@@ -16,42 +16,23 @@ class DashboardController extends Controller
 
         $credentials = $this->loadCredentials();
 
-        $available_sessions = [
-            '1'  => [
-                'activity' => 'Exemplar',
-                'type'     => 'LIT 10 I',
-                'dates'    => 'August 1-2',
-                'location' => 'Vancouver'
-            ],
-            '22' => [
-                'activity' => 'Marking',
-                'type'     => 'LIT 10 I',
-                'dates'    => 'August 3-4',
-                'location' => 'Vancouver'
-            ],
-            '33' => [
-                'activity' => 'Marking',
-                'type'     => 'LIT 20 E',
-                'dates'    => 'July 3-4',
-                'location' => 'Victoria'
-            ]
-        ];
+        $sessions = $this->loadSessions();
 
         $assignments = [
-            '1'  => [
+            [
+                'id' => '1',
                 'status' => 'Scheduled'
             ],
-            '22' => [
+            [
+                'id' => '22',
                 'status' => 'Assigned'
             ],
         ];
 
-
-
         return view('dashboard', [
             'user'        => json_encode($user),
             'credentials' => json_encode($credentials),
-            'sessions'    => json_encode($available_sessions),
+            'sessions'    => json_encode($sessions),
             'assignments' => json_encode($assignments),
             'subjects'    => json_encode($subjects),
             'schools'     => json_encode($schools),

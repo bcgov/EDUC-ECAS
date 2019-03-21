@@ -15,9 +15,11 @@
                                     {{ user.address_1 }}<br/>
                                     {{ user.city }}, {{ user.region }}</p>
                                 <p v-if="typeof user.professional_certificate_bc !== 'undefined' && user.professional_certificate_bc.length > 1">
-                                    <strong>BC Professional Certificate:</strong> {{ user.professional_certificate_bc }}</p>
+                                    <strong>BC Professional Certificate:</strong> {{ user.professional_certificate_bc }}
+                                </p>
                                 <p v-if="typeof user.professional_certificate_yk !== 'undefined' && user.professional_certificate_yk.length > 1">
-                                    <strong>Yukon Professional Certificate:</strong> {{ user.professional_certificate_yk }}</p>
+                                    <strong>Yukon Professional Certificate:</strong> {{ user.professional_certificate_yk
+                                    }}</p>
                                 <p v-if="typeof user.professional_certificate_other !== 'undefined' && user.professional_certificate_other.length > 1">
                                     <strong>Other Certificate:</strong> {{ user.professional_certificate_other }}</p>
                             </div>
@@ -26,7 +28,6 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-header">
-                                <button @click="editCredentials" class="float-right btn btn-primary">Edit</button>
                                 <h2>Credentials</h2>
                             </div>
                             <div class="card-body">
@@ -35,11 +36,15 @@
                                     <div class="col">{{ credential.name }}</div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-1"><button class="btn btn-primary btn-sm" @click="addCredential">+</button></div>
+                                    <div class="col-1">
+                                        <button class="btn btn-primary btn-sm" @click="addCredential">+</button>
+                                    </div>
                                     <div class="col">
                                         <select v-model="new_credential">
                                             <option value="0">Select New Credential</option>
-                                            <option v-for="credential in credentials" :value="credential.id">{{ credential.name }}</option>
+                                            <option v-for="credential in credentials" :value="credential.id">{{
+                                                credential.name }}
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -54,10 +59,10 @@
                                 <div class="row">
                                     <div class="col"><h2>Marking Sessions</h2></div>
                                     <div class="col text-right">
-                                        <button type="button" class="btn btn-success">
+                                        <button @click="filter = 'Scheduled'" class="btn btn-success">
                                             You're Going! <span class="badge badge-light">{{ goingCount }}</span>
                                         </button>
-                                        <button type="button" class="btn btn-primary">
+                                        <button class="btn btn-primary">
                                             You're Invited! <span class="badge badge-light">2</span>
                                         </button>
                                     </div>
@@ -73,7 +78,7 @@
                                         <th>Location</th>
                                         <th>Status</th>
                                     </tr>
-                                    <tr v-for="(session, id) in sessions">
+                                    <tr v-for="(session, id) in filteredSessions(sessions)">
                                         <td>{{ session.activity }}</td>
                                         <td>{{ session.type }}</td>
                                         <td>{{ session.dates }}</td>
@@ -96,21 +101,9 @@
                 </div>
             </div>
         </div>
-        <!--<modal name="credentials_form">-->
-            <!--<div class="card">-->
-                <!--<div class="card-header">Credentials</div>-->
-                <!--<div class="card-body">-->
-                    <!--<div class="row">-->
-                        <!--<div class="col">-->
-                            <!--<select v-model="new_credential">-->
-                                <!--<option v-for="credential in credentials" :value="credential.id">{{ credential.name }}</option>-->
-                            <!--</select>-->
-                        <!--</div>-->
-                        <!--<div class="col"><button class="btn btn-primary" @click="addCredential">Add</button></div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</modal>-->
+        <modal name="credentials_form">
+            Modal Form
+        </modal>
     </div>
 </template>
 
@@ -120,9 +113,7 @@
             user: {},
             credentials: {},
             sessions: {},
-            assignments: {
-                type: Object
-            },
+            assignments: {},
             subjects: {},
             schools: {
                 type: Object
@@ -132,7 +123,8 @@
             return {
                 assignments_local: [],
                 credentials_local: [],
-                new_credential: 0
+                new_credential: 0,
+                filter: ''
             }
         },
         mounted() {
@@ -170,6 +162,17 @@
             pushCredential(credential) {
                 console.log('pushing credential')
                 this.credentials_local.unshift(credential)
+            },
+            filteredSessions(sessions) {
+                var dashboard = this
+
+                return sessions.filter(function (session) {
+                    if (dashboard.filter.length == 0) {
+                        return true
+                    }
+
+                    return session.status == dashboard.filter
+                })
             },
             isAssigned: function (id) {
                 if (typeof(this.assignments_local[id]) !== 'undefined') {

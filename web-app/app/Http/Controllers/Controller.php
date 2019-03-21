@@ -15,21 +15,21 @@ class Controller extends BaseController
     {
         // Mock querying Dynamics for a User
         return [
-            'id'                             => 1,
-            'email'                          => 'jane.smith@example.com',
-            'preferred_first_name'           => 'Sal',
-            'first_name'                     => 'Sally',
-            'last_name'                      => 'Sherwood',
-            'social_insurance_no'            => '123456789',
-            'professional_certificate_bc'    => 'bd-aejrkqwehr',
-//            'professional_certificate_yk'    => 'yk-039290',
-//            'professional_certificate_other' => '',
-            'current_school'                 => 'South Park Elementary',
-            'address_1'                      => '456 Yellow Brick Rd.',
-            'address_2'                      => '',
-            'city'                           => 'Oz',
-            'region'                         => 'BC',
-            'postal_code'                    => 'T0B4T5'
+            'id'                          => 1,
+            'email'                       => 'jane.smith@example.com',
+            'preferred_first_name'        => 'Sal',
+            'first_name'                  => 'Sally',
+            'last_name'                   => 'Sherwood',
+            'social_insurance_no'         => '123456789',
+            'professional_certificate_bc' => 'bd-aejrkqwehr',
+            //            'professional_certificate_yk'    => 'yk-039290',
+            //            'professional_certificate_other' => '',
+            'current_school'              => 'South Park Elementary',
+            'address_1'                   => '456 Yellow Brick Rd.',
+            'address_2'                   => '',
+            'city'                        => 'Oz',
+            'region'                      => 'BC',
+            'postal_code'                 => 'T0B4T5'
         ];
     }
 
@@ -84,16 +84,46 @@ class Controller extends BaseController
     {
         return [
             [
-                'id' => '1',
+                'id'   => '1',
                 'name' => 'Literacy 10 E'
             ],
             [
-                'id' => '2',
+                'id'   => '2',
                 'name' => 'Literacy 10 P'
             ],
             [
-                'id' => '3',
+                'id'   => '3',
                 'name' => 'Numeracy 10'
+            ]
+        ];
+    }
+
+    protected function loadSessions()
+    {
+        return [
+            [
+                'id'       => '1',
+                'activity' => 'Exemplar',
+                'type'     => 'LIT 10 I',
+                'dates'    => 'August 1-2',
+                'location' => 'Vancouver',
+                'status'   => 'Scheduled'
+            ],
+            [
+                'id'       => '2',
+                'activity' => 'Marking',
+                'type'     => 'LIT 10 I',
+                'dates'    => 'August 3-4',
+                'location' => 'Vancouver',
+                'status'   => 'Assigned'
+            ],
+            [
+                'id'       => '3',
+                'activity' => 'Marking',
+                'type'     => 'LIT 20 E',
+                'dates'    => 'July 3-4',
+                'location' => 'Victoria',
+                'status'   => ''
             ]
         ];
     }
