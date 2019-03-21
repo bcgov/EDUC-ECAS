@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/Profile/edit', 'ProfileController@edit');
+Route::get('/Dashboard', 'DashboardController@index');
+Route::post('/Dashboard/credential', 'DashboardController@storeCredential');
+Route::post('/Dashboard/post', 'DashboardController@post');
