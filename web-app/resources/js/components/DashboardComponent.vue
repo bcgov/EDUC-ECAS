@@ -56,44 +56,62 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-header">
-                                <div class="row">
-                                    <div class="col"><h2>Marking Sessions</h2></div>
-                                    <div class="col text-right">
-                                        <button @click="filter = 'Scheduled'" class="btn btn-success">
-                                            You're Going! <span class="badge badge-light">{{ goingCount }}</span>
-                                        </button>
-                                        <button class="btn btn-primary">
-                                            You're Invited! <span class="badge badge-light">2</span>
-                                        </button>
-                                    </div>
-                                </div>
-
+                                <h2 class="float-left">Marking Sessions</h2>
+                                <ul class="nav nav-tabs justify-content-end">
+                                    <li class="nav-item">
+                                        <a href="#"
+                                           @click="filter = ''"
+                                           class="nav-link"
+                                           :class="{ 'active': filter == '' }">All
+                                            <span class="badge badge-pill badge-primary">{{ sessions_local.length }}</span></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#"
+                                           @click="filter = 'Applied'"
+                                           class="nav-link"
+                                           :class="{ 'active': filter == 'Applied' }">Applied
+                                            <span class="badge badge-pill badge-primary">{{ countStatus('Applied') }}</span></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#"
+                                           @click="filter = 'Invited'"
+                                           class="nav-link"
+                                           :class="{ 'active': filter == 'Invited' }">Invited
+                                            <span class="badge badge-pill badge-primary">{{ countStatus('Invited') }}</span></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#"
+                                           @click="filter = 'Scheduled'"
+                                           class="nav-link"
+                                           :class="{ 'active': filter == 'Scheduled' }">Going
+                                            <span class="badge badge-pill badge-primary">{{ countStatus('Scheduled') }}</span></a>
+                                    </li>
+                                </ul>
                             </div>
                             <div class="card-body">
-                                <table class="table">
+                                <table class="table table-hover">
                                     <tr>
-                                        <th>Activity</th>
                                         <th>Type</th>
+                                        <th>Activity</th>
                                         <th>Dates</th>
                                         <th>Location</th>
                                         <th>Status</th>
                                     </tr>
-                                    <tr v-for="(session, id) in filteredSessions(sessions)">
-                                        <td>{{ session.activity }}</td>
+                                    <tbody>
+                                    <tr @click="viewSession(session)"
+                                        v-for="session in filteredSessions(sessions_local)">
                                         <td>{{ session.type }}</td>
+                                        <td>{{ session.activity }}</td>
                                         <td>{{ session.dates }}</td>
                                         <td>{{ session.location }}</td>
                                         <td>
-                                            <template v-if="isAssigned(id)">
-                                                <button class="btn btn-primary btn-sm"
-                                                        v-on:click="acceptInvitation(id)">Accept Invitation!
-                                                </button>
-                                            </template>
-                                            <template v-else-if="isScheduled(id)">You're Going!</template>
+                                            <template v-if="isStatus(session, 'Invited')">Accept Invitation!</template>
+                                            <template v-else-if="isStatus(session, 'Scheduled')">You're Going!</template>
+                                            <template v-else-if="isStatus(session, 'Applied')">You've Applied</template>
                                             <template v-else>Open</template>
-                                            <!-- <button class="btn btn-success btn-sm">Contract Pending</button> -->
                                         </td>
                                     </tr>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -101,8 +119,29 @@
                 </div>
             </div>
         </div>
-        <modal name="credentials_form">
-            Modal Form
+        <modal name="session_form">
+            <div class="card">
+                <div class="card-header">
+                    <h2>{{ current_session.type }} - {{ current_session.activity }}</h2>
+                    <h3>{{ current_session.dates }}, {{ current_session.location }}</h3>
+                </div>
+                <div class="card-body">
+                    <template v-if="isStatus(current_session, 'Invited')">
+                        <button class="btn btn-primary btn-sm"
+                                v-on:click="acceptInvitation(current_session)">Accept Invitation!
+                        </button>
+                    </template>
+                    <template v-else-if="isStatus(current_session, 'Applied')">
+                        You have applied to this Session
+                    </template>
+                    <template v-else>
+                        <button class="btn btn-primary btn-sm"
+                                v-on:click="applyToSession(current_session)">I would like to attend
+                        </button>
+                    </template>
+                </div>
+            </div>
+
         </modal>
     </div>
 </template>
@@ -113,7 +152,6 @@
             user: {},
             credentials: {},
             sessions: {},
-            assignments: {},
             subjects: {},
             schools: {
                 type: Object
@@ -121,30 +159,24 @@
         },
         data() {
             return {
-                assignments_local: [],
+                sessions_local: [],
                 credentials_local: [],
                 new_credential: 0,
-                filter: ''
+                filter: '',
+                current_session: {}
             }
         },
         mounted() {
             console.log('Dashboard Mounted')
-            this.assignments_local = this.assignments
-            // this.credentials_local = this.credentials
+            this.sessions_local = this.sessions
             Event.listen('credential-added', this.pushCredential)
         },
         computed: {
-            goingCount: function () {
-                return Object.values(this.assignments_local).filter(function (assignment) {
-                    return assignment.status == 'Scheduled'
-                }).length
-            }
         },
 
         methods: {
             addCredential: function () {
                 console.log('adding credential')
-                // this.$modal.hide('credentials_form');
 
                 var form = this
 
@@ -159,6 +191,12 @@
                         console.log('Failure!')
                     });
             },
+            countStatus: function (status) {
+                // var status
+                return Object.values(this.sessions_local).filter(function (assignment) {
+                    return assignment.status == status
+                }).length
+            },
             pushCredential(credential) {
                 console.log('pushing credential')
                 this.credentials_local.unshift(credential)
@@ -170,31 +208,24 @@
                     if (dashboard.filter.length == 0) {
                         return true
                     }
-
                     return session.status == dashboard.filter
                 })
             },
-            isAssigned: function (id) {
-                if (typeof(this.assignments_local[id]) !== 'undefined') {
-                    return this.assignments_local[id].status == 'Assigned'
-                }
-
-                return false
+            isStatus: function (session, status) {
+                return session.status == status
             },
-            isScheduled: function (id) {
-                if (typeof(this.assignments_local[id]) !== 'undefined') {
-                    return this.assignments_local[id].status == 'Scheduled'
-                }
-
-                return false
+            acceptInvitation: function (session) {
+                console.log('accepting assignment ' + session.id)
+                session.status = 'Scheduled'
             },
-            acceptInvitation: function (id) {
-                console.log('accepting assignment ' + id)
-                this.assignments_local[id].status = 'Scheduled'
+            applyToSession: function (session) {
+                console.log('applying to session ' + session.id)
+                session.status = 'Applied'
             },
-            editCredentials() {
-                console.log('Edit Profile')
-                this.$modal.show('credentials_form');
+            viewSession(session) {
+                console.log('View Session')
+                this.current_session = session
+                this.$modal.show('session_form');
             }
         }
 

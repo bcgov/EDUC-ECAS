@@ -115,7 +115,7 @@ class Controller extends BaseController
                 'type'     => 'LIT 10 I',
                 'dates'    => 'August 3-4',
                 'location' => 'Vancouver',
-                'status'   => 'Assigned'
+                'status'   => 'Invited'
             ],
             [
                 'id'       => '3',
