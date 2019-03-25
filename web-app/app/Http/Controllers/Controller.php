@@ -123,7 +123,7 @@ class Controller extends BaseController
                 'type'     => 'LIT 20 E',
                 'dates'    => 'July 3-4',
                 'location' => 'Victoria',
-                'status'   => ''
+                'status'   => 'Open'
             ]
         ];
     }
