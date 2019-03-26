@@ -3,7 +3,7 @@
 # Export objects
 oc get bc/ecas is/ecas --export -o yaml > build.yaml
 
-# As a reference check th eoutput of the deprecated `oc export`
+# As a reference check the output of the deprecated `oc export`
 # oc export bc/ecas is/ecas -o yaml > build2.yaml
 
 # Manually update to remove cluster/namespace references
@@ -24,5 +24,7 @@ oc process -f build.yaml --param-file=build.vars --param-file=build.local.vars |
 ```
 # Export objects
 oc get dc/ecas is/ecas --export -o yaml > deployment.yaml
+
+# Create new deployment template??
 oc process -f deployment.yaml | oc create -f -
 ```
