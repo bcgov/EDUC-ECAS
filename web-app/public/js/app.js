@@ -1879,14 +1879,82 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     user: {},
     credentials: {},
     sessions: {},
-    assignments: {
-      type: Object
-    },
     subjects: {},
     schools: {
       type: Object
@@ -1894,28 +1962,22 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      assignments_local: [],
+      sessions_local: [],
       credentials_local: [],
-      new_credential: 0
+      new_credential: 0,
+      filter: '',
+      current_session: {}
     };
   },
   mounted: function mounted() {
     console.log('Dashboard Mounted');
-    this.assignments_local = this.assignments; // this.credentials_local = this.credentials
-
+    this.sessions_local = this.sessions;
     Event.listen('credential-added', this.pushCredential);
   },
-  computed: {
-    goingCount: function goingCount() {
-      return Object.values(this.assignments_local).filter(function (assignment) {
-        return assignment.status == 'Scheduled';
-      }).length;
-    }
-  },
+  computed: {},
   methods: {
     addCredential: function addCredential() {
-      console.log('adding credential'); // this.$modal.hide('credentials_form');
-
+      console.log('adding credential');
       var form = this;
       axios.post('/Dashboard/credential', {
         credential_id: form.new_credential
@@ -1926,31 +1988,64 @@ __webpack_require__.r(__webpack_exports__);
         console.log('Failure!');
       });
     },
+    countStatus: function countStatus(status) {
+      // var status
+      return Object.values(this.sessions_local).filter(function (assignment) {
+        return assignment.status == status;
+      }).length;
+    },
     pushCredential: function pushCredential(credential) {
       console.log('pushing credential');
       this.credentials_local.unshift(credential);
     },
-    isAssigned: function isAssigned(id) {
-      if (typeof this.assignments_local[id] !== 'undefined') {
-        return this.assignments_local[id].status == 'Assigned';
-      }
+    filteredSessions: function filteredSessions(sessions) {
+      var dashboard = this;
+      return sessions.filter(function (session) {
+        if (dashboard.filter.length == 0) {
+          return true;
+        }
 
-      return false;
+        return session.status == dashboard.filter;
+      });
     },
-    isScheduled: function isScheduled(id) {
-      if (typeof this.assignments_local[id] !== 'undefined') {
-        return this.assignments_local[id].status == 'Scheduled';
-      }
+    isStatus: function isStatus(session, status) {
+      return session.status == status;
+    },
+    acceptInvitation: function acceptInvitation(session, accept) {
+      if (accept === undefined) accept = true;
+      this.closeModal();
 
-      return false;
+      if (accept) {
+        console.log('accepting assignment ' + session.id);
+        session.status = 'Scheduled';
+      } else {
+        console.log('declining invitation ' + session.id);
+        session.status = 'Declined';
+      }
     },
-    acceptInvitation: function acceptInvitation(id) {
-      console.log('accepting assignment ' + id);
-      this.assignments_local[id].status = 'Scheduled';
+    applyToSession: function applyToSession(session, attend) {
+      if (attend === undefined) attend = true;
+      this.closeModal();
+
+      if (attend) {
+        console.log('applying to session ' + session.id);
+        session.status = 'Applied';
+      } else {
+        console.log('cancelling application to session ' + session.id);
+        session.status = 'Open';
+      }
     },
-    editCredentials: function editCredentials() {
-      console.log('Edit Profile');
-      this.$modal.show('credentials_form');
+    viewSession: function viewSession(session) {
+      console.log('View Session');
+      this.current_session = session;
+      this.$modal.show('session_form');
+    },
+    closeModal: function closeModal() {
+      this.$modal.hide('session_form');
+    },
+    getContract: function getContract() {
+      console.log('Download Contract');
+      this.closeModal();
     }
   }
 });
@@ -37010,259 +37105,564 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "card" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col" }, [
-            _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-header" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "float-right btn btn-primary",
-                    attrs: { href: "/Profile/edit" }
-                  },
-                  [_vm._v("Edit")]
-                ),
-                _vm._v(" "),
-                _c("h2", [
-                  _vm._v(
-                    _vm._s(_vm.user.preferred_first_name) +
-                      " " +
-                      _vm._s(_vm.user.last_name)
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c("p", [
-                  _vm._v(_vm._s(_vm.user.email)),
-                  _c("br"),
-                  _vm._v(
-                    "\n                                " +
-                      _vm._s(_vm.user.address_1)
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "card" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-header" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "float-right btn btn-primary",
+                      attrs: { href: "/Profile/edit" }
+                    },
+                    [_vm._v("Edit")]
                   ),
-                  _c("br"),
-                  _vm._v(
-                    "\n                                " +
-                      _vm._s(_vm.user.city) +
-                      ", " +
-                      _vm._s(_vm.user.region)
-                  )
+                  _vm._v(" "),
+                  _c("h2", [
+                    _vm._v(
+                      _vm._s(_vm.user.preferred_first_name) +
+                        " " +
+                        _vm._s(_vm.user.last_name)
+                    )
+                  ])
                 ]),
                 _vm._v(" "),
-                typeof _vm.user.professional_certificate_bc !== "undefined" &&
-                _vm.user.professional_certificate_bc.length > 1
-                  ? _c("p", [
-                      _c("strong", [_vm._v("BC Professional Certificate:")]),
-                      _vm._v(" " + _vm._s(_vm.user.professional_certificate_bc))
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                typeof _vm.user.professional_certificate_yk !== "undefined" &&
-                _vm.user.professional_certificate_yk.length > 1
-                  ? _c("p", [
-                      _c("strong", [_vm._v("Yukon Professional Certificate:")]),
-                      _vm._v(" " + _vm._s(_vm.user.professional_certificate_yk))
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                typeof _vm.user.professional_certificate_other !==
-                  "undefined" &&
-                _vm.user.professional_certificate_other.length > 1
-                  ? _c("p", [
-                      _c("strong", [_vm._v("Other Certificate:")]),
-                      _vm._v(
-                        " " + _vm._s(_vm.user.professional_certificate_other)
-                      )
-                    ])
-                  : _vm._e()
+                _c("div", { staticClass: "card-body" }, [
+                  _c("p", [
+                    _vm._v(_vm._s(_vm.user.email)),
+                    _c("br"),
+                    _vm._v(
+                      "\n                                " +
+                        _vm._s(_vm.user.address_1)
+                    ),
+                    _c("br"),
+                    _vm._v(
+                      "\n                                " +
+                        _vm._s(_vm.user.city) +
+                        ", " +
+                        _vm._s(_vm.user.region)
+                    )
+                  ]),
+                  _vm._v(" "),
+                  typeof _vm.user.professional_certificate_bc !== "undefined" &&
+                  _vm.user.professional_certificate_bc.length > 1
+                    ? _c("p", [
+                        _c("strong", [_vm._v("BC Professional Certificate:")]),
+                        _vm._v(
+                          " " +
+                            _vm._s(_vm.user.professional_certificate_bc) +
+                            "\n                            "
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  typeof _vm.user.professional_certificate_yk !== "undefined" &&
+                  _vm.user.professional_certificate_yk.length > 1
+                    ? _c("p", [
+                        _c("strong", [
+                          _vm._v("Yukon Professional Certificate:")
+                        ]),
+                        _vm._v(
+                          " " + _vm._s(_vm.user.professional_certificate_yk)
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  typeof _vm.user.professional_certificate_other !==
+                    "undefined" &&
+                  _vm.user.professional_certificate_other.length > 1
+                    ? _c("p", [
+                        _c("strong", [_vm._v("Other Certificate:")]),
+                        _vm._v(
+                          " " + _vm._s(_vm.user.professional_certificate_other)
+                        )
+                      ])
+                    : _vm._e()
+                ])
               ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col" }, [
-            _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-header" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "float-right btn btn-primary",
-                    on: { click: _vm.editCredentials }
-                  },
-                  [_vm._v("Edit")]
-                ),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col" }, [
+              _c("div", { staticClass: "card" }, [
+                _vm._m(1),
                 _vm._v(" "),
-                _c("h2", [_vm._v("Credentials")])
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "card-body" },
-                [
-                  _vm._l(_vm.credentials_local, function(credential) {
-                    return _c("div", { staticClass: "row" }, [
-                      _vm._m(1, true),
+                _c(
+                  "div",
+                  { staticClass: "card-body" },
+                  [
+                    _vm._l(_vm.credentials_local, function(credential) {
+                      return _c("div", { staticClass: "row" }, [
+                        _vm._m(2, true),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col" }, [
+                          _vm._v(_vm._s(credential.name))
+                        ])
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-1" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary btn-sm",
+                            on: { click: _vm.addCredential }
+                          },
+                          [_vm._v("+")]
+                        )
+                      ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "col" }, [
-                        _vm._v(_vm._s(credential.name))
-                      ])
-                    ])
-                  }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-1" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary btn-sm",
-                          on: { click: _vm.addCredential }
-                        },
-                        [_vm._v("+")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col" }, [
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.new_credential,
-                              expression: "new_credential"
-                            }
-                          ],
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.new_credential = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            }
-                          }
-                        },
-                        [
-                          _c("option", { attrs: { value: "0" } }, [
-                            _vm._v("Select New Credential")
-                          ]),
-                          _vm._v(" "),
-                          _vm._l(_vm.credentials, function(credential) {
-                            return _c(
-                              "option",
-                              { domProps: { value: credential.id } },
-                              [_vm._v(_vm._s(credential.name))]
-                            )
-                          })
-                        ],
-                        2
-                      )
-                    ])
-                  ])
-                ],
-                2
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col" }, [
-            _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-header" }, [
-                _c("div", { staticClass: "row" }, [
-                  _vm._m(2),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col text-right" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-success",
-                        attrs: { type: "button" }
-                      },
-                      [
-                        _vm._v(
-                          "\n                                        You're Going! "
-                        ),
-                        _c("span", { staticClass: "badge badge-light" }, [
-                          _vm._v(_vm._s(_vm.goingCount))
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _vm._m(3)
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c(
-                  "table",
-                  { staticClass: "table" },
-                  [
-                    _vm._m(4),
-                    _vm._v(" "),
-                    _vm._l(_vm.sessions, function(session, id) {
-                      return _c("tr", [
-                        _c("td", [_vm._v(_vm._s(session.activity))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(session.type))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(session.dates))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(session.location))]),
-                        _vm._v(" "),
                         _c(
-                          "td",
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.new_credential,
+                                expression: "new_credential"
+                              }
+                            ],
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.new_credential = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
                           [
-                            _vm.isAssigned(id)
-                              ? [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-primary btn-sm",
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.acceptInvitation(id)
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "Accept Invitation!\n                                            "
-                                      )
-                                    ]
+                            _c("option", { attrs: { value: "0" } }, [
+                              _vm._v("Select New Credential")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.credentials, function(credential) {
+                              return _c(
+                                "option",
+                                { domProps: { value: credential.id } },
+                                [
+                                  _vm._v(
+                                    _vm._s(credential.name) +
+                                      "\n                                        "
                                   )
                                 ]
-                              : _vm.isScheduled(id)
-                              ? [_vm._v("You're Going!")]
-                              : [_vm._v("Open")]
+                              )
+                            })
                           ],
                           2
                         )
                       ])
-                    })
+                    ])
                   ],
                   2
                 )
               ])
             ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-header" }, [
+                  _c("h2", { staticClass: "float-left" }, [
+                    _vm._v("Marking Sessions")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "ul",
+                    { staticClass: "nav nav-tabs justify-content-end" },
+                    [
+                      _c("li", { staticClass: "nav-item" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "nav-link",
+                            class: { active: _vm.filter == "" },
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                _vm.filter = ""
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "All\n                                        "
+                            ),
+                            _c(
+                              "span",
+                              { staticClass: "badge badge-pill badge-primary" },
+                              [_vm._v(_vm._s(_vm.sessions_local.length))]
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "nav-item" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "nav-link",
+                            class: { active: _vm.filter == "Applied" },
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                _vm.filter = "Applied"
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "Applied\n                                        "
+                            ),
+                            _c(
+                              "span",
+                              { staticClass: "badge badge-pill badge-primary" },
+                              [_vm._v(_vm._s(_vm.countStatus("Applied")))]
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "nav-item" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "nav-link",
+                            class: { active: _vm.filter == "Invited" },
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                _vm.filter = "Invited"
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "Invited\n                                        "
+                            ),
+                            _c(
+                              "span",
+                              { staticClass: "badge badge-pill badge-primary" },
+                              [_vm._v(_vm._s(_vm.countStatus("Invited")))]
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "nav-item" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "nav-link",
+                            class: { active: _vm.filter == "Scheduled" },
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                _vm.filter = "Scheduled"
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "Going\n                                        "
+                            ),
+                            _c(
+                              "span",
+                              { staticClass: "badge badge-pill badge-primary" },
+                              [_vm._v(_vm._s(_vm.countStatus("Scheduled")))]
+                            )
+                          ]
+                        )
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-body" }, [
+                  _c("table", { staticClass: "table table-hover" }, [
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.filteredSessions(_vm.sessions_local), function(
+                        session
+                      ) {
+                        return _c(
+                          "tr",
+                          {
+                            on: {
+                              click: function($event) {
+                                return _vm.viewSession(session)
+                              }
+                            }
+                          },
+                          [
+                            _c("td", [_vm._v(_vm._s(session.type))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(session.activity))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(session.dates))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(session.location))]),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              [
+                                _vm.isStatus(session, "Invited")
+                                  ? [_vm._v("Accept Invitation!")]
+                                  : _vm.isStatus(session, "Scheduled")
+                                  ? [_vm._v("You're Going!")]
+                                  : _vm.isStatus(session, "Applied")
+                                  ? [_vm._v("You've Applied")]
+                                  : _vm.isStatus(session, "Declined")
+                                  ? [_vm._v("Declined")]
+                                  : _vm._e()
+                              ],
+                              2
+                            )
+                          ]
+                        )
+                      }),
+                      0
+                    )
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("modal", { attrs: { name: "session_form", height: "auto" } }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary btn-sm float-right",
+                on: { click: _vm.closeModal }
+              },
+              [_vm._v("X")]
+            ),
+            _vm._v(" "),
+            _c("h2", [
+              _vm._v(
+                _vm._s(_vm.current_session.type) +
+                  " - " +
+                  _vm._s(_vm.current_session.activity)
+              )
+            ]),
+            _vm._v(" "),
+            _c("h3", [
+              _vm._v(
+                _vm._s(_vm.current_session.dates) +
+                  ", " +
+                  _vm._s(_vm.current_session.location)
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "card-body" },
+            [
+              _vm.isStatus(_vm.current_session, "Open")
+                ? [
+                    _c("p", [_vm._v("This Session is open.")]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v("Would you to like to apply for this Session?")
+                    ])
+                  ]
+                : _vm.isStatus(_vm.current_session, "Applied")
+                ? [
+                    _c("p", [_vm._v("You have applied to this Session")]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("Do you still want to go?")])
+                  ]
+                : _vm.isStatus(_vm.current_session, "Invited")
+                ? [
+                    _c("p", [
+                      _vm._v(
+                        "You are invited to participate in this " +
+                          _vm._s(_vm.current_session.activity) +
+                          " Session!"
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v(
+                        "Please accept the invitation to confirm your attendance."
+                      )
+                    ])
+                  ]
+                : _vm.isStatus(_vm.current_session, "Scheduled")
+                ? [
+                    _c("p", [
+                      _vm._v(
+                        "You have accepted the invitation to this session and are scheduled to attend."
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v(
+                        "Your signed contract has not been received. You may download a copy below."
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v("If you can no longer attend please cancel.")
+                    ])
+                  ]
+                : _vm.isStatus(_vm.current_session, "Contracted")
+                ? [
+                    _vm._v(
+                      "\n                    You have have a contract and are scheduled to attend this session.\n                "
+                    )
+                  ]
+                : _vm._e()
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-footer" }, [
+            _c(
+              "div",
+              { staticClass: "row" },
+              [
+                _vm.isStatus(_vm.current_session, "Open") ||
+                _vm.isStatus(_vm.current_session, "Applied")
+                  ? [
+                      _c("div", { staticClass: "col" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger btn-block",
+                            on: {
+                              click: function($event) {
+                                return _vm.applyToSession(
+                                  _vm.current_session,
+                                  false
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                No, Thanks"
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary btn-block",
+                            on: {
+                              click: function($event) {
+                                return _vm.applyToSession(_vm.current_session)
+                              }
+                            }
+                          },
+                          [_vm._v("Yes, Please")]
+                        )
+                      ])
+                    ]
+                  : _vm.isStatus(_vm.current_session, "Invited")
+                  ? [
+                      _c("div", { staticClass: "col" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger btn-block",
+                            on: {
+                              click: function($event) {
+                                return _vm.acceptInvitation(
+                                  _vm.current_session,
+                                  false
+                                )
+                              }
+                            }
+                          },
+                          [_vm._v("No, Thanks")]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary btn-block",
+                            on: {
+                              click: function($event) {
+                                return _vm.acceptInvitation(_vm.current_session)
+                              }
+                            }
+                          },
+                          [_vm._v("Accept Invitation!")]
+                        )
+                      ])
+                    ]
+                  : _vm.isStatus(_vm.current_session, "Scheduled")
+                  ? [
+                      _c("div", { staticClass: "col" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger btn-block",
+                            on: {
+                              click: function($event) {
+                                return _vm.acceptInvitation(
+                                  _vm.current_session,
+                                  false
+                                )
+                              }
+                            }
+                          },
+                          [_vm._v("Cancel Attendance!")]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary btn-block",
+                            on: { click: _vm.getContract }
+                          },
+                          [_vm._v("Download Contract")]
+                        )
+                      ])
+                    ]
+                  : _vm._e()
+              ],
+              2
+            )
           ])
         ])
       ])
-    ])
-  ])
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -37277,6 +37677,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h2", [_vm._v("Credentials")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-1" }, [
       _c("i", { staticClass: "fas fa-igloo" })
     ])
@@ -37285,31 +37693,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col" }, [
-      _c("h2", [_vm._v("Marking Sessions")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn-primary", attrs: { type: "button" } },
-      [
-        _vm._v("\n                                        You're Invited! "),
-        _c("span", { staticClass: "badge badge-light" }, [_vm._v("2")])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("th", [_vm._v("Activity")]),
-      _vm._v(" "),
       _c("th", [_vm._v("Type")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Activity")]),
       _vm._v(" "),
       _c("th", [_vm._v("Dates")]),
       _vm._v(" "),

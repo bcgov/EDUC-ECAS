@@ -108,7 +108,7 @@
                                             <template v-if="isStatus(session, 'Invited')">Accept Invitation!</template>
                                             <template v-else-if="isStatus(session, 'Scheduled')">You're Going!</template>
                                             <template v-else-if="isStatus(session, 'Applied')">You've Applied</template>
-                                            <template v-else>Open</template>
+                                            <template v-else-if="isStatus(session, 'Declined')">Declined</template>
                                         </td>
                                     </tr>
                                     </tbody>
