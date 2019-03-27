@@ -20,7 +20,23 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+import VModal from 'vue-js-modal'
+
+Vue.use(VModal)
+
+Vue.component('dashboard', require('./components/DashboardComponent.vue').default);
+
+window.Event = new class {
+    constructor() {
+        this.vue = new Vue();
+    }
+    fire(event, data = null) {
+        this.vue.$emit(event, data)
+    }
+    listen(event, callback) {
+        this.vue.$on(event, callback)
+    }
+}
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
