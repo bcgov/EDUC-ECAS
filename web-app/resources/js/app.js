@@ -8,6 +8,10 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+window.Vuex = require('vuex')
+
+import Vue from 'vue'
+import Vuex from 'vuex'
 
 /**
  * The following block of code may be used to automatically register your
@@ -22,10 +26,13 @@ window.Vue = require('vue');
 
 import VModal from 'vue-js-modal'
 
-Vue.use(VModal)
+Vue.use(Vuex)
+Vue.use(VModal, { dynamic: true, injectModalsContainer: true })
 
 Vue.component('dashboard', require('./components/DashboardComponent.vue').default);
+Vue.component('session', require('./components/Session.vue').default);
 
+// A global event handler, just a convenient wrapper for Vue's event system
 window.Event = new class {
     constructor() {
         this.vue = new Vue();
@@ -38,6 +45,33 @@ window.Event = new class {
     }
 }
 
+const store = new Vuex.Store({
+    state: {
+        accounts: {},
+        cash_outs: {},
+        roles: {},
+        daily: {},
+        staff_totals: {},
+        messages: {},
+        tip_jars: {}
+    },
+    mutations: {
+        'SET_ACCOUNTS' (state, accounts) {
+            state.accounts = accounts;
+        }
+    },
+    getters: {
+        messages(state) {
+            return state.messages
+        },
+        account: (state) => (id) => {
+            return state.accounts.find(function(account) {
+                return account.id == id
+            })
+        }
+    }
+})
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -45,5 +79,6 @@ window.Event = new class {
  */
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    store
 });

@@ -109,6 +109,7 @@
                                             <template v-else-if="isStatus(session, 'Scheduled')">You're Going!</template>
                                             <template v-else-if="isStatus(session, 'Applied')">You've Applied</template>
                                             <template v-else-if="isStatus(session, 'Declined')">Declined</template>
+                                            <template v-else-if="isStatus(session, 'Open')">Open</template>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -120,73 +121,17 @@
             </div>
         </div>
         <modal name="session_form" height="auto">
-            <div class="card">
-                <div class="card-header">
-                    <button class="btn btn-primary btn-sm float-right" v-on:click="closeModal">X</button>
-                    <h2>{{ current_session.type }} - {{ current_session.activity }}</h2>
-                    <h3>{{ current_session.dates }}, {{ current_session.location }}</h3>
-                </div>
-                <div class="card-body">
-                    <template v-if="isStatus(current_session, 'Open')">
-                        <p>This Session is open.</p>
-                        <p>Would you to like to apply for this Session?</p>
-                    </template>
-                    <template v-else-if="isStatus(current_session, 'Applied')">
-                        <p>You have applied to this Session</p>
-                        <p>Do you still want to go?</p>
-                    </template>
-                    <template v-else-if="isStatus(current_session, 'Invited')">
-                        <p>You are invited to participate in this {{ current_session.activity }} Session!</p>
-                        <p>Please accept the invitation to confirm your attendance.</p>
-                    </template>
-                    <template v-else-if="isStatus(current_session, 'Scheduled')">
-                        <p>You have accepted the invitation to this session and are scheduled to attend.</p>
-                        <p>Your signed contract has not been received. You may download a copy below.</p>
-                        <p>If you can no longer attend please cancel.</p>
-                    </template>
-                    <template v-else-if="isStatus(current_session, 'Contracted')">
-                        You have have a contract and are scheduled to attend this session.
-                    </template>
-                </div>
-                <div class="card-footer">
-                    <div class="row">
-                        <template v-if="isStatus(current_session, 'Open') || isStatus(current_session, 'Applied')">
-                            <div class="col">
-                                <button class="btn btn-danger btn-block" v-on:click="applyToSession(current_session, false)">
-                                    No, Thanks</button>
-                            </div>
-                            <div class="col">
-                                <button class="btn btn-primary btn-block"
-                                        v-on:click="applyToSession(current_session)">Yes, Please</button>
-                            </div>
-                        </template>
-                        <template v-else-if="isStatus(current_session, 'Invited')">
-                            <div class="col">
-                                <button class="btn btn-danger btn-block" v-on:click="acceptInvitation(current_session, false)">No, Thanks</button>
-                            </div>
-                            <div class="col">
-                                <button class="btn btn-primary btn-block"
-                                        v-on:click="acceptInvitation(current_session)">Accept Invitation!</button>
-                            </div>
-                        </template>
-                        <template v-else-if="isStatus(current_session, 'Scheduled')">
-                            <div class="col">
-                                <button class="btn btn-danger btn-block" v-on:click="acceptInvitation(current_session, false)">Cancel Attendance!</button>
-                            </div>
-                            <div class="col">
-                                <button class="btn btn-primary btn-block" v-on:click="getContract">Download Contract</button>
-                            </div>
-                        </template>
-                    </div>
-                </div>
-            </div>
-
+            <session :session="current_session"></session>
         </modal>
     </div>
 </template>
 
 <script>
+    // import { mapMutations } from 'vuex'
+    // import { mapGetters } from 'vuex'
+
     export default {
+        name: "Dashboard",
         props: {
             user: {},
             credentials: {},
@@ -212,7 +157,6 @@
         },
         computed: {
         },
-
         methods: {
             addCredential: function () {
                 console.log('adding credential')
@@ -253,36 +197,7 @@
             isStatus: function (session, status) {
                 return session.status == status
             },
-            acceptInvitation: function (session, accept) {
 
-                if (accept === undefined) accept = true;
-
-                this.closeModal()
-
-                if (accept) {
-                    console.log('accepting assignment ' + session.id)
-                    session.status = 'Scheduled'
-                }
-                else {
-                    console.log('declining invitation ' + session.id)
-                    session.status = 'Declined'
-                }
-            },
-            applyToSession: function (session, attend) {
-
-                if (attend === undefined) attend = true;
-
-                this.closeModal()
-
-                if (attend) {
-                    console.log('applying to session ' + session.id)
-                    session.status = 'Applied'
-                }
-                else {
-                    console.log('cancelling application to session ' + session.id)
-                    session.status = 'Open'
-                }
-            },
             viewSession(session) {
                 console.log('View Session')
                 this.current_session = session
@@ -290,11 +205,8 @@
             },
             closeModal() {
                 this.$modal.hide('session_form');
-            },
-            getContract() {
-                console.log('Download Contract')
-                this.closeModal();
             }
+
         }
 
     }
