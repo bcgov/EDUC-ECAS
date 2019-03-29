@@ -148,8 +148,8 @@
         },
         data() {
             return {
-                user_local: [],
-                sessions_local: [],
+                // user_local2: this.user,
+                sessions_local: this.sessions,
                 credentials_local: [],
                 new_credential: 0,
                 filter: '',
@@ -158,8 +158,6 @@
         },
         mounted() {
             console.log('Dashboard Mounted')
-            // this.user_local = this.user
-            this.sessions_local = this.sessions
             Event.listen('credential-added', this.pushCredential)
             Event.listen('profile-updated', this.updateProfile)
         },

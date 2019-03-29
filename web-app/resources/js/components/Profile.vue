@@ -12,7 +12,8 @@
                 <div class="form-group row">
                     <label for="preferred_first_name" class="col-4 col-form-label">preferred_first_name</label>
                     <div class="col">
-                        <input v-model="user_local.preferred_first_name" type="text" class="form-control"
+                        <input v-model="user_local.preferred_first_name"
+                               type="text" class="form-control"
                                name="preferred_first_name" id="preferred_first_name">
                     </div>
                 </div>
@@ -125,11 +126,10 @@
         },
         data() {
             return {
-                user_local: []
+                user_local: this.user
             }
         },
         mounted() {
-            this.user_local = this.user
         },
         methods: {
             closeModal() {
@@ -158,7 +158,7 @@
                     address_2: form.user_local.address_2,
                     city: form.user_local.city,
                     region: form.user_local.region,
-                    postal_code: form.user_local.postal_code,
+                    postal_code: form.user_local.postal_code
                 })
                     .then(function (response) {
                         Event.fire('profile-updated', response.data)
