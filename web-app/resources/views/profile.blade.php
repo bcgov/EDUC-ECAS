@@ -45,14 +45,14 @@
                     <label for="professional_certificate_bc" class="col-3 col-form-label">professional_certificate_bc</label>
                     <div class="col">
                         <input type="text" class="form-control" name="professional_certificate_bc"
-                               value="{{ $user['professional_certificate_bc'] }}" id="professional_certificate_bc">
+                               value="{{ isset($user['professional_certificate_bc']) ? $user['professional_certificate_bc'] : '' }}" id="professional_certificate_bc">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="professional_certificate_yk" class="col-3 col-form-label">professional_certificate_yk</label>
                     <div class="col">
                         <input type="text" class="form-control" name="professional_certificate_yk"
-                               value="{{ $user['professional_certificate_yk'] }}" id="professional_certificate_yk">
+                               value="{{ isset($user['professional_certificate_yk']) ? $user['professional_certificate_yk'] : '' }}" id="professional_certificate_yk">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -60,7 +60,7 @@
                            class="col-3 col-form-label">professional_certificate_other</label>
                     <div class="col">
                         <input type="text" class="form-control" name="professional_certificate_other"
-                               value="{{ $user['professional_certificate_other'] }}" id="professional_certificate_other">
+                               value="{{ isset($user['professional_certificate_other']) ? $user['professional_certificate_other'] : '' }}" id="professional_certificate_other">
                     </div>
                 </div>
                 <div class="form-group row">
