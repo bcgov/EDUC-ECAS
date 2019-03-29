@@ -7,7 +7,7 @@
     <title>Laravel</title>
 
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
+    <link href="asset('css/app.css')" rel="stylesheet">
 
     <script src="{{ asset('js/fontawesome.min.js') }}"></script>
 
