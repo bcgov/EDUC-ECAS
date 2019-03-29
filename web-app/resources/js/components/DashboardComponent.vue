@@ -7,7 +7,7 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-header">
-                                <a href="/Profile/edit" class="float-right btn btn-primary">Edit</a>
+                                <a @click="showProfile" class="float-right btn btn-primary">Edit</a>
                                 <h2>{{ user.preferred_first_name }} {{ user.last_name }}</h2>
                             </div>
                             <div class="card-body">
@@ -106,7 +106,8 @@
                                         <td>{{ session.location }}</td>
                                         <td>
                                             <template v-if="isStatus(session, 'Invited')">Accept Invitation!</template>
-                                            <template v-else-if="isStatus(session, 'Scheduled')">You're Going!</template>
+                                            <template v-else-if="isStatus(session, 'Scheduled')">You're Going!
+                                            </template>
                                             <template v-else-if="isStatus(session, 'Applied')">You've Applied</template>
                                             <template v-else-if="isStatus(session, 'Declined')">Declined</template>
                                             <template v-else-if="isStatus(session, 'Open')">Open</template>
@@ -123,6 +124,12 @@
         <modal name="session_form" height="auto">
             <session :session="current_session"></session>
         </modal>
+        <modal name="profile_form" height="auto" :scrollable="true">
+            <profile
+                    :user="user"
+                    :schools="schools"
+            ></profile>
+        </modal>
     </div>
 </template>
 
@@ -137,12 +144,11 @@
             credentials: {},
             sessions: {},
             subjects: {},
-            schools: {
-                type: Object
-            }
+            schools: {}
         },
         data() {
             return {
+                user_local: [],
                 sessions_local: [],
                 credentials_local: [],
                 new_credential: 0,
@@ -152,11 +158,12 @@
         },
         mounted() {
             console.log('Dashboard Mounted')
+            // this.user_local = this.user
             this.sessions_local = this.sessions
             Event.listen('credential-added', this.pushCredential)
+            Event.listen('profile-updated', this.updateProfile)
         },
-        computed: {
-        },
+        computed: {},
         methods: {
             addCredential: function () {
                 console.log('adding credential')
@@ -197,7 +204,6 @@
             isStatus: function (session, status) {
                 return session.status == status
             },
-
             viewSession(session) {
                 console.log('View Session')
                 this.current_session = session
@@ -205,8 +211,13 @@
             },
             closeModal() {
                 this.$modal.hide('session_form');
+            },
+            showProfile() {
+                this.$modal.show('profile_form');
+            },
+            updateProfile(user) {
+                this.user = user
             }
-
         }
 
     }

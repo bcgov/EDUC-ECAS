@@ -41,11 +41,26 @@ class DashboardController extends Controller
 
     public function storeCredential(Request $request)
     {
+        // TODO: A useless stub, we are just returning the selected credential
         foreach ($this->loadCredentials() as $credential) {
             if ($credential['id'] == $request['credential_id']) {
                 return json_encode($credential);
             }
         }
+    }
+
+    public function storeProfile(Request $request)
+    {
+        // Load the existing user record
+        $user = $this->loadUser();
+
+        foreach ($request->all() as $key => $value) {
+            if (isset($user[$key])) {
+                $user[$key] = $value;
+            }
+        }
+
+        return json_encode($user);
     }
 
     public function post(Request $request)

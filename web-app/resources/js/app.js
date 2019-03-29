@@ -31,6 +31,7 @@ Vue.use(VModal, { dynamic: true, injectModalsContainer: true })
 
 Vue.component('dashboard', require('./components/DashboardComponent.vue').default);
 Vue.component('session', require('./components/Session.vue').default);
+Vue.component('profile', require('./components/Profile.vue').default);
 
 // A global event handler, just a convenient wrapper for Vue's event system
 window.Event = new class {
@@ -47,23 +48,14 @@ window.Event = new class {
 
 const store = new Vuex.Store({
     state: {
-        accounts: {},
-        cash_outs: {},
-        roles: {},
-        daily: {},
-        staff_totals: {},
-        messages: {},
-        tip_jars: {}
+        my_variable: {}
     },
     mutations: {
-        'SET_ACCOUNTS' (state, accounts) {
-            state.accounts = accounts;
+        'SET_VARIABLE' (state, value) {
+            state.my_variable = value;
         }
     },
     getters: {
-        messages(state) {
-            return state.messages
-        },
         account: (state) => (id) => {
             return state.accounts.find(function(account) {
                 return account.id == id
