@@ -17,6 +17,7 @@
 </head>
 <body>
 <div class="flex-center position-ref full-height">
+
     @if (Route::has('login'))
         <div class="top-right links">
             @auth
@@ -31,6 +32,11 @@
         </div>
     @endif
 
+    <div class="row bg-primary">
+        <div class="col offset-1">
+            <img src="{{ asset('logo-banner.svg') }}" height="80px">
+        </div>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col">
