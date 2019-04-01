@@ -7,7 +7,7 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-header">
-                                <a @click="showProfile" class="float-right btn btn-primary">Edit</a>
+                                <button @click="showProfile" class="float-right btn btn-primary">Edit</button>
                                 <h2>{{ user.preferred_first_name }} {{ user.last_name }}</h2>
                             </div>
                             <div class="card-body">
@@ -98,21 +98,21 @@
                                         <th>Status</th>
                                     </tr>
                                     <tbody>
-                                    <tr @click="viewSession(session)"
-                                        v-for="session in filteredSessions(sessions_local)">
-                                        <td>{{ session.type }}</td>
-                                        <td>{{ session.activity }}</td>
-                                        <td>{{ session.dates }}</td>
-                                        <td>{{ session.location }}</td>
-                                        <td>
-                                            <template v-if="isStatus(session, 'Invited')">Accept Invitation!</template>
-                                            <template v-else-if="isStatus(session, 'Scheduled')">You're Going!
-                                            </template>
-                                            <template v-else-if="isStatus(session, 'Applied')">You've Applied</template>
-                                            <template v-else-if="isStatus(session, 'Declined')">Declined</template>
-                                            <template v-else-if="isStatus(session, 'Open')">Open</template>
-                                        </td>
-                                    </tr>
+                                        <tr @click="viewSession(session)"
+                                            v-for="session in filteredSessions(sessions_local)">
+                                            <td>{{ session.type }}</td>
+                                            <td>{{ session.activity }}</td>
+                                            <td>{{ session.dates }}</td>
+                                            <td>{{ session.location }}</td>
+                                            <td>
+                                                <template v-if="isStatus(session, 'Invited')">Accept Invitation!</template>
+                                                <template v-else-if="isStatus(session, 'Scheduled')">You're Going!
+                                                </template>
+                                                <template v-else-if="isStatus(session, 'Applied')">You've Applied</template>
+                                                <template v-else-if="isStatus(session, 'Declined')">Declined</template>
+                                                <template v-else-if="isStatus(session, 'Open')">Open</template>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
