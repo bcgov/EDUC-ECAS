@@ -134,8 +134,8 @@
 </template>
 
 <script>
-    // import { mapMutations } from 'vuex'
-    // import { mapGetters } from 'vuex'
+    import { mapMutations } from 'vuex'
+    import { mapGetters } from 'vuex'
 
     export default {
         name: "Dashboard",
@@ -158,10 +158,15 @@
         },
         mounted() {
             console.log('Dashboard Mounted')
+            this.$store.commit('SET_USER', this.user)
             Event.listen('credential-added', this.pushCredential)
             Event.listen('profile-updated', this.updateProfile)
         },
-        computed: {},
+        computed: {
+            ...mapGetters([
+                'getUser'
+                ])
+        },
         methods: {
             addCredential: function () {
                 console.log('adding credential')

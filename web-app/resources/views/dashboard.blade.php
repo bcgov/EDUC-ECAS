@@ -6,7 +6,6 @@
         :user="{{ $user }}"
         :credentials="{{ $credentials }}"
         :sessions="{{ $sessions }}"
-        :assignments="{{ $assignments }}"
         :subjects="{{ $subjects }}"
         :schools="{{ $schools }}"
         >

@@ -48,14 +48,17 @@ window.Event = new class {
 
 const store = new Vuex.Store({
     state: {
-        my_variable: {}
+        user: {}
     },
     mutations: {
-        'SET_VARIABLE' (state, value) {
-            state.my_variable = value;
+        'SET_USER' (state, user) {
+            state.user = user;
         }
     },
     getters: {
+        getUser: (state) => {
+            return state.user
+        },
         account: (state) => (id) => {
             return state.accounts.find(function(account) {
                 return account.id == id
