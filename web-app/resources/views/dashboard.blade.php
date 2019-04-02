@@ -8,6 +8,7 @@
         :sessions="{{ $sessions }}"
         :subjects="{{ $subjects }}"
         :schools="{{ $schools }}"
+        :regions="{{ $regions }}"
         >
     </dashboard>
     </div>

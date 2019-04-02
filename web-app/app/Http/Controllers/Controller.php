@@ -98,6 +98,14 @@ class Controller extends BaseController
         ];
     }
 
+    protected function loadRegions()
+    {
+        return [
+            'BC',
+            'YK'
+        ];
+    }
+
     protected function loadSessions()
     {
         return [

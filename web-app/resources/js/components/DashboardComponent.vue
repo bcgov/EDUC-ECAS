@@ -128,6 +128,7 @@
             <profile
                     :user="user"
                     :schools="schools"
+                    :regions="regions"
             ></profile>
         </modal>
     </div>
@@ -144,7 +145,8 @@
             credentials: {},
             sessions: {},
             subjects: {},
-            schools: {}
+            schools: {},
+            regions: {}
         },
         data() {
             return {

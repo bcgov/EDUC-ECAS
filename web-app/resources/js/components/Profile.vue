@@ -3,108 +3,95 @@
         <div class="card-header"><h1>Edit Profile</h1></div>
         <div class="card-body">
             <form>
-                <div class="form-group row">
-                    <label for="email" class="col-4 col-form-label">email</label>
-                    <div class="col">
-                        <input v-model="user_local.email" type="text" class="form-control" name="email" id="email">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="preferred_first_name" class="col-4 col-form-label">preferred_first_name</label>
-                    <div class="col">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="preferred_first_name">Preferred First</label>
                         <input v-model="user_local.preferred_first_name"
                                type="text" class="form-control"
                                name="preferred_first_name" id="preferred_first_name">
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="first_name" class="col-4 col-form-label">first_name</label>
-                    <div class="col">
+                    <div class="form-group col">
+                        <label for="first_name">First</label>
                         <input v-model="user_local.first_name" type="text" class="form-control" name="first_name"
                                id="first_name">
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="last_name" class="col-4 col-form-label">last_name</label>
-                    <div class="col">
+                    <div class="form-group col">
+                        <label for="last_name">Last</label>
                         <input v-model="user_local.last_name" type="text" class="form-control" name="last_name"
                                id="last_name">
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="social_insurance_no" class="col-4 col-form-label">social_insurance_no</label>
-                    <div class="col">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="email">email</label>
+                        <input v-model="user_local.email" type="text" class="form-control" name="email" id="email">
+                    </div>
+                    <div class="form-group col">
+                        <label for="social_insurance_no">S.I.N.</label>
                         <input v-model="user_local.social_insurance_no" type="text" class="form-control"
                                name="social_insurance_no" id="social_insurance_no">
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="professional_certificate_bc"
-                           class="col-4 col-form-label">professional_certificate_bc</label>
+                <div class="form-row">
                     <div class="col">
-                        <input type="text" class="form-control" name="professional_certificate_bc"
-                               v-model="user_local.professional_certificate_bc" id="professional_certificate_bc">
+                        <div class="form-group">
+                            <label for="address_1">Address</label>
+                            <input v-model="user_local.address_1" type="text" class="form-control" name="address_1"
+                                   id="address_1">
+                        </div>
+                        <div class="form-group">
+                            <label for="address_2">Line 2</label>
+                            <input v-model="user_local.address_2" type="text" class="form-control" name="address_2"
+                                   id="address_2">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input v-model="user_local.city" type="text" class="form-control" name="city" id="city">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label for="region">Province</label>
+                                <select class="form-control" name="region" id="region">
+                                    <option v-bind:key="region" v-for="region in regions">{{ region }}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col">
+                                <label for="postal_code">Postal Code</label>
+                                <input v-model="user_local.postal_code" type="text" class="form-control" name="postal_code"
+                                       id="postal_code">
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="professional_certificate_yk"
-                           class="col-4 col-form-label">professional_certificate_yk</label>
-                    <div class="col">
-                        <input type="text" class="form-control" name="professional_certificate_yk"
-                               v-model="user_local.professional_certificate_yk" id="professional_certificate_yk">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="professional_certificate_other"
-                           class="col-4 col-form-label">professional_certificate_other</label>
-                    <div class="col">
-                        <input type="text" class="form-control" name="professional_certificate_other"
-                               v-model="user_local.professional_certificate_other" id="professional_certificate_other">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="school" class="col-4 col-form-label">current_school</label>
-                    <div class="col">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="school">Current School</label>
                         <select class="form-control" name="school" id="school">
                             <option v-bind:key="school.id" v-for="school in schools">{{ school }}</option>
                         </select>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="address_1" class="col-4 col-form-label">address_1</label>
-                    <div class="col">
-                        <input v-model="user_local.address_1" type="text" class="form-control" name="address_1"
-                               id="address_1">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="professional_certificate_bc">BC Certificate</label>
+                        <input type="text" class="form-control" name="professional_certificate_bc"
+                               v-model="user_local.professional_certificate_bc" id="professional_certificate_bc">
+                    </div>
+                    <div class="form-group col">
+                        <label for="professional_certificate_yk">YK Certificate</label>
+                        <input type="text" class="form-control" name="professional_certificate_yk"
+                               v-model="user_local.professional_certificate_yk" id="professional_certificate_yk">
+                    </div>
+                    <div class="form-group col">
+                        <label for="professional_certificate_other">Other</label>
+                        <input type="text" class="form-control" name="professional_certificate_other"
+                               v-model="user_local.professional_certificate_other" id="professional_certificate_other">
                     </div>
                 </div>
+
                 <div class="form-group row">
-                    <label for="address_2" class="col-4 col-form-label">address_2</label>
-                    <div class="col">
-                        <input v-model="user_local.address_2" type="text" class="form-control" name="address_2"
-                               id="address_2">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="city" class="col-4 col-form-label">city</label>
-                    <div class="col">
-                        <input v-model="user_local.city" type="text" class="form-control" name="city" id="city">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="region" class="col-4 col-form-label">region</label>
-                    <div class="col">
-                        <input v-model="user_local.region" type="text" class="form-control" name="region" id="region">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="postal_code" class="col-4 col-form-label">postal_code</label>
-                    <div class="col">
-                        <input v-model="user_local.postal_code" type="text" class="form-control" name="postal_code"
-                               id="postal_code">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-4"></div>
                     <div class="col">
                         <button class="btn btn-danger btn-block" v-on:click.prevent="cancelProfile">Cancel</button>
                     </div>
@@ -122,7 +109,8 @@
         name: "Profile",
         props: {
             user: {},
-            schools: {}
+            schools: {},
+            regions: {}
         },
         data() {
             return {

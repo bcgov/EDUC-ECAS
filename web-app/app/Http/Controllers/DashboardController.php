@@ -36,6 +36,7 @@ class DashboardController extends Controller
             'assignments' => json_encode($assignments),
             'subjects'    => json_encode($subjects),
             'schools'     => json_encode($schools),
+            'regions'     => json_encode($this->loadRegions()),
         ]);
     }
 
