@@ -12,14 +12,5 @@ services:
       - ./web-app:/web-app
     networks:
       - webnet
-#  web:
-#    build:
-#      context: ./
-#      dockerfile: web.dockerfile
-#    working_dir: /public
-#    volumes:
-#      - ./web-app:/web-app
-#    ports:
-#      - 8080:8080
 networks:
   webnet:
