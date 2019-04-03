@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: app.dockerfile
+    working_dir: /web-app/public
+    ports:
+      - 80:80
+    volumes:
+      - ./web-app:/web-app
+    networks:
+      - webnet
+networks:
+  webnet:

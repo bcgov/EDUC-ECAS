@@ -1,10 +1,5 @@
-Options +FollowSymLinks
-RewriteEngine On
-
-RewriteBase /public
-
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ index.php [L]
-
-FallbackResource /public/index.php
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^localhost$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^localhost$
+RewriteCond %{REQUEST_URI} !public/
+RewriteRule (.*) /public/$1 [L]

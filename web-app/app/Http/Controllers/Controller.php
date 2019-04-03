@@ -124,6 +124,14 @@ class Controller extends BaseController
                 'dates'    => 'July 3-4',
                 'location' => 'Victoria',
                 'status'   => 'Open'
+            ],
+            [
+                'id'       => '4',
+                'activity' => 'Marking',
+                'type'     => 'NUM 10',
+                'dates'    => 'July 10-12',
+                'location' => 'Kelowna',
+                'status'   => 'Open'
             ]
         ];
     }
