@@ -37349,7 +37349,7 @@ var render = function() {
               _c("div", { staticClass: "card" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c(
-                    "a",
+                    "button",
                     {
                       staticClass: "float-right btn btn-primary",
                       on: { click: _vm.showProfile }
@@ -37662,7 +37662,7 @@ var render = function() {
                                   : _vm.isStatus(session, "Scheduled")
                                   ? [
                                       _vm._v(
-                                        "You're Going!\n                                        "
+                                        "You're Going!\n                                            "
                                       )
                                     ]
                                   : _vm.isStatus(session, "Applied")
