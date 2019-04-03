@@ -1,5 +1,18 @@
 FROM php:7.1-apache
 
+RUN apt-get update  \
+    && apt-get install -y \
+    libmcrypt-dev \
+    curl \
+    git \
+    zip \
+    unzip \
+    mysql-client libmagickwand-dev --no-install-recommends \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick \
+    && docker-php-ext-install mcrypt pdo_mysql \
+    && docker-php-ext-install zip
+
 # Set the documet root
 ENV APACHE_DOCUMENT_ROOT /web-app/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
