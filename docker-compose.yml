@@ -8,8 +8,8 @@ services:
     working_dir: /web-app/public
     ports:
       - 80:80
-    volumes:
-      - ./web-app:/web-app
+#    volumes:
+#      - ./web-app:/web-app
     networks:
       - webnet
 networks:
