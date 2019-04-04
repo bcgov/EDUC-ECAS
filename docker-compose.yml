@@ -12,5 +12,9 @@ services:
 #      - ./web-app:/web-app
     networks:
       - webnet
+    environment:
+      - APP_KEY=base64:sf+TeOK14bHa/pqupMwHbV5MUBFeZF/OPFh+LU++0w8=
+      - APP_DEBUG=true
+      - APP_URL=http://localhost
 networks:
   webnet:
