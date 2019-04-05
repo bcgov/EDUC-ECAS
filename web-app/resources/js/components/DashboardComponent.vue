@@ -8,20 +8,20 @@
                         <div class="card">
                             <div class="card-header">
                                 <button @click="showProfile" class="float-right btn btn-primary">Edit</button>
-                                <h2>{{ user.preferred_first_name }} {{ user.last_name }}</h2>
+                                <h2>{{ getUser.preferred_first_name }} {{ getUser.last_name }}</h2>
                             </div>
                             <div class="card-body">
-                                <p>{{ user.email }}<br/>
-                                    {{ user.address_1 }}<br/>
-                                    {{ user.city }}, {{ user.region }}</p>
-                                <p v-if="typeof user.professional_certificate_bc !== 'undefined' && user.professional_certificate_bc.length > 1">
-                                    <strong>BC Professional Certificate:</strong> {{ user.professional_certificate_bc }}
+                                <p>{{ getUser.email }}<br/>
+                                    {{ getUser.address_1 }}<br/>
+                                    {{ getUser.city }}, {{ getUser.region }}</p>
+                                <p v-if="typeof getUser.professional_certificate_bc !== 'undefined' && getUser.professional_certificate_bc.length > 1">
+                                    <strong>BC Professional Certificate:</strong> {{ getUser.professional_certificate_bc }}
                                 </p>
-                                <p v-if="typeof user.professional_certificate_yk !== 'undefined' && user.professional_certificate_yk.length > 1">
-                                    <strong>Yukon Professional Certificate:</strong> {{ user.professional_certificate_yk
+                                <p v-if="typeof getUser.professional_certificate_yk !== 'undefined' && getUser.professional_certificate_yk.length > 1">
+                                    <strong>Yukon Professional Certificate:</strong> {{ getUser.professional_certificate_yk
                                     }}</p>
-                                <p v-if="typeof user.professional_certificate_other !== 'undefined' && user.professional_certificate_other.length > 1">
-                                    <strong>Other Certificate:</strong> {{ user.professional_certificate_other }}</p>
+                                <p v-if="typeof getUser.professional_certificate_other !== 'undefined' && getUser.professional_certificate_other.length > 1">
+                                    <strong>Other Certificate:</strong> {{ getUser.professional_certificate_other }}</p>
                             </div>
                         </div>
                     </div>
@@ -150,7 +150,6 @@
         },
         data() {
             return {
-                // user_local2: this.user,
                 sessions_local: this.sessions,
                 credentials_local: [],
                 new_credential: 0,
@@ -221,7 +220,7 @@
                 this.$modal.show('profile_form');
             },
             updateProfile(user) {
-                this.user = user
+                this.$store.commit('SET_USER', user)
             }
         }
 

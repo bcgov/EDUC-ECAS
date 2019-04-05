@@ -114,7 +114,7 @@
         },
         data() {
             return {
-                user_local: this.user
+                user_local: {...this.user}
             }
         },
         mounted() {
