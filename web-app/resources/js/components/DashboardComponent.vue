@@ -31,7 +31,7 @@
                                 <h2>Credentials</h2>
                             </div>
                             <div class="card-body">
-                                <div class="row" v-for="credential in credentials_local">
+                                <div class="row" v-for="credential in credentials_applied">
                                     <div class="col-1"><i class="fas fa-igloo"></i></div>
                                     <div class="col">{{ credential.name }}</div>
                                 </div>
@@ -42,8 +42,8 @@
                                     <div class="col">
                                         <select v-model="new_credential">
                                             <option value="0">Select New Credential</option>
-                                            <option v-for="credential in credentials" :value="credential.id">{{
-                                                credential.name }}
+                                            <option v-for="credential in credentials_available" :value="credential.id">
+                                                {{ credential.name }}
                                             </option>
                                         </select>
                                     </div>
@@ -151,7 +151,8 @@
         data() {
             return {
                 sessions_local: this.sessions,
-                credentials_local: [],
+                credentials_applied: [],
+                credentials_available: [...this.credentials],
                 new_credential: 0,
                 filter: '',
                 current_session: {}
@@ -193,7 +194,14 @@
             },
             pushCredential(credential) {
                 console.log('pushing credential')
-                this.credentials_local.unshift(credential)
+
+                // Remove the credential from the available list
+                this.credentials_available.splice(this.credentials_available.findIndex(elm => elm.id === credential.id), 1)
+
+                // Add to the applied list
+                this.credentials_applied.unshift(credential)
+
+                this.new_credential = 0;
             },
             filteredSessions(sessions) {
                 var dashboard = this

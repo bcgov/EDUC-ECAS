@@ -18,22 +18,10 @@ class DashboardController extends Controller
 
         $sessions = $this->loadSessions();
 
-        $assignments = [
-            [
-                'id' => '1',
-                'status' => 'Scheduled'
-            ],
-            [
-                'id' => '22',
-                'status' => 'Assigned'
-            ],
-        ];
-
         return view('dashboard', [
             'user'        => json_encode($user),
             'credentials' => json_encode($credentials),
             'sessions'    => json_encode($sessions),
-            'assignments' => json_encode($assignments),
             'subjects'    => json_encode($subjects),
             'schools'     => json_encode($schools),
             'regions'     => json_encode($this->loadRegions()),
@@ -55,6 +43,7 @@ class DashboardController extends Controller
         // Load the existing user record
         $user = $this->loadUser();
 
+        // TODO: Another useless stub, update the dummy user and return
         foreach ($request->all() as $key => $value) {
             if (isset($user[$key])) {
                 $user[$key] = $value;
