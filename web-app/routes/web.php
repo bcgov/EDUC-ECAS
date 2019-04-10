@@ -11,10 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/', 'DashboardController@login');
+Route::post('/login', 'DashboardController@postLogin');
+Route::get('/Profile', 'DashboardController@profile');
 Route::get('/Dashboard', 'DashboardController@index');
 Route::post('/Dashboard/credential', 'DashboardController@storeCredential');
 Route::post('/Dashboard/profile', 'DashboardController@storeProfile');

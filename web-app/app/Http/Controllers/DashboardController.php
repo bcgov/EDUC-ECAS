@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $user = $this->loadUser();
+        if ($this->userLoggedIn()) {
+            $user = $this->loadUser();
+        }
+        else {
+            $user = [];
+        }
 
         $subjects = $this->loadSubjects();
 
@@ -28,6 +34,24 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function login()
+    {
+        return view('login');
+    }
+
+    public function postLogin(Request $request)
+    {
+        if ($request['email'] == 'new@example.com') {
+            Session::forget('user_id');
+        }
+        else {
+            $user = $this->loadUser();
+            Session::put('user_id', $user['id']);
+        }
+
+        return redirect('/Dashboard');
+    }
+
     public function storeCredential(Request $request)
     {
         // TODO: A useless stub, we are just returning the selected credential
@@ -40,14 +64,17 @@ class DashboardController extends Controller
 
     public function storeProfile(Request $request)
     {
-        // Load the existing user record
-        $user = $this->loadUser();
+        $this->validate($request, [
+            'email' => 'required|email'
+        ]);
+
+        if ($this->userLoggedIn()) {
+            $user = $this->loadUser();
+        }
 
         // TODO: Another useless stub, update the dummy user and return
         foreach ($request->all() as $key => $value) {
-            if (isset($user[$key])) {
-                $user[$key] = $value;
-            }
+            $user[$key] = $value;
         }
 
         return json_encode($user);
@@ -56,5 +83,13 @@ class DashboardController extends Controller
     public function post(Request $request)
     {
         return $request->all();
+    }
+
+    /**
+     * @return bool
+     */
+    private function userLoggedIn(): bool
+    {
+        return Session::has('user_id');
     }
 }

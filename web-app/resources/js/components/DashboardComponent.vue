@@ -135,7 +135,6 @@
 </template>
 
 <script>
-    import { mapMutations } from 'vuex'
     import { mapGetters } from 'vuex'
 
     export default {
@@ -163,6 +162,10 @@
             this.$store.commit('SET_USER', this.user)
             Event.listen('credential-added', this.pushCredential)
             Event.listen('profile-updated', this.updateProfile)
+
+            if (this.getUser.id === undefined) {
+                this.showProfile()
+            }
         },
         computed: {
             ...mapGetters([

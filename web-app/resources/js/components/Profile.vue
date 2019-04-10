@@ -24,7 +24,15 @@
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="email">email</label>
-                        <input v-model="user_local.email" type="text" class="form-control" name="email" id="email">
+                        <input v-model="user_local.email"
+                               type="email"
+                               class="form-control"
+                               name="email"
+                               id="email"
+                                required>
+                        <form-error v-if="errors.email" :errors="errors">
+                            {{ errors.email[0] }}
+                        </form-error>
                     </div>
                     <div class="form-group col">
                         <label for="social_insurance_no">S.I.N.</label>
@@ -54,7 +62,7 @@
                             <div class="form-group col">
                                 <label for="region">Province</label>
                                 <select class="form-control" name="region" id="region">
-                                    <option v-bind:key="region" v-for="region in regions">{{ region }}</option>
+                                    <option v-bind:key="region.id" v-for="region in regions">{{ region.name }}</option>
                                 </select>
                             </div>
                             <div class="form-group col">
@@ -69,7 +77,7 @@
                     <div class="form-group col">
                         <label for="school">Current School</label>
                         <select class="form-control" name="school" id="school">
-                            <option v-bind:key="school.id" v-for="school in schools">{{ school }}</option>
+                            <option v-bind:key="school.id" v-for="school in schools">{{ school.name }}</option>
                         </select>
                     </div>
                 </div>
@@ -96,6 +104,8 @@
                         <button class="btn btn-danger btn-block" v-on:click.prevent="cancelProfile">Cancel</button>
                     </div>
                     <div class="col">
+                        <!--<input type="submit" class="btn btn-primary btn-block"value="Save"-->
+                               <!--v-on:click.prevent="saveProfile">-->
                         <button class="btn btn-primary btn-block" v-on:click.prevent="saveProfile">Save</button>
                     </div>
                 </div>
@@ -105,6 +115,8 @@
 </template>
 
 <script>
+    import FormError from './FormError.vue';
+
     export default {
         name: "Profile",
         props: {
@@ -112,9 +124,13 @@
             schools: {},
             regions: {}
         },
+        components: {
+            FormError,
+        },
         data() {
             return {
-                user_local: {...this.user}
+                user_local: {...this.user},
+                errors: {}
             }
         },
         mounted() {
@@ -127,7 +143,7 @@
                 this.closeModal()
             },
             saveProfile() {
-                this.closeModal()
+
                 console.log('saving profile')
 
                 var form = this
@@ -149,11 +165,18 @@
                     postal_code: form.user_local.postal_code
                 })
                     .then(function (response) {
+                        form.closeModal()
                         Event.fire('profile-updated', response.data)
                         console.log('Success!')
                     })
                     .catch(function (error) {
                         console.log('Failure!')
+                        // console.log(error.response)
+                        // console.log(error.response.data)
+                        if (error.response.status == 422){
+                            form.errors = error.response.data.errors;
+                        }
+                        // form.errors = response.data.errors
                     });
             }
         }
