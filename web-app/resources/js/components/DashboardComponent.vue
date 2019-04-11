@@ -126,9 +126,11 @@
         </modal>
         <modal name="profile_form" height="auto" :scrollable="true">
             <profile
-                    :user="user"
+                    :user="getUser"
                     :schools="schools"
                     :regions="regions"
+                    :districts="districts"
+                    :payments="payments"
             ></profile>
         </modal>
     </div>
@@ -145,7 +147,9 @@
             sessions: {},
             subjects: {},
             schools: {},
-            regions: {}
+            regions: {},
+            districts: {},
+            payments: {}
         },
         data() {
             return {

@@ -24,12 +24,24 @@ class DashboardController extends Controller
 
         $sessions = $this->loadSessions();
 
+        $districts = [
+            ['id' => 1, 'name' => 'District Number 1'],
+            ['id' => 2, 'name' => 'Another District']
+        ];
+
+        $payments = [
+            ['id' => 1, 'name' => 'Electronic Transfer'],
+            ['id' => 2, 'name' => 'Cheque']
+        ];
+
         return view('dashboard', [
             'user'        => json_encode($user),
             'credentials' => json_encode($credentials),
             'sessions'    => json_encode($sessions),
             'subjects'    => json_encode($subjects),
             'schools'     => json_encode($schools),
+            'payments'    => json_encode($payments),
+            'districts'   => json_encode($districts),
             'regions'     => json_encode($this->loadRegions()),
         ]);
     }
@@ -65,8 +77,27 @@ class DashboardController extends Controller
     public function storeProfile(Request $request)
     {
         $this->validate($request, [
-            'email' => 'required|email'
-        ]);
+            'first_name'  => 'required',
+            'last_name'   => 'required',
+            'email'       => 'required|email',
+            'phone'       => 'required',
+            'address_1'   => 'required',
+            'city'        => 'required',
+            'region'      => 'required',
+            'postal_code' => 'required'
+
+        ],
+            [
+                'first_name.required'  => 'Required',
+                'last_name.required'   => 'Required',
+                'email.required'       => 'Required',
+                'email.email'          => 'Invalid email',
+                'phone.required'       => 'Required',
+                'address_1.required'   => 'Required',
+                'city.required'        => 'Required',
+                'region.required'      => 'Required',
+                'postal_code.required' => 'Required'
+            ]);
 
         if ($this->userLoggedIn()) {
             $user = $this->loadUser();

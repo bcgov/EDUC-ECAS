@@ -1,11 +1,11 @@
 <template>
-    <span class="help-block">
-        <slot></slot>
+    <span class="text-danger" v-if="errors[field]">
+        {{ errors[field][0] }}
     </span>
 </template>
 
 <script>
     export default {
-        props: ['errors'],
+        props: ['errors', 'field'],
     }
 </script>

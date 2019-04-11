@@ -14,11 +14,13 @@
                         <label for="first_name">First</label>
                         <input v-model="user_local.first_name" type="text" class="form-control" name="first_name"
                                id="first_name">
+                        <form-error :errors="errors" field="first_name"></form-error>
                     </div>
                     <div class="form-group col">
                         <label for="last_name">Last</label>
                         <input v-model="user_local.last_name" type="text" class="form-control" name="last_name"
                                id="last_name">
+                        <form-error :errors="errors" field="last_name"></form-error>
                     </div>
                 </div>
                 <div class="form-row">
@@ -30,9 +32,13 @@
                                name="email"
                                id="email"
                                 required>
-                        <form-error v-if="errors.email" :errors="errors">
-                            {{ errors.email[0] }}
-                        </form-error>
+                        <form-error :errors="errors" field="email"></form-error>
+                    </div>
+                    <div class="form-group col">
+                        <label for="phone">Phone</label>
+                        <input v-model="user_local.phone" type="text" class="form-control"
+                               name="phone" id="phone">
+                        <form-error :errors="errors" field="phone"></form-error>
                     </div>
                     <div class="form-group col">
                         <label for="social_insurance_no">S.I.N.</label>
@@ -46,6 +52,7 @@
                             <label for="address_1">Address</label>
                             <input v-model="user_local.address_1" type="text" class="form-control" name="address_1"
                                    id="address_1">
+                            <form-error :errors="errors" field="address_1"></form-error>
                         </div>
                         <div class="form-group">
                             <label for="address_2">Line 2</label>
@@ -57,6 +64,7 @@
                         <div class="form-group">
                             <label for="city">City</label>
                             <input v-model="user_local.city" type="text" class="form-control" name="city" id="city">
+                            <form-error :errors="errors" field="city"></form-error>
                         </div>
                         <div class="form-row">
                             <div class="form-group col">
@@ -69,14 +77,23 @@
                                 <label for="postal_code">Postal Code</label>
                                 <input v-model="user_local.postal_code" type="text" class="form-control" name="postal_code"
                                        id="postal_code">
+                                <form-error :errors="errors" field="postal_code"></form-error>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col">
+                        <label for="district">Current District</label>
+                        <select class="form-control" name="district" id="district">
+                            <option value="0">Select...</option>
+                            <option v-bind:key="district.id" v-for="district in districts">{{ district.name }}</option>
+                        </select>
+                    </div>
+                    <div class="form-group col">
                         <label for="school">Current School</label>
                         <select class="form-control" name="school" id="school">
+                            <option value="0">Select...</option>
                             <option v-bind:key="school.id" v-for="school in schools">{{ school.name }}</option>
                         </select>
                     </div>
@@ -98,14 +115,19 @@
                                v-model="user_local.professional_certificate_other" id="professional_certificate_other">
                     </div>
                 </div>
-
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="payment">Please pay me by...</label>
+                        <select class="form-control" name="payment" id="payment">
+                            <option v-bind:key="payment.id" v-for="payment in payments">{{ payment.name }}</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group row">
                     <div class="col">
                         <button class="btn btn-danger btn-block" v-on:click.prevent="cancelProfile">Cancel</button>
                     </div>
                     <div class="col">
-                        <!--<input type="submit" class="btn btn-primary btn-block"value="Save"-->
-                               <!--v-on:click.prevent="saveProfile">-->
                         <button class="btn btn-primary btn-block" v-on:click.prevent="saveProfile">Save</button>
                     </div>
                 </div>
@@ -122,7 +144,9 @@
         props: {
             user: {},
             schools: {},
-            regions: {}
+            regions: {},
+            districts: {},
+            payments: {}
         },
         components: {
             FormError,
@@ -165,18 +189,15 @@
                     postal_code: form.user_local.postal_code
                 })
                     .then(function (response) {
+                        console.log('Success!')
                         form.closeModal()
                         Event.fire('profile-updated', response.data)
-                        console.log('Success!')
                     })
                     .catch(function (error) {
                         console.log('Failure!')
-                        // console.log(error.response)
-                        // console.log(error.response.data)
                         if (error.response.status == 422){
                             form.errors = error.response.data.errors;
                         }
-                        // form.errors = response.data.errors
                     });
             }
         }
