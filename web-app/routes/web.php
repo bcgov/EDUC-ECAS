@@ -11,6 +11,14 @@
 |
 */
 
+// BC Government standard Footer
+Route::get('/disclaimer', 'PageController@disclaimer');
+Route::get('/privacy', 'PageController@privacy');
+Route::get('/accessibility', 'PageController@accessibility');
+Route::get('/copyright', 'PageController@copyright');
+Route::get('/contact', 'PageController@contact');
+
+// App Specific Routes
 Route::get('/', 'DashboardController@login');
 Route::post('/login', 'DashboardController@postLogin');
 Route::get('/Profile', 'DashboardController@profile');

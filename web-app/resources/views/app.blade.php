@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-100">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,36 +15,48 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
 </head>
-<body>
-<div class="flex-center position-ref full-height">
+<body class="d-flex flex-column h-100">
+    <main class="flex-shrink-0">
 
-    @if (Route::has('login'))
-        <div class="top-right links">
-            @auth
-                <a href="{{ url('/home') }}">Home</a>
-            @else
-                <a href="{{ route('login') }}">Login</a>
+        @if (Route::has('login'))
+            <div class="top-right links">
+                @auth
+                    <a href="{{ url('/home') }}">Home</a>
+                @else
+                    <a href="{{ route('login') }}">Login</a>
 
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}">Register</a>
-                @endif
-            @endauth
-        </div>
-    @endif
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}">Register</a>
+                    @endif
+                @endauth
+            </div>
+        @endif
 
-    <div class="row bg-primary">
-        <div class="col offset-1">
-            <img src="{{ asset('logo-banner.svg') }}" height="80px">
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                @yield('content')
+        <div class="row bg-primary">
+            <div class="col offset-1">
+                <img src="{{ asset('logo-banner.svg') }}" height="80px">
             </div>
         </div>
-    </div>
-</div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    @yield('content')
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="footer mt-auto">
+        <div class="container">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/disclaimer">Disclaimer</a></li>
+                <li><a href="/privacy">Privacy</a></li>
+                <li><a href="/accessibility">Accessibility</a></li>
+                <li><a href="/copyright">Copyright</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+            </ul>
+        </div>
+    </footer>
 
 <script src="{{ asset('js/app.js') }}"></script>
 
