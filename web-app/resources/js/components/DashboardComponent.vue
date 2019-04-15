@@ -8,20 +8,20 @@
                         <div class="card">
                             <div class="card-header">
                                 <button @click="showProfile" class="float-right btn btn-primary">Edit</button>
-                                <h2>{{ user.preferred_first_name }} {{ user.last_name }}</h2>
+                                <h2>{{ getUser.preferred_first_name }} {{ getUser.last_name }}</h2>
                             </div>
                             <div class="card-body">
-                                <p>{{ user.email }}<br/>
-                                    {{ user.address_1 }}<br/>
-                                    {{ user.city }}, {{ user.region }}</p>
-                                <p v-if="typeof user.professional_certificate_bc !== 'undefined' && user.professional_certificate_bc.length > 1">
-                                    <strong>BC Professional Certificate:</strong> {{ user.professional_certificate_bc }}
+                                <p>{{ getUser.email }}<br/>
+                                    {{ getUser.address_1 }}<br/>
+                                    {{ getUser.city }}, {{ getUser.region }}</p>
+                                <p v-if="typeof getUser.professional_certificate_bc !== 'undefined' && getUser.professional_certificate_bc.length > 1">
+                                    <strong>BC Professional Certificate:</strong> {{ getUser.professional_certificate_bc }}
                                 </p>
-                                <p v-if="typeof user.professional_certificate_yk !== 'undefined' && user.professional_certificate_yk.length > 1">
-                                    <strong>Yukon Professional Certificate:</strong> {{ user.professional_certificate_yk
+                                <p v-if="typeof getUser.professional_certificate_yk !== 'undefined' && getUser.professional_certificate_yk.length > 1">
+                                    <strong>Yukon Professional Certificate:</strong> {{ getUser.professional_certificate_yk
                                     }}</p>
-                                <p v-if="typeof user.professional_certificate_other !== 'undefined' && user.professional_certificate_other.length > 1">
-                                    <strong>Other Certificate:</strong> {{ user.professional_certificate_other }}</p>
+                                <p v-if="typeof getUser.professional_certificate_other !== 'undefined' && getUser.professional_certificate_other.length > 1">
+                                    <strong>Other Certificate:</strong> {{ getUser.professional_certificate_other }}</p>
                             </div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                                 <h2>Credentials</h2>
                             </div>
                             <div class="card-body">
-                                <div class="row" v-for="credential in credentials_local">
+                                <div class="row" v-for="credential in credentials_applied">
                                     <div class="col-1"><i class="fas fa-igloo"></i></div>
                                     <div class="col">{{ credential.name }}</div>
                                 </div>
@@ -42,8 +42,8 @@
                                     <div class="col">
                                         <select v-model="new_credential">
                                             <option value="0">Select New Credential</option>
-                                            <option v-for="credential in credentials" :value="credential.id">{{
-                                                credential.name }}
+                                            <option v-for="credential in credentials_available" :value="credential.id">
+                                                {{ credential.name }}
                                             </option>
                                         </select>
                                     </div>
@@ -126,16 +126,19 @@
         </modal>
         <modal name="profile_form" height="auto" :scrollable="true">
             <profile
-                    :user="user"
+                    :user="getUser"
                     :schools="schools"
+                    :regions="regions"
+                    :districts="districts"
+                    :payments="payments"
+                    dusk="profile-component"
             ></profile>
         </modal>
     </div>
 </template>
 
 <script>
-    // import { mapMutations } from 'vuex'
-    // import { mapGetters } from 'vuex'
+    import { mapGetters } from 'vuex'
 
     export default {
         name: "Dashboard",
@@ -144,13 +147,16 @@
             credentials: {},
             sessions: {},
             subjects: {},
-            schools: {}
+            schools: {},
+            regions: {},
+            districts: {},
+            payments: {}
         },
         data() {
             return {
-                // user_local2: this.user,
                 sessions_local: this.sessions,
-                credentials_local: [],
+                credentials_applied: [],
+                credentials_available: [...this.credentials],
                 new_credential: 0,
                 filter: '',
                 current_session: {}
@@ -158,10 +164,19 @@
         },
         mounted() {
             console.log('Dashboard Mounted')
+            this.$store.commit('SET_USER', this.user)
             Event.listen('credential-added', this.pushCredential)
             Event.listen('profile-updated', this.updateProfile)
+
+            if (this.getUser.id === undefined) {
+                this.showProfile()
+            }
         },
-        computed: {},
+        computed: {
+            ...mapGetters([
+                'getUser'
+                ])
+        },
         methods: {
             addCredential: function () {
                 console.log('adding credential')
@@ -187,7 +202,14 @@
             },
             pushCredential(credential) {
                 console.log('pushing credential')
-                this.credentials_local.unshift(credential)
+
+                // Remove the credential from the available list
+                this.credentials_available.splice(this.credentials_available.findIndex(elm => elm.id === credential.id), 1)
+
+                // Add to the applied list
+                this.credentials_applied.unshift(credential)
+
+                this.new_credential = 0;
             },
             filteredSessions(sessions) {
                 var dashboard = this
@@ -214,7 +236,7 @@
                 this.$modal.show('profile_form');
             },
             updateProfile(user) {
-                this.user = user
+                this.$store.commit('SET_USER', user)
             }
         }
 

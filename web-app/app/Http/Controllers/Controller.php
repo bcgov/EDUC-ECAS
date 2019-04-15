@@ -20,63 +20,65 @@ class Controller extends BaseController
             'preferred_first_name'        => 'Sal',
             'first_name'                  => 'Sally',
             'last_name'                   => 'Sherwood',
+            'phone'                       => '2508123353',
             'social_insurance_no'         => '123456789',
             'professional_certificate_bc' => 'bd-aejrkqwehr',
             //            'professional_certificate_yk'    => 'yk-039290',
             //            'professional_certificate_other' => '',
-            'current_school'              => 'South Park Elementary',
+            'school'                      => '1',
+            'district'                    => '1',
             'address_1'                   => '456 Yellow Brick Rd.',
             'address_2'                   => '',
             'city'                        => 'Oz',
             'region'                      => 'BC',
-            'postal_code'                 => 'T0B4T5'
+            'postal_code'                 => 'T0B4T5',
         ];
     }
 
     protected function loadSubjects()
     {
         return [
-            '1'  => 'Learning Assistance Teacher',
-            '2'  => 'Learning Specialist Teacher',
-            '3'  => 'Learning Support Teacher',
-            '4'  => 'Learning Support Teacher',
-            '5'  => 'Special Education Teacher',
-            '6'  => 'Intervention Teacher',
-            '7'  => 'Inclusion Support Teacher',
-            '8'  => 'Resource Teacher',
-            '9'  => 'Teacher-Librarian',
-            '10' => 'Counsellor',
-            '11' => 'Homeroom Teacher',
-            '12' => 'Academic Support Teacher',
-            '13' => 'Language and Cultural Teacher',
-            '14' => 'Language Coordinator',
-            '15' => 'Language Teacher',
-            '16' => 'Adult Education Teacher',
-            '17' => 'Vice-Principal',
-            '18' => 'Principal',
-            '19' => 'Teacher on Call',
-            '20' => 'French Immersion Teacher',
-            '21' => 'Literacy Teacher',
-            '22' => 'Numeracy Teacher',
-            '23' => 'Middle School Generalist',
-            '24' => 'Primary Teacher',
-            '25' => 'Intermediate Teacher',
-            '26' => 'Elementary Teacher',
-            '27' => 'Junior Secondary Teacher',
-            '28' => 'Senior Secondary Teacher',
-            '29' => 'Secondary Teacher',
-            '30' => 'ELL Teacher',
+            ['id' => '1', 'name' => 'Learning Assistance Teacher'],
+            ['id' => '2', 'name' => 'Learning Specialist Teacher'],
+            ['id' => '3', 'name' => 'Learning Support Teacher'],
+            ['id' => '4', 'name' => 'Learning Support Teacher'],
+            ['id' => '5', 'name' => 'Special Education Teacher'],
+            ['id' => '6', 'name' => 'Intervention Teacher'],
+            ['id' => '7', 'name' => 'Inclusion Support Teacher'],
+            ['id' => '8', 'name' => 'Resource Teacher'],
+            ['id' => '9', 'name' => 'Teacher-Librarian'],
+            ['id' => '10', 'name' => 'Counsellor'],
+            ['id' => '11', 'name' => 'Homeroom Teacher'],
+            ['id' => '12', 'name' => 'Academic Support Teacher'],
+            ['id' => '13', 'name' => 'Language and Cultural Teacher'],
+            ['id' => '14', 'name' => 'Language Coordinator'],
+            ['id' => '15', 'name' => 'Language Teacher'],
+            ['id' => '16', 'name' => 'Adult Education Teacher'],
+            ['id' => '17', 'name' => 'Vice-Principal'],
+            ['id' => '18', 'name' => 'Principal'],
+            ['id' => '19', 'name' => 'Teacher on Call'],
+            ['id' => '20', 'name' => 'French Immersion Teacher'],
+            ['id' => '21', 'name' => 'Literacy Teacher'],
+            ['id' => '22', 'name' => 'Numeracy Teacher'],
+            ['id' => '23', 'name' => 'Middle School Generalist'],
+            ['id' => '24', 'name' => 'Primary Teacher'],
+            ['id' => '25', 'name' => 'Intermediate Teacher'],
+            ['id' => '26', 'name' => 'Elementary Teacher'],
+            ['id' => '27', 'name' => 'Junior Secondary Teacher'],
+            ['id' => '28', 'name' => 'Senior Secondary Teacher'],
+            ['id' => '29', 'name' => 'Secondary Teacher'],
+            ['id' => '30', 'name' => 'ELL Teacher'],
         ];
     }
 
     protected function loadSchools()
     {
         return [
-            '1' => 'South Park Elementary',
-            '2' => 'Ridgemont High',
-            '3' => 'Northridge Junior High',
-            '4' => 'St. Augustine',
-            '5' => 'George Jay Elementary'
+            ['id' => '1', 'name' => 'South Park Elementary'],
+            ['id' => '2', 'name' => 'Ridgemont High'],
+            ['id' => '3', 'name' => 'Northridge Junior High'],
+            ['id' => '4', 'name' => 'St. Augustine'],
+            ['id' => '5', 'name' => 'George Jay Elementary']
         ];
     }
 
@@ -95,6 +97,14 @@ class Controller extends BaseController
                 'id'   => '3',
                 'name' => 'Numeracy 10'
             ]
+        ];
+    }
+
+    protected function loadRegions()
+    {
+        return [
+            ['code' => 'BC', 'name' => 'British Columbia'],
+            ['code' => 'YK', 'name' => 'Yukon']
         ];
     }
 
