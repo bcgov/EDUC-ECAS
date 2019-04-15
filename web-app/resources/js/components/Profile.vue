@@ -11,13 +11,13 @@
                                name="preferred_first_name" id="preferred_first_name">
                     </div>
                     <div class="form-group col">
-                        <label for="first_name">First</label>
+                        <label for="first_name">First Name</label>
                         <input v-model="user_local.first_name" type="text" class="form-control" name="first_name"
                                id="first_name">
                         <form-error :errors="errors" field="first_name"></form-error>
                     </div>
                     <div class="form-group col">
-                        <label for="last_name">Last</label>
+                        <label for="last_name">Last Name</label>
                         <input v-model="user_local.last_name" type="text" class="form-control" name="last_name"
                                id="last_name">
                         <form-error :errors="errors" field="last_name"></form-error>
@@ -36,8 +36,11 @@
                     </div>
                     <div class="form-group col">
                         <label for="phone">Phone</label>
-                        <input v-model="user_local.phone" type="text" class="form-control"
-                               name="phone" id="phone">
+                        <input v-model="user_local.phone"
+                               type="tel"
+                               class="form-control"
+                               name="phone"
+                               id="phone">
                         <form-error :errors="errors" field="phone"></form-error>
                     </div>
                     <div class="form-group col">
@@ -69,8 +72,8 @@
                         <div class="form-row">
                             <div class="form-group col">
                                 <label for="region">Province</label>
-                                <select class="form-control" name="region" id="region">
-                                    <option v-bind:key="region.id" v-for="region in regions">{{ region.name }}</option>
+                                <select class="form-control" v-model="user_local.region" id="region" name="region">
+                                    <option v-bind:value="region.code" v-for="region in regions">{{ region.name }}</option>
                                 </select>
                             </div>
                             <div class="form-group col">
@@ -85,16 +88,16 @@
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="district">Current District</label>
-                        <select class="form-control" name="district" id="district">
-                            <option value="0">Select...</option>
-                            <option v-bind:key="district.id" v-for="district in districts">{{ district.name }}</option>
+                        <select class="form-control" v-model="user_local.district" id="district">
+                            <option disabled value="">Please select one</option>
+                            <option v-bind:value="district.id" v-for="district in districts">{{ district.name }}</option>
                         </select>
                     </div>
                     <div class="form-group col">
                         <label for="school">Current School</label>
-                        <select class="form-control" name="school" id="school">
-                            <option value="0">Select...</option>
-                            <option v-bind:key="school.id" v-for="school in schools">{{ school.name }}</option>
+                        <select class="form-control" v-model="user_local.school" id="school">
+                            <option disabled value="">Please select one</option>
+                            <option v-bind:value="school.id" v-for="school in schools">{{ school.name }}</option>
                         </select>
                     </div>
                 </div>
@@ -128,7 +131,7 @@
                         <button class="btn btn-danger btn-block" v-on:click.prevent="cancelProfile">Cancel</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-primary btn-block" v-on:click.prevent="saveProfile">Save</button>
+                        <button class="btn btn-primary btn-block" v-on:click.prevent="saveProfile" dusk="save">Save</button>
                     </div>
                 </div>
             </form>
@@ -174,6 +177,7 @@
 
                 axios.post('/Dashboard/profile', {
                     email: form.user_local.email,
+                    phone: form.user_local.phone,
                     preferred_first_name: form.user_local.preferred_first_name,
                     first_name: form.user_local.first_name,
                     last_name: form.user_local.last_name,
@@ -181,12 +185,14 @@
                     professional_certificate_bc: form.user_local.professional_certificate_bc,
                     professional_certificate_yk: form.user_local.professional_certificate_yk,
                     professional_certificate_other: form.user_local.professional_certificate_other,
-                    current_school: form.user_local.current_school,
+                    school: form.user_local.school,
                     address_1: form.user_local.address_1,
                     address_2: form.user_local.address_2,
                     city: form.user_local.city,
                     region: form.user_local.region,
-                    postal_code: form.user_local.postal_code
+                    postal_code: form.user_local.postal_code,
+                    payment: form.user_local.payment,
+                    district: form.user_local.district
                 })
                     .then(function (response) {
                         console.log('Success!')

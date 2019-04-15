@@ -20,16 +20,18 @@ class Controller extends BaseController
             'preferred_first_name'        => 'Sal',
             'first_name'                  => 'Sally',
             'last_name'                   => 'Sherwood',
+            'phone'                       => '2508123353',
             'social_insurance_no'         => '123456789',
             'professional_certificate_bc' => 'bd-aejrkqwehr',
             //            'professional_certificate_yk'    => 'yk-039290',
             //            'professional_certificate_other' => '',
-            'current_school'              => 'South Park Elementary',
+            'school'                      => '1',
+            'district'                    => '1',
             'address_1'                   => '456 Yellow Brick Rd.',
             'address_2'                   => '',
             'city'                        => 'Oz',
             'region'                      => 'BC',
-            'postal_code'                 => 'T0B4T5'
+            'postal_code'                 => 'T0B4T5',
         ];
     }
 

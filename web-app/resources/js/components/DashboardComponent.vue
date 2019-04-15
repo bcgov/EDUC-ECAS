@@ -131,6 +131,7 @@
                     :regions="regions"
                     :districts="districts"
                     :payments="payments"
+                    dusk="profile-component"
             ></profile>
         </modal>
     </div>
