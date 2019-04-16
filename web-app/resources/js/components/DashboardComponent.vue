@@ -31,7 +31,7 @@
                                 <h2>Credentials</h2>
                             </div>
                             <div class="card-body">
-                                <div class="row" v-for="credential in credentials_local">
+                                <div class="row" v-for="credential in credentials_applied">
                                     <div class="col-1"><i class="fas fa-igloo"></i></div>
                                     <div class="col">{{ credential.name }}</div>
                                 </div>
@@ -42,8 +42,8 @@
                                     <div class="col">
                                         <select v-model="new_credential">
                                             <option value="0">Select New Credential</option>
-                                            <option v-for="credential in credentials" :value="credential.id">{{
-                                                credential.name }}
+                                            <option v-for="credential in credentials_available" :value="credential.id">
+                                                {{ credential.name }}
                                             </option>
                                         </select>
                                     </div>
@@ -124,18 +124,21 @@
         <modal name="session_form" height="auto">
             <session :session="current_session"></session>
         </modal>
-        <modal name="profile_form" height="auto" :scrollable="true">
+        <modal name="profile_form" height="auto" :scrollable="true" :clickToClose="false">
             <profile
-                    :user="user"
+                    :user="getUser"
                     :schools="schools"
                     :regions="regions"
+                    :districts="districts"
+                    :payments="payments"
+                    :new_user="new_user"
+                    dusk="profile-component"
             ></profile>
         </modal>
     </div>
 </template>
 
 <script>
-    import { mapMutations } from 'vuex'
     import { mapGetters } from 'vuex'
 
     export default {
@@ -146,15 +149,19 @@
             sessions: {},
             subjects: {},
             schools: {},
-            regions: {}
+            regions: {},
+            districts: {},
+            payments: {}
         },
         data() {
             return {
                 sessions_local: this.sessions,
-                credentials_local: [],
+                credentials_applied: [],
+                credentials_available: [...this.credentials],
                 new_credential: 0,
                 filter: '',
-                current_session: {}
+                current_session: {},
+                new_user: false
             }
         },
         mounted() {
@@ -162,6 +169,11 @@
             this.$store.commit('SET_USER', this.user)
             Event.listen('credential-added', this.pushCredential)
             Event.listen('profile-updated', this.updateProfile)
+
+            if (this.getUser.id === undefined) {
+                this.new_user = true
+                this.showProfile()
+            }
         },
         computed: {
             ...mapGetters([
@@ -193,7 +205,14 @@
             },
             pushCredential(credential) {
                 console.log('pushing credential')
-                this.credentials_local.unshift(credential)
+
+                // Remove the credential from the available list
+                this.credentials_available.splice(this.credentials_available.findIndex(elm => elm.id === credential.id), 1)
+
+                // Add to the applied list
+                this.credentials_applied.unshift(credential)
+
+                this.new_credential = 0;
             },
             filteredSessions(sessions) {
                 var dashboard = this
@@ -220,6 +239,8 @@
                 this.$modal.show('profile_form');
             },
             updateProfile(user) {
+                // We must have a valid user now
+                this.new_user = false
                 this.$store.commit('SET_USER', user)
             }
         }

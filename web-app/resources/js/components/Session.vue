@@ -53,7 +53,7 @@
                         <button class="btn btn-danger btn-block" v-on:click="acceptInvitation(session, false)">Cancel Attendance!</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-primary btn-block" v-on:click="getContract">Download Contract</button>
+                        <button class="btn btn-primary btn-block" v-on:click="getExpenses(session)">Expenses</button>
                     </div>
                 </template>
             </div>
@@ -117,6 +117,9 @@
             getContract() {
                 console.log('Download Contract')
                 this.closeModal();
+            },
+            getExpenses(session) {
+                window.location = "/Expenses/" + session.id;
             }
         }
     }

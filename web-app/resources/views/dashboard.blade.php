@@ -9,6 +9,9 @@
         :subjects="{{ $subjects }}"
         :schools="{{ $schools }}"
         :regions="{{ $regions }}"
+        :districts="{{ $districts }}"
+        :payments="{{ $payments }}"
+        dusk="dashboard-component"
         >
     </dashboard>
     </div>
