@@ -30,3 +30,4 @@ oc process -f deployment.yaml | oc create -f -
 ```
 
 # Pipeline
+TODO: Add Jenkins file
