@@ -53,6 +53,47 @@ class DashboardControllerTest extends TestCase
             ->assertOk();
     }
 
+    /** @test */
+    public function profile_needs_valid_postal_code()
+    {
+        // Valid: Six alternating letters and numbers, spaces don't matter
+
+        $this->withExceptionHandling();
+
+        $this->post('/Dashboard/profile', $this->validProfileData(['postal_code' => '123456']))
+            ->assertSessionHasErrors('postal_code');
+
+        $this->post('/Dashboard/profile', $this->validProfileData(['postal_code' => 'V8V 1J6']))
+            ->assertOk();
+
+        $this->post('/Dashboard/profile', $this->validProfileData(['postal_code' => 'V8V1J6']))
+            ->assertOk();
+    }
+
+    /** @test */
+    public function profile_needs_valid_sin()
+    {
+        // Valid: Any 9 digits, spaces don't matter
+
+        $this->withExceptionHandling();
+
+        $this->post('/Dashboard/profile', $this->validProfileData(['sin' => '123456']))
+            ->assertSessionHasErrors('sin');
+
+        $this->post('/Dashboard/profile', $this->validProfileData(['sin' => '1234567ww']))
+            ->assertSessionHasErrors('sin');
+
+        // Is not required
+        $this->post('/Dashboard/profile', $this->validProfileData(['sin' => '']))
+            ->assertOk();
+
+        $this->post('/Dashboard/profile', $this->validProfileData(['sin' => '123456789']))
+            ->assertOk();
+
+        $this->post('/Dashboard/profile', $this->validProfileData(['sin' => '123 456 789']))
+            ->assertOk();
+    }
+
     /**
      * @return array
      */
@@ -66,7 +107,7 @@ class DashboardControllerTest extends TestCase
             'address_1'   => 'required',
             'city'        => 'required',
             'region'      => 'required',
-            'postal_code' => 'required'
+            'postal_code' => 'H0H0H0'
         ];
 
         return array_merge($valid, $replace);
