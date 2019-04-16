@@ -28,3 +28,5 @@ oc get dc/ecas is/ecas --export -o yaml > deployment.yaml
 # Create new deployment template??
 oc process -f deployment.yaml | oc create -f -
 ```
+
+# Pipeline
