@@ -13,7 +13,11 @@ class DashboardController extends Controller
             $user = $this->loadUser();
         }
         else {
-            $user = [];
+            $user = [
+                'region' => 'BC',
+                'district' => '',
+                'school' => ''
+            ];
         }
 
         $subjects = $this->loadSubjects();
@@ -85,7 +89,6 @@ class DashboardController extends Controller
             'city'        => 'required',
             'region'      => 'required',
             'postal_code' => 'required'
-
         ],
             [
                 'first_name.required'  => 'Required',
@@ -109,11 +112,6 @@ class DashboardController extends Controller
         }
 
         return json_encode($user);
-    }
-
-    public function post(Request $request)
-    {
-        return $request->all();
     }
 
     /**
