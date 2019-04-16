@@ -31,3 +31,4 @@ oc process -f deployment.yaml | oc create -f -
 
 # Pipeline
 TODO: Add Jenkins file
+TODO: Modify the ecas template.  Currently it's set to build automatically, but we want to orchestrate everything from the pipeline
