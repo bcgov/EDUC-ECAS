@@ -36,3 +36,5 @@ TODO: Modify the ecas template.  Currently it's set to build automatically, but 
 One of my last theories to test is that the push to the Dev branch isn't triggering the webhook call
 
 Confirmed that the push to the dev branch wasn't triggering the webhook.  Merged dev into Master
+
+Pointed the build to the master branch since it's only commits to master that will trigger the pipeline
