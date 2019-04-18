@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "36da8125cf1821b08517a9b5d0defce5",
+    "content-hash": "d2ca6987408a7c26ab3c1f17b9de90a7",
     "packages": [
         {
             "name": "alexacrm/dynamics-webapi-toolkit",

@@ -2,11 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\DynamicsRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class DashboardController extends Controller
 {
+    public function dynamics()
+    {
+        $test_user_id = 'cf7837ae-0862-e911-a983-000d3af42a5a';
+
+        $dynamics = new DynamicsRepository();
+        return $dynamics->createProfile();
+        return $dynamics->getProfile('69ec756c-6060-e911-a99d-000d3af4ae4d');
+        return $dynamics->getDistricts();
+    }
+
     public function index()
     {
         if ($this->userLoggedIn()) {

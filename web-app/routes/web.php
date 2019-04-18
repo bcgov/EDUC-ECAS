@@ -29,3 +29,5 @@ Route::post('/Dashboard/profile', 'DashboardController@storeProfile');
 Route::post('/Dashboard/post', 'DashboardController@post');
 
 Route::get('/Expenses/{session_id}', 'ExpenseController@index');
+
+Route::get('/connect', 'DashboardController@dynamics');
