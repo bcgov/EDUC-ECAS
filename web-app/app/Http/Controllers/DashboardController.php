@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Assignment;
+use App\Credential;
+use App\District;
 use App\DynamicsRepository;
+use App\Profile;
+use App\School;
+use App\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -12,10 +18,31 @@ class DashboardController extends Controller
     {
         $test_user_id = 'cf7837ae-0862-e911-a983-000d3af42a5a';
 
-        $dynamics = new DynamicsRepository();
-        return $dynamics->createProfile();
-        return $dynamics->getProfile('69ec756c-6060-e911-a99d-000d3af4ae4d');
-        return $dynamics->getDistricts();
+//        return Profile::get($test_user_id);
+
+//        return District::get();
+
+//        return Profile::create([
+//            'first_name'  => 'Test',
+//            'last_name'   => 'User',
+//            'email'       => 'test2@example.com',
+//            'phone'       => '2508123352',
+//            'address_1'   => 'test address',
+//            'city'        => 'Victoria',
+//            'region'      => 'BC',
+//            'postal_code' => 'V8V1J5',
+//        ]);
+
+        return Profile::update($test_user_id, [
+            'first_name'  => 'Changed User',
+            'last_name'   => 'User',
+            'email'       => 'test2@example.com',
+            'phone'       => '2508123352',
+            'address_1'   => 'test address',
+            'city'        => 'Victoria',
+            'region'      => 'BC',
+            'postal_code' => 'V8V1J5',
+        ]);
     }
 
     public function index()
@@ -30,7 +57,7 @@ class DashboardController extends Controller
                 'school'   => ''
             ];
         }
-
+dd(Assignment::get());
         $subjects = $this->loadSubjects();
 
         $schools = $this->loadSchools();
@@ -39,10 +66,7 @@ class DashboardController extends Controller
 
         $sessions = $this->loadSessions();
 
-        $districts = [
-            ['id' => 1, 'name' => 'District Number 1'],
-            ['id' => 2, 'name' => 'Another District']
-        ];
+        $districts = $this->loadDistricts();
 
         $payments = [
             ['id' => 1, 'name' => 'Electronic Transfer'],
@@ -91,8 +115,28 @@ class DashboardController extends Controller
 
     public function storeProfile(Request $request)
     {
-        // Massage the data before we validate
+        $request = $this->validateProfileRequest($request);
 
+        $user_id = Profile::create($request->all());
+
+        return json_encode($user);
+    }
+
+    /**
+     * @return bool
+     */
+    private function userLoggedIn(): bool
+    {
+        return Session::has('user_id');
+    }
+
+    /**
+     * @param Request $request
+     * @return Request
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    private function validateProfileRequest(Request $request): Request
+    {
         // Get rid of spaces
         $remove_spaces_from = ['postal_code', 'sin'];
         foreach ($remove_spaces_from as $field) {
@@ -125,60 +169,6 @@ class DashboardController extends Controller
                 'postal_code.regex'    => 'Invalid Postal Code',
             ]);
 
-        if ($this->userLoggedIn()) {
-            $user = $this->loadUser();
-        }
-
-        // TODO: Another useless stub, update the dummy user and return
-        foreach ($request->all() as $key => $value) {
-            $user[$key] = $value;
-        }
-
-        return json_encode($user);
-    }
-
-    /**
-     * @return bool
-     */
-    private function userLoggedIn(): bool
-    {
-        return Session::has('user_id');
-    }
-
-    public function test1()
-    {
-        $client = \AlexaCRM\WebAPI\ClientFactory::createOnlineClient(
-            'http://ecas-pvpywj-dev.pathfinder.gov.bc.ca/',
-            '96337d02-539f-4982-a89a-c1d25c78bd3b',
-            'NltSOQMgJ2DwVbjw+6hpceiyGzGYWp6mDI6v5smQX+k='
-        );
-    }
-
-    public function signIn()
-    {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        // Initialize the OAuth client
-        $oauthClient = new \League\OAuth2\Client\Provider\GenericProvider([
-            'clientId'                => env('OAUTH_APP_ID'),
-            'clientSecret'            => env('OAUTH_APP_PASSWORD'),
-            'redirectUri'             => env('OAUTH_REDIRECT_URI'),
-            'urlAuthorize'            => env('OAUTH_AUTHORITY').env('OAUTH_AUTHORIZE_ENDPOINT'),
-            'urlAccessToken'          => env('OAUTH_AUTHORITY').env('OAUTH_TOKEN_ENDPOINT'),
-            'urlResourceOwnerDetails' => '',
-            'scopes'                  => env('OAUTH_SCOPES')
-        ]);
-
-        // Generate the auth URL
-        $authorizationUrl = $oauthClient->getAuthorizationUrl();
-
-        // Save client state so we can validate in response
-        $_SESSION['oauth_state'] = $oauthClient->getState();
-
-        // Redirect to authorization endpoint
-        header('Location: '.$authorizationUrl);
-        exit();
+        return $request;
     }
 }

@@ -26,6 +26,7 @@ Route::get('/Profile', 'DashboardController@profile');
 Route::get('/Dashboard', 'DashboardController@index');
 Route::post('/Dashboard/credential', 'DashboardController@storeCredential');
 Route::post('/Dashboard/profile', 'DashboardController@storeProfile');
+Route::patch('/Dashboard/profile', 'DashboardController@updateProfile');
 Route::post('/Dashboard/post', 'DashboardController@post');
 
 Route::get('/Expenses/{session_id}', 'ExpenseController@index');

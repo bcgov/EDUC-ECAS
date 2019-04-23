@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Credential;
+use App\School;
+use App\Subject;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -35,69 +38,39 @@ class Controller extends BaseController
         ];
     }
 
+    protected function loadDistricts()
+    {
+        $districts = District::get();
+        usort($districts, function($a, $b) {
+            return $a['name'] <=> $b['name'];
+        });
+        return $districts;
+    }
     protected function loadSubjects()
     {
-        return [
-            ['id' => '1', 'name' => 'Learning Assistance Teacher'],
-            ['id' => '2', 'name' => 'Learning Specialist Teacher'],
-            ['id' => '3', 'name' => 'Learning Support Teacher'],
-            ['id' => '4', 'name' => 'Learning Support Teacher'],
-            ['id' => '5', 'name' => 'Special Education Teacher'],
-            ['id' => '6', 'name' => 'Intervention Teacher'],
-            ['id' => '7', 'name' => 'Inclusion Support Teacher'],
-            ['id' => '8', 'name' => 'Resource Teacher'],
-            ['id' => '9', 'name' => 'Teacher-Librarian'],
-            ['id' => '10', 'name' => 'Counsellor'],
-            ['id' => '11', 'name' => 'Homeroom Teacher'],
-            ['id' => '12', 'name' => 'Academic Support Teacher'],
-            ['id' => '13', 'name' => 'Language and Cultural Teacher'],
-            ['id' => '14', 'name' => 'Language Coordinator'],
-            ['id' => '15', 'name' => 'Language Teacher'],
-            ['id' => '16', 'name' => 'Adult Education Teacher'],
-            ['id' => '17', 'name' => 'Vice-Principal'],
-            ['id' => '18', 'name' => 'Principal'],
-            ['id' => '19', 'name' => 'Teacher on Call'],
-            ['id' => '20', 'name' => 'French Immersion Teacher'],
-            ['id' => '21', 'name' => 'Literacy Teacher'],
-            ['id' => '22', 'name' => 'Numeracy Teacher'],
-            ['id' => '23', 'name' => 'Middle School Generalist'],
-            ['id' => '24', 'name' => 'Primary Teacher'],
-            ['id' => '25', 'name' => 'Intermediate Teacher'],
-            ['id' => '26', 'name' => 'Elementary Teacher'],
-            ['id' => '27', 'name' => 'Junior Secondary Teacher'],
-            ['id' => '28', 'name' => 'Senior Secondary Teacher'],
-            ['id' => '29', 'name' => 'Secondary Teacher'],
-            ['id' => '30', 'name' => 'ELL Teacher'],
-        ];
+        $subjects = Subject::get();
+        usort($subjects, function($a, $b) {
+            return $a['name'] <=> $b['name'];
+        });
+        return $subjects;
     }
 
     protected function loadSchools()
     {
-        return [
-            ['id' => '1', 'name' => 'South Park Elementary'],
-            ['id' => '2', 'name' => 'Ridgemont High'],
-            ['id' => '3', 'name' => 'Northridge Junior High'],
-            ['id' => '4', 'name' => 'St. Augustine'],
-            ['id' => '5', 'name' => 'George Jay Elementary']
-        ];
+        $schools = School::get();
+        usort($schools, function($a, $b) {
+            return $a['name'] <=> $b['name'];
+        });
+        return $schools;
     }
 
     protected function loadCredentials()
     {
-        return [
-            [
-                'id'   => '1',
-                'name' => 'Literacy 10 E'
-            ],
-            [
-                'id'   => '2',
-                'name' => 'Literacy 10 P'
-            ],
-            [
-                'id'   => '3',
-                'name' => 'Numeracy 10'
-            ]
-        ];
+        $credentials = Credential::get();
+        usort($credentials, function($a, $b) {
+            return $a['name'] <=> $b['name'];
+        });
+        return $credentials;
     }
 
     protected function loadRegions()
@@ -144,5 +117,7 @@ class Controller extends BaseController
                 'status'   => 'Open'
             ]
         ];
+        $sessions = \App\Session::get();
+        return $sessions;
     }
 }
