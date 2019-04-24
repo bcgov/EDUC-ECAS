@@ -14,6 +14,8 @@ class Credential extends DynamicsRepository
 
     public static $primary_key = 'educ_credentialcode';
 
+    public static $cache = 480; // 8 Hours
+
     public static $fields = [
         'id'   => 'educ_credentialcode',
         'name' => 'educ_name'

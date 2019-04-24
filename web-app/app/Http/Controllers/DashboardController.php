@@ -57,7 +57,7 @@ class DashboardController extends Controller
                 'school'   => ''
             ];
         }
-dd(Assignment::get());
+
         $subjects = $this->loadSubjects();
 
         $schools = $this->loadSchools();
@@ -118,6 +118,8 @@ dd(Assignment::get());
         $request = $this->validateProfileRequest($request);
 
         $user_id = Profile::create($request->all());
+
+        $user = Profile::get($user_id);
 
         return json_encode($user);
     }

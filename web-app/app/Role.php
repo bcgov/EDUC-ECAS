@@ -14,6 +14,8 @@ class Role extends DynamicsRepository
 
     public static $primary_key = 'educ_name';
 
+    public static $cache = 480; // 8 Hours
+
     public static $fields = [
         'id'   => 'educ_name',
         'name' => 'educ_name',

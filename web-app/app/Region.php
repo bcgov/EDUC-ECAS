@@ -14,6 +14,8 @@ class Region extends DynamicsRepository
 
     public static $primary_key = 'educ_provincestatecode';
 
+    public static $cache = 480; // 8 Hours
+
     public static $fields = [
         'id'   => 'educ_provincestatecode',
         'name' => 'educ_name'

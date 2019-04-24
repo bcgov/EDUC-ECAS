@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Assignment;
 use App\Credential;
 use App\District;
+use App\Profile;
 use App\Region;
 use App\Role;
 use App\School;
@@ -94,5 +95,41 @@ class DynamicsApiTest extends TestCase
         $result = Assignment::get();
 
         $this->assertTrue(is_array($result));
+    }
+
+    /** @test */
+    public function create_and_update_profile()
+    {
+        $user_id = Profile::create([
+            'first_name'  => 'FirstName',
+            'last_name'   => 'LastName',
+            'email'       => 'test@example.com',
+            'phone'       => '1234567890',
+            'address_1'   => 'required',
+            'city'        => 'required',
+            'region'      => 'required',
+            'postal_code' => 'H0H0H0'
+        ]);
+
+        $user = Profile::get($user_id);
+
+        $this->assertEquals('FirstName', $user['first_name']);
+        $this->assertEquals('LastName', $user['last_name']);
+
+        // Update
+
+        $updated_user = Profile::update($user_id, [
+            'first_name'  => 'NewFirstName',
+            'last_name'   => 'NewLastName',
+            'email'       => 'new@example.com',
+            'phone'       => '1234567890',
+            'address_1'   => 'required',
+            'city'        => 'required',
+            'region'      => 'required',
+            'postal_code' => 'H0H0H0'
+        ]);
+
+        $this->assertEquals('NewFirstName', $updated_user['first_name']);
+        $this->assertEquals('NewLastName', $updated_user['last_name']);
     }
 }

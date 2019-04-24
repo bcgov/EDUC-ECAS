@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Credential;
+use App\District;
 use App\School;
+use App\Session;
 use App\Subject;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
@@ -83,41 +85,45 @@ class Controller extends BaseController
 
     protected function loadSessions()
     {
-        return [
-            [
-                'id'       => '1',
-                'activity' => 'Exemplar',
-                'type'     => 'LIT 10 I',
-                'dates'    => 'August 1-2',
-                'location' => 'Vancouver',
-                'status'   => 'Scheduled'
-            ],
-            [
-                'id'       => '2',
-                'activity' => 'Marking',
-                'type'     => 'LIT 10 I',
-                'dates'    => 'August 3-4',
-                'location' => 'Vancouver',
-                'status'   => 'Invited'
-            ],
-            [
-                'id'       => '3',
-                'activity' => 'Marking',
-                'type'     => 'LIT 20 E',
-                'dates'    => 'July 3-4',
-                'location' => 'Victoria',
-                'status'   => 'Open'
-            ],
-            [
-                'id'       => '4',
-                'activity' => 'Marking',
-                'type'     => 'NUM 10',
-                'dates'    => 'July 10-12',
-                'location' => 'Kelowna',
-                'status'   => 'Open'
-            ]
-        ];
-        $sessions = \App\Session::get();
+        $sessions = Session::get();
+        usort($sessions, function($a, $b) {
+            return $a['start_date'] <=> $b['start_date'];
+        });
         return $sessions;
+
+//        return [
+//            [
+//                'id'       => '1',
+//                'activity' => 'Exemplar',
+//                'type'     => 'LIT 10 I',
+//                'dates'    => 'August 1-2',
+//                'location' => 'Vancouver',
+//                'status'   => 'Scheduled'
+//            ],
+//            [
+//                'id'       => '2',
+//                'activity' => 'Marking',
+//                'type'     => 'LIT 10 I',
+//                'dates'    => 'August 3-4',
+//                'location' => 'Vancouver',
+//                'status'   => 'Invited'
+//            ],
+//            [
+//                'id'       => '3',
+//                'activity' => 'Marking',
+//                'type'     => 'LIT 20 E',
+//                'dates'    => 'July 3-4',
+//                'location' => 'Victoria',
+//                'status'   => 'Open'
+//            ],
+//            [
+//                'id'       => '4',
+//                'activity' => 'Marking',
+//                'type'     => 'NUM 10',
+//                'dates'    => 'July 10-12',
+//                'location' => 'Kelowna',
+//                'status'   => 'Open'
+//            ]
+//        ];
     }
 }

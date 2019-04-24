@@ -12,10 +12,13 @@ class SessionType extends DynamicsRepository
 {
     public static $table = 'educ_sessiontypecodes';
 
-    public static $primary_key = 'educ_name';
+    public static $primary_key = 'educ_sessiontypecodeid';
+
+    public static $cache = 480; // 8 Hours
 
     public static $fields = [
-        'id'   => 'educ_sessiontypecode',
+        'id'   => 'educ_sessiontypecodeid',
+        'code' => 'educ_sessiontypecode',
         'name' => 'educ_name'
     ];
 }

@@ -10,32 +10,35 @@ namespace App;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class DynamicsRepository
 {
     public static $table;
     public static $primary_key;
     public static $fields = [];
+    public static $cache = 0; // Cache the model for x minutes, or 0 don't cache
 
     public static $base_url = 'https://ecaswebapi.azurewebsites.net/api/operations';
 
     public static function get($id = null)
     {
-        $query = static::$base_url . '?statement=' . static::$table . '&$select=' . implode(',', static::$fields);
+        $cache_key = static::cacheKey($id);
 
-        if ($id) {
-            $query .= '&$filter=' . static::$primary_key . ' eq \'' . $id . '\'';
+        Log::debug($cache_key);
+
+        if (static::$cache > 0 && Cache::has($cache_key)) {
+            $collection = Cache::get($cache_key);
+            Log::debug('Loading from Cache');
         }
+        else {
+            $collection = self::loadCollection($id);
+            Log::debug('Loading from Dynamics');
 
-        $response = self::queryAPI('GET', $query);
-
-        $data = json_decode($response->getBody()->getContents())->value;
-
-        $collection = [];
-
-        foreach ($data as $index => $row) {
-            foreach (static::$fields as $local_field_name => $data_source_field_name) {
-                $collection[$index][$local_field_name] = $row->$data_source_field_name;
+            if (static::$cache > 0) {
+                Cache::put($cache_key, $collection, static::$cache);
+                Log::debug('Caching collection ' . $cache_key);
             }
         }
 
@@ -47,13 +50,20 @@ class DynamicsRepository
         return $collection;
     }
 
+    public static function cacheKey($id)
+    {
+        $pieces = explode('\\', get_called_class());
+
+        $name = array_pop($pieces);
+
+        return $id ? $name . '.' . $id : $name;
+    }
+
     public static function create($data)
     {
         $query = static::$base_url . '?statement=' . static::$table;
 
-        $response = self::connection()->request('POST', $query, [
-            'json' => self::mapToDynamics($data)
-        ]);
+        $response = self::queryAPI('POST', $query, $data);
 
         // Returns the id of the created record
         return $response->getBody()->getContents();
@@ -61,11 +71,9 @@ class DynamicsRepository
 
     public static function update($id, $data)
     {
-        $query = static::$base_url . '?statement=' . static::$table.'('.$id.')';
+        $query = static::$base_url . '?statement=' . static::$table . '(' . $id . ')';
 
-        $response = self::connection()->request('PATCH', $query, [
-            'json' => self::mapToDynamics($data)
-        ]);
+        $response = self::queryAPI('PATCH', $query, $data);
 
         // Returns an array of the returned data
         return self::mapToLocal(json_decode($response->getBody()->getContents(), true));
@@ -114,13 +122,47 @@ class DynamicsRepository
      */
     private static function queryAPI($method, $query, $data = null)
     {
-        try {
+        if ($method == 'GET') {
             $response = self::connection()->request($method, $query);
         }
-        catch (ClientException $exception) {
-            report($exception);
+        else {
+            $response = self::connection()->request($method, $query, [
+                'json' => self::mapToDynamics($data)
+            ]);
         }
-////dd($response);
+
+        if (static::$cache > 0) {
+            Cache::put($query, $response, static::$cache);
+        }
+
         return $response;
+    }
+
+    /**
+     * @param $id
+     * @return array
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    private static function loadCollection($id): array
+    {
+        $query = static::$base_url . '?statement=' . static::$table . '&$select=' . implode(',', static::$fields);
+
+        if ($id) {
+            $query .= '&$filter=' . static::$primary_key . ' eq \'' . $id . '\'';
+        }
+
+        $response = self::queryAPI('GET', $query);
+
+        $data = json_decode($response->getBody()->getContents())->value;
+
+        $collection = [];
+
+        foreach ($data as $index => $row) {
+            foreach (static::$fields as $local_field_name => $data_source_field_name) {
+                $collection[$index][$local_field_name] = $row->$data_source_field_name;
+            }
+        }
+
+        return $collection;
     }
 }

@@ -15,13 +15,13 @@ class Session extends DynamicsRepository
     public static $primary_key = 'educ_sessionid';
 
     public static $fields = [
-//        'id'         => 'educ_sessionid',
-//        'activity'   => 'educ_sessionActivity',
-//        'type'       => 'educ_sessionType',
-//        'start_date' => 'educ_startdate',
-//        'end_date'   => 'educ_enddate',
-        'location'   => 'educ_locationName',
-//        'address'    => 'educ_locationAddress',
-//        'city'       => 'educ_locationCity',
+        'id'         => 'educ_sessionid',
+        'activity_id'   => '_educ_sessionactivity_value',
+        'type_id'       => '_educ_sessiontype_value',
+        'start_date' => 'educ_startdate',
+        'end_date'   => 'educ_enddate',
+        'location'   => 'educ_locationname',
+        'address'    => 'educ_locationaddress',
+        'city'       => 'educ_locationcity',
     ];
 }

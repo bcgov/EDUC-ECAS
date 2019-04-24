@@ -12,11 +12,12 @@ class Assignment extends DynamicsRepository
 {
     public static $table = 'educ_assignments';
 
-    public static $primary_key = 'educ_name';
+    public static $primary_key = 'educ_assignmentid';
 
     public static $fields = [
-        'id'      => 'educ_name',
-        'session' => 'educ_session',
-        'user'    => 'educ_contact'
+        'id'      => 'educ_assignmentid',
+        'session' => '_educ_session_value',
+        'user'    => '_educ_contact_value',
+        'role'    => '_educ_role_value'
     ];
 }

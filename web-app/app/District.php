@@ -14,6 +14,8 @@ class District extends DynamicsRepository
 
     public static $primary_key = 'educ_districtcodeid';
 
+    public static $cache = 480; // 8 Hours
+
     public static $fields = [
         'id'   => 'educ_districtcodeid',
         'name' => 'educ_name'
