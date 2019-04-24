@@ -3,6 +3,7 @@
         <div class="card-header"><h1>Teacher Profile</h1></div>
         <div class="card-body">
             <form>
+                <input type="text" id="id" name="id" v-model="user_local.id">
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="preferred_first_name">Preferred First</label>
@@ -181,7 +182,8 @@
 
                 var form = this
 
-                axios.post('/Dashboard/profile', {
+                var data = {
+                    id: form.user_local.id,
                     email: form.user_local.email,
                     phone: form.user_local.phone,
                     preferred_first_name: form.user_local.preferred_first_name,
@@ -199,18 +201,36 @@
                     postal_code: form.user_local.postal_code,
                     payment: form.user_local.payment,
                     district: form.user_local.district
-                })
-                    .then(function (response) {
-                        console.log('Success!')
-                        form.closeModal()
-                        Event.fire('profile-updated', response.data)
-                    })
-                    .catch(function (error) {
-                        console.log('Failure!')
-                        if (error.response.status == 422){
-                            form.errors = error.response.data.errors;
-                        }
-                    });
+                }
+
+                if (this.getUser.id !== undefined) {
+                    axios.patch('/Dashboard/profile', data)
+                        .then(function (response) {
+                            console.log('Patch Profile')
+                            form.closeModal()
+                            Event.fire('profile-updated', response.data)
+                        })
+                        .catch(function (error) {
+                            console.log('Failure!')
+                            if (error.response.status == 422){
+                                form.errors = error.response.data.errors;
+                            }
+                        });
+                }
+                else {
+                    axios.post('/Dashboard/profile', data)
+                        .then(function (response) {
+                            console.log('Create Profile')
+                            form.closeModal()
+                            Event.fire('profile-updated', response.data)
+                        })
+                        .catch(function (error) {
+                            console.log('Failure!')
+                            if (error.response.status == 422){
+                                form.errors = error.response.data.errors;
+                            }
+                        });
+                }
             }
         }
     }
