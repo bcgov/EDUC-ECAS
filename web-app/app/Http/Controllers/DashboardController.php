@@ -13,7 +13,11 @@ class DashboardController extends Controller
             $user = $this->loadUser();
         }
         else {
-            $user = [];
+            $user = [
+                'region'   => 'BC',
+                'district' => '',
+                'school'   => ''
+            ];
         }
 
         $subjects = $this->loadSubjects();
@@ -76,6 +80,16 @@ class DashboardController extends Controller
 
     public function storeProfile(Request $request)
     {
+        // Massage the data before we validate
+
+        // Get rid of spaces
+        $remove_spaces_from = ['postal_code', 'sin'];
+        foreach ($remove_spaces_from as $field) {
+            if (isset($request[$field])) {
+                $request[$field] = preg_replace('/\s+/', '', $request[$field]);
+            }
+        }
+
         $this->validate($request, [
             'first_name'  => 'required',
             'last_name'   => 'required',
@@ -84,8 +98,8 @@ class DashboardController extends Controller
             'address_1'   => 'required',
             'city'        => 'required',
             'region'      => 'required',
-            'postal_code' => 'required'
-
+            'postal_code' => 'required|regex:/^\D\d\D\s?\d\D\d$/i',
+            'sin'         => 'regex:/^\d{9}$/i'
         ],
             [
                 'first_name.required'  => 'Required',
@@ -96,7 +110,8 @@ class DashboardController extends Controller
                 'address_1.required'   => 'Required',
                 'city.required'        => 'Required',
                 'region.required'      => 'Required',
-                'postal_code.required' => 'Required'
+                'postal_code.required' => 'Required',
+                'postal_code.regex'    => 'Invalid Postal Code',
             ]);
 
         if ($this->userLoggedIn()) {
@@ -109,11 +124,6 @@ class DashboardController extends Controller
         }
 
         return json_encode($user);
-    }
-
-    public function post(Request $request)
-    {
-        return $request->all();
     }
 
     /**

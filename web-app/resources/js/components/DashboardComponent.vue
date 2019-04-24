@@ -124,13 +124,14 @@
         <modal name="session_form" height="auto">
             <session :session="current_session"></session>
         </modal>
-        <modal name="profile_form" height="auto" :scrollable="true">
+        <modal name="profile_form" height="auto" :scrollable="true" :clickToClose="false">
             <profile
                     :user="getUser"
                     :schools="schools"
                     :regions="regions"
                     :districts="districts"
                     :payments="payments"
+                    :new_user="new_user"
                     dusk="profile-component"
             ></profile>
         </modal>
@@ -159,7 +160,8 @@
                 credentials_available: [...this.credentials],
                 new_credential: 0,
                 filter: '',
-                current_session: {}
+                current_session: {},
+                new_user: false
             }
         },
         mounted() {
@@ -169,6 +171,7 @@
             Event.listen('profile-updated', this.updateProfile)
 
             if (this.getUser.id === undefined) {
+                this.new_user = true
                 this.showProfile()
             }
         },
@@ -236,6 +239,8 @@
                 this.$modal.show('profile_form');
             },
             updateProfile(user) {
+                // We must have a valid user now
+                this.new_user = false
                 this.$store.commit('SET_USER', user)
             }
         }

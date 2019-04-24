@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <div class="card-header"><h1>Edit Profile</h1></div>
+        <div class="card-header"><h1>Teacher Profile</h1></div>
         <div class="card-body">
             <form>
                 <div class="form-row">
@@ -127,7 +127,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <div class="col">
+                    <div class="col" v-show="showCancel">
                         <button class="btn btn-danger btn-block" v-on:click.prevent="cancelProfile">Cancel</button>
                     </div>
                     <div class="col">
@@ -149,7 +149,8 @@
             schools: {},
             regions: {},
             districts: {},
-            payments: {}
+            payments: {},
+            new_user: false
         },
         components: {
             FormError,
@@ -161,6 +162,11 @@
             }
         },
         mounted() {
+        },
+        computed: {
+            showCancel() {
+                return !this.new_user
+            }
         },
         methods: {
             closeModal() {
