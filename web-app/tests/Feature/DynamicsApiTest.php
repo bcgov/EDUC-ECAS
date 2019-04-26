@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Assignment;
+use App\AssignmentStage;
+use App\ContractStage;
 use App\Credential;
 use App\District;
 use App\Payment;
@@ -112,7 +114,23 @@ class DynamicsApiTest extends TestCase
     public function get_payment_option_list()
     {
         $result = Payment::get();
-        
+
+        $this->assertTrue(is_array($result));
+    }
+
+    /** @test */
+    public function get_contract_stage_list()
+    {
+        $result = ContractStage::get();
+
+        $this->assertTrue(is_array($result));
+    }
+
+    /** @test */
+    public function get_assignment_stage_list()
+    {
+        $result = AssignmentStage::get();
+
         $this->assertTrue(is_array($result));
     }
 
