@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Assignment;
 use App\Credential;
 use App\District;
 use App\School;
 use App\Session;
+use App\SessionActivity;
+use App\SessionType;
 use App\Subject;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
@@ -64,6 +67,21 @@ class Controller extends BaseController
             return $a['name'] <=> $b['name'];
         });
         return $schools;
+    }
+
+    protected function loadActivities()
+    {
+        return SessionActivity::get();
+    }
+
+    protected function loadAssignments()
+    {
+        return Assignment::get();
+    }
+
+    protected function loadTypes()
+    {
+        return SessionType::get();
     }
 
     protected function loadCredentials()

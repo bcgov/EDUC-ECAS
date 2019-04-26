@@ -16,7 +16,10 @@ class Profile extends DynamicsRepository
 //    public $primary_key = 'educ_federatedid';
     public static $primary_key = 'contactid';
 
+    public static $data_bind = 'educ_Contact';
+
     public static $fields = [
+        'id'                             => 'contactid',
         'preferred_first_name'           => 'educ_preferredfirstname',
         'first_name'                     => 'firstname',
         'last_name'                      => 'lastname',
@@ -34,5 +37,9 @@ class Profile extends DynamicsRepository
         'professional_certificate_yk'    => 'educ_professionalcertificateyk',
         'professional_certificate_other' => 'educ_professionalcertificateother',
         'payment'                        => 'educ_methodofpayment'
+    ];
+
+    public static $links = [
+        'district_id' => District::class
     ];
 }

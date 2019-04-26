@@ -104,14 +104,7 @@
                                             <td>{{ session.activity }}</td>
                                             <td>{{ session.dates }}</td>
                                             <td>{{ session.location }}</td>
-                                            <td>
-                                                <template v-if="isStatus(session, 'Invited')">Accept Invitation!</template>
-                                                <template v-else-if="isStatus(session, 'Scheduled')">You're Going!
-                                                </template>
-                                                <template v-else-if="isStatus(session, 'Applied')">You've Applied</template>
-                                                <template v-else-if="isStatus(session, 'Declined')">Declined</template>
-                                                <template v-else-if="isStatus(session, 'Open')">Open</template>
-                                            </td>
+                                            <td>{{ sessionStatus(session) }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -226,6 +219,28 @@
             },
             isStatus: function (session, status) {
                 return session.status == status
+            },
+            sessionStatus(session) {
+                switch (session.status) {
+                    case 'Applied':
+                        return "You've Applied"
+                    case 'Invited':
+                        return 'Accept Invitation!'
+                    case 'Accepted':
+                        return 'Contract Pending'
+                    case 'Contract':
+                        return 'Contract Pending'
+                    case 'Confirmed':
+                        return "You're Going!"
+                    case 'Declined':
+                        return 'Declined'
+                    case 'Withdrew':
+                        return 'Withdrew'
+                    case 'Completed':
+                        return 'Closed'
+                }
+
+                return 'Open'
             },
             viewSession(session) {
                 console.log('View Session')

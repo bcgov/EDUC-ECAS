@@ -9,36 +9,70 @@
 namespace App;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 class DynamicsRepository
 {
     public static $table;
-    public static $primary_key;
-    public static $fields = [];
-    public static $cache = 0; // Cache the model for x minutes, or 0 don't cache
 
-    public static $base_url = 'https://ecaswebapi.azurewebsites.net/api/operations';
+    public static $primary_key;
+
+    // Fields maps the variables used locally to Dynamics field names
+    // the array key is the local name, the value is the dynamics field
+    // $fields = ['local_field_name' => 'dynamicsfieldname']
+    public static $fields = [];
+
+    // Links are to other items
+    public static $links = [];
+
+    // Cache the model for x minutes, or 0 don't cache
+    public static $cache = 0;
+
+    public static $base_url = 'https://ecaswebapi.azurewebsites.net/api';
+
+    // operations, metadata
+    public static $api_verb = 'operations';
+
+    public static function filter(array $filter)
+    {
+        $query = static::$base_url . '/' . static::$api_verb . '?statement=' . static::$table .
+                 '&$select=' . implode(',', static::$fields) .
+                 '&$filter=' . static::$fields[key($filter)] . ' eq \'' . current($filter) . '\'';
+
+        $response = self::queryAPI('GET', $query);
+
+        $data = json_decode($response->getBody()->getContents())->value;
+
+        $collection = [];
+
+        foreach ($data as $index => $row) {
+            foreach (static::$fields as $local_field_name => $data_source_field_name) {
+                $collection[$index][$local_field_name] = $row->$data_source_field_name;
+            }
+        }
+
+        return $collection;
+    }
 
     public static function get($id = null)
     {
         $cache_key = static::cacheKey($id);
 
-        Log::debug($cache_key);
-
+        // Are we caching this model and does a cached copy exist
         if (static::$cache > 0 && Cache::has($cache_key)) {
+            Log::debug('Loading from Cache: ' . $cache_key);
             $collection = Cache::get($cache_key);
-            Log::debug('Loading from Cache');
         }
+        // Need to get from Dynamics
         else {
+            Log::debug('Loading from Dynamics: ' . $cache_key);
             $collection = self::loadCollection($id);
-            Log::debug('Loading from Dynamics');
 
+            // Cache for future reference
             if (static::$cache > 0) {
-                Cache::put($cache_key, $collection, static::$cache);
                 Log::debug('Caching collection ' . $cache_key);
+                Cache::put($cache_key, $collection, static::$cache);
             }
         }
 
@@ -61,7 +95,7 @@ class DynamicsRepository
 
     public static function create($data)
     {
-        $query = static::$base_url . '?statement=' . static::$table;
+        $query = static::$base_url . '/' . static::$api_verb . '?statement=' . static::$table;
 
         $response = self::queryAPI('POST', $query, $data);
 
@@ -71,7 +105,7 @@ class DynamicsRepository
 
     public static function update($id, $data)
     {
-        $query = static::$base_url . '?statement=' . static::$table . '(' . $id . ')';
+        $query = static::$base_url . '/' . static::$api_verb . '?statement=' . static::$table . '(' . $id . ')';
 
         $response = self::queryAPI('PATCH', $query, $data);
 
@@ -85,9 +119,21 @@ class DynamicsRepository
 
         foreach (static::$fields as $our_name => $dynamics_name) {
             if (isset($data[$our_name])) {
-                $mapped_data[$dynamics_name] = $data[$our_name];
+                if (isset(static::$links[$our_name])) {
+                    $linked_class = static::$links[$our_name];
+                    $mapped_data[$linked_class::$data_bind . '@odata.bind'] = $linked_class::$table . '(' . $data[$our_name] . ')';
+                }
+                else {
+                    $mapped_data[$dynamics_name] = $data[$our_name];
+                }
             }
         }
+        Log::debug($mapped_data);
+//        foreach (static::links as $our_name => $linked_class) {
+//            if (isset($mapped_data[$our_name])) {
+//                $mapped_data[$dynamics_name] = $data[$our_name];
+//            }
+//        }
 
         return $mapped_data;
     }
@@ -131,10 +177,6 @@ class DynamicsRepository
             ]);
         }
 
-        if (static::$cache > 0) {
-            Cache::put($query, $response, static::$cache);
-        }
-
         return $response;
     }
 
@@ -145,15 +187,27 @@ class DynamicsRepository
      */
     private static function loadCollection($id): array
     {
-        $query = static::$base_url . '?statement=' . static::$table . '&$select=' . implode(',', static::$fields);
+        if (static::$api_verb == 'operations') {
+            $query = static::$base_url . '/' . static::$api_verb . '?statement=' . static::$table . '&$select=' . implode(',', static::$fields);
+        }
+        elseif(static::$api_verb == 'metadata') {
+            $query = static::$base_url . '/' . static::$api_verb . '?entityName=' . static::$table . '&optionSetName=' . static::$primary_key;
+        }
 
         if ($id) {
             $query .= '&$filter=' . static::$primary_key . ' eq \'' . $id . '\'';
         }
 
+        Log::debug($query);
+
         $response = self::queryAPI('GET', $query);
 
-        $data = json_decode($response->getBody()->getContents())->value;
+        if (static::$api_verb == 'operations') {
+            $data = json_decode($response->getBody()->getContents())->value;
+        }
+        elseif(static::$api_verb == 'metadata') {
+            $data = json_decode($response->getBody()->getContents())->Options;
+        }
 
         $collection = [];
 

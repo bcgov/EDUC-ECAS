@@ -3,7 +3,6 @@
         <div class="card-header"><h1>Teacher Profile</h1></div>
         <div class="card-body">
             <form>
-                <input type="text" id="id" name="id" v-model="user_local.id">
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="preferred_first_name">Preferred First</label>
@@ -203,8 +202,8 @@
                     district: form.user_local.district
                 }
 
-                if (this.getUser.id !== undefined) {
-                    axios.patch('/Dashboard/profile', data)
+                if (this.new_user) {
+                    axios.post('/Dashboard/profile', data)
                         .then(function (response) {
                             console.log('Patch Profile')
                             form.closeModal()
@@ -218,7 +217,7 @@
                         });
                 }
                 else {
-                    axios.post('/Dashboard/profile', data)
+                    axios.patch('/Dashboard/profile', data)
                         .then(function (response) {
                             console.log('Create Profile')
                             form.closeModal()

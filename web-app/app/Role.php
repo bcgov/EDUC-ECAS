@@ -14,10 +14,12 @@ class Role extends DynamicsRepository
 
     public static $primary_key = 'educ_name';
 
+    public static $data_bind = 'educ_Rolecodes';
+
     public static $cache = 480; // 8 Hours
 
     public static $fields = [
-        'id'   => 'educ_name',
+        'id'   => 'educ_rolecodeid',
         'name' => 'educ_name',
         'rate' => 'educ_rolerate'
     ];

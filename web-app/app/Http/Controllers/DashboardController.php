@@ -11,6 +11,7 @@ use App\School;
 use App\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -58,20 +59,50 @@ class DashboardController extends Controller
             ];
         }
 
+        $payments = [
+            ['id' => 1, 'name' => 'Electronic Transfer'],
+            ['id' => 2, 'name' => 'Cheque']
+        ];
+
         $subjects = $this->loadSubjects();
 
         $schools = $this->loadSchools();
 
         $credentials = $this->loadCredentials();
 
-        $sessions = $this->loadSessions();
-
         $districts = $this->loadDistricts();
 
-        $payments = [
-            ['id' => 1, 'name' => 'Electronic Transfer'],
-            ['id' => 2, 'name' => 'Cheque']
-        ];
+        $sessions = $this->loadSessions();
+
+        $activities = $this->loadActivities();
+
+        $types = $this->loadTypes();
+
+        //TODO: This is getting all assignments, just want this user's
+        $assignments = $this->loadAssignments();
+
+        // Load the Session Look Up fields with info
+        foreach ($sessions as $index => $session) {
+
+            // Default to Open status, if an assignment is present it will overwrite below
+            $sessions[$index]['status'] = 'Open';
+
+            $sessions[$index]['dates'] = Carbon::create($session['start_date'])->format('M d')
+                                         .' - '.
+                                         Carbon::create($session['end_date'])->format('M d');
+
+            $key = array_search($session['activity_id'], array_column($activities, 'id'));
+            $sessions[$index]['activity'] = $activities[$key]['name'];
+
+            $key = array_search($session['type_id'], array_column($types, 'id'));
+            $sessions[$index]['type'] = $types[$key]['name'];
+        }
+
+        // Load the Sessions with any assignment details
+        foreach ($assignments as $assignment) {
+            $session_key = array_search($assignment['session_id'], array_column($sessions, 'id'));
+            $sessions[$session_key]['status'] = $assignment['status'];
+        }
 
         return view('dashboard', [
             'user'        => json_encode($user),
