@@ -41,7 +41,6 @@ class DynamicsApiTest extends TestCase
     public function get_districts()
     {
         $districts = District::get();
-//dd($districts);
 
         $this->assertTrue(is_array($districts));
     }
@@ -177,17 +176,20 @@ class DynamicsApiTest extends TestCase
         $this->assertEquals('NewLastName', $updated_user['last_name']);
 
         // CREATE ASSIGNMENT
-//        $sessions = Session::get();
-//        $roles = Role::get();
-//
-//        $assignment = Assignment::create([
-//            'id'             => 'educ_assignmentid',
-//            'session_id'     => $sessions[0]['id'],
-//            'user_id'        => $user_id,
-//            'role_id'        => $roles[0]['id'],
-//            'contract_stage' => 'None',
-//            'status'         => 'Applied'
-//        ]);
+        $sessions = Session::get();
+        $roles = Role::get();
+        $stages = ContractStage::get();
+        $statuses = AssignmentStage::get();
+
+        $assignment_id = Assignment::create([
+            'session_id'     => $sessions[0]['id'],
+            'user_id'        => $user_id,
+            'role_id'        => $roles[0]['id'],
+            'contract_stage' => $stages[0]['id'],
+            'status'         => $statuses[0]['id']
+        ]);
+
+        $this->assertTrue(is_string($assignment_id));
 
         // CREATE PROFILE CREDENTIAL
         $credentials = Credential::get();
