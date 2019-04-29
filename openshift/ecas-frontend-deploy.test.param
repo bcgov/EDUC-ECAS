@@ -8,7 +8,6 @@
 APPLICATION_DOMAIN=ecas-test.pathfinder.gov.bc.ca
 # IMAGE_NAMESPACE=pvpywj-tools
 TAG_NAME=test
-# APP_KEY=[a-zA-Z0-9]{32}
 # APP_DEBUG=true
 # DOCUMENTROOT=/public
 # PORT=8080

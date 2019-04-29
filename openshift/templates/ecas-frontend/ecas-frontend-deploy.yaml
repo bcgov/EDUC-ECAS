@@ -68,7 +68,7 @@ objects:
         - name: ${NAME}
           env:
           - name: APP_KEY
-            value: base64:${APP_KEY}
+            value: ${APP_KEY}
           - name: APP_DEBUG
             value: ${APP_DEBUG}
           - name: DOCUMENTROOT
