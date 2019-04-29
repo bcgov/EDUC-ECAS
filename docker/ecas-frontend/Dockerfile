@@ -14,9 +14,9 @@ RUN apt-get update  \
     && docker-php-ext-install mcrypt pdo_mysql \
     && docker-php-ext-install zip
 
-RUN npm i -g npm
+#RUN npm i -g npm
 # Set the documet root
-ENV APACHE_DOCUMENT_ROOT /web-app
+ENV APACHE_DOCUMENT_ROOT /web-app/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
