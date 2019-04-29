@@ -11,3 +11,15 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .idea/*
+
+# Certs and keys
+*.crt
+*.key
+
+# tmp script files
+*_DeploymentConfig.json
+*_BuildConfig.json
+*.local.*
+
+# VS Code Files
+.vscode
