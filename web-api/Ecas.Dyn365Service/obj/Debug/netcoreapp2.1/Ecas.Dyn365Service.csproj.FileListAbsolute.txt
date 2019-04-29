@@ -22,9 +22,9 @@ D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\web-api\Ecas.Dyn365Service\o
 D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\web-api\Ecas.Dyn365Service\obj\Debug\netcoreapp2.1\Ecas.Dyn365Service.csproj.CoreCompileInputs.cache
 D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\web-api\Ecas.Dyn365Service\obj\Debug\netcoreapp2.1\Ecas.Dyn365Service.RazorAssemblyInfo.cache
 D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\web-api\Ecas.Dyn365Service\obj\Debug\netcoreapp2.1\Ecas.Dyn365Service.RazorAssemblyInfo.cs
-D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\web-api\Ecas.Dyn365Service\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
 D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\web-api\Ecas.Dyn365Service\obj\Debug\netcoreapp2.1\Ecas.Dyn365Service.AssemblyInfoInputs.cache
 D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\web-api\Ecas.Dyn365Service\obj\Debug\netcoreapp2.1\Ecas.Dyn365Service.AssemblyInfo.cs
 D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\web-api\Ecas.Dyn365Service\obj\Debug\netcoreapp2.1\Ecas.Dyn365Service.RazorTargetAssemblyInfo.cache
 D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\web-api\Ecas.Dyn365Service\obj\Debug\netcoreapp2.1\Ecas.Dyn365Service.dll
 D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\web-api\Ecas.Dyn365Service\obj\Debug\netcoreapp2.1\Ecas.Dyn365Service.pdb
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\web-api\Ecas.Dyn365Service\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs

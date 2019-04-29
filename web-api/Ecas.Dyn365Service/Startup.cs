@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Bazinga.AspNetCore.Authentication.Basic;
+using Ecas.Dyn365Service.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +28,21 @@ namespace Ecas.Dyn365Service
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddScoped<DynamicsAuthenticationSettings>();
+            services.AddScoped<ECasAPISecuritySettings>();
+
+            //services.AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme)
+            //    .AddBasicAuthentication(credentials =>
+            //        Task.FromResult(
+            //            credentials.username == "myUsername"
+            //            && credentials.password == "myPassword"));
+
+            services.AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme)
+                .AddBasicAuthentication(credentials =>
+                    Task.FromResult(
+                        credentials.username == "ecasadmin"
+                        && credentials.password == "Ec@s201p!"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

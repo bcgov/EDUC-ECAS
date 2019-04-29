@@ -13,6 +13,12 @@ namespace Ecas.Dyn365Service.Controllers
     [ApiController]
     public class MetadataController : ControllerBase
     {
+        DynamicsAuthenticationSettings _dynamicsAuthenticationSettings;
+
+        public MetadataController(DynamicsAuthenticationSettings dynamicsAuthenticationSettings)
+        {
+            _dynamicsAuthenticationSettings = dynamicsAuthenticationSettings;
+        }
         // GET: api/Metadata
         [HttpGet]
         public ActionResult<string> Get(string entityName, string optionSetName)
