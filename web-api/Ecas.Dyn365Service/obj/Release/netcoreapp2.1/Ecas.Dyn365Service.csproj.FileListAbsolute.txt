@@ -1,0 +1,15 @@
+C:\Users\victo\source\repos\Ecas.Dyn365Service\bin\Release\netcoreapp2.1\Ecas.Dyn365Service.deps.json
+C:\Users\victo\source\repos\Ecas.Dyn365Service\bin\Release\netcoreapp2.1\Ecas.Dyn365Service.runtimeconfig.json
+C:\Users\victo\source\repos\Ecas.Dyn365Service\bin\Release\netcoreapp2.1\Ecas.Dyn365Service.runtimeconfig.dev.json
+C:\Users\victo\source\repos\Ecas.Dyn365Service\bin\Release\netcoreapp2.1\Ecas.Dyn365Service.dll
+C:\Users\victo\source\repos\Ecas.Dyn365Service\bin\Release\netcoreapp2.1\Ecas.Dyn365Service.pdb
+C:\Users\victo\source\repos\Ecas.Dyn365Service\obj\Release\netcoreapp2.1\Ecas.Dyn365Service.csprojAssemblyReference.cache
+C:\Users\victo\source\repos\Ecas.Dyn365Service\obj\Release\netcoreapp2.1\Ecas.Dyn365Service.csproj.CoreCompileInputs.cache
+C:\Users\victo\source\repos\Ecas.Dyn365Service\obj\Release\netcoreapp2.1\Ecas.Dyn365Service.RazorAssemblyInfo.cache
+C:\Users\victo\source\repos\Ecas.Dyn365Service\obj\Release\netcoreapp2.1\Ecas.Dyn365Service.RazorAssemblyInfo.cs
+C:\Users\victo\source\repos\Ecas.Dyn365Service\obj\Release\netcoreapp2.1\UserSecretsAssemblyInfo.cs
+C:\Users\victo\source\repos\Ecas.Dyn365Service\obj\Release\netcoreapp2.1\Ecas.Dyn365Service.AssemblyInfoInputs.cache
+C:\Users\victo\source\repos\Ecas.Dyn365Service\obj\Release\netcoreapp2.1\Ecas.Dyn365Service.AssemblyInfo.cs
+C:\Users\victo\source\repos\Ecas.Dyn365Service\obj\Release\netcoreapp2.1\Ecas.Dyn365Service.RazorTargetAssemblyInfo.cache
+C:\Users\victo\source\repos\Ecas.Dyn365Service\obj\Release\netcoreapp2.1\Ecas.Dyn365Service.dll
+C:\Users\victo\source\repos\Ecas.Dyn365Service\obj\Release\netcoreapp2.1\Ecas.Dyn365Service.pdb
