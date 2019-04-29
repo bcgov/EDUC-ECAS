@@ -1,6 +1,5 @@
 #!/bin/bash
 export MSYS_NO_PATHCONV=1
-export DOCKERHOST=${APPLICATION_URL-$(docker run --rm --net=host chilio/laravel-dusk-ci)}
 set -e
 
 S2I_EXE=s2i
@@ -71,7 +70,22 @@ DEFAULT_CONTAINERS="ecas-frontend"
 # -----------------------------------------------------------------------------------------------------------------
 # Functions:
 # -----------------------------------------------------------------------------------------------------------------
-build-api() {
+build-ecas-frontend() {
+  #
+  # ecas-frontend
+  #
+
+  echo "in build-ecas-frontend"
+
+  BASE_IMAGE="registry.access.redhat.com/rhscl/php-71-rhel7"
+  echo -e "\nBuilding ecas-frontend image from ${BASE_IMAGE}..."
+  ${S2I_EXE} build \
+    '../web-app' \
+    "$BASE_IMAGE" \
+    'ecas-frontend'
+}
+
+build-ecas-api() {
   #
   # ecas-api
   #
@@ -87,7 +101,10 @@ build-api() {
 }
 
 buildImages() {
-  ecas-api
+  echo "in buildImages"
+
+  build-ecas-frontend
+  # build-ecas-api
 }
 
 configureEnvironment() {
@@ -201,7 +218,8 @@ build)
   configureEnvironment $@
   case "$@" in
   *)
-    buildImages
+    echo "buildImages"
+    buildImages    
     ;;
   esac
   ;;
