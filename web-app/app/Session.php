@@ -14,7 +14,7 @@ class Session extends DynamicsRepository
 
     public static $primary_key = 'educ_sessionid';
 
-    public static $data_bind = 'educ_Sessions';
+    public static $data_bind = 'educ_Session';
 
     public static $cache = 480; // 8 Hours
 

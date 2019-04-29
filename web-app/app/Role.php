@@ -14,7 +14,7 @@ class Role extends DynamicsRepository
 
     public static $primary_key = 'educ_name';
 
-    public static $data_bind = 'educ_Rolecodes';
+    public static $data_bind = 'educ_Role';
 
     public static $cache = 480; // 8 Hours
 
