@@ -7,7 +7,7 @@
     <title>ECAS</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
@@ -34,7 +34,7 @@
 
         <div class="row bg-primary">
             <div class="col offset-1">
-                <img src="{{ asset('logo-banner.svg') }}" height="80px">
+                <img src="/logo-banner.svg" height="80px">
             </div>
         </div>
         <div class="container">
@@ -58,7 +58,8 @@
         </div>
     </footer>
 
-<script src="{{ asset('js/app.js') }}"></script>
+<script src="/js/app.js"></script>
+{{--<script src="{{ asset('js/app.js') }}"></script>--}}
 
 </body>
 </html>
