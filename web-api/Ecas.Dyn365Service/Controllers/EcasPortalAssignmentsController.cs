@@ -4,12 +4,14 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Ecas.Dyn365Service.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecas.Dyn365Service.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class EcasPortalAssignmentsController : ControllerBase
     {

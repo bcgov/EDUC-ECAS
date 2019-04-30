@@ -31,12 +31,12 @@ namespace Ecas.Dyn365Service.Utils
             String authorityUrl = ap.Authority;
             String resourceUrl = ap.Resource;
 
-            return getOnPremHttpClient(_dynamicsAuthenticationSettings.OnPremUserName, _dynamicsAuthenticationSettings.OnPremPassword,
-                _dynamicsAuthenticationSettings.OnPremDomain, _dynamicsAuthenticationSettings.OnPremWebApiUrl);
+            //return getOnPremHttpClient(_dynamicsAuthenticationSettings.OnPremUserName, _dynamicsAuthenticationSettings.OnPremPassword,
+            //    _dynamicsAuthenticationSettings.OnPremDomain, _dynamicsAuthenticationSettings.OnPremWebApiUrl);
 
-            //return getOnlineHttpClient(resourceUrl, authorityUrl, _dynamicsAuthenticationSettings.CloudClientId, 
-            //    _dynamicsAuthenticationSettings.CloudClientSecret, _dynamicsAuthenticationSettings.CloudResourceUrl, 
-            //    _dynamicsAuthenticationSettings.CloudUserName, _dynamicsAuthenticationSettings.CloudWebApiUrl);
+            return getOnlineHttpClient(resourceUrl, authorityUrl, _dynamicsAuthenticationSettings.CloudClientId,
+                _dynamicsAuthenticationSettings.CloudClientSecret, _dynamicsAuthenticationSettings.CloudResourceUrl,
+                _dynamicsAuthenticationSettings.CloudUserName, _dynamicsAuthenticationSettings.CloudWebApiUrl);
         }
 
         private HttpClient getOnPremHttpClient(string userName, string password, string domainName, string webAPIBaseAddress)
