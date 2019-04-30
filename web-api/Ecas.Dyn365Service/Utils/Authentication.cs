@@ -31,17 +31,27 @@ namespace Ecas.Dyn365Service.Utils
             String authorityUrl = ap.Authority;
             String resourceUrl = ap.Resource;
 
-            //return getOnPremHttpClient(_dynamicsAuthenticationSettings.OnPremUserName, _dynamicsAuthenticationSettings.OnPremPassword,
-            //    _dynamicsAuthenticationSettings.OnPremDomain, _dynamicsAuthenticationSettings.OnPremWebApiUrl);
+            return getOnPremHttpClient(_dynamicsAuthenticationSettings.OnPremUserName, _dynamicsAuthenticationSettings.OnPremPassword,
+                _dynamicsAuthenticationSettings.OnPremDomain, _dynamicsAuthenticationSettings.OnPremWebApiUrl);
 
-            return getOnlineHttpClient(resourceUrl, authorityUrl, _dynamicsAuthenticationSettings.CloudClientId, 
-                _dynamicsAuthenticationSettings.CloudClientSecret, _dynamicsAuthenticationSettings.CloudResourceUrl, 
-                _dynamicsAuthenticationSettings.CloudUserName, _dynamicsAuthenticationSettings.CloudWebApiUrl);
+            //return getOnlineHttpClient(resourceUrl, authorityUrl, _dynamicsAuthenticationSettings.CloudClientId, 
+            //    _dynamicsAuthenticationSettings.CloudClientSecret, _dynamicsAuthenticationSettings.CloudResourceUrl, 
+            //    _dynamicsAuthenticationSettings.CloudUserName, _dynamicsAuthenticationSettings.CloudWebApiUrl);
         }
 
         private HttpClient getOnPremHttpClient(string userName, string password, string domainName, string webAPIBaseAddress)
         {
-            HttpClient client = new HttpClient(new HttpClientHandler() { Credentials = new NetworkCredential(userName, password, domainName) });
+            var handler = new HttpClientHandler();
+            handler.Credentials = new NetworkCredential(userName, password, domainName);
+            //TODO: Certificate validation workaround
+            handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+            handler.ServerCertificateCustomValidationCallback =
+                (httpRequestMessage, cert, cetChain, policyErrors) =>
+                {
+                    return true;
+                };
+
+            HttpClient client = new HttpClient(handler);
             client.BaseAddress = new Uri(webAPIBaseAddress);
             client.Timeout = new TimeSpan(0, 2, 0);
             return client;

@@ -58,6 +58,7 @@ namespace Ecas.Dyn365Service
             }
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseMvc();
         }
     }
