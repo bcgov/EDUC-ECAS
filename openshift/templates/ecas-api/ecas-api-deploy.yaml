@@ -66,13 +66,6 @@ objects:
       spec:
         containers:
         - name: ${NAME}
-          env:
-          - name: APP_KEY
-            value: ${APP_KEY}
-          - name: APP_DEBUG
-            value: ${APP_DEBUG}
-          - name: DOCUMENTROOT
-            value: ${DOCUMENTROOT}
           image: " "
           ports:
           - containerPort: ${{PORT}}
