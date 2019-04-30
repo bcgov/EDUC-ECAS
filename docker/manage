@@ -89,13 +89,10 @@ build-ecas-api() {
   #
   # ecas-api
   #
-  BASE_IMAGE="centos/python-36-centos7"
+  BASE_IMAGE="registry.access.redhat.com/dotnet/dotnet-21-rhel7"
   echo -e "\nBuilding ecas-api image from ${BASE_IMAGE}..."
   ${S2I_EXE} build \
-    -e "UPGRADE_PIP_TO_LATEST=true" \
-    -e "PIP_NO_CACHE_DIR=" \
-    -v "${COMPOSE_PROJECT_NAME}_ecas-pip-cache:/opt/app-root/.cache/pip" \
-    '../ecas-api' \
+    '../web-api/Ecas.Dyn365Service' \
     "$BASE_IMAGE" \
     'ecas-api'
 }
@@ -104,7 +101,7 @@ buildImages() {
   echo "in buildImages"
 
   build-ecas-frontend
-  # build-ecas-api
+  build-ecas-api
 }
 
 configureEnvironment() {

@@ -5,12 +5,8 @@ services:
   #
   ecas-frontend:
     image: ecas-frontend
-    # build:
-    #   context: ..
-    #   dockerfile: docker/ecas-frontend/Dockerfile
-    # working_dir: /web-app
     ports:
-      - 8080:8080
+      - 7070:8080
     networks:
       - webnet
     environment:
@@ -18,6 +14,16 @@ services:
       - APP_DEBUG=true
       - APP_URL=http://localhost
       - DOCUMENTROOT=/public
+
+#
+  # ecas-api
+  #
+  ecas-api:
+    image: ecas-api
+    ports:
+      - 8080:8080
+    networks:
+      - webnet
 
 
 #   #
