@@ -55,6 +55,16 @@ class DynamicsRepository
         return $collection;
     }
 
+    public static function delete($id)
+    {
+        $query = static::$base_url . '/' . static::$api_verb . '?statement=' . static::$table . '(' . $id . ')';
+
+        $response = self::queryAPI('DELETE', $query);
+
+        // Returns an array of the returned data
+        return self::mapToLocal(json_decode($response->getBody()->getContents(), true));
+    }
+
     public static function get($id = null)
     {
         $cache_key = static::cacheKey($id);
@@ -129,11 +139,6 @@ class DynamicsRepository
             }
         }
         Log::debug($mapped_data);
-//        foreach (static::links as $our_name => $linked_class) {
-//            if (isset($mapped_data[$our_name])) {
-//                $mapped_data[$dynamics_name] = $data[$our_name];
-//            }
-//        }
 
         return $mapped_data;
     }
@@ -168,7 +173,7 @@ class DynamicsRepository
      */
     private static function queryAPI($method, $query, $data = null)
     {
-        if ($method == 'GET') {
+        if ($method == 'GET' || $method == 'DELETE') {
             $response = self::connection()->request($method, $query);
         }
         else {

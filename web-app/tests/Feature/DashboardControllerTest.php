@@ -94,6 +94,17 @@ class DashboardControllerTest extends TestCase
             ->assertOk();
     }
 
+    /** @test */
+    public function apply_to_session()
+    {
+        $response = $this->post('/Dashboard/session', [
+            'session_id' => '',
+            'action' => 'apply'
+        ]);
+
+        // A new Application should be created in Dynamics
+    }
+
     /**
      * @return array
      */

@@ -205,7 +205,7 @@
                 if (this.new_user) {
                     axios.post('/Dashboard/profile', data)
                         .then(function (response) {
-                            console.log('Patch Profile')
+                            console.log('Create Profile')
                             form.closeModal()
                             Event.fire('profile-updated', response.data)
                         })
@@ -219,7 +219,7 @@
                 else {
                     axios.patch('/Dashboard/profile', data)
                         .then(function (response) {
-                            console.log('Create Profile')
+                            console.log('Patch Profile')
                             form.closeModal()
                             Event.fire('profile-updated', response.data)
                         })

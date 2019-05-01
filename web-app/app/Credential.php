@@ -12,14 +12,14 @@ class Credential extends DynamicsRepository
 {
     public static $table = 'educ_credentialcodes';
 
-    public static $primary_key = 'educ_credentialcode';
+    public static $primary_key = 'educ_credentialcodeid';
 
     public static $data_bind = 'educ_Credential';
 
     public static $cache = 480; // 8 Hours
 
     public static $fields = [
-        'id'   => 'educ_credentialcode',
+        'id'   => 'educ_credentialcodeid',
         'name' => 'educ_name'
     ];
 }

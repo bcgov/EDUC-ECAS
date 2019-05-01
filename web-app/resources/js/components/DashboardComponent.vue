@@ -8,19 +8,22 @@
                         <div class="card">
                             <div class="card-header">
                                 <button @click="showProfile" class="float-right btn btn-primary">Edit</button>
-                                <h2>{{ getUser.preferred_first_name }} {{ getUser.last_name }}</h2>
+                                <h2>
+                                    <span v-if="getUser.preferred_first_name">{{ getUser.preferred_first_name }}</span>
+                                    <span v-else>{{ getUser.first_name }}</span>
+                                    {{ getUser.last_name }}
+                                </h2>
                             </div>
                             <div class="card-body">
-                                <p>{{ getUser.email }}<br/>
+                                <p v-show="!new_user">{{ getUser.email }}<br/>
                                     {{ getUser.address_1 }}<br/>
                                     {{ getUser.city }}, {{ getUser.region }}</p>
-                                <p v-if="typeof getUser.professional_certificate_bc !== 'undefined' && getUser.professional_certificate_bc.length > 1">
+                                <p v-if="getUser.professional_certificate_bc">
                                     <strong>BC Professional Certificate:</strong> {{ getUser.professional_certificate_bc }}
                                 </p>
-                                <p v-if="typeof getUser.professional_certificate_yk !== 'undefined' && getUser.professional_certificate_yk.length > 1">
-                                    <strong>Yukon Professional Certificate:</strong> {{ getUser.professional_certificate_yk
-                                    }}</p>
-                                <p v-if="typeof getUser.professional_certificate_other !== 'undefined' && getUser.professional_certificate_other.length > 1">
+                                <p v-if="getUser.professional_certificate_yk">
+                                    <strong>Yukon Professional Certificate:</strong> {{ getUser.professional_certificate_yk }}</p>
+                                <p v-if="getUser.professional_certificate_other">
                                     <strong>Other Certificate:</strong> {{ getUser.professional_certificate_other }}</p>
                             </div>
                         </div>
@@ -32,7 +35,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="row" v-for="credential in credentials_applied">
-                                    <div class="col-1"><i class="fas fa-igloo"></i></div>
+                                    <div class="col-1" style="color: red;" @click="deleteCredential(credential)"><font-awesome-icon icon="trash" /></div>
                                     <div class="col">{{ credential.name }}</div>
                                 </div>
                                 <div class="row">
@@ -102,7 +105,7 @@
                                             v-for="session in filteredSessions(sessions_local)">
                                             <td>{{ session.type }}</td>
                                             <td>{{ session.activity }}</td>
-                                            <td>{{ session.dates }}</td>
+                                            <td nowrap>{{ session.dates }}</td>
                                             <td>{{ session.location }}</td>
                                             <td>{{ sessionStatus(session) }}</td>
                                         </tr>
@@ -139,6 +142,7 @@
         props: {
             user: {},
             credentials: {},
+            user_credentials: {},
             sessions: {},
             subjects: {},
             schools: {},
@@ -149,7 +153,7 @@
         data() {
             return {
                 sessions_local: this.sessions,
-                credentials_applied: [],
+                credentials_applied: [...this.user_credentials],
                 credentials_available: [...this.credentials],
                 new_credential: 0,
                 filter: '',
@@ -161,6 +165,7 @@
             console.log('Dashboard Mounted')
             this.$store.commit('SET_USER', this.user)
             Event.listen('credential-added', this.pushCredential)
+            Event.listen('credential-deleted', this.removeCredential)
             Event.listen('profile-updated', this.updateProfile)
 
             if (this.getUser.id === undefined) {
@@ -174,13 +179,14 @@
                 ])
         },
         methods: {
-            addCredential: function () {
+            addCredential() {
                 console.log('adding credential')
 
                 var form = this
 
                 axios.post('/Dashboard/credential', {
-                    credential_id: form.new_credential
+                    credential_id: form.new_credential,
+                    user_id: form.getUser.id
                 })
                     .then(function (response) {
                         Event.fire('credential-added', response.data)
@@ -190,20 +196,57 @@
                         console.log('Failure!')
                     });
             },
-            countStatus: function (status) {
+            deleteCredential(profile_credential) {
+                console.log('removing credential')
+
+                var form = this
+
+                axios.post('/Dashboard/credential/delete', {
+                    profile_credential_id: profile_credential.id
+                })
+                    .then(function (response) {
+                        Event.fire('credential-deleted', response.data)
+                        console.log('Success!')
+                    })
+                    .catch(function (error) {
+                        console.log('Failure!')
+                    });
+            },
+            countStatus(status) {
                 // var status
                 return Object.values(this.sessions_local).filter(function (assignment) {
                     return assignment.status == status
                 }).length
             },
-            pushCredential(credential) {
+            pushCredential(profile_credential) {
                 console.log('pushing credential')
 
+                // Get the credential
+                let index = this.credentials_available.findIndex(elm => elm.id === profile_credential.credential_id)
+                let credential = this.credentials_available[index]
+                credential.credential_id = credential.id
+                credential.id = profile_credential.id
+
                 // Remove the credential from the available list
-                this.credentials_available.splice(this.credentials_available.findIndex(elm => elm.id === credential.id), 1)
+                this.credentials_available.splice(index, 1)
 
                 // Add to the applied list
                 this.credentials_applied.unshift(credential)
+
+                this.new_credential = 0;
+            },
+            removeCredential(profile_credential) {
+                console.log('remove credential')
+
+                // Get the credential
+                let index = this.credentials_applied.findIndex(elm => elm.id === profile_credential.id)
+                let credential = this.credentials_applied[index]
+
+                // Remove the credential from the applied list
+                this.credentials_applied.splice(index, 1)
+
+                // Add to the available list
+                this.credentials_available.unshift(credential)
 
                 this.new_credential = 0;
             },

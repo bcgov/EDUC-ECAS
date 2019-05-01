@@ -62,6 +62,8 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
+
     export default {
         name: "Session",
         props: {
@@ -76,6 +78,9 @@
             console.log('Session Mounted')
         },
         computed: {
+            ...mapGetters([
+                'getUser'
+            ])
         },
         methods: {
             closeModal() {
@@ -105,9 +110,24 @@
 
                 this.closeModal()
 
+                var form = this
+
                 if (attend) {
                     console.log('applying to session ' + session.id)
                     session.status = 'Applied'
+
+                    axios.post('/Dashboard/session', {
+                        session_id: session.id,
+                        user_id: form.getUser.id,
+                        action: 'apply'
+                    })
+                        .then(function (response) {
+                            // Event.fire('credential-added', response.data)
+                            console.log(response.data)
+                        })
+                        .catch(function (error) {
+                            console.log('Failure!')
+                        });
                 }
                 else {
                     console.log('cancelling application to session ' + session.id)

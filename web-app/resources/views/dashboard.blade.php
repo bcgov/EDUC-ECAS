@@ -11,6 +11,7 @@
         :regions="{{ $regions }}"
         :districts="{{ $districts }}"
         :payments="{{ $payments }}"
+        :user_credentials="{{ $user_credentials }}"
         dusk="dashboard-component"
         >
     </dashboard>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Assignment;
 use App\Credential;
 use App\District;
+use App\Profile;
 use App\School;
 use App\Session;
 use App\SessionActivity;
@@ -19,8 +20,9 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected function loadUser()
+    protected function loadUser($id)
     {
+        return Profile::get($id);
         // Mock querying Dynamics for a User
         return [
             'id'                          => 1,
@@ -74,9 +76,9 @@ class Controller extends BaseController
         return SessionActivity::get();
     }
 
-    protected function loadAssignments()
+    protected function loadAssignments($user_id)
     {
-        return Assignment::get();
+        return Assignment::filter(['user_id' => $user_id]);
     }
 
     protected function loadTypes()

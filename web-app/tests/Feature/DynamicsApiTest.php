@@ -182,8 +182,8 @@ class DynamicsApiTest extends TestCase
         $statuses = AssignmentStage::get();
 
         $assignment_id = Assignment::create([
-            'session_id'     => $sessions[0]['id'],
             'user_id'        => $user_id,
+            'session_id'     => $sessions[0]['id'],
             'role_id'        => $roles[0]['id'],
             'contract_stage' => $stages[0]['id'],
             'status'         => $statuses[0]['id']
@@ -191,22 +191,33 @@ class DynamicsApiTest extends TestCase
 
         $this->assertTrue(is_string($assignment_id));
 
+        // Get the assignments for this
+        $assignments = Assignment::filter(['user_id' => $user_id]);
+
+        $this->assertEquals(1, count($assignments));
+        $this->assertEquals($assignment_id, $assignments[0]['id']);
+        $this->assertEquals($user_id, $assignments[0]['user_id']);
+
         // CREATE PROFILE CREDENTIAL
         $credentials = Credential::get();
 
-        $credential = $credentials[0]; // Let's just assign whatever the first credential is
-        ProfileCredential::create([
+        $profile_credential_id = ProfileCredential::create([
             'user_id'       => $user_id,
-            'credential_id' => $credential['id']
+            'credential_id' => $credentials[0]['id']
         ]);
 
         $user_credentials = ProfileCredential::filter(['user_id' => $user_id]);
 
         $this->assertEquals(1, count($user_credentials));
-        $this->assertEquals($credential['id'], $user_credentials[0]['credential_id']);
+        $this->assertEquals($credentials[0]['id'], $user_credentials[0]['credential_id']);
         $this->assertEquals($user_id, $user_credentials[0]['user_id']);
 
         // Delete Profile Credential
+        ProfileCredential::delete($profile_credential_id);
+
+        $user_credentials = ProfileCredential::filter(['user_id' => $user_id]);
+
+        $this->assertEquals(0, count($user_credentials));
     }
 
 }
