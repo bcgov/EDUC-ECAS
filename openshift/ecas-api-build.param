@@ -1,14 +1,14 @@
 #=========================================================
 # OpenShift template parameters for:
 # Component: .
-# Template File: templates/ecas-frontend/ecas-frontend-build.json
+# Template File: templates/ecas-api/ecas-api-build.json
 #=========================================================
-NAME=ecas-frontend
+NAME=ecas-api
 APP_NAME=ecas
 GIT_REPO_URL=https://github.com/bcgov/ECAS.git
 GIT_REF=dev
-SOURCE_CONTEXT_DIR=web-app
+SOURCE_CONTEXT_DIR=web-api/Ecas.Dyn365Service
 SOURCE_IMAGE_KIND=DockerImage
-SOURCE_IMAGE_NAME=registry.access.redhat.com/rhscl/php-71-rhel7
+SOURCE_IMAGE_NAME=registry.access.redhat.com/dotnet/dotnet-21-rhel7
 SOURCE_IMAGE_TAG=latest
 OUTPUT_IMAGE_TAG=latest

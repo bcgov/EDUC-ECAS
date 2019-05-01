@@ -66,13 +66,6 @@ objects:
       spec:
         containers:
         - name: ${NAME}
-          env:
-          - name: APP_KEY
-            value: ${APP_KEY}
-          - name: APP_DEBUG
-            value: ${APP_DEBUG}
-          - name: DOCUMENTROOT
-            value: ${DOCUMENTROOT}
           image: " "
           ports:
           - containerPort: ${{PORT}}
@@ -121,7 +114,7 @@ parameters:
   displayName: Name
   description: The name assigned to all the objects defined in this template.
   required: true
-  value: ecas-frontend
+  value: ecas-api
 - name: APP_GROUP
   displayName: App Group
   description: Used to group components together.
@@ -141,18 +134,10 @@ parameters:
   description: The TAG name for this environment, e.g., dev, test, prod.
   required: true
   value: dev
-- name: APP_KEY
-  displayName: Application Unique KEY
-  from: "[a-zA-Z0-9]{32}"
-  generate: expression
 - name: APP_DEBUG
   displayName: Application Debug
   required: true
   value: "true"
-- name: DOCUMENTROOT
-  displayName: Document Root
-  required: true
-  value: "/public"
 - name: PORT
   displayName: Port
   description: The port on which the service will listen.
