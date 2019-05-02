@@ -1,5 +1,6 @@
 These instructions assume you have installed the [OpenShift scripts](https://github.com/BCDevOps/openshift-developer-tools/blob/master/bin/README.md) and that they are accessible via your PATH environment variable.
 
+You will also need to use the [docker/manage.sh](../docker/README.md)  to build the images locally.
 # Param management
 Run the genParams.sh whenever a new template is created or a change adds a new param
 ```
