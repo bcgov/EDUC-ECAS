@@ -11,7 +11,14 @@ Ministry of Education Examinations and Contract Administration System
 
 
 
-## Features
+Repository Map
+--------------
+- **Docker**: Docker compose and manage.sh scripts
+- **Jenkins**: Jenkins configuration data
+- **openshift**: [OpenShift templates](openshift/templates/README.md)
+- **Sonar-runner**: The component that gets configured to run within SonarQube
+- **web-app**: The Laravel Application
+- **web-api**: The .NET Core API layer to Dynamics
 
 ## Usage
 
