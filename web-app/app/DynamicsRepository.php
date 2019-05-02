@@ -29,7 +29,8 @@ class DynamicsRepository
     // Cache the model for x minutes, or 0 don't cache
     public static $cache = 0;
 
-    public static $base_url = 'https://ecaswebapi.azurewebsites.net/api';
+    //public static $base_url = 'https://ecaswebapi.azurewebsites.net/api';
+    public static $base_url = $_SERVER["DYNAMICSBASEURL"];
 
     // operations, metadata
     public static $api_verb = 'operations';
