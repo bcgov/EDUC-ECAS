@@ -44,13 +44,7 @@ class DynamicsRepository
 
         $data = json_decode($response->getBody()->getContents())->value;
 
-        $collection = [];
-
-        foreach ($data as $index => $row) {
-            foreach (static::$fields as $local_field_name => $data_source_field_name) {
-                $collection[$index][$local_field_name] = $row->$data_source_field_name;
-            }
-        }
+        $collection = self::convertDynamicsToLocalVariables($data);
 
         return $collection;
     }
@@ -120,7 +114,15 @@ class DynamicsRepository
         $response = self::queryAPI('PATCH', $query, $data);
 
         // Returns an array of the returned data
-        return self::mapToLocal(json_decode($response->getBody()->getContents(), true));
+        $data = json_decode($response->getBody()->getContents());
+
+        Log::debug('data returned from PATCH call to Dynamics API');
+        ob_start();
+        var_dump($data);
+        $data = ob_get_clean();
+        Log::debug( $data);
+
+        return self::mapToLocal($data);
     }
 
     private static function mapToDynamics($data): array
@@ -138,6 +140,8 @@ class DynamicsRepository
                 }
             }
         }
+
+        Log::debug('data mapped to local variables:');
         Log::debug($mapped_data);
 
         return $mapped_data;
@@ -195,7 +199,7 @@ class DynamicsRepository
         if (static::$api_verb == 'operations') {
             $query = static::$base_url . '/' . static::$api_verb . '?statement=' . static::$table . '&$select=' . implode(',', static::$fields);
         }
-        elseif(static::$api_verb == 'metadata') {
+        elseif (static::$api_verb == 'metadata') {
             $query = static::$base_url . '/' . static::$api_verb . '?entityName=' . static::$table . '&optionSetName=' . static::$primary_key;
         }
 
@@ -210,10 +214,21 @@ class DynamicsRepository
         if (static::$api_verb == 'operations') {
             $data = json_decode($response->getBody()->getContents())->value;
         }
-        elseif(static::$api_verb == 'metadata') {
+        elseif (static::$api_verb == 'metadata') {
             $data = json_decode($response->getBody()->getContents())->Options;
         }
 
+        $collection = self::convertDynamicsToLocalVariables($data);
+
+        return $collection;
+    }
+
+    /**
+     * @param $data
+     * @return array
+     */
+    private static function convertDynamicsToLocalVariables($data): array
+    {
         $collection = [];
 
         foreach ($data as $index => $row) {
