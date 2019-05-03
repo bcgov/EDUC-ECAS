@@ -29,15 +29,12 @@ class DynamicsRepository
     // Cache the model for x minutes, or 0 don't cache
     public static $cache = 0;
 
-    //public static $base_url = 'https://ecaswebapi.azurewebsites.net/api';
-    public static $base_url = $_SERVER["DYNAMICSBASEURL"];
-
     // operations, metadata
     public static $api_verb = 'operations';
 
     public static function filter(array $filter)
     {
-        $query = static::$base_url . '/' . static::$api_verb . '?statement=' . static::$table .
+        $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table .
                  '&$select=' . implode(',', static::$fields) .
                  '&$filter=' . static::$fields[key($filter)] . ' eq \'' . current($filter) . '\'';
 
@@ -52,7 +49,7 @@ class DynamicsRepository
 
     public static function delete($id)
     {
-        $query = static::$base_url . '/' . static::$api_verb . '?statement=' . static::$table . '(' . $id . ')';
+        $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '(' . $id . ')';
 
         $response = self::queryAPI('DELETE', $query);
 
@@ -100,7 +97,7 @@ class DynamicsRepository
 
     public static function create($data)
     {
-        $query = static::$base_url . '/' . static::$api_verb . '?statement=' . static::$table;
+        $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table;
 
         $response = self::queryAPI('POST', $query, $data);
 
@@ -110,7 +107,7 @@ class DynamicsRepository
 
     public static function update($id, $data)
     {
-        $query = static::$base_url . '/' . static::$api_verb . '?statement=' . static::$table . '(' . $id . ')';
+        $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '(' . $id . ')';
 
         $response = self::queryAPI('PATCH', $query, $data);
 
@@ -121,7 +118,7 @@ class DynamicsRepository
         ob_start();
         var_dump($data);
         $data = ob_get_clean();
-        Log::debug( $data);
+        Log::debug($data);
 
         return self::mapToLocal($data);
     }
@@ -163,9 +160,10 @@ class DynamicsRepository
 
     protected static function connection()
     {
+
         return new Client([
             // Base URI is used with relative requests
-            'base_uri' => self::$base_url,
+            'base_uri' => env('DYNAMICSBASEURL'),
             // You can set any number of default request options.
             'timeout'  => 5.0,
         ]);
@@ -197,11 +195,12 @@ class DynamicsRepository
      */
     private static function loadCollection($id): array
     {
+
         if (static::$api_verb == 'operations') {
-            $query = static::$base_url . '/' . static::$api_verb . '?statement=' . static::$table . '&$select=' . implode(',', static::$fields);
+            $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '&$select=' . implode(',', static::$fields);
         }
         elseif (static::$api_verb == 'metadata') {
-            $query = static::$base_url . '/' . static::$api_verb . '?entityName=' . static::$table . '&optionSetName=' . static::$primary_key;
+            $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?entityName=' . static::$table . '&optionSetName=' . static::$primary_key;
         }
 
         if ($id) {
