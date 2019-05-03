@@ -12,18 +12,19 @@ use App\ProfileCredential;
 use App\School;
 use App\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
+    private $test_user_id = 'cf7837ae-0862-e911-a983-000d3af42a5a';
+
     public function index()
     {
-        $test_user_id = 'cf7837ae-0862-e911-a983-000d3af42a5a';
-
         $user = [];
 //        if ($this->userLoggedIn()) {
-        $user = $this->loadUser($test_user_id);
+        $user = $this->loadUser($this->test_user_id);
 //        }
 //        else {
 //            $user = [
@@ -84,7 +85,7 @@ class DashboardController extends Controller
         // Not all Statuses should be displayed to the user
         $do_not_display = ['Selected'];
 
-        $assignments = $this->loadAssignments($test_user_id);
+        $assignments = $this->loadAssignments($this->test_user_id);
 
         foreach ($assignments as $assignment) {
             $assignment_status_key = array_search($assignment['status'], array_column($assignment_statuses, 'id'));
@@ -96,7 +97,7 @@ class DashboardController extends Controller
             }
         }
 
-        $user_credentials = ProfileCredential::filter(['user_id' => $test_user_id]);
+        $user_credentials = ProfileCredential::filter(['user_id' => $this->test_user_id]);
 //        dump(json_encode($user_credentials));
 //        dd(json_encode($credentials));
         // Need to inject the name into the applied credential
@@ -133,7 +134,7 @@ class DashboardController extends Controller
             Session::forget('user_id');
         }
         else {
-            $user = $this->loadUser();
+            $user = $this->loadUser($this->test_user_id);
             Session::put('user_id', $user['id']);
         }
 
@@ -174,6 +175,15 @@ class DashboardController extends Controller
         $user_id = Profile::create($request->all());
 
         $user = Profile::get($user_id);
+
+        return json_encode($user);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $request = $this->validateProfileRequest($request);
+
+        $user = Profile::update($this->test_user_id, $request->all());
 
         return json_encode($user);
     }

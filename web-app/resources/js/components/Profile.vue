@@ -44,9 +44,9 @@
                         <form-error :errors="errors" field="phone"></form-error>
                     </div>
                     <div class="form-group col">
-                        <label for="social_insurance_no">S.I.N.</label>
-                        <input v-model="user_local.social_insurance_no" type="text" class="form-control"
-                               name="social_insurance_no" id="social_insurance_no">
+                        <label for="social_insurance_number">S.I.N.</label>
+                        <input v-model="user_local.social_insurance_number" type="text" class="form-control"
+                               name="social_insurance_number" id="social_insurance_number">
                     </div>
                 </div>
                 <div class="form-row">
@@ -88,9 +88,11 @@
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="district">Current District</label>
-                        <select class="form-control" v-model="user_local.district" id="district">
+                        <select class="form-control" v-model="user_local.district_id" id="district">
                             <option disabled value="">Please select one</option>
-                            <option v-bind:value="district.id" v-for="district in districts">{{ district.name }}</option>
+                            <option v-for="district in districts" :value="district.id">
+                                {{ district.name }}
+                            </option>
                         </select>
                     </div>
                     <div class="form-group col">
@@ -116,14 +118,6 @@
                         <label for="professional_certificate_other">Other</label>
                         <input type="text" class="form-control" name="professional_certificate_other"
                                v-model="user_local.professional_certificate_other" id="professional_certificate_other">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col">
-                        <label for="payment">Please pay me by...</label>
-                        <select class="form-control" name="payment" id="payment">
-                            <option v-bind:key="payment.id" v-for="payment in payments">{{ payment.name }}</option>
-                        </select>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -181,6 +175,7 @@
 
                 var form = this
 
+                // Data must be registered here to interact with the form
                 var data = {
                     id: form.user_local.id,
                     email: form.user_local.email,
@@ -188,7 +183,7 @@
                     preferred_first_name: form.user_local.preferred_first_name,
                     first_name: form.user_local.first_name,
                     last_name: form.user_local.last_name,
-                    social_insurance_no: form.user_local.social_insurance_no,
+                    social_insurance_number: form.user_local.social_insurance_number,
                     professional_certificate_bc: form.user_local.professional_certificate_bc,
                     professional_certificate_yk: form.user_local.professional_certificate_yk,
                     professional_certificate_other: form.user_local.professional_certificate_other,
@@ -198,8 +193,7 @@
                     city: form.user_local.city,
                     region: form.user_local.region,
                     postal_code: form.user_local.postal_code,
-                    payment: form.user_local.payment,
-                    district: form.user_local.district
+                    district_id: form.user_local.district_id
                 }
 
                 if (this.new_user) {

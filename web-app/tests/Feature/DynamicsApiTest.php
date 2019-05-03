@@ -136,7 +136,7 @@ class DynamicsApiTest extends TestCase
     /** @test */
     public function create_and_update_profile_credential_and_assignment()
     {
-        $districts = District::get();
+        $this->districts = District::get();
 
         // CREATE PROFILE
         $user_id = Profile::create([
@@ -148,7 +148,7 @@ class DynamicsApiTest extends TestCase
             'city'        => 'required',
             'region'      => 'required',
             'postal_code' => 'H0H0H0',
-            'district_id' => $districts[0]['id'] // Use the first District
+            'district_id' => $this->districts[0]['id'] // Use the first District
         ]);
 
         $this->assertTrue(is_string($user_id));
@@ -158,7 +158,7 @@ class DynamicsApiTest extends TestCase
 
         $this->assertEquals('FirstName', $user['first_name']);
         $this->assertEquals('LastName', $user['last_name']);
-        $this->assertEquals($districts[0]['id'], $user['district_id']);
+        $this->assertEquals($this->districts[0]['id'], $user['district_id']);
 
         // UPDATE PROFILE
         $updated_user = Profile::update($user_id, [

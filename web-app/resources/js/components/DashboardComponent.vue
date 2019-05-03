@@ -35,10 +35,13 @@
                             </div>
                             <div class="card-body">
                                 <div class="row" v-for="credential in credentials_applied">
-                                    <div class="col-1" style="color: red;" @click="deleteCredential(credential)"><font-awesome-icon icon="trash" /></div>
+                                    <div class="col-1 text-center">
+                                        <font-awesome-icon v-if="credential.verified" icon="check" alt="verified"/>
+                                        <font-awesome-icon v-else icon="trash" @click="deleteCredential(credential)" alt="delete" style="color: red;"/>
+                                    </div>
                                     <div class="col">{{ credential.name }}</div>
                                 </div>
-                                <div class="row">
+                                <div class="row pt-3">
                                     <div class="col-1">
                                         <button class="btn btn-primary btn-sm" @click="addCredential">+</button>
                                     </div>
