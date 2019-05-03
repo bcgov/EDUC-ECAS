@@ -5,12 +5,14 @@
 #=========================================================
 NAME=ecas-frontend
 APP_GROUP=ecas
-APPLICATION_DOMAIN=ecas-dev.pathfinder.gov.bc.ca
+APPLICATION_DOMAIN=ecas-frontend-pvpywj-dev.pathfinder.gov.bc.ca
 IMAGE_NAMESPACE=pvpywj-tools
 TAG_NAME=dev
+APP_KEY=[a-zA-Z0-9]{32}
 APP_DEBUG=true
 DOCUMENTROOT=/public
 PORT=8080
+DYNAMICSBASEURL=webnet:8080/api
 CPU_REQUEST=10m
 CPU_LIMIT=250m
 MEMORY_REQUEST=10Mi

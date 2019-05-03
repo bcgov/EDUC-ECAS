@@ -1,40 +1,30 @@
+These instructions assume you have installed the [OpenShift scripts](https://github.com/BCDevOps/openshift-developer-tools/blob/master/bin/README.md) and that they are accessible via your PATH environment variable.
+
+You will also need to use the [docker/manage.sh](../docker/README.md)  to build the images locally.
+# Param management
+Run the genParams.sh whenever a new template is created or a change adds a new param
+```
+genParams.sh
+```
+Generate pipeline param files whenever you have a pipeline script to test and deploy.
+```
+genPipelineParams.sh
+```
+
 # Build
 ```
-# Export objects
-oc get bc/ecas is/ecas --export -o yaml > build.yaml
-
-# As a reference check the output of the deprecated `oc export`
-# oc export bc/ecas is/ecas -o yaml > build2.yaml
-
-# Manually update to remove cluster/namespace references
-
-# Process template
-# For creating new objects
-oc process -f build.yaml --param-file=build.vars --param-file=build.local.vars | oc create -f -
-
-# FOr Updating existing ones
-oc process -f build.yaml --param-file=build.vars --param-file=build.local.vars | oc replace -f -
-
-# note: Check `oc apply`
-oc process -f build.yaml --param-file=build.vars --param-file=build.local.vars | oc apply -f
+genBuilds.sh     # when you need to add a new build artifact 
+genBuilds.sh -u  # when you have want to deploy modified param
 
 ```
 
 # Deployment
 ```
-# Export objects
-oc get dc/ecas is/ecas --export -o yaml > deployment.yaml
+getDepls.sh       # when you need to add a new deployment artifact
+getDepls.sh -u    # when you need want to deploy a modified param
 
-# Create new deployment template??
-oc process -f deployment.yaml | oc create -f -
 ```
 
 # Pipeline
-TODO: Add Jenkins file
-TODO: Modify the ecas template.  Currently it's set to build automatically, but we want to orchestrate everything from the pipeline.
+Pipeline builds are managed by the build script phase.
 
-One of my last theories to test is that the push to the Dev branch isn't triggering the webhook call
-
-Confirmed that the push to the dev branch wasn't triggering the webhook.  Merged dev into Master
-
-Pointed the build to the master branch since it's only commits to master that will trigger the pipeline

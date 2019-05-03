@@ -73,6 +73,8 @@ objects:
             value: ${APP_DEBUG}
           - name: DOCUMENTROOT
             value: ${DOCUMENTROOT}
+          - name: DYNAMICSBASEURL
+            value: ${DYNAMICSBASEURL}
           image: " "
           ports:
           - containerPort: ${{PORT}}
@@ -158,6 +160,11 @@ parameters:
   description: The port on which the service will listen.
   required: true
   value: "8080"
+- name: DYNAMICSBASEURL
+  displayName: Dynamics API
+  description: The endpoint for the internal Dynamics API component.
+  required: true
+  value: "webnet:8080/api"
 - name: CPU_REQUEST
   displayName: Resources CPU Request
   description: The resources CPU request (in cores) for this build.

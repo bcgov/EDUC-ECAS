@@ -2,7 +2,7 @@ version: '3'
 services:
   #
   # ecas-frontend
-  #
+  #  DYNAMICSBASEURL=https://ecaswebapi.azurewebsites.net/api
   ecas-frontend:
     image: ecas-frontend
     ports:
@@ -14,6 +14,7 @@ services:
       - APP_DEBUG=true
       - APP_URL=http://localhost
       - DOCUMENTROOT=/public
+      - DYNAMICSBASEURL=webnet:8080/api
 
 #
   # ecas-api
