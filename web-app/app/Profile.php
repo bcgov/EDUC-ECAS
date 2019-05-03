@@ -25,18 +25,18 @@ class Profile extends DynamicsRepository
         'last_name'                      => 'lastname',
         'email'                          => 'emailaddress1',
         'phone'                          => 'address1_telephone1',
-        'sin'                            => 'educ_socialinsurancenumber',
+        'social_insurance_number'        => 'educ_socialinsurancenumber',
         'address_1'                      => 'address1_line1',
         'address_2'                      => 'address1_line2',
         'city'                           => 'address1_city',
         'region'                         => 'address1_stateorprovince',
         'postal_code'                    => 'address1_postalcode',
         'district_id'                    => '_educ_district_value',
-        'school'                         => 'educ_currentschool',
+        //        'district_id'                    => 'educ_districtcode_contact',
+        'school_id'                      => 'educ_currentschool',
         'professional_certificate_bc'    => 'educ_professionalcertificatebc',
         'professional_certificate_yk'    => 'educ_professionalcertificateyk',
         'professional_certificate_other' => 'educ_professionalcertificateother',
-        'payment'                        => 'educ_methodofpayment'
     ];
 
     public static $links = [
