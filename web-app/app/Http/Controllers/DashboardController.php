@@ -101,7 +101,7 @@ class DashboardController extends Controller
 //        dump(json_encode($user_credentials));
 //        dd(json_encode($credentials));
         // Need to inject the name into the applied credential
-        foreach($user_credentials as $index => $user_credential) {
+        foreach ($user_credentials as $index => $user_credential) {
             $key = array_search($user_credential['credential_id'], array_column($credentials, 'id'));
             $user_credentials[$index]['name'] = $credentials[$key]['name'];
 
@@ -190,6 +190,33 @@ class DashboardController extends Controller
 
     public function storeAssignment(Request $request)
     {
+        Log::debug('STORE ASSIGNMENT');
+        Log::debug($request->all());
+
+        $assignment_id = Assignment::create([
+            'user_id'        => $this->test_user_id,
+            'session_id'     => $request['session_id'],
+            'role_id'        => $request['role_id'],
+            'contract_stage' => $request['contract_stage'],
+            'status'         => $request['status']
+        ]);
+
+        Log::debug('created assignment id: ' . $assignment_id);
+
+        $assignment = Assignment::get($assignment_id);
+
+        $assignment_statuses = AssignmentStage::get();
+
+        $assignment_status_key = array_search($assignment['status'], array_column($assignment_statuses, 'id'));
+
+        $session = \App\Session::
+
+        $session_key = array_search($assignment['session_id'], array_column($sessions, 'id'));
+
+        $sessions[$session_key]['status'] = $assignment_statuses[$assignment_status_key]['name'];
+
+        Log::debug($assignment);
+
         return $request->all();
     }
 
