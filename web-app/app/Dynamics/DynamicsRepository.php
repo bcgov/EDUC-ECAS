@@ -6,7 +6,7 @@
  * Time: 12:33 PM
  */
 
-namespace App;
+namespace App\Dynamics;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Cache;

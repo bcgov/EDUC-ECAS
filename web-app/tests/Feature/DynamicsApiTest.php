@@ -2,21 +2,21 @@
 
 namespace Tests\Feature;
 
-use App\Assignment;
-use App\AssignmentStage;
-use App\ContractStage;
-use App\Credential;
-use App\District;
-use App\Payment;
-use App\Profile;
-use App\ProfileCredential;
-use App\Region;
-use App\Role;
-use App\School;
-use App\Session;
-use App\SessionActivity;
-use App\SessionType;
-use App\Subject;
+use App\Dynamics\Assignment;
+use App\Dynamics\AssignmentStage;
+use App\Dynamics\ContractStage;
+use App\Dynamics\Credential;
+use App\Dynamics\District;
+use App\Dynamics\Payment;
+use App\Dynamics\Profile;
+use App\Dynamics\ProfileCredential;
+use App\Dynamics\Region;
+use App\Dynamics\Role;
+use App\Dynamics\School;
+use App\Dynamics\Session;
+use App\Dynamics\SessionActivity;
+use App\Dynamics\SessionType;
+use App\Dynamics\Subject;
 use Tests\TestCase;
 
 class DynamicsApiTest extends TestCase

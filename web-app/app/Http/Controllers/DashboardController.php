@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Assignment;
-use App\AssignmentStage;
-use App\Credential;
-use App\District;
-use App\DynamicsRepository;
-use App\Profile;
-use App\ProfileCredential;
-use App\School;
-use App\Subject;
+use App\Dynamics\Assignment;
+use App\Dynamics\AssignmentStage;
+use App\Dynamics\Credential;
+use App\Dynamics\District;
+use App\Dynamics\Profile;
+use App\Dynamics\ProfileCredential;
+use App\Dynamics\School;
+use App\Dynamics\Subject;
+use App\Dynamics\Session as MarkerSession;
+use App\Dynamics\SessionActivity;
+use App\Dynamics\SessionType;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 
@@ -131,11 +132,11 @@ class DashboardController extends Controller
     public function postLogin(Request $request)
     {
         if ($request['email'] == 'new@example.com') {
-            Session::forget('user_id');
+            MarkerSession::forget('user_id');
         }
         else {
             $user = $this->loadUser($this->test_user_id);
-            Session::put('user_id', $user['id']);
+            MarkerSession::put('user_id', $user['id']);
         }
 
         return redirect('/Dashboard');
@@ -241,5 +242,133 @@ class DashboardController extends Controller
             ]);
 
         return $request;
+    }
+
+    protected function loadUser($id)
+    {
+        return Profile::get($id);
+        // Mock querying Dynamics for a User
+        return [
+            'id'                          => 1,
+            'email'                       => 'jane.smith@example.com',
+            'preferred_first_name'        => 'Sal',
+            'first_name'                  => 'Sally',
+            'last_name'                   => 'Sherwood',
+            'phone'                       => '2508123353',
+            'social_insurance_no'         => '123456789',
+            'professional_certificate_bc' => 'bd-aejrkqwehr',
+            //            'professional_certificate_yk'    => 'yk-039290',
+            //            'professional_certificate_other' => '',
+            'school'                      => '1',
+            'district'                    => '1',
+            'address_1'                   => '456 Yellow Brick Rd.',
+            'address_2'                   => '',
+            'city'                        => 'Oz',
+            'region'                      => 'BC',
+            'postal_code'                 => 'T0B4T5',
+        ];
+    }
+
+    protected function loadDistricts()
+    {
+        $districts = District::get();
+        usort($districts, function($a, $b) {
+            return $a['name'] <=> $b['name'];
+        });
+        return $districts;
+    }
+
+    protected function loadSubjects()
+    {
+        $subjects = Subject::get();
+        usort($subjects, function($a, $b) {
+            return $a['name'] <=> $b['name'];
+        });
+        return $subjects;
+    }
+
+    protected function loadSchools()
+    {
+        $schools = School::get();
+        usort($schools, function($a, $b) {
+            return $a['name'] <=> $b['name'];
+        });
+        return $schools;
+    }
+
+    protected function loadActivities()
+    {
+        return SessionActivity::get();
+    }
+
+    protected function loadAssignments($user_id)
+    {
+        return Assignment::filter(['user_id' => $user_id]);
+    }
+
+    protected function loadTypes()
+    {
+        return SessionType::get();
+    }
+
+    protected function loadCredentials()
+    {
+        $credentials = Credential::get();
+        usort($credentials, function($a, $b) {
+            return $a['name'] <=> $b['name'];
+        });
+        return $credentials;
+    }
+
+    protected function loadRegions()
+    {
+        return [
+            ['code' => 'BC', 'name' => 'British Columbia'],
+            ['code' => 'YK', 'name' => 'Yukon']
+        ];
+    }
+
+    protected function loadSessions()
+    {
+        $sessions = MarkerSession::get();
+        usort($sessions, function($a, $b) {
+            return $a['start_date'] <=> $b['start_date'];
+        });
+        return $sessions;
+
+//        return [
+//            [
+//                'id'       => '1',
+//                'activity' => 'Exemplar',
+//                'type'     => 'LIT 10 I',
+//                'dates'    => 'August 1-2',
+//                'location' => 'Vancouver',
+//                'status'   => 'Scheduled'
+//            ],
+//            [
+//                'id'       => '2',
+//                'activity' => 'Marking',
+//                'type'     => 'LIT 10 I',
+//                'dates'    => 'August 3-4',
+//                'location' => 'Vancouver',
+//                'status'   => 'Invited'
+//            ],
+//            [
+//                'id'       => '3',
+//                'activity' => 'Marking',
+//                'type'     => 'LIT 20 E',
+//                'dates'    => 'July 3-4',
+//                'location' => 'Victoria',
+//                'status'   => 'Open'
+//            ],
+//            [
+//                'id'       => '4',
+//                'activity' => 'Marking',
+//                'type'     => 'NUM 10',
+//                'dates'    => 'July 10-12',
+//                'location' => 'Kelowna',
+//                'status'   => 'Open'
+//            ]
+//        ];
     }
 }

@@ -6,15 +6,15 @@
  * Time: 2:50 PM
  */
 
-namespace App;
+namespace App\Dynamics;
 
-class ContractStage extends DynamicsRepository
+class AssignmentStage extends DynamicsRepository
 {
     public static $table = 'educ_assignment';
 
     public static $api_verb = 'metadata';
 
-    public static $primary_key = 'educ_contractstage';
+    public static $primary_key = 'statuscode';
 
     public static $fields = [
         'id'   => 'Id',

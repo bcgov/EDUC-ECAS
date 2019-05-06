@@ -6,7 +6,7 @@
  * Time: 2:50 PM
  */
 
-namespace App;
+namespace App\Dynamics;
 
 class Subject extends DynamicsRepository
 {
