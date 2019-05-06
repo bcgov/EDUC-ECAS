@@ -69,7 +69,7 @@
                                            @click="filter = ''"
                                            class="nav-link"
                                            :class="{ 'active': filter == '' }">All
-                                            <span class="badge badge-pill badge-primary">{{ sessions_local.length }}</span></a>
+                                            <span class="badge badge-pill badge-primary">{{ getSessions.length }}</span></a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="#"
@@ -105,7 +105,7 @@
                                     </tr>
                                     <tbody>
                                         <tr @click="viewSession(session)"
-                                            v-for="session in filteredSessions(sessions_local)">
+                                            v-for="session in filteredSessions">
                                             <td>{{ session.type }}</td>
                                             <td>{{ session.activity }}</td>
                                             <td nowrap>{{ session.dates }}</td>
@@ -155,7 +155,6 @@
         },
         data() {
             return {
-                sessions_local: this.sessions,
                 credentials_applied: [...this.user_credentials],
                 credentials_available: [...this.credentials],
                 new_credential: 0,
@@ -166,10 +165,14 @@
         },
         mounted() {
             console.log('Dashboard Mounted')
+
             this.$store.commit('SET_USER', this.user)
+            this.$store.commit('SET_SESSIONS', this.sessions)
+
             Event.listen('credential-added', this.pushCredential)
             Event.listen('credential-deleted', this.removeCredential)
             Event.listen('profile-updated', this.updateProfile)
+            Event.listen('session_status_updated', this.updateSessionStatus)
 
             if (this.getUser.id === undefined) {
                 this.new_user = true
@@ -178,8 +181,19 @@
         },
         computed: {
             ...mapGetters([
-                'getUser'
-                ])
+                'getUser',
+                'getSessions',
+                'filterSessions'
+                ]),
+            filteredSessions() {
+                var dashboard = this
+                return this.getSessions.filter(function (session) {
+                    if (dashboard.filter.length == 0) {
+                        return true
+                    }
+                    return session.status == dashboard.filter
+                })
+            }
         },
         methods: {
             addCredential() {
@@ -217,7 +231,7 @@
             },
             countStatus(status) {
                 // var status
-                return Object.values(this.sessions_local).filter(function (assignment) {
+                return Object.values(this.getSessions).filter(function (assignment) {
                     return assignment.status == status
                 }).length
             },
@@ -253,16 +267,7 @@
 
                 this.new_credential = 0;
             },
-            filteredSessions(sessions) {
-                var dashboard = this
 
-                return sessions.filter(function (session) {
-                    if (dashboard.filter.length == 0) {
-                        return true
-                    }
-                    return session.status == dashboard.filter
-                })
-            },
             isStatus: function (session, status) {
                 return session.status == status
             },
@@ -303,6 +308,9 @@
                 // We must have a valid user now
                 this.new_user = false
                 this.$store.commit('SET_USER', user)
+            },
+            updateSessionStatus(response) {
+                this.$store.commit('UPDATE_SESSION_STATUS', response)
             }
         }
 

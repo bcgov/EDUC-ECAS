@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Dynamics\Assignment;
-use App\Dynamics\AssignmentStage;
+use App\Dynamics\AssignmentStatus;
 use App\Dynamics\ContractStage;
 use App\Dynamics\Credential;
 use App\Dynamics\District;
@@ -128,7 +128,7 @@ class DynamicsApiTest extends TestCase
     /** @test */
     public function get_assignment_stage_list()
     {
-        $result = AssignmentStage::get();
+        $result = AssignmentStatus::get();
 
         $this->assertTrue(is_array($result));
     }
@@ -179,26 +179,44 @@ class DynamicsApiTest extends TestCase
 
         // CREATE ASSIGNMENT
         $sessions = Session::get();
-        $roles = Role::get();
-        $stages = ContractStage::get();
-        $statuses = AssignmentStage::get();
-
+//        $roles = Role::get();
+//        $stages = ContractStage::get();
+        $statuses = AssignmentStatus::get();
+//dump($statuses);
         $assignment_id = Assignment::create([
-            'user_id'        => $user_id,
-            'session_id'     => $sessions[0]['id'],
-            'role_id'        => $roles[0]['id'],
-            'contract_stage' => $stages[0]['id'],
-            'status'         => $statuses[0]['id']
+            'user_id'    => $user_id,
+            'session_id' => $sessions[0]['id']
         ]);
 
         $this->assertTrue(is_string($assignment_id));
 
-        // Get the assignments for this
+        // Get the assignments for this User
         $assignments = Assignment::filter(['user_id' => $user_id]);
 
         $this->assertEquals(1, count($assignments));
         $this->assertEquals($assignment_id, $assignments[0]['id']);
         $this->assertEquals($user_id, $assignments[0]['user_id']);
+
+        // Assignment Status should be 'Applied'
+        $assignment_status_key = array_search(Assignment::APPLIED_STATUS, array_column($statuses, 'name'));
+        $applied_status_id = $statuses[$assignment_status_key]['id'];
+        $this->assertEquals($applied_status_id, $assignments[0]['status']);
+//dump('applied assignment status id: ' . $applied_status_id);
+//dump($assignments);
+        // Update the Status of the Assignment, used to move from Invited to Accepted for example
+        $assignment_status_key = array_search(Assignment::ACCEPTED_STATUS, array_column($statuses, 'name'));
+        $accepted_status_id = $statuses[$assignment_status_key]['id'];
+//dump('accepted assignment status id: ' . $accepted_status_id);
+        Assignment::update($assignment_id, [
+            'status' => $accepted_status_id,
+            'id' => $assignment_id
+        ]);
+
+        // Refresh the assignments for this
+        $assignments = Assignment::filter(['user_id' => $user_id]);
+
+        // We should see that the assignment status has been updated
+        $this->assertEquals($accepted_status_id, $assignments[0]['status']);
 
         // CREATE PROFILE CREDENTIAL
         $credentials = Credential::get();

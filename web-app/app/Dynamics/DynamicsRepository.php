@@ -131,7 +131,12 @@ class DynamicsRepository
             if (isset($data[$our_name])) {
                 if (isset(static::$links[$our_name])) {
                     $linked_class = static::$links[$our_name];
-                    $mapped_data[$linked_class::$data_bind . '@odata.bind'] = $linked_class::$table . '(' . $data[$our_name] . ')';
+                    if ($linked_class::$api_verb == 'metadata') {
+                        $mapped_data[$linked_class::$data_bind] = $data[$our_name];
+                    }
+                    else {
+                        $mapped_data[$linked_class::$data_bind . '@odata.bind'] = $linked_class::$table . '(' . $data[$our_name] . ')';
+                    }
                 }
                 else {
                     $mapped_data[$dynamics_name] = $data[$our_name];
@@ -139,7 +144,7 @@ class DynamicsRepository
             }
         }
 
-        Log::debug('data mapped to local variables:');
+        Log::debug('data mapped to Dynamics variables:');
         Log::debug($mapped_data);
 
         return $mapped_data;
@@ -179,6 +184,8 @@ class DynamicsRepository
      */
     private static function queryAPI($method, $query, $data = null)
     {
+        Log::debug(strtoupper($method));
+        Log::debug($query);
         if ($method == 'GET' || $method == 'DELETE') {
             $response = self::connection()->request($method, $query);
         }

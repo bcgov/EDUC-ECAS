@@ -36,7 +36,7 @@
                     </div>
                     <div class="col">
                         <button class="btn btn-primary btn-block"
-                                v-on:click="applyToSession(session)">Yes, Please</button>
+                                v-on:click="acceptInvitation(session)">Yes, Please</button>
                     </div>
                 </template>
                 <template v-else-if="isStatus(session, 'Invited')">
@@ -89,50 +89,42 @@
             isStatus: function (session, status) {
                 return session.status == status
             },
-            acceptInvitation: function (session, accept) {
-
-                if (accept === undefined) accept = true;
-
-                this.closeModal()
-
-                if (accept) {
-                    console.log('accepting assignment ' + session.id)
-                    session.status = 'Scheduled'
-                }
-                else {
-                    console.log('declining invitation ' + session.id)
-                    session.status = 'Declined'
-                }
+            acceptInvitation(session) {
+                session.status = 'Accepted'
+                this.postSession(session, 'Accepted')
             },
-            applyToSession: function (session, attend) {
+            applyToSession (session, attend) {
 
                 if (attend === undefined) attend = true;
+
+                if (attend) {
+                    session.status = 'Applied'
+                    this.postSession(session, 'Applied')
+                }
+                else {
+                    session.status = 'Open'
+                    this.postSession(session, 'Open')
+                }
+            },
+            postSession(session, action) {
 
                 this.closeModal()
 
                 var form = this
 
-                if (attend) {
-                    console.log('applying to session ' + session.id)
-                    session.status = 'Applied'
-
-                    axios.post('/Dashboard/session', {
-                        session_id: session.id,
-                        user_id: form.getUser.id,
-                        action: 'apply'
+                axios.post('/Dashboard/session', {
+                    assignment_id: session.assignment_id,
+                    session_id: session.id,
+                    user_id: form.getUser.id,
+                    action: action
+                })
+                    .then(function (response) {
+                        Event.fire('session_status_updated', response.data)
+                        console.log(response.data)
                     })
-                        .then(function (response) {
-                            // Event.fire('credential-added', response.data)
-                            console.log(response.data)
-                        })
-                        .catch(function (error) {
-                            console.log('Failure!')
-                        });
-                }
-                else {
-                    console.log('cancelling application to session ' + session.id)
-                    session.status = 'Open'
-                }
+                    .catch(function (error) {
+                        console.log('Failure!')
+                    });
             },
             getContract() {
                 console.log('Download Contract')

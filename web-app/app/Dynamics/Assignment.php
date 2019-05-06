@@ -14,6 +14,9 @@ class Assignment extends DynamicsRepository
 
     public static $primary_key = 'educ_assignmentid';
 
+    const APPLIED_STATUS = 'Applied';
+    const ACCEPTED_STATUS = 'Accepted';
+
     public static $fields = [
         'id'             => 'educ_assignmentid',
         'session_id'     => '_educ_session_value',
@@ -26,6 +29,7 @@ class Assignment extends DynamicsRepository
     public static $links = [
         'session_id' => Session::class,
         'user_id'    => Profile::class,
-        'role_id'    => Role::class
+        'role_id'    => Role::class,
+        'status'     => AssignmentStatus::class
     ];
 }

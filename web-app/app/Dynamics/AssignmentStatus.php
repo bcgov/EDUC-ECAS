@@ -8,13 +8,15 @@
 
 namespace App\Dynamics;
 
-class AssignmentStage extends DynamicsRepository
+class AssignmentStatus extends DynamicsRepository
 {
     public static $table = 'educ_assignment';
 
     public static $api_verb = 'metadata';
 
     public static $primary_key = 'statuscode';
+
+    public static $data_bind = 'Statuscode';
 
     public static $fields = [
         'id'   => 'Id',

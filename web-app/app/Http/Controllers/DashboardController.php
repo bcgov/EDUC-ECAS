@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Dynamics\Assignment;
-use App\Dynamics\AssignmentStage;
+use App\Dynamics\AssignmentStatus;
 use App\Dynamics\Credential;
 use App\Dynamics\District;
 use App\Dynamics\Profile;
@@ -14,6 +14,7 @@ use App\Dynamics\Session as MarkerSession;
 use App\Dynamics\SessionActivity;
 use App\Dynamics\SessionType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 
@@ -81,7 +82,7 @@ class DashboardController extends Controller
 
         // Load the Sessions with any assignment details
 
-        $assignment_statuses = AssignmentStage::get();
+        $assignment_statuses = AssignmentStatus::get();
 
         // Not all Statuses should be displayed to the user
         $do_not_display = ['Selected'];
@@ -95,6 +96,9 @@ class DashboardController extends Controller
                 $session_key = array_search($assignment['session_id'], array_column($sessions, 'id'));
 
                 $sessions[$session_key]['status'] = $assignment_statuses[$assignment_status_key]['name'];
+
+                // if a Session has an Assignment store the assignment id
+                $sessions[$session_key]['assignment_id'] = $assignment['id'];
             }
         }
 
@@ -194,31 +198,28 @@ class DashboardController extends Controller
         Log::debug('STORE ASSIGNMENT');
         Log::debug($request->all());
 
-        $assignment_id = Assignment::create([
-            'user_id'        => $this->test_user_id,
-            'session_id'     => $request['session_id'],
-            'role_id'        => $request['role_id'],
-            'contract_stage' => $request['contract_stage'],
-            'status'         => $request['status']
+        $action = $request['action'];
+
+        $assignment_statuses = AssignmentStatus::get();
+
+        if ($action == Assignment::APPLIED_STATUS) {
+
+            $assignment_id = Assignment::create([
+                'user_id'        => $this->test_user_id,
+                'session_id'     => $request['session_id']
+            ]);
+
+            Log::debug('created assignment id: ' . $assignment_id);
+        }
+        elseif($action == Assignment::ACCEPTED_STATUS) {
+            $assignment_status_key = array_search(Assignment::ACCEPTED_STATUS, array_column($assignment_statuses, 'name'));
+            Assignment::update($request['assignment_id'], ['status' => $assignment_statuses[$assignment_status_key]['id']]);
+        }
+
+        return json_encode([
+            'session_id' => $request['session_id'],
+            'status'     => $action
         ]);
-
-        Log::debug('created assignment id: ' . $assignment_id);
-
-        $assignment = Assignment::get($assignment_id);
-
-        $assignment_statuses = AssignmentStage::get();
-
-        $assignment_status_key = array_search($assignment['status'], array_column($assignment_statuses, 'id'));
-
-        $session = \App\Session::
-
-        $session_key = array_search($assignment['session_id'], array_column($sessions, 'id'));
-
-        $sessions[$session_key]['status'] = $assignment_statuses[$assignment_status_key]['name'];
-
-        Log::debug($assignment);
-
-        return $request->all();
     }
 
     /**
@@ -274,6 +275,7 @@ class DashboardController extends Controller
     protected function loadUser($id)
     {
         return Profile::get($id);
+
         // Mock querying Dynamics for a User
         return [
             'id'                          => 1,
@@ -299,27 +301,30 @@ class DashboardController extends Controller
     protected function loadDistricts()
     {
         $districts = District::get();
-        usort($districts, function($a, $b) {
+        usort($districts, function ($a, $b) {
             return $a['name'] <=> $b['name'];
         });
+
         return $districts;
     }
 
     protected function loadSubjects()
     {
         $subjects = Subject::get();
-        usort($subjects, function($a, $b) {
+        usort($subjects, function ($a, $b) {
             return $a['name'] <=> $b['name'];
         });
+
         return $subjects;
     }
 
     protected function loadSchools()
     {
         $schools = School::get();
-        usort($schools, function($a, $b) {
+        usort($schools, function ($a, $b) {
             return $a['name'] <=> $b['name'];
         });
+
         return $schools;
     }
 
@@ -341,9 +346,10 @@ class DashboardController extends Controller
     protected function loadCredentials()
     {
         $credentials = Credential::get();
-        usort($credentials, function($a, $b) {
+        usort($credentials, function ($a, $b) {
             return $a['name'] <=> $b['name'];
         });
+
         return $credentials;
     }
 
@@ -358,9 +364,10 @@ class DashboardController extends Controller
     protected function loadSessions()
     {
         $sessions = MarkerSession::get();
-        usort($sessions, function($a, $b) {
+        usort($sessions, function ($a, $b) {
             return $a['start_date'] <=> $b['start_date'];
         });
+
         return $sessions;
 
 //        return [
