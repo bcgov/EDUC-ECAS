@@ -172,6 +172,8 @@ class DynamicsApiTest extends TestCase
             'postal_code' => 'H0H0H0'
         ]);
 
+        $updated_user = Profile::get($user_id);
+
         $this->assertEquals('NewFirstName', $updated_user['first_name']);
         $this->assertEquals('NewLastName', $updated_user['last_name']);
 
@@ -218,6 +220,22 @@ class DynamicsApiTest extends TestCase
         $user_credentials = ProfileCredential::filter(['user_id' => $user_id]);
 
         $this->assertEquals(0, count($user_credentials));
+    }
+
+    private function validProfileData($replace = []): array
+    {
+        $valid = [
+            'first_name'  => 'required',
+            'last_name'   => 'required',
+            'email'       => 'test@example.com',
+            'phone'       => 'required',
+            'address_1'   => 'required',
+            'city'        => 'required',
+            'region'      => 'required',
+            'postal_code' => 'H0H0H0'
+        ];
+
+        return array_merge($valid, $replace);
     }
 
 }
