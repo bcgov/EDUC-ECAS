@@ -16,7 +16,8 @@
             </template>
             <template v-else-if="isStatus(session, 'Invited')">
                 <p>You are invited to participate in this {{ session.activity }} Session!</p>
-                <p>Please accept the invitation to confirm your attendance.</p>
+                <p v-if="hasSIN">Please accept the invitation to confirm your attendance.</p>
+                <p v-else><a @click.prevent="editProfile" href="">You must include a Social Insurance Number in your profile to attend a Session!</a></p>
             </template>
             <template v-else-if="isStatus(session, 'Scheduled')">
                 <p>You have accepted the invitation to this session and are scheduled to attend.</p>
@@ -47,8 +48,10 @@
                         <button class="btn btn-danger btn-block" v-on:click="acceptInvitation(session, false)">No, Thanks</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-primary btn-block"
+                        <button v-if="hasSIN" class="btn btn-primary btn-block"
                                 v-on:click="acceptInvitation(session)">Accept Invitation!</button>
+                        <button v-else class="btn btn-primary btn-block"
+                                v-on:click="editProfile">Add SIN</button>
                     </div>
                 </template>
                 <template v-else-if="isStatus(session, 'Scheduled')">
@@ -83,12 +86,20 @@
         computed: {
             ...mapGetters([
                 'getUser'
-            ])
+            ]),
+            hasSIN() {
+                return this.getUser.social_insurance_number ? true : false
+            }
         },
         methods: {
             closeModal() {
                 this.$modal.hide('session_form');
             },
+            editProfile() {
+                this.closeModal()
+                this.$modal.show('profile_form');
+            },
+
             isStatus: function (session, status) {
                 return session.status == status
             },
