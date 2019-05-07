@@ -14,7 +14,7 @@ services:
       - APP_DEBUG=true
       - APP_URL=http://localhost
       - DOCUMENTROOT=/public
-      - DYNAMICSBASEURL=webnet:8080/api
+      - DYNAMICSBASEURL=http://ecas-api:8080/api
 
 #
   # ecas-api
