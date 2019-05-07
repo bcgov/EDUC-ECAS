@@ -160,7 +160,6 @@ class DynamicsApiTest extends TestCase
 
         $this->assertTrue(is_string($user_id));
 
-        // GET PROFILE
         $user = Profile::get($user_id);
 
         $this->assertEquals('FirstName', $user['first_name']);
@@ -194,7 +193,7 @@ class DynamicsApiTest extends TestCase
             'professional_certificate_bc'    => 'new_bc_cert',
             'professional_certificate_yk'    => 'new_yk_cert',
             'professional_certificate_other' => 'new_other_cert',
-            'district_id'                    => $districts[1]['id'], // Use the first District
+            'district_id'                    => $districts[1]['id'],
             'school_id'                      => $schools[1]['id'],
         ]);
 
@@ -218,10 +217,8 @@ class DynamicsApiTest extends TestCase
 
         // CREATE ASSIGNMENT
         $sessions = Session::get();
-//        $roles = Role::get();
-//        $stages = ContractStage::get();
         $statuses = AssignmentStatus::get();
-//dump($statuses);
+dump($statuses);
         $assignment_id = Assignment::create([
             'user_id'    => $user_id,
             'session_id' => $sessions[0]['id']
@@ -240,12 +237,12 @@ class DynamicsApiTest extends TestCase
         $assignment_status_key = array_search(Assignment::APPLIED_STATUS, array_column($statuses, 'name'));
         $applied_status_id = $statuses[$assignment_status_key]['id'];
         $this->assertEquals($applied_status_id, $assignments[0]['status']);
-//dump('applied assignment status id: ' . $applied_status_id);
-//dump($assignments);
-        // Update the Status of the Assignment, used to move from Invited to Accepted for example
+
+        // Update the Status of the Assignment to 'Accepted'
+        // IMPORTANT: The user must have a SIN for status to be Accepted
         $assignment_status_key = array_search(Assignment::ACCEPTED_STATUS, array_column($statuses, 'name'));
         $accepted_status_id = $statuses[$assignment_status_key]['id'];
-//dump('accepted assignment status id: ' . $accepted_status_id);
+
         Assignment::update($assignment_id, [
             'status' => $accepted_status_id
         ]);
@@ -256,12 +253,26 @@ class DynamicsApiTest extends TestCase
         // We should see that the assignment status has been updated
         $this->assertEquals($accepted_status_id, $assignments[0]['status']);
 
+        // Update the Status of the Assignment to 'Declined'
+        $declined_status_key = array_search(Assignment::DECLINED_STATUS, array_column($statuses, 'name'));
+        $declined_status_id = $statuses[$declined_status_key]['id'];
+
+        Assignment::update($assignment_id, [
+            'status' => $declined_status_id
+        ]);
+
+        // Refresh the assignments for this
+        $assignments = Assignment::filter(['user_id' => $user_id]);
+
+        // We should see that the assignment status has been updated
+        $this->assertEquals($declined_status_id, $assignments[0]['status']);
+
         // CREATE PROFILE CREDENTIAL
         $credentials = Credential::get();
 
         $profile_credential_id = ProfileCredential::create([
             'user_id'       => $user_id,
-            'credential_id' => $credentials[0]['id']
+            'credential_id' => $credentials[0]['id'] // pick whatever the first one is
         ]);
 
         $user_credentials = ProfileCredential::filter(['user_id' => $user_id]);
@@ -277,21 +288,4 @@ class DynamicsApiTest extends TestCase
 
         $this->assertEquals(0, count($user_credentials));
     }
-
-    private function validProfileData($replace = []): array
-    {
-        $valid = [
-            'first_name'  => 'required',
-            'last_name'   => 'required',
-            'email'       => 'test@example.com',
-            'phone'       => 'required',
-            'address_1'   => 'required',
-            'city'        => 'required',
-            'region'      => 'required',
-            'postal_code' => 'H0H0H0'
-        ];
-
-        return array_merge($valid, $replace);
-    }
-
 }

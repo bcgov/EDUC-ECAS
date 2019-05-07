@@ -22,9 +22,13 @@ class DashboardController extends Controller
 {
     private $test_user_id = 'cf7837ae-0862-e911-a983-000d3af42a5a';
 
+    // We only want to fetch the logged in user once
+    protected $_user = [];
+
     public function index()
     {
-        $user = $this->loadUser($this->test_user_id);
+//        $user = $this->user($this->test_user_id);
+        $user = $this->user();
 
         $payments = [
             ['id' => 1, 'name' => 'Electronic Transfer'],
@@ -77,7 +81,7 @@ class DashboardController extends Controller
         // Not all Statuses should be displayed to the user
         $do_not_display = ['Selected'];
 
-        $assignments = $this->loadAssignments($this->test_user_id);
+        $assignments = $this->loadAssignments();
 
         foreach ($assignments as $assignment) {
             $assignment_status_key = array_search($assignment['status'], array_column($assignment_statuses, 'id'));
@@ -92,9 +96,8 @@ class DashboardController extends Controller
             }
         }
 
-        $user_credentials = ProfileCredential::filter(['user_id' => $this->test_user_id]);
-//        dump(json_encode($user_credentials));
-//        dd(json_encode($credentials));
+        $user_credentials = $this->loadUserCredentials();
+
         // Need to inject the name into the applied credential
         foreach ($user_credentials as $index => $user_credential) {
             $key = array_search($user_credential['credential_id'], array_column($credentials, 'id'));
@@ -103,8 +106,7 @@ class DashboardController extends Controller
             // Also remove the applied credential from the list of possibles
             array_splice($credentials, $key, 1);
         }
-//dump(json_encode($user_credentials));
-//dd(json_encode($credentials));
+
         return view('dashboard', [
             'user'             => json_encode($user),
             'credentials'      => json_encode($credentials),
@@ -123,13 +125,14 @@ class DashboardController extends Controller
         return view('login');
     }
 
+    // TODO: This is a useless stub for testing and will be replaced by integration with SiteMinder / Keycloak
     public function postLogin(Request $request)
     {
         if ($request['email'] == 'new@example.com') {
             MarkerSession::forget('user_id');
         }
         else {
-            $user = $this->loadUser($this->test_user_id);
+            $user = $this->user();
             MarkerSession::put('user_id', $user['id']);
         }
 
@@ -139,12 +142,13 @@ class DashboardController extends Controller
     public function storeCredential(Request $request)
     {
         $this->validate($request, [
-            'user_id'       => 'required',
             'credential_id' => 'required'
         ]);
 
+        $user = $this->user();
+
         $profile_credential_id = ProfileCredential::create([
-            'user_id'       => $request['user_id'],
+            'user_id'       => $user['id'],
             'credential_id' => $request['credential_id']
         ]);
 
@@ -169,7 +173,7 @@ class DashboardController extends Controller
 
         $user_id = Profile::create($request->all());
 
-        $user = Profile::get($user_id);
+        $user = $this->user($user_id);
 
         return json_encode($user);
     }
@@ -178,11 +182,9 @@ class DashboardController extends Controller
     {
         $request = $this->validateProfileRequest($request);
 
-        Profile::update($this->test_user_id, $request->all());
+        Profile::update($this->userId(), $request->all());
 
-        $user = Profile::get($this->test_user_id);
-
-        return json_encode($user);
+        return json_encode($this->user());
     }
 
     public function storeAssignment(Request $request)
@@ -197,13 +199,13 @@ class DashboardController extends Controller
         if ($action == Assignment::APPLIED_STATUS) {
 
             $assignment_id = Assignment::create([
-                'user_id'        => $this->test_user_id,
-                'session_id'     => $request['session_id']
+                'user_id'    => $this->userId(),
+                'session_id' => $request['session_id']
             ]);
 
             Log::debug('created assignment id: ' . $assignment_id);
         }
-        elseif($action == Assignment::ACCEPTED_STATUS) {
+        elseif ($action == Assignment::ACCEPTED_STATUS) {
             $assignment_status_key = array_search(Assignment::ACCEPTED_STATUS, array_column($assignment_statuses, 'name'));
             Assignment::update($request['assignment_id'], ['status' => $assignment_statuses[$assignment_status_key]['id']]);
         }
@@ -214,19 +216,6 @@ class DashboardController extends Controller
         ]);
     }
 
-    /**
-     * @return bool
-     */
-    private function userLoggedIn(): bool
-    {
-        return Session::has('user_id');
-    }
-
-    /**
-     * @param Request $request
-     * @return Request
-     * @throws \Illuminate\Validation\ValidationException
-     */
     private function validateProfileRequest(Request $request): Request
     {
         // Get rid of spaces
@@ -264,30 +253,26 @@ class DashboardController extends Controller
         return $request;
     }
 
-    protected function loadUser($id)
+    protected function user($id = null)
     {
-        return Profile::get($id);
+        if ($id) {
+            Session::put('user_id', $id);
+        }
 
-        // Mock querying Dynamics for a User
-        return [
-            'id'                          => 1,
-            'email'                       => 'jane.smith@example.com',
-            'preferred_first_name'        => 'Sal',
-            'first_name'                  => 'Sally',
-            'last_name'                   => 'Sherwood',
-            'phone'                       => '2508123353',
-            'social_insurance_no'         => '123456789',
-            'professional_certificate_bc' => 'bd-aejrkqwehr',
-            //            'professional_certificate_yk'    => 'yk-039290',
-            //            'professional_certificate_other' => '',
-            'school'                      => '1',
-            'district'                    => '1',
-            'address_1'                   => '456 Yellow Brick Rd.',
-            'address_2'                   => '',
-            'city'                        => 'Oz',
-            'region'                      => 'BC',
-            'postal_code'                 => 'T0B4T5',
-        ];
+        if ( ! $this->_user && $user_id = $this->userId()) {
+            $this->_user = Profile::get($user_id);
+        }
+
+        return $this->_user;
+    }
+
+    protected function userId()
+    {
+        if (Session::has('user_id')) {
+            return Session::get('user_id');
+        }
+
+        return null;
     }
 
     protected function loadDistricts()
@@ -325,9 +310,22 @@ class DashboardController extends Controller
         return SessionActivity::get();
     }
 
-    protected function loadAssignments($user_id)
+    protected function loadAssignments()
     {
-        return Assignment::filter(['user_id' => $user_id]);
+        if ($this->userId()) {
+            return Assignment::filter(['user_id' => $this->userId()]);
+        }
+
+        return [];
+    }
+
+    protected function loadUserCredentials()
+    {
+        if ($this->userId()) {
+            return ProfileCredential::filter(['user_id' => $this->userId()]);
+        }
+
+        return [];
     }
 
     protected function loadTypes()
@@ -347,6 +345,8 @@ class DashboardController extends Controller
 
     protected function loadRegions()
     {
+        // TODO: This is available in a Dynamics table
+        // Leaving hardcoded for now to improve page loading speeds during testing
         return [
             ['code' => 'BC', 'name' => 'British Columbia'],
             ['code' => 'YK', 'name' => 'Yukon']
@@ -361,40 +361,5 @@ class DashboardController extends Controller
         });
 
         return $sessions;
-
-//        return [
-//            [
-//                'id'       => '1',
-//                'activity' => 'Exemplar',
-//                'type'     => 'LIT 10 I',
-//                'dates'    => 'August 1-2',
-//                'location' => 'Vancouver',
-//                'status'   => 'Scheduled'
-//            ],
-//            [
-//                'id'       => '2',
-//                'activity' => 'Marking',
-//                'type'     => 'LIT 10 I',
-//                'dates'    => 'August 3-4',
-//                'location' => 'Vancouver',
-//                'status'   => 'Invited'
-//            ],
-//            [
-//                'id'       => '3',
-//                'activity' => 'Marking',
-//                'type'     => 'LIT 20 E',
-//                'dates'    => 'July 3-4',
-//                'location' => 'Victoria',
-//                'status'   => 'Open'
-//            ],
-//            [
-//                'id'       => '4',
-//                'activity' => 'Marking',
-//                'type'     => 'NUM 10',
-//                'dates'    => 'July 10-12',
-//                'location' => 'Kelowna',
-//                'status'   => 'Open'
-//            ]
-//        ];
     }
 }

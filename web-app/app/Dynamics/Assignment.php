@@ -16,6 +16,7 @@ class Assignment extends DynamicsRepository
 
     const APPLIED_STATUS = 'Applied';
     const ACCEPTED_STATUS = 'Accepted';
+    const DECLINED_STATUS = 'Declined';
 
     public static $fields = [
         'id'             => 'educ_assignmentid',

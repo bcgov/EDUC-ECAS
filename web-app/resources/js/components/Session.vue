@@ -24,7 +24,10 @@
                 <p>If you can no longer attend please cancel.</p>
             </template>
             <template v-else-if="isStatus(session, 'Contracted')">
-                You have have a contract and are scheduled to attend this session.
+                <p>You have have a contract and are scheduled to attend this session.</p>
+            </template>
+            <template v-else>
+                <p>Unknown Session Status</p>
             </template>
         </div>
         <div class="card-footer">
@@ -36,7 +39,7 @@
                     </div>
                     <div class="col">
                         <button class="btn btn-primary btn-block"
-                                v-on:click="acceptInvitation(session)">Yes, Please</button>
+                                v-on:click="applyToSession(session)">Yes, Please</button>
                     </div>
                 </template>
                 <template v-else-if="isStatus(session, 'Invited')">
@@ -53,7 +56,7 @@
                         <button class="btn btn-danger btn-block" v-on:click="acceptInvitation(session, false)">Cancel Attendance!</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-primary btn-block" v-on:click="getExpenses(session)">Expenses</button>
+                        <button class="btn btn-primary btn-block" v-on:click="alert('expenses')">Expenses</button>
                     </div>
                 </template>
             </div>
@@ -89,22 +92,25 @@
             isStatus: function (session, status) {
                 return session.status == status
             },
-            acceptInvitation(session) {
-                session.status = 'Accepted'
-                this.postSession(session, 'Accepted')
+            acceptInvitation(session, accept) {
+
+                // If nothing passed in assume user wants to accept
+                if (accept === undefined) accept = true;
+
+                let action = accept ? 'Accepted' : 'Declined'
+
+                this.postSession(session, action)
             },
             applyToSession (session, attend) {
 
+                console.log('applying to session')
+
+                // If nothing passed in assume user wants to attend
                 if (attend === undefined) attend = true;
 
-                if (attend) {
-                    session.status = 'Applied'
-                    this.postSession(session, 'Applied')
-                }
-                else {
-                    session.status = 'Open'
-                    this.postSession(session, 'Open')
-                }
+                let action = attend ? 'Applied' : 'Open'
+
+                this.postSession(session, action)
             },
             postSession(session, action) {
 
@@ -112,26 +118,27 @@
 
                 var form = this
 
-                axios.post('/Dashboard/session', {
-                    assignment_id: session.assignment_id,
-                    session_id: session.id,
-                    user_id: form.getUser.id,
-                    action: action
-                })
-                    .then(function (response) {
-                        Event.fire('session_status_updated', response.data)
-                        console.log(response.data)
+                // Only post if something needs to be done
+                if (action !== session.status) {
+
+                    // assume success!
+                    // TODO: should handle failure gracefully!
+                    session.status = action
+
+                    axios.post('/Dashboard/session', {
+                        assignment_id: session.assignment_id,
+                        session_id: session.id,
+                        user_id: form.getUser.id,
+                        action: action
                     })
-                    .catch(function (error) {
-                        console.log('Failure!')
-                    });
-            },
-            getContract() {
-                console.log('Download Contract')
-                this.closeModal();
-            },
-            getExpenses(session) {
-                window.location = "/Expenses/" + session.id;
+                        .then(function (response) {
+                            Event.fire('session_status_updated', response.data)
+                            console.log(response.data)
+                        })
+                        .catch(function (error) {
+                            console.log('Failure!')
+                        });
+                }
             }
         }
     }
