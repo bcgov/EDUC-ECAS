@@ -97,12 +97,10 @@ class DashboardControllerTest extends TestCase
     /** @test */
     public function apply_to_session()
     {
-        $response = $this->post('/Dashboard/session', [
+        $this->post('/Dashboard/session', [
             'session_id' => '',
             'action' => 'apply'
-        ]);
-
-        // A new Application should be created in Dynamics
+        ])->assertOk();
     }
 
     /**
