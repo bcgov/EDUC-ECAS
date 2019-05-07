@@ -97,9 +97,9 @@
                     </div>
                     <div class="form-group col">
                         <label for="school">Current School</label>
-                        <select class="form-control" v-model="user_local.school" id="school">
+                        <select class="form-control" v-model="user_local.school_id" id="school">
                             <option disabled value="">Please select one</option>
-                            <option v-bind:value="school.id" v-for="school in schools">{{ school.name }}</option>
+                            <option :value="school.id" v-for="school in schools">{{ school.name }}</option>
                         </select>
                     </div>
                 </div>
@@ -193,7 +193,8 @@
                     city: form.user_local.city,
                     region: form.user_local.region,
                     postal_code: form.user_local.postal_code,
-                    district_id: form.user_local.district_id
+                    district_id: form.user_local.district_id,
+                    school_id: form.user_local.school_id
                 }
 
                 if (this.new_user) {

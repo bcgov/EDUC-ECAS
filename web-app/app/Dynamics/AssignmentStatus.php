@@ -16,7 +16,7 @@ class AssignmentStatus extends DynamicsRepository
 
     public static $primary_key = 'statuscode';
 
-    public static $data_bind = 'Statuscode';
+    public static $data_bind = 'statuscode';
 
     public static $fields = [
         'id'   => 'Id',

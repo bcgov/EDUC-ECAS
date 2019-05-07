@@ -32,7 +32,6 @@ class Profile extends DynamicsRepository
         'region'                         => 'address1_stateorprovince',
         'postal_code'                    => 'address1_postalcode',
         'district_id'                    => '_educ_district_value',
-        //        'district_id'                    => 'educ_districtcode_contact',
         'school_id'                      => 'educ_currentschool',
         'professional_certificate_bc'    => 'educ_professionalcertificatebc',
         'professional_certificate_yk'    => 'educ_professionalcertificateyk',

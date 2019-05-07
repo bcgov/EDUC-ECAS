@@ -126,9 +126,10 @@ class DynamicsRepository
     private static function mapToDynamics($data): array
     {
         $mapped_data = [];
-
+        Log::debug('original data:');
+        Log::debug($data);
         foreach (static::$fields as $our_name => $dynamics_name) {
-            if (isset($data[$our_name])) {
+            if (array_key_exists($our_name, $data)) {
                 if (isset(static::$links[$our_name])) {
                     $linked_class = static::$links[$our_name];
                     if ($linked_class::$api_verb == 'metadata') {
@@ -216,8 +217,6 @@ class DynamicsRepository
         if ($id) {
             $query .= '&$filter=' . static::$primary_key . ' eq \'' . $id . '\'';
         }
-
-        Log::debug($query);
 
         $response = self::queryAPI('GET', $query);
 

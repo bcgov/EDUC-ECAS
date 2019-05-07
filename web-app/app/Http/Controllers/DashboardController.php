@@ -24,17 +24,7 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $user = [];
-//        if ($this->userLoggedIn()) {
         $user = $this->loadUser($this->test_user_id);
-//        }
-//        else {
-//            $user = [
-//                'region'   => 'BC',
-//                'district' => '',
-//                'school'   => ''
-//            ];
-//        }
 
         $payments = [
             ['id' => 1, 'name' => 'Electronic Transfer'],
@@ -188,7 +178,9 @@ class DashboardController extends Controller
     {
         $request = $this->validateProfileRequest($request);
 
-        $user = Profile::update($this->test_user_id, $request->all());
+        Profile::update($this->test_user_id, $request->all());
+
+        $user = Profile::get($this->test_user_id);
 
         return json_encode($user);
     }

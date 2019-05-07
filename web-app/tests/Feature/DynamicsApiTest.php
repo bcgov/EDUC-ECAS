@@ -136,19 +136,26 @@ class DynamicsApiTest extends TestCase
     /** @test */
     public function create_and_update_profile_credential_and_assignment()
     {
-        $this->districts = District::get();
+        $districts = District::get();
+        $schools = School::get();
 
         // CREATE PROFILE
         $user_id = Profile::create([
-            'first_name'  => 'FirstName',
-            'last_name'   => 'LastName',
-            'email'       => 'test@example.com',
-            'phone'       => '1234567890',
-            'address_1'   => 'required',
-            'city'        => 'required',
-            'region'      => 'required',
-            'postal_code' => 'H0H0H0',
-            'district_id' => $this->districts[0]['id'] // Use the first District
+            'first_name'                     => 'FirstName',
+            'last_name'                      => 'LastName',
+            'email'                          => 'test@example.com',
+            'phone'                          => '1234567890',
+            'address_1'                      => 'Address #1',
+            'address_2'                      => 'Address #2',
+            'city'                           => 'Victoria',
+            'region'                         => 'BC',
+            'postal_code'                    => 'H0H0H0',
+            'social_insurance_number'        => '123456789',
+            'professional_certificate_bc'    => 'bc_cert',
+            'professional_certificate_yk'    => 'yk_cert',
+            'professional_certificate_other' => 'other_cert',
+            'district_id'                    => $districts[0]['id'], // Use the first District
+            'school_id'                      => $schools[0]['id'],
         ]);
 
         $this->assertTrue(is_string($user_id));
@@ -158,24 +165,56 @@ class DynamicsApiTest extends TestCase
 
         $this->assertEquals('FirstName', $user['first_name']);
         $this->assertEquals('LastName', $user['last_name']);
-        $this->assertEquals($this->districts[0]['id'], $user['district_id']);
+        $this->assertEquals('test@example.com', $user['email']);
+        $this->assertEquals('1234567890', $user['phone']);
+        $this->assertEquals('Address #1', $user['address_1']);
+        $this->assertEquals('Address #2', $user['address_2']);
+        $this->assertEquals('Victoria', $user['city']);
+        $this->assertEquals('BC', $user['region']);
+        $this->assertEquals('H0H0H0', $user['postal_code']);
+        $this->assertEquals('123456789', $user['social_insurance_number']);
+        $this->assertEquals('bc_cert', $user['professional_certificate_bc']);
+        $this->assertEquals('yk_cert', $user['professional_certificate_yk']);
+        $this->assertEquals('other_cert', $user['professional_certificate_other']);
+        $this->assertEquals($schools[0]['id'], $user['school_id']);
+        $this->assertEquals($districts[0]['id'], $user['district_id']);
 
         // UPDATE PROFILE
-        $updated_user = Profile::update($user_id, [
-            'first_name'  => 'NewFirstName',
-            'last_name'   => 'NewLastName',
-            'email'       => 'new@example.com',
-            'phone'       => '1234567890',
-            'address_1'   => 'required',
-            'city'        => 'required',
-            'region'      => 'required',
-            'postal_code' => 'H0H0H0'
+        Profile::update($user_id, [
+            'first_name'                     => 'new_FirstName',
+            'last_name'                      => 'new_LastName',
+            'email'                          => 'new_test@example.com',
+            'phone'                          => '2345678901',
+            'address_1'                      => 'new_Address #1',
+            'address_2'                      => 'new_Address #2',
+            'city'                           => 'new_Victoria',
+            'region'                         => 'YK',
+            'postal_code'                    => 'H1H1H1',
+            'social_insurance_number'        => '987654321',
+            'professional_certificate_bc'    => 'new_bc_cert',
+            'professional_certificate_yk'    => 'new_yk_cert',
+            'professional_certificate_other' => 'new_other_cert',
+            'district_id'                    => $districts[1]['id'], // Use the first District
+            'school_id'                      => $schools[1]['id'],
         ]);
 
         $updated_user = Profile::get($user_id);
 
-        $this->assertEquals('NewFirstName', $updated_user['first_name']);
-        $this->assertEquals('NewLastName', $updated_user['last_name']);
+        $this->assertEquals('new_FirstName', $updated_user['first_name']);
+        $this->assertEquals('new_LastName', $updated_user['last_name']);
+        $this->assertEquals('new_test@example.com', $updated_user['email']);
+        $this->assertEquals('2345678901', $updated_user['phone']);
+        $this->assertEquals('new_Address #1', $updated_user['address_1']);
+        $this->assertEquals('new_Address #2', $updated_user['address_2']);
+        $this->assertEquals('new_Victoria', $updated_user['city']);
+        $this->assertEquals('YK', $updated_user['region']);
+        $this->assertEquals('H1H1H1', $updated_user['postal_code']);
+        $this->assertEquals('987654321', $updated_user['social_insurance_number']);
+        $this->assertEquals('new_bc_cert', $updated_user['professional_certificate_bc']);
+        $this->assertEquals('new_yk_cert', $updated_user['professional_certificate_yk']);
+        $this->assertEquals('new_other_cert', $updated_user['professional_certificate_other']);
+        $this->assertEquals($schools[1]['id'], $updated_user['school_id']);
+        $this->assertEquals($districts[1]['id'], $updated_user['district_id']);
 
         // CREATE ASSIGNMENT
         $sessions = Session::get();
@@ -208,8 +247,7 @@ class DynamicsApiTest extends TestCase
         $accepted_status_id = $statuses[$assignment_status_key]['id'];
 //dump('accepted assignment status id: ' . $accepted_status_id);
         Assignment::update($assignment_id, [
-            'status' => $accepted_status_id,
-            'id' => $assignment_id
+            'status' => $accepted_status_id
         ]);
 
         // Refresh the assignments for this
