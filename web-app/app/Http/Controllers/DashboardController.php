@@ -228,6 +228,12 @@ class DashboardController extends Controller
             }
         }
 
+        // Sanitize phone numbers, remove everything that isn't a number
+        $sanitize_to_integer = ['phone'];
+        foreach ($sanitize_to_integer as $field) {
+            $request[$field] = preg_replace('/[^0-9.]/', '', $request[$field]);
+        }
+
         $this->validate($request, [
             'first_name'  => 'required',
             'last_name'   => 'required',
