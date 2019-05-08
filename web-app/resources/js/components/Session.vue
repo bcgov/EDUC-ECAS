@@ -39,27 +39,30 @@
                             No, Thanks</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-primary btn-block"
-                                v-on:click="applyToSession(session)">Yes, Please</button>
+                        <button class="btn btn-primary btn-block" v-on:click="applyToSession(session)">
+                            Yes, Please</button>
                     </div>
                 </template>
                 <template v-else-if="isStatus(session, 'Invited')">
                     <div class="col">
-                        <button class="btn btn-danger btn-block" v-on:click="acceptInvitation(session, false)">No, Thanks</button>
+                        <button class="btn btn-danger btn-block" v-on:click="acceptInvitation(session, false)">
+                            No, Thanks</button>
                     </div>
                     <div class="col">
-                        <button v-if="hasSIN" class="btn btn-primary btn-block"
-                                v-on:click="acceptInvitation(session)">Accept Invitation!</button>
-                        <button v-else class="btn btn-primary btn-block"
-                                v-on:click="editProfile">Add SIN</button>
+                        <button v-if="hasSIN" class="btn btn-primary btn-block" v-on:click="acceptInvitation(session)">
+                            Accept Invitation!</button>
+                        <button v-else class="btn btn-primary btn-block" v-on:click="editProfile">
+                            Add SIN</button>
                     </div>
                 </template>
                 <template v-else-if="isStatus(session, 'Scheduled')">
                     <div class="col">
-                        <button class="btn btn-danger btn-block" v-on:click="acceptInvitation(session, false)">Cancel Attendance!</button>
+                        <button class="btn btn-danger btn-block" v-on:click="acceptInvitation(session, false)">
+                            Cancel Attendance!</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-primary btn-block" v-on:click="alert('expenses')">Expenses</button>
+                        <button class="btn btn-primary btn-block" v-on:click="alert('expenses')">
+                            Expenses</button>
                     </div>
                 </template>
             </div>
@@ -114,8 +117,6 @@
             },
             applyToSession (session, attend) {
 
-                console.log('applying to session')
-
                 // If nothing passed in assume user wants to attend
                 if (attend === undefined) attend = true;
 
@@ -132,7 +133,7 @@
                 // Only post if something needs to be done
                 if (action !== session.status) {
 
-                    // assume success!
+                    // assume success! and change the status before we post
                     // TODO: should handle failure gracefully!
                     session.status = action
 
@@ -154,7 +155,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

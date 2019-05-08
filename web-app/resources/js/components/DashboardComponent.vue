@@ -1,7 +1,6 @@
 ﻿<template>
     <div>
         <div class="card">
-            <div class="card-header"><h1>Dashboard</h1></div>
             <div class="card-body">
                 <div class="row">
                     <div class="col">
@@ -61,31 +60,31 @@
                 <div class="row">
                     <div class="col">
                         <div class="card">
-                            <div class="card-header">
+                            <div class="card-header pb-0">
                                 <h2 class="float-left">Marking Sessions</h2>
-                                <ul class="nav nav-tabs justify-content-end">
-                                    <li class="nav-item">
+                                <ul class="nav nav-tabs justify-content-end pt-2">
+                                    <li class="nav-item mb-0">
                                         <a href="#"
                                            @click="filter = ''"
                                            class="nav-link"
                                            :class="{ 'active': filter == '' }">All
                                             <span class="badge badge-pill badge-primary">{{ getSessions.length }}</span></a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item mb-0">
                                         <a href="#"
                                            @click="filter = 'Applied'"
                                            class="nav-link"
                                            :class="{ 'active': filter == 'Applied' }">Applied
                                             <span class="badge badge-pill badge-primary">{{ countStatus('Applied') }}</span></a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item mb-0">
                                         <a href="#"
                                            @click="filter = 'Invited'"
                                            class="nav-link"
                                            :class="{ 'active': filter == 'Invited' }">Invited
                                             <span class="badge badge-pill badge-primary">{{ countStatus('Invited') }}</span></a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item mb-0">
                                         <a href="#"
                                            @click="filter = 'Scheduled'"
                                            class="nav-link"
@@ -318,4 +317,7 @@
 </script>
 
 <style>
+    .nav-tabs {
+        border-bottom: none;
+    }
 </style>

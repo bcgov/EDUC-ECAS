@@ -52,13 +52,13 @@
                 <div class="form-row">
                     <div class="col">
                         <div class="form-group">
-                            <label for="address_1">Address</label>
+                            <label for="address_1">Home Address</label>
                             <input v-model="user_local.address_1" type="text" class="form-control" name="address_1"
                                    id="address_1">
                             <form-error :errors="errors" field="address_1"></form-error>
                         </div>
                         <div class="form-group">
-                            <label for="address_2">Line 2</label>
+                            <label for="address_2">Home Address Line 2</label>
                             <input v-model="user_local.address_2" type="text" class="form-control" name="address_2"
                                    id="address_2">
                         </div>

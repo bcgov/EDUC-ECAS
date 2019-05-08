@@ -218,7 +218,7 @@ class DynamicsApiTest extends TestCase
         // CREATE ASSIGNMENT
         $sessions = Session::get();
         $statuses = AssignmentStatus::get();
-dump($statuses);
+
         $assignment_id = Assignment::create([
             'user_id'    => $user_id,
             'session_id' => $sessions[0]['id']
