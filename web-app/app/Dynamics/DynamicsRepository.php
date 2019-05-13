@@ -170,7 +170,7 @@ class DynamicsRepository
         return new Client([
             // Base URI is used with relative requests
             'base_uri' => env('DYNAMICSBASEURL'),
-            'timeout'  => 5.0,
+            'timeout'  => 10.0,
             'headers'  => [
                 'UserName' => 'ecasadmin',
                 'Password' => 'Ec@s201p!'

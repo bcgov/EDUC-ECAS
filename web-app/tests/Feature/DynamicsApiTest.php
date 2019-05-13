@@ -257,6 +257,8 @@ class DynamicsApiTest extends TestCase
         $declined_status_key = array_search(Assignment::DECLINED_STATUS, array_column($statuses, 'name'));
         $declined_status_id = $statuses[$declined_status_key]['id'];
 
+        // TODO: This test is failing! Assume because of Business Rule within Dynamics
+        // We are not satisfying a precondition of setting status to Declined, but am unsure what that condition is
         Assignment::update($assignment_id, [
             'status' => $declined_status_id
         ]);
