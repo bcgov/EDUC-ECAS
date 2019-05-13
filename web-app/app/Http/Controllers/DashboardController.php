@@ -23,19 +23,12 @@ class DashboardController extends Controller
     private $test_user_id = 'cf7837ae-0862-e911-a983-000d3af42a5a';
 
     // We only want to fetch the logged in user once
-    protected $_user = [
-        'region' => 'BC'
-    ];
+    protected $_user = [];
 
     public function index()
     {
 //        $user = $this->user($this->test_user_id);
         $user = $this->user();
-
-        $payments = [
-            ['id' => 1, 'name' => 'Electronic Transfer'],
-            ['id' => 2, 'name' => 'Cheque']
-        ];
 
         $subjects = $this->loadSubjects();
 
@@ -50,6 +43,12 @@ class DashboardController extends Controller
         $activities = $this->loadActivities();
 
         $types = $this->loadTypes();
+
+        // Add the District and School names to the selected
+        $key = array_search($user['district_id'], array_column($districts, 'id'));
+        $user['district'] = $districts[$key]['name'];
+        $key = array_search($user['school_id'], array_column($schools, 'id'));
+        $user['school'] = $schools[$key]['name'];
 
         // Load the Session Look Up fields with info
         foreach ($sessions as $index => $session) {
@@ -115,7 +114,6 @@ class DashboardController extends Controller
             'sessions'         => json_encode($sessions),
             'subjects'         => json_encode($subjects),
             'schools'          => json_encode($schools),
-            'payments'         => json_encode($payments),
             'districts'        => json_encode($districts),
             'regions'          => json_encode($this->loadRegions()),
             'user_credentials' => json_encode($user_credentials)

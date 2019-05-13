@@ -20,6 +20,6 @@ class District extends DynamicsRepository
 
     public static $fields = [
         'id'   => 'educ_districtcodeid',
-        'name' => 'educ_name'
+        'name' => 'educ_districtnamenumber'
     ];
 }

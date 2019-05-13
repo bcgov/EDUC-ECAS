@@ -16,7 +16,8 @@
                             <div class="card-body">
                                 <p v-show="!new_user">{{ getUser.email }}<br/>
                                     {{ getUser.address_1 }}<br/>
-                                    {{ getUser.city }}, {{ getUser.region }}</p>
+                                    {{ getUser.city }}, {{ getUser.region }} {{ getUser.postal_code }}
+                                </p>
                                 <p v-if="getUser.professional_certificate_bc">
                                     <strong>BC Professional Certificate:</strong> {{ getUser.professional_certificate_bc }}
                                 </p>
@@ -24,6 +25,10 @@
                                     <strong>Yukon Professional Certificate:</strong> {{ getUser.professional_certificate_yk }}</p>
                                 <p v-if="getUser.professional_certificate_other">
                                     <strong>Other Certificate:</strong> {{ getUser.professional_certificate_other }}</p>
+                                <p v-if="getUser.district">
+                                    <strong>District:</strong> {{ getUser.district }}</p>
+                                <p v-if="getUser.school">
+                                    <strong>School:</strong> {{ getUser.school }}</p>
                             </div>
                         </div>
                     </div>
@@ -128,7 +133,6 @@
                     :schools="schools"
                     :regions="regions"
                     :districts="districts"
-                    :payments="payments"
                     :new_user="new_user"
                     dusk="profile-component"
             ></profile>
@@ -149,8 +153,7 @@
             subjects: {},
             schools: {},
             regions: {},
-            districts: {},
-            payments: {}
+            districts: {}
         },
         data() {
             return {

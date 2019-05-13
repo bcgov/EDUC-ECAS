@@ -5,16 +5,16 @@
             <form>
                 <div class="form-row">
                     <div class="form-group col">
-                        <label for="preferred_first_name">Preferred First</label>
-                        <input v-model="user_local.preferred_first_name"
-                               type="text" class="form-control"
-                               name="preferred_first_name" id="preferred_first_name">
-                    </div>
-                    <div class="form-group col">
                         <label for="first_name" class="required">First Name</label>
                         <input v-model="user_local.first_name" type="text" class="form-control" name="first_name"
                                id="first_name">
                         <form-error :errors="errors" field="first_name"></form-error>
+                    </div>
+                    <div class="form-group col">
+                        <label for="preferred_first_name">Preferred First</label>
+                        <input v-model="user_local.preferred_first_name"
+                               type="text" class="form-control"
+                               name="preferred_first_name" id="preferred_first_name">
                     </div>
                     <div class="form-group col">
                         <label for="last_name" class="required">Last Name</label>
@@ -25,7 +25,7 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col">
-                        <label for="email" class="required">email</label>
+                        <label for="email" class="required">Email</label>
                         <input v-model="user_local.email"
                                type="email"
                                class="form-control"
@@ -89,7 +89,7 @@
                     <div class="form-group col">
                         <label for="district">Current District</label>
                         <select class="form-control" v-model="user_local.district_id" id="district">
-                            <option disabled value="">Please select one</option>
+                            <option value="">None</option>
                             <option v-for="district in districts" :value="district.id">
                                 {{ district.name }}
                             </option>
@@ -98,7 +98,7 @@
                     <div class="form-group col">
                         <label for="school">Current School</label>
                         <select class="form-control" v-model="user_local.school_id" id="school">
-                            <option disabled value="">Please select one</option>
+                            <option value="">None</option>
                             <option :value="school.id" v-for="school in schools">{{ school.name }}</option>
                         </select>
                     </div>
@@ -146,7 +146,6 @@
             schools: {},
             regions: {},
             districts: {},
-            payments: {},
             new_user: false
         },
         components: {
@@ -159,6 +158,9 @@
             }
         },
         mounted() {
+            if (this.new_user) {
+                this.user_local.region = 'BC'
+            }
         },
         computed: {
             showCancel() {
