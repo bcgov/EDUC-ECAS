@@ -1,7 +1,6 @@
 ﻿<template>
     <div>
         <div class="card">
-            <div class="card-header"><h1>Dashboard</h1></div>
             <div class="card-body">
                 <div class="row">
                     <div class="col">
@@ -17,7 +16,8 @@
                             <div class="card-body">
                                 <p v-show="!new_user">{{ getUser.email }}<br/>
                                     {{ getUser.address_1 }}<br/>
-                                    {{ getUser.city }}, {{ getUser.region }}</p>
+                                    {{ getUser.city }}, {{ getUser.region }} {{ getUser.postal_code }}
+                                </p>
                                 <p v-if="getUser.professional_certificate_bc">
                                     <strong>BC Professional Certificate:</strong> {{ getUser.professional_certificate_bc }}
                                 </p>
@@ -25,6 +25,10 @@
                                     <strong>Yukon Professional Certificate:</strong> {{ getUser.professional_certificate_yk }}</p>
                                 <p v-if="getUser.professional_certificate_other">
                                     <strong>Other Certificate:</strong> {{ getUser.professional_certificate_other }}</p>
+                                <p v-if="getUser.district">
+                                    <strong>District:</strong> {{ getUser.district }}</p>
+                                <p v-if="getUser.school">
+                                    <strong>School:</strong> {{ getUser.school }}</p>
                             </div>
                         </div>
                     </div>
@@ -61,31 +65,31 @@
                 <div class="row">
                     <div class="col">
                         <div class="card">
-                            <div class="card-header">
+                            <div class="card-header pb-0">
                                 <h2 class="float-left">Marking Sessions</h2>
-                                <ul class="nav nav-tabs justify-content-end">
-                                    <li class="nav-item">
+                                <ul class="nav nav-tabs justify-content-end pt-2">
+                                    <li class="nav-item mb-0">
                                         <a href="#"
                                            @click="filter = ''"
                                            class="nav-link"
                                            :class="{ 'active': filter == '' }">All
-                                            <span class="badge badge-pill badge-primary">{{ sessions_local.length }}</span></a>
+                                            <span class="badge badge-pill badge-primary">{{ getSessions.length }}</span></a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item mb-0">
                                         <a href="#"
                                            @click="filter = 'Applied'"
                                            class="nav-link"
                                            :class="{ 'active': filter == 'Applied' }">Applied
                                             <span class="badge badge-pill badge-primary">{{ countStatus('Applied') }}</span></a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item mb-0">
                                         <a href="#"
                                            @click="filter = 'Invited'"
                                            class="nav-link"
                                            :class="{ 'active': filter == 'Invited' }">Invited
                                             <span class="badge badge-pill badge-primary">{{ countStatus('Invited') }}</span></a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item mb-0">
                                         <a href="#"
                                            @click="filter = 'Scheduled'"
                                            class="nav-link"
@@ -105,7 +109,7 @@
                                     </tr>
                                     <tbody>
                                         <tr @click="viewSession(session)"
-                                            v-for="session in filteredSessions(sessions_local)">
+                                            v-for="session in filteredSessions">
                                             <td>{{ session.type }}</td>
                                             <td>{{ session.activity }}</td>
                                             <td nowrap>{{ session.dates }}</td>
@@ -129,7 +133,6 @@
                     :schools="schools"
                     :regions="regions"
                     :districts="districts"
-                    :payments="payments"
                     :new_user="new_user"
                     dusk="profile-component"
             ></profile>
@@ -150,12 +153,10 @@
             subjects: {},
             schools: {},
             regions: {},
-            districts: {},
-            payments: {}
+            districts: {}
         },
         data() {
             return {
-                sessions_local: this.sessions,
                 credentials_applied: [...this.user_credentials],
                 credentials_available: [...this.credentials],
                 new_credential: 0,
@@ -166,10 +167,14 @@
         },
         mounted() {
             console.log('Dashboard Mounted')
+
             this.$store.commit('SET_USER', this.user)
+            this.$store.commit('SET_SESSIONS', this.sessions)
+
             Event.listen('credential-added', this.pushCredential)
             Event.listen('credential-deleted', this.removeCredential)
             Event.listen('profile-updated', this.updateProfile)
+            Event.listen('session_status_updated', this.updateSessionStatus)
 
             if (this.getUser.id === undefined) {
                 this.new_user = true
@@ -178,8 +183,19 @@
         },
         computed: {
             ...mapGetters([
-                'getUser'
-                ])
+                'getUser',
+                'getSessions',
+                'filterSessions'
+                ]),
+            filteredSessions() {
+                var dashboard = this
+                return this.getSessions.filter(function (session) {
+                    if (dashboard.filter.length == 0) {
+                        return true
+                    }
+                    return session.status == dashboard.filter
+                })
+            }
         },
         methods: {
             addCredential() {
@@ -217,7 +233,7 @@
             },
             countStatus(status) {
                 // var status
-                return Object.values(this.sessions_local).filter(function (assignment) {
+                return Object.values(this.getSessions).filter(function (assignment) {
                     return assignment.status == status
                 }).length
             },
@@ -253,16 +269,7 @@
 
                 this.new_credential = 0;
             },
-            filteredSessions(sessions) {
-                var dashboard = this
 
-                return sessions.filter(function (session) {
-                    if (dashboard.filter.length == 0) {
-                        return true
-                    }
-                    return session.status == dashboard.filter
-                })
-            },
             isStatus: function (session, status) {
                 return session.status == status
             },
@@ -303,6 +310,9 @@
                 // We must have a valid user now
                 this.new_user = false
                 this.$store.commit('SET_USER', user)
+            },
+            updateSessionStatus(response) {
+                this.$store.commit('UPDATE_SESSION_STATUS', response)
             }
         }
 
@@ -310,4 +320,7 @@
 </script>
 
 <style>
+    .nav-tabs {
+        border-bottom: none;
+    }
 </style>

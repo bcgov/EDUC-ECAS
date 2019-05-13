@@ -36,6 +36,11 @@
             <div class="col offset-1">
                 <img src="/logo-banner.svg" height="80px">
             </div>
+            <div class="col text-right text-light">
+                <h1>Ministry of Education</h1>
+                <p>Electronic Contract Administration System (ECAS)</p>
+            </div>
+            <div class="col-1"></div>
         </div>
         <div class="container">
             <div class="row">

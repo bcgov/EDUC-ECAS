@@ -16,7 +16,8 @@
             </template>
             <template v-else-if="isStatus(session, 'Invited')">
                 <p>You are invited to participate in this {{ session.activity }} Session!</p>
-                <p>Please accept the invitation to confirm your attendance.</p>
+                <p v-if="hasSIN">Please accept the invitation to confirm your attendance.</p>
+                <p v-else><a @click.prevent="editProfile" href="">You must include a Social Insurance Number in your profile to attend a Session!</a></p>
             </template>
             <template v-else-if="isStatus(session, 'Scheduled')">
                 <p>You have accepted the invitation to this session and are scheduled to attend.</p>
@@ -24,7 +25,10 @@
                 <p>If you can no longer attend please cancel.</p>
             </template>
             <template v-else-if="isStatus(session, 'Contracted')">
-                You have have a contract and are scheduled to attend this session.
+                <p>You have have a contract and are scheduled to attend this session.</p>
+            </template>
+            <template v-else>
+                <p>Unknown Session Status</p>
             </template>
         </div>
         <div class="card-footer">
@@ -35,25 +39,30 @@
                             No, Thanks</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-primary btn-block"
-                                v-on:click="applyToSession(session)">Yes, Please</button>
+                        <button class="btn btn-primary btn-block" v-on:click="applyToSession(session)">
+                            Yes, Please</button>
                     </div>
                 </template>
                 <template v-else-if="isStatus(session, 'Invited')">
                     <div class="col">
-                        <button class="btn btn-danger btn-block" v-on:click="acceptInvitation(session, false)">No, Thanks</button>
+                        <button class="btn btn-danger btn-block" v-on:click="acceptInvitation(session, false)">
+                            No, Thanks</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-primary btn-block"
-                                v-on:click="acceptInvitation(session)">Accept Invitation!</button>
+                        <button v-if="hasSIN" class="btn btn-primary btn-block" v-on:click="acceptInvitation(session)">
+                            Accept Invitation!</button>
+                        <button v-else class="btn btn-primary btn-block" v-on:click="editProfile">
+                            Add SIN</button>
                     </div>
                 </template>
                 <template v-else-if="isStatus(session, 'Scheduled')">
                     <div class="col">
-                        <button class="btn btn-danger btn-block" v-on:click="acceptInvitation(session, false)">Cancel Attendance!</button>
+                        <button class="btn btn-danger btn-block" v-on:click="acceptInvitation(session, false)">
+                            Cancel Attendance!</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-primary btn-block" v-on:click="getExpenses(session)">Expenses</button>
+                        <button class="btn btn-primary btn-block" v-on:click="alert('expenses')">
+                            Expenses</button>
                     </div>
                 </template>
             </div>
@@ -80,71 +89,69 @@
         computed: {
             ...mapGetters([
                 'getUser'
-            ])
+            ]),
+            hasSIN() {
+                return this.getUser.social_insurance_number ? true : false
+            }
         },
         methods: {
             closeModal() {
                 this.$modal.hide('session_form');
             },
+            editProfile() {
+                this.closeModal()
+                this.$modal.show('profile_form');
+            },
+
             isStatus: function (session, status) {
                 return session.status == status
             },
-            acceptInvitation: function (session, accept) {
+            acceptInvitation(session, accept) {
 
+                // If nothing passed in assume user wants to accept
                 if (accept === undefined) accept = true;
 
-                this.closeModal()
+                let action = accept ? 'Accepted' : 'Declined'
 
-                if (accept) {
-                    console.log('accepting assignment ' + session.id)
-                    session.status = 'Scheduled'
-                }
-                else {
-                    console.log('declining invitation ' + session.id)
-                    session.status = 'Declined'
-                }
+                this.postSession(session, action)
             },
-            applyToSession: function (session, attend) {
+            applyToSession (session, attend) {
 
+                // If nothing passed in assume user wants to attend
                 if (attend === undefined) attend = true;
+
+                let action = attend ? 'Applied' : 'Open'
+
+                this.postSession(session, action)
+            },
+            postSession(session, action) {
 
                 this.closeModal()
 
                 var form = this
 
-                if (attend) {
-                    console.log('applying to session ' + session.id)
-                    session.status = 'Applied'
+                // Only post if something needs to be done
+                if (action !== session.status) {
+
+                    // assume success! and change the status before we post
+                    // TODO: should handle failure gracefully!
+                    session.status = action
 
                     axios.post('/Dashboard/session', {
+                        assignment_id: session.assignment_id,
                         session_id: session.id,
                         user_id: form.getUser.id,
-                        action: 'apply'
+                        action: action
                     })
                         .then(function (response) {
-                            // Event.fire('credential-added', response.data)
+                            Event.fire('session_status_updated', response.data)
                             console.log(response.data)
                         })
                         .catch(function (error) {
                             console.log('Failure!')
                         });
                 }
-                else {
-                    console.log('cancelling application to session ' + session.id)
-                    session.status = 'Open'
-                }
-            },
-            getContract() {
-                console.log('Download Contract')
-                this.closeModal();
-            },
-            getExpenses(session) {
-                window.location = "/Expenses/" + session.id;
             }
         }
     }
 </script>
-
-<style scoped>
-
-</style>

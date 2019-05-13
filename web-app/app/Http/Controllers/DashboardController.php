@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Assignment;
-use App\AssignmentStage;
-use App\Credential;
-use App\District;
-use App\DynamicsRepository;
-use App\Profile;
-use App\ProfileCredential;
-use App\School;
-use App\Subject;
+use App\Dynamics\Assignment;
+use App\Dynamics\AssignmentStatus;
+use App\Dynamics\Credential;
+use App\Dynamics\District;
+use App\Dynamics\Profile;
+use App\Dynamics\ProfileCredential;
+use App\Dynamics\School;
+use App\Dynamics\Subject;
+use App\Dynamics\Session as MarkerSession;
+use App\Dynamics\SessionActivity;
+use App\Dynamics\SessionType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -20,24 +22,13 @@ class DashboardController extends Controller
 {
     private $test_user_id = 'cf7837ae-0862-e911-a983-000d3af42a5a';
 
+    // We only want to fetch the logged in user once
+    protected $_user = [];
+
     public function index()
     {
-        $user = [];
-//        if ($this->userLoggedIn()) {
-        $user = $this->loadUser($this->test_user_id);
-//        }
-//        else {
-//            $user = [
-//                'region'   => 'BC',
-//                'district' => '',
-//                'school'   => ''
-//            ];
-//        }
-
-        $payments = [
-            ['id' => 1, 'name' => 'Electronic Transfer'],
-            ['id' => 2, 'name' => 'Cheque']
-        ];
+//        $user = $this->user($this->test_user_id);
+        $user = $this->user();
 
         $subjects = $this->loadSubjects();
 
@@ -52,6 +43,12 @@ class DashboardController extends Controller
         $activities = $this->loadActivities();
 
         $types = $this->loadTypes();
+
+        // Add the District and School names to the selected
+        $key = array_search($user['district_id'], array_column($districts, 'id'));
+        $user['district'] = $districts[$key]['name'];
+        $key = array_search($user['school_id'], array_column($schools, 'id'));
+        $user['school'] = $schools[$key]['name'];
 
         // Load the Session Look Up fields with info
         foreach ($sessions as $index => $session) {
@@ -80,12 +77,12 @@ class DashboardController extends Controller
 
         // Load the Sessions with any assignment details
 
-        $assignment_statuses = AssignmentStage::get();
+        $assignment_statuses = AssignmentStatus::get();
 
         // Not all Statuses should be displayed to the user
         $do_not_display = ['Selected'];
 
-        $assignments = $this->loadAssignments($this->test_user_id);
+        $assignments = $this->loadAssignments();
 
         foreach ($assignments as $assignment) {
             $assignment_status_key = array_search($assignment['status'], array_column($assignment_statuses, 'id'));
@@ -94,12 +91,14 @@ class DashboardController extends Controller
                 $session_key = array_search($assignment['session_id'], array_column($sessions, 'id'));
 
                 $sessions[$session_key]['status'] = $assignment_statuses[$assignment_status_key]['name'];
+
+                // if a Session has an Assignment store the assignment id
+                $sessions[$session_key]['assignment_id'] = $assignment['id'];
             }
         }
 
-        $user_credentials = ProfileCredential::filter(['user_id' => $this->test_user_id]);
-//        dump(json_encode($user_credentials));
-//        dd(json_encode($credentials));
+        $user_credentials = $this->loadUserCredentials();
+
         // Need to inject the name into the applied credential
         foreach ($user_credentials as $index => $user_credential) {
             $key = array_search($user_credential['credential_id'], array_column($credentials, 'id'));
@@ -108,15 +107,13 @@ class DashboardController extends Controller
             // Also remove the applied credential from the list of possibles
             array_splice($credentials, $key, 1);
         }
-//dump(json_encode($user_credentials));
-//dd(json_encode($credentials));
+
         return view('dashboard', [
             'user'             => json_encode($user),
             'credentials'      => json_encode($credentials),
             'sessions'         => json_encode($sessions),
             'subjects'         => json_encode($subjects),
             'schools'          => json_encode($schools),
-            'payments'         => json_encode($payments),
             'districts'        => json_encode($districts),
             'regions'          => json_encode($this->loadRegions()),
             'user_credentials' => json_encode($user_credentials)
@@ -128,14 +125,15 @@ class DashboardController extends Controller
         return view('login');
     }
 
+    // TODO: This is a useless stub for testing and will be replaced by integration with SiteMinder / Keycloak
     public function postLogin(Request $request)
     {
         if ($request['email'] == 'new@example.com') {
-            Session::forget('user_id');
+            MarkerSession::forget('user_id');
         }
         else {
-            $user = $this->loadUser($this->test_user_id);
-            Session::put('user_id', $user['id']);
+            $user = $this->user();
+            MarkerSession::put('user_id', $user['id']);
         }
 
         return redirect('/Dashboard');
@@ -144,12 +142,13 @@ class DashboardController extends Controller
     public function storeCredential(Request $request)
     {
         $this->validate($request, [
-            'user_id'       => 'required',
             'credential_id' => 'required'
         ]);
 
+        $user = $this->user();
+
         $profile_credential_id = ProfileCredential::create([
-            'user_id'       => $request['user_id'],
+            'user_id'       => $user['id'],
             'credential_id' => $request['credential_id']
         ]);
 
@@ -174,7 +173,7 @@ class DashboardController extends Controller
 
         $user_id = Profile::create($request->all());
 
-        $user = Profile::get($user_id);
+        $user = $this->user($user_id);
 
         return json_encode($user);
     }
@@ -183,9 +182,9 @@ class DashboardController extends Controller
     {
         $request = $this->validateProfileRequest($request);
 
-        $user = Profile::update($this->test_user_id, $request->all());
+        Profile::update($this->userId(), $request->all());
 
-        return json_encode($user);
+        return json_encode($this->user());
     }
 
     public function storeAssignment(Request $request)
@@ -193,46 +192,30 @@ class DashboardController extends Controller
         Log::debug('STORE ASSIGNMENT');
         Log::debug($request->all());
 
-        $assignment_id = Assignment::create([
-            'user_id'        => $this->test_user_id,
-            'session_id'     => $request['session_id'],
-            'role_id'        => $request['role_id'],
-            'contract_stage' => $request['contract_stage'],
-            'status'         => $request['status']
+        $action = $request['action'];
+
+        $assignment_statuses = AssignmentStatus::get();
+
+        if ($action == Assignment::APPLIED_STATUS) {
+
+            $assignment_id = Assignment::create([
+                'user_id'    => $this->userId(),
+                'session_id' => $request['session_id']
+            ]);
+
+            Log::debug('created assignment id: ' . $assignment_id);
+        }
+        elseif ($action == Assignment::ACCEPTED_STATUS) {
+            $assignment_status_key = array_search(Assignment::ACCEPTED_STATUS, array_column($assignment_statuses, 'name'));
+            Assignment::update($request['assignment_id'], ['status' => $assignment_statuses[$assignment_status_key]['id']]);
+        }
+
+        return json_encode([
+            'session_id' => $request['session_id'],
+            'status'     => $action
         ]);
-
-        Log::debug('created assignment id: ' . $assignment_id);
-
-        $assignment = Assignment::get($assignment_id);
-
-        $assignment_statuses = AssignmentStage::get();
-
-        $assignment_status_key = array_search($assignment['status'], array_column($assignment_statuses, 'id'));
-
-        $session = \App\Session::
-
-        $session_key = array_search($assignment['session_id'], array_column($sessions, 'id'));
-
-        $sessions[$session_key]['status'] = $assignment_statuses[$assignment_status_key]['name'];
-
-        Log::debug($assignment);
-
-        return $request->all();
     }
 
-    /**
-     * @return bool
-     */
-    private function userLoggedIn(): bool
-    {
-        return Session::has('user_id');
-    }
-
-    /**
-     * @param Request $request
-     * @return Request
-     * @throws \Illuminate\Validation\ValidationException
-     */
     private function validateProfileRequest(Request $request): Request
     {
         // Get rid of spaces
@@ -241,6 +224,12 @@ class DashboardController extends Controller
             if (isset($request[$field])) {
                 $request[$field] = preg_replace('/\s+/', '', $request[$field]);
             }
+        }
+
+        // Sanitize phone numbers, remove everything that isn't a number
+        $sanitize_to_integer = ['phone'];
+        foreach ($sanitize_to_integer as $field) {
+            $request[$field] = preg_replace('/[^0-9.]/', '', $request[$field]);
         }
 
         $this->validate($request, [
@@ -268,5 +257,115 @@ class DashboardController extends Controller
             ]);
 
         return $request;
+    }
+
+    protected function user($id = null)
+    {
+        if ($id) {
+            Session::put('user_id', $id);
+        }
+
+        if ( ! $this->_user && $user_id = $this->userId()) {
+            $this->_user = Profile::get($user_id);
+        }
+
+        return $this->_user;
+    }
+
+    protected function userId()
+    {
+        if (Session::has('user_id')) {
+            return Session::get('user_id');
+        }
+
+        return null;
+    }
+
+    protected function loadDistricts()
+    {
+        $districts = District::get();
+        usort($districts, function ($a, $b) {
+            return $a['name'] <=> $b['name'];
+        });
+
+        return $districts;
+    }
+
+    protected function loadSubjects()
+    {
+        $subjects = Subject::get();
+        usort($subjects, function ($a, $b) {
+            return $a['name'] <=> $b['name'];
+        });
+
+        return $subjects;
+    }
+
+    protected function loadSchools()
+    {
+        $schools = School::get();
+        usort($schools, function ($a, $b) {
+            return $a['name'] <=> $b['name'];
+        });
+
+        return $schools;
+    }
+
+    protected function loadActivities()
+    {
+        return SessionActivity::get();
+    }
+
+    protected function loadAssignments()
+    {
+        if ($this->userId()) {
+            return Assignment::filter(['user_id' => $this->userId()]);
+        }
+
+        return [];
+    }
+
+    protected function loadUserCredentials()
+    {
+        if ($this->userId()) {
+            return ProfileCredential::filter(['user_id' => $this->userId()]);
+        }
+
+        return [];
+    }
+
+    protected function loadTypes()
+    {
+        return SessionType::get();
+    }
+
+    protected function loadCredentials()
+    {
+        $credentials = Credential::get();
+        usort($credentials, function ($a, $b) {
+            return $a['name'] <=> $b['name'];
+        });
+
+        return $credentials;
+    }
+
+    protected function loadRegions()
+    {
+        // TODO: This is available in a Dynamics table
+        // Leaving hardcoded for now to improve page loading speeds during testing
+        return [
+            ['code' => 'BC', 'name' => 'British Columbia'],
+            ['code' => 'YK', 'name' => 'Yukon']
+        ];
+    }
+
+    protected function loadSessions()
+    {
+        $sessions = MarkerSession::get();
+        usort($sessions, function ($a, $b) {
+            return $a['start_date'] <=> $b['start_date'];
+        });
+
+        return $sessions;
     }
 }
