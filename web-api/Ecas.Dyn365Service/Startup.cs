@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Bazinga.AspNetCore.Authentication.Basic;
@@ -32,17 +33,21 @@ namespace Ecas.Dyn365Service
             services.AddScoped<DynamicsAuthenticationSettings>();
             services.AddScoped<ECasAPISecuritySettings>();
 
-            //services.AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme)
-            //    .AddBasicAuthentication(credentials =>
-            //        Task.FromResult(
-            //            credentials.username == "myUsername"
-            //            && credentials.password == "myPassword"));
+            //Load Config Keys for ApiSecurity parameters
+            var builder = new ConfigurationBuilder()
+                                        .SetBasePath(Directory.GetCurrentDirectory())
+                                        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                                        .AddEnvironmentVariables();
+
+            var configuration = builder.Build();
+            var ecasAPISecuritySettingsSection = configuration.GetSection("ECasAPISecuritySettings");
+            var ecasAPISecuritySettingsSettings = ecasAPISecuritySettingsSection.Get<ECasAPISecuritySettings>();
 
             services.AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme)
                 .AddBasicAuthentication(credentials =>
                     Task.FromResult(
-                        credentials.username == "ecasadmin"
-                        && credentials.password == "Ec@s201p!"));
+                        credentials.username == ecasAPISecuritySettingsSettings.UserName && 
+                        credentials.password == ecasAPISecuritySettingsSettings.Password));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +63,7 @@ namespace Ecas.Dyn365Service
             }
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseMvc();
         }
     }
