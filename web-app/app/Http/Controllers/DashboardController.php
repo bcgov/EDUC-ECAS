@@ -27,7 +27,6 @@ class DashboardController extends Controller
 
     public function index()
     {
-//        $user = $this->user($this->test_user_id);
         $user = $this->user();
 
         $subjects = $this->loadSubjects();
@@ -212,6 +211,13 @@ class DashboardController extends Controller
         elseif ($action == Assignment::ACCEPTED_STATUS) {
             $assignment_status_key = array_search(Assignment::ACCEPTED_STATUS, array_column($assignment_statuses, 'name'));
             Assignment::update($request['assignment_id'], ['status' => $assignment_statuses[$assignment_status_key]['id']]);
+        }
+        elseif ($action == Assignment::DECLINED_STATUS) {
+            $assignment_status_key = array_search(Assignment::DECLINED_STATUS, array_column($assignment_statuses, 'name'));
+            Assignment::update($request['assignment_id'], [
+                'status' => $assignment_statuses[$assignment_status_key]['id'],
+                'state'  => Assignment::INACTIVE_STATE
+            ]);
         }
 
         return json_encode([
