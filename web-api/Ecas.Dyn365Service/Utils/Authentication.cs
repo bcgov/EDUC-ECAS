@@ -25,25 +25,30 @@ namespace Ecas.Dyn365Service.Utils
             var _dynamicsAuthenticationSettingsSection = configuration.GetSection("DynamicsAuthenticationSettings");
             var _dynamicsAuthenticationSettings = _dynamicsAuthenticationSettingsSection.Get<DynamicsAuthenticationSettings>();
 
-            AuthenticationParameters ap = AuthenticationParameters.CreateFromResourceUrlAsync(
-                        new Uri(_dynamicsAuthenticationSettings.CloudResourceUrl)).Result;
+            if (_dynamicsAuthenticationSettings.ActiveEnvironment.ToLower() == "onprem")
+            {
+                return getOnPremHttpClient(_dynamicsAuthenticationSettings.OnPremUserName, _dynamicsAuthenticationSettings.OnPremPassword,
+                    _dynamicsAuthenticationSettings.OnPremDomain, _dynamicsAuthenticationSettings.OnPremWebApiUrl);
+            }
+            else
+            {
+                AuthenticationParameters ap = AuthenticationParameters.CreateFromResourceUrlAsync(
+                    new Uri(_dynamicsAuthenticationSettings.CloudResourceUrl)).Result;
 
-            String authorityUrl = ap.Authority;
-            String resourceUrl = ap.Resource;
+                String authorityUrl = ap.Authority;
+                String resourceUrl = ap.Resource;
 
-            //return getOnPremHttpClient(_dynamicsAuthenticationSettings.OnPremUserName, _dynamicsAuthenticationSettings.OnPremPassword,
-            //    _dynamicsAuthenticationSettings.OnPremDomain, _dynamicsAuthenticationSettings.OnPremWebApiUrl);
-
-            return getOnlineHttpClient(resourceUrl, authorityUrl, _dynamicsAuthenticationSettings.CloudClientId,
-                _dynamicsAuthenticationSettings.CloudClientSecret, _dynamicsAuthenticationSettings.CloudResourceUrl,
-                _dynamicsAuthenticationSettings.CloudUserName, _dynamicsAuthenticationSettings.CloudWebApiUrl);
+                return getOnlineHttpClient(resourceUrl, authorityUrl, _dynamicsAuthenticationSettings.CloudClientId,
+                    _dynamicsAuthenticationSettings.CloudClientSecret, _dynamicsAuthenticationSettings.CloudResourceUrl,
+                    _dynamicsAuthenticationSettings.CloudUserName, _dynamicsAuthenticationSettings.CloudWebApiUrl);
+            }
         }
 
         private HttpClient getOnPremHttpClient(string userName, string password, string domainName, string webAPIBaseAddress)
         {
             var handler = new HttpClientHandler();
             handler.Credentials = new NetworkCredential(userName, password, domainName);
-            //TODO: Certificate validation workaround
+            //TODO: Certificate validation workaround for self-issued certificates
             handler.ClientCertificateOptions = ClientCertificateOption.Manual;
             handler.ServerCertificateCustomValidationCallback =
                 (httpRequestMessage, cert, cetChain, policyErrors) =>

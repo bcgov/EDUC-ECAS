@@ -17,5 +17,6 @@ namespace Ecas.Dyn365Service.Utils
         public string OnPremUserName { get; set; }
         public string OnPremPassword { get; set; }
         public string OnPremDomain { get; set; }
+        public string ActiveEnvironment { get; set; }
     }
 }
