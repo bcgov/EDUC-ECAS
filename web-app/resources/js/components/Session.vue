@@ -11,21 +11,27 @@
                 <p>Would you to like to apply for this Session?</p>
             </template>
             <template v-else-if="isStatus(session, 'Applied')">
-                <p>You have applied to this Session</p>
-                <p>Do you still want to go?</p>
+                <p>Thank you for your application for this session. The Ministry is reviewing all applications for eligibility and will notify you one way or the other. If you need to un-apply please check the box below.</p>
             </template>
             <template v-else-if="isStatus(session, 'Invited')">
-                <p>You are invited to participate in this {{ session.activity }} Session!</p>
-                <p v-if="hasSIN">Please accept the invitation to confirm your attendance.</p>
+                <p>You are invited to participate in this session.</p>
+                <p v-if="hasSIN">Please accept or decline as soon as possible.</p>
                 <p v-else><a @click.prevent="editProfile" href="">You must include a Social Insurance Number in your profile to attend a Session!</a></p>
             </template>
-            <template v-else-if="isStatus(session, 'Scheduled')">
-                <p>You have accepted the invitation to this session and are scheduled to attend.</p>
-                <p>Your signed contract has not been received. You may download a copy below.</p>
-                <p>If you can no longer attend please cancel.</p>
+            <template v-else-if="isStatus(session, 'Accepted')">
+                <p>Thank you for accepting your invitation to participate in this session. A contract is being created and you will be notified when it is ready for signing. If you need to cancel your participation before receiving the contract, please check the box below.</p>
             </template>
-            <template v-else-if="isStatus(session, 'Contracted')">
-                <p>You have have a contract and are scheduled to attend this session.</p>
+            <template v-else-if="isStatus(session, 'Declined')">
+                <p>You have declined your invitation for this session.</p>
+            </template>
+            <template v-else-if="isStatus(session, 'Contract')">
+                <p>Your contract is ready for signature. Please download, sign, date, and scan back to exams@gov.bc.ca as soon as possible. If you are no longer able to participate in this session, please Decline below.</p>
+            </template>
+            <template v-else-if="isStatus(session, 'Confirmed')">
+                <p>Thank you for returning your signed contract. At this point the Ministry is relying on you to participate in the session. In an unexpected situation comes up and you need to withdraw, please contact exams@gov.bc.ca</p>
+            </template>
+            <template v-else-if="isStatus(session, 'Completed')">
+                <p>This session is now complete. If there are fees or expenses attached to the session please submit receipts if required. Payments can be expected within 4-6 weeks. If you have any questions, please contact exams@gov.bc.ca</p>
             </template>
             <template v-else>
                 <p>Unknown Session Status</p>
@@ -33,36 +39,38 @@
         </div>
         <div class="card-footer">
             <div class="row">
-                <template v-if="isStatus(session, 'Open') || isStatus(session, 'Applied')">
+                <template v-if="isStatus(session, 'Open')">
                     <div class="col">
                         <button class="btn btn-danger btn-block" v-on:click="applyToSession(session, false)">
-                            No, Thanks</button>
+                            No thank you</button>
                     </div>
                     <div class="col">
                         <button class="btn btn-primary btn-block" v-on:click="applyToSession(session)">
-                            Yes, Please</button>
+                            Yes please</button>
+                    </div>
+                </template>
+                <template v-if="isStatus(session, 'Applied')">
+                    <div class="col">
+                        <button class="btn btn-danger btn-block" v-on:click="applyToSession(session, false)">
+                            Un-apply</button>
                     </div>
                 </template>
                 <template v-else-if="isStatus(session, 'Invited')">
                     <div class="col">
                         <button class="btn btn-danger btn-block" v-on:click="acceptInvitation(session, false)">
-                            No, Thanks</button>
+                            Decline</button>
                     </div>
                     <div class="col">
                         <button v-if="hasSIN" class="btn btn-primary btn-block" v-on:click="acceptInvitation(session)">
-                            Accept Invitation!</button>
+                            Accept</button>
                         <button v-else class="btn btn-primary btn-block" v-on:click="editProfile">
                             Add SIN</button>
                     </div>
                 </template>
-                <template v-else-if="isStatus(session, 'Scheduled')">
+                <template v-else-if="isStatus(session, 'Accepted') || isStatus(session, 'Contract')">
                     <div class="col">
                         <button class="btn btn-danger btn-block" v-on:click="acceptInvitation(session, false)">
-                            Cancel Attendance!</button>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-primary btn-block" v-on:click="alert('expenses')">
-                            Expenses</button>
+                            Decline</button>
                     </div>
                 </template>
             </div>

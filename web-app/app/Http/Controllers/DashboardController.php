@@ -45,10 +45,14 @@ class DashboardController extends Controller
         $types = $this->loadTypes();
 
         // Add the District and School names to the selected
-        $key = array_search($user['district_id'], array_column($districts, 'id'));
-        $user['district'] = $districts[$key]['name'];
-        $key = array_search($user['school_id'], array_column($schools, 'id'));
-        $user['school'] = $schools[$key]['name'];
+        if (isset($user['district_id'])) {
+            $key = array_search($user['district_id'], array_column($districts, 'id'));
+            $user['district'] = $districts[$key]['name'];
+        }
+        if (isset($user['school_id'])) {
+            $key = array_search($user['school_id'], array_column($schools, 'id'));
+            $user['school'] = $schools[$key]['name'];
+        }
 
         // Load the Session Look Up fields with info
         foreach ($sessions as $index => $session) {
