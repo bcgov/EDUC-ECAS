@@ -20,8 +20,6 @@ use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
-    private $test_user_id = 'cf7837ae-0862-e911-a983-000d3af42a5a';
-
     // We only want to fetch the logged in user once
     protected $_user = [];
 
