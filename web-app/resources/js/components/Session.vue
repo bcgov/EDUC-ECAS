@@ -25,7 +25,7 @@
                 <p>You have declined your invitation for this session.</p>
             </template>
             <template v-else-if="isStatus(session, 'Contract')">
-                <p>Your contract is ready for signature. Please download, sign, dated, and scan back to exams@gov.bc.ca as soon as possible. If you are no longer able to participate in this session, please Decline below.</p>
+                <p>Your contract is ready for signature. Please download, sign, date, and scan back to exams@gov.bc.ca as soon as possible. If you are no longer able to participate in this session, please Decline below.</p>
             </template>
             <template v-else-if="isStatus(session, 'Confirmed')">
                 <p>Thank you for returning your signed contract. At this point the Ministry is relying on you to participate in the session. In an unexpected situation comes up and you need to withdraw, please contact exams@gov.bc.ca</p>
