@@ -25,12 +25,6 @@ namespace Ecas.Dyn365Service.Utils
             var _dynamicsAuthenticationSettingsSection = configuration.GetSection("DynamicsAuthenticationSettings");
             var _dynamicsAuthenticationSettings = _dynamicsAuthenticationSettingsSection.Get<DynamicsAuthenticationSettings>();
 
-            AuthenticationParameters ap = AuthenticationParameters.CreateFromResourceUrlAsync(
-                        new Uri(_dynamicsAuthenticationSettings.CloudResourceUrl)).Result;
-
-            String authorityUrl = ap.Authority;
-            String resourceUrl = ap.Resource;
-
             if (_dynamicsAuthenticationSettings.ActiveEnvironment.ToLower() == "onprem")
             {
                 return getOnPremHttpClient(_dynamicsAuthenticationSettings.OnPremUserName, _dynamicsAuthenticationSettings.OnPremPassword,
@@ -38,6 +32,12 @@ namespace Ecas.Dyn365Service.Utils
             }
             else
             {
+                AuthenticationParameters ap = AuthenticationParameters.CreateFromResourceUrlAsync(
+                    new Uri(_dynamicsAuthenticationSettings.CloudResourceUrl)).Result;
+
+                String authorityUrl = ap.Authority;
+                String resourceUrl = ap.Resource;
+
                 return getOnlineHttpClient(resourceUrl, authorityUrl, _dynamicsAuthenticationSettings.CloudClientId,
                     _dynamicsAuthenticationSettings.CloudClientSecret, _dynamicsAuthenticationSettings.CloudResourceUrl,
                     _dynamicsAuthenticationSettings.CloudUserName, _dynamicsAuthenticationSettings.CloudWebApiUrl);
