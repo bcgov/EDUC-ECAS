@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Ecas.Dyn365Service.Controllers
 {
+    /// <summary>
+    /// Controller is used to indicate the health/availability of the service. 
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class HealthController : ControllerBase
