@@ -112,10 +112,10 @@ class DashboardControllerTest extends TestCase
             'first_name'  => 'required',
             'last_name'   => 'required',
             'email'       => 'test@example.com',
-            'phone'       => 'required',
-            'address_1'   => 'required',
-            'city'        => 'required',
-            'region'      => 'required',
+            'phone'       => '2508123353',
+            'address_1'   => 'Address field 1',
+            'city'        => 'Victoria',
+            'region'      => 'BC',
             'postal_code' => 'H0H0H0'
         ];
 
