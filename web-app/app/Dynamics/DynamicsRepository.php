@@ -166,7 +166,7 @@ class DynamicsRepository
 
     protected static function connection()
     {
-
+        // TODO: Security headers hardcoded! Testing only! Need to move these to an environment file
         return new Client([
             // Base URI is used with relative requests
             'base_uri' => env('DYNAMICSBASEURL'),
@@ -185,8 +185,8 @@ class DynamicsRepository
      */
     private static function queryAPI($method, $query, $data = null)
     {
-        Log::debug(strtoupper($method));
-        Log::debug($query);
+        Log::debug(strtoupper($method) . ': ' . $query);
+
         if ($method == 'GET' || $method == 'DELETE') {
             $response = self::connection()->request($method, $query);
         }
@@ -206,7 +206,6 @@ class DynamicsRepository
      */
     private static function loadCollection($id): array
     {
-
         if (static::$api_verb == 'operations') {
             $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '&$select=' . implode(',', static::$fields);
         }
@@ -238,6 +237,11 @@ class DynamicsRepository
      */
     private static function convertDynamicsToLocalVariables($data): array
     {
+        // Dynamics field names are unreadable junk!
+        // We want to define our own easy readable variables and disconnect from Dynamics
+        // Map Dynamics to local variables here
+        // These are defined in each specific Dynamics Model Class
+
         $collection = [];
 
         foreach ($data as $index => $row) {
