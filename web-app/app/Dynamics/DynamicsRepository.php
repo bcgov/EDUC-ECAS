@@ -184,7 +184,7 @@ class DynamicsRepository
         return new Client([
             // Base URI is used with relative requests
             'base_uri' => env('DYNAMICSBASEURL'),
-            'timeout'  => 10.0,
+            'timeout'  => 30.0,
             'headers'  => [
                 'Authorization' => 'Basic ZWNhc2FkbWluOkVjQHMyMDFwIQ=='
             ]
