@@ -6,6 +6,7 @@ use App\Dynamics\Assignment;
 use App\Dynamics\AssignmentStatus;
 use App\Dynamics\Credential;
 use App\Dynamics\District;
+use App\Dynamics\DynamicsRepository;
 use App\Dynamics\Profile;
 use App\Dynamics\ProfileCredential;
 use App\Dynamics\School;
@@ -125,6 +126,11 @@ class DashboardController extends Controller
     public function login()
     {
         return view('login');
+    }
+
+    public function apitest()
+    {
+        return DynamicsRepository::test();
     }
 
     // TODO: This is a useless stub for testing and will be replaced by integration with SiteMinder / Keycloak

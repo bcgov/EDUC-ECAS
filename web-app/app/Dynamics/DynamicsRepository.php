@@ -105,6 +105,11 @@ class DynamicsRepository
         return $response->getBody()->getContents();
     }
 
+    public static function test()
+    {
+        return self::connection()->request('GET', env('DYNAMICSBASEURL') . '/EnvironmentInformation');
+    }
+
     public static function update($id, $data)
     {
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '(' . $id . ')';
