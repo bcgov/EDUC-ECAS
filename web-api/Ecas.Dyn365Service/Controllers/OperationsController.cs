@@ -16,11 +16,19 @@ using Newtonsoft.Json.Linq;
 
 namespace Ecas.Dyn365Service.Controllers
 {
+    /// <summary>
+    /// Wrapper that executes GET (Read), POST (Create), PATCH (Updates), DELETE operations agains the Dyn365 WebApi. View https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/use-microsoft-dynamics-365-web-api
+    /// </summary>
     [Route("api/[controller]")]
     [Authorize]
     [ApiController]
     public class OperationsController : ControllerBase
     {
+        /// <summary>
+        /// Executes GET operations against the Dyn365 API. View https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/webapi/query-data-web-api
+        /// </summary>
+        /// <param name="statement">Requested Operation statement</param>
+        /// <returns></returns>
         // GET: api/Operations
         [HttpGet]
         public ActionResult<string> Get(string statement)
@@ -35,7 +43,6 @@ namespace Ecas.Dyn365Service.Controllers
 
             var response = new Dyn365WebAPI().SendRetrieveRequestAsync(statement, true);
 
-            //TODO: Improve Exception handling
             if (response.IsSuccessStatusCode)
                 return Ok(response.Content.ReadAsStringAsync().Result);
             else
@@ -43,6 +50,12 @@ namespace Ecas.Dyn365Service.Controllers
                     $"Failed to Retrieve records: {response.ReasonPhrase}");
         }
 
+        /// <summary>
+        /// Executes POST operations against the Dyn365 API. View https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/webapi/create-entity-web-api
+        /// </summary>
+        /// <param name="statement">Requested Operation statement</param>
+        /// <param name="value">Json schema with values to be used in the operation</param>
+        /// <returns></returns>
         // POST: api/Operations
         [HttpPost]
         public ActionResult<string> Post(string statement, [FromBody]dynamic value)
@@ -66,7 +79,13 @@ namespace Ecas.Dyn365Service.Controllers
                     $"Failed to Create record: {response.ReasonPhrase}");
         }
 
-        // POST: api/Operations
+        /// <summary>
+        /// Executes PATCH operations against the Dyn365 API. View https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/webapi/update-delete-entities-using-web-api
+        /// </summary>
+        /// <param name="statement">Requested Operation statement</param>
+        /// <param name="value">Json schema with values to be used in the operation</param>
+        /// <returns></returns>
+        // PATCH: api/Operations
         [HttpPatch]
         public ActionResult<string> Patch(string statement, [FromBody] dynamic value)
         {
@@ -80,6 +99,11 @@ namespace Ecas.Dyn365Service.Controllers
                     $"Failed to Update record: {response.ReasonPhrase}");
         }
 
+        /// <summary>
+        /// Executes DELETE operations against the Dyn365 API. View https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/webapi/update-delete-entities-using-web-api
+        /// </summary>
+        /// <param name="statement">Requested Operation statement</param>
+        /// <returns></returns>
         // DELETE: api/ApiWithActions/5
         [HttpDelete]
         public ActionResult<string> Delete(string statement)
