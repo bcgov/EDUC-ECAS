@@ -26,7 +26,6 @@ class DashboardController extends Controller
 
     public function index()
     {
-//        $user = $this->user($this->test_user_id);
         $user = $this->user();
 
         $subjects = $this->loadSubjects();
@@ -130,10 +129,16 @@ class DashboardController extends Controller
 
     public function apitest()
     {
-        $result = DynamicsRepository::test();
+        $status_code = DynamicsRepository::health();
 
-        return view('apitest', ['api' => json_decode($result)]);
-        dd(json_decode($result));
+        $result = DynamicsRepository::settings();
+
+        $variables = json_decode($result);
+
+        return view('apitest', [
+            'status' => $status_code,
+            'api' => $variables
+        ]);
     }
 
     // TODO: This is a useless stub for testing and will be replaced by integration with SiteMinder / Keycloak

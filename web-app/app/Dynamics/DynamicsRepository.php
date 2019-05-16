@@ -105,11 +105,18 @@ class DynamicsRepository
         return $response->getBody()->getContents();
     }
 
-    public static function test()
+    public static function settings()
     {
         $response = self::connection()->request('GET', env('DYNAMICSBASEURL') . '/EnvironmentInformation');
 
         return $response->getBody()->getContents();
+    }
+
+    public static function health()
+    {
+        $response = self::connection()->request('GET', env('DYNAMICSBASEURL') . '/health');
+
+        return $response->getStatusCode();
     }
 
     public static function update($id, $data)
@@ -179,8 +186,7 @@ class DynamicsRepository
             'base_uri' => env('DYNAMICSBASEURL'),
             'timeout'  => 10.0,
             'headers'  => [
-                'UserName' => 'ecasadmin',
-                'Password' => 'Ec@s201p!'
+                'Authorization' => 'Basic ZWNhc2FkbWluOkVjQHMyMDFwIQ=='
             ]
         ]);
     }
