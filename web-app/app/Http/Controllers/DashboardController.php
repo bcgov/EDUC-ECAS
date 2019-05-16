@@ -130,7 +130,10 @@ class DashboardController extends Controller
 
     public function apitest()
     {
-        return DynamicsRepository::test();
+        $result = DynamicsRepository::test();
+
+        return view('apitest', ['api' => json_decode($result)]);
+        dd(json_decode($result));
     }
 
     // TODO: This is a useless stub for testing and will be replaced by integration with SiteMinder / Keycloak
