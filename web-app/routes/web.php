@@ -20,7 +20,7 @@ Route::get('/contact', 'PageController@contact');
 
 // App Specific Routes
 
-Route::get('/apitest', 'DashBoardController@apitest');
+Route::get('/apitest', 'DashboardController@apitest');
 
 Route::get('/', 'DashboardController@login');
 Route::post('/login', 'DashboardController@postLogin');
