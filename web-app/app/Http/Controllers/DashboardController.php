@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 
+/*
+ * Main Controller for the application
+ */
 class DashboardController extends Controller
 {
     // We only want to fetch the logged in user once, store for the entire request lifecycle
@@ -131,6 +134,7 @@ class DashboardController extends Controller
 
         $user_id = Profile::create($request->all());
 
+        // TODO: if we can get the .NET API to return the stored profile from the create method above we could eliminate this call
         $user = $this->user($user_id);
 
         return json_encode($user);
