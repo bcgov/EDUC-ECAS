@@ -125,7 +125,12 @@
                         <button class="btn btn-danger btn-block" v-on:click.prevent="cancelProfile">Cancel</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-primary btn-block" v-on:click.prevent="saveProfile" dusk="save">Save</button>
+                        <button class="btn btn-primary btn-block" v-on:click.prevent="saveProfile" dusk="save">
+                                <span>
+                                    <div class="loader text-center" v-show="working"></div>
+                                </span>
+                            <div v-show="!working">Save</div>
+                        </button>
                     </div>
                 </div>
                 <div class="row">
@@ -154,7 +159,8 @@
         data() {
             return {
                 user_local: {...this.user},
-                errors: {}
+                errors: {},
+                working: true
             }
         },
         mounted() {
@@ -177,6 +183,12 @@
             saveProfile() {
 
                 console.log('saving profile')
+
+                if (this.working) {
+                    return
+                }
+
+                this.working = false;
 
                 var form = this
 
@@ -207,10 +219,12 @@
                         .then(function (response) {
                             console.log('Create Profile')
                             form.closeModal()
+                            form.working = false
                             Event.fire('profile-updated', response.data)
                         })
                         .catch(function (error) {
                             console.log('Failure!')
+                            form.working = false
                             if (error.response.status == 422){
                                 form.errors = error.response.data.errors;
                             }
@@ -220,11 +234,13 @@
                     axios.patch('/Dashboard/profile', data)
                         .then(function (response) {
                             console.log('Patch Profile')
+                            form.working = false
                             form.closeModal()
                             Event.fire('profile-updated', response.data)
                         })
                         .catch(function (error) {
                             console.log('Failure!')
+                            form.working = false
                             if (error.response.status == 422){
                                 form.errors = error.response.data.errors;
                             }
@@ -237,4 +253,21 @@
 
 <style scoped>
     .required:after { content:" *"; }
+    .loader {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        margin: auto;
+        animation: spin 2s linear infinite;
+    }
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 </style>
