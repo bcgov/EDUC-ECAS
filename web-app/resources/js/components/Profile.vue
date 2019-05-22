@@ -160,7 +160,7 @@
             return {
                 user_local: {...this.user},
                 errors: {},
-                working: true
+                working: false
             }
         },
         mounted() {
@@ -188,7 +188,7 @@
                     return
                 }
 
-                this.working = false;
+                this.working = true;
 
                 var form = this
 
