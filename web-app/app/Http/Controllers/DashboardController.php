@@ -125,6 +125,9 @@ class DashboardController extends Controller
         ]);
     }
 
+    /*
+     * Create the Profile record (Contact in Dynamics)
+     */
     public function storeProfile(Request $request)
     {
         Log::debug('STORE PROFILE');
@@ -140,6 +143,9 @@ class DashboardController extends Controller
         return json_encode($user);
     }
 
+    /*
+     * Update an existing user Profile (Contact in Dynamics)
+     */
     public function updateProfile(Request $request)
     {
         Log::debug('UPDATE PROFILE');
@@ -152,6 +158,10 @@ class DashboardController extends Controller
         return json_encode($this->user());
     }
 
+    /*
+     * Create a new Assignment
+     * Or change the status of an existing Assignment
+     */
     public function storeAssignment(Request $request)
     {
         Log::debug('STORE ASSIGNMENT');
@@ -370,6 +380,7 @@ class DashboardController extends Controller
             // Default to Open status, if an assignment is present it will overwrite below
             $sessions[$index]['status'] = 'Open';
 
+            // Display a nicely formated date string
             $start_carbon = Carbon::create($session['start_date']);
             $end_carbon = Carbon::create($session['end_date']);
             $date_string = $start_carbon->format('M j') . ' - ';

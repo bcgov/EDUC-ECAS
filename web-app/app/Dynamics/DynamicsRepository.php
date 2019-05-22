@@ -69,7 +69,6 @@ class DynamicsRepository
         self::queryAPI('DELETE', $query);
 
         // Assuming the delete worked!
-        // TODO: We should have some failure handling here. What if the delete fails?
         return true;
     }
 
@@ -296,7 +295,6 @@ class DynamicsRepository
             $query .= '&$filter=' . static::$primary_key . ' eq \'' . $id . '\'';
         }
 
-        // TODO: Should have failure handling, we assume this all works fine
         $response = self::queryAPI('GET', $query);
 
         if (static::$api_verb == 'operations') {
