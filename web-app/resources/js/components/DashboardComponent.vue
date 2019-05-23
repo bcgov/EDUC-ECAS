@@ -19,10 +19,12 @@
                                     {{ getUser.city }}, {{ getUser.region }} {{ getUser.postal_code }}
                                 </p>
                                 <p v-if="getUser.professional_certificate_bc">
-                                    <strong>BC Professional Certificate:</strong> {{ getUser.professional_certificate_bc }}
+                                    <strong>BC Professional Certificate:</strong> {{ getUser.professional_certificate_bc
+                                    }}
                                 </p>
                                 <p v-if="getUser.professional_certificate_yk">
-                                    <strong>Yukon Professional Certificate:</strong> {{ getUser.professional_certificate_yk }}</p>
+                                    <strong>Yukon Professional Certificate:</strong> {{
+                                    getUser.professional_certificate_yk }}</p>
                                 <p v-if="getUser.professional_certificate_other">
                                     <strong>Other Certificate:</strong> {{ getUser.professional_certificate_other }}</p>
                                 <p v-if="getUser.district">
@@ -41,13 +43,19 @@
                                 <div class="row" v-for="credential in credentials_applied">
                                     <div class="col-1 text-center">
                                         <font-awesome-icon v-if="credential.verified" icon="check" alt="verified"/>
-                                        <font-awesome-icon v-else icon="trash" @click="deleteCredential(credential)" alt="delete" style="color: red;"/>
+                                        <font-awesome-icon v-else icon="trash" @click="deleteCredential(credential)"
+                                                           alt="delete" style="color: red;"/>
                                     </div>
                                     <div class="col">{{ credential.name }}</div>
                                 </div>
                                 <div class="row pt-3">
                                     <div class="col-1">
-                                        <button class="btn btn-primary btn-sm" @click="addCredential">+</button>
+                                        <button class="btn btn-primary btn-sm" @click="addCredential">
+                                            <span>
+                                                <div class="loader text-center" v-show="working"></div>
+                                            </span>
+                                            <div v-show="!working">+</div>
+                                        </button>
                                     </div>
                                     <div class="col">
                                         <select v-model="new_credential">
@@ -108,14 +116,14 @@
                                         <th>Status</th>
                                     </tr>
                                     <tbody>
-                                        <tr @click="viewSession(session)"
-                                            v-for="session in filteredSessions">
-                                            <td>{{ session.type }}</td>
-                                            <td>{{ session.activity }}</td>
-                                            <td nowrap>{{ session.dates }}</td>
-                                            <td>{{ session.location }}</td>
-                                            <td>{{ sessionStatus(session) }}</td>
-                                        </tr>
+                                    <tr @click="viewSession(session)"
+                                        v-for="session in filteredSessions">
+                                        <td>{{ session.type }}</td>
+                                        <td>{{ session.activity }}</td>
+                                        <td nowrap>{{ session.dates }}</td>
+                                        <td>{{ session.location }}</td>
+                                        <td>{{ sessionStatus(session) }}</td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -141,7 +149,7 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
+    import {mapGetters} from 'vuex'
 
     export default {
         name: "Dashboard",
@@ -162,7 +170,8 @@
                 new_credential: 0,
                 filter: '',
                 current_session: {},
-                new_user: false
+                new_user: false,
+                working: false
             }
         },
         mounted() {
@@ -186,7 +195,7 @@
                 'getUser',
                 'getSessions',
                 'filterSessions'
-                ]),
+            ]),
             filteredSessions() {
                 var dashboard = this
                 return this.getSessions.filter(function (session) {
@@ -201,6 +210,8 @@
             addCredential() {
                 console.log('adding credential')
 
+                this.working = true
+
                 var form = this
 
                 axios.post('/Dashboard/credential', {
@@ -208,15 +219,19 @@
                     user_id: form.getUser.id
                 })
                     .then(function (response) {
+                        form.working = false
                         Event.fire('credential-added', response.data)
                         console.log('Success!')
                     })
                     .catch(function (error) {
+                        form.working = false
                         console.log('Failure!')
                     });
             },
             deleteCredential(profile_credential) {
                 console.log('removing credential')
+
+                this.working = true
 
                 var form = this
 
@@ -224,10 +239,12 @@
                     profile_credential_id: profile_credential.id
                 })
                     .then(function (response) {
+                        form.working = false
                         Event.fire('credential-deleted', response.data)
                         console.log('Success!')
                     })
                     .catch(function (error) {
+                        form.working = false
                         console.log('Failure!')
                     });
             },
@@ -322,5 +339,22 @@
 <style>
     .nav-tabs {
         border-bottom: none;
+    }
+    .loader {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        margin: auto;
+        animation: spin 2s linear infinite;
+    }
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
     }
 </style>

@@ -15,7 +15,7 @@ Repository Map
 - **jenkins**: Jenkins configuration data
 - **openshift**: [OpenShift templates](openshift/templates/README.md)
 - **sonar-runner**: The component that gets configured to run within SonarQube
-- **web-app**: The Laravel Application
+- **web-app**: The Laravel & Vue Application
 - **web-api**: The .NET Core API layer to Dynamics
 
 ## Requirements

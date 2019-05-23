@@ -126,9 +126,9 @@
                     </div>
                     <div class="col">
                         <button class="btn btn-primary btn-block" v-on:click.prevent="saveProfile" dusk="save">
-                                <span>
-                                    <div class="loader text-center" v-show="working"></div>
-                                </span>
+                            <span>
+                                <div class="loader text-center" v-show="working"></div>
+                            </span>
                             <div v-show="!working">Save</div>
                         </button>
                     </div>
