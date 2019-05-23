@@ -11,21 +11,21 @@ Ministry of Education Examinations and Contract Administration System
 
 Repository Map
 --------------
-- **Docker**: Docker compose and manage.sh scripts
-- **Jenkins**: Jenkins configuration data
+- **docker**: Docker compose and manage.sh scripts
+- **jenkins**: Jenkins configuration data
 - **openshift**: [OpenShift templates](openshift/templates/README.md)
-- **Sonar-runner**: The component that gets configured to run within SonarQube
+- **sonar-runner**: The component that gets configured to run within SonarQube
 - **web-app**: The Laravel Application
 - **web-api**: The .NET Core API layer to Dynamics
 
 ## Requirements
 
-* Vue.js (V 2.5)
-* Laravel Framework (V 5.8)
-* PHP (V 7.1)
-* .NET (Core V 2.1) 
-* OpenShift cluster administered by the “CSI Lab”
-* Vue.js files require processing by npm to convert their ECMAscript into vanilla javascript suitable for most browsers. This is currently done manually by the developer and is not built into the automatic deploy process in OpenShift. 
+- Vue.js (V 2.5)
+- Laravel Framework (V 5.8)
+- PHP (V 7.1)
+- .NET (Core V 2.1)
+- OpenShift cluster administered by the “CSI Lab”
+- Vue.js files require processing by npm to convert their ECMAscript into vanilla javascript suitable for most browsers. This is currently done manually by the developer and is not built into the automatic deploy process in OpenShift. 
 
 ## Project Status
 
