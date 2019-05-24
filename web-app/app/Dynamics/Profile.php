@@ -20,7 +20,7 @@ class Profile extends DynamicsRepository
     public static $data_bind = 'educ_Contact';
 
     public static $fields = [
-        'id'                             => 'contactid',
+        'id'                             => 'contactid', // TODO: also need to change it here
         'preferred_first_name'           => 'educ_preferredfirstname',
         'first_name'                     => 'firstname',
         'last_name'                      => 'lastname',
