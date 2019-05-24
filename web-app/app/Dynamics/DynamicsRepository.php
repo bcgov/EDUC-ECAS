@@ -151,6 +151,20 @@ class DynamicsRepository
         return $response->getBody()->getContents();
     }
 
+    public static function settings()
+    {
+        $response = self::connection()->request('GET', env('DYNAMICSBASEURL') . '/EnvironmentInformation');
+
+        return $response->getBody()->getContents();
+    }
+
+    public static function health()
+    {
+        $response = self::connection()->request('GET', env('DYNAMICSBASEURL') . '/health');
+
+        return $response->getStatusCode();
+    }
+
     public static function update($id, $data)
     {
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '(' . $id . ')';
@@ -267,10 +281,9 @@ class DynamicsRepository
         return new Client([
             // Base URI is used with relative requests
             'base_uri' => env('DYNAMICSBASEURL'),
-            'timeout'  => 10.0,
+            'timeout'  => 30.0,
             'headers'  => [
-                'UserName' => 'ecasadmin',
-                'Password' => 'Ec@s201p!'
+                'Authorization' => 'Basic ZWNhc2FkbWluOkVjQHMyMDFwIQ=='
             ]
         ]);
     }

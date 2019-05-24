@@ -10,6 +10,9 @@ using Newtonsoft.Json.Linq;
 
 namespace Ecas.Dyn365Service.Controllers
 {
+    /// <summary>
+    /// Wrapper that executes GET (Read) on Dynamics 365 Metadata. This is to be used for querying entity attribute definition such as OptionSets or StatusReason fields.
+    /// </summary>
     [Route("api/[controller]")]
     [Authorize]
     [ApiController]
@@ -21,6 +24,13 @@ namespace Ecas.Dyn365Service.Controllers
         {
             _dynamicsAuthenticationSettings = dynamicsAuthenticationSettings;
         }
+
+        /// <summary>
+        /// Executes GET operations against the Dyn365 API. View https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/webapi/query-metadata-web-api
+        /// </summary>
+        /// <param name="entityName">Name of the Entity where attribute resides</param>
+        /// <param name="optionSetName">name of the Attribute</param>
+        /// <returns></returns>
         // GET: api/Metadata
         [HttpGet]
         public ActionResult<string> Get(string entityName, string optionSetName)
@@ -55,30 +65,5 @@ namespace Ecas.Dyn365Service.Controllers
                 return StatusCode((int)response.StatusCode,
                     $"Failed to Retrieve records: {response.ReasonPhrase}");
         }
-
-        //// GET: api/Metadata/5
-        //[HttpGet("{id}", Name = "Get")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        //// POST: api/Metadata
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        //// PUT: api/Metadata/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }
