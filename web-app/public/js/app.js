@@ -11389,6 +11389,14 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Dashboard",
@@ -11409,7 +11417,8 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       new_credential: 0,
       filter: '',
       current_session: {},
-      new_user: false
+      new_user: false,
+      working: false
     };
   },
   mounted: function mounted() {
@@ -11441,26 +11450,32 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   methods: {
     addCredential: function addCredential() {
       console.log('adding credential');
+      this.working = true;
       var form = this;
       axios.post('/Dashboard/credential', {
         credential_id: form.new_credential,
         user_id: form.getUser.id
       }).then(function (response) {
+        form.working = false;
         Event.fire('credential-added', response.data);
         console.log('Success!');
       }).catch(function (error) {
+        form.working = false;
         console.log('Failure!');
       });
     },
     deleteCredential: function deleteCredential(profile_credential) {
       console.log('removing credential');
+      this.working = true;
       var form = this;
       axios.post('/Dashboard/credential/delete', {
         profile_credential_id: profile_credential.id
       }).then(function (response) {
+        form.working = false;
         Event.fire('credential-deleted', response.data);
         console.log('Success!');
       }).catch(function (error) {
+        form.working = false;
         console.log('Failure!');
       });
     },
@@ -11727,6 +11742,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Profile",
@@ -11743,7 +11763,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       user_local: _objectSpread({}, this.user),
-      errors: {}
+      errors: {},
+      working: false
     };
   },
   mounted: function mounted() {
@@ -11765,6 +11786,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     saveProfile: function saveProfile() {
       console.log('saving profile');
+
+      if (this.working) {
+        return;
+      }
+
+      this.working = true;
       var form = this; // Data must be registered here to interact with the form
 
       var data = {
@@ -11792,9 +11819,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         axios.post('/Dashboard/profile', data).then(function (response) {
           console.log('Create Profile');
           form.closeModal();
+          form.working = false;
           Event.fire('profile-updated', response.data);
         }).catch(function (error) {
           console.log('Failure!');
+          form.working = false;
 
           if (error.response.status == 422) {
             form.errors = error.response.data.errors;
@@ -11803,10 +11832,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } else {
         axios.patch('/Dashboard/profile', data).then(function (response) {
           console.log('Patch Profile');
+          form.working = false;
           form.closeModal();
           Event.fire('profile-updated', response.data);
         }).catch(function (error) {
           console.log('Failure!');
+          form.working = false;
 
           if (error.response.status == 422) {
             form.errors = error.response.data.errors;
@@ -16438,7 +16469,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.nav-tabs {\n    border-bottom: none;\n}\n", ""]);
+exports.push([module.i, "\n.nav-tabs {\n    border-bottom: none;\n}\n.loader {\n    border: 4px solid #f3f3f3; /* Light grey */\n    border-top: 4px solid #3498db; /* Blue */\n    border-radius: 50%;\n    width: 16px;\n    height: 16px;\n    margin: auto;\n    -webkit-animation: spin 2s linear infinite;\n            animation: spin 2s linear infinite;\n}\n@-webkit-keyframes spin {\n0% {\n        -webkit-transform: rotate(0deg);\n                transform: rotate(0deg);\n}\n100% {\n        -webkit-transform: rotate(360deg);\n                transform: rotate(360deg);\n}\n}\n@keyframes spin {\n0% {\n        -webkit-transform: rotate(0deg);\n                transform: rotate(0deg);\n}\n100% {\n        -webkit-transform: rotate(360deg);\n                transform: rotate(360deg);\n}\n}\n", ""]);
 
 // exports
 
@@ -16457,7 +16488,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.required[data-v-3bd692e4]:after { content:\" *\";\n}\n", ""]);
+exports.push([module.i, "\n.required[data-v-3bd692e4]:after { content:\" *\";\n}\n.loader[data-v-3bd692e4] {\n    border: 4px solid #f3f3f3; /* Light grey */\n    border-top: 4px solid #3498db; /* Blue */\n    border-radius: 50%;\n    width: 16px;\n    height: 16px;\n    margin: auto;\n    -webkit-animation: spin-data-v-3bd692e4 2s linear infinite;\n            animation: spin-data-v-3bd692e4 2s linear infinite;\n}\n@-webkit-keyframes spin-data-v-3bd692e4 {\n0% {\n        -webkit-transform: rotate(0deg);\n                transform: rotate(0deg);\n}\n100% {\n        -webkit-transform: rotate(360deg);\n                transform: rotate(360deg);\n}\n}\n@keyframes spin-data-v-3bd692e4 {\n0% {\n        -webkit-transform: rotate(0deg);\n                transform: rotate(0deg);\n}\n100% {\n        -webkit-transform: rotate(360deg);\n                transform: rotate(360deg);\n}\n}\n", ""]);
 
 // exports
 
@@ -47887,7 +47918,36 @@ var render = function() {
                             staticClass: "btn btn-primary btn-sm",
                             on: { click: _vm.addCredential }
                           },
-                          [_vm._v("+")]
+                          [
+                            _c("span", [
+                              _c("div", {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.working,
+                                    expression: "working"
+                                  }
+                                ],
+                                staticClass: "loader text-center"
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: !_vm.working,
+                                    expression: "!working"
+                                  }
+                                ]
+                              },
+                              [_vm._v("+")]
+                            )
+                          ]
                         )
                       ]),
                       _vm._v(" "),
@@ -48931,7 +48991,36 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v("Save")]
+              [
+                _c("span", [
+                  _c("div", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.working,
+                        expression: "working"
+                      }
+                    ],
+                    staticClass: "loader text-center"
+                  })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.working,
+                        expression: "!working"
+                      }
+                    ]
+                  },
+                  [_vm._v("Save")]
+                )
+              ]
             )
           ])
         ]),
