@@ -18,19 +18,23 @@ class Assignment extends DynamicsRepository
     const ACCEPTED_STATUS = 'Accepted';
     const DECLINED_STATUS = 'Declined';
 
+    const INACTIVE_STATE = 1;
+
     public static $fields = [
         'id'             => 'educ_assignmentid',
         'session_id'     => '_educ_session_value',
         'user_id'        => '_educ_contact_value',
         'role_id'        => '_educ_role_value',
         'contract_stage' => 'educ_contractstage',
-        'status'         => 'statuscode'
+        'status'         => 'statuscode',
+        'state'          => 'statecode'
     ];
 
     public static $links = [
-        'session_id' => Session::class,
-        'user_id'    => Profile::class,
-        'role_id'    => Role::class,
-        'status'     => AssignmentStatus::class
+        'session_id'     => Session::class,
+        'user_id'        => Profile::class,
+        'role_id'        => Role::class,
+        'status'         => AssignmentStatus::class,
+        'contract_stage' => ContractStage::class
     ];
 }
