@@ -13,13 +13,14 @@ class Profile extends DynamicsRepository
     public static $table = 'contacts';
 
     // TODO: this field isn't populated yet, use the contact id for testing
-//    public $primary_key = 'educ_federatedid';
+    // When SiteMinder authentication has been put in place we will want to use the federated id
+    // public $primary_key = 'educ_federatedid';
     public static $primary_key = 'contactid';
 
     public static $data_bind = 'educ_Contact';
 
     public static $fields = [
-        'id'                             => 'contactid',
+        'id'                             => 'contactid', // TODO: also need to change it here
         'preferred_first_name'           => 'educ_preferredfirstname',
         'first_name'                     => 'firstname',
         'last_name'                      => 'lastname',
