@@ -8,7 +8,9 @@
 
 namespace App\Dynamics;
 
-class School extends DynamicsRepository
+use App\Dynamics\Interfaces\iFullCRUD;
+
+class School extends DynamicsRepository implements iFullCRUD
 {
     public static $table = 'educ_schoollists';
 

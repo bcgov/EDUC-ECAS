@@ -8,7 +8,9 @@
 
 namespace App\Dynamics;
 
-class AssignmentStatus extends DynamicsRepository
+use App\Dynamics\Interfaces\iFullCRUD;
+
+class AssignmentStatus extends DynamicsRepository implements iFullCRUD
 {
     public static $table = 'educ_assignment';
 

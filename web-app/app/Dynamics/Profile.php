@@ -8,7 +8,9 @@
 
 namespace App\Dynamics;
 
-class Profile extends DynamicsRepository
+use App\Dynamics\Interfaces\iFullCRUD;
+
+class Profile extends DynamicsRepository implements iFullCRUD
 {
     public static $table = 'contacts';
 

@@ -8,7 +8,9 @@
 
 namespace App\Dynamics;
 
-class ContractStage extends DynamicsRepository
+use App\Dynamics\Interfaces\iFullCRUD;
+
+class ContractStage extends DynamicsRepository implements iFullCRUD
 {
     public static $table = 'educ_assignment';
 

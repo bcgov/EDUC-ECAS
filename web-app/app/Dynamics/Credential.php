@@ -8,7 +8,9 @@
 
 namespace App\Dynamics;
 
-class Credential extends DynamicsRepository
+use App\Dynamics\Interfaces\iFullCRUD;
+
+class Credential extends DynamicsRepository implements iFullCRUD
 {
     public static $table = 'educ_credentialcodes';
 

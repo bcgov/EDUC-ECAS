@@ -3,7 +3,6 @@
 namespace App\Dynamics;
 
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 /*
@@ -45,8 +44,6 @@ abstract class DynamicsRepository
      */
     public static $links = [];
 
-    // Cache the model for x minutes, or 0 don't cache
-    public static $cache = 0;
 
     /*
      * There a multiple "types" of Dynamics entities
@@ -99,25 +96,10 @@ abstract class DynamicsRepository
      */
     public static function get($id = null)
     {
-        $cache_key = static::cacheKey($id);
 
-        // Are we caching this model and does a cached copy exist
-        if (static::$cache > 0 && Cache::has($cache_key)) {
-            Log::debug('Loading from Cache: ' . $cache_key);
-            $collection = Cache::get($cache_key);
-        }
-        // This is a non-cached model or we don't have a current copy
-        // Need to get from Dynamics
-        else {
-            Log::debug('Loading from Dynamics: ' . $cache_key);
-            $collection = self::loadCollection($id);
+        Log::debug('Loading from Dynamics: ' . $id);
+        $collection = self::loadCollection($id);
 
-            // Cache for future reference
-            if (static::$cache > 0) {
-                Log::debug('Caching collection ' . $cache_key);
-                Cache::put($cache_key, $collection, static::$cache);
-            }
-        }
 
         // Just looking for a single record?
         if ($id) {
@@ -127,18 +109,25 @@ abstract class DynamicsRepository
         return $collection;
     }
 
-    /*
-     * Generate a key for caching this model based on the class name and the primary key
-     * This allows us to cache a specific record based on $id
-     * Or cache and entire collection
-     */
-    public static function cacheKey($id)
-    {
-        $pieces = explode('\\', get_called_class());
 
-        $name = array_pop($pieces);
+    public static function index(array $filter = null) {
 
-        return $id ? $name . '.' . $id : $name;
+        if($filter) {
+            // retrieve some records
+            return self::filter($filter);
+        } else {
+            // retrieve all records
+            return self::get();
+        }
+
+    }
+
+    public static function show($id) {
+        return self::get($id);
+    }
+
+    public static function store($data) {
+        return self::store($data);
     }
 
     public static function create($data)
@@ -161,11 +150,6 @@ abstract class DynamicsRepository
         // Returns an array of the returned data
         $data = json_decode($response->getBody()->getContents());
 
-        // replace the stale cache
-        if (static::$cache > 0) {
-            Log::debug('Caching collection ' . static::cacheKey($id));
-            Cache::put(static::cacheKey($id), $data, static::$cache);
-        }
 
         // TODO: This is handy for developing, but shouldn't be needed by Production
         Log::debug('data returned from PATCH call to Dynamics API');

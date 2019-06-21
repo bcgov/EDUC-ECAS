@@ -8,7 +8,9 @@
 
 namespace App\Dynamics;
 
-class Payment extends DynamicsRepository
+use App\Dynamics\Interfaces\iFullCRUD;
+
+class Payment extends DynamicsRepository implements iFullCRUD
 {
     public static $table = 'contact';
 

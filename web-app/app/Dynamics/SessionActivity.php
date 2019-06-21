@@ -8,7 +8,9 @@
 
 namespace App\Dynamics;
 
-class SessionActivity extends DynamicsRepository
+use App\Dynamics\Interfaces\iFullCRUD;
+
+class SessionActivity extends DynamicsRepository implements iFullCRUD
 {
     public static $table = 'educ_sessionactivitycodes';
 

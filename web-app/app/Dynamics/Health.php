@@ -8,9 +8,12 @@
 
 namespace App\Dynamics;
 
-class Health extends DynamicsRepository
+use App\Dynamics\Interfaces\iIndexOnlyCRUD;
+use App\Dynamics\Interfaces\iReadCRUD;
+
+class Health extends DynamicsRepository implements iIndexOnlyCRUD
 {
-    public function show() {
+    public static function index( array $filter = null ) {
 
 
         $response = self::connection()->request('GET', env('DYNAMICSBASEURL') . '/health');

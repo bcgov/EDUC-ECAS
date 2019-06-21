@@ -8,7 +8,9 @@
 
 namespace App\Dynamics;
 
-class Region extends DynamicsRepository
+use App\Dynamics\Interfaces\iFullCRUD;
+
+class Region extends DynamicsRepository implements iFullCRUD
 {
     public static $table = 'educ_provincestatecodes';
 

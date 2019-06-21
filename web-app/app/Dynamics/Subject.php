@@ -8,7 +8,9 @@
 
 namespace App\Dynamics;
 
-class Subject extends DynamicsRepository
+use App\Dynamics\Interfaces\iFullCRUD;
+
+class Subject extends DynamicsRepository implements iFullCRUD
 {
     public static $table = 'educ_subjectcodes';
 
