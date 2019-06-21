@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Log;
  * To add functionality to the application new Dynamics entities will be created
  * which will require new PHP classes extending this class.
  */
-class DynamicsRepository
+abstract class DynamicsRepository
 {
     /*
      * What is the table in Dynamics that defines this model
@@ -151,19 +151,6 @@ class DynamicsRepository
         return $response->getBody()->getContents();
     }
 
-    public static function settings()
-    {
-        $response = self::connection()->request('GET', env('DYNAMICSBASEURL') . '/EnvironmentInformation');
-
-        return $response->getBody()->getContents();
-    }
-
-    public static function health()
-    {
-        $response = self::connection()->request('GET', env('DYNAMICSBASEURL') . '/health');
-
-        return $response->getStatusCode();
-    }
 
     public static function update($id, $data)
     {
