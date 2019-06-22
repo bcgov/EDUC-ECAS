@@ -36,3 +36,8 @@ Route::post('/Dashboard/session', 'DashboardController@storeAssignment');
 Route::get('/Expenses/{session_id}', 'ExpenseController@index');
 
 Route::get('/connect', 'DashboardController@dynamics');
+
+
+// DEBUG
+Route::get('/debug', function () { return \App\Dynamics\Subject::get(); });
+

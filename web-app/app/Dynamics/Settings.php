@@ -8,20 +8,16 @@
 
 namespace App\Dynamics;
 
-use App\Dynamics\Interfaces\iIndexOnlyCRUD;
-use App\Dynamics\Interfaces\iReadCRUD;
+use App\Dynamics\Interfaces\iAllOnlyCrud;
 
-class Settings extends DynamicsRepository implements iIndexOnlyCRUD
+class Settings extends DynamicsRepository implements iAllOnlyCrud
 {
-    public static function index(array $filter = null) {
+    public static function all() {
 
 
-        $response = self::connection()->request('GET', env('DYNAMICSBASEURL') . '/EnvironmentInformation');
+        $response = parent::connection()->request('GET', env('DYNAMICSBASEURL') . '/EnvironmentInformation');
 
         return $response->getBody()->getContents();
-
-
-
 
     }
 }

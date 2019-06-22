@@ -59,6 +59,7 @@ abstract class DynamicsRepository
      */
     public static $data_bind;
 
+
     public static function delete($id)
     {
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '(' . $id . ')';
@@ -89,46 +90,39 @@ abstract class DynamicsRepository
         return $collection;
     }
 
+
+    /*
+    * Read data from Dynamics
+    * if no $id is passed in the all records from the table are returned
+    * Passing in and $id will return on specific record based on the table's primary key
+    */
+    public static function all()
+    {
+
+        Log::debug('Loading all() from Dynamics: ');
+        $collection = self::loadCollection(null);
+
+        return $collection;
+    }
+
+
     /*
      * Read data from Dynamics
      * if no $id is passed in the all records from the table are returned
      * Passing in and $id will return on specific record based on the table's primary key
      */
-    public static function get($id = null)
+    public static function get($id)
     {
 
         Log::debug('Loading from Dynamics: ' . $id);
         $collection = self::loadCollection($id);
 
 
-        // Just looking for a single record?
-        if ($id) {
-            return current($collection);
-        }
-
-        return $collection;
-    }
-
-
-    public static function index(array $filter = null) {
-
-        if($filter) {
-            // retrieve some records
-            return self::filter($filter);
-        } else {
-            // retrieve all records
-            return self::get();
-        }
+        return current($collection);
 
     }
 
-    public static function show($id) {
-        return self::get($id);
-    }
 
-    public static function store($data) {
-        return self::store($data);
-    }
 
     public static function create($data)
     {

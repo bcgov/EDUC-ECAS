@@ -19,125 +19,27 @@ use App\Dynamics\SessionType;
 use App\Dynamics\Subject;
 use Tests\TestCase;
 
-class DynamicsApiTest extends TestCase
+class ProfileCredentialTest extends TestCase
 {
-    /** @test */
-    public function get_credentials()
-    {
-        $credentials = Credential::get();
-
-        $this->assertTrue(is_array($credentials));
-    }
-
-    /** @test */
-    public function get_schools()
-    {
-        $schools = School::get();
-
-        $this->assertTrue(is_array($schools));
-    }
-
-    /** @test */
-    public function get_districts()
-    {
-        $districts = District::get();
-
-        $this->assertTrue(is_array($districts));
-    }
-
-    /** @test */
-    public function get_subjects()
-    {
-        $subjects = Subject::get();
-
-        $this->assertTrue(is_array($subjects));
-    }
-
-    /** @test */
-    public function get_regions()
-    {
-        $regions = Region::get();
-
-        $this->assertTrue(is_array($regions));
-    }
-
-    /** @test */
-    public function get_session_types()
-    {
-        $types = SessionType::get();
-
-        $this->assertTrue(is_array($types));
-    }
-
-    /** @test */
-    public function get_session_activities()
-    {
-        $result = SessionActivity::get();
-
-        $this->assertTrue(is_array($result));
-    }
-
-    /** @test */
-    public function get_roles()
-    {
-        $result = Role::get();
-
-        $this->assertTrue(is_array($result));
-    }
-
-    /** @test */
-    public function get_sessions()
-    {
-        $result = Session::get();
-
-        $this->assertTrue(is_array($result));
-    }
-
-    /** @test */
-    public function get_assignments()
-    {
-        $result = Assignment::get();
-
-        $this->assertTrue(is_array($result));
-    }
 
     /** @test */
     public function get_profile_credentials()
     {
-        $result = ProfileCredential::get();
+        $results = ProfileCredential::all();
 
-        $this->assertTrue(is_array($result));
-    }
-
-    /** @test */
-    public function get_payment_option_list()
-    {
-        $result = Payment::get();
-
-        $this->assertTrue(is_array($result));
-    }
-
-    /** @test */
-    public function get_contract_stage_list()
-    {
-        $result = ContractStage::get();
-
-        $this->assertTrue(is_array($result));
-    }
-
-    /** @test */
-    public function get_assignment_stage_list()
-    {
-        $result = AssignmentStatus::get();
-
-        $this->assertTrue(is_array($result));
+        $this->assertIsArray($results);
+        $this->assertIsArray($results[0]);
+        $this->assertArrayHasKey('id', $results[0]);
+        $this->assertArrayHasKey('user_id', $results[0]);
+        $this->assertArrayHasKey('credential_id', $results[0]);
+        $this->assertArrayHasKey('verified', $results[0]);
     }
 
     /** @test */
     public function create_and_update_profile_credential_and_assignment()
     {
-        $districts = District::get();
-        $schools = School::get();
+        $districts = District::all();
+        $schools = School::all();
 
         // CREATE PROFILE
         $user_id = Profile::create([
@@ -216,8 +118,8 @@ class DynamicsApiTest extends TestCase
         $this->assertEquals($districts[1]['id'], $updated_user['district_id']);
 
         // CREATE ASSIGNMENT
-        $sessions = Session::get();
-        $statuses = AssignmentStatus::get();
+        $sessions = Session::all();
+        $statuses = AssignmentStatus::all();
 
         $assignment_id = Assignment::create([
             'user_id'    => $user_id,
@@ -271,7 +173,7 @@ class DynamicsApiTest extends TestCase
         $this->assertEquals($declined_status_id, $assignments[0]['status']);
 
         // CREATE PROFILE CREDENTIAL
-        $credentials = Credential::get();
+        $credentials = Credential::all();
 
         $profile_credential_id = ProfileCredential::create([
             'user_id'       => $user_id,
@@ -291,4 +193,6 @@ class DynamicsApiTest extends TestCase
 
         $this->assertEquals(0, count($user_credentials));
     }
+
+
 }

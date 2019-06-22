@@ -8,15 +8,16 @@
 
 namespace App\Dynamics;
 
-use App\Dynamics\Interfaces\iIndexOnlyCRUD;
-use App\Dynamics\Interfaces\iReadCRUD;
 
-class Health extends DynamicsRepository implements iIndexOnlyCRUD
+use App\Dynamics\Interfaces\iAllOnlyCRUD;
+
+
+class Health extends DynamicsRepository implements iAllOnlyCRUD
 {
-    public static function index( array $filter = null ) {
+    public static function all() {
 
 
-        $response = self::connection()->request('GET', env('DYNAMICSBASEURL') . '/health');
+        $response = parent::connection()->request('GET', env('DYNAMICSBASEURL') . '/health');
 
         return $response->getStatusCode();
 

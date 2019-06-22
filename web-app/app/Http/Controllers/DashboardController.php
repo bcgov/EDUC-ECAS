@@ -295,7 +295,7 @@ class DashboardController extends Controller
 
     protected function loadDistricts()
     {
-        $this->districts = District::get();
+        $this->districts = District::all();
         usort($this->districts, function ($a, $b) {
             return $a['name'] <=> $b['name'];
         });
@@ -305,7 +305,7 @@ class DashboardController extends Controller
 
     protected function loadSubjects()
     {
-        $this->subjects = Subject::get();
+        $this->subjects = Subject::all();
         usort($this->subjects, function ($a, $b) {
             return $a['name'] <=> $b['name'];
         });
@@ -315,7 +315,7 @@ class DashboardController extends Controller
 
     protected function loadSchools()
     {
-        $this->schools = School::get();
+        $this->schools = School::all();
         usort($this->schools, function ($a, $b) {
             return $a['name'] <=> $b['name'];
         });
@@ -325,7 +325,7 @@ class DashboardController extends Controller
 
     protected function loadActivities()
     {
-        return $this->activities = SessionActivity::get();
+        return $this->activities = SessionActivity::all();
     }
 
     protected function loadAssignments()
@@ -360,12 +360,12 @@ class DashboardController extends Controller
 
     protected function loadTypes()
     {
-        return $this->types = SessionType::get();
+        return $this->types = SessionType::all();
     }
 
     protected function loadCredentials()
     {
-        $this->credentials = Credential::get();
+        $this->credentials = Credential::all();
         usort($this->credentials, function ($a, $b) {
             return $a['name'] <=> $b['name'];
         });
@@ -385,7 +385,7 @@ class DashboardController extends Controller
 
     protected function loadSessions()
     {
-        $sessions = MarkerSession::get();
+        $sessions = MarkerSession::all();
 
         // Sort the Sessions by their start date
         usort($sessions, function ($a, $b) {
@@ -445,7 +445,7 @@ class DashboardController extends Controller
      */
     private function loadAssignmentStatuses()
     {
-        return $this->assignment_statuses = AssignmentStatus::get();
+        return $this->assignment_statuses = AssignmentStatus::all();
     }
 
     private function loadCachedObjects(): void
