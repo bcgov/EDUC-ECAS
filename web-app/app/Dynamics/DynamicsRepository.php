@@ -248,7 +248,7 @@ abstract class DynamicsRepository
             'base_uri' => env('DYNAMICSBASEURL'),
             'timeout'  => 30.0,
             'headers'  => [
-                'Authorization' => 'Basic ZWNhc2FkbWluOkVjQHMyMDFwIQ=='
+                'Authorization' => env('API_KEY')
             ]
         ]);
     }
