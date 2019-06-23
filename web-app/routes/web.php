@@ -39,5 +39,5 @@ Route::get('/connect', 'DashboardController@dynamics');
 
 
 // DEBUG
-Route::get('/debug', function () { return \App\Dynamics\Subject::get(); });
+Route::get('/debug', function () { return (\App\Dynamics\Cache\District::all()); });
 
