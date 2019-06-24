@@ -40,4 +40,5 @@ Route::get('/connect', 'DashboardController@dynamics');
 
 // DEBUG
 Route::get('/debug', 'DebugController@index');
+Route::get('/fake', 'DebugController@fake');
 

@@ -1,6 +1,9 @@
 <?php
 
+
 use Illuminate\Database\Seeder;
+
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +14,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+
+        factory(\App\User::class, 10)->create();
+        factory(\App\Dynamics\Mock\School::class, 50)->create();
+        factory(\App\Dynamics\Mock\District::class, 50)->create();
+        factory(\App\Dynamics\Mock\Role::class, 5)->create();
+        factory(\App\Dynamics\Mock\Credential::class, 5)->create();
+
+        factory(\App\Dynamics\Mock\ProfileCredential::class, 50)->create();
+        factory(\App\Dynamics\Mock\Profile::class, 50)->create();
     }
 }
