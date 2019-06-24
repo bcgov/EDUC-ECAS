@@ -2,6 +2,7 @@
 
 namespace App\Dynamics;
 
+use App\Dynamics\Interfaces\iFullCRUD;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\Log;
  */
 abstract class DynamicsRepository
 {
+
+
     /*
      * What is the table in Dynamics that defines this model
      */
@@ -60,7 +63,17 @@ abstract class DynamicsRepository
     public static $data_bind;
 
 
-    public static function delete($id)
+    public static $cache = 0;   // cache duration in minutes
+
+
+    public function __construct()
+    {
+
+
+    }
+
+
+    public function delete($id)
     {
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '(' . $id . ')';
 
@@ -75,7 +88,7 @@ abstract class DynamicsRepository
      * This function takes an array as a filter, but only filter based on one field!!
      * You would need to refactor to make it work if more than one filter field is required.
      */
-    public static function filter(array $filter)
+    public function filter(array $filter)
     {
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table .
                  '&$select=' . implode(',', static::$fields) .
@@ -96,7 +109,7 @@ abstract class DynamicsRepository
     * if no $id is passed in the all records from the table are returned
     * Passing in and $id will return on specific record based on the table's primary key
     */
-    public static function all()
+    public function all()
     {
 
         Log::debug('Loading all() from Dynamics: ');
@@ -111,7 +124,7 @@ abstract class DynamicsRepository
      * if no $id is passed in the all records from the table are returned
      * Passing in and $id will return on specific record based on the table's primary key
      */
-    public static function get($id)
+    public function get($id)
     {
 
         Log::debug('Loading from Dynamics: ' . $id);
@@ -124,7 +137,7 @@ abstract class DynamicsRepository
 
 
 
-    public static function create($data)
+    public function create($data)
     {
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table;
 
@@ -135,7 +148,7 @@ abstract class DynamicsRepository
     }
 
 
-    public static function update($id, $data)
+    public function update($id, $data)
     {
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '(' . $id . ')';
 
