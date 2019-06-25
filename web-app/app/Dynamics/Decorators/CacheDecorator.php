@@ -4,17 +4,17 @@
 namespace App\Dynamics\Decorators;
 
 
-use App\Dynamics\Interfaces\iFullCRUD;
+use App\Dynamics\Interfaces\iDynamicsRepository;
 use Illuminate\Support\Facades\Cache;
 
-class CacheDecorator  implements iFullCRUD
+class CacheDecorator  implements iDynamicsRepository
 {
     
     const CACHE_DURATION = 480; // minutes
     protected $model;
 
  
-    public function __construct(iFullCRUD $model)
+    public function __construct(iDynamicsRepository $model)
     {
         $this->model = $model;
     }

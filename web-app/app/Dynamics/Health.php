@@ -9,10 +9,10 @@
 namespace App\Dynamics;
 
 
-use App\Dynamics\Interfaces\iAllOnlyCRUD;
+use App\Dynamics\Interfaces\iDynamicsRepository;
 
 
-class Health extends DynamicsRepository implements iAllOnlyCRUD
+class Health extends DynamicsRepository implements iDynamicsRepository
 {
     public static function all() {
 

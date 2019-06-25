@@ -2,7 +2,6 @@
 
 namespace App\Dynamics;
 
-use App\Dynamics\Interfaces\iFullCRUD;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 

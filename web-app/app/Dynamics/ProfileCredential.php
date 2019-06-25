@@ -8,9 +8,9 @@
 
 namespace App\Dynamics;
 
-use App\Dynamics\Interfaces\iFullCRUD;
+use App\Dynamics\Interfaces\iDynamicsRepository;
 
-class ProfileCredential extends DynamicsRepository implements iFullCRUD
+class ProfileCredential extends DynamicsRepository implements iDynamicsRepository
 {
     public static $table = 'educ_credentials';
 

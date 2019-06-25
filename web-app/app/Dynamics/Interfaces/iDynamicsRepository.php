@@ -4,8 +4,11 @@
 namespace App\Dynamics\Interfaces;
 
 
-interface iFullCRUD extends iAllOnlyCRUD
+interface iDynamicsRepository
 {
+
+    public function all();
+
     public function get($id);
 
     public function filter(array $filter);

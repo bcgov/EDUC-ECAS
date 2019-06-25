@@ -8,9 +8,9 @@
 
 namespace App\Dynamics;
 
-use App\Dynamics\Interfaces\iFullCRUD;
+use App\Dynamics\Interfaces\iDynamicsRepository;
 
-class Role extends DynamicsRepository implements iFullCRUD
+class Role extends DynamicsRepository implements iDynamicsRepository
 {
     public static $table = 'educ_rolecodes';
 

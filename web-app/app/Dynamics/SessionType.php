@@ -8,9 +8,9 @@
 
 namespace App\Dynamics;
 
-use App\Dynamics\Interfaces\iFullCRUD;
+use App\Dynamics\Interfaces\iDynamicsRepository;
 
-class SessionType extends DynamicsRepository implements iFullCRUD
+class SessionType extends DynamicsRepository implements iDynamicsRepository
 {
     public static $table = 'educ_sessiontypecodes';
 

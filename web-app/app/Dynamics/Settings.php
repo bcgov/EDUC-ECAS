@@ -8,9 +8,10 @@
 
 namespace App\Dynamics;
 
-use App\Dynamics\Interfaces\iAllOnlyCrud;
 
-class Settings extends DynamicsRepository implements iAllOnlyCrud
+use App\Dynamics\Interfaces\iDynamicsRepository;
+
+class Settings extends DynamicsRepository implements iDynamicsRepository
 {
     public static function all() {
 
