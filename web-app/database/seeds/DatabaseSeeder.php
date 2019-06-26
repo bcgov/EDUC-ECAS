@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
         factory(\App\User::class, 10)->create();
         factory(\App\MockEntities\School::class, 50)->create();
         factory(\App\MockEntities\District::class, 50)->create();
-        factory(\App\MockEntities\Role::class, 5)->create();
         factory(\App\MockEntities\Credential::class, 5)->create();
+        $this->call(RoleSeeder::class);
         $this->call(AssignmentStatusSeeder::class);
         $this->call(ContractStageSeeder::class);
         $this->call(PaymentTypeSeeder::class);

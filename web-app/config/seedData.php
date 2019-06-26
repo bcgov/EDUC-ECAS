@@ -86,7 +86,36 @@ return [
 
                             ],
 
-
+    'roles'     => [
+                             [
+                                "name"=> "Team Lead",
+                                "rate"=> 340
+                              ],
+                              [
+                                "name"=> "Exemplar",
+                                "rate"=> 340
+                              ],
+                              [
+                                "name"=> "Marker",
+                                "rate"=> 300
+                              ],
+                              [
+                                "name"=> "Chair",
+                                "rate"=> 350
+                              ],
+                              [
+                                "name"=> "Vice-Chair",
+                                "rate"=> 340
+                              ],
+                              [
+                                "name"=> "Section Head",
+                                "rate"=> 325
+                              ],
+                              [
+                                "name"=> "Team Member",
+                                "rate"=> 300
+                              ],
+                ],
 
 
 ];
