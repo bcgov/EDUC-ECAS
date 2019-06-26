@@ -2,7 +2,7 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use App\Dynamics\Mock\School;
+use App\MockEntities\School;
 use Faker\Generator as Faker;
 
 $factory->define(School::class, function (Faker $faker) {

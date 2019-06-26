@@ -3,32 +3,55 @@
 namespace Tests\Feature;
 
 use App\Dynamics\Credential;
-use App\Dynamics\Cache\Credential as CacheCredentials;
+use App\Dynamics\Decorators\CacheDecorator;
 use Tests\TestCase;
 
 class CredentialTest extends TestCase
 {
+
+    public $api;
+    public $fake;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->api = new Credential();
+        $this->fake = new \App\MockEntities\Repository\Credential(new \App\MockEntities\Credential());
+
+    }
+
     /** @test */
     public function get_credentials()
     {
-        $credentials = Credential::all();
+        $credentials = $this->api->all();
 
-        $this->assertIsArray($credentials);
-        $this->assertIsArray($credentials[0]);
-        $this->assertArrayHasKey('id', $credentials[0]);
-        $this->assertArrayHasKey('name', $credentials[0]);
+
+        $this->verifyCollection($credentials);
+        $this->verifySingle($credentials[0]);
+        
     }
 
 
     /** @test */
     public function get_cache_credentials()
     {
-        $credentials = CacheCredentials::all();
+        $credentials = (new CacheDecorator($this->api))->all();
 
-        $this->assertIsArray($credentials);
-        $this->assertIsArray($credentials[0]);
-        $this->assertArrayHasKey('id', $credentials[0]);
-        $this->assertArrayHasKey('name', $credentials[0]);
+        $this->verifyCollection($credentials);
+        $this->verifySingle($credentials[0]);
+    }
+    
+    private function verifyCollection($results)
+    {
+        $this->assertIsArray($results);
+    }
+    
+    private function verifySingle($result)
+    {
+
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('id', $result);
+        $this->assertArrayHasKey('name', $result);
     }
 
 

@@ -2,7 +2,7 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use App\Dynamics\Mock\Profile;
+use App\MockEntities\Profile;
 use Faker\Generator as Faker;
 
 $factory->define(Profile::class, function (Faker $faker) {
@@ -10,8 +10,8 @@ $factory->define(Profile::class, function (Faker $faker) {
     $postal_code = 'V'. $faker->randomDigitNotNull . $faker->randomLetter .
         $faker->randomDigitNotNull . $faker->randomLetter . $faker->randomDigitNotNull;
 
-    $districts = \App\Dynamics\Mock\District::pluck('id')->toArray();
-    $schools =  \App\Dynamics\Mock\School::pluck('id')->toArray();
+    $districts = \App\MockEntities\District::pluck('id')->toArray();
+    $schools =  \App\MockEntities\School::pluck('id')->toArray();
 
     return [
         //'id'                             => 'contactid', // TODO: also need to change it here

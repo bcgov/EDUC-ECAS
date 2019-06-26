@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dynamics\Mock;
+namespace App\MockEntities;
 
 
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +10,7 @@ class Profile extends Model
 
     public function district()
     {
-        return $this->belongsTo(\App\Dynamics\Mock\District::class);
+        return $this->belongsTo(\App\Dynamics\Entites\District::class);
     }
 
     public function school()

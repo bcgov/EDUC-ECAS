@@ -2,50 +2,82 @@
 
 namespace Tests\Feature;
 
-use App\Dynamics\Cache\AssignmentStatus as CacheAssignmentStatus;
 use App\Dynamics\AssignmentStatus;
 
+use App\Dynamics\Decorators\CacheDecorator;
 use Tests\TestCase;
 
 class AssignmentStatusTest extends TestCase
 {
 
-    /** @test */
-    public function get_assignment_stage_list()
-    {
-        $results = AssignmentStatus::all();
+    public $api;
+    public $fake;
 
-        $this->assertIsArray($results);
-        $this->assertIsArray($results[0]);
-        $this->assertArrayHasKey('id', $results[0]);
-        $this->assertArrayHasKey('name', $results[0]);
+    public function setUp(): void
+    {
+        parent::setUp(); 
+        $this->api              = new AssignmentStatus();
+        $this->fake             = new \App\MockEntities\Repository\AssignmentStatus(new \App\MockEntities\AssignmentStatus());
+        
     }
 
     /** @test */
-    public function get_cache_assignment_stage_list()
+    public function get_all_assignments_from_api()
     {
-        $results = CacheAssignmentStatus::all();
+        $results = $this->api->all();
 
-        $this->assertIsArray($results);
-        $this->assertIsArray($results[0]);
-        $this->assertArrayHasKey('id', $results[0]);
-        $this->assertArrayHasKey('name', $results[0]);
+        $this->verifyCollection($results);
+        $this->verifySingle($results[0]);
     }
 
     /** @test */
-    public function get_cache_update_assignment_stage_list()
+    public function get_all_assignments_from_api_cached()
     {
-        // cache is set
-        $results = CacheAssignmentStatus::all();
+        $results = (new CacheDecorator($this->api))->all();
 
-        // make small modification
-
-
-        $this->assertIsArray($results);
-        $this->assertIsArray($results[0]);
-        $this->assertArrayHasKey('id', $results[0]);
-        $this->assertArrayHasKey('name', $results[0]);
+        $this->verifyCollection($results);
+        $this->verifySingle($results[0]);
     }
+
+    /** @test */
+    public function get_all_assignments_from_fake_local_database()
+    {
+        // TODO - remove `toArray()` - we should be returning a collection
+        $results = $this->fake->all()->toArray();
+
+
+        $this->verifyCollection($results);
+        $this->verifySingle($results[0]);
+    }
+
+
+    /** @test */
+    public function get_all_assignments_from_fake_local_database_then_cached()
+    {
+        // TODO - remove `toArray()` - we should be returning a collection
+        $results = (new CacheDecorator($this->fake))->all()->toArray();
+
+        $this->verifyCollection($results);
+        $this->verifySingle($results[0]);
+    }
+
+
+
+    private function verifyCollection($results)
+    {
+        $this->assertIsArray($results);
+
+    }
+
+    private function verifySingle($result)
+    {
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('id', $result);
+        $this->assertArrayHasKey('name', $result);
+
+    }
+
+
 
 
 }

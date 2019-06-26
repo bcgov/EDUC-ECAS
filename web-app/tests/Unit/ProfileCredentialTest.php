@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Dynamics\Assignment;
 use App\Dynamics\AssignmentStatus;
 use App\Dynamics\Credential;
+use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\District;
 use App\Dynamics\Profile;
 use App\Dynamics\ProfileCredential;
@@ -16,20 +17,55 @@ use Tests\TestCase;
 class ProfileCredentialTest extends TestCase
 {
 
-    /** @test */
-    public function get_profile_credentials()
-    {
-        $results = ProfileCredential::all();
+    public $api;
+    public $fake;
 
-        $this->assertIsArray($results);
-        $this->assertIsArray($results[0]);
-        $this->assertArrayHasKey('id', $results[0]);
-        $this->assertArrayHasKey('user_id', $results[0]);
-        $this->assertArrayHasKey('credential_id', $results[0]);
-        $this->assertArrayHasKey('verified', $results[0]);
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->api = new ProfileCredential();
+        $this->fake = new \App\MockEntities\Repository\ProfileCredential(new \App\MockEntities\ProfileCredential());
     }
 
+
     /** @test */
+    public function get_all_contracts_from_api()
+    {
+        $results = $this->api->all();
+        $this->verifyCollection($results);
+        $this->verifySingle($results[0]);
+
+    }
+
+
+    /** @test */
+    public function get_all_contracts_from_api_via_the_cache()
+    {
+        $results = (new CacheDecorator($this->api))->all();
+        $this->verifyCollection($results);
+        $this->verifySingle($results[0]);
+
+    }
+
+
+    private function verifyCollection($results)
+    {
+        $this->assertIsArray($results);
+
+    }
+
+    private function verifySingle($result)
+    {
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('id', $result);
+        $this->assertArrayHasKey('user_id', $result);
+        $this->assertArrayHasKey('credential_id', $result);
+        $this->assertArrayHasKey('verified', $result);
+
+    }
+
+
+    // TODO - re-enable this test
     public function create_and_update_profile_credential_and_assignment()
     {
         $districts = District::all();

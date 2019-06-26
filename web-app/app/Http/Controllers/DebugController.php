@@ -2,30 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Dynamics\Decorators\CacheDecorator;
-use App\Dynamics\District;
-use App\Dynamics\Profile;
-use Illuminate\Http\Request;
+use App\MockEntities\Credential;
 
-class DebugController extends Controller
+
+class DebugController
 {
+
+    private $model;
+
+    public function __construct(Credential $model)
+    {
+        $this->model = $model;
+    }
+
+
     public function index()
     {
-
-        $temp = new Profile();
-        $cache = new CacheDecorator($temp);
-
-        return ($cache->all());
-
+        return $this->model->all();
     }
 
-
-    public function fake()
-    {
-
-        return \App\Dynamics\Mock\Profile::all();
-
-
-    }
 
 }

@@ -2,27 +2,62 @@
 
 namespace Tests\Feature;
 
+use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\Session;
 use Tests\TestCase;
 
 class SessionTest extends TestCase
 {
+    
+    public $api;
+    public $fake;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->api = new Session();
+        $this->fake = new \App\MockEntities\Repository\Session(new \App\MockEntities\Session());
+    }
+
 
     /** @test */
-    public function get_sessions()
+    public function get_all_contracts_from_api()
     {
-        $results = Session::all();
+        $results = $this->api->all();
+        $this->verifyCollection($results);
+        $this->verifySingle($results[0]);
 
+    }
+
+
+    /** @test */
+    public function get_all_contracts_from_api_via_the_cache()
+    {
+        $results = (new CacheDecorator($this->api))->all();
+        $this->verifyCollection($results);
+        $this->verifySingle($results[0]);
+
+    }
+
+
+    private function verifyCollection($results)
+    {
         $this->assertIsArray($results);
-        $this->assertIsArray($results[0]);
-        $this->assertArrayHasKey('id', $results[0]);
-        $this->assertArrayHasKey('activity_id', $results[0]);
-        $this->assertArrayHasKey('type_id', $results[0]);
-        $this->assertArrayHasKey('start_date', $results[0]);
-        $this->assertArrayHasKey('end_date', $results[0]);
-        $this->assertArrayHasKey('location', $results[0]);
-        $this->assertArrayHasKey('address', $results[0]);
-        $this->assertArrayHasKey('city', $results[0]);
+
+    }
+
+    private function verifySingle($result)
+    {
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('id', $result);
+        $this->assertArrayHasKey('activity_id', $result);
+        $this->assertArrayHasKey('type_id', $result);
+        $this->assertArrayHasKey('start_date', $result);
+        $this->assertArrayHasKey('end_date', $result);
+        $this->assertArrayHasKey('location', $result);
+        $this->assertArrayHasKey('address', $result);
+        $this->assertArrayHasKey('city', $result);
+
     }
 
 

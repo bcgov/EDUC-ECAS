@@ -3,22 +3,58 @@
 namespace Tests\Feature;
 
 
+use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\SessionType;
 use Tests\TestCase;
 
 class SessionTypeTest extends TestCase
 {
 
-    /** @test */
-    public function get_session_types()
-    {
-        $results = SessionType::all();
 
+    public $api;
+    public $fake;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->api = new SessionType();
+        $this->fake = new \App\MockEntities\Repository\SessionType(new \App\MockEntities\SessionType());
+    }
+
+
+    /** @test */
+    public function get_all_contracts_from_api()
+    {
+        $results = $this->api->all();
+        $this->verifyCollection($results);
+        $this->verifySingle($results[0]);
+
+    }
+
+
+    /** @test */
+    public function get_all_contracts_from_api_via_the_cache()
+    {
+        $results = (new CacheDecorator($this->api))->all();
+        $this->verifyCollection($results);
+        $this->verifySingle($results[0]);
+
+    }
+
+
+    private function verifyCollection($results)
+    {
         $this->assertIsArray($results);
-        $this->assertIsArray($results[0]);
-        $this->assertArrayHasKey('id', $results[0]);
-        $this->assertArrayHasKey('name', $results[0]);
-        $this->assertArrayHasKey('code', $results[0]);
+
+    }
+
+    private function verifySingle($result)
+    {
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('id', $result);
+        $this->assertArrayHasKey('name', $result);
+        $this->assertArrayHasKey('code', $result);
+
     }
 
 

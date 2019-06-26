@@ -8,10 +8,20 @@ use Tests\TestCase;
 class AssignmentTest extends TestCase
 {
 
-    /** @test */
-    public function get_assignments()
+    public $api;
+    public $fake;
+
+    public function setUp(): void
     {
-        $result = Assignment::all();
+        parent::setUp();
+        $this->api = new Assignment();
+    }
+
+
+    /** @test */
+    public function all_assignments()
+    {
+        $result = $this->api->all();
 
         $this->assertTrue(is_array($result));
 
@@ -26,5 +36,7 @@ class AssignmentTest extends TestCase
         $this->assertArrayHasKey('state', $result[0]);
 
     }
+
+
 
 }

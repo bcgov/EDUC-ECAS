@@ -65,11 +65,11 @@ abstract class DynamicsRepository
     public static $cache = 0;   // cache duration in minutes
 
 
-    public function __construct()
-    {
-
-
-    }
+//    public function __construct()
+//    {
+//
+//
+//    }
 
 
     public function delete($id)

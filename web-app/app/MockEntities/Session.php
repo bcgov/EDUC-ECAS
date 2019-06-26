@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Dynamics\Mock;
+namespace App\MockEntities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Credential extends Model
+class Session extends Model
 {
     //
 }

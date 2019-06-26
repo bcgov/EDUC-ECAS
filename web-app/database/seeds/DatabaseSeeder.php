@@ -14,14 +14,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
+        // Standalone Models with no relationship to other models - must be run first
         factory(\App\User::class, 10)->create();
-        factory(\App\Dynamics\Mock\School::class, 50)->create();
-        factory(\App\Dynamics\Mock\District::class, 50)->create();
-        factory(\App\Dynamics\Mock\Role::class, 5)->create();
-        factory(\App\Dynamics\Mock\Credential::class, 5)->create();
+        factory(\App\MockEntities\School::class, 50)->create();
+        factory(\App\MockEntities\District::class, 50)->create();
+        factory(\App\MockEntities\Role::class, 5)->create();
+        factory(\App\MockEntities\Credential::class, 5)->create();
+        $this->call(AssignmentStatusSeeder::class);
 
-        factory(\App\Dynamics\Mock\ProfileCredential::class, 50)->create();
-        factory(\App\Dynamics\Mock\Profile::class, 50)->create();
+
+        // Models with relationships to other models - the order that the following factories are run matters
+        factory(\App\MockEntities\ProfileCredential::class, 50)->create();
+        factory(\App\MockEntities\Profile::class, 50)->create();
     }
 }

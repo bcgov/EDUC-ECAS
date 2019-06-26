@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 
+use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\Region;
 use Tests\TestCase;
 
@@ -10,17 +11,49 @@ class RegionTest extends TestCase
 {
 
 
-    /** @test */
-    public function get_regions()
+    public $api;
+    public $fake;
+
+    public function setUp(): void
     {
-        $results = Region::all();
-
-
-        $this->assertIsArray($results);
-        $this->assertIsArray($results[0]);
-        $this->assertArrayHasKey('id', $results[0]);
-        $this->assertArrayHasKey('name', $results[0]);
+        parent::setUp();
+        $this->api = new Region();
+        $this->fake = new \App\MockEntities\Repository\Region(new \App\MockEntities\Region());
     }
 
+
+    /** @test */
+    public function get_all_contracts_from_api()
+    {
+        $results = $this->api->all();
+        $this->verifyCollection($results);
+        $this->verifySingle($results[0]);
+
+    }
+
+
+    /** @test */
+    public function get_all_contracts_from_api_via_the_cache()
+    {
+        $results = (new CacheDecorator($this->api))->all();
+        $this->verifyCollection($results);
+        $this->verifySingle($results[0]);
+
+    }
+
+
+    private function verifyCollection($results)
+    {
+        $this->assertIsArray($results);
+
+    }
+
+    private function verifySingle($result)
+    {
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('id', $result);
+        $this->assertArrayHasKey('name', $result);
+
+    }
 
 }

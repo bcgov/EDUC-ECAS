@@ -22,7 +22,7 @@ class CacheDecorator  implements iDynamicsRepository
 
     public function all()
     {
-        return Cache::remember(self::cacheKey(),self::CACHE_DURATION , function ()
+        return Cache::remember($this->cacheKey(),self::CACHE_DURATION , function ()
         {
             return $this->model->all();
         });
@@ -43,21 +43,21 @@ class CacheDecorator  implements iDynamicsRepository
 
     public function create($data)
     {
-        Cache::forget(self::cacheKey());
+        Cache::forget($this->cacheKey());
         return $this->model->create($data);
     }
 
     public function update($id, $data)
     {
         Cache::forget(self::cacheKey($id));
-        Cache::forget(self::cacheKey());
+        Cache::forget($this->cacheKey());
 
         return $this->model->update($id, $data);
     }
 
     public function delete($id)
     {
-        Cache::forget(self::cacheKey());
+        Cache::forget($this->cacheKey());
         Cache::forget(self::cacheKey($id));
 
         return $this->model->delete($id);
@@ -71,9 +71,9 @@ class CacheDecorator  implements iDynamicsRepository
 
     }
 
-    private static function cacheKey($id = null)
+    private function cacheKey($id = null)
     {
-        $pieces = explode('\\', get_called_class());
+        $pieces = explode('\\', get_class($this->model));
 
         $class_name = array_pop($pieces);
 
