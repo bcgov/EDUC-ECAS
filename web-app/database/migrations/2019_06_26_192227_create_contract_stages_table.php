@@ -15,6 +15,7 @@ class CreateContractStagesTable extends Migration
     {
         Schema::create('contract_stages', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
             $table->timestamps();
         });
     }

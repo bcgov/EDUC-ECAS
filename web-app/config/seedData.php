@@ -14,11 +14,16 @@ return [
                             ],
 
 
-    'contract_stages' => [
+    'contract_statuses' => [
                                 'Not Created',
                                 'Contract Sent',
                                 'Contract Signed'
-                            ]
+                            ],
+
+    'payment_types'     => [
+                                'Cheque',
+                                'Electronic Transfer'
+                            ],
 
 
 

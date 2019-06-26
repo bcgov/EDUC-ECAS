@@ -29,10 +29,13 @@ Route::resource('/schools'                  , 'Api\SchoolController', ['only' =>
 Route::resource('/roles'                    , 'Api\RoleController', ['only' => ['index','show']]);
 Route::resource('/assignment-statuses'      , 'Api\AssignmentStatusController', ['only' => ['index','show']]);
 Route::resource('/contract-stages'          , 'Api\ContractStageController', ['only' => ['index','show']]);
+Route::resource('/payment-types'            , 'Api\PaymentTypeController', ['only' => ['index','show']]);
 
 
 
-// Local fictitious data for development purposes
+// Local fictitious data for development and testing purposes
+// These routes and the underlying db were developed because there were
+// significant delays getting access to the API
 Route::prefix('fake')->group(function () {
 
     // Read and write resources
@@ -46,8 +49,8 @@ Route::prefix('fake')->group(function () {
     Route::resource('/roles'               , 'Fictitious\RoleController', ['only' => ['index','show']]);
     Route::resource('/districts'           , 'Fictitious\DistrictController', ['only' => ['index','show']]);
     Route::resource('/assignment-statuses' , 'Fictitious\AssignmentStatusController', ['only' => ['index','show']]);
-
-
+    Route::resource('/contract-stages'     , 'Fictitious\ContractStageController', ['only' => ['index','show']]);
+    Route::resource('/payment-types'       , 'Fictitious\PaymentTypeController', ['only' => ['index','show']]);
 
 
 

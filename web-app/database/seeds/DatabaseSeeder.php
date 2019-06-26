@@ -21,9 +21,12 @@ class DatabaseSeeder extends Seeder
         factory(\App\MockEntities\Role::class, 5)->create();
         factory(\App\MockEntities\Credential::class, 5)->create();
         $this->call(AssignmentStatusSeeder::class);
+        $this->call(ContractStageSeeder::class);
+        $this->call(PaymentTypeSeeder::class);
 
 
         // Models with relationships to other models - the order that the following factories are run matters
+        // Assignments will go here
         factory(\App\MockEntities\ProfileCredential::class, 50)->create();
         factory(\App\MockEntities\Profile::class, 50)->create();
     }

@@ -40,6 +40,27 @@ class ContractStageTest extends TestCase
 
     }
 
+    /** @test */
+    public function get_all_fake_records()
+    {
+        // TODO - remove toArray() below - collection
+        $results = $this->fake->all()->toArray();
+        $this->verifyCollection($results);
+        $this->verifySingle($results[0]);
+
+    }
+
+
+    /** @test */
+    public function get_all_fake_records_via_the_cache()
+    {
+        // TODO - remove toArray() below - collection
+        $results = (new CacheDecorator($this->fake))->all()->toArray();
+        $this->verifyCollection($results);
+        $this->verifySingle($results[0]);
+
+    }
+
 
     private function verifyCollection($results)
     {
