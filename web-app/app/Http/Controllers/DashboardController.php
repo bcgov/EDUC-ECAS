@@ -78,20 +78,7 @@ class DashboardController extends Controller
         return view('login');
     }
 
-    public function apitest()
-    {
-        $status_code = DynamicsRepository::health();
-
-        $result = DynamicsRepository::settings();
-
-        $variables = json_decode($result);
-
-        return view('apitest', [
-            'status' => $status_code,
-            'api' => $variables
-        ]);
-    }
-
+   
     // TODO: This is a useless stub for testing and will be replaced by integration with SiteMinder / Keycloak
     public function postLogin(Request $request)
     {
