@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ContractStageSeeder::class);
         $this->call(PaymentTypeSeeder::class);
         $this->call(RegionSeeder::class);
+        $this->call(SessionActivitySeeder::class);
 
 
         // Models with relationships to other models - the order that the following factories are run matters

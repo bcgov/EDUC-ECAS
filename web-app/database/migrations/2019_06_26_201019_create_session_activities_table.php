@@ -15,6 +15,10 @@ class CreateSessionActivitiesTable extends Migration
     {
         Schema::create('session_activities', function (Blueprint $table) {
             $table->bigIncrements('id');
+
+            $table->string('code');
+            $table->string('name');
+
             $table->timestamps();
         });
     }

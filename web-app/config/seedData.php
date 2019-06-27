@@ -116,6 +116,61 @@ return [
                                 "rate"=> 300
                               ],
                 ],
+    
+    'session_activies'      => [
+                                [
+                                "code"=> "INA",
+                                "name"=> "Inactive Session Type"
+                                ],
+                                [
+                                "code"=> "MAR",
+                                "name"=> "Marking"
+                                ],
+                                [
+                                "code"=> "EXE",
+                                "name"=> "Exemplars"
+                                ],
+                                [
+                                "code"=> "STD",
+                                "name"=> "Standard Setting"
+                                ],
+                                [
+                                "code"=> "MON",
+                                "name"=> "Monitoring"
+                                ],
+                                [
+                                "code"=> "REV",
+                                "name"=> "Review"
+                                ],
+                                [
+                                "code"=> "DEV",
+                                "name"=> "Development"
+                                ],
+                                [
+                                "code"=> "CRD",
+                                "name"=> "Credentialing-Facilitation"
+                                ],
+                                [
+                                "code"=> "PRP",
+                                "name"=> "Prep marking site "
+                                ],
+                                [
+                                "code"=> "WRT",
+                                "name"=> "Writing – marking manuals, scoring guides, credentialing materials"
+                                ],
+                                [
+                                "code"=> "MEET",
+                                "name"=> "Meeting"
+                                ],
+                                [
+                                "code"=> "TRAN",
+                                "name"=> "Translation"
+                                ],
+                                [
+                                "code"=> "CAR",
+                                "name"=> "Classroom assessment and marking"
+                                ]
+                            ]
 
 
 ];
