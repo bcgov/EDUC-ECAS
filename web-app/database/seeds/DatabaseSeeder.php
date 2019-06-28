@@ -25,10 +25,13 @@ class DatabaseSeeder extends Seeder
         $this->call(PaymentTypeSeeder::class);
         $this->call(RegionSeeder::class);
         $this->call(SessionActivitySeeder::class);
+        $this->call(SessionTypeSeeder::class);
 
 
         // Models with relationships to other models - the order that the following factories are run matters
         // Assignments will go here
+        factory(\App\MockEntities\Session::class, 3)->create();
+
         factory(\App\MockEntities\ProfileCredential::class, 50)->create();
         factory(\App\MockEntities\Profile::class, 50)->create();
     }

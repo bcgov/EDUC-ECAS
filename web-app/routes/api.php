@@ -32,6 +32,8 @@ Route::resource('/contract-stages'          , 'Api\ContractStageController', ['o
 Route::resource('/payment-types'            , 'Api\PaymentTypeController', ['only' => ['index','show']]);
 Route::resource('/regions'                  , 'Api\RegionController', ['only' => ['index','show']]);
 Route::resource('/session-activities'       , 'Api\SessionActivityController', ['only' => ['index','show']]);
+Route::resource('/sessions'                 , 'Api\SessionController', ['only' => ['index','show']]);
+Route::resource('/session-types'            , 'Api\SessionTypeController', ['only' => ['index','show']]);
 
 
 // Local fictitious data for development and testing purposes
@@ -54,6 +56,8 @@ Route::prefix('fake')->group(function () {
     Route::resource('/payment-types'       , 'Fictitious\PaymentTypeController', ['only' => ['index','show']]);
     Route::resource('/regions'             , 'Fictitious\RegionController', ['only' => ['index','show']]);
     Route::resource('/session-activities'  , 'Fictitious\SessionActivityController', ['only' => ['index','show']]);
+    Route::resource('/sessions'            , 'Fictitious\SessionController', ['only' => ['index','show']]);
+    Route::resource('/session-types'       , 'Fictitious\SessionTypeController', ['only' => ['index','show']]);
 
 
 });

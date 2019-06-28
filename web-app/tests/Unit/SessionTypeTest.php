@@ -23,7 +23,7 @@ class SessionTypeTest extends TestCase
 
 
     /** @test */
-    public function get_all_contracts_from_api()
+    public function get_all_records_from_api()
     {
         $results = $this->api->all();
         $this->verifyCollection($results);
@@ -33,9 +33,28 @@ class SessionTypeTest extends TestCase
 
 
     /** @test */
-    public function get_all_contracts_from_api_via_the_cache()
+    public function get_all_records_from_api_via_the_cache()
     {
         $results = (new CacheDecorator($this->api))->all();
+        $this->verifyCollection($results);
+        $this->verifySingle($results[0]);
+
+    }
+
+    /** @test */
+    public function get_all_fake_records()
+    {
+        $results = $this->fake->all()->toArray();
+        $this->verifyCollection($results);
+        $this->verifySingle($results[0]);
+
+    }
+
+
+    /** @test */
+    public function get_all_fake_records_via_the_cache()
+    {
+        $results = (new CacheDecorator($this->fake))->all()->toArray();
         $this->verifyCollection($results);
         $this->verifySingle($results[0]);
 

@@ -117,7 +117,7 @@ return [
                               ],
                 ],
     
-    'session_activies'      => [
+    'session_activities'      => [
                                 [
                                 "code"=> "INA",
                                 "name"=> "Inactive Session Type"
@@ -170,7 +170,65 @@ return [
                                 "code"=> "CAR",
                                 "name"=> "Classroom assessment and marking"
                                 ]
-                            ]
+                            ],
+    'session_types'         => [
+                                [
+                                "code"=> "INAC",
+                                "name"=> "Inactive Type Name"
+                                ],
+                                [
+                                "code"=> "FSA 4 RE",
+                                "name"=> "Foundation Skills Assessment Reading English, Grade 4"
+                                ],
+                                [
+                                "code"=> "FSA 7 RE",
+                                "name"=> "Foundation Skills Assessment Reading English, Grade 7"
+                                ],
+                                [
+                                "code"=> "FSA 4 RF",
+                                "name"=> "Foundation Skills Assessment Reading French, Grade 4"
+                                ],
+                                [
+                                "code"=> "FSA 7 RF",
+                                "name"=> "Foundation Skills Assessment Reading French, Grade 7"
+                                ],
+                                [
+                                "code"=> "FSA 4 NU",
+                                "name"=> "Foundation Skills Assessment Numeracy, Grade 4"
+                                ],
+                                [
+                                "code"=> "FSA 7 NU",
+                                "name"=> "Foundation Skills Assessment Numeracy, Grade 7"
+                                ],
+                                [
+                                "code"=> "GNA 10 E",
+                                "name"=> "Graduation Numeracy Assessment English, 10"
+                                ],
+                                [
+                                "code"=> "GNA 10 F",
+                                "name"=> "Graduation Numeracy Assessment French, 10"
+                                ],
+                                [
+                                "code"=> "GLA 10 E",
+                                "name"=> "Graduation Literacy Assessment English, 10 "
+                                ],
+                                [
+                                "code"=> "GLA 10 P",
+                                "name"=> "Graduation Literacy Assessment Première, 10"
+                                ],
+                                [
+                                "code"=> "GLA 12 E",
+                                "name"=> "Graduation Literacy Assessment English, 12"
+                                ],
+                                [
+                                "code"=> "GLA 12 P",
+                                "name"=> "Graduation Literacy Assessment Première, 12"
+                                ],
+                                [
+                                "code"=> "GLA 12 I",
+                                "name"=> "Graduation Literacy Assessment Immersion, 12"
+                                ]
+                        ]
 
 
 ];

@@ -15,6 +15,10 @@ class CreateSessionTypesTable extends Migration
     {
         Schema::create('session_types', function (Blueprint $table) {
             $table->bigIncrements('id');
+
+            $table->string('code');
+            $table->string('name');
+
             $table->timestamps();
         });
     }
