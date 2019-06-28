@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Dynamics\Assignment;
 use App\Dynamics\AssignmentStatus;
 use App\Dynamics\Credential;
+use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\District;
-use App\Dynamics\DynamicsRepository;
 use App\Dynamics\Profile;
 use App\Dynamics\ProfileCredential;
+use App\Dynamics\Region;
 use App\Dynamics\School;
 use App\Dynamics\Subject;
 use App\Dynamics\Session as MarkerSession;
@@ -35,6 +36,29 @@ class DashboardController extends Controller
     protected $activities;
     protected $types;
     protected $assignment_statuses;
+    protected $region;
+
+
+    public function __construct(School $school,
+                                Subject $subject,
+                                Credential $credential,
+                                District $distict,
+                                SessionActivity $activity,
+                                SessionType $type,
+                                AssignmentStatus $assignment_statuses,
+                                Region $region)
+    {
+
+        $this->schools = $school;
+        $this->subjects = $subject;
+        $this->credentials = $credential;
+        $this->districts = $distict;
+        $this->activities = $activity;
+        $this->types = $type;
+        $this->region = $region;
+        $this->assignment_statuses = $assignment_statuses;
+
+    }
 
     /*
      * Main entry point for the single page Vue.js application
@@ -282,8 +306,8 @@ class DashboardController extends Controller
 
     protected function loadDistricts()
     {
-        $this->districts = District::all();
-        usort($this->districts, function ($a, $b) {
+
+        usort($this->districts->all(), function ($a, $b) {
             return $a['name'] <=> $b['name'];
         });
 
@@ -292,8 +316,7 @@ class DashboardController extends Controller
 
     protected function loadSubjects()
     {
-        $this->subjects = Subject::all();
-        usort($this->subjects, function ($a, $b) {
+        usort($this->subjects->all(), function ($a, $b) {
             return $a['name'] <=> $b['name'];
         });
 
@@ -302,8 +325,8 @@ class DashboardController extends Controller
 
     protected function loadSchools()
     {
-        $this->schools = School::all();
-        usort($this->schools, function ($a, $b) {
+
+        usort($this->schools->all(), function ($a, $b) {
             return $a['name'] <=> $b['name'];
         });
 
@@ -312,7 +335,7 @@ class DashboardController extends Controller
 
     protected function loadActivities()
     {
-        return $this->activities = SessionActivity::all();
+        return $this->activities->all();
     }
 
     protected function loadAssignments()
@@ -347,13 +370,12 @@ class DashboardController extends Controller
 
     protected function loadTypes()
     {
-        return $this->types = SessionType::all();
+        return $this->types->all();
     }
 
     protected function loadCredentials()
     {
-        $this->credentials = Credential::all();
-        usort($this->credentials, function ($a, $b) {
+        usort($this->credentials->all(), function ($a, $b) {
             return $a['name'] <=> $b['name'];
         });
 
@@ -362,12 +384,7 @@ class DashboardController extends Controller
 
     protected function loadRegions()
     {
-        // TODO: This is available in a Dynamics table
-        // Leaving hardcoded for now to improve page loading speeds during testing
-        return [
-            ['code' => 'BC', 'name' => 'British Columbia'],
-            ['code' => 'YK', 'name' => 'Yukon']
-        ];
+        return ( new CacheDecorator($this->region))->all();
     }
 
     protected function loadSessions()
@@ -432,7 +449,7 @@ class DashboardController extends Controller
      */
     private function loadAssignmentStatuses()
     {
-        return $this->assignment_statuses = AssignmentStatus::all();
+        return $this->assignment_statuses->all();
     }
 
     private function loadCachedObjects(): void
