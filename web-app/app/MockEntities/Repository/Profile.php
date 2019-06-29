@@ -17,4 +17,12 @@ class Profile extends DynamicsRepository implements iDynamicsRepository
         $this->model = $model;
 
     }
+
+    public function all()
+    {
+
+        // override parent - disable the ability to return all users profiles
+        return null;
+
+    }
 }

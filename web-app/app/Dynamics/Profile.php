@@ -44,4 +44,13 @@ class Profile extends DynamicsRepository implements iDynamicsRepository
     public static $links = [
         'district_id' => District::class
     ];
+
+
+    public function all()
+    {
+
+        // override parent - disable the ability to return all users profiles
+        return null;
+
+    }
 }

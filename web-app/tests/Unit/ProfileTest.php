@@ -25,8 +25,7 @@ class ProfileTest extends TestCase
     public function get_all_records_from_api()
     {
         $results = $this->api->all();
-        $this->verifyCollection($results);
-        $this->verifySingle($results[0]);
+        $this->assertNull($results);
 
     }
 
@@ -35,17 +34,15 @@ class ProfileTest extends TestCase
     public function get_all_records_from_api_via_the_cache()
     {
         $results = (new CacheDecorator($this->api))->all();
-        $this->verifyCollection($results);
-        $this->verifySingle($results[0]);
+        $this->assertNull($results);
 
     }
 
     /** @test */
     public function get_all_fake_records_from_api()
     {
-        $results = $this->fake->all()->toArray();
-        $this->verifyCollection($results);
-        $this->verifySingle($results[0]);
+        $results = $this->fake->all();
+        $this->assertNull($results);
 
     }
 
@@ -53,9 +50,8 @@ class ProfileTest extends TestCase
     /** @test */
     public function get_all_fake_records_from_api_via_the_cache()
     {
-        $results = (new CacheDecorator($this->fake))->all()->toArray();
-        $this->verifyCollection($results);
-        $this->verifySingle($results[0]);
+        $results = (new CacheDecorator($this->fake))->all();
+        $this->assertNull($results);
 
     }
 

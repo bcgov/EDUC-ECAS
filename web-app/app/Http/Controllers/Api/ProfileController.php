@@ -13,6 +13,14 @@ class ProfileController extends BaseController
         $this->model = $model;
     }
 
+    public function index()
+    {
+
+        // override parent - disable the ability to return all users profiles
+        abort(404);
+
+    }
+
 
 
 }

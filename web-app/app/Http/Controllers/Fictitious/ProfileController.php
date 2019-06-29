@@ -14,6 +14,10 @@ class ProfileController extends BaseController
         $this->model = $model;
     }
 
+    public function index()
+    {
+        return abort(404);
+    }
 
 
 }

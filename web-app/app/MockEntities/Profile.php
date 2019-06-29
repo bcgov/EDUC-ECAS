@@ -10,7 +10,7 @@ class Profile extends Model
 
     public function district()
     {
-        return $this->belongsTo(\App\Dynamics\Entites\District::class);
+        return $this->belongsTo(\App\Dynamics\District::class);
     }
 
     public function school()
