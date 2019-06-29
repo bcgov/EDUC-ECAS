@@ -22,9 +22,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resource('/assignments'              , 'Api\AssignmentController');
 Route::resource('/profiles'                 , 'Api\ProfileController');
 Route::resource('/profile-credentials'      , 'Api\CredentialController');
+Route::resource('/credentials'              , 'Api\CredentialController');
 
 // Read only resources
-Route::resource('/credentials'              , 'Api\CredentialController', ['only' => ['index','show']]);
+
 Route::resource('/schools'                  , 'Api\SchoolController', ['only' => ['index','show']]);
 Route::resource('/roles'                    , 'Api\RoleController', ['only' => ['index','show']]);
 Route::resource('/assignment-statuses'      , 'Api\AssignmentStatusController', ['only' => ['index','show']]);

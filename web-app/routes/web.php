@@ -19,26 +19,22 @@ Route::get('/copyright', 'PageController@copyright');
 Route::get('/contact', 'PageController@contact');
 
 // App Specific Routes
-
-Route::get('/apitest', 'DashboardController@apitest');
-
 Route::get('/', 'DashboardController@login');
 Route::post('/login', 'DashboardController@postLogin');
-Route::get('/Profile', 'DashboardController@profile');
 Route::get('/Dashboard', 'DashboardController@index');
+
+// Credentials
 Route::post('/Dashboard/credential', 'DashboardController@storeCredential');
 Route::post('/Dashboard/credential/delete', 'DashboardController@deleteCredential');
+
+// Profiles
 Route::post('/Dashboard/profile', 'DashboardController@storeProfile');
 Route::patch('/Dashboard/profile', 'DashboardController@updateProfile');
-Route::post('/Dashboard/post', 'DashboardController@post');
+
+
 Route::post('/Dashboard/session', 'DashboardController@storeAssignment');
 
 Route::get('/Expenses/{session_id}', 'ExpenseController@index');
 
-Route::get('/connect', 'DashboardController@dynamics');
 
-
-// DEBUG
-Route::get('/debug', 'DebugController@index');
-Route::get('/fake', 'DebugController@fake');
 
