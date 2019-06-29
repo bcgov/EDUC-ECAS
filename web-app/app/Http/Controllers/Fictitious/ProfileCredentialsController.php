@@ -14,6 +14,12 @@ class ProfileCredentialsController extends BaseController
         $this->model = $model;
     }
 
+    public function index()
+    {
+        // override parent - disable the ability to return credentials for all users
+        return abort(404);
+    }
+
 
 
 }

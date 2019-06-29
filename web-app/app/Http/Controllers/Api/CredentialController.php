@@ -20,8 +20,9 @@ class CredentialController extends BaseController
 
     public function index()
     {
-        $credentials = (new CacheDecorator($this->model))->all();
-        return $credentials->sort('name');
+
+        // override parent - disable the ability to return credentials for all users
+        abort(404);
 
     }
 

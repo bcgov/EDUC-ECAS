@@ -20,8 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 // Read and write resources
 Route::resource('/assignments'              , 'Api\AssignmentController');
-Route::resource('/profiles'                 , 'Api\ProfileController');
-Route::resource('/profile-credentials'      , 'Api\CredentialController');
+Route::resource('/profiles'                 , 'Api\ProfileController', ['except' => ['index','delete']]);
+Route::resource('/profile-credentials'      , 'Api\CredentialController', ['except' => ['index']]);
 Route::resource('/credentials'              , 'Api\CredentialController');
 Route::resource('/sessions'                 , 'Api\SessionController', ['only' => ['index','show','store']]);
 

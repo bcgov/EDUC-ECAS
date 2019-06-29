@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use App\Dynamics\Assignment;
 use App\Dynamics\AssignmentStatus;
@@ -32,8 +32,7 @@ class ProfileCredentialTest extends TestCase
     public function get_all_records_from_api()
     {
         $results = $this->api->all();
-        $this->verifyCollection($results);
-        $this->verifySingle($results[0]);
+        $this->assertNull($results);
 
     }
 
@@ -42,8 +41,7 @@ class ProfileCredentialTest extends TestCase
     public function get_all_records_from_api_via_the_cache()
     {
         $results = (new CacheDecorator($this->api))->all();
-        $this->verifyCollection($results);
-        $this->verifySingle($results[0]);
+        $this->assertNull($results);
 
     }
 
@@ -51,9 +49,8 @@ class ProfileCredentialTest extends TestCase
     /** @test */
     public function get_all_fake_records()
     {
-        $results = $this->fake->all()->toArray();
-        $this->verifyCollection($results);
-        $this->verifySingle($results[0]);
+        $results = $this->fake->all();
+        $this->assertNull($results);
 
     }
 
@@ -61,26 +58,8 @@ class ProfileCredentialTest extends TestCase
     /** @test */
     public function get_all_fake_records_via_the_cache()
     {
-        $results = (new CacheDecorator($this->fake))->all()->toArray();
-        $this->verifyCollection($results);
-        $this->verifySingle($results[0]);
-
-    }
-
-
-    private function verifyCollection($results)
-    {
-        $this->assertIsArray($results);
-
-    }
-
-    private function verifySingle($result)
-    {
-        $this->assertIsArray($result);
-        $this->assertArrayHasKey('id', $result);
-        $this->assertArrayHasKey('user_id', $result);
-        $this->assertArrayHasKey('credential_id', $result);
-        $this->assertArrayHasKey('verified', $result);
+        $results = (new CacheDecorator($this->fake))->all();
+        $this->assertNull($results);
 
     }
 

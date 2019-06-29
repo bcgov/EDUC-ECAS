@@ -19,4 +19,12 @@ class ProfileCredential extends DynamicsRepository implements iDynamicsRepositor
         $this->model = $model;
 
     }
+
+    public function all()
+    {
+
+        // override parent - disable the ability to return the credentials of all users
+        return null;
+
+    }
 }
