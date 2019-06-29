@@ -15,6 +15,7 @@ use App\Dynamics\Subject;
 use App\Dynamics\Session as MarkerSession;
 use App\Dynamics\SessionActivity;
 use App\Dynamics\SessionType;
+use App\Http\Resources\AggregatedResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -28,43 +29,6 @@ class DashboardController extends Controller
     // We only want to fetch the logged in user once, store for the entire request lifecycle
     protected $_user = []; // default to a blank / new user
 
-    // These are cached objects, we want to load them once per session
-    protected $subjects;
-    protected $schools;
-    protected $credentials;
-    protected $districts;
-    protected $activities;
-    protected $types;
-    protected $assignment_statuses;
-    protected $region;
-    protected $session;
-    protected $assignment;
-
-
-    public function __construct(School $school,
-                                Subject $subject,
-                                Credential $credential,
-                                District $distict,
-                                SessionActivity $activity,
-                                SessionType $type,
-                                AssignmentStatus $assignment_statuses,
-                                Region $region,
-                                MarkerSession $session,
-                                Assignment $assignment)
-    {
-
-        $this->schools = $school;
-        $this->subjects = $subject;
-        $this->credentials = $credential;
-        $this->districts = $distict;
-        $this->activities = $activity;
-        $this->types = $type;
-        $this->region = $region;
-        $this->assignment_statuses = $assignment_statuses;
-        $this->session = $session;
-        $this->assignment = $assignment;
-
-    }
 
     /*
      * Main entry point for the single page Vue.js application
@@ -90,16 +54,7 @@ class DashboardController extends Controller
 
 //        $user_credentials = $this->loadUserCredentials();
 
-        return view('dashboard', [
-            'user'             => json_encode($user),
-            'credentials'      => json_encode($this->credentials),
-  //          'sessions'         => json_encode($sessions),
-            'subjects'         => json_encode($this->subjects->all()),
-            'schools'          => json_encode($this->schools->all()),
-            'districts'        => json_encode($this->districts->all()),
-            'regions'          => json_encode($this->region->all()),
-  //          'user_credentials' => json_encode($user_credentials)
-        ]);
+        return view('dashboard', ['aggregated'       => new AggregatedResource($this)]);
     }
 
     // TODO: This is a useless stub for testing and will be replaced by integration with SiteMinder / Keycloak
@@ -125,7 +80,7 @@ class DashboardController extends Controller
 
 
 
-    protected function user($id = null)
+    private function user($id = null)
     {
         // If an id is present, save it to the Session
         if ($id) {
@@ -140,7 +95,7 @@ class DashboardController extends Controller
         return $this->_user;
     }
 
-    protected function userId()
+    private function userId()
     {
         // If we have a valid user there is a Session variable
         if (Session::has('user_id')) {
