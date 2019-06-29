@@ -23,9 +23,10 @@ Route::resource('/assignments'              , 'Api\AssignmentController');
 Route::resource('/profiles'                 , 'Api\ProfileController');
 Route::resource('/profile-credentials'      , 'Api\CredentialController');
 Route::resource('/credentials'              , 'Api\CredentialController');
+Route::resource('/sessions'                 , 'Api\SessionController', ['only' => ['index','show','store']]);
 
 // Read only resources
-
+// TODO - remove show methods where not needed below
 Route::resource('/schools'                  , 'Api\SchoolController', ['only' => ['index','show']]);
 Route::resource('/roles'                    , 'Api\RoleController', ['only' => ['index','show']]);
 Route::resource('/assignment-statuses'      , 'Api\AssignmentStatusController', ['only' => ['index','show']]);
@@ -33,7 +34,6 @@ Route::resource('/contract-stages'          , 'Api\ContractStageController', ['o
 Route::resource('/payment-types'            , 'Api\PaymentTypeController', ['only' => ['index','show']]);
 Route::resource('/regions'                  , 'Api\RegionController', ['only' => ['index','show']]);
 Route::resource('/session-activities'       , 'Api\SessionActivityController', ['only' => ['index','show']]);
-Route::resource('/sessions'                 , 'Api\SessionController', ['only' => ['index','show']]);
 Route::resource('/session-types'            , 'Api\SessionTypeController', ['only' => ['index','show']]);
 
 

@@ -13,7 +13,7 @@ class DashboardControllerTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $this->post('/Dashboard/profile', $this->validProfileData())->assertOk();
+        $this->post('/api/profiles', $this->validProfileData())->assertOk();
     }
 
     /** @test */
@@ -21,7 +21,7 @@ class DashboardControllerTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $this->post('/Dashboard/profile', $this->validProfileData([
+        $this->post('/api/profiles', $this->validProfileData([
             'first_name'  => '',
             'last_name'   => '',
             'email'       => '',
@@ -46,10 +46,10 @@ class DashboardControllerTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $this->post('/Dashboard/profile', $this->validProfileData(['email' => 'notanemail']))
+        $this->post('/api/profiles', $this->validProfileData(['email' => 'notanemail']))
             ->assertSessionHasErrors('email');
 
-        $this->post('/Dashboard/profile', $this->validProfileData(['email' => 'valid@test.com']))
+        $this->post('/api/profiles', $this->validProfileData(['email' => 'valid@test.com']))
             ->assertOk();
     }
 
@@ -60,13 +60,13 @@ class DashboardControllerTest extends TestCase
 
         $this->withExceptionHandling();
 
-        $this->post('/Dashboard/profile', $this->validProfileData(['postal_code' => '123456']))
+        $this->post('/api/profiles', $this->validProfileData(['postal_code' => '123456']))
             ->assertSessionHasErrors('postal_code');
 
-        $this->post('/Dashboard/profile', $this->validProfileData(['postal_code' => 'V8V 1J6']))
+        $this->post('/api/profiles', $this->validProfileData(['postal_code' => 'V8V 1J6']))
             ->assertOk();
 
-        $this->post('/Dashboard/profile', $this->validProfileData(['postal_code' => 'V8V1J6']))
+        $this->post('/api/profiles', $this->validProfileData(['postal_code' => 'V8V1J6']))
             ->assertOk();
     }
 
@@ -77,27 +77,27 @@ class DashboardControllerTest extends TestCase
 
         $this->withExceptionHandling();
 
-        $this->post('/Dashboard/profile', $this->validProfileData(['sin' => '123456']))
+        $this->post('/api/profiles', $this->validProfileData(['sin' => '123456']))
             ->assertSessionHasErrors('sin');
 
-        $this->post('/Dashboard/profile', $this->validProfileData(['sin' => '1234567ww']))
+        $this->post('/api/profiles', $this->validProfileData(['sin' => '1234567ww']))
             ->assertSessionHasErrors('sin');
 
         // Is not required
-        $this->post('/Dashboard/profile', $this->validProfileData(['sin' => '']))
+        $this->post('/api/profiles', $this->validProfileData(['sin' => '']))
             ->assertOk();
 
-        $this->post('/Dashboard/profile', $this->validProfileData(['sin' => '123456789']))
+        $this->post('/api/profiles', $this->validProfileData(['sin' => '123456789']))
             ->assertOk();
 
-        $this->post('/Dashboard/profile', $this->validProfileData(['sin' => '123 456 789']))
+        $this->post('/api/profiles', $this->validProfileData(['sin' => '123 456 789']))
             ->assertOk();
     }
 
     /** @test */
     public function apply_to_session()
     {
-        $this->post('/Dashboard/session', [
+        $this->post('/api/sessions', [
             'session_id' => '',
             'action' => 'apply'
         ])->assertOk();

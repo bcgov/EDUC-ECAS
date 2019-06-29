@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api;
 use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\Interfaces\iDynamicsRepository;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 abstract class BaseController extends Controller
 {
@@ -31,20 +32,20 @@ abstract class BaseController extends Controller
 
 
 
-    public function update($id, $data)
+    public function update(Request $request)
     {
 
         // TODO
 
     }
 
-    public function create($data)
+    public function store(Request $request)
     {
 
         // TODO
     }
 
-    public function delete($id)
+    public function delete(Request $request)
     {
         // TODO
     }

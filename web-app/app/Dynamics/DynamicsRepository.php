@@ -138,6 +138,7 @@ abstract class DynamicsRepository
 
     public function create($data)
     {
+
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table;
 
         $response = self::queryAPI('POST', $query, $data);

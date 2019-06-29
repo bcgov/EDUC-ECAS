@@ -37,6 +37,8 @@ class DashboardController extends Controller
     protected $types;
     protected $assignment_statuses;
     protected $region;
+    protected $session;
+    protected $assignment;
 
 
     public function __construct(School $school,
@@ -46,7 +48,9 @@ class DashboardController extends Controller
                                 SessionActivity $activity,
                                 SessionType $type,
                                 AssignmentStatus $assignment_statuses,
-                                Region $region)
+                                Region $region,
+                                MarkerSession $session,
+                                Assignment $assignment)
     {
 
         $this->schools = $school;
@@ -57,6 +61,8 @@ class DashboardController extends Controller
         $this->types = $type;
         $this->region = $region;
         $this->assignment_statuses = $assignment_statuses;
+        $this->session = $session;
+        $this->assignment = $assignment;
 
     }
 
@@ -68,7 +74,7 @@ class DashboardController extends Controller
         // Much of the data we need are lists and options which do not change often
         // We want to use Caching to reduce the loading of repeated data
         // This must be done at the start, loading other data depends on this info
-        $this->loadCachedObjects();
+        //$this->loadCachedObjects();
 
         // Load the specific User Information
 
@@ -77,22 +83,22 @@ class DashboardController extends Controller
 
         $user = $this->user($temporary_user_id);
 
-        $user = $this->loadDistrictAndSchoolNames($user);
+//        $user = $this->loadDistrictAndSchoolNames($user);
 
         // Session will also include Assignment information for this User
-        $sessions = $this->loadSessions();
+//        $sessions = $this->loadSessions();
 
-        $user_credentials = $this->loadUserCredentials();
+//        $user_credentials = $this->loadUserCredentials();
 
         return view('dashboard', [
             'user'             => json_encode($user),
             'credentials'      => json_encode($this->credentials),
-            'sessions'         => json_encode($sessions),
-            'subjects'         => json_encode($this->subjects),
-            'schools'          => json_encode($this->schools),
-            'districts'        => json_encode($this->districts),
-            'regions'          => json_encode($this->loadRegions()),
-            'user_credentials' => json_encode($user_credentials)
+  //          'sessions'         => json_encode($sessions),
+            'subjects'         => json_encode($this->subjects->all()),
+            'schools'          => json_encode($this->schools->all()),
+            'districts'        => json_encode($this->districts->all()),
+            'regions'          => json_encode($this->region->all()),
+  //          'user_credentials' => json_encode($user_credentials)
         ]);
     }
 
@@ -117,167 +123,7 @@ class DashboardController extends Controller
         return redirect('/Dashboard');
     }
 
-    /*
-     * Attach a credential to a User
-     */
-    public function storeCredential(Request $request)
-    {
-        Log::debug('STORE CREDENTIAL');
-        Log::debug($request->all());
 
-        $this->validate($request, [
-            'credential_id' => 'required'
-        ]);
-
-        $user = $this->user();
-
-        $profile_credential_id = ProfileCredential::create([
-            'user_id'       => $user['id'],
-            'credential_id' => $request['credential_id']
-        ]);
-
-        return json_encode([
-            'id'            => $profile_credential_id,
-            'credential_id' => $request['credential_id']
-        ]);
-    }
-
-    public function deleteCredential(Request $request)
-    {
-        Log::debug('DELETE CREDENTIAL');
-        Log::debug($request->all());
-
-        ProfileCredential::delete($request['profile_credential_id']);
-
-        return json_encode([
-            'id' => $request['profile_credential_id']
-        ]);
-    }
-
-    /*
-     * Create the Profile record (Contact in Dynamics)
-     */
-    public function storeProfile(Request $request)
-    {
-        Log::debug('STORE PROFILE');
-        Log::debug($request->all());
-
-        $request = $this->validateProfileRequest($request);
-
-        $user_id = Profile::create($request->all());
-
-        // TODO: if we can get the .NET API to return the stored profile from the create method above we could eliminate this call
-        $user = $this->user($user_id);
-
-        return json_encode($user);
-    }
-
-    /*
-     * Update an existing user Profile (Contact in Dynamics)
-     */
-    public function updateProfile(Request $request)
-    {
-        Log::debug('UPDATE PROFILE');
-        Log::debug($request->all());
-
-        $request = $this->validateProfileRequest($request);
-
-        Profile::update($this->userId(), $request->all());
-
-        return json_encode($this->user());
-    }
-
-    /*
-     * Create a new Assignment
-     * Or change the status of an existing Assignment
-     */
-    public function storeAssignment(Request $request)
-    {
-        Log::debug('STORE ASSIGNMENT');
-        Log::debug($request->all());
-
-        $action = $request['action'];
-
-        $this->assignment_statuses = $this->loadAssignmentStatuses();
-
-        if ($action == Assignment::APPLIED_STATUS) {
-
-            $assignment_id = Assignment::create([
-                'user_id'    => $this->userId(),
-                'session_id' => $request['session_id']
-            ]);
-
-            Log::debug('created assignment id: ' . $assignment_id);
-        }
-        elseif ($action == Assignment::ACCEPTED_STATUS) {
-            $assignment_status_key = array_search(Assignment::ACCEPTED_STATUS, array_column($this->assignment_statuses, 'name'));
-            Assignment::update($request['assignment_id'], ['status' => $this->assignment_statuses[$assignment_status_key]['id']]);
-        }
-        elseif ($action == Assignment::DECLINED_STATUS) {
-            $assignment_status_key = array_search(Assignment::DECLINED_STATUS, array_column($this->assignment_statuses, 'name'));
-            Assignment::update($request['assignment_id'], [
-                'status' => $this->assignment_statuses[$assignment_status_key]['id'],
-                'state'  => Assignment::INACTIVE_STATE
-            ]);
-        }
-
-        return json_encode([
-            'session_id' => $request['session_id'],
-            'status'     => $action
-        ]);
-    }
-
-    private function validateProfileRequest(Request $request): Request
-    {
-        // Get rid of spaces
-        $remove_spaces_from = ['postal_code', 'sin'];
-        foreach ($remove_spaces_from as $field) {
-            if (isset($request[$field])) {
-                $request[$field] = preg_replace('/\s+/', '', $request[$field]);
-            }
-        }
-
-        // Sanitize phone numbers, remove everything that isn't a number
-        $sanitize_to_integer = ['phone'];
-        foreach ($sanitize_to_integer as $field) {
-            $request[$field] = preg_replace('/[^0-9.]/', '', $request[$field]);
-        }
-
-        // If we pass in blank look-up ids Dynamics freaks out
-        // remove options that are blank
-        $remove_blank_options = ['district_id', 'school_id'];
-        foreach ($remove_blank_options as $field) {
-            if ( ! $request[$field]) {
-                unset($request[$field]);
-            }
-        }
-
-        $this->validate($request, [
-            'first_name'  => 'required',
-            'last_name'   => 'required',
-            'email'       => 'required|email',
-            'phone'       => 'required',
-            'address_1'   => 'required',
-            'city'        => 'required',
-            'region'      => 'required',
-            'postal_code' => 'required|regex:/^\D\d\D\s?\d\D\d$/i',
-            'sin'         => 'regex:/^\d{9}$/i'
-        ],
-            [
-                'first_name.required'  => 'Required',
-                'last_name.required'   => 'Required',
-                'email.required'       => 'Required',
-                'email.email'          => 'Invalid email',
-                'phone.required'       => 'Required',
-                'address_1.required'   => 'Required',
-                'city.required'        => 'Required',
-                'region.required'      => 'Required',
-                'postal_code.required' => 'Required',
-                'postal_code.regex'    => 'Invalid Postal Code',
-            ]);
-
-        return $request;
-    }
 
     protected function user($id = null)
     {
@@ -288,7 +134,7 @@ class DashboardController extends Controller
 
         // If we have not loaded the user this request and we have a logged in user, go get the user from Dynamics
         if ( ! $this->_user && $user_id = $this->userId()) {
-            $this->_user = Profile::get($user_id);
+            $this->_user = ( new Profile())->get($user_id);
         }
 
         return $this->_user;
@@ -304,62 +150,20 @@ class DashboardController extends Controller
         return null;
     }
 
-    protected function loadDistricts()
-    {
 
-        usort($this->districts->all(), function ($a, $b) {
-            return $a['name'] <=> $b['name'];
-        });
-
-        return $this->districts;
-    }
-
-    protected function loadSubjects()
-    {
-        usort($this->subjects->all(), function ($a, $b) {
-            return $a['name'] <=> $b['name'];
-        });
-
-        return $this->subjects;
-    }
-
-    protected function loadSchools()
-    {
-
-        usort($this->schools->all(), function ($a, $b) {
-            return $a['name'] <=> $b['name'];
-        });
-
-        return $this->schools;
-    }
-
-    protected function loadActivities()
-    {
-        return $this->activities->all();
-    }
-
-    protected function loadAssignments()
-    {
-        if ($this->userId()) {
-            return Assignment::filter(['user_id' => $this->userId()]);
-        }
-
-        return [];
-    }
-
-    protected function loadUserCredentials()
+    private function loadUserCredentials()
     {
         if ($this->userId()) {
 
-            $user_credentials = ProfileCredential::filter(['user_id' => $this->userId()]);
+            $user_credentials = (new ProfileCredential())->get(['user_id' => $this->userId()]);
 
             // Need to inject the name into the applied credential
             foreach ($user_credentials as $index => $user_credential) {
-                $key = array_search($user_credential['credential_id'], array_column($this->credentials, 'id'));
+                $key = array_search($user_credential['credential_id'], array_column($this->credentials->all(), 'id'));
                 $user_credentials[$index]['name'] = $this->credentials[$key]['name'];
 
                 // Also remove the applied credential from the list of possibles
-                array_splice($this->credentials, $key, 1);
+                array_splice($this->credentials->all(), $key, 1);
             }
 
             return $user_credentials;
@@ -368,28 +172,12 @@ class DashboardController extends Controller
         return [];
     }
 
-    protected function loadTypes()
-    {
-        return $this->types->all();
-    }
 
-    protected function loadCredentials()
-    {
-        usort($this->credentials->all(), function ($a, $b) {
-            return $a['name'] <=> $b['name'];
-        });
 
-        return $this->credentials;
-    }
 
-    protected function loadRegions()
+    private function loadSessions()
     {
-        return ( new CacheDecorator($this->region))->all();
-    }
-
-    protected function loadSessions()
-    {
-        $sessions = MarkerSession::all();
+        $sessions = $this->session->all();
 
         // Sort the Sessions by their start date
         usort($sessions, function ($a, $b) {
@@ -415,15 +203,15 @@ class DashboardController extends Controller
 
             $sessions[$index]['dates'] = $date_string;
 
-            $key = array_search($session['activity_id'], array_column($this->activities, 'id'));
+            $key = array_search($session['activity_id'], array_column($this->activities->all(), 'id'));
             $sessions[$index]['activity'] = $this->activities[$key]['name'];
 
-            $key = array_search($session['type_id'], array_column($this->types, 'id'));
+            $key = array_search($session['type_id'], array_column($this->types->all(), 'id'));
             $sessions[$index]['type'] = $this->types[$key]['name'];
         }
 
         // Load the Sessions with any assignment details
-        $assignments = $this->loadAssignments();
+        $assignments = $this->assignment->get($this->userId());
 
         // Not all Statuses should be displayed to the user
         $do_not_display = ['Selected'];
@@ -444,48 +232,23 @@ class DashboardController extends Controller
         return $sessions;
     }
 
-    /**
-     * @return array|mixed
-     */
-    private function loadAssignmentStatuses()
-    {
-        return $this->assignment_statuses->all();
-    }
 
-    private function loadCachedObjects(): void
-    {
-        Log::debug('LOADING BASE DATA / CACHED OBJECTS');
 
-        $this->loadSubjects();
-
-        $this->loadSchools();
-
-        $this->loadCredentials();
-
-        $this->loadDistricts();
-
-        $this->loadActivities();
-
-        $this->loadTypes();
-
-        $this->loadAssignmentStatuses();
-    }
-
-    /**
-     * @param $user
-     * @return array
-     */
-    private function loadDistrictAndSchoolNames($user)
-    {
-        if (isset($user['district_id'])) {
-            $key = array_search($user['district_id'], array_column($this->districts, 'id'));
-            $user['district'] = $this->districts[$key]['name'];
-        }
-        if (isset($user['school_id'])) {
-            $key = array_search($user['school_id'], array_column($this->schools, 'id'));
-            $user['school'] = $this->schools[$key]['name'];
-        }
-
-        return $user;
-    }
+//    /**
+//     * @param $user
+//     * @return array
+//     */
+//    private function loadDistrictAndSchoolNames($user)
+//    {
+//        if (isset($user['district_id'])) {
+//            $key = array_search($user['district_id'], array_column($this->districts->all(), 'id'));
+//            $user['district'] = $this->districts[$key]['name'];
+//        }
+//        if (isset($user['school_id'])) {
+//            $key = array_search($user['school_id'], array_column($this->schools->all(), 'id'));
+//            $user['school'] = $this->schools[$key]['name'];
+//        }
+//
+//        return $user;
+//    }
 }
