@@ -2,22 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Dynamics\Assignment;
-use App\Dynamics\AssignmentStatus;
-use App\Dynamics\Credential;
+
 use App\Dynamics\Decorators\CacheDecorator;
-use App\Dynamics\District;
-use App\Dynamics\Profile;
-use App\Dynamics\ProfileCredential;
-use App\Dynamics\Region;
-use App\Dynamics\School;
-use App\Dynamics\Subject;
 use App\Dynamics\Session as MarkerSession;
-use App\Dynamics\SessionActivity;
-use App\Dynamics\SessionType;
 use App\Http\Resources\AggregatedResource;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 
@@ -45,16 +35,25 @@ class DashboardController extends Controller
         // TODO: Temporarily hardcoding a specific user for the demo. Remove!
         $temporary_user_id = '8c266dae-5d7e-e911-a990-000d3af438b6';
 
-        $user = $this->user($temporary_user_id);
+//        $user = $this->user($temporary_user_id);
 
 //        $user = $this->loadDistrictAndSchoolNames($user);
 
         // Session will also include Assignment information for this User
 //        $sessions = $this->loadSessions();
 
-//        $user_credentials = $this->loadUserCredentials();
 
-        return view('dashboard', ['aggregated'       => new AggregatedResource($this)]);
+        // We instantiate $profile and $credentials using App::make so we can
+        // dynamically switch between fictitious data and the Dynamics API.
+        $profile        = App::make('App\\' . env('DATASET') .'\Profile');
+        $credentials    = App::make('App\\' . env('DATASET') .'\Credential');
+
+
+        return view('dashboard', [
+            'aggregated'                => new AggregatedResource($this),
+            'profile'                   => (new CacheDecorator($profile))->get($temporary_user_id),
+            'profile_credentials'       => (new CacheDecorator($credentials))->get($temporary_user_id),
+        ]);
     }
 
     // TODO: This is a useless stub for testing and will be replaced by integration with SiteMinder / Keycloak

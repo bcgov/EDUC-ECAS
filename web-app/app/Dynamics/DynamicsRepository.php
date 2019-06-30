@@ -4,6 +4,7 @@ namespace App\Dynamics;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
+use mysql_xdevapi\Collection;
 
 /*
  * Each data entity within Dynamics required by the Front End has a corresponding PHP class that extends this class
@@ -232,7 +233,7 @@ abstract class DynamicsRepository
      * Convert a collection of records into local variable names
      * Expecting an array filed with data objects
      */
-    private static function convertDynamicsToLocalVariables($data): array
+    private static function convertDynamicsToLocalVariables($data)
     {
         // Dynamics field names are unreadable junk!
         // We want to define our own easy readable variables and disconnect from Dynamics
@@ -247,7 +248,7 @@ abstract class DynamicsRepository
             }
         }
 
-        return $collection;
+        return collect($collection);
     }
 
     /*
@@ -273,7 +274,7 @@ abstract class DynamicsRepository
     * @return array
     * @throws \GuzzleHttp\Exception\GuzzleException
     */
-    private static function loadCollection($id): array
+    private static function loadCollection($id)
     {
         if (static::$api_verb == 'operations') {
             $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '&$select=' . implode(',', static::$fields);

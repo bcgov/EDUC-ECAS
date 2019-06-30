@@ -8,7 +8,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-window.Vuex = require('vuex')
+window.Vuex = require('vuex');
 
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -26,12 +26,17 @@ import Vuex from 'vuex'
 
 import VModal from 'vue-js-modal'
 
-Vue.use(Vuex)
-Vue.use(VModal, { dynamic: true, injectModalsContainer: true })
+Vue.use(Vuex);
+Vue.use(VModal, { dynamic: true, injectModalsContainer: true });
 
-Vue.component('dashboard', require('./components/DashboardComponent.vue').default);
-Vue.component('session', require('./components/Session.vue').default);
-Vue.component('profile', require('./components/Profile.vue').default);
+//Vue.component('dashboard', require('./components/DashboardComponent.vue').default);
+
+Vue.component('profile-component'       , require('./components/ProfileComponent.vue').default);
+Vue.component('profile-credentials'     , require('./components/ProfileCredentials.vue').default);
+Vue.component('marking-sessions'       , require('./components/MarkingSessions.vue').default);
+                                            
+Vue.component('session'                 , require('./components/Session.vue').default);
+Vue.component('profile'                 , require('./components/Profile.vue').default);
 
 // A global event handler, just a convenient wrapper for Vue's event system
 window.Event = new class {
@@ -44,7 +49,7 @@ window.Event = new class {
     listen(event, callback) {
         this.vue.$on(event, callback)
     }
-}
+};
 
 const store = new Vuex.Store({
     state: {
@@ -86,7 +91,7 @@ const store = new Vuex.Store({
         //     })
         // }
     }
-})
+});
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
@@ -98,7 +103,7 @@ library.add(faTrash)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

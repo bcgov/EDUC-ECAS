@@ -20,7 +20,6 @@ class AggregatedResource extends JsonResource
         return [
             'type'          => 'aggregated',
             'attributes'    => [
-                'credentials'   => ( new CacheDecorator(App::make('App\\' . env('DATASET') .'\Credential')))->all(),
                 'sessions'      => ( new CacheDecorator(App::make('App\\' . env('DATASET') .'\Session')))->all(),
                 'subjects'      => ( new CacheDecorator(App::make('App\\' . env('DATASET') .'\Subject')))->all(),
                 'districts'     => ( new CacheDecorator(App::make('App\\' . env('DATASET') .'\District')))->all(),
