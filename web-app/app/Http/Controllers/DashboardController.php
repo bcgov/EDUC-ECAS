@@ -45,14 +45,24 @@ class DashboardController extends Controller
 
         // We instantiate $profile and $credentials using App::make so we can
         // dynamically switch between fictitious data and the Dynamics API.
-        $profile        = App::make('App\\' . env('DATASET') .'\Profile');
-        $credentials    = App::make('App\\' . env('DATASET') .'\Credential');
+        // TODO - move the instantiation code below to RepositoryServiceProvider
+        $repository = env('DATASET') == 'Dynamics' ? 'Dynamics' : 'MockEntities\Repository';
+
+        $user                   = App::make('App\\' . $repository .'\Profile');
+        $user_credentials       = App::make('App\\' . $repository .'\ProfileCredential');
+        $assignments            = App::make('App\\' . $repository .'\Assignment');
 
 
         return view('dashboard', [
-            'aggregated'                => new AggregatedResource($this),
-            'profile'                   => (new CacheDecorator($profile))->get($temporary_user_id),
-            'profile_credentials'       => (new CacheDecorator($credentials))->get($temporary_user_id),
+            'user'                   => (new CacheDecorator($user))->get(1),
+            'user_credentials'       => (new CacheDecorator($user_credentials))->filter(['user_id', 1]),
+            'assignments'            => $assignments->filter(['user_id', 1]),
+            'sessions'      => ( new CacheDecorator(App::make('App\\' . $repository .'\Session')))->all(),
+            'subjects'      => ( new CacheDecorator(App::make('App\\' . $repository .'\Subject')))->all(),
+            'districts'     => ( new CacheDecorator(App::make('App\\' . $repository .'\District')))->all(),
+            'regions'       => ( new CacheDecorator(App::make('App\\' . $repository .'\Region')))->all(),
+            'credentials'   => ( new CacheDecorator(App::make('App\\' . $repository .'\Credential')))->all(),
+            'schools'       => ( new CacheDecorator(App::make('App\\' . $repository .'\School')))->all(),
         ]);
     }
 

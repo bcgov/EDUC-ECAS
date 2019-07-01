@@ -44,7 +44,12 @@ abstract class DynamicsRepository
 
     public function filter(array $filter)
     {
-        // TODO
+        $collection = $this->model->where($filter[0], $filter[1])->get();
+        $collection_of_arrays = $collection->map( function ($item) {
+            return $item->toArray();
+        });
+
+        return $collection_of_arrays;
     }
     /*
      * Read data from Dynamics

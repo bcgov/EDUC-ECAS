@@ -38,7 +38,7 @@
     import {mapGetters} from 'vuex'
 
     export default {
-        name: "Credentials",
+        name: "profile-credentials",
         props: {
             user: {},
             credentials: {},

@@ -33,7 +33,7 @@ Vue.use(VModal, { dynamic: true, injectModalsContainer: true });
 
 Vue.component('profile-component'       , require('./components/ProfileComponent.vue').default);
 Vue.component('profile-credentials'     , require('./components/ProfileCredentials.vue').default);
-Vue.component('marking-sessions'       , require('./components/MarkingSessions.vue').default);
+Vue.component('marking-sessions'        , require('./components/MarkingSessions.vue').default);
                                             
 Vue.component('session'                 , require('./components/Session.vue').default);
 Vue.component('profile'                 , require('./components/Profile.vue').default);

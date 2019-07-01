@@ -7,20 +7,46 @@
                 <div class="row">
                     <div class="col">
 
-                        <profile-component :profile="{{ json_encode($profile) }}" :aggregate="{{ json_encode($aggregated) }}"></profile-component>
+                        <profile-component :user="{{ json_encode($user) }}"
+                                           :credentials="{{ $credentials }}"
+                                           :sessions="{{ $sessions }}"
+                                           :subjects="{{ $subjects }}"
+                                           :schools="{{ $schools }}"
+                                           :regions="{{ $regions }}"
+                                           :districts="{{ $districts }}"
+                                           :user_credentials="{{ $user_credentials }}">
+
+                        </profile-component>
 
                     </div>
                     <div class="col">
 
-                        <profile-credentials :credentials="{{ json_encode($credentials) }}" :aggregate="{{ json_encode($aggregated) }}"></profile-credentials>
+                        <profile-credentials :user_credentials="{{ json_encode($user_credentials) }}"
+                                             :credentials="{{ $credentials }}"
+                                             :sessions="{{ $sessions }}"
+                                             :subjects="{{ $subjects }}"
+                                             :schools="{{ $schools }}"
+                                             :regions="{{ $regions }}"
+                                             :districts="{{ $districts }}"
+                                             :user_credentials="{{ $user_credentials }}">
+
+                        </profile-credentials>
 
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
 
-                        <marking-sessions :aggregated="{{ json_encode($aggregated) }}"></marking-sessions>
-
+                     {{--   <marking-sessions
+                                          :credentials="{{ $credentials }}"
+                                          :sessions="{{ $sessions }}"
+                                          :subjects="{{ $subjects }}"
+                                          :schools="{{ $schools }}"
+                                          :regions="{{ $regions }}"
+                                          :districts="{{ $districts }}"
+                                          :user_credentials="{{ $user_credentials }}">
+                        </marking-sessions>
+--}}
                     </div>
                 </div>
             </div>
