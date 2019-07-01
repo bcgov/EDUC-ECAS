@@ -8,9 +8,9 @@
 
 namespace App\MockEntities\Repository;
 
-use App\Dynamics\Interfaces\iDynamicsRepository;
+use App\Interfaces\iModelRepository;
 
-class AssignmentStatus extends DynamicsRepository implements iDynamicsRepository
+class AssignmentStatus extends DynamicsRepository implements iModelRepository
 {
 
     public function __construct(\App\MockEntities\AssignmentStatus $model)

@@ -25,7 +25,8 @@ class ProfileTest extends TestCase
     public function get_all_records_from_api()
     {
         $results = $this->api->all();
-        $this->assertNull($results);
+        $this->assertInstanceOf('Illuminate\Support\Collection', $results);
+        $this->verifySingle($results->first());
 
     }
 
@@ -34,7 +35,8 @@ class ProfileTest extends TestCase
     public function get_all_records_from_api_via_the_cache()
     {
         $results = (new CacheDecorator($this->api))->all();
-        $this->assertNull($results);
+        $this->assertInstanceOf('Illuminate\Support\Collection', $results);
+        $this->verifySingle($results->first());
 
     }
 
@@ -42,7 +44,8 @@ class ProfileTest extends TestCase
     public function get_all_fake_records_from_api()
     {
         $results = $this->fake->all();
-        $this->assertNull($results);
+        $this->assertInstanceOf('Illuminate\Support\Collection', $results);
+        $this->verifySingle($results->first());
 
     }
 
@@ -51,16 +54,12 @@ class ProfileTest extends TestCase
     public function get_all_fake_records_from_api_via_the_cache()
     {
         $results = (new CacheDecorator($this->fake))->all();
-        $this->assertNull($results);
+        $this->assertInstanceOf('Illuminate\Support\Collection', $results);
+        $this->verifySingle($results->first());
 
     }
 
 
-    private function verifyCollection($results)
-    {
-        $this->assertIsArray($results);
-
-    }
 
     private function verifySingle($result)
     {

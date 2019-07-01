@@ -4,15 +4,12 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Dynamics\SessionActivity;
-use App\Http\Controllers\Interfaces\iApiController;
+use App\Http\Controllers\Interfaces\iModelRepository;
 
-class SessionActivityController extends BaseController implements iApiController
+class SessionActivityController extends BaseController implements iModelRepository
 {
 
-    public function __construct(SessionActivity $model)
-    {
-        $this->model = $model;
-    }
+
 
 
 

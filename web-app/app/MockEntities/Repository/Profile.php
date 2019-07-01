@@ -8,9 +8,9 @@
 
 namespace App\MockEntities\Repository;
 
-use App\Dynamics\Interfaces\iDynamicsRepository;
+use App\Interfaces\iModelRepository;
 
-class Profile extends DynamicsRepository implements iDynamicsRepository
+class Profile extends DynamicsRepository implements iModelRepository
 {
     public function __construct(\App\MockEntities\Profile $model)
     {
@@ -18,11 +18,4 @@ class Profile extends DynamicsRepository implements iDynamicsRepository
 
     }
 
-    public function all()
-    {
-
-        // override parent - disable the ability to return all users profiles
-        return null;
-
-    }
 }

@@ -3,19 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 
+
 use App\Dynamics\Assignment;
-use App\Http\Controllers\Interfaces\iApiController;
+use App\Interfaces\iModelRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class AssignmentController extends BaseController implements iApiController
+class AssignmentController extends BaseController
 {
-
-    public function __construct(Assignment $model)
-    {
-        $this->model = $model;
-    }
-
 
 
     public function create(Request $request)

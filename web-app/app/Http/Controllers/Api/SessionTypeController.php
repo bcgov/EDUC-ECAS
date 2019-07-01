@@ -3,16 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 
-use App\Dynamics\SessionType;
-use App\Http\Controllers\Interfaces\iApiController;
 
-class SessionTypeController extends BaseController implements iApiController
+use App\Http\Controllers\Interfaces\iModelRepository;
+
+class SessionTypeController extends BaseController
 {
-
-    public function __construct(SessionType $model)
-    {
-        $this->model = $model;
-    }
 
 
 

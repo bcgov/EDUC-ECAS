@@ -26,8 +26,8 @@ class CredentialTest extends TestCase
         $credentials = $this->api->all();
 
 
-        $this->verifyCollection($credentials);
-        $this->verifySingle($credentials[0]);
+        $this->assertInstanceOf('Illuminate\Support\Collection', $credentials);
+        $this->verifySingle($credentials->first());
         
     }
 
@@ -37,14 +37,32 @@ class CredentialTest extends TestCase
     {
         $credentials = (new CacheDecorator($this->api))->all();
 
-        $this->verifyCollection($credentials);
-        $this->verifySingle($credentials[0]);
+        $this->assertInstanceOf('Illuminate\Support\Collection', $credentials);
+        $this->verifySingle($credentials->first());
+    }
+
+    /** @test */
+    public function get_fake_credentials()
+    {
+        $credentials = $this->fake->all();
+
+
+        $this->assertInstanceOf('Illuminate\Support\Collection', $credentials);
+        $this->verifySingle($credentials->first());
+
+    }
+
+
+    /** @test */
+    public function get_fake_cache_credentials()
+    {
+        $credentials = (new CacheDecorator($this->fake))->all();
+
+        $this->assertInstanceOf('Illuminate\Support\Collection', $credentials);
+        $this->verifySingle($credentials->first());
     }
     
-    private function verifyCollection($results)
-    {
-        $this->assertIsArray($results);
-    }
+
     
     private function verifySingle($result)
     {

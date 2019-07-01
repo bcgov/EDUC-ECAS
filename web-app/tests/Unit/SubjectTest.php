@@ -25,8 +25,8 @@ class SubjectTest extends TestCase
     public function get_all_subjects_from_api()
     {
         $results = $this->api->all();
-        $this->verifyCollection($results);
-        // API is returning an empty array at present - $this->verifySingle($results[0]);
+        $this->assertInstanceOf('Illuminate\Support\Collection', $results);
+        // API is returning an empty array at present - $this->verifySingle($results->first());
 
     }
 
@@ -35,17 +35,12 @@ class SubjectTest extends TestCase
     public function get_all_subjects_from_api_via_the_cache()
     {
         $results = (new CacheDecorator($this->api))->all();
-        $this->verifyCollection($results);
-        // API is returning an empty array at present - $this->verifySingle($results[0]);
+        $this->assertInstanceOf('Illuminate\Support\Collection', $results);
+        // API is returning an empty array at present - $this->verifySingle($results->first());
 
     }
 
 
-    private function verifyCollection($results)
-    {
-        $this->assertIsArray($results);
-
-    }
 
     private function verifySingle($result)
     {

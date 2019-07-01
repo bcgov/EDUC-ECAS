@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Interfaces;
 
 use Illuminate\Http\Request;
 
-interface iApiController
+interface iModelRepository
 {
     public function index();
 

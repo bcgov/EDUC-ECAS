@@ -3,17 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 
-use App\Dynamics\AssignmentStatus;
-use App\Http\Controllers\Interfaces\iApiController;
+use App\Http\Controllers\Interfaces\iModelRepository;
 
-class AssignmentStatusController extends BaseController implements iApiController
+class AssignmentStatusController extends BaseController
 {
-
-    public function __construct(AssignmentStatus $model)
-    {
-        $this->model = $model;
-    }
-
 
 
 }

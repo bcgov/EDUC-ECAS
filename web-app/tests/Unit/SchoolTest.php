@@ -26,8 +26,8 @@ class SchoolTest extends TestCase
     public function get_all_records_from_api()
     {
         $results = $this->api->all();
-        $this->verifyCollection($results);
-        $this->verifySingle($results[0]);
+        $this->assertInstanceOf('Illuminate\Support\Collection', $results);
+        $this->verifySingle($results->first());
 
     }
 
@@ -36,8 +36,8 @@ class SchoolTest extends TestCase
     public function get_all_records_from_api_via_the_cache()
     {
         $results = (new CacheDecorator($this->api))->all();
-        $this->verifyCollection($results);
-        $this->verifySingle($results[0]);
+        $this->assertInstanceOf('Illuminate\Support\Collection', $results);
+        $this->verifySingle($results->first());
 
     }
 
@@ -45,9 +45,9 @@ class SchoolTest extends TestCase
     /** @test */
     public function get_all_fake_records_from_api()
     {
-        $results = $this->fake->all()->toArray();
-        $this->verifyCollection($results);
-        $this->verifySingle($results[0]);
+        $results = $this->fake->all();
+        $this->assertInstanceOf('Illuminate\Support\Collection', $results);
+        $this->verifySingle($results->first());
 
     }
 
@@ -55,18 +55,12 @@ class SchoolTest extends TestCase
     /** @test */
     public function get_all_fake_records_from_api_via_the_cache()
     {
-        $results = (new CacheDecorator($this->fake))->all()->toArray();
-        $this->verifyCollection($results);
-        $this->verifySingle($results[0]);
+        $results = (new CacheDecorator($this->fake))->all();
+        $this->assertInstanceOf('Illuminate\Support\Collection', $results);
+        $this->verifySingle($results->first());
 
     }
 
-
-    private function verifyCollection($results)
-    {
-        $this->assertIsArray($results);
-
-    }
 
     private function verifySingle($result)
     {

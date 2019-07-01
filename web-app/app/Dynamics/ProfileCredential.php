@@ -8,9 +8,9 @@
 
 namespace App\Dynamics;
 
-use App\Dynamics\Interfaces\iDynamicsRepository;
+use App\Interfaces\iModelRepository;
 
-class ProfileCredential extends DynamicsRepository implements iDynamicsRepository
+class ProfileCredential extends DynamicsRepository implements iModelRepository
 {
     public static $table = 'educ_credentials';
 
@@ -30,11 +30,4 @@ class ProfileCredential extends DynamicsRepository implements iDynamicsRepositor
         'credential_id' => Credential::class
     ];
 
-    public function all()
-    {
-
-        // override parent - disable the ability to return the credentials of all users
-        return null;
-
-    }
 }

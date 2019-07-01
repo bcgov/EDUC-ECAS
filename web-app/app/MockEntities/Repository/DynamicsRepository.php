@@ -26,8 +26,18 @@ abstract class DynamicsRepository
     public function all()
     {
 
-        return $this->model->all();
+        // Since this repository attempts to mimic the Dynamics API
+        // we convert each object in the collection to an array so
+        // they appear identical
 
+        $collection = $this->model->all();
+
+        $collection_of_arrays = $collection->map( function ($item) {
+
+            return $item->toArray();
+        });
+
+        return $collection_of_arrays;
 
     }
 
@@ -46,8 +56,11 @@ abstract class DynamicsRepository
     public function get($id)
     {
 
+        // Since this repository attempts to mimic the Dynamics API
+        // we convert the Laravel object retrieved to an array so
+        // it appears identical to the Dynamics object
 
-        return $this->model->find($id);
+        return $this->model->find($id)->toArray();
 
     }
     public function create($data)

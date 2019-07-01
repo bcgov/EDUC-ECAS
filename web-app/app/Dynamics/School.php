@@ -8,10 +8,10 @@
 
 namespace App\Dynamics;
 
-use App\Dynamics\Interfaces\iDynamicsRepository;
+use App\Interfaces\iModelRepository;
 
 
-class School extends DynamicsRepository implements iDynamicsRepository
+class School extends DynamicsRepository implements iModelRepository
 {
     public static $table = 'educ_schoollists';
 

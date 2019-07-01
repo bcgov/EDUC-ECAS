@@ -8,9 +8,9 @@
 
 namespace App\Dynamics;
 
-use App\Dynamics\Interfaces\iDynamicsRepository;
+use App\Interfaces\iModelRepository;
 
-class AssignmentStatus extends DynamicsRepository implements iDynamicsRepository
+class AssignmentStatus extends DynamicsRepository implements iModelRepository
 {
     public static $table = 'educ_assignment';
 

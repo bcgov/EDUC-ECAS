@@ -8,9 +8,10 @@
 
 namespace App\Dynamics;
 
-use App\Dynamics\Interfaces\iDynamicsRepository;
+use App\Interfaces\iModelRepository;
 
-class Profile extends DynamicsRepository implements iDynamicsRepository
+
+class Profile extends DynamicsRepository implements iModelRepository
 {
     public static $table = 'contacts';
 
@@ -46,11 +47,4 @@ class Profile extends DynamicsRepository implements iDynamicsRepository
     ];
 
 
-    public function all()
-    {
-
-        // override parent - disable the ability to return all users profiles
-        return null;
-
-    }
 }

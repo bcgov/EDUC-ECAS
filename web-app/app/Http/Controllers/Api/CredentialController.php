@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 
-use App\Dynamics\Credential;
-use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\ProfileCredential;
+use App\Http\Controllers\Interfaces\iModelRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -13,18 +12,14 @@ use Illuminate\Support\Facades\Log;
 class CredentialController extends BaseController
 {
 
-    public function __construct(Credential $model)
-    {
-        $this->model = $model;
-    }
 
-    public function index()
-    {
-
-        // override parent - disable the ability to return credentials for all users
-        abort(404);
-
-    }
+//    public function index()
+//    {
+//
+//        // override parent - disable the ability to return credentials for all users
+//        //abort(404);
+//
+//    }
 
 
     /*

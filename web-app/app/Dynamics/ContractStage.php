@@ -8,9 +8,9 @@
 
 namespace App\Dynamics;
 
-use App\Dynamics\Interfaces\iDynamicsRepository;
+use App\Interfaces\iModelRepository;
 
-class ContractStage extends DynamicsRepository implements iDynamicsRepository
+class ContractStage extends DynamicsRepository implements iModelRepository
 {
     public static $table = 'educ_assignment';
 

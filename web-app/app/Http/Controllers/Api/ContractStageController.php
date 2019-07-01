@@ -3,16 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 
-use App\Dynamics\ContractStage;
-use App\Http\Controllers\Interfaces\iApiController;
+use App\Http\Controllers\Interfaces\iModelRepository;
 
-class ContractStageController extends BaseController implements iApiController
+class ContractStageController extends BaseController
 {
 
-    public function __construct(ContractStage $model)
-    {
-        $this->model = $model;
-    }
 
 
 

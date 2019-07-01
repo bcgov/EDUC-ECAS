@@ -4,14 +4,19 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Dynamics\Decorators\CacheDecorator;
-use App\Dynamics\Interfaces\iDynamicsRepository;
 use App\Http\Controllers\Controller;
+use App\Interfaces\iModelRepository;
 use Illuminate\Http\Request;
 
 abstract class BaseController extends Controller
 {
 
     protected $model;
+
+    public function __construct(iModelRepository $model)
+    {
+        $this->model = $model;
+    }
 
 
     public function index()

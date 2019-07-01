@@ -8,9 +8,10 @@
 
 namespace App\MockEntities\Repository;
 
-use App\Dynamics\Interfaces\iSchoolRepository;
 
-class School extends DynamicsRepository implements iSchoolRepository
+use App\Interfaces\iModelRepository;
+
+class School extends DynamicsRepository implements iModelRepository
 {
 
     public function __construct(\App\MockEntities\School $model)

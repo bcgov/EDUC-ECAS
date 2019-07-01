@@ -4,16 +4,13 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Dynamics\Profile;
+use App\Interfaces\iModelRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+
 
 class ProfileController extends BaseController
 {
 
-    public function __construct(Profile $model)
-    {
-        $this->model = $model;
-    }
 
     public function index()
     {

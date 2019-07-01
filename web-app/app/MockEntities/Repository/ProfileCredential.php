@@ -8,9 +8,9 @@
 
 namespace App\MockEntities\Repository;
 
-use App\Dynamics\Interfaces\iDynamicsRepository;
+use App\Interfaces\iModelRepository;
 
-class ProfileCredential extends DynamicsRepository implements iDynamicsRepository
+class ProfileCredential extends DynamicsRepository implements iModelRepository
 {
 
 
@@ -20,11 +20,5 @@ class ProfileCredential extends DynamicsRepository implements iDynamicsRepositor
 
     }
 
-    public function all()
-    {
 
-        // override parent - disable the ability to return the credentials of all users
-        return null;
-
-    }
 }

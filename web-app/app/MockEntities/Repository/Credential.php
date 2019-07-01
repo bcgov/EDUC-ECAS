@@ -8,10 +8,10 @@
 
 namespace App\MockEntities\Repository;
 
-use App\Dynamics\Interfaces\iCredentialRepository;
+use App\Interfaces\iModelRepository;
 
 
-class Credential extends DynamicsRepository implements iCredentialRepository
+class Credential extends DynamicsRepository implements iModelRepository
 {
 
     public function __construct(\App\MockEntities\Credential $model)

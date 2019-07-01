@@ -4,15 +4,12 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Dynamics\Role;
-use App\Http\Controllers\Interfaces\iApiController;
+use App\Http\Controllers\Interfaces\iModelRepository;
 
-class RoleController extends BaseController implements iApiController
+class RoleController extends BaseController
 {
 
-    public function __construct(Role $model)
-    {
-        $this->model = $model;
-    }
+
 
 
 
