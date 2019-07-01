@@ -25,7 +25,6 @@ class CredentialTest extends TestCase
     {
         $credentials = $this->api->all();
 
-
         $this->assertInstanceOf('Illuminate\Support\Collection', $credentials);
         $this->verifySingle($credentials->first());
         

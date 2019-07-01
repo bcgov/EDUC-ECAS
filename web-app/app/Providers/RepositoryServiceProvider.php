@@ -85,7 +85,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->when(CredentialController::class)
             ->needs(iModelRepository::class)
             ->give(function () {
-                return $this->getRepository('ProfileCredential');
+                return $this->getRepository('Credential');
             });
 
         $this->app->when(RegionController::class)

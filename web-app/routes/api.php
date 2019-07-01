@@ -19,10 +19,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 // Read and write resources
+// TODO - the index() method below should return only the current user's credentials!!
 Route::resource('/assignments'              , 'Api\AssignmentController');
-Route::resource('/profiles'                 , 'Api\ProfileController', ['except' => ['index']]);
-Route::resource('/profile-credentials'      , 'Api\ProfileCredentialController', ['except' => ['index']] );
-Route::resource('/sessions'                 , 'Api\SessionController', ['only' => ['index','show','store']]);
+Route::resource('/profiles'                 , 'Api\ProfileController');
+Route::resource('/profile-credentials'      , 'Api\ProfileCredentialController' );
+
+
 
 // Read only resources
 Route::resource('/schools'                  , 'Api\SchoolController', ['only' => ['index','show']]);
@@ -35,8 +37,6 @@ Route::resource('/regions'                  , 'Api\RegionController', ['only' =>
 Route::resource('/session-activities'       , 'Api\SessionActivityController', ['only' => ['index','show']]);
 Route::resource('/session-types'            , 'Api\SessionTypeController', ['only' => ['index','show']]);
 Route::resource('/subjects'                 , 'Api\SubjectController', ['only' => ['index','show']]);
-
-// TODO - this needs fixing
 Route::resource('/credential-codes'         , 'Api\CredentialController', ['only' => ['index']]);
-
+Route::resource('/sessions'                 , 'Api\SessionController', ['only' => ['index']]);
 

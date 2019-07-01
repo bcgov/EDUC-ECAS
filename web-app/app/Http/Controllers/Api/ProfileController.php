@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Dynamics\Profile;
-use App\Interfaces\iModelRepository;
 use Illuminate\Http\Request;
 
 

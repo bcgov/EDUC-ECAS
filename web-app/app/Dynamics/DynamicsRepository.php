@@ -4,7 +4,6 @@ namespace App\Dynamics;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
-use mysql_xdevapi\Collection;
 
 /*
  * Each data entity within Dynamics required by the Front End has a corresponding PHP class that extends this class
@@ -65,12 +64,6 @@ abstract class DynamicsRepository
 
     public static $cache = 0;   // cache duration in minutes
 
-
-//    public function __construct()
-//    {
-//
-//
-//    }
 
 
     public function delete($id)
