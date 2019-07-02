@@ -22,7 +22,7 @@ Route::get('/contact', 'PageController@contact');
 
 Route::get('/apitest', 'DashboardController@apitest');
 
-Route::get('/', 'DashboardController@login');
+Route::get('/', 'DashboardController@index');
 Route::post('/login', 'DashboardController@postLogin');
 Route::get('/Profile', 'DashboardController@profile');
 Route::get('/Dashboard', 'DashboardController@index');
