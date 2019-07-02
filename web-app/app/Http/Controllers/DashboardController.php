@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 
 use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\Session as MarkerSession;
-use App\Http\Resources\AggregatedResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
@@ -28,20 +27,11 @@ class DashboardController extends Controller
         // Much of the data we need are lists and options which do not change often
         // We want to use Caching to reduce the loading of repeated data
         // This must be done at the start, loading other data depends on this info
-        //$this->loadCachedObjects();
 
         // Load the specific User Information
 
         // TODO: Temporarily hardcoding a specific user for the demo. Remove!
         $temporary_user_id = '8c266dae-5d7e-e911-a990-000d3af438b6';
-
-//        $user = $this->user($temporary_user_id);
-
-//        $user = $this->loadDistrictAndSchoolNames($user);
-
-        // Session will also include Assignment information for this User
-//        $sessions = $this->loadSessions();
-
 
         // We instantiate $profile and $credentials using App::make so we can
         // dynamically switch between fictitious data and the Dynamics API.
@@ -54,9 +44,9 @@ class DashboardController extends Controller
 
 
         return view('dashboard', [
-            'user'                   => (new CacheDecorator($user))->get(1),
-            'user_credentials'       => (new CacheDecorator($user_credentials))->filter(['user_id', 1]),
-            'assignments'            => $assignments->filter(['user_id', 1]),
+            'user'                   => (new CacheDecorator($user))->get($temporary_user_id),
+            'user_credentials'       => (new CacheDecorator($user_credentials))->all(),//filter(['user_id', $temporary_user_id]),
+            'assignments'            => $assignments->all(),//filter(['user_id', $temporary_user_id]),
             'sessions'      => ( new CacheDecorator(App::make('App\\' . $repository .'\Session')))->all(),
             'subjects'      => ( new CacheDecorator(App::make('App\\' . $repository .'\Subject')))->all(),
             'districts'     => ( new CacheDecorator(App::make('App\\' . $repository .'\District')))->all(),
@@ -65,6 +55,7 @@ class DashboardController extends Controller
             'schools'       => ( new CacheDecorator(App::make('App\\' . $repository .'\School')))->all(),
         ]);
     }
+
 
     // TODO: This is a useless stub for testing and will be replaced by integration with SiteMinder / Keycloak
     public function login()
@@ -114,7 +105,7 @@ class DashboardController extends Controller
         return null;
     }
 
-
+/*
     private function loadUserCredentials()
     {
         if ($this->userId()) {
@@ -198,21 +189,23 @@ class DashboardController extends Controller
 
 
 
-//    /**
-//     * @param $user
-//     * @return array
-//     */
-//    private function loadDistrictAndSchoolNames($user)
-//    {
-//        if (isset($user['district_id'])) {
-//            $key = array_search($user['district_id'], array_column($this->districts->all(), 'id'));
-//            $user['district'] = $this->districts[$key]['name'];
-//        }
-//        if (isset($user['school_id'])) {
-//            $key = array_search($user['school_id'], array_column($this->schools->all(), 'id'));
-//            $user['school'] = $this->schools[$key]['name'];
-//        }
-//
-//        return $user;
-//    }
+    /**
+     * @param $user
+     * @return array
+     */
+/*    private function loadDistrictAndSchoolNames($user)
+    {
+        if (isset($user['district_id'])) {
+            $key = array_search($user['district_id'], array_column($this->districts->all(), 'id'));
+            $user['district'] = $this->districts[$key]['name'];
+        }
+        if (isset($user['school_id'])) {
+            $key = array_search($user['school_id'], array_column($this->schools->all(), 'id'));
+            $user['school'] = $this->schools[$key]['name'];
+        }
+
+        return $user;
+    }*/
+
+
 }

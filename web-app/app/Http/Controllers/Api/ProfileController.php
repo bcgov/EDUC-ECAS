@@ -11,13 +11,6 @@ class ProfileController extends BaseController
 {
 
 
-    public function index()
-    {
-
-        // override parent - disable the ability to return all users profiles
-        abort(404);
-
-    }
 
     /*
  * Create the Profile record (Contact in Dynamics)
