@@ -17,4 +17,10 @@ class Session extends DynamicsRepository implements iModelRepository
         $this->model = $model;
 
     }
+
+    public function all()
+    {
+        $collection = $this->model->all();
+        return $collection->sortBy('start_date')->values();
+    }
 }

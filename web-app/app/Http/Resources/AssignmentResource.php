@@ -24,11 +24,11 @@ class AssignmentResource extends JsonResource
 
         return [
             'id'                => $this['id'],
-            'session'           => new SessionResource($sessions->firstWhere('id', $this['session_id'])),
+            'session'           => $this['session_id'],
             'user_id'           => $this['user_id'],
-            'role'              => $roles->firstWhere('id', $this['role_id']),
-            'contract_stage'    => $contract_stages->firstWhere('id', $this['contract_stage']),
-            'status'            => $assignment_statuses->firstWhere('id', $this['status']),
+            'role'              => new RoleResource($roles->firstWhere('id', $this['role_id'])),
+            'contract_stage'    => new SimpleResource($contract_stages->firstWhere('id', $this['contract_stage'])),
+            'status'            => new SimpleResource($assignment_statuses->firstWhere('id', $this['status'])),
             'state'             => (Boolean) $this['state']
 
         ];

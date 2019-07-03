@@ -27,6 +27,8 @@ class DashboardController extends Controller
         // TODO: Temporarily hardcoding a specific user for the demo. Remove!
         //$temporary_user_id = '8c266dae-5d7e-e911-a990-000d3af438b6';
 
+        //return new DashboardResource($federated_id);
+
         return view('dashboard', ['dashboard' => new DashboardResource($federated_id)]);
 
     }

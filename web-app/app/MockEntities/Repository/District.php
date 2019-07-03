@@ -19,4 +19,11 @@ class District extends DynamicsRepository implements iModelRepository
 
     }
 
+    public function all()
+    {
+        $collection = $this->model->all();
+        return $collection->sortBy('name')->values();
+    }
+
+
 }

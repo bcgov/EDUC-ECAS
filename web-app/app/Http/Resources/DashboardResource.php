@@ -22,17 +22,22 @@ class DashboardResource extends JsonResource
         $profile                = ( new CacheDecorator(App::make('App\\' . $repository .'\Profile')))->filter(['id'=> $this->federated_id])->first();
         $profile_credentials    = ( new CacheDecorator(App::make('App\\' . $repository .'\ProfileCredential')))->filter(['user_id'=> $this->federated_id]);
         $assignments            = ( new CacheDecorator(App::make('App\\' . $repository .'\Assignment')))->filter(['user_id'=> $this->federated_id]);
+        $districts              = ( new CacheDecorator(App::make('App\\' . $repository .'\District')))->all();
+        $credentials            = ( new CacheDecorator(App::make('App\\' . $repository .'\Credential')))->all();
+        $regions                = ( new CacheDecorator(App::make('App\\' . $repository .'\Region')))->all();
+        $schools                = ( new CacheDecorator(App::make('App\\' . $repository .'\School')))->all();
+
 
         return [
-            'profile'               => new ProfileResource($profile),
-            'profile-credentials'   => ProfileCredentialResource::collection($profile_credentials),
+            'user'                  => new ProfileResource($profile),
+            'user_credentials'      => ProfileCredentialResource::collection($profile_credentials),
             'assignments'           => AssignmentResource::collection($assignments),
             'sessions'              => SessionResource::collection($sessions),
-            //'subjects'      => ( new CacheDecorator(App::make('App\\' . $repository .'\Subject')))->all(),
-            'districts'             => ( new CacheDecorator(App::make('App\\' . $repository .'\District')))->all(),
-            'regions'               => ( new CacheDecorator(App::make('App\\' . $repository .'\Region')))->all(),
-            'credentials'           => ( new CacheDecorator(App::make('App\\' . $repository .'\Credential')))->all(),
-            'schools'               => ( new CacheDecorator(App::make('App\\' . $repository .'\School')))->all(),
+            'subjects'              => ( new CacheDecorator(App::make('App\\' . $repository .'\Subject')))->all(),
+            'districts'             => SimpleResource::collection($districts),
+            'regions'               => SimpleResource::collection($regions),
+            'credentials'           => SimpleResource::collection($credentials),
+            'schools'               => SchoolResource::collection($schools),
         ];
     }
 }

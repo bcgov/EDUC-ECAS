@@ -7,6 +7,6 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\MockEntities\Credential::class, function (Faker $faker) {
     return [
-        'name'      => $faker->word . ' Credential'
+        'name'      => ucfirst($faker->lexify('????????') . ' Credential')
     ];
 });

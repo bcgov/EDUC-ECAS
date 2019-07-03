@@ -28,9 +28,9 @@
                                 <p v-if="getUser.professional_certificate_other">
                                     <strong>Other Certificate:</strong> {{ getUser.professional_certificate_other }}</p>
                                 <p v-if="getUser.district">
-                                    <strong>District:</strong> {{ getUser.district }}</p>
+                                    <strong>District:</strong> {{ getUser.district.name }}</p>
                                 <p v-if="getUser.school">
-                                    <strong>School:</strong> {{ getUser.school }}</p>
+                                    <strong>School:</strong> {{ getUser.school.name }}</p>
                             </div>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                                         <font-awesome-icon v-else icon="trash" @click="deleteCredential(credential)"
                                                            alt="delete" style="color: red;"/>
                                     </div>
-                                    <div class="col">{{ credential.name }}</div>
+                                    <div class="col">{{ credential.credential.name }}</div>
                                 </div>
                                 <div class="row pt-3">
                                     <div class="col-1">
@@ -118,9 +118,9 @@
                                     <tbody>
                                     <tr @click="viewSession(session)"
                                         v-for="session in filteredSessions">
-                                        <td>{{ session.type }}</td>
-                                        <td>{{ session.activity }}</td>
-                                        <td nowrap>{{ session.dates }}</td>
+                                        <td>{{ session.type.name }}</td>
+                                        <td>{{ session.activity.name }}</td>
+                                        <td nowrap>{{ session.date }}</td>
                                         <td>{{ session.location }}</td>
                                         <td>{{ sessionStatus(session) }}</td>
                                     </tr>
@@ -138,9 +138,9 @@
         <modal name="profile_form" height="auto" :scrollable="true" :clickToClose="false">
             <profile
                     :user="getUser"
-                    :schools="schools"
-                    :regions="regions"
-                    :districts="districts"
+                    :schools="data.schools"
+                    :regions="data.regions"
+                    :districts="data.districts"
                     :new_user="new_user"
                     dusk="profile-component"
             ></profile>
@@ -154,19 +154,20 @@
     export default {
         name: "Dashboard",
         props: {
-            user: {},
-            credentials: {},
-            user_credentials: {},
-            sessions: {},
-            subjects: {},
-            schools: {},
-            regions: {},
-            districts: {}
+            data: {},
+            // user: {},
+            // credentials: {},
+            // user_credentials: {},
+            // sessions: {},
+            // subjects: {},
+            // schools: {},
+            // regions: {},
+            // districts: {}
         },
         data() {
             return {
-                credentials_applied: [...this.user_credentials],
-                credentials_available: [...this.credentials],
+                credentials_applied: [...this.data.user_credentials],
+                credentials_available: [...this.data.credentials],
                 new_credential: 0,
                 filter: '',
                 current_session: {},
@@ -177,8 +178,8 @@
         mounted() {
             console.log('Dashboard Mounted')
 
-            this.$store.commit('SET_USER', this.user)
-            this.$store.commit('SET_SESSIONS', this.sessions)
+            this.$store.commit('SET_USER', this.data.user)
+            this.$store.commit('SET_SESSIONS', this.data.sessions)
 
             Event.listen('credential-added', this.pushCredential)
             Event.listen('credential-deleted', this.removeCredential)

@@ -72,7 +72,7 @@
                         <div class="form-row">
                             <div class="form-group col">
                                 <label for="region">Province</label>
-                                <select class="form-control" v-model="user_local.region" id="region" name="region">
+                                <select class="form-control" v-model="user_local.region.name" id="region" name="region">
                                     <option v-bind:value="region.code" v-for="region in regions">{{ region.name }}</option>
                                 </select>
                             </div>
@@ -88,7 +88,7 @@
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="district">Current District</label>
-                        <select class="form-control" v-model="user_local.district_id" id="district">
+                        <select class="form-control" v-model="user_local.district.id" id="district">
                             <option value="">None</option>
                             <option v-for="district in districts" :value="district.id">
                                 {{ district.name }}
@@ -97,7 +97,7 @@
                     </div>
                     <div class="form-group col">
                         <label for="school">Current School</label>
-                        <select class="form-control" v-model="user_local.school_id" id="school">
+                        <select class="form-control" v-model="user_local.school.id" id="school">
                             <option value="">None</option>
                             <option :value="school.id" v-for="school in schools">{{ school.name }}</option>
                         </select>

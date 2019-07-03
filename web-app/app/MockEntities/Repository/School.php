@@ -19,4 +19,12 @@ class School extends DynamicsRepository implements iModelRepository
         $this->model = $model;
 
     }
+
+
+    public function all()
+    {
+        $collection = $this->model->all();
+        return $collection->sortBy('name')->values();
+    }
+
 }
