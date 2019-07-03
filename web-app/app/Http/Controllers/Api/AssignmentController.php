@@ -13,6 +13,15 @@ class AssignmentController extends BaseController
 {
 
 
+
+
+    public function index($federated_id)
+    {
+        // TODO - check that user is authorized to view this resource
+        return $this->model->filter(['user_id'=>$federated_id]);
+    }
+
+
     public function create(Request $request)
     {
         Log::debug('STORE ASSIGNMENT');

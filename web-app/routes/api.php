@@ -19,10 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 // Read and write resources
-// TODO - the index() method below should return only the current user's credentials!!
-Route::resource('/assignments'              , 'Api\AssignmentController');
-Route::resource('/profiles'                 , 'Api\ProfileController');
-Route::resource('/profile-credentials'      , 'Api\ProfileCredentialController' );
+Route::resource('/{federated_id}/assignments'              , 'Api\AssignmentController');
+Route::resource('/profile'                                 , 'Api\ProfileController', ['except' => ['index']]);
+Route::resource('/{federated_id}/profile-credentials'      , 'Api\ProfileCredentialController' );
 
 
 

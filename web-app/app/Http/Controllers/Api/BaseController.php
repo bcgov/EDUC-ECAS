@@ -13,16 +13,17 @@ abstract class BaseController extends Controller
 
     protected $model;
 
+
     public function __construct(iModelRepository $model)
     {
-        $this->model = $model;
+        $this->model            = $model;
     }
 
 
-    public function index()
+    public function index($federated_id)
     {
 
-        return (new CacheDecorator($this->model))->all();
+        return (new CacheDecorator($this->model))->filter(['id' => $federated_id]);
 
 
     }

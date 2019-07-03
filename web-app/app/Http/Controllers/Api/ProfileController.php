@@ -4,12 +4,34 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Dynamics\Profile;
+use App\Interfaces\iModelRepository;
 use Illuminate\Http\Request;
 
 
-class ProfileController extends BaseController
+class ProfileController
 {
 
+    protected $model;
+
+    public function __construct(iModelRepository $model)
+    {
+        $this->model            = $model;
+
+    }
+
+
+
+    public function index()
+    {
+
+        abort('404');
+    }
+
+    public function show($id)
+    {
+        // TODO - verify that the user is authorized to look up their record
+        return $this->model->filter(['id'=> $id])->first();
+    }
 
 
     /*

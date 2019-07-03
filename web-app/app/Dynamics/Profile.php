@@ -40,6 +40,7 @@ class Profile extends DynamicsRepository implements iModelRepository
         'professional_certificate_bc'    => 'educ_professionalcertificatebc',
         'professional_certificate_yk'    => 'educ_professionalcertificateyk',
         'professional_certificate_other' => 'educ_professionalcertificateother',
+        'federated_id'                   => 'educ_federatedid'
     ];
 
     public static $links = [

@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Log;
 class ProfileCredentialController extends BaseController
 {
 
+    public function index($federated_id)
+    {
+        // TODO - check that user is authorized to view this resource
+        return $this->model->filter(['id'=>$federated_id]);
+    }
+
 
 
     /*

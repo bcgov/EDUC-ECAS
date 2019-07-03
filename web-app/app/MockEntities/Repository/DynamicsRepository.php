@@ -44,7 +44,7 @@ abstract class DynamicsRepository
 
     public function filter(array $filter)
     {
-        $collection = $this->model->where($filter[0], $filter[1])->get();
+        $collection = $this->model->where(key($filter), current($filter))->get();
         $collection_of_arrays = $collection->map( function ($item) {
             return $item->toArray();
         });

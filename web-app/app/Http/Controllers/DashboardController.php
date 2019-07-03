@@ -45,8 +45,8 @@ class DashboardController extends Controller
 
         return view('dashboard', [
             'user'                   => (new CacheDecorator($user))->get($temporary_user_id),
-            'user_credentials'       => (new CacheDecorator($user_credentials))->all(),//filter(['user_id', $temporary_user_id]),
-            'assignments'            => $assignments->all(),//filter(['user_id', $temporary_user_id]),
+            'user_credentials'       => (new CacheDecorator($user_credentials))->filter(['id' => $temporary_user_id]),
+            'assignments'            => $assignments->filter(['id' => $temporary_user_id]),
             'sessions'      => ( new CacheDecorator(App::make('App\\' . $repository .'\Session')))->all(),
             'subjects'      => ( new CacheDecorator(App::make('App\\' . $repository .'\Subject')))->all(),
             'districts'     => ( new CacheDecorator(App::make('App\\' . $repository .'\District')))->all(),
