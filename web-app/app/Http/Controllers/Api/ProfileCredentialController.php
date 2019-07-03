@@ -14,7 +14,7 @@ class ProfileCredentialController extends BaseController
     public function index($federated_id)
     {
         // TODO - check that user is authorized to view this resource
-        return $this->model->filter(['id'=>$federated_id]);
+        return $this->model->filter(['user_id'=>$federated_id]);
     }
 
 

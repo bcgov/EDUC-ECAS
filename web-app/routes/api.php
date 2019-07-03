@@ -20,7 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 // Read and write resources
 Route::resource('/{federated_id}/assignments'              , 'Api\AssignmentController');
-Route::resource('/profile'                                 , 'Api\ProfileController', ['except' => ['index']]);
+Route::resource('/profiles'                                , 'Api\ProfileController', ['except' => ['index']]);
 Route::resource('/{federated_id}/profile-credentials'      , 'Api\ProfileCredentialController' );
 
 

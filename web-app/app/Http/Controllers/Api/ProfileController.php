@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Dynamics\Profile;
+use App\Http\Resources\ProfileResource;
 use App\Interfaces\iModelRepository;
 use Illuminate\Http\Request;
 
@@ -25,12 +26,15 @@ class ProfileController
     {
 
         abort('404');
+
     }
+
 
     public function show($id)
     {
         // TODO - verify that the user is authorized to look up their record
-        return $this->model->filter(['id'=> $id])->first();
+        $profile = $this->model->filter(['id'=> $id])->first();
+        return new ProfileResource($profile);
     }
 
 
@@ -45,7 +49,7 @@ class ProfileController
         $profile = new Profile();
         $user_id = $profile->create($request->all());
 
-        return $this->show($user_id);
+        return new ProfileResource($this->show($user_id));
     }
 
     /*
