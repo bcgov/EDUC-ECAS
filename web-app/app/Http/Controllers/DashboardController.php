@@ -7,7 +7,7 @@ namespace App\Http\Controllers;
 use App\Dynamics\Session as MarkerSession;
 use App\Http\Resources\DashboardResource;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session; 
+use Illuminate\Support\Facades\Session;
 
 /*
  * Main Controller for the application
@@ -23,19 +23,11 @@ class DashboardController extends Controller
      */
     public function index(Request $federated_id)
     {
-        // Much of the data we need are lists and options which do not change often
-        // We want to use Caching to reduce the loading of repeated data
-        // This must be done at the start, loading other data depends on this info
-
-        // Load the specific User Information
 
         // TODO: Temporarily hardcoding a specific user for the demo. Remove!
         //$temporary_user_id = '8c266dae-5d7e-e911-a990-000d3af438b6';
 
-        // We instantiate $profile and $credentials using App::make so we can
-        // dynamically switch between fictitious data and the Dynamics API.
-
-        return new DashboardResource($federated_id);
+        return view('dashboard', ['dashboard' => new DashboardResource($federated_id)]);
 
     }
 
