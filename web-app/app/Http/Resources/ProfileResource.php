@@ -25,6 +25,7 @@ class ProfileResource extends JsonResource
 
         return [
           'id'                                     =>  $this['id'],
+          'federated_id'                           =>  $this['federated_id'],
           'first_name'                             =>  $this['first_name'],
           'preferred_first_name'                   =>  $this['preferred_first_name'],
           'last_name'                              =>  $this['last_name'],
@@ -41,7 +42,6 @@ class ProfileResource extends JsonResource
           'professional_certificate_bc'            =>  $this['professional_certificate_bc'],
           'professional_certificate_yk'            =>  $this['professional_certificate_yk'],
           'professional_certificate_other'         =>  $this['professional_certificate_other'],
-          'federated_id'                           =>  $this['federated_id']
         ];
     }
 }

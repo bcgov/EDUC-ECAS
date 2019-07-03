@@ -16,6 +16,7 @@ class CreateProfilesTable extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->bigIncrements('id');
 
+            $table->string('federated_id')->default('null');
             $table->string('preferred_first_name');
             $table->string('first_name');
             $table->string('last_name');
