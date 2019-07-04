@@ -10,7 +10,7 @@ namespace App\MockEntities\Repository;
 
 use App\Interfaces\iModelRepository;
 
-class Payment extends DynamicsRepository implements iModelRepository
+class Payment extends MockRepository implements iModelRepository
 {
 
     public function __construct(\App\MockEntities\Payment $model)

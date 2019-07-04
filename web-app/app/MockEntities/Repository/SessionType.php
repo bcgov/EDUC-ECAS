@@ -10,7 +10,7 @@ namespace App\MockEntities\Repository;
 
 use App\Interfaces\iModelRepository;
 
-class SessionType extends DynamicsRepository implements iModelRepository
+class SessionType extends MockRepository implements iModelRepository
 {
     public function __construct(\App\MockEntities\SessionType $model)
     {

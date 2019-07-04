@@ -10,7 +10,7 @@ namespace App\MockEntities\Repository;
 
 use App\Interfaces\iModelRepository;
 
-class ContractStage extends DynamicsRepository implements iModelRepository
+class ContractStage extends MockRepository implements iModelRepository
 {
     public function __construct(\App\MockEntities\ContractStage $model)
     {

@@ -10,7 +10,7 @@ namespace App\MockEntities\Repository;
 
 use App\Interfaces\iModelRepository;
 
-class ProfileCredential extends DynamicsRepository implements iModelRepository
+class ProfileCredential extends MockRepository implements iModelRepository
 {
 
 

@@ -3,10 +3,9 @@
 namespace App\MockEntities\Repository;
 
 
-use App\MockEntities\Credential;
 
 
-abstract class DynamicsRepository
+abstract class MockRepository
 {
 
     protected $model;
@@ -70,19 +69,27 @@ abstract class DynamicsRepository
     }
     public function create($data)
     {
-        // TODO
+
+        return $this->model->create($data)->toArray();
+
     }
 
 
 
     public function update($id, $data)
     {
-        // TODO
+
+        $record = $this->model->find($id);
+        $record->fill($data);
+
+        return $record->toArray();
+
     }
 
 
     public function delete($id)
     {
-        // TODO
+        $record = $this->model->find($id);
+        return $record->delete();
     }
 }

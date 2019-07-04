@@ -10,7 +10,7 @@ namespace App\MockEntities\Repository;
 
 use App\Interfaces\iModelRepository;
 
-class District extends DynamicsRepository implements iModelRepository
+class District extends MockRepository implements iModelRepository
 {
 
     public function __construct(\App\MockEntities\District $model)
