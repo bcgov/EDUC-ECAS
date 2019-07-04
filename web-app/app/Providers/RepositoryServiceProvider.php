@@ -30,42 +30,11 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //TODO - The logic below should be refactored into a loop to avoid duplication
 
         $this->app->when(AssignmentController::class)
             ->needs(iModelRepository::class)
             ->give(function () {
                 return $this->getRepository('Assignment');
-            });
-
-        $this->app->when(AssignmentStatusController::class)
-            ->needs(iModelRepository::class)
-            ->give(function () {
-                return $this->getRepository('AssignmentStatus');
-            });
-
-        $this->app->when(ContractStageController::class)
-            ->needs(iModelRepository::class)
-            ->give(function () {
-                return $this->getRepository('ContractStage');
-            });
-
-        $this->app->when(CredentialController::class)
-            ->needs(iModelRepository::class)
-            ->give(function () {
-                return $this->getRepository('Credential');
-            });
-
-        $this->app->when(DistrictController::class)
-            ->needs(iModelRepository::class)
-            ->give(function () {
-                return $this->getRepository('District');
-            });
-
-        $this->app->when(PaymentTypeController::class)
-            ->needs(iModelRepository::class)
-            ->give(function () {
-                return $this->getRepository('Payment');
             });
 
         $this->app->when(ProfileController::class)
@@ -79,57 +48,6 @@ class RepositoryServiceProvider extends ServiceProvider
             ->give(function () {
                 return $this->getRepository('ProfileCredential');
             });
-
-
-
-        $this->app->when(CredentialController::class)
-            ->needs(iModelRepository::class)
-            ->give(function () {
-                return $this->getRepository('Credential');
-            });
-
-        $this->app->when(RegionController::class)
-            ->needs(iModelRepository::class)
-            ->give(function () {
-                return $this->getRepository('Region');
-            });
-
-        $this->app->when(RoleController::class)
-            ->needs(iModelRepository::class)
-            ->give(function () {
-                return $this->getRepository('Role');
-            });
-
-        $this->app->when(SchoolController::class)
-            ->needs(iModelRepository::class)
-            ->give(function () {
-                return $this->getRepository('School');
-            });
-
-        $this->app->when(SessionController::class)
-            ->needs(iModelRepository::class)
-            ->give(function () {
-                return $this->getRepository('Session');
-            });
-
-        $this->app->when(SessionActivityController::class)
-            ->needs(iModelRepository::class)
-            ->give(function () {
-                return $this->getRepository('SessionActivity');
-            });
-
-        $this->app->when(SessionTypeController::class)
-            ->needs(iModelRepository::class)
-            ->give(function () {
-                return $this->getRepository('SessionType');
-            });
-
-        $this->app->when(SubjectController::class)
-            ->needs(iModelRepository::class)
-            ->give(function () {
-                return $this->getRepository('Subject');
-            });
-
 
     }
 
