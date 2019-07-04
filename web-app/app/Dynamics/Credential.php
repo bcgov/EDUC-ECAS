@@ -24,4 +24,12 @@ class Credential extends DynamicsRepository implements iModelRepository
         'id'   => 'educ_credentialcodeid',
         'name' => 'educ_name'
     ];
+
+    public function all()
+    {
+        $collection = parent::all();
+        return $collection->sortBy('name')->values();
+
+
+    }
 }

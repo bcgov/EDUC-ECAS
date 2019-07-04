@@ -24,4 +24,14 @@ class District extends DynamicsRepository implements iModelRepository
         'id'   => 'educ_districtcodeid',
         'name' => 'educ_districtnamenumber'
     ];
+
+
+    public function all()
+    {
+        $collection = parent::all();
+        return $collection->sortBy('name')->values();
+
+
+    }
+
 }

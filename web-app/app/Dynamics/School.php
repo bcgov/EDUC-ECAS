@@ -25,4 +25,13 @@ class School extends DynamicsRepository implements iModelRepository
         'city' => 'educ_schoolcity'
     ];
 
+    public function all()
+    {
+        $collection = parent::all();
+        return $collection->sortBy('name')->values();
+
+
+    }
+
+
 }

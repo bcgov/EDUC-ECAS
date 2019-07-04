@@ -30,4 +30,12 @@ class Session extends DynamicsRepository implements iModelRepository
         'address'     => 'educ_locationaddress',
         'city'        => 'educ_locationcity',
     ];
+
+    public function all()
+    {
+        $collection = parent::all();
+        return $collection->sortBy('start_date')->values();
+
+
+    }
 }
