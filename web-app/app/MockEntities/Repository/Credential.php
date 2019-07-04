@@ -22,8 +22,17 @@ class Credential extends MockRepository implements iModelRepository
 
     public function all()
     {
+        // override parent method to sort collection by name
         $collection = $this->model->all();
-        return $collection->sortBy('name')->values();
+        $collection->sortBy('name')->values();
+
+        $collection_of_arrays = $collection->map( function ($item) {
+
+            return $item->toArray();
+        });
+
+        return $collection_of_arrays;
+
     }
 
 

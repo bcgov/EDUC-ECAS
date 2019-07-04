@@ -20,7 +20,16 @@ class Session extends MockRepository implements iModelRepository
 
     public function all()
     {
+        // override parent method to sort collection by name
         $collection = $this->model->all();
-        return $collection->sortBy('start_date')->values();
+        $collection->sortBy('start_date')->values();
+
+        $collection_of_arrays = $collection->map( function ($item) {
+
+            return $item->toArray();
+        });
+
+        return $collection_of_arrays;
+
     }
 }
