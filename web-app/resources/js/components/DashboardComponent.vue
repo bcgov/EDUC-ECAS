@@ -80,29 +80,29 @@
                                         <a href="#"
                                            @click="filter = ''"
                                            class="nav-link"
-                                           :class="{ 'active': filter == '' }">All
+                                           :class="{ 'active': filter === '' }">All
                                             <span class="badge badge-pill badge-primary">{{ getSessions.length }}</span></a>
                                     </li>
                                     <li class="nav-item mb-0">
                                         <a href="#"
                                            @click="filter = 'Applied'"
                                            class="nav-link"
-                                           :class="{ 'active': filter == 'Applied' }">Applied
+                                           :class="{ 'active': filter === 'Applied' }">Applied
                                             <span class="badge badge-pill badge-primary">{{ countStatus('Applied') }}</span></a>
                                     </li>
                                     <li class="nav-item mb-0">
                                         <a href="#"
                                            @click="filter = 'Invited'"
                                            class="nav-link"
-                                           :class="{ 'active': filter == 'Invited' }">Invited
+                                           :class="{ 'active': filter === 'Invited' }">Invited
                                             <span class="badge badge-pill badge-primary">{{ countStatus('Invited') }}</span></a>
                                     </li>
                                     <li class="nav-item mb-0">
                                         <a href="#"
-                                           @click="filter = 'Scheduled'"
+                                           @click="filter = 'Confirmed'"
                                            class="nav-link"
-                                           :class="{ 'active': filter == 'Scheduled' }">Going
-                                            <span class="badge badge-pill badge-primary">{{ countStatus('Scheduled') }}</span></a>
+                                           :class="{ 'active': filter === 'Confirmed' }">Going
+                                            <span class="badge badge-pill badge-primary">{{ countStatus('Confirmed') }}</span></a>
                                     </li>
                                 </ul>
                             </div>
@@ -200,10 +200,10 @@
             filteredSessions() {
                 var dashboard = this
                 return this.getSessions.filter(function (session) {
-                    if (dashboard.filter.length == 0) {
+                    if (dashboard.filter.length === 0) {
                         return true
                     }
-                    return session.status == dashboard.filter
+                    return session.status === dashboard.filter
                 })
             }
         },

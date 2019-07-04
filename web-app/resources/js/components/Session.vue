@@ -2,8 +2,8 @@
     <div class="card">
         <div class="card-header">
             <button class="btn btn-primary btn-sm float-right" v-on:click="closeModal">X</button>
-            <h2>{{ session.type }} - {{ session.activity }}</h2>
-            <h3>{{ session.dates }}, {{ session.location }}</h3>
+            <h2>{{ session.type.name }} - {{ session.activity.name }}</h2>
+            <h3>{{ session.date }}, {{ session.location }}</h3>
         </div>
         <div class="card-body">
             <template v-if="isStatus(session, 'Open')">
