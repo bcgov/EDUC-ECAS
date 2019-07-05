@@ -3,10 +3,10 @@
 namespace Tests\Api;
 
 use App\MockEntities\Profile;
-use Tests\TestCase;
 
 
-class ProfileTest extends TestCase
+
+class ProfileTest extends BaseApiTest
 {
 
     private $profile;
