@@ -3,10 +3,10 @@
 namespace Tests\Api;
 
 use App\MockEntities\Profile;
+use Tests\BaseMigrations;
 
 
-
-class ProfileTest extends BaseApiTest
+class ProfileTest extends BaseMigrations
 {
 
     private $profile;

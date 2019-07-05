@@ -5,19 +5,22 @@ namespace Tests\Unit;
 use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\Payment;
 
-use Tests\TestCase;
+use Tests\BaseMigrations;
 
-class PaymentOptionListTest extends TestCase
+class PaymentOptionListTest extends BaseMigrations
 {
 
     public $api;
     public $fake;
+    public $types;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->api = new Payment();
         $this->fake = new \App\MockEntities\Repository\Payment(new \App\MockEntities\Payment());
+
+        $this->types = factory(\App\MockEntities\Payment::class, 7)->create();
     }
 
 

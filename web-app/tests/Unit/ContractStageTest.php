@@ -5,19 +5,21 @@ namespace Tests\Unit;
 use App\Dynamics\ContractStage;
 
 use App\Dynamics\Decorators\CacheDecorator;
-use Tests\TestCase;
+use Tests\BaseMigrations;
 
-class ContractStageTest extends TestCase
+class ContractStageTest extends BaseMigrations
 {
 
     public $api;
     public $fake;
+    public $stages;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->api = new ContractStage();
         $this->fake = new \App\MockEntities\Repository\ContractStage(new \App\MockEntities\ContractStage());
+        $this->stages = factory(\App\MockEntities\ContractStage::class, 7)->create();
     }
 
 

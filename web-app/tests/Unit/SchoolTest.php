@@ -4,21 +4,24 @@ namespace Tests\Unit;
 
 use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\School;
-use Tests\TestCase;
+use Tests\BaseMigrations;
 
-class SchoolTest extends TestCase
+class SchoolTest extends BaseMigrations
 {
 
 
 
     public $api;
     public $fake;
+    public $schools;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->api = new School();
         $this->fake = new \App\MockEntities\Repository\School(new \App\MockEntities\School());
+
+        $this->schools = factory(\App\MockEntities\School::class, 7)->create();
     }
 
 

@@ -4,19 +4,24 @@ namespace Tests\Unit;
 
 use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\Profile;
-use Tests\TestCase;
+use Tests\BaseMigrations;
 
-class ProfileTest extends TestCase
+class ProfileTest extends BaseMigrations
 {
 
     public $api;
     public $fake;
+    public $profile;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->api = new Profile();
         $this->fake = new \App\MockEntities\Repository\Profile(new \App\MockEntities\Profile());
+        factory(\App\MockEntities\School::class, 1)->create();
+        factory(\App\MockEntities\District::class, 1)->create();
+        $this->profile = Factory(\App\MockEntities\Profile::class)->create();
+
     }
 
 

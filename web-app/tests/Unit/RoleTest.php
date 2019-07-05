@@ -4,20 +4,23 @@ namespace Tests\Unit;
 
 use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\Role;
-use Tests\TestCase;
+use Tests\BaseMigrations;
 
-class RoleTest extends TestCase
+class RoleTest extends BaseMigrations
 {
 
 
     public $api;
     public $fake;
+    public $roles;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->api = new Role();
         $this->fake = new \App\MockEntities\Repository\Role(new \App\MockEntities\Role());
+
+        $this->roles = factory(\App\MockEntities\Role::class, 7)->create();
     }
 
 

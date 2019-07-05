@@ -5,20 +5,23 @@ namespace Tests\Unit;
 
 use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\SessionType;
-use Tests\TestCase;
+use Tests\BaseMigrations;
 
-class SessionTypeTest extends TestCase
+class SessionTypeTest extends BaseMigrations
 {
 
 
     public $api;
     public $fake;
+    public $types;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->api = new SessionType();
         $this->fake = new \App\MockEntities\Repository\SessionType(new \App\MockEntities\SessionType());
+
+        $this->types = factory(\App\MockEntities\SessionType::class, 7)->create();
     }
 
 

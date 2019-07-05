@@ -5,20 +5,22 @@ namespace Tests\Unit;
 
 use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\Region;
-use Tests\TestCase;
+use Tests\BaseMigrations;
 
-class RegionTest extends TestCase
+class RegionTest extends BaseMigrations
 {
 
 
     public $api;
     public $fake;
+    public $regions;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->api = new Region();
         $this->fake = new \App\MockEntities\Repository\Region(new \App\MockEntities\Region());
+        $this->regions = factory(\App\MockEntities\Region::class, 7)->create();
     }
 
 

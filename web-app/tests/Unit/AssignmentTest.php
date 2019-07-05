@@ -4,19 +4,28 @@ namespace Tests\Unit;
 
 use App\Dynamics\Assignment;
 use App\Dynamics\Decorators\CacheDecorator;
-use Tests\TestCase;
+use Tests\BaseMigrations;
 
-class AssignmentTest extends TestCase
+class AssignmentTest extends BaseMigrations
 {
 
     public $api;
     public $fake;
+    public $assignments;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->api = new Assignment();
         $this->fake = new \App\MockEntities\Repository\Assignment(new \App\MockEntities\Assignment());
+
+        $this->assignments = factory(\App\MockEntities\Assignment::class, 5)->create([
+            'user_id'           => 1,
+            'role_id'           => 1,
+            'session_id'        => 1,
+            'contract_stage'    => 1,
+            'status'            => 1
+        ]);
     }
 
 

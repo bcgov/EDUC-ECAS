@@ -5,9 +5,11 @@ namespace Tests\Unit;
 use App\Dynamics\AssignmentStatus;
 
 use App\Dynamics\Decorators\CacheDecorator;
-use Tests\TestCase;
+use Faker\Factory;
+use Tests\BaseMigrations;
 
-class AssignmentStatusTest extends TestCase
+
+class AssignmentStatusTest extends BaseMigrations
 {
 
     public $api;
@@ -15,7 +17,9 @@ class AssignmentStatusTest extends TestCase
 
     public function setUp(): void
     {
-        parent::setUp(); 
+
+        parent::setUp();
+        factory(\App\MockEntities\AssignmentStatus::class, 10)->create();
         $this->api              = new AssignmentStatus();
         $this->fake             = new \App\MockEntities\Repository\AssignmentStatus(new \App\MockEntities\AssignmentStatus());
 

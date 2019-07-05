@@ -4,10 +4,10 @@ namespace Tests\Unit;
 
 use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\Subject;
-use Tests\TestCase;
+use Tests\BaseMigrations;
 
 
-class SubjectTest extends TestCase
+class SubjectTest extends BaseMigrations
 {
 
     public $api;

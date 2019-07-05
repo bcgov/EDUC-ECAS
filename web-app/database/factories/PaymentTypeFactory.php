@@ -2,12 +2,11 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use App\MockEntities\SessionType;
+use App\MockEntities\Payment;
 use Faker\Generator as Faker;
 
-$factory->define(SessionType::class, function (Faker $faker) {
+$factory->define(Payment::class, function (Faker $faker) {
     return [
         'name'      => $faker->lexify("????????"),
-        'code'      => $faker->lexify('??')
     ];
 });

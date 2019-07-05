@@ -4,20 +4,22 @@ namespace Tests\Unit;
 
 use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\District;
-use Tests\TestCase;
+use Tests\BaseMigrations;
 
-class DistrictTest extends TestCase
+class DistrictTest extends BaseMigrations
 {
 
 
     public $api;
     public $fake;
+    public $districts;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->api = new District();
         $this->fake = new \App\MockEntities\Repository\District(new \App\MockEntities\District());
+        $this->districts = factory(\App\MockEntities\District::class, 7)->create();
     }
 
 

@@ -1,15 +1,13 @@
 <?php
 
-namespace Tests\Api;
+namespace Tests;
 
 
-use App\MockEntities\ProfileCredential;
-use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Tests\TestCase;
 
 
-abstract class BaseApiTest extends TestCase
+
+abstract class BaseMigrations extends TestCase
 {
 
     use DatabaseMigrations;

@@ -4,10 +4,10 @@ namespace Tests\Api;
 
 
 use App\MockEntities\ProfileCredential;
+use Tests\BaseMigrations;
 
 
-
-class ProfileCredentialTest extends BaseApiTest
+class ProfileCredentialTest extends BaseMigrations
 {
 
     private $profile_credentials;
@@ -29,11 +29,23 @@ class ProfileCredentialTest extends BaseApiTest
     /** @test */
     public function a_user_can_get_all_profile_credentials()
     {
-        $response = $this->get('/api/' . $this->user->id . '/profile-credentials' );
+        $response = $this->get('/api/profile-credentials' );
         $response
             ->assertJsonFragment(['user_id' => (string) $this->user->id])
             ->assertJsonCount(2);
     }
+
+    /** @test */
+    public function a_user_can_create_a_profile_credentials()
+    {
+        $response = $this->get('/api/profile-credentials' );
+        $response
+            ->assertJsonFragment(['user_id' => (string) $this->user->id])
+            ->assertJsonCount(2);
+    }
+
+
+
 
 
 }

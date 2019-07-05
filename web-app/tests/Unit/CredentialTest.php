@@ -4,20 +4,21 @@ namespace Tests\Unit;
 
 use App\Dynamics\Credential;
 use App\Dynamics\Decorators\CacheDecorator;
-use Tests\TestCase;
+use Tests\BaseMigrations;
 
-class CredentialTest extends TestCase
+class CredentialTest extends BaseMigrations
 {
 
     public $api;
     public $fake;
+    public $credentials;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->api = new Credential();
         $this->fake = new \App\MockEntities\Repository\Credential(new \App\MockEntities\Credential());
-
+        $this->credentials = factory(\App\MockEntities\Credential::class, 7)->create();
     }
 
     /** @test */

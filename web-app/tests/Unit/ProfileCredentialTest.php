@@ -12,13 +12,14 @@ use App\Dynamics\ProfileCredential;
 use App\Dynamics\School;
 use App\Dynamics\Session;
 
-use Tests\TestCase;
+use Tests\BaseMigrations;
 
-class ProfileCredentialTest extends TestCase
+class ProfileCredentialTest extends BaseMigrations
 {
 
     public $api;
     public $fake;
+    public $profile_credentials;
 
     public function setUp(): void
     {
@@ -26,6 +27,10 @@ class ProfileCredentialTest extends TestCase
         $this->api = new ProfileCredential();
         $this->fake = new \App\MockEntities\Repository\ProfileCredential(new \App\MockEntities\ProfileCredential());
 
+        factory(\App\MockEntities\Credential::class, 4)->create();
+        $this->profile_credentials = factory(\App\MockEntities\ProfileCredential::class, 3)->create([
+            'user_id'   => 1
+        ]);
     }
 
 
