@@ -215,7 +215,7 @@
 
                 var form = this
 
-                axios.post('/Dashboard/credential', {
+                axios.post('/api/proile-credentials', {
                     credential_id: form.new_credential,
                     user_id: form.getUser.id
                 })
@@ -236,7 +236,7 @@
 
                 var form = this
 
-                axios.post('/Dashboard/credential/delete', {
+                axios.post('/api/profile-credentials/delete', {
                     profile_credential_id: profile_credential.id
                 })
                     .then(function (response) {

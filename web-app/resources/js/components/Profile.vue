@@ -88,18 +88,18 @@
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="district">Current District</label>
-                        <select class="form-control" v-model="user_local.district.id" id="district">
+                        <select class="form-control" v-model="user_local.district" id="district">
                             <option value="">None</option>
-                            <option v-for="district in districts" :value="district.id">
+                            <option v-for="district in districts" :value="district">
                                 {{ district.name }}
                             </option>
                         </select>
                     </div>
                     <div class="form-group col">
                         <label for="school">Current School</label>
-                        <select class="form-control" v-model="user_local.school.id" id="school">
+                        <select class="form-control" v-model="user_local.school" id="school">
                             <option value="">None</option>
-                            <option :value="school.id" v-for="school in schools">{{ school.name }}</option>
+                            <option :value="school" v-for="school in schools">{{ school.name }}</option>
                         </select>
                     </div>
                 </div>
@@ -210,12 +210,12 @@
                     city: form.user_local.city,
                     region: form.user_local.region,
                     postal_code: form.user_local.postal_code,
-                    district_id: form.user_local.district_id,
-                    school_id: form.user_local.school_id
-                }
+                    district_id: form.user_local.district.id,
+                    school_id: form.user_local.school.id
+                };
 
                 if (this.new_user) {
-                    axios.post('/Dashboard/profile', data)
+                    axios.post('/api/profiles/9', data)
                         .then(function (response) {
                             console.log('Create Profile')
                             form.closeModal()
@@ -231,7 +231,7 @@
                         });
                 }
                 else {
-                    axios.patch('/Dashboard/profile', data)
+                    axios.patch('/api/profiles/9', data)
                         .then(function (response) {
                             console.log('Patch Profile')
                             form.working = false
@@ -239,7 +239,7 @@
                             Event.fire('profile-updated', response.data)
                         })
                         .catch(function (error) {
-                            console.log('Failure!')
+                            console.log('Failure!', data);
                             form.working = false
                             if (error.response.status == 422){
                                 form.errors = error.response.data.errors;

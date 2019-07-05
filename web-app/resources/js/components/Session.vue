@@ -145,7 +145,7 @@
                     // TODO: should handle failure gracefully!
                     session.status = action
 
-                    axios.post('/Dashboard/session', {
+                    axios.post('/api/sessions', {
                         assignment_id: session.assignment_id,
                         session_id: session.id,
                         user_id: form.getUser.id,
