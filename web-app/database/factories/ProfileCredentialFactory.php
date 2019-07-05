@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(ProfileCredential::class, function (Faker $faker) {
 
     $credentials = \App\MockEntities\Credential::pluck('id')->toArray();
-    $users = \App\User::pluck('id')->toArray();
+    $users = \App\MockEntities\Profile::pluck('id')->toArray();
 
     return [
         'user_id'       => $faker->randomElement($users),

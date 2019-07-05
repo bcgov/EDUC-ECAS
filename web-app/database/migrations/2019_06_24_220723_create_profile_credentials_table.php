@@ -17,7 +17,7 @@ class CreateProfileCredentialsTable extends Migration
             $table->bigIncrements('id');
 
             $table->unsignedBigInteger('user_id')->index();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('profiles')->onDelete('cascade');
 
             $table->unsignedBigInteger('credential_id')->index();
             $table->foreign('credential_id')->references('id')->on('credentials')->onDelete('cascade');

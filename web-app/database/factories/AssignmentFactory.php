@@ -11,7 +11,7 @@ $factory->define(Assignment::class, function (Faker $faker) {
     $assignment_statuses = \App\MockEntities\AssignmentStatus::pluck('id')->toArray();
     $sessions = \App\MockEntities\Session::pluck('id')->toArray();
     $roles = \App\MockEntities\Role::pluck('id')->toArray();
-    $users = \App\User::pluck('id')->toArray();
+    $users = \App\MockEntities\Profile::pluck('id')->toArray();
 
     return [
 
