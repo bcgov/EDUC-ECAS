@@ -70,7 +70,10 @@ abstract class MockRepository
     public function create($data)
     {
 
-        return $this->model->create($data)->toArray();
+        // For consistency with Dynamics, return only the new key id
+        // not the entire model
+        $new_model = $this->model->create($data);
+        return $new_model->id;
 
     }
 

@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 
-use App\Dynamics\Profile;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\ProfileResource;
 use App\Interfaces\iModelRepository;
+use App\Rules\SocialInsuranceNumberRule;
 use Illuminate\Http\Request;
 
 
-class ProfileController
+class ProfileController extends Controller
 {
 
     protected $model;
@@ -43,11 +44,10 @@ class ProfileController
  */
     public function store(Request $request)
     {
-
+        // TODO - check that user only creates a profile with their federated_id
         $request = $this->validateProfileRequest($request);
 
-        $profile = new Profile();
-        $user_id = $profile->create($request->all());
+        $user_id = $this->model->create($request->all());
 
         return new ProfileResource($this->show($user_id));
     }
@@ -55,14 +55,24 @@ class ProfileController
     /*
      * Update an existing user Profile (Contact in Dynamics)
      */
-    public function update(Request $request)
+    public function update($federated_id, Request $request)
     {
+        // TODO - Check that the user is authorised to update their federated_id
+
         $request = $this->validateProfileRequest($request);
+        $response = $this->model->update($federated_id, $request->all());
 
-        (new Profile())->update($this->userId(), $request->all());
-
-        return json_encode($this->user());
+        return new ProfileResource($response);
     }
+
+
+    public function destroy($federated_id)
+    {
+        abort(401);
+        // unauthorized
+
+    }
+
 
     /*
      * Create a new Assignment
@@ -94,15 +104,15 @@ class ProfileController
         }
 
         $this->validate($request, [
-            'first_name'  => 'required',
-            'last_name'   => 'required',
-            'email'       => 'required|email',
-            'phone'       => 'required',
-            'address_1'   => 'required',
-            'city'        => 'required',
-            'region'      => 'required',
-            'postal_code' => 'required|regex:/^\D\d\D\s?\d\D\d$/i',
-            'sin'         => 'regex:/^\d{9}$/i'
+            'first_name'                    => 'required',
+            'last_name'                     => 'required',
+            'email'                         => 'required|email',
+            'phone'                         => 'required',
+            'address_1'                     => 'required',
+            'city'                          => 'required',
+            'region'                        => 'required',
+            'postal_code'                   => 'required|regex:/^\D\d\D\s?\d\D\d$/i',
+            'social_insurance_number'       => [ new SocialInsuranceNumberRule ]
         ],
             [
                 'first_name.required'  => 'Required',
