@@ -11,21 +11,36 @@ use Illuminate\Support\Facades\Log;
 class ProfileCredentialController extends BaseController
 {
 
-    public function index($federated_id)
+    public function index()
     {
-        // TODO - check that user is authorized to view this resource
-        return $this->model->filter(['user_id'=>$federated_id]);
+        // TODO - use filter() to return only those records associated with the user
+        return $this->model->all();
+        //return $this->model->filter(['user_id'=>$federated_id]);
     }
 
+    public function show($id)
+    {
+        // TODO: Implement show() method.
+    }
+
+    public function update($id, Request $request)
+    {
+        // TODO: Implement update() method.
+    }
+
+    public function create(Request $request)
+    {
+        dd('this method has been replaced with store()');
+    }
 
 
     /*
  * Attach a credential to a User
  */
-    public function create(Request $request)
+    public function store(Request $request)
     {
         Log::debug('STORE CREDENTIAL');
-        Log::debug($request->all());
+
 
         $this->validate($request, [
             'credential_id' => 'required'
@@ -44,16 +59,13 @@ class ProfileCredentialController extends BaseController
         ]);
     }
 
-    public function delete(Request $request)
+    public function destroy($id)
     {
         Log::debug('DELETE CREDENTIAL');
-        Log::debug($request->all());
 
-        ( new ProfileCredential())->delete($request['profile_credential_id']);
+        ( new ProfileCredential())->delete($id);
 
-        return json_encode([
-            'id' => $request['profile_credential_id']
-        ]);
+        return true;  // TODO - return appropriate response
     }
 
 

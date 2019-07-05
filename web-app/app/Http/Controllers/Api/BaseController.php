@@ -20,41 +20,16 @@ abstract class BaseController extends Controller
     }
 
 
-    public function index($federated_id)
-    {
+    abstract public function index();
 
-        return (new CacheDecorator($this->model))->filter(['id' => $federated_id]);
+    abstract public function show($id);
 
+    abstract public function update($id, Request $request);
 
-    }
+    abstract public function store(Request $request);
 
+    abstract public function destroy($id);
 
-    public function show($id)
-    {
-
-        return (new CacheDecorator($this->model))->get($id);
-
-    }
-
-
-
-    public function update(Request $request)
-    {
-
-        // TODO
-
-    }
-
-    public function store(Request $request)
-    {
-
-        // TODO
-    }
-
-    public function delete(Request $request)
-    {
-        // TODO
-    }
 
 
 

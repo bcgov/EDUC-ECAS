@@ -10,7 +10,7 @@ use App\Rules\SocialInsuranceNumberRule;
 use Illuminate\Http\Request;
 
 
-class ProfileController extends Controller
+class ProfileController extends BaseController
 {
 
     protected $model;

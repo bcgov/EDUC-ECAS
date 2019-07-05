@@ -15,9 +15,9 @@ class AssignmentController extends BaseController
 
 
 
-    public function index($federated_id)
+    public function index()
     {
-        // TODO - check that user is authorized to view this resource
+        // TODO - use filter() to return only those records associated with the user
         return $this->model->filter(['user_id'=>$federated_id]);
     }
 
@@ -58,7 +58,25 @@ class AssignmentController extends BaseController
         ]);
     }
 
+    public function show($id)
+    {
+        // TODO: Implement show() method.
+    }
 
+    public function update($id, Request $request)
+    {
+        // TODO: Implement update() method.
+    }
+
+    public function store(Request $request)
+    {
+        // TODO: Implement store() method.
+    }
+
+    public function delete($id)
+    {
+        // TODO: Implement delete() method.
+    }
 
 
 }

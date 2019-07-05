@@ -19,9 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 // Read and write resources
-Route::resource('/{federated_id}/assignments'              , 'Api\AssignmentController');
-Route::resource('/profiles'                                , 'Api\ProfileController', ['except' => ['index']]);
-Route::resource('/{federated_id}/profile-credentials'      , 'Api\ProfileCredentialController' );
+Route::resource('/assignments'                  , 'Api\AssignmentController');
+Route::resource('/profiles'                     , 'Api\ProfileController', ['except' => ['index']]);
+Route::resource('/profile-credentials'          , 'Api\ProfileCredentialController' );
 
 
 
