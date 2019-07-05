@@ -249,11 +249,11 @@ abstract class DynamicsRepository
      */
     protected static function connection()
     {
-        // TODO: Security headers hardcoded! Testing only! Need to move these to an environment file
+        
         return new Client([
             // Base URI is used with relative requests
             'base_uri' => env('DYNAMICSBASEURL'),
-            'timeout'  => 30.0,
+            'timeout'  => env('DYNAMICS_TIMEOUT'),
             'headers'  => [
                 'Authorization' => env('API_KEY')
             ]
