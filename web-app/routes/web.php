@@ -27,3 +27,7 @@ Route::get('/{federated_id}/Dashboard', 'DashboardController@index');
 
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

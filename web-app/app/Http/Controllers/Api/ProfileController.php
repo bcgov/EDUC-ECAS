@@ -8,6 +8,7 @@ use App\Http\Resources\ProfileResource;
 use App\Interfaces\iModelRepository;
 use App\Rules\SocialInsuranceNumberRule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class ProfileController extends BaseController
@@ -33,7 +34,12 @@ class ProfileController extends BaseController
 
     public function show($id)
     {
-        // TODO - verify that the user is authorized to look up their record
+
+        // check user is requesting their own profile
+        if($id <> Auth::id()) {
+            abort(302, 'unauthorized');
+        }
+
         $profile = $this->model->filter(['id'=> $id])->first();
         return new ProfileResource($profile);
     }

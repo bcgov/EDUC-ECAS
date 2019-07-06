@@ -10,21 +10,54 @@ class ProfileTest extends BaseMigrations
 {
 
     private $profile;
+    private $user;
 
     public function setUp() : void
     {
         parent::setUp();
+        $this->user = factory(\App\User::class)->create();
         factory(\App\MockEntities\School::class, 50)->create();
         factory(\App\MockEntities\District::class, 50)->create();
         $this->profile = Factory(Profile::class)->create();
 
+
+
+
     }
 
     /** @test */
-    public function this_can_get_a_profile()
+    public function an_authenticated_user_can_get_their_own_profile()
     {
-        $response = $this->get('/api/profiles/' . $this->profile->id );
+        $this->actingAs($this->user, 'api');
+        $response = $this->get('/api/profiles/' . $this->user->id );
         $response->assertJsonFragment(['first_name' => $this->profile->first_name]);
+        $response->assertJsonCount(1);
+    }
+
+
+
+    /** @test */
+    public function an_authenticated_user_can_get_another_users_profile()
+    {
+        $this->withExceptionHandling();
+
+        $this->actingAs($this->user, 'api');
+        $other_user = factory(\App\User::class)->create();
+        $response = $this->get('/api/profiles/' . $other_user->id );
+        $response->assertStatus(302); // unauthorized
+
+    }
+
+
+
+    /** @test */
+    public function an_unauthorized_user_cannot_get_a_profile()
+    {
+
+        $this->withExceptionHandling();
+
+        $response = $this->post('/api/profiles', $this->validProfileData());
+        $response->assertStatus(302); // unauthorized
     }
 
 
