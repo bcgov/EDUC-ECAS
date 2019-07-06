@@ -50,23 +50,27 @@ class ProfileController extends BaseController
  */
     public function store(Request $request)
     {
-        // TODO - check that user only creates a profile with their federated_id
+        // TODO - ensure federated_id stored on profile record matches the user's
+
         $request = $this->validateProfileRequest($request);
 
-        $user_id = $this->model->create($request->all());
+        $new_model_id = $this->model->create($request->all());
 
-        return new ProfileResource($this->show($user_id));
+        return new ProfileResource($this->model->get($new_model_id));
     }
 
     /*
      * Update an existing user Profile (Contact in Dynamics)
      */
-    public function update($federated_id, Request $request)
+    public function update($id, Request $request)
     {
-        // TODO - Check that the user is authorised to update their federated_id
+        // check user is updating their own profile
+        if($id <> Auth::id()) {
+            abort(302, 'unauthorized');
+        }
 
         $request = $this->validateProfileRequest($request);
-        $response = $this->model->update($federated_id, $request->all());
+        $response = $this->model->update($id, $request->all());
 
         return new ProfileResource($response);
     }

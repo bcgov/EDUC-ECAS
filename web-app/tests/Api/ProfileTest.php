@@ -37,7 +37,7 @@ class ProfileTest extends BaseMigrations
 
 
     /** @test */
-    public function an_authenticated_user_can_get_another_users_profile()
+    public function an_authenticated_user_cannot_get_another_users_profile()
     {
         $this->withExceptionHandling();
 
@@ -51,24 +51,26 @@ class ProfileTest extends BaseMigrations
 
 
     /** @test */
-    public function an_unauthorized_user_cannot_get_a_profile()
+    public function the_index_method_on_the_profile_controller_is_blocked()
     {
 
         $this->withExceptionHandling();
 
-        $response = $this->post('/api/profiles', $this->validProfileData());
-        $response->assertStatus(302); // unauthorized
+        $response = $this->get('/api/profiles');
+        $response->assertStatus(405); // route not available
     }
 
 
     /** @test */
-    public function this_can_update_a_profile()
+    public function an_authenticated_user_can_update_their_own_profile()
     {
+        $this->actingAs($this->user, 'api');
+
         $new_data = $this->profile;
         $new_data->first_name = 'newValue';
         $new_data->social_insurance_number = '';
 
-        $response = $this->put('/api/profiles/' . $this->profile->id, $new_data->toArray() );
+        $response = $this->put('/api/profiles/' . $this->user->id, $new_data->toArray() );
 
         $response
             ->assertStatus(200)
@@ -77,30 +79,46 @@ class ProfileTest extends BaseMigrations
 
 
     /** @test */
-    public function this_cannot_delete_a_profile()
+    public function an_authenticated_user_cannot_update_another_users_profile()
     {
+        $this->withExceptionHandling();
+
+        $this->actingAs($this->user, 'api');
+        $other_user = factory(\App\User::class)->create();
+
         $new_data = $this->profile;
-        $new_data->first_name = 'newValue';
         $new_data->social_insurance_number = '';
 
-        $response = $this->delete('/api/profiles/' . $this->profile->id );
+        $response = $this->put('/api/profiles/' . $other_user->id, $new_data->toArray() );
+
+        $response->assertStatus(302);
+    }
+
+
+    /** @test */
+    public function an_authenticated_user_cannot_delete_their_own_profile()
+    {
+        $this->actingAs($this->user, 'api');
+        $response = $this->delete('/api/profiles/' . $this->user->id );
 
         $response->assertStatus(401);
     }
 
 
     /** @test */
-    public function create_profile()
+    public function an_authenticated_user_can_create_profile()
     {
-        $this->withExceptionHandling();
+        $this->actingAs($this->user, 'api');
 
         $response = $this->post('/api/profiles', $this->validProfileData());
         $response->assertOk();
     }
 
     /** @test */
-    public function new_profile_requires_data()
+    public function an_authenticated_user_cannot_create_a_blank_profile()
     {
+        $this->actingAs($this->user, 'api');
+
         $this->withExceptionHandling();
 
         $this->post('/api/profiles', $this->validProfileData([
@@ -124,8 +142,9 @@ class ProfileTest extends BaseMigrations
     }
 
     /** @test */
-    public function new_profile_needs_valid_email()
+    public function an_authenticated_user_cannot_create_a_profile_without_a_valid_email()
     {
+        $this->actingAs($this->user, 'api');
         $this->withExceptionHandling();
 
         $this->post('/api/profiles', $this->validProfileData(['email' => 'notanemail']))
@@ -136,9 +155,10 @@ class ProfileTest extends BaseMigrations
     }
 
     /** @test */
-    public function new_profile_can_have_a_postal_code_with_a_space()
+    public function an_authenticated_user_can_create_a_profile_with_postal_code_that_includes_a_space()
     {
         // Valid: Six alternating letters and numbers, spaces don't matter
+        $this->actingAs($this->user, 'api');
 
         $this->post('/api/profiles', $this->validProfileData(['postal_code' => 'V8V 1J6']))
             ->assertOk();
@@ -149,6 +169,7 @@ class ProfileTest extends BaseMigrations
     public function new_profile_needs_valid_postal_code()
     {
         // Valid: Six alternating letters and numbers, spaces don't matter
+        $this->actingAs($this->user, 'api');
 
         $this->post('/api/profiles', $this->validProfileData(['postal_code' => 'V8V1J6']))
             ->assertOk();
@@ -159,6 +180,7 @@ class ProfileTest extends BaseMigrations
     public function new_profile_cannot_have_a_numeric_postal_code()
     {
         // Valid: Six alternating letters and numbers, spaces don't matter
+        $this->actingAs($this->user, 'api');
 
         $this->withExceptionHandling();
 
@@ -170,6 +192,7 @@ class ProfileTest extends BaseMigrations
     /** @test */
     public function new_profile_sin_cannot_have_only_6_digits()
     {
+        $this->actingAs($this->user, 'api');
 
         $this->withExceptionHandling();
 
@@ -182,6 +205,7 @@ class ProfileTest extends BaseMigrations
     /** @test */
     public function new_profile_sin_can_be_blank()
     {
+        $this->actingAs($this->user, 'api');
 
         $data = $this->validProfileData(['social_insurance_number' => '']);
         $response = $this->post('/api/profiles', $data);
@@ -194,9 +218,11 @@ class ProfileTest extends BaseMigrations
     public function new_profile_sin_cannot_have_alpha_characters()
     {
 
+        $this->actingAs($this->user, 'api');
+
         $this->withExceptionHandling();
 
-        $data = $this->validProfileData(['social_insurance_number' => '123w4w56']);
+        $data = $this->validProfileData(['social_insurance_number' => '123w4w56a']);
         $response = $this->post('/api/profiles', $data);
         $response->assertSessionHasErrors('social_insurance_number');
 
@@ -208,6 +234,7 @@ class ProfileTest extends BaseMigrations
     {
 
         // Use: http://id-check.artega.biz/pin-ca.php to generate a fictitious SIN
+        $this->actingAs($this->user, 'api');
 
         $this->withExceptionHandling();
 
@@ -223,6 +250,8 @@ class ProfileTest extends BaseMigrations
     public function new_profile_sin_may_not_have_dashes_between_numbers()
     {
 
+        $this->actingAs($this->user, 'api');
+
         $this->withExceptionHandling();
 
         $data = $this->validProfileData(['social_insurance_number' => '783-302-649']);
@@ -236,6 +265,7 @@ class ProfileTest extends BaseMigrations
     public function new_profile_sin_may_have_blanks_between_triplets()
     {
 
+        $this->actingAs($this->user, 'api');
 
         $data = $this->validProfileData(['social_insurance_number' => '783 302 649']);
         $response = $this->post('/api/profiles', $data);
@@ -248,6 +278,7 @@ class ProfileTest extends BaseMigrations
     /** @test */
     public function new_profile_sin_cannot_be_any_9_digit_number()
     {
+        $this->actingAs($this->user, 'api');
 
         $this->withExceptionHandling();
 

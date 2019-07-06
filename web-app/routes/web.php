@@ -19,15 +19,11 @@ Route::get('/copyright', 'PageController@copyright');
 Route::get('/contact', 'PageController@contact');
 
 // App Specific Routes
-Route::get('/', 'DashboardController@login');
-Route::post('/login', 'DashboardController@postLogin');
-
-// For testing purposes it's handy to expose the id in the URL
-Route::get('/{federated_id}/Dashboard', 'DashboardController@index');
-
-
+Route::get('/', function () { return redirect('Dashboard'); });
+Route::get('/Dashboard', 'DashboardController@index')->name('Dashboard');
 
 
 Auth::routes();
 
+// TODO - route below is temporary - handy for testing
 Route::get('/home', 'HomeController@index')->name('home');

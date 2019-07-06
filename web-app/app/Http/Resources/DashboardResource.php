@@ -19,9 +19,9 @@ class DashboardResource extends JsonResource
 
         $repository             = env('DATASET') == 'Dynamics' ? 'Dynamics' : 'MockEntities\Repository';
         $sessions               = ( new CacheDecorator(App::make('App\\' . $repository .'\Session')))->all();
-        $profile                = ( new CacheDecorator(App::make('App\\' . $repository .'\Profile')))->filter(['id'=> $this->federated_id])->first();
-        $profile_credentials    = ( new CacheDecorator(App::make('App\\' . $repository .'\ProfileCredential')))->filter(['user_id'=> $this->federated_id]);
-        $assignments            = ( new CacheDecorator(App::make('App\\' . $repository .'\Assignment')))->filter(['user_id'=> $this->federated_id]);
+        $profile                = ( new CacheDecorator(App::make('App\\' . $repository .'\Profile')))->get($this->id);
+        $profile_credentials    = ( new CacheDecorator(App::make('App\\' . $repository .'\ProfileCredential')))->filter(['user_id'=> $this->id]);
+        $assignments            = ( new CacheDecorator(App::make('App\\' . $repository .'\Assignment')))->filter(['user_id'=> $this->id]);
         $districts              = ( new CacheDecorator(App::make('App\\' . $repository .'\District')))->all();
         $credentials            = ( new CacheDecorator(App::make('App\\' . $repository .'\Credential')))->all();
         $regions                = ( new CacheDecorator(App::make('App\\' . $repository .'\Region')))->all();
