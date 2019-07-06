@@ -73,7 +73,7 @@ class AssignmentController extends BaseController
         // TODO: Implement store() method.
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         // TODO: Implement delete() method.
     }
