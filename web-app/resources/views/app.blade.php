@@ -17,21 +17,6 @@
 </head>
 <body class="d-flex flex-column h-100">
     <main class="flex-shrink-0">
-
-        @if (Route::has('login'))
-            <div class="top-right links">
-                @auth
-                    <a href="{{ url('/home') }}">Home</a>
-                @else
-                    <a href="{{ route('login') }}">Login</a>
-
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}">Register</a>
-                    @endif
-                @endauth
-            </div>
-        @endif
-
         <div class="row bg-primary">
             <div class="col offset-1">
                 <img src="/logo-banner.svg" height="80px">
