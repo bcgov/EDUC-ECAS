@@ -14,7 +14,9 @@ $factory->define(Profile::class, function (Faker $faker) {
     $schools =  \App\MockEntities\School::pluck('id')->toArray();
 
     return [
-        //'id'                             => 'contactid', // TODO: also need to change it here
+
+        'user_id'                        =>  111,
+
         'preferred_first_name'           =>  $faker->firstName,
         'first_name'                     =>  $faker->firstName,
         'last_name'                      =>  $faker->lastName,

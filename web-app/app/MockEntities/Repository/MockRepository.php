@@ -64,7 +64,14 @@ abstract class MockRepository
         // we convert the Laravel object retrieved to an array so
         // it appears identical to the Dynamics object
 
-        return $this->model->find($id)->toArray();
+        $model = $this->model->find($id);
+
+        if( ! $model ) {
+            return null;
+        }
+
+        return $model->toArray();
+
 
     }
     public function create($data)

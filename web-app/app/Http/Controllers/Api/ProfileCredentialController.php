@@ -14,8 +14,7 @@ class ProfileCredentialController extends BaseController
     public function index()
     {
         // TODO - use filter() to return only those records associated with the user
-        return $this->model->all();
-        //return $this->model->filter(['user_id'=>$federated_id]);
+        return $this->model->filter(['user_id'=>Auth::id()]);
     }
 
     public function show($id)

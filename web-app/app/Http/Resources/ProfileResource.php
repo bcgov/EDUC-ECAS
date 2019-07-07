@@ -25,7 +25,7 @@ class ProfileResource extends JsonResource
 
         return [
           'id'                                     =>  $this['id'],
-          'federated_id'                           =>  $this['federated_id'],
+          'user_id'                                =>  $this['user_id'],
           'first_name'                             =>  $this['first_name'],
           'preferred_first_name'                   =>  $this['preferred_first_name'],
           'last_name'                              =>  $this['last_name'],
