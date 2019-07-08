@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Cache;
 class CacheDecorator implements iModelRepository
 {
     
-    const CACHE_DURATION = 480; // minutes
+    const CACHE_DURATION = 28800; // 8 hours in seconds
     protected $model;
 
  
