@@ -21,6 +21,7 @@ class ProfileCredentialTest extends BaseMigrations
         Factory(\App\MockEntities\Credential::class, 5)->create();
         $this->user = Factory(\App\User::class)->create();
         Factory(Profile::class)->create([
+            'user_id'       => $this->user->id,
             'school_id'     => 1,
             'district_id'   => 1
         ]);

@@ -18,10 +18,9 @@ class ProfileTest extends BaseMigrations
         $this->user = factory(\App\User::class)->create();
         factory(\App\MockEntities\School::class, 50)->create();
         factory(\App\MockEntities\District::class, 50)->create();
-        $this->profile = Factory(Profile::class)->create();
-
-
-
+        $this->profile = Factory(Profile::class)->create([
+            'user_id'   => $this->user->id
+        ]);
 
     }
 
@@ -29,7 +28,7 @@ class ProfileTest extends BaseMigrations
     public function an_authenticated_user_can_get_their_own_profile()
     {
         $this->actingAs($this->user, 'api');
-        $response = $this->get('/api/profiles/' . $this->user->id );
+        $response = $this->get('/api/profiles/' . $this->profile->id );
         $response->assertJsonFragment(['first_name' => $this->profile->first_name]);
         $response->assertJsonCount(1);
     }
@@ -70,7 +69,7 @@ class ProfileTest extends BaseMigrations
         $new_data->first_name = 'newValue';
         $new_data->social_insurance_number = '';
 
-        $response = $this->put('/api/profiles/' . $this->user->id, $new_data->toArray() );
+        $response = $this->put('/api/profiles/' . $this->profile->id, $new_data->toArray() );
 
         $response
             ->assertStatus(200)
@@ -111,6 +110,7 @@ class ProfileTest extends BaseMigrations
         $this->actingAs($this->user, 'api');
 
         $response = $this->post('/api/profiles', $this->validProfileData());
+
         $response->assertOk();
     }
 

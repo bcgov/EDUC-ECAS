@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Dynamics\ProfileCredential;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 

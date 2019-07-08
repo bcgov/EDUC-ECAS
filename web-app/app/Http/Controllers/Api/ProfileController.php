@@ -53,8 +53,10 @@ class ProfileController extends BaseController
         // TODO - ensure federated_id stored on profile record matches the user's
 
         $request = $this->validateProfileRequest($request);
+        $data = $request->all();
+        $data['user_id'] = Auth::id();
 
-        $new_model_id = $this->model->create($request->all());
+        $new_model_id = $this->model->create($data);
 
         return new ProfileResource($this->model->get($new_model_id));
     }
@@ -69,8 +71,12 @@ class ProfileController extends BaseController
             abort(302, 'unauthorized');
         }
 
-        $request = $this->validateProfileRequest($request);
-        $response = $this->model->update($id, $request->all());
+        $this->validateProfileRequest($request);
+
+
+        $data = $request->all();
+        $data['user_id'] = Auth::id();
+        $response = $this->model->update($id, $data);
 
         return new ProfileResource($response);
     }
