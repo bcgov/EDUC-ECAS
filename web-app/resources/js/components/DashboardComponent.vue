@@ -155,14 +155,6 @@
         name: "Dashboard",
         props: {
             data: {},
-            // user: {},
-            // credentials: {},
-            // user_credentials: {},
-            // sessions: {},
-            // subjects: {},
-            // schools: {},
-            // regions: {},
-            // districts: {}
         },
         data() {
             return {
@@ -215,7 +207,7 @@
 
                 var form = this
 
-                axios.post('/api/proile-credentials', {
+                axios.post('/api/profile-credentials', {
                     credential_id: form.new_credential,
                     user_id: form.getUser.id
                 })
@@ -226,7 +218,7 @@
                     })
                     .catch(function (error) {
                         form.working = false
-                        console.log('Failure!')
+                        console.log('Failure!', error)
                     });
             },
             deleteCredential(profile_credential) {

@@ -215,7 +215,7 @@
                 };
 
                 if (this.new_user) {
-                    axios.post('/api/profiles/9', data)
+                    axios.post('/api/profiles', data)
                         .then(function (response) {
                             console.log('Create Profile')
                             form.closeModal()
@@ -231,7 +231,7 @@
                         });
                 }
                 else {
-                    axios.patch('/api/profiles/9', data)
+                    axios.patch('/api/profiles', data)
                         .then(function (response) {
                             console.log('Patch Profile')
                             form.working = false
