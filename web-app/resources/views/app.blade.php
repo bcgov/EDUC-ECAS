@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>ECAS</title>
+    <title>BC Ministry of Education - ECAS</title>
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
@@ -49,7 +49,6 @@
     </footer>
 
 <script src="/js/app.js"></script>
-{{--<script src="{{ asset('js/app.js') }}"></script>--}}
 
 </body>
 </html>
