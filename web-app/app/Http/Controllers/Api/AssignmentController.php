@@ -5,40 +5,54 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Dynamics\Assignment;
+use App\Dynamics\Decorators\CacheDecorator;
 use App\Interfaces\iModelRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 
 class AssignmentController extends BaseController
 {
 
+    private $assignment_statuses;
 
+    public function __construct(iModelRepository $model)
+    {
+        parent::__construct($model);
+
+        $repository                     = env('DATASET') == 'Dynamics' ? 'Dynamics' : 'MockEntities\Repository';
+        $this->assignment_statuses      = ( new CacheDecorator(App::make('App\\' . $repository .'\AssignmentStatus')))->all();
+
+    }
 
 
     public function index()
     {
         // TODO - use filter() to return only those records associated with the user
-        return $this->model->filter(['user_id'=>$federated_id]);
+        return $this->model->filter(['user_id'=>Auth::id()]);
     }
 
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         Log::debug('STORE ASSIGNMENT');
-        Log::debug($request->all());
 
         $action = $request['action'];
 
-        $this->assignment_statuses->all();
 
+        $new_record_id = $this->model->create([
+            'user_id'    => Auth::id(),
+            'session_id' => $request['session_id']
+        ]);
+
+        Log::debug('created assignment id: ' . $new_record_id);
+
+        // TODO - Not sure why we're updating records in the store() method -- ask Dirk
+/*
         if ($action == Assignment::APPLIED_STATUS) {
 
-            $assignment_id = Assignment::create([
-                'user_id'    => $this->userId(),
-                'session_id' => $request['session_id']
-            ]);
-
-            Log::debug('created assignment id: ' . $assignment_id);
         }
         elseif ($action == Assignment::ACCEPTED_STATUS) {
             $assignment_status_key = array_search(Assignment::ACCEPTED_STATUS, array_column($this->assignment_statuses, 'name'));
@@ -50,32 +64,25 @@ class AssignmentController extends BaseController
                 'status' => $this->assignment_statuses[$assignment_status_key]['id'],
                 'state'  => Assignment::INACTIVE_STATE
             ]);
-        }
+        }*/
 
-        return json_encode([
-            'session_id' => $request['session_id'],
-            'status'     => $action
-        ]);
+        return Response::json($this->model->get($new_record_id), 200);
     }
 
     public function show($id)
     {
-        // TODO: Implement show() method.
+        abort(405, 'method not allowed');
     }
 
     public function update($id, Request $request)
     {
-        // TODO: Implement update() method.
+        abort(405, 'method not allowed');
     }
 
-    public function store(Request $request)
-    {
-        // TODO: Implement store() method.
-    }
 
     public function destroy($id)
     {
-        // TODO: Implement delete() method.
+        abort(405, 'method not allowed');
     }
 
 

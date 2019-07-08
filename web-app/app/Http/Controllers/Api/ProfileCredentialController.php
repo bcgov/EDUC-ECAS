@@ -7,6 +7,7 @@ use App\Dynamics\ProfileCredential;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 
 
 class ProfileCredentialController extends BaseController
@@ -20,19 +21,13 @@ class ProfileCredentialController extends BaseController
 
     public function show($id)
     {
-        // TODO: Implement show() method.
+        abort(405, 'method not allowed');
     }
 
     public function update($id, Request $request)
     {
-        // TODO: Implement update() method.
+        abort(405, 'method not allowed');
     }
-
-    public function create(Request $request)
-    {
-        dd('this method has been replaced with store()');
-    }
-
 
     /*
  * Attach a credential to a User
@@ -41,31 +36,36 @@ class ProfileCredentialController extends BaseController
     {
         Log::debug('STORE CREDENTIAL');
 
-
         $this->validate($request, [
             'credential_id' => 'required'
         ]);
 
-        $user = $this->user();
 
-        $profile_credential_id = ( new ProfileCredential())->create([
-            'user_id'       => $user['id'],
-            'credential_id' => $request['credential_id']
+        $profile_credential_id = $this->model->create([
+            'user_id'       => Auth::id(),
+            'credential_id' => $request['credential_id'],
+            'verified'      => false
         ]);
 
-        return json_encode([
-            'id'            => $profile_credential_id,
-            'credential_id' => $request['credential_id']
-        ]);
+        $new_record = $this->model->get($profile_credential_id);
+
+        return Response::json($new_record, 200);
     }
 
     public function destroy($id)
     {
         Log::debug('DELETE CREDENTIAL');
 
-        ( new ProfileCredential())->delete($id);
+        // check: does the user own this record?
+        $record = $this->model->get($id);
 
-        return true;  // TODO - return appropriate response
+        if($record['user_id'] <> Auth::id()) {
+            abort(403, 'Unauthorized');
+        }
+
+        $this->model->delete($id);
+
+        return Response::json(['message' => 'success'], 204);
     }
 
 

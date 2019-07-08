@@ -22,13 +22,13 @@ class CreateAssignmentsTable extends Migration
             $table->unsignedBigInteger('user_id')->index();
             $table->foreign('user_id')->references('id')->on('profiles');
 
-            $table->unsignedBigInteger('role_id')->index();
+            $table->unsignedBigInteger('role_id')->index()->nullable();
             $table->foreign('role_id')->references('id')->on('roles');
 
-            $table->unsignedBigInteger('contract_stage')->index();
+            $table->unsignedBigInteger('contract_stage')->index()->nullable();
             $table->foreign('contract_stage')->references('id')->on('contract_stages');
 
-            $table->unsignedBigInteger('status')->index();
+            $table->unsignedBigInteger('status')->index()->nullable();
             $table->foreign('status')->references('id')->on('assignment_statuses');
 
             $table->unsignedSmallInteger('state')->default(0);
