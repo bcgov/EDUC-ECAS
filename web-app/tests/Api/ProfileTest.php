@@ -48,6 +48,30 @@ class ProfileTest extends BaseMigrations
     }
 
 
+    /** @test */
+    public function a_valid_SIN_number_is_never_echoed_back_to_users()
+    {
+
+        $this->actingAs($this->user, 'api');
+        $response = $this->get('/api/profiles/' . $this->user->id );
+        $response->assertJsonFragment(['social_insurance_number' => '[RECEIVED]']);
+
+    }
+
+
+    /** @test */
+    public function an_empty_SIN_number_is_not_shown_as_received()
+    {
+
+        $this->actingAs($this->user, 'api');
+        $this->profile->social_insurance_number = '';
+        $this->profile->save();
+        $response = $this->get('/api/profiles/' . $this->user->id );
+
+        $response->assertJsonFragment(['social_insurance_number' => '']);
+
+    }
+
 
     /** @test */
     public function the_index_method_on_the_profile_controller_is_blocked()

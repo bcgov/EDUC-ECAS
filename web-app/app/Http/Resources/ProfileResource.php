@@ -22,6 +22,11 @@ class ProfileResource extends JsonResource
         $districts  = ( new CacheDecorator(App::make('App\\' . $repository .'\District')))->all();
         $schools    = ( new CacheDecorator(App::make('App\\' . $repository .'\School')))->all();
 
+        if(strlen($this['social_insurance_number']) == 9) {
+            $maskedSIN  = substr_replace($this['social_insurance_number'],'[RECEIVED]',0,9);
+        } else {
+            $maskedSIN = '';
+        }
 
         return [
           'id'                                     =>  $this['id'],
@@ -31,7 +36,7 @@ class ProfileResource extends JsonResource
           'last_name'                              =>  $this['last_name'],
           'email'                                  =>  $this['email'],
           'phone'                                  =>  $this['phone'],
-          'social_insurance_number'                =>  $this['social_insurance_number'],
+          'social_insurance_number'                =>  $maskedSIN,
           'address_1'                              =>  $this['address_1'],
           'address_2'                              =>  $this['address_2'],
           'city'                                   =>  $this['city'],

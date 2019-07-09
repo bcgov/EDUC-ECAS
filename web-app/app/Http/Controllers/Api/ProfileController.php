@@ -14,15 +14,6 @@ use Illuminate\Support\Facades\Auth;
 class ProfileController extends BaseController
 {
 
-    protected $model;
-
-    public function __construct(iModelRepository $model)
-    {
-        $this->model            = $model;
-
-    }
-
-
 
     public function index()
     {
@@ -73,7 +64,7 @@ class ProfileController extends BaseController
 
         $this->validateProfileRequest($request);
 
-
+        // TODO - Replace $request->all() below
         $data = $request->all();
         $data['user_id'] = Auth::id();
         $response = $this->model->update($id, $data);
