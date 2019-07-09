@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         // Standalone Models with no relationship to other models - must be run first
         factory(\App\MockEntities\School::class, 50)->create();
         factory(\App\MockEntities\District::class, 50)->create();
-        factory(\App\MockEntities\Credential::class, 5)->create();
+        factory(\App\MockEntities\Credential::class, 15)->create();
         $this->call(RoleSeeder::class);
         $this->call(AssignmentStatusSeeder::class);
         $this->call(ContractStageSeeder::class);
@@ -35,11 +35,14 @@ class DatabaseSeeder extends Seeder
             $user->profile()->save(factory(\App\MockEntities\Profile::class)->make([
                 'user_id'    => $user->id
             ]));
+            factory(\App\MockEntities\Assignment::class, 3)->create([
+                'user_id'    => $user->id
+            ]);
+            factory(\App\MockEntities\ProfileCredential::class, 2)->create([
+                'user_id'    => $user->id
+            ]);
         });
 
-
-        factory(\App\MockEntities\Assignment::class, 25)->create();
-        factory(\App\MockEntities\ProfileCredential::class, 50)->create();
 
     }
 }

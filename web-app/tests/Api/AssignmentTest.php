@@ -17,14 +17,10 @@ class AssignmentTest extends BaseMigrations
 
         parent::setUp();
         $this->user = Factory(\App\User::class)->create();
-        Factory(\App\MockEntities\ContractStage::class, 5)->create();
-        Factory(\App\MockEntities\AssignmentStatus::class, 5)->create();
         Factory(\App\MockEntities\Session::class, 5)->create([
             'type_id'       => 1,
             'activity_id'   => 2,
         ]);
-        Factory(\App\MockEntities\Role::class, 5)->create();
-
         $this->assignments = Factory(Assignment::class,2)->create([
             'user_id'       => $this->user->id
         ]);

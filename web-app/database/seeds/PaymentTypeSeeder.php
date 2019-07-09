@@ -11,7 +11,7 @@ class PaymentTypeSeeder extends Seeder
      */
     public function run()
     {
-        foreach (config('seedData.payment_types') as $type)
+        foreach  ( \App\MockEntities\SeedData::$payment_types as $type)
         {
 
             $newStatus = new \App\MockEntities\Payment();

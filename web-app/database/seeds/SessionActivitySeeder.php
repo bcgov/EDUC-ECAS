@@ -11,7 +11,7 @@ class SessionActivitySeeder extends Seeder
      */
     public function run()
     {
-        foreach (config('seedData.session_activities') as $activity)
+        foreach ( \App\MockEntities\SeedData::$session_activities as $activity)
         {
 
             $newStatus = new \App\MockEntities\SessionActivity();

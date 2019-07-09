@@ -7,6 +7,6 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\MockEntities\ContractStage::class, function (Faker $faker) {
     return [
-        'name'      => $faker->lexify('???????'),
+        'name'      => $faker->randomElement(\App\MockEntities\SeedData::$contract_statuses),
     ];
 });

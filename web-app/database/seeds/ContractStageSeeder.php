@@ -11,7 +11,7 @@ class ContractStageSeeder extends Seeder
      */
     public function run()
     {
-        foreach (config('seedData.contract_statuses') as $status)
+        foreach ( \App\MockEntities\SeedData::$contract_statuses  as $status)
         {
 
             $newStatus = new \App\MockEntities\ContractStage();

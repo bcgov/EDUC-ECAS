@@ -6,8 +6,8 @@ use App\MockEntities\SessionType;
 use Faker\Generator as Faker;
 
 $factory->define(SessionType::class, function (Faker $faker) {
-    return [
-        'name'      => $faker->lexify("????????"),
-        'code'      => $faker->lexify('??')
-    ];
+
+
+
+    return $faker->randomElement(\App\MockEntities\SeedData::$session_types);
 });

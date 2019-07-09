@@ -11,7 +11,7 @@ class RegionSeeder extends Seeder
      */
     public function run()
     {
-        foreach (config('seedData.regions') as $region)
+        foreach ( \App\MockEntities\SeedData::$regions as $region)
         {
 
             $newStatus = new \App\MockEntities\Region();

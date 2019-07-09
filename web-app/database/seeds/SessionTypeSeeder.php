@@ -11,7 +11,7 @@ class SessionTypeSeeder extends Seeder
      */
     public function run()
     {
-        foreach (config('seedData.session_types') as $type)
+        foreach ( \App\MockEntities\SeedData::$session_types as $type)
         {
 
             $newStatus = new \App\MockEntities\SessionType();

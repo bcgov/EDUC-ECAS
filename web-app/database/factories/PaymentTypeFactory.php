@@ -7,6 +7,6 @@ use Faker\Generator as Faker;
 
 $factory->define(Payment::class, function (Faker $faker) {
     return [
-        'name'      => $faker->lexify("????????"),
+        'name'      => $faker->randomElement(\App\MockEntities\SeedData::$payment_types)
     ];
 });

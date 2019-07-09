@@ -11,7 +11,7 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        foreach (config('seedData.roles') as $role)
+        foreach (\App\MockEntities\SeedData::$roles as $role)
         {
 
             $newStatus = new \App\MockEntities\Role();

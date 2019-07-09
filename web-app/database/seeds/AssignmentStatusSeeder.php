@@ -12,7 +12,7 @@ class AssignmentStatusSeeder extends Seeder
      */
     public function run()
     {
-        foreach (config('seedData.assignment_statuses') as $status)
+        foreach ( \App\MockEntities\SeedData::$assignment_statuses as $status)
         {
 
             $newStatus = new \App\MockEntities\AssignmentStatus();
