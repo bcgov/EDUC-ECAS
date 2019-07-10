@@ -20,12 +20,19 @@ Route::get('/contact', 'PageController@contact');
 
 // App Specific Routes
 
-Route::get('/', 'DashboardController@login');
+Route::get('/apitest', 'DashboardController@apitest');
+
+Route::get('/', 'DashboardController@index');
 Route::post('/login', 'DashboardController@postLogin');
 Route::get('/Profile', 'DashboardController@profile');
 Route::get('/Dashboard', 'DashboardController@index');
 Route::post('/Dashboard/credential', 'DashboardController@storeCredential');
+Route::post('/Dashboard/credential/delete', 'DashboardController@deleteCredential');
 Route::post('/Dashboard/profile', 'DashboardController@storeProfile');
+Route::patch('/Dashboard/profile', 'DashboardController@updateProfile');
 Route::post('/Dashboard/post', 'DashboardController@post');
+Route::post('/Dashboard/session', 'DashboardController@storeAssignment');
 
 Route::get('/Expenses/{session_id}', 'ExpenseController@index');
+
+Route::get('/connect', 'DashboardController@dynamics');

@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>ECAS</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
@@ -34,8 +34,13 @@
 
         <div class="row bg-primary">
             <div class="col offset-1">
-                <img src="{{ asset('logo-banner.svg') }}" height="80px">
+                <img src="/logo-banner.svg" height="80px">
             </div>
+            <div class="col text-right text-light">
+                <h1>Ministry of Education</h1>
+                <p>Electronic Contract Administration System (ECAS)</p>
+            </div>
+            <div class="col-1"></div>
         </div>
         <div class="container">
             <div class="row">
@@ -58,7 +63,8 @@
         </div>
     </footer>
 
-<script src="{{ asset('js/app.js') }}"></script>
+<script src="/js/app.js"></script>
+{{--<script src="{{ asset('js/app.js') }}"></script>--}}
 
 </body>
 </html>
