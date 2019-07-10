@@ -49,9 +49,9 @@ class DashboardController extends Controller
         // Load the specific User Information
 
         // TODO: Temporarily hardcoding a specific user for the demo. Remove!
-        $temporary_user_id = '8c266dae-5d7e-e911-a990-000d3af438b6';
+//        $temporary_user_id = '8c266dae-5d7e-e911-a990-000d3af438b6';
 
-        $user = $this->user($temporary_user_id);
+        $user = $this->user();
 
         $user = $this->loadDistrictAndSchoolNames($user);
 
