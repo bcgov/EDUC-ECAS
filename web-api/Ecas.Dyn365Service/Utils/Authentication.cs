@@ -46,19 +46,34 @@ namespace Ecas.Dyn365Service.Utils
 
         private HttpClient getOnPremHttpClient(string userName, string password, string domainName, string webAPIBaseAddress)
         {
-            var handler = new HttpClientHandler();
-            handler.Credentials = new NetworkCredential(userName, password, domainName);
-            //TODO: Certificate validation workaround for self-issued certificates
-            handler.ClientCertificateOptions = ClientCertificateOption.Manual;
-            handler.ServerCertificateCustomValidationCallback =
-                (httpRequestMessage, cert, cetChain, policyErrors) =>
-                {
-                    return true;
-                };
 
-            HttpClient client = new HttpClient(handler);
+            var client = new HttpClient(new HttpClientHandler()
+            {
+                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => { return true; }
+            });
+
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(domainName + "\\" + userName + ":" + password);
+            string base64 = System.Convert.ToBase64String(bytes);
             client.BaseAddress = new Uri(webAPIBaseAddress);
-            client.Timeout = new TimeSpan(0, 2, 0);
+            client.Timeout = new TimeSpan(1, 0, 0); // 1 hour timeout
+            client.DefaultRequestHeaders.Add("Authorization", "Basic " + base64);
+            client.DefaultRequestHeaders.Add("OData-MaxVersion", "4.0");
+            client.DefaultRequestHeaders.Add("OData-Version", "4.0");
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+
+            //var handler = new HttpClientHandler();
+            //handler.Credentials = new NetworkCredential(userName, password, domainName);
+            //handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+            //handler.ServerCertificateCustomValidationCallback =
+            //    (httpRequestMessage, cert, cetChain, policyErrors) =>
+            //    {
+            //        return true;
+            //    };
+
+            //HttpClient client = new HttpClient(handler);
+            //client.BaseAddress = new Uri(webAPIBaseAddress);
+            //client.Timeout = new TimeSpan(0, 2, 0);
             return client;
         }
 
