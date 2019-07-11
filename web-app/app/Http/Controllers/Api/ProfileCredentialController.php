@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Dynamics\ProfileCredential;
+use App\Http\Resources\ProfileCredentialResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -49,7 +50,7 @@ class ProfileCredentialController extends BaseController
 
         $new_record = $this->model->get($profile_credential_id);
 
-        return Response::json($new_record, 200);
+        return Response::json(new ProfileCredentialResource($new_record), 200);
     }
 
     public function destroy($id)

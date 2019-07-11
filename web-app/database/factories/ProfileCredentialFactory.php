@@ -13,6 +13,6 @@ $factory->define(ProfileCredential::class, function (Faker $faker) {
     return [
         'user_id'       => $faker->randomElement($users),
         'credential_id' => $faker->randomElement($credentials),
-        'verified'      => $faker->boolean,
+        'verified'      => $faker->randomElement(['Yes','No','Unverified']),
     ];
 });
