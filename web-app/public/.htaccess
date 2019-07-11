@@ -6,5 +6,5 @@ RewriteRule ^(.*)$ index.php/$1 [L]
 
 AuthType Basic
 AuthName "Restricted access"
-AuthUserFile ../.htpasswd
+AuthUserFile /opt/app-root/src/.htpasswd
 require valid-user
