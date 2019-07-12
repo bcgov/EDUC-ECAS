@@ -22,7 +22,7 @@ class ProfileCredential extends DynamicsRepository implements iModelRepository
         'id'            => 'educ_credentialid',
         'user_id'       => '_educ_contact_value',
         'credential_id' => '_educ_credential_value',
-        'verified'      => 'educ_verified'
+        'verified'      => 'educ_verifiedcredential'
     ];
 
     public static $links = [

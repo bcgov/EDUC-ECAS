@@ -3,6 +3,7 @@
 namespace Tests\Api;
 
 
+use App\Http\Resources\SimpleResource;
 use App\MockEntities\Profile;
 use App\MockEntities\ProfileCredential;
 use Tests\BaseMigrations;
@@ -24,7 +25,9 @@ class ProfileCredentialTest extends BaseMigrations
             'school_id'     => 1,
             'district_id'   => 1
         ]);
-        $this->profile_credentials = Factory(ProfileCredential::class,2)->create();
+        $this->profile_credentials = Factory(ProfileCredential::class,2)->create([
+            'verified'      => "Yes"
+        ]);
 
 
     }
@@ -42,7 +45,22 @@ class ProfileCredentialTest extends BaseMigrations
 
 
     /** @test */
-    public function an_unauthenticated_user_cannot_get_all_profile_credentials()
+    public function a_user_does_not_receive_credentials_verified_as_no()
+    {
+        $this->actingAs($this->user, 'api');
+
+        $no_credentials = Factory(ProfileCredential::class,2)->create([
+            'verified'      => "No"
+        ]);
+
+        $response = $this->get('/api/profile-credentials' );
+
+        $response->assertJsonCount(2);
+    }
+
+
+    /** @test */
+    public function an_unauthenticated_user_cannot_get_any_profile_credentials()
     {
         $this->withExceptionHandling();
 
@@ -83,15 +101,51 @@ class ProfileCredentialTest extends BaseMigrations
     {
         $this->actingAs($this->user, 'api');
 
+        $credential = Factory(\App\MockEntities\Credential::class)->create();
+
         $response = $this->post('/api/profile-credentials', [
-            'credential_id'       => 2
+            'credential_id'       => $credential->id
         ] );
 
         $response
             ->assertJsonFragment(['user_id'         => (string) $this->user->id])
-            ->assertJsonFragment(['credential_id'   => '2']);
+            ->assertJsonFragment(['credential'      => new SimpleResource($credential)]);
     }
 
+
+    /** @test */
+    public function a_user_can_create_two_identical_profile_credentials()
+    {
+
+        $this->actingAs($this->user, 'api');
+
+        $this->post('/api/profile-credentials', [
+            'credential_id'       => 7
+        ] );
+
+        $response = $this->post('/api/profile-credentials', [
+            'credential_id'       => 7
+        ] );
+
+        $response->assertStatus(200 ); // okay
+    }
+
+
+    /** @test */
+    public function a_user_cannot_create_a_profile_credential_with_a_verified_status()
+    {
+
+        $this->actingAs($this->user, 'api');
+
+        $response = $this->post('/api/profile-credentials', [
+            'credential_id'       => 7,
+            'verified'            => "Yes"  // using "Yes" here as that's how Dynamics records it
+        ] );
+
+        $response
+            ->assertJsonFragment(['user_id'         => (string) $this->user->id])
+            ->assertJsonFragment(['verified'        => false]);
+    }
 
 
 

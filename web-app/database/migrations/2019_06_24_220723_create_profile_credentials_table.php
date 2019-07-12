@@ -22,7 +22,7 @@ class CreateProfileCredentialsTable extends Migration
             $table->unsignedBigInteger('credential_id')->index();
             $table->foreign('credential_id')->references('id')->on('credentials');
 
-            $table->boolean('verified');
+            $table->string('verified');
 
 
             $table->timestamps();

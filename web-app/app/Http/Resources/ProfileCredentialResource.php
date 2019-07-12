@@ -20,11 +20,14 @@ class ProfileCredentialResource extends JsonResource
         $repository             = env('DATASET') == 'Dynamics' ? 'Dynamics' : 'MockEntities\Repository';
         $credentials            = ( new CacheDecorator(App::make('App\\' . $repository .'\Credential')))->all();
 
+        // Dynamics reports credentials as one of: "Yes", "No" or "Unverified"
+        // This application transforms the verification field into a Boolean
+
         return [
             'id'            => $this['id'],
             'user_id'       => $this['user_id'],
             'credential'    => new SimpleResource($credentials->firstWhere('id', $this['credential_id'])),
-            'verified'      => (Boolean) $this['verified']
+            'verified'      => ($this['verified'] == "Yes") ? TRUE : FALSE,
         ];
     }
 }
