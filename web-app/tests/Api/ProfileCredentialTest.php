@@ -25,7 +25,9 @@ class ProfileCredentialTest extends BaseMigrations
             'school_id'     => 1,
             'district_id'   => 1
         ]);
-        $this->profile_credentials = Factory(ProfileCredential::class,2)->create();
+        $this->profile_credentials = Factory(ProfileCredential::class,2)->create([
+            'verified'      => "Yes"
+        ]);
 
 
     }
@@ -39,6 +41,21 @@ class ProfileCredentialTest extends BaseMigrations
         $response
             ->assertJsonFragment(['user_id' => (string) $this->user->id])
             ->assertJsonCount(2);
+    }
+
+
+    /** @test */
+    public function a_user_does_not_receive_credentials_verified_as_no()
+    {
+        $this->actingAs($this->user, 'api');
+
+        $no_credentials = Factory(ProfileCredential::class,2)->create([
+            'verified'      => "No"
+        ]);
+
+        $response = $this->get('/api/profile-credentials' );
+
+        $response->assertJsonCount(2);
     }
 
 
@@ -97,9 +114,8 @@ class ProfileCredentialTest extends BaseMigrations
 
 
     /** @test */
-    public function a_user_cannot_create_two_identical_profile_credentials()
+    public function a_user_can_create_two_identical_profile_credentials()
     {
-        $this->withExceptionHandling();
 
         $this->actingAs($this->user, 'api');
 
@@ -111,7 +127,7 @@ class ProfileCredentialTest extends BaseMigrations
             'credential_id'       => 7
         ] );
 
-        $response->assertStatus(403 ); // unauthorized
+        $response->assertStatus(200 ); // okay
     }
 
 

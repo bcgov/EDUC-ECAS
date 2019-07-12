@@ -16,8 +16,14 @@ class ProfileCredentialController extends BaseController
 
     public function index()
     {
-        // TODO - use filter() to return only those records associated with the user
-        return $this->model->filter(['user_id'=>Auth::id()]);
+        $credentials =  $this->model->filter(['user_id'=>Auth::id()]);
+
+        $filtered = $credentials->filter( function ($credential) {
+            return $credential['verified'] <> "No";
+        });
+
+        return $filtered;
+
     }
 
     public function show($id)
@@ -45,7 +51,7 @@ class ProfileCredentialController extends BaseController
         $profile_credential_id = $this->model->create([
             'user_id'       => Auth::id(),
             'credential_id' => $request['credential_id'],
-            'verified'      => false
+            'verified'      => 'Unverified'
         ]);
 
         $new_record = $this->model->get($profile_credential_id);
