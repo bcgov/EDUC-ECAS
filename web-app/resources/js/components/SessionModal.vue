@@ -82,7 +82,7 @@
     import { mapGetters } from 'vuex'
 
     export default {
-        name: "Session",
+        name: "SessionModal",
         props: {
             session: {}
         },
@@ -106,13 +106,10 @@
             closeModal() {
                 this.$modal.hide('session_form');
             },
-            editProfile() {
-                this.closeModal()
-                this.$modal.show('profile_form');
-            },
+
 
             isStatus: function (session, status) {
-                return session.status == status
+                return session.status === status
             },
             acceptInvitation(session, accept) {
 

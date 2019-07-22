@@ -145,7 +145,7 @@
     import FormError from './FormError.vue';
 
     export default {
-        name: "Profile",
+        name: "ProfileModal",
         props: {
             user: {},
             schools: {},

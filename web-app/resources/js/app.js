@@ -29,9 +29,13 @@ import VModal from 'vue-js-modal'
 Vue.use(Vuex);
 Vue.use(VModal, { dynamic: true, injectModalsContainer: true });
 
-Vue.component('dashboard'               , require('./components/DashboardComponent.vue').default);
-Vue.component('session'                 , require('./components/Session.vue').default);
-Vue.component('profile'                 , require('./components/Profile.vue').default);
+Vue.component('ecas-logout'             , require('./components/EcasLogout.vue').default);
+Vue.component('ecas-profile'            , require('./components/EcasProfile.vue').default);
+Vue.component('profile-credentials'     , require('./components/ProfileCredentials.vue').default);
+Vue.component('marking-sessions'        , require('./components/MarkingSessions.vue').default);
+
+Vue.component('session'                 , require('./components/SessionModal.vue').default);
+Vue.component('profile'                 , require('./components/ProfileModal.vue').default);
 
 // A global event handler, just a convenient wrapper for Vue's event system
 window.Event = new class {
