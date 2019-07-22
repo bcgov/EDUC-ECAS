@@ -12,17 +12,17 @@
 */
 
 // BC Government standard Footer
-Route::get('/disclaimer', 'PageController@disclaimer');
-Route::get('/privacy', 'PageController@privacy');
-Route::get('/accessibility', 'PageController@accessibility');
-Route::get('/copyright', 'PageController@copyright');
-Route::get('/contact', 'PageController@contact');
+Route::get('/disclaimer',       'PageController@disclaimer');
+Route::get('/privacy',          'PageController@privacy');
+Route::get('/accessibility',    'PageController@accessibility');
+Route::get('/copyright',        'PageController@copyright');
+Route::get('/contact',          'PageController@contact');
 
 // App Specific Routes
 Route::get('/', function () { return redirect('Dashboard'); });
 Route::get('/Dashboard', 'DashboardController@index')->name('Dashboard');
 
-
+// TODO - Remove before flight - will be replaced by Keycloak
 Auth::routes();
 
 // TODO - route below is temporary - handy for testing

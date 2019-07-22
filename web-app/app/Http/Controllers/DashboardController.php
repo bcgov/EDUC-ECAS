@@ -40,8 +40,6 @@ class DashboardController extends Controller
 
         $user = Auth::user();
 
-        // TODO - do not pass entire user model to view (sanitize first)
-
         return view('dashboard', ['dashboard' => new DashboardResource($user)]);
 
     }
