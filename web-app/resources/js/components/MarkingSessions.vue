@@ -6,29 +6,25 @@
                 <h2 class="float-left">Marking Sessions</h2>
                 <ul class="nav nav-tabs justify-content-end pt-2">
                     <li class="nav-item mb-0">
-                        <a href="#"
-                           @click="filter = ''"
+                        <a @click="filter = ''"
                            class="nav-link"
                            :class="{ 'active': filter === '' }">All
                             <span class="badge badge-pill badge-primary">{{ getSessions.length }}</span></a>
                     </li>
                     <li class="nav-item mb-0">
-                        <a href="#"
-                           @click="filter = 'Applied'"
+                        <a @click="filter = 'Applied'"
                            class="nav-link"
                            :class="{ 'active': filter === 'Applied' }">Applied
                             <span class="badge badge-pill badge-primary">{{ countStatus('Applied') }}</span></a>
                     </li>
                     <li class="nav-item mb-0">
-                        <a href="#"
-                           @click="filter = 'Invited'"
+                        <a @click="filter = 'Invited'"
                            class="nav-link"
                            :class="{ 'active': filter === 'Invited' }">Invited
                             <span class="badge badge-pill badge-primary">{{ countStatus('Invited') }}</span></a>
                     </li>
                     <li class="nav-item mb-0">
-                        <a href="#"
-                           @click="filter = 'Confirmed'"
+                        <a @click="filter = 'Confirmed'"
                            class="nav-link"
                            :class="{ 'active': filter === 'Confirmed' }">Going
                             <span class="badge badge-pill badge-primary">{{ countStatus('Confirmed') }}</span></a>
@@ -77,9 +73,6 @@
         },
         data() {
             return {
-                credentials_applied: [...this.data.user_credentials],
-                credentials_available: [...this.data.credentials],
-                new_credential: 0,
                 filter: '',
                 current_session: {},
                 new_user: false,
@@ -116,6 +109,10 @@
             }
         },
         methods: {
+
+            sessionRow(status) {
+                return 'Session' + status;
+            },
 
             countStatus(status) {
                 // var status
