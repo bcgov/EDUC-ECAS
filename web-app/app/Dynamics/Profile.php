@@ -15,12 +15,13 @@ class Profile extends DynamicsRepository implements iModelRepository
 {
     public static $table = 'contacts';
 
-    public static $primary_key = 'educ_federatedid';
+    //public static $primary_key = 'educ_federatedid';
+    public static $primary_key = 'contactid';
 
     public static $data_bind = 'educ_Contact';
 
     public static $fields = [
-        'id'                             => 'educ_federatedid',
+        'id'                             => 'contactid',
         'preferred_first_name'           => 'educ_preferredfirstname',
         'first_name'                     => 'firstname',
         'last_name'                      => 'lastname',
