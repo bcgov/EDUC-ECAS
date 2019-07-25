@@ -44,4 +44,15 @@ return [
         ],
     ],
 
+    'keycloak' => [
+        'authServerUrl'         => env('KEYCLOAK_AUTHSERVERURL'),
+        'realm'                 => env('KEYCLOAK_REALM'),
+        'clientId'              => env('KEYCLOAK_CLIENTID'),
+        'clientSecret'          => env('KEYCLOAK_CLIENTSECRET'),
+        'redirectUri'           => env('KEYCLOAK_REDIRECTURI'),
+        'encryptionAlgorithm'   => env('KEYCLOAK_ENCRYPTIONALGORITHM'),
+        'encryptionKeyPath'     => env('KEYCLOAK_ENCRYPTIONKEYPATH'),
+        'encryptionKey'         => env('KEYCLOAK_ENCRYPTIONKEY'),
+    ]
+
 ];

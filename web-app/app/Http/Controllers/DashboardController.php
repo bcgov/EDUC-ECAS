@@ -34,10 +34,6 @@ class DashboardController extends Controller
     public function index()
     {
 
-
-        // TODO - Remove before flight  // DEBUG
-        Auth::loginUsingId(10, true);
-
         $user = Auth::user();
 
         return view('dashboard', ['dashboard' => new DashboardResource($user)]);

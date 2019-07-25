@@ -18,12 +18,13 @@ Route::get('/accessibility',    'PageController@accessibility');
 Route::get('/copyright',        'PageController@copyright');
 Route::get('/contact',          'PageController@contact');
 
+
+// Keycloak routes
+Route::get('/redirect',         'KeycloakAuthController@redirect')->name('login');
+Route::get('/logout',           'KeycloakAuthController@logout');
+Route::get('/callback',         'KeycloakAuthController@callback');
+
 // App Specific Routes
-Route::get('/', function () { return redirect('Dashboard'); });
-Route::get('/Dashboard', 'DashboardController@index')->name('Dashboard');
+Route::get('/'                  , function () { return redirect('Dashboard'); });
+Route::get('/Dashboard'         , 'DashboardController@index')->name('Dashboard');
 
-// TODO - Remove before flight - will be replaced by Keycloak
-Auth::routes();
-
-// TODO - route below is temporary - handy for testing
-Route::get('/home', 'HomeController@index')->name('home');
