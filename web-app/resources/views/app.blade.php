@@ -38,12 +38,12 @@
     <footer class="footer mt-auto">
         <div class="container">
             <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/disclaimer">Disclaimer</a></li>
-                <li><a href="/privacy">Privacy</a></li>
-                <li><a href="/accessibility">Accessibility</a></li>
-                <li><a href="/copyright">Copyright</a></li>
-                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="https://www2.gov.bc.ca/">Home</a></li>
+                <li><a href="https://www2.gov.bc.ca/gov/content/home/disclaimer">Disclaimer</a></li>
+                <li><a href="https://www2.gov.bc.ca/gov/content/home/privacy">Privacy</a></li>
+                <li><a href="https://www2.gov.bc.ca/gov/content/home/accessibility">Accessibility</a></li>
+                <li><a href="https://www2.gov.bc.ca/gov/content/home/copyright">Copyright</a></li>
+                <li><a href="https://www2.gov.bc.ca/gov/content/home/contact-us">Contact Us</a></li>
             </ul>
         </div>
     </footer>
