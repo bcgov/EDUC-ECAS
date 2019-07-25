@@ -41,23 +41,3 @@ class DashboardResource extends JsonResource
         ];
     }
 }
-
-/*
- *
- * // TODO - move the instantiation code below to RepositoryServiceProvider
-
-
-        $user                   = App::make('App\\' . $repository .'\Profile');
-        $user_credentials       = App::make('App\\' . $repository .'\ProfileCredential');
-        $assignments            = App::make('App\\' . $repository .'\Assignment');
-
-        return $this->loadDistrictAndSchoolNames($user);
-
-        return view('dashboard', [
-            'user'                   => (new CacheDecorator($user))->get($temporary_user_id),
-            'user_credentials'       => (new CacheDecorator($user_credentials))->filter(['id' => $temporary_user_id]),
-            'assignments'            => $assignments->filter(['id' => $temporary_user_id]),
-
-        ]);
- *
- */
