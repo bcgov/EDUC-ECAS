@@ -3,52 +3,58 @@
 namespace App\Http\Controllers\Api;
 
 
-
-use App\Dynamics\Assignment;
 use App\Dynamics\Decorators\CacheDecorator;
 use App\Interfaces\iModelRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
 class AssignmentController extends BaseController
 {
 
+    private $profile;
     private $assignment_statuses;
 
     public function __construct(iModelRepository $model)
     {
+
         parent::__construct($model);
 
         $repository                     = env('DATASET') == 'Dynamics' ? 'Dynamics' : 'MockEntities\Repository';
         $this->assignment_statuses      = ( new CacheDecorator(App::make('App\\' . $repository .'\AssignmentStatus')))->all();
+        $this->profile                  = ( new CacheDecorator(App::make('App\\' . $repository .'\Profile')));
 
     }
 
 
-    public function index()
+    public function index($profile_id)
     {
-        // TODO - use filter() to return only those records associated with the user
-        return $this->model->filter(['user_id'=>Auth::id()]);
+
+        $profile = $this->profile->get($profile_id);
+
+        if($this->user->id <> $profile['federated_id']) {
+            abort(401, 'unauthorized');
+        }
+
+        return $this->model->filter(['contact_id' => $profile['id']]);
     }
 
 
-    public function store(Request $request)
+    public function store(Request $request, $profile_id)
     {
-        Log::debug('STORE ASSIGNMENT');
+        $profile = $this->profile->get($profile_id);
 
-        $action = $request['action'];
-
+        if($this->user->id <> $profile['federated_id']) {
+            abort(401, 'unauthorized');
+        }
 
         $new_record_id = $this->model->create([
-            'user_id'    => Auth::id(),
+            'contact_id' => $profile['id'],
             'session_id' => $request['session_id']
         ]);
 
-        Log::debug('created assignment id: ' . $new_record_id);
 
+        // TODO - Remove before flight
         // TODO - Not sure why we're updating records in the store() method -- ask Dirk
 /*
         if ($action == Assignment::APPLIED_STATUS) {

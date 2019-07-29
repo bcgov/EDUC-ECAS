@@ -31,7 +31,8 @@ class ProfileController extends BaseController
             abort(302, 'unauthorized');
         }
 
-        $profile = $this->model->filter(['id'=> $id])->first();
+        $profile = $this->model->filter(['federated_id'=> $id])->first();
+
         return new ProfileResource($profile);
     }
 
@@ -41,11 +42,10 @@ class ProfileController extends BaseController
  */
     public function store(Request $request)
     {
-        // TODO - ensure federated_id stored on profile record matches the user's
 
         $request = $this->validateProfileRequest($request);
-        $data = $request->all();
-        $data['user_id'] = Auth::id();
+        $data = $request->all();  // TODO - Remove before flight - dangerous
+        $data['federated_id'] = Auth::id();
 
         $new_model_id = $this->model->create($data);
 
@@ -64,10 +64,13 @@ class ProfileController extends BaseController
 
         $this->validateProfileRequest($request);
 
+        $profile = $this->model->filter(['federated_id'=> $id])->first();
+
         // TODO - Replace $request->all() below
         $data = $request->all();
-        $data['user_id'] = Auth::id();
-        $response = $this->model->update($id, $data);
+        $data['federated_id'] = Auth::id();
+        $response = $this->model->update($profile['id'], $data);
+
 
         return new ProfileResource($response);
     }

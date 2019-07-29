@@ -15,13 +15,15 @@ class Profile extends DynamicsRepository implements iModelRepository
 {
     public static $table = 'contacts';
 
-    //public static $primary_key = 'educ_federatedid';
-    public static $primary_key = 'contactid';
+    public static $primary_key = 'educ_federatedid';
+    //public static $primary_key = 'contactid';
 
     public static $data_bind = 'educ_Contact';
 
     public static $fields = [
+
         'id'                             => 'contactid',
+        'federated_id'                   => 'educ_federatedid',
         'preferred_first_name'           => 'educ_preferredfirstname',
         'first_name'                     => 'firstname',
         'last_name'                      => 'lastname',
@@ -38,12 +40,14 @@ class Profile extends DynamicsRepository implements iModelRepository
         'professional_certificate_bc'    => 'educ_professionalcertificatebc',
         'professional_certificate_yk'    => 'educ_professionalcertificateyk',
         'professional_certificate_other' => 'educ_professionalcertificateother',
-        'federated_id'                   => 'educ_federatedid'
     ];
 
     public static $links = [
         'district_id' => District::class
     ];
+
+
+    public static $filter_quote = '\'';
 
 
 }

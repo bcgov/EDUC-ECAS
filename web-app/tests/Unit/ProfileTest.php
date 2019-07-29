@@ -25,9 +25,25 @@ class ProfileTest extends BaseMigrations
     }
 
 
+    /** @test */
+    public function get_a_single_profile_via_the_api()
+    {
+
+        $federated_id = 'aabb-cccd-eeef-ffgg';
+
+        $result = $this->api->all()->first();
+
+        $this->api->update($result['id'], ['federated_id' => $federated_id]);
+
+        $singleProfile = $this->api->filter(['federated_id' => $federated_id]);
+
+        $this->verifySingle($singleProfile[0]);
+
+    }
+
 
     /** @test */
-    public function get_all_records_from_api()
+    public function get_all_profiles_from_api()
     {
         $results = $this->api->all();
         $this->assertInstanceOf('Illuminate\Support\Collection', $results);
@@ -37,7 +53,7 @@ class ProfileTest extends BaseMigrations
 
 
     /** @test */
-    public function get_all_records_from_api_via_the_cache()
+    public function get_all_profiles_from_api_via_the_cache()
     {
         $results = (new CacheDecorator($this->api))->all();
         $this->assertInstanceOf('Illuminate\Support\Collection', $results);
@@ -46,7 +62,7 @@ class ProfileTest extends BaseMigrations
     }
 
     /** @test */
-    public function get_all_fake_records_from_api()
+    public function get_all_fake_profiles_from_api()
     {
         $results = $this->fake->all();
         $this->assertInstanceOf('Illuminate\Support\Collection', $results);
@@ -56,7 +72,7 @@ class ProfileTest extends BaseMigrations
 
 
     /** @test */
-    public function get_all_fake_records_from_api_via_the_cache()
+    public function get_all_fake_profiles_from_api_via_the_cache()
     {
         $results = (new CacheDecorator($this->fake))->all();
         $this->assertInstanceOf('Illuminate\Support\Collection', $results);

@@ -15,7 +15,7 @@ $factory->define(Profile::class, function (Faker $faker) {
 
     return [
 
-        'user_id'                        =>  111,
+        'federated_id'                   =>  '',  //REQUIRED - LINKS TO USER.ID,
 
         'preferred_first_name'           =>  $faker->firstName,
         'first_name'                     =>  $faker->firstName,
@@ -30,8 +30,8 @@ $factory->define(Profile::class, function (Faker $faker) {
         'postal_code'                    =>  strtoupper($postal_code),
         'district_id'                    =>  $faker->randomElement($districts),
         'school_id'                      =>  $faker->randomElement($schools),
-        'professional_certificate_bc'    => 'bc_' . $faker->lexify('????????'),
-        'professional_certificate_yk'    => 'yk_' . $faker->lexify('????????'),
-        'professional_certificate_other' => 'other_' . $faker->lexify('????????'),
+        'professional_certificate_bc'    => 'bc_' . $faker->lexify('??-??????'),
+        'professional_certificate_yk'    => 'yk_' . $faker->lexify('??-??????'),
+        'professional_certificate_other' => 'other_' . $faker->lexify('??-??????'),
     ];
 });

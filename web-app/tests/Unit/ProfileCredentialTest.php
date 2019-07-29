@@ -29,13 +29,13 @@ class ProfileCredentialTest extends BaseMigrations
 
         factory(\App\MockEntities\Credential::class, 4)->create();
         $this->profile_credentials = factory(\App\MockEntities\ProfileCredential::class, 3)->create([
-            'user_id'   => 1
+            'contact_id'   => 1
         ]);
     }
 
 
     /** @test */
-    public function get_all_records_from_api()
+    public function get_all_credentials_from_api()
     {
         $results = $this->api->all();
         $this->assertInstanceOf('Illuminate\Support\Collection', $results);
@@ -45,7 +45,19 @@ class ProfileCredentialTest extends BaseMigrations
 
 
     /** @test */
-    public function get_all_records_from_api_via_the_cache()
+    public function get_filtered_set_of_credentials_via_the_api()
+    {
+        $filtered = $this->api->filter([ 'contact_id' => '1a2abe23-3d64-e911-b80a-005056833c5b' ]);
+
+
+        $this->assertInstanceOf('Illuminate\Support\Collection', $filtered);
+        $this->verifySingle($filtered->first());
+
+    }
+
+
+    /** @test */
+    public function get_all_credentials_from_api_via_the_cache()
     {
         $results = (new CacheDecorator($this->api))->all();
         $this->assertInstanceOf('Illuminate\Support\Collection', $results);
@@ -55,7 +67,7 @@ class ProfileCredentialTest extends BaseMigrations
 
 
     /** @test */
-    public function get_all_fake_records()
+    public function get_all_fake_credentials()
     {
         $results = $this->fake->all();
         $this->assertInstanceOf('Illuminate\Support\Collection', $results);
@@ -65,7 +77,7 @@ class ProfileCredentialTest extends BaseMigrations
 
 
     /** @test */
-    public function get_all_fake_records_via_the_cache()
+    public function get_all_fake_credentials_via_the_cache()
     {
         $results = (new CacheDecorator($this->fake))->all();
         $this->assertInstanceOf('Illuminate\Support\Collection', $results);
@@ -78,7 +90,7 @@ class ProfileCredentialTest extends BaseMigrations
 
         $this->assertIsArray($result);
         $this->assertArrayHasKey('id', $result);
-        $this->assertArrayHasKey('user_id', $result);
+        $this->assertArrayHasKey('contact_id', $result);
         $this->assertArrayHasKey('credential_id', $result);
         $this->assertArrayHasKey('verified', $result);
 

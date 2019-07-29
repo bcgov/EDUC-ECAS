@@ -10,6 +10,7 @@ class Profile extends Model
     // For MockEntities, all fields are assignable
     protected $guarded = [];
 
+
     public function district()
     {
         return $this->belongsTo(\App\MockEntities\District::class);

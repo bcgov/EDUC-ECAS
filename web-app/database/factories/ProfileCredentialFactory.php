@@ -8,10 +8,10 @@ use Faker\Generator as Faker;
 $factory->define(ProfileCredential::class, function (Faker $faker) {
 
     $credentials = \App\MockEntities\Credential::pluck('id')->toArray();
-    $users = \App\MockEntities\Profile::pluck('id')->toArray();
+    $profiles = \App\MockEntities\Profile::pluck('id')->toArray();
 
     return [
-        'user_id'       => $faker->randomElement($users),
+        'contact_id'    => $faker->randomElement($profiles),
         'credential_id' => $faker->randomElement($credentials),
         'verified'      => $faker->randomElement(['Yes','No','Unverified']),
     ];

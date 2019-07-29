@@ -14,17 +14,18 @@ class CreateProfilesTable extends Migration
     public function up()
     {
         Schema::create('profiles', function (Blueprint $table) {
-            $table->bigIncrements('id');
 
-            $table->unsignedBigInteger('user_id')->index();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('id')->autoIncrement();  // Dynamics contact_id (key) for this table
+
+            $table->string('federated_id')->index();
+            $table->foreign('federated_id')->references('id')->on('users');
 
             $table->string('preferred_first_name')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
-            $table->string('social_insurance_number')->nullable();
+            $table->unsignedBigInteger('social_insurance_number')->nullable();
             $table->string('address_1')->nullable();
             $table->string('address_2')->nullable();
             $table->string('city')->nullable();

@@ -14,21 +14,22 @@ class ProfileCredentialTest extends BaseMigrations
 
     private $profile_credentials;
     private $user;
+    private $profile;
 
     public function setUp() : void
     {
         parent::setUp();
         Factory(\App\MockEntities\Credential::class, 5)->create();
         $this->user = Factory(\App\User::class)->create();
-        Factory(Profile::class)->create([
-            'user_id'       => $this->user->id,
+
+        $this->profile = Factory(Profile::class)->create([
+            'federated_id'  => $this->user->id,
             'school_id'     => 1,
             'district_id'   => 1
         ]);
         $this->profile_credentials = Factory(ProfileCredential::class,2)->create([
             'verified'      => "Yes"
         ]);
-
 
     }
 
@@ -37,9 +38,9 @@ class ProfileCredentialTest extends BaseMigrations
     {
         $this->actingAs($this->user, 'api');
 
-        $response = $this->get('/api/profile-credentials' );
+        $response = $this->get('/api/' . $this->profile->id . '/profile-credentials' );
         $response
-            ->assertJsonFragment(['user_id' => (string) $this->user->id])
+            ->assertJsonFragment(['contact_id' => (string) $this->profile->id])
             ->assertJsonCount(2);
     }
 
@@ -53,7 +54,7 @@ class ProfileCredentialTest extends BaseMigrations
             'verified'      => "No"
         ]);
 
-        $response = $this->get('/api/profile-credentials' );
+        $response = $this->get('/api/'. $this->profile->id . '/profile-credentials' );
 
         $response->assertJsonCount(2);
     }
@@ -64,7 +65,7 @@ class ProfileCredentialTest extends BaseMigrations
     {
         $this->withExceptionHandling();
 
-        $response = $this->get('/api/profile-credentials' );
+        $response = $this->get('/api/' . $this->profile->id . '/profile-credentials' );
         $response->assertStatus(302); // unauthorised
     }
 
@@ -75,7 +76,7 @@ class ProfileCredentialTest extends BaseMigrations
 
         $record_2b_deleted = $this->profile_credentials->last();
 
-        $response = $this->delete('/api/profile-credentials/' . $record_2b_deleted->id  );
+        $response = $this->delete('/api/' . $this->profile->id . '/profile-credentials/' . $record_2b_deleted->id  );
 
         $response->assertStatus(204 ); // success
     }
@@ -89,9 +90,9 @@ class ProfileCredentialTest extends BaseMigrations
 
         $record_2b_deleted = $this->profile_credentials->last();
 
-        $response = $this->delete('/api/profile-credentials/' . $record_2b_deleted->id  );
+        $response = $this->delete('/api/' . $this->profile->id . '/profile-credentials/' . $record_2b_deleted->id  );
 
-        $response->assertStatus(403 ); // unauthorized
+        $response->assertStatus(401 ); // unauthorized
     }
 
 
@@ -103,12 +104,12 @@ class ProfileCredentialTest extends BaseMigrations
 
         $credential = Factory(\App\MockEntities\Credential::class)->create();
 
-        $response = $this->post('/api/profile-credentials', [
+        $response = $this->post('/api/' . $this->profile->id . '/profile-credentials', [
             'credential_id'       => $credential->id
         ] );
 
         $response
-            ->assertJsonFragment(['user_id'         => (string) $this->user->id])
+            ->assertJsonFragment(['contact_id'      => (string) $this->profile->id])
             ->assertJsonFragment(['credential'      => new SimpleResource($credential)]);
     }
 
@@ -119,11 +120,11 @@ class ProfileCredentialTest extends BaseMigrations
 
         $this->actingAs($this->user, 'api');
 
-        $this->post('/api/profile-credentials', [
+        $this->post('/api/' . $this->profile->id . '/profile-credentials', [
             'credential_id'       => 7
         ] );
 
-        $response = $this->post('/api/profile-credentials', [
+        $response = $this->post('/api/' . $this->profile->id . '/profile-credentials', [
             'credential_id'       => 7
         ] );
 
@@ -137,13 +138,13 @@ class ProfileCredentialTest extends BaseMigrations
 
         $this->actingAs($this->user, 'api');
 
-        $response = $this->post('/api/profile-credentials', [
+        $response = $this->post('/api/' . $this->profile->id . '/profile-credentials', [
             'credential_id'       => 7,
             'verified'            => "Yes"  // using "Yes" here as that's how Dynamics records it
         ] );
 
         $response
-            ->assertJsonFragment(['user_id'         => (string) $this->user->id])
+            ->assertJsonFragment(['contact_id'      => (string) $this->profile->id])
             ->assertJsonFragment(['verified'        => false]);
     }
 

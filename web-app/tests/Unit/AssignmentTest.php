@@ -20,7 +20,7 @@ class AssignmentTest extends BaseMigrations
         $this->fake = new \App\MockEntities\Repository\Assignment(new \App\MockEntities\Assignment());
 
         $this->assignments = factory(\App\MockEntities\Assignment::class, 5)->create([
-            'user_id'           => 1,
+            'contact_id'        => 1,
             'role_id'           => 1,
             'session_id'        => 1,
             'contract_stage'    => 1,
@@ -37,6 +37,21 @@ class AssignmentTest extends BaseMigrations
         $this->assertInstanceOf('Illuminate\Support\Collection', $results);
         $this->verifySingle($results->first());
     }
+
+
+
+    /** @test */
+    public function get_filtered_set_of_assignments_via_the_api()
+    {
+        $filtered = $this->api->filter([ 'contact_id' => '1a2abe23-3d64-e911-b80a-005056833c5b' ]);
+
+
+        $this->assertInstanceOf('Illuminate\Support\Collection', $filtered);
+        $this->verifySingle($filtered->first());
+
+    }
+
+
 
     /** @test */
     public function get_all_assignments_from_api_cached()
@@ -76,7 +91,7 @@ class AssignmentTest extends BaseMigrations
         $this->assertIsArray($result);
         $this->assertArrayHasKey('id', $result);
         $this->assertArrayHasKey('session_id', $result);
-        $this->assertArrayHasKey('user_id', $result);
+        $this->assertArrayHasKey('contact_id', $result);
         $this->assertArrayHasKey('role_id', $result);
         $this->assertArrayHasKey('contract_stage', $result);
         $this->assertArrayHasKey('status', $result);

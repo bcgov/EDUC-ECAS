@@ -62,6 +62,13 @@ abstract class DynamicsRepository
     public static $data_bind;
 
 
+    /*
+     * Go figure, Dynamics requires quotes around the filter requests for a Profile, but not around the filter requests
+     * for Assignments and Credentials
+     */
+    public static $filter_quote = '';
+
+
     public static $cache = 0;   // cache duration in minutes
 
 
@@ -85,7 +92,8 @@ abstract class DynamicsRepository
     {
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table .
                  '&$select=' . implode(',', static::$fields) .
-                 '&$filter=' . static::$fields[key($filter)] . ' eq \'' . current($filter) . '\'';
+                 '&$filter=' . static::$fields[key($filter)] . ' eq ' .
+                static::$filter_quote . current($filter) . static::$filter_quote;
 
         $response = self::queryAPI('GET', $query);
 

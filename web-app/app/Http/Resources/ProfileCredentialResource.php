@@ -25,7 +25,7 @@ class ProfileCredentialResource extends JsonResource
 
         return [
             'id'            => $this['id'],
-            'user_id'       => $this['user_id'],
+            'contact_id'    => $this['contact_id'],
             'credential'    => new SimpleResource($credentials->firstWhere('id', $this['credential_id'])),
             'verified'      => ($this['verified'] == "Yes") ? TRUE : FALSE,
         ];

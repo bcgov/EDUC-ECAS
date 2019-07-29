@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Dynamics\Session as MarkerSession;
 use App\Http\Resources\DashboardResource;
+use App\Http\Resources\ProfileResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -35,6 +36,8 @@ class DashboardController extends Controller
     {
 
         $user = Auth::user();
+
+        return new DashboardResource($user);
 
         return view('dashboard', ['dashboard' => new DashboardResource($user)]);
 

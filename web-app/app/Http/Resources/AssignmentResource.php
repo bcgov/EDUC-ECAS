@@ -25,7 +25,7 @@ class AssignmentResource extends JsonResource
         return [
             'id'                => $this['id'],
             'session'           => $this['session_id'],
-            'user_id'           => $this['user_id'],
+            'contact_id'           => $this['contact_id'],
             'role'              => new RoleResource($roles->firstWhere('id', $this['role_id'])),
             'contract_stage'    => new SimpleResource($contract_stages->firstWhere('id', $this['contract_stage'])),
             'status'            => new SimpleResource($assignment_statuses->firstWhere('id', $this['status'])),

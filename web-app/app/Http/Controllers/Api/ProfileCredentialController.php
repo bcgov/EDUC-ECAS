@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 
-use App\Dynamics\ProfileCredential;
+use App\Dynamics\Decorators\CacheDecorator;
+use App\Interfaces\iModelRepository;
 use App\Http\Resources\ProfileCredentialResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
@@ -14,9 +16,28 @@ use Illuminate\Support\Facades\Response;
 class ProfileCredentialController extends BaseController
 {
 
-    public function index()
+    private $profile;
+
+    public function __construct(iModelRepository $model)
     {
-        $credentials =  $this->model->filter(['user_id'=>Auth::id()]);
+
+        parent::__construct($model);
+
+        $repository                     = env('DATASET') == 'Dynamics' ? 'Dynamics' : 'MockEntities\Repository';
+        $this->profile                  = ( new CacheDecorator(App::make('App\\' . $repository .'\Profile')));
+
+    }
+
+    public function index($profile_id)
+    {
+
+        $profile = $this->profile->get($profile_id);
+
+        if($this->user->id <> $profile['federated_id']) {
+            abort(401, 'unauthorized');
+        }
+
+        $credentials =  $this->model->filter(['contact_id' => $profile['id']]);
 
         $filtered = $credentials->filter( function ($credential) {
             return $credential['verified'] <> "No";
@@ -39,9 +60,14 @@ class ProfileCredentialController extends BaseController
     /*
  * Attach a credential to a User
  */
-    public function store(Request $request)
+    public function store(Request $request, $profile_id )
     {
-        Log::debug('STORE CREDENTIAL');
+        $profile = $this->profile->get($profile_id);
+
+        if($this->user->id <> $profile['federated_id']) {
+            abort(401, 'unauthorized');
+        }
+
 
         $this->validate($request, [
             'credential_id' => 'required'
@@ -49,7 +75,7 @@ class ProfileCredentialController extends BaseController
 
 
         $profile_credential_id = $this->model->create([
-            'user_id'       => Auth::id(),
+            'contact_id'    => $profile['id'],
             'credential_id' => $request['credential_id'],
             'verified'      => 'Unverified'
         ]);
@@ -59,15 +85,12 @@ class ProfileCredentialController extends BaseController
         return Response::json(new ProfileCredentialResource($new_record), 200);
     }
 
-    public function destroy($id)
+    public function destroy($profile_id, $id)
     {
-        Log::debug('DELETE CREDENTIAL');
+        $profile = $this->profile->get($profile_id);
 
-        // check: does the user own this record?
-        $record = $this->model->get($id);
-
-        if($record['user_id'] <> Auth::id()) {
-            abort(403, 'Unauthorized');
+        if($this->user->id <> $profile['federated_id']) {
+            abort(401, 'unauthorized');
         }
 
         $this->model->delete($id);

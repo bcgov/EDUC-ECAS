@@ -11,11 +11,11 @@ $factory->define(Assignment::class, function (Faker $faker) {
     $assignment_statuses = \App\MockEntities\AssignmentStatus::pluck('id')->toArray();
     $sessions = \App\MockEntities\Session::pluck('id')->toArray();
     $roles = \App\MockEntities\Role::pluck('id')->toArray();
-    $users = \App\MockEntities\Profile::pluck('id')->toArray();
+    $profiles = \App\MockEntities\Profile::pluck('id')->toArray();
 
     return [
 
-        'user_id'           => $faker->randomElement($users),
+        'contact_id'        => $faker->randomElement($profiles),
         'session_id'        => $faker->randomElement($sessions),
         'role_id'           => $faker->randomElement($roles),
         'contract_stage'    => $faker->randomElement($contract_stages),

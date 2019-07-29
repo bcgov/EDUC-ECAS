@@ -19,8 +19,8 @@ class CreateAssignmentsTable extends Migration
             $table->unsignedBigInteger('session_id')->index();
             $table->foreign('session_id')->references('id')->on('sessions');
 
-            $table->unsignedBigInteger('user_id')->index();
-            $table->foreign('user_id')->references('id')->on('profiles');
+            $table->string('contact_id')->index();
+            $table->foreign('contact_id')->references('id')->on('profiles');
 
             $table->unsignedBigInteger('role_id')->index()->nullable();
             $table->foreign('role_id')->references('id')->on('roles');

@@ -21,17 +21,4 @@ abstract class BaseController extends Controller
     }
 
 
-    abstract public function index();
-
-    abstract public function show($id);
-
-    abstract public function update($id, Request $request);
-
-    abstract public function store(Request $request);
-
-    abstract public function destroy($id);
-
-
-
-
 }

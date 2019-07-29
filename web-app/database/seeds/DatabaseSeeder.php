@@ -31,16 +31,20 @@ class DatabaseSeeder extends Seeder
         factory(\App\MockEntities\Session::class, 25)->create();
 
 
-        factory(\App\User::class, 50)->create()->each(function ($user) {
-            $user->profile()->save(factory(\App\MockEntities\Profile::class)->make([
-                'user_id'    => $user->id
-            ]));
-            factory(\App\MockEntities\Assignment::class, 3)->create([
-                'user_id'    => $user->id
-            ]);
-            factory(\App\MockEntities\ProfileCredential::class, 2)->create([
-                'user_id'    => $user->id
-            ]);
+        factory(\App\User::class, 50)->create()
+            ->each(function ($user) {
+            factory(\App\MockEntities\Profile::class)->create([
+                'federated_id'                => $user->id
+            ])->each(function ($profile) {
+                factory(\App\MockEntities\Assignment::class, 3)->create([
+                    'contact_id'        => $profile->id
+                ]);
+                factory(\App\MockEntities\ProfileCredential::class, 2)->create([
+                    'contact_id'        => $profile->id
+                ]);
+
+            });
+
         });
 
 

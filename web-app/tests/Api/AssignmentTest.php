@@ -3,6 +3,7 @@
 namespace Tests\Api;
 
 use App\MockEntities\Assignment;
+use Faker\Factory;
 use Tests\BaseMigrations;
 
 
@@ -11,18 +12,24 @@ class AssignmentTest extends BaseMigrations
 
     private $assignments;
     private $user;
+    private $profile;
 
     public function setUp() : void
     {
 
         parent::setUp();
+
+
         $this->user = Factory(\App\User::class)->create();
+        $this->profile = Factory(\App\MockEntities\Profile::class)->create([
+            'federated_id'  => $this->user->id
+        ]);
         Factory(\App\MockEntities\Session::class, 5)->create([
             'type_id'       => 1,
             'activity_id'   => 2,
         ]);
         $this->assignments = Factory(Assignment::class,2)->create([
-            'user_id'       => $this->user->id
+            'contact_id'    => $this->profile->id
         ]);
 
     }
@@ -33,9 +40,10 @@ class AssignmentTest extends BaseMigrations
     {
         $this->actingAs($this->user, 'api');
 
-        $response = $this->get('/api/assignments' );
+        $response = $this->get('/api/' . $this->profile->id .'/assignments' );
+
         $response
-            ->assertJsonFragment(['user_id' => (string) $this->user->id])
+            ->assertJsonFragment(['contact_id' => (string) $this->profile->id])
             ->assertJsonCount(2);
     }
 
@@ -45,7 +53,7 @@ class AssignmentTest extends BaseMigrations
     {
         $this->withExceptionHandling();
 
-        $response = $this->get('/api/assignments' );
+        $response = $this->get( '/api/' . $this->profile->id .'/assignments' );
         $response->assertStatus(302); // unauthorised
     }
 
@@ -56,7 +64,7 @@ class AssignmentTest extends BaseMigrations
 
         $record_2b_deleted = $this->assignments->last();
 
-        $response = $this->delete('/api/assignments/' . $record_2b_deleted->id  );
+        $response = $this->delete('/api/' . $this->profile->id .'/assignments/' . $record_2b_deleted->id  );
 
         $response->assertStatus(405 ); // method not implemented
     }
@@ -70,7 +78,7 @@ class AssignmentTest extends BaseMigrations
 
         $record_2b_deleted = $this->assignments->last();
 
-        $response = $this->delete('/api/assignments/' . $record_2b_deleted->id  );
+        $response = $this->delete( '/api/' . $this->profile->id .'/assignments/' . $record_2b_deleted->id  );
 
         $response->assertStatus(405 ); // method not implemented
     }
@@ -82,13 +90,13 @@ class AssignmentTest extends BaseMigrations
     {
         $this->actingAs($this->user, 'api');
 
-        $response = $this->post('/api/assignments', [
+        $response = $this->post( '/api/' . $this->profile->id .'/assignments' , [
             'session_id'       => 2,
             'role_id'          => 1
         ] );
 
         $response
-            ->assertJsonFragment(['user_id'         => (string) $this->user->id])
+            ->assertJsonFragment(['contact_id'   => (string) $this->profile->id])
             ->assertJsonFragment(['session_id'   => '2']);
     }
 
