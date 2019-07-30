@@ -37,7 +37,7 @@ return [
 
     'guards' => [
         'web' => [
-            'driver' => 'session',  // TODO - replace with 'keycloak'
+            'driver' => 'session',
             'provider' => 'users',
         ],
 
