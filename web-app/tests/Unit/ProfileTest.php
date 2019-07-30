@@ -26,7 +26,7 @@ class ProfileTest extends BaseMigrations
 
 
     /** @test */
-    public function get_a_single_profile_via_the_api()
+    public function filter_for_a_single_profile_via_the_api()
     {
 
         $federated_id = 'aabb-cccd-eeef-ffgg';
@@ -40,6 +40,54 @@ class ProfileTest extends BaseMigrations
         $this->verifySingle($singleProfile[0]);
 
     }
+
+
+    /** @test */
+    public function get_a_single_profile_via_the_api()
+    {
+
+        $result = $this->api->all()->first();
+
+        $singleProfile = $this->api->get($result['id']);
+
+        $this->assertTrue($result == $singleProfile);
+
+    }
+
+
+
+    /** @test */
+    public function return_blank_profile_when_none_exists_via_the_api()
+    {
+
+        $new_federated_id   = 'aaaa-bbbb-cccc-dddd';
+        $data               = [
+            'first_name'    => 'Bob',
+            'last_name'     => 'Smith',
+            'email'         => 'bsmith@example.com',
+        ];
+
+        $singleProfile = $this->api->firstOrCreate($new_federated_id, $data);
+
+        $this->assertTrue($singleProfile['federated_id']    == $new_federated_id );
+        $this->assertTrue($singleProfile['first_name']      == $data['first_name'] );
+        $this->assertTrue($singleProfile['last_name']       == $data['last_name'] );
+        $this->assertTrue($singleProfile['email']           == $data['email'] );
+    }
+
+
+    /** @test */
+    public function delete_a_single_profile_via_the_api()
+    {
+
+        $result = $this->api->all()->first();
+
+        $this->api->delete($result['id']);
+
+        $this->assertTrue(count($this->api->filter([ 'federated_id' => $result['federated_id']])) == 0);
+
+    }
+
 
 
     /** @test */

@@ -15,6 +15,8 @@ interface iModelRepository
 
     public function create($data);
 
+    public function firstOrCreate($id, $data);
+
     public function update($id, $data);
 
     public function delete($id);

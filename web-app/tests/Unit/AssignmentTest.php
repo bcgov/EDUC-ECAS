@@ -43,11 +43,13 @@ class AssignmentTest extends BaseMigrations
     /** @test */
     public function get_filtered_set_of_assignments_via_the_api()
     {
-        $filtered = $this->api->filter([ 'contact_id' => '1a2abe23-3d64-e911-b80a-005056833c5b' ]);
+        
+        $expected = $this->api->all()->last();
+        
+        $result = $this->api->filter([ 'contact_id' => $expected['contact_id'] ]);
 
-
-        $this->assertInstanceOf('Illuminate\Support\Collection', $filtered);
-        $this->verifySingle($filtered->first());
+        $this->assertInstanceOf('Illuminate\Support\Collection', $result);
+        $this->verifySingle($result->first());
 
     }
 

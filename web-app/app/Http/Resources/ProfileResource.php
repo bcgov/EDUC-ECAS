@@ -22,8 +22,6 @@ class ProfileResource extends JsonResource
         $districts  = ( new CacheDecorator(App::make('App\\' . $repository .'\District')))->all();
         $schools    = ( new CacheDecorator(App::make('App\\' . $repository .'\School')))->all();
 
-        dd($this->id);
-
         return [
           'id'                                     =>  $this['id'],
           'federated_id'                           =>  $this['federated_id'],

@@ -74,6 +74,45 @@ abstract class MockRepository
 
 
     }
+
+
+
+    public function firstOrCreate($federated_id, $data)
+    {
+        $existing = $this->model->filter([ 'federated_id' => $federated_id ]);
+
+        if (count($existing) == 0) {
+
+            return [
+                'federated_id'                   => $federated_id,
+                'id'                             => null,
+                'preferred_first_name'           => null,
+                'first_name'                     => $data['first_name'],
+                'last_name'                      => $data['last_name'],
+                'email'                          => $data['email'],
+                'phone'                          => null,
+                'social_insurance_number'        => null,
+                'address_1'                      => null,
+                'address_2'                      => null,
+                'city'                           => null,
+                'region'                         => null,
+                'postal_code'                    => null,
+                'district_id'                    => null,
+                'school_id'                      => null,
+                'professional_certificate_bc'    => null,
+                'professional_certificate_yk'    => null,
+                'professional_certificate_other' => null,
+            ];
+
+        }
+
+        return $existing;
+
+    }
+
+
+
+
     public function create($data)
     {
 

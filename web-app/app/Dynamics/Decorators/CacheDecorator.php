@@ -35,6 +35,15 @@ class CacheDecorator implements iModelRepository
         });
     }
 
+
+    public function firstOrCreate($id, $data)
+    {
+        return Cache::remember(self::cacheKey($id),self::CACHE_DURATION , function () use($id, $data) {
+            return $this->model->firstOrCreate($id, $data);
+        });
+    }
+
+
     public function filter(array $filter)
     {
         // TODO - should the filter method be cached?

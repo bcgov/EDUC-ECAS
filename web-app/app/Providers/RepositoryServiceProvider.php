@@ -3,20 +3,9 @@
 namespace App\Providers;
 
 use App\Http\Controllers\Api\AssignmentController;
-use App\Http\Controllers\Api\AssignmentStatusController;
-use App\Http\Controllers\Api\ContractStageController;
-use App\Http\Controllers\Api\CredentialController;
-use App\Http\Controllers\Api\DistrictController;
-use App\Http\Controllers\Api\PaymentTypeController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\ProfileCredentialController;
-use App\Http\Controllers\Api\RegionController;
-use App\Http\Controllers\Api\RoleController;
-use App\Http\Controllers\Api\SchoolController;
-use App\Http\Controllers\Api\SessionActivityController;
-use App\Http\Controllers\Api\SessionController;
-use App\Http\Controllers\Api\SessionTypeController;
-use App\Http\Controllers\Api\SubjectController;
+use App\Http\Controllers\DashboardController;
 use App\Interfaces\iModelRepository;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
@@ -30,6 +19,13 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
+
+        $this->app->when(DashboardController::class)
+            ->needs(iModelRepository::class)
+            ->give(function () {
+                return $this->getRepository('Profile');
+            });
+
 
         $this->app->when(AssignmentController::class)
             ->needs(iModelRepository::class)

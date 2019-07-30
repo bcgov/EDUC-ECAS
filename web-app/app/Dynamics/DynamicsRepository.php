@@ -128,11 +128,17 @@ abstract class DynamicsRepository
     public function get($id)
     {
 
-        Log::debug('Loading from Dynamics: ' . $id);
         $collection = self::loadCollection($id);
 
+        return current($collection)[0];
 
-        return current($collection);
+    }
+
+
+    public function firstOrCreate($id, $data)
+    {
+        return 'method not implemented';
+        // overridden by Profile - none others
 
     }
 
@@ -285,7 +291,7 @@ abstract class DynamicsRepository
         }
 
         if ($id) {
-            $query .= '&$filter=' . static::$primary_key . ' eq \'' . $id . '\'';
+            $query .= '&$filter=' . static::$primary_key . ' eq ' . $id . '';
         }
 
         $response = self::queryAPI('GET', $query);

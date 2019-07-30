@@ -87,8 +87,6 @@ class ProfileTest extends BaseMigrations
 
         $response = $this->get('/api/profiles/' . $this->user->id );
 
-       // dd($temp_profile, $response);
-
         $response->assertJsonFragment(['is_SIN_on_file' => TRUE]);
 
     }

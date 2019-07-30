@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 
-
-use App\Dynamics\Session as MarkerSession;
+use App\Dynamics\Decorators\CacheDecorator;
+use App\Interfaces\iModelRepository;
 use App\Http\Resources\DashboardResource;
-use App\Http\Resources\ProfileResource;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
 /*
  * Main Controller for the application
@@ -17,15 +14,18 @@ use Illuminate\Support\Facades\Session;
 class DashboardController extends Controller
 {
 
+    private $profile;
 
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param iModelRepository $profile
      */
-    public function __construct()
+    public function __construct(iModelRepository $profile)
     {
         $this->middleware('auth');
+        $this->profile = $profile;
+
     }
 
 
@@ -35,9 +35,14 @@ class DashboardController extends Controller
     public function index()
     {
 
-        $user = Auth::user();
+        $user       = Auth::user();
 
-        return new DashboardResource($user);
+        $profile    = $this->profile->firstOrCreate($user->id, [
+            // TODO - replace the values below with data from BCeID
+            'first_name'  => 'required',
+            'last_name'   => 'required',
+            'email'       => 'test@example.com',
+        ]);
 
         return view('dashboard', ['dashboard' => new DashboardResource($user)]);
 
