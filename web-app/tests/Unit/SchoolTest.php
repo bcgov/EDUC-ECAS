@@ -26,7 +26,7 @@ class SchoolTest extends BaseMigrations
 
 
     /** @test */
-    public function get_all_records_from_api()
+    public function get_all_schools_from_api()
     {
         $results = $this->api->all();
         $this->assertInstanceOf('Illuminate\Support\Collection', $results);
@@ -36,7 +36,17 @@ class SchoolTest extends BaseMigrations
 
 
     /** @test */
-    public function get_all_records_from_api_via_the_cache()
+    public function the_api_should_return_more_than_50_schools()
+    {
+        $results = $this->api->all();
+        $this->assertInstanceOf('Illuminate\Support\Collection', $results);
+        $this->assertTrue(count($results) > 50 );
+
+    }
+
+
+    /** @test */
+    public function get_all_schools_from_api_via_the_cache()
     {
         $results = (new CacheDecorator($this->api))->all();
         $this->assertInstanceOf('Illuminate\Support\Collection', $results);
@@ -46,7 +56,7 @@ class SchoolTest extends BaseMigrations
 
 
     /** @test */
-    public function get_all_fake_records_from_api()
+    public function get_all_fake_schools_from_api()
     {
         $results = $this->fake->all();
         $this->assertInstanceOf('Illuminate\Support\Collection', $results);
@@ -56,7 +66,7 @@ class SchoolTest extends BaseMigrations
 
 
     /** @test */
-    public function get_all_fake_records_from_api_via_the_cache()
+    public function get_all_fake_schools_from_api_via_the_cache()
     {
         $results = (new CacheDecorator($this->fake))->all();
         $this->assertInstanceOf('Illuminate\Support\Collection', $results);

@@ -29,6 +29,7 @@ import VModal from 'vue-js-modal'
 Vue.use(Vuex);
 Vue.use(VModal, { dynamic: true, injectModalsContainer: true });
 
+Vue.component('ecas-dashboard'          , require('./components/EcasDashboard.vue').default);
 Vue.component('ecas-logout'             , require('./components/EcasLogout.vue').default);
 Vue.component('ecas-profile'            , require('./components/EcasProfile.vue').default);
 Vue.component('profile-credentials'     , require('./components/ProfileCredentials.vue').default);

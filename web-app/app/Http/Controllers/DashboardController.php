@@ -39,12 +39,12 @@ class DashboardController extends Controller
 
         $profile    = $this->profile->firstOrCreate($user->id, [
             // TODO - replace the values below with data from BCeID
-            'first_name'  => 'required',
-            'last_name'   => 'required',
-            'email'       => 'test@example.com',
+            'first_name'  => 'BCeID_first',
+            'last_name'   => 'BCeID_last',
+            'email'       => 'bceid@example.com',
         ]);
 
-        return view('dashboard', ['dashboard' => new DashboardResource($user)]);
+        return view('dashboard', ['dashboard' => new DashboardResource($profile)]);
 
     }
 

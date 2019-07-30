@@ -10,7 +10,7 @@
             </h2>
         </div>
         <div class="card-body">
-            <p v-show="!new_user">{{ getUser.email }}<br/>
+            <p v-show=" ! newUser">{{ getUser.email }}<br/>
                 {{ getUser.address_1 }}<br/>
                 {{ getUser.city }}, {{ getUser.region }} {{ getUser.postal_code }}
             </p>
@@ -35,7 +35,7 @@
                     :schools="data.schools"
                     :regions="data.regions"
                     :districts="data.districts"
-                    :new_user="new_user"
+                    :new_user="newUser"
                     dusk="profile-component"
             ></profile>
         </modal>
@@ -55,19 +55,17 @@
         },
         data() {
             return {
-                new_user: false,
                 working: false
             }
         },
         mounted() {
-            console.log('Ecas Profile Mounted')
+            console.log('Ecas Profile Mounted');
 
-            this.$store.commit('SET_USER', this.data.user)
+            this.$store.commit('SET_USER', this.data.user);
 
-            Event.listen('profile-updated', this.updateProfile)
+            Event.listen('profile-updated', this.updateProfile);
 
-            if (this.getUser.id === undefined) {
-                this.new_user = true
+            if (this.newUser) {
                 this.showProfile()
             }
         },
@@ -75,6 +73,10 @@
             ...mapGetters([
                 'getUser',
             ]),
+
+            newUser() {
+                return (this.data.user.id === null);
+            }
 
         },
         methods: {
@@ -84,7 +86,6 @@
             },
             updateProfile(user) {
                 // We must have a valid user now
-                this.new_user = false
                 this.$store.commit('SET_USER', user)
             },
 
