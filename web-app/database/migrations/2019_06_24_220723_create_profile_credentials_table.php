@@ -16,7 +16,7 @@ class CreateProfileCredentialsTable extends Migration
         Schema::create('profile_credentials', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->string('contact_id')->index();
+            $table->unsignedBigInteger('contact_id')->index();
             $table->foreign('contact_id')->references('id')->on('profiles');
 
             $table->unsignedBigInteger('credential_id')->index();
