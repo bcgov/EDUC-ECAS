@@ -70,12 +70,12 @@
                             <form-error :errors="errors" field="city"></form-error>
                         </div>
                         <div class="form-row">
-                            <!--<div class="form-group col">-->
-                                <!--<label for="region">Province</label>-->
-                                <!--<select class="form-control" v-model="user_local.region.name" id="region" name="region">-->
-                                    <!--<option v-bind:value="region.code" v-for="region in regions">{{ region.name }}</option>-->
-                                <!--</select>-->
-                            <!--</div>-->
+                            <div class="form-group col">
+                                <label for="region">Province</label>
+                                <select class="form-control" v-model="user_local.region" id="region" name="region">
+                                    <option :value="region" v-for="region in regions">{{ region.name }}</option>
+                                </select>
+                            </div>
                             <div class="form-group col">
                                 <label for="postal_code" class="required">Postal Code</label>
                                 <input v-model="user_local.postal_code" type="text" class="form-control" name="postal_code"
@@ -86,22 +86,22 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <!--<div class="form-group col">-->
-                        <!--<label for="district">Current District</label>-->
-                        <!--<select class="form-control" v-model="user_local.district" id="district">-->
-                            <!--<option value="">None</option>-->
-                            <!--<option v-for="district in districts" :value="district">-->
-                                <!--{{ district.name }}-->
-                            <!--</option>-->
-                        <!--</select>-->
-                    <!--</div>-->
-                    <!--<div class="form-group col">-->
-                        <!--<label for="school">Current School</label>-->
-                        <!--<select class="form-control" v-model="user_local.school" id="school">-->
-                            <!--<option value="">None</option>-->
-                            <!--<option :value="school" v-for="school in schools">{{ school.name }}</option>-->
-                        <!--</select>-->
-                    <!--</div>-->
+                    <div class="form-group col">
+                        <label for="district">Current District</label>
+                        <select class="form-control" v-model="user_local.district" id="district">
+                            <option value="">None</option>
+                            <option v-for="district in districts" :value="district">
+                                {{ district.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group col">
+                        <label for="school">Current School</label>
+                        <select class="form-control" v-model="user_local.school" id="school">
+                            <option value="">None</option>
+                            <option :value="school" v-for="school in schools">{{ school.name }}</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col">
@@ -125,7 +125,7 @@
                         <button class="btn btn-danger btn-block" v-on:click.prevent="cancelProfile">Cancel</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-primary btn-block" v-on:click.prevent="saveProfile">
+                        <button class="btn btn-primary btn-block" v-on:click.prevent="saveProfile" dusk="save">
                             <span>
                                 <div class="loader text-center" v-show="working"></div>
                             </span>
@@ -145,7 +145,7 @@
     import FormError from './FormError.vue';
 
     export default {
-        name: "ProfileModal",
+        name: "Profile",
         props: {
             user: {},
             schools: {},
@@ -165,7 +165,7 @@
         },
         mounted() {
             if (this.new_user) {
-                this.user_local.region = 'BC'
+                this.user_local.region.id = 'BC'
             }
         },
         computed: {
@@ -182,7 +182,7 @@
             },
             saveProfile() {
 
-                console.log('saving profile', this.user.federated_id, );
+                console.log('saving profile')
 
                 if (this.working) {
                     return
@@ -190,11 +190,11 @@
 
                 this.working = true;
 
-                var form = this;
+                var form = this
 
-                //Data must be registered here to interact with the form
+                // Data must be registered here to interact with the form
                 var data = {
-                    //id: form.user_local.id,
+                    id: form.user_local.id,
                     email: form.user_local.email,
                     phone: form.user_local.phone,
                     preferred_first_name: form.user_local.preferred_first_name,
@@ -208,24 +208,22 @@
                     address_1: form.user_local.address_1,
                     address_2: form.user_local.address_2,
                     city: form.user_local.city,
-                    region: form.user_local.region,
+                    region: form.user_local.region.id,
                     postal_code: form.user_local.postal_code,
-                    //district_id: form.user_local.district.id,
-                    //school_id: form.user_local.school.id
-                };
+                    district_id: form.user_local.district.id,
+                    school_id: form.user_local.school.id
+                }
 
                 if (this.new_user) {
-
-                    window.axios.post('/api/profiles' , data)
+                    axios.post('/api/profiles', data)
                         .then(function (response) {
                             console.log('Create Profile');
+                            form.closeModal();
                             form.working = false;
-                            Event.fire('profile-updated', response.data);
-                            console.log('profile created', response.data );
-                            form.closeModal()
+                            Event.fire('profile-updated', response.data)
                         })
                         .catch(function (error) {
-                            console.log('Failure!');
+                            console.log('Failure!', data);
                             form.working = false;
                             if (error.response.status === 422){
                                 form.errors = error.response.data.errors;
@@ -233,15 +231,15 @@
                         });
                 }
                 else {
-                    window.axios.patch('/api/profiles/' + this.user.id , data)
+                    axios.patch('/api/profiles/' + this.user.id, data)
                         .then(function (response) {
-                            console.log('Patch Profile', data );
+                            console.log('Patch Profile');
                             form.working = false;
                             form.closeModal();
                             Event.fire('profile-updated', response.data)
                         })
                         .catch(function (error) {
-                            console.log('Failure!', data);
+                            console.log('Failure!');
                             form.working = false;
                             if (error.response.status === 422){
                                 form.errors = error.response.data.errors;

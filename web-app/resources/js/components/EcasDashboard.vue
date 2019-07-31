@@ -58,7 +58,10 @@
         mounted() {
             console.log('Ecas Profile Mounted');
 
-            this.$modal.show('profile_form');
+            if(this.newUser) {
+                this.$modal.show('profile_form');
+            }
+
 
             this.isMounted = true;
 
@@ -78,10 +81,10 @@
                 this.$modal.show('profile_form');
             },
 
-            updateProfile(user) {
+            updateProfile(payload) {
                 // We must have a valid user now
-                console.log('updateProfile method', user);
-                this.$store.commit('SET_USER', user)
+                console.log('updateProfile method', payload[0].data);
+                this.local_data.user = payload[0].data;
             },
 
         }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ProfileResource;
 use App\Interfaces\iModelRepository;
 use App\Rules\SocialInsuranceNumberRule;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,13 +24,13 @@ class ProfileController extends BaseController
     }
 
 
-    public function show($id)
+    public function show($id, Request $request)
     {
 
-        // check user is requesting their own profile
-        if($id <> Auth::id()) {
-            abort(302, 'unauthorized');
-        }
+        // check user is updating their own profile
+        $profile = $this->model->get($id);
+        $this->checkOwner($request, $profile['federated_id']);
+
 
         $profile = $this->model->filter(['federated_id'=> $id])->first();
 
@@ -43,9 +44,14 @@ class ProfileController extends BaseController
     public function store(Request $request)
     {
 
+        $api_token = explode(' ', $request->headers->get('Authorization'));
+
+        $user = User::where('api_token', $api_token[1])
+            ->get();
+
         $request = $this->validateProfileRequest($request);
         $data = $request->all();  // TODO - Remove before flight - dangerous
-        $data['federated_id'] = Auth::id();
+        $data['federated_id'] = $user->id;
 
         $new_model_id = $this->model->create($data);
 
@@ -57,20 +63,18 @@ class ProfileController extends BaseController
      */
     public function update($id, Request $request)
     {
+
         // check user is updating their own profile
-        if($id <> Auth::id()) {
-            abort(302, 'unauthorized');
-        }
+        $profile = $this->model->get($id);
+        $this->checkOwner($request, $profile['federated_id']);
+
 
         $this->validateProfileRequest($request);
 
-        $profile = $this->model->filter(['federated_id'=> $id])->first();
-
-        // TODO - Remove before flight - dangerous
+        // TODO - Remove before flight - map specific fields
         $data = $request->all();
-        $data['federated_id'] = Auth::id();
+        $data['federated_id'] = $profile['federated_id'];
         $response = $this->model->update($profile['id'], $data);
-
 
         return new ProfileResource($response);
     }
@@ -122,7 +126,7 @@ class ProfileController extends BaseController
             'city'                          => 'required',
             'region'                        => 'required',
             'postal_code'                   => 'required|regex:/^\D\d\D\s?\d\D\d$/i',
-            'social_insurance_number'       => [ new SocialInsuranceNumberRule ]
+            //'social_insurance_number'       => [ new SocialInsuranceNumberRule ]
         ],
             [
                 'first_name.required'  => 'Required',

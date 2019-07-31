@@ -21,6 +21,7 @@ class ProfileResource extends JsonResource
 
         $districts  = ( new CacheDecorator(App::make('App\\' . $repository .'\District')))->all();
         $schools    = ( new CacheDecorator(App::make('App\\' . $repository .'\School')))->all();
+        $regions    = ( new CacheDecorator(App::make('App\\' . $repository .'\Region')))->all();
 
         return [
           'id'                                     =>  $this['id'],
@@ -34,7 +35,7 @@ class ProfileResource extends JsonResource
           'address_1'                              =>  $this['address_1'],
           'address_2'                              =>  $this['address_2'],
           'city'                                   =>  $this['city'],
-          'region'                                 =>  $this['region'],
+          'region'                                 =>  new SimpleResource($regions->firstWhere('id', $this['region'])),
           'postal_code'                            =>  $this['postal_code'],
           'district'                               =>  new SimpleResource($districts->firstWhere('id', $this['district_id'])),
           'school'                                 =>  new SchoolResource($schools->firstWhere('id', $this['school_id'])),

@@ -78,7 +78,7 @@ class Profile extends DynamicsRepository implements iModelRepository
 
         }
 
-        return $existing;
+        return $existing[0];
 
     }
 

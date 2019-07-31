@@ -62,11 +62,10 @@ class ProfileCredentialController extends BaseController
  */
     public function store(Request $request, $profile_id )
     {
-        $profile = $this->profile->get($profile_id);
 
-        if($this->user->id <> $profile['federated_id']) {
-            abort(401, 'unauthorized');
-        }
+        // check user is updating their own profile
+        $profile = $this->model->get($profile_id);
+        $this->checkOwner($request, $profile['federated_id']);
 
 
         $this->validate($request, [

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 
 /**
@@ -55,7 +56,8 @@ class KeycloakAuthController extends Controller
                 'id'    => $userData->id
             ],
             [
-                'name'  =>  $userData->name
+                'name'          =>  $userData->name,
+                'api_token'     =>  Str::random(60)
             ]
         );
 

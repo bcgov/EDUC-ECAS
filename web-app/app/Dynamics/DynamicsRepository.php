@@ -166,14 +166,10 @@ abstract class DynamicsRepository
         $data = json_decode($response->getBody()->getContents());
 
 
-        // TODO: This is handy for developing, but shouldn't be needed by Production
-        Log::debug('data returned from PATCH call to Dynamics API');
-        ob_start();
-        var_dump($data);
-        $data = ob_get_clean();
-        Log::debug($data);
+        // TODO - Investigate why the API is not returning the complete updated record -- some fields are missing
+        // Workaround - get a fresh copy instead
+        return $this->get($id);
 
-        return self::mapToLocal($data);
     }
 
     /*
