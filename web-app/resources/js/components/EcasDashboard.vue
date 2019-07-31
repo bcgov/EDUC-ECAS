@@ -8,7 +8,12 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <ecas-profile :data="data" :new_user="newUser"></ecas-profile>
+                        <ecas-profile
+                                :data="data.user"
+                                @edit-profile-request="showProfile"
+                        >
+
+                        </ecas-profile>
                     </div>
                     <profile-credentials :data="data" ></profile-credentials>
                 </div>
@@ -20,13 +25,23 @@
             </div>
         </div>
 
+        <modal name="profile_form" height="auto" :scrollable="true" :clickToClose="false">
+            <profile
+                    :user="local_data.user"
+                    :schools="data.schools"
+                    :regions="data.regions"
+                    :districts="data.districts"
+                    dusk="profile-component"
+                    :new_user="newUser"
+                    @profile-updated="updateProfile"
+            ></profile>
+        </modal>
+
     </div>
 
 </template>
 
 <script>
-    import {mapGetters}         from 'vuex';
-
 
     export default {
         name: "EcasDashboard",
@@ -36,22 +51,38 @@
         },
         data() {
             return {
-                new_user: false
+                local_data: this.data,
+                isMounted:  false
             }
         },
         mounted() {
             console.log('Ecas Profile Mounted');
 
-            this.$store.commit('SET_USER', this.data.user)
+            this.$modal.show('profile_form');
+
+            this.isMounted = true;
+
         },
+
         computed: {
-            ...mapGetters([
-                'getUser',
-            ]),
 
             newUser() {
-                return (this.data.user.id === null)
+                return (this.data.user.id === null);
             }
+
+        },
+
+        methods: {
+
+            showProfile() {
+                this.$modal.show('profile_form');
+            },
+
+            updateProfile(user) {
+                // We must have a valid user now
+                console.log('updateProfile method', user);
+                this.$store.commit('SET_USER', user)
+            },
 
         }
 

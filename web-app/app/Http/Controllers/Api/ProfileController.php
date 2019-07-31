@@ -66,7 +66,7 @@ class ProfileController extends BaseController
 
         $profile = $this->model->filter(['federated_id'=> $id])->first();
 
-        // TODO - Replace $request->all() below
+        // TODO - Remove before flight - dangerous
         $data = $request->all();
         $data['federated_id'] = Auth::id();
         $response = $this->model->update($profile['id'], $data);
@@ -78,7 +78,7 @@ class ProfileController extends BaseController
 
     public function destroy($federated_id)
     {
-        abort(401);
+        abort(401, 'method not available');
         // unauthorized
 
     }

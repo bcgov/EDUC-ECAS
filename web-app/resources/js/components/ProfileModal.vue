@@ -70,12 +70,12 @@
                             <form-error :errors="errors" field="city"></form-error>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col">
-                                <label for="region">Province</label>
-                                <select class="form-control" v-model="user_local.region.name" id="region" name="region">
-                                    <option v-bind:value="region.code" v-for="region in regions">{{ region.name }}</option>
-                                </select>
-                            </div>
+                            <!--<div class="form-group col">-->
+                                <!--<label for="region">Province</label>-->
+                                <!--<select class="form-control" v-model="user_local.region.name" id="region" name="region">-->
+                                    <!--<option v-bind:value="region.code" v-for="region in regions">{{ region.name }}</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
                             <div class="form-group col">
                                 <label for="postal_code" class="required">Postal Code</label>
                                 <input v-model="user_local.postal_code" type="text" class="form-control" name="postal_code"
@@ -86,22 +86,22 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col">
-                        <label for="district">Current District</label>
-                        <select class="form-control" v-model="user_local.district" id="district">
-                            <option value="">None</option>
-                            <option v-for="district in districts" :value="district">
-                                {{ district.name }}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="form-group col">
-                        <label for="school">Current School</label>
-                        <select class="form-control" v-model="user_local.school" id="school">
-                            <option value="">None</option>
-                            <option :value="school" v-for="school in schools">{{ school.name }}</option>
-                        </select>
-                    </div>
+                    <!--<div class="form-group col">-->
+                        <!--<label for="district">Current District</label>-->
+                        <!--<select class="form-control" v-model="user_local.district" id="district">-->
+                            <!--<option value="">None</option>-->
+                            <!--<option v-for="district in districts" :value="district">-->
+                                <!--{{ district.name }}-->
+                            <!--</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                    <!--<div class="form-group col">-->
+                        <!--<label for="school">Current School</label>-->
+                        <!--<select class="form-control" v-model="user_local.school" id="school">-->
+                            <!--<option value="">None</option>-->
+                            <!--<option :value="school" v-for="school in schools">{{ school.name }}</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
                 </div>
                 <div class="form-row">
                     <div class="form-group col">
@@ -125,7 +125,7 @@
                         <button class="btn btn-danger btn-block" v-on:click.prevent="cancelProfile">Cancel</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-primary btn-block" v-on:click.prevent="saveProfile" dusk="save">
+                        <button class="btn btn-primary btn-block" v-on:click.prevent="saveProfile">
                             <span>
                                 <div class="loader text-center" v-show="working"></div>
                             </span>
@@ -143,8 +143,6 @@
 
 <script>
     import FormError from './FormError.vue';
-    import axios from 'axios';
-
 
     export default {
         name: "ProfileModal",
@@ -217,11 +215,14 @@
                 };
 
                 if (this.new_user) {
-                    axios.post('/api/profiles/' . this.user.federated_id , data)
+
+                    console.log('new user', data, this.user.federated_id );
+                    window.axios.post('/api/profiles' , data)
                         .then(function (response) {
                             console.log('Create Profile');
                             form.working = false;
                             Event.fire('profile-updated', response.data);
+                            console.log('response', response.data );
                             form.closeModal()
                         })
                         .catch(function (error) {
@@ -233,7 +234,7 @@
                         });
                 }
                 else {
-                    axios.patch('/api/profiles/' . this.user.federated_id , data)
+                    window.axios.patch('/api/profiles/' + this.user.id , data)
                         .then(function (response) {
                             console.log('Patch Profile');
                             form.working = false;

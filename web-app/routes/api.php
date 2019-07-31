@@ -14,8 +14,10 @@ use Illuminate\Http\Request;
 */
 
 
+
+
 Route::group(['middleware' => ['auth:api']], function() {
-// Read and write resources
+
     Route::resource('/profiles'                               , 'Api\ProfileController', ['except' => ['index']]);
     Route::resource('/{profile_id}/profile-credentials'       , 'Api\ProfileCredentialController' );
     Route::resource('/{profile_id}/assignments'               , 'Api\AssignmentController');
