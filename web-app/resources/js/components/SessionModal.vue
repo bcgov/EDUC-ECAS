@@ -45,8 +45,11 @@
                             No thank you</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-primary btn-block" v-on:click="applyToSession(session)">
+                        <button v-show=" ! working" class="btn btn-primary btn-block" v-on:click="applyToSession(session)">
                             Yes please</button>
+                        <span>
+                                <div class="loader text-center" v-show="working"></div>
+                            </span>
                     </div>
                 </template>
                 <template v-if="isStatus(session, 'Applied')">
@@ -88,7 +91,8 @@
         },
         data() {
             return {
-                session_local: []
+                session_local: [],
+                working: false,
             }
         },
         mounted() {
@@ -131,29 +135,32 @@
             },
             postSession(session, action) {
 
-                this.closeModal()
+                var form = this;
 
-                var form = this
+                if (this.working) {
+                    return
+                }
 
                 // Only post if something needs to be done
                 if (action !== session.status) {
 
-                    // assume success! and change the status before we post
-                    // TODO: should handle failure gracefully!
-                    session.status = action
+                    form.working = true;
 
-                    axios.post('/api/sessions', {
+                    axios.post('/api/' + form.getUser.id + '/assignments', {
                         assignment_id: session.assignment_id,
                         session_id: session.id,
-                        user_id: form.getUser.id,
                         action: action
                     })
                         .then(function (response) {
-                            Event.fire('session_status_updated', response.data)
+                            Event.fire('session_status_updated', response.data);
+                            session.status = action;
+                            this.closeModal();
+                            form.working = false;
                             console.log(response.data)
                         })
                         .catch(function (error) {
                             console.log('Failure!')
+                            form.working = false;
                         });
                 }
             }

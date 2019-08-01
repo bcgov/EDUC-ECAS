@@ -4,18 +4,14 @@ namespace App\Http\Controllers;
 
 
 use App\Dynamics\Decorators\CacheDecorator;
-use App\Http\Resources\AssignmentResource;
 use App\Http\Resources\ProfileCredentialResource;
 use App\Http\Resources\ProfileResource;
 use App\Http\Resources\SchoolResource;
 use App\Http\Resources\SessionResource;
 use App\Http\Resources\SimpleResource;
 use App\Interfaces\iModelRepository;
-use App\Http\Resources\DashboardResource;
-use App\User;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
 /*
  * Main Controller for the application
@@ -53,16 +49,14 @@ class DashboardController extends Controller
             'email'       => 'bceid@example.com',
         ]);
 
-        // TODO - move this mess of code to a service provider
+        // TODO -----------------------  move this mess of code to a service provider ---------------------
 
         $repository             = env('DATASET') == 'Dynamics' ? 'Dynamics' : 'MockEntities\Repository';
 
         if($profile['id']) {
             $profile_credentials    = ( new CacheDecorator(App::make('App\\' . $repository .'\ProfileCredential')))->filter(['contact_id'=> $profile['id']]);
-            $assignments            = ( new CacheDecorator(App::make('App\\' . $repository .'\Assignment')))->filter(['contact_id'=> $profile['id']]);
         } else {
             $profile_credentials    = collect([]);
-            $assignments            = collect([]);
         }
 
         $sessions               = ( new CacheDecorator(App::make('App\\' . $repository .'\Session')))->all();
@@ -72,9 +66,8 @@ class DashboardController extends Controller
         $schools                = ( new CacheDecorator(App::make('App\\' . $repository .'\School')))->all();
         $subjects               = ( new CacheDecorator(App::make('App\\' . $repository .'\Subject')))->all();
 
-        $assignment_statuses    = ( new CacheDecorator(App::make('App\\' . $repository .'\AssignmentStatus')))->all();
 
-        // TODO - end of mess -------------------------------------
+        // TODO ------------------------------------ end of mess -------------------------------------
 
         return view('dashboard', [
             'user'                  => new ProfileResource($profile),
