@@ -56,6 +56,37 @@ class ProfileCredentialTest extends BaseMigrations
     }
 
 
+
+    public function create_a_new_credential_via_the_api()
+    {
+        $profile = (new Profile())->all()->first();
+        $credential = (new Credential())->all()->first();
+
+        $results = $this->api->create([
+            'contact_id'    => $profile['id'],
+            'credential_id' => $credential['id'],
+            'verified'      => 'Unverified'
+        ]);
+
+        // TODO - assert something - create not working at present
+        // TODO - re-enable this test
+
+    }
+
+
+
+    public function delete_a_credential_via_the_api()
+    {
+        $credential = (new ProfileCredential())->all()->first();
+
+        $results = $this->api->delete($credential['id']);
+
+        // TODO - re-enable this test; don't want to run it as it deletes credentials from api
+        // Better to add a new record and then delete it - but create isn't working at present
+
+    }
+
+
     /** @test */
     public function get_all_credentials_from_api_via_the_cache()
     {

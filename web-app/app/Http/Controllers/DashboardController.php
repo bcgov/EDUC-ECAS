@@ -72,12 +72,13 @@ class DashboardController extends Controller
         $schools                = ( new CacheDecorator(App::make('App\\' . $repository .'\School')))->all();
         $subjects               = ( new CacheDecorator(App::make('App\\' . $repository .'\Subject')))->all();
 
+        $assignment_statuses    = ( new CacheDecorator(App::make('App\\' . $repository .'\AssignmentStatus')))->all();
+
         // TODO - end of mess -------------------------------------
 
         return view('dashboard', [
             'user'                  => new ProfileResource($profile),
             'user_credentials'      => ProfileCredentialResource::collection($profile_credentials),
-            'assignments'           => AssignmentResource::collection($assignments),
             'sessions'              => SessionResource::collection($sessions),
             'subjects'              => SimpleResource::collection($subjects),
             'districts'             => SimpleResource::collection($districts),

@@ -213,8 +213,7 @@
                 var form = this;
 
                 axios.post('/api/' + form.getUser.id + '/profile-credentials', {
-                    credential_id: form.new_credential,
-                    user_id: form.getUser.id
+                    credential_id: form.new_credential
                 })
                     .then(function (response) {
                         form.working = false;
@@ -233,9 +232,7 @@
 
                 var form = this;
 
-                axios.post('/ap/credentials/delete', {
-                    profile_credential_id: profile_credential.id
-                })
+                axios.delete('/api/' + form.getUser.id + '/profile-credentials/' + profile_credential.id )
                     .then(function (response) {
                         form.working = false;
                         Event.fire('credential-deleted', response.data);

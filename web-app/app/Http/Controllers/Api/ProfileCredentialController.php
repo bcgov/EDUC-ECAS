@@ -64,7 +64,7 @@ class ProfileCredentialController extends BaseController
     {
 
         // check user is updating their own profile
-        $profile = $this->model->get($profile_id);
+        $profile = $this->profile->get($profile_id);
         $this->checkOwner($request, $profile['federated_id']);
 
 
@@ -79,9 +79,11 @@ class ProfileCredentialController extends BaseController
             'verified'      => 'Unverified'
         ]);
 
-        $new_record = $this->model->get($profile_credential_id);
+        return 'success: ' . $profile_credential_id;
 
-        return Response::json(new ProfileCredentialResource($new_record), 200);
+        //$new_record = $this->model->all();
+
+        //return Response::json(new ProfileCredentialResource($new_record), 200);
     }
 
     public function destroy($profile_id, $id)

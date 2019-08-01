@@ -7,7 +7,6 @@
         <dashboard-component
             :user="{{ json_encode($user) }}"
             :user_credentials="{{ json_encode($user_credentials) }}"
-            :assignments="{{ json_encode($assignments) }}"
             :sessions="{{ json_encode($sessions) }}"
             :subjects="{{ json_encode($subjects) }}"
             :districts="{{ json_encode($districts) }}"

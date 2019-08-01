@@ -17,7 +17,6 @@ class AssignmentResource extends JsonResource
     public function toArray($request)
     {
         $repository             = env('DATASET') == 'Dynamics' ? 'Dynamics' : 'MockEntities\Repository';
-        $sessions               = ( new CacheDecorator(App::make('App\\' . $repository .'\Session')))->all();
         $roles                  = ( new CacheDecorator(App::make('App\\' . $repository .'\Role')))->all();
         $contract_stages        = ( new CacheDecorator(App::make('App\\' . $repository .'\ContractStage')))->all();
         $assignment_statuses    = ( new CacheDecorator(App::make('App\\' . $repository .'\AssignmentStatus')))->all();
