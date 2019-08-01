@@ -34,4 +34,6 @@ class District extends DynamicsRepository implements iModelRepository
 
     }
 
+    public static $filter_quote = '\'';
+
 }

@@ -32,6 +32,17 @@ class DistrictTest extends BaseMigrations
 
     }
 
+    /** @test */
+    public function the_api_can_filter_by_district_name()
+    {
+        $results = $this->api->filterContains([ 'name' => 'Camp']);
+
+        $this->assertInstanceOf('Illuminate\Support\Collection', $results);
+        $this->assertTrue(count($results) == 1 );
+        $this->assertTrue($results[0]['name'] == 'Campbell River(72)');
+
+    }
+
 
     /** @test */
     public function get_all_districts_from_api_via_the_cache()
