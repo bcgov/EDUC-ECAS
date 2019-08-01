@@ -50,6 +50,11 @@ class CacheDecorator implements iModelRepository
         return $this->model->filter($filter);
     }
 
+    public function filterContains(array $filter)
+    {
+        return $this->model->filterContains($filter);
+    }
+
     public function create($data)
     {
         Cache::forget($this->cacheKey());
@@ -64,6 +69,7 @@ class CacheDecorator implements iModelRepository
         return $this->model->update($id, $data);
     }
 
+
     public function delete($id)
     {
         Cache::forget($this->cacheKey());
@@ -71,7 +77,6 @@ class CacheDecorator implements iModelRepository
 
         return $this->model->delete($id);
     }
-
 
     public function prebuildCache()
     {
@@ -88,5 +93,4 @@ class CacheDecorator implements iModelRepository
 
         return $id ? $class_name . '.' . $id : $class_name;
     }
-    
 }

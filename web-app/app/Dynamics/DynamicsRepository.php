@@ -106,6 +106,28 @@ abstract class DynamicsRepository
 
 
     /*
+     * Read data from Dynamics, but filter by a specific field
+     * This function takes an array as a filter, but only filter based on one field!!
+     * You would need to refactor to make it work if more than one filter field is required.
+     */
+    public function filterContains(array $filter)
+    {
+        $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table .
+            '&$select=' . implode(',', static::$fields) .
+            '&$filter=contains(' . static::$fields[key($filter)] . ',' .
+            static::$filter_quote . current($filter) . static::$filter_quote . ')';
+
+        $response = static::queryAPI('GET', $query);
+
+        $data = json_decode($response->getBody()->getContents())->value;
+
+        $collection = self::convertDynamicsToLocalVariables($data);
+
+        return $collection;
+    }
+
+
+    /*
     * Read data from Dynamics
     * if no $id is passed in the all records from the table are returned
     * Passing in and $id will return on specific record based on the table's primary key

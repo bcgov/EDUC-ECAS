@@ -50,6 +50,18 @@ abstract class MockRepository
 
         return $collection_of_arrays;
     }
+
+
+    public function filterContains(array $filter)
+    {
+        $collection = $this->model->where(key($filter), current($filter))->get();
+        $collection_of_arrays = $collection->map( function ($item) {
+            return $item->toArray();
+        });
+
+        return $collection_of_arrays;
+    }
+
     /*
      * Read data from Dynamics
      * if no $id is passed in the all records from the table are returned

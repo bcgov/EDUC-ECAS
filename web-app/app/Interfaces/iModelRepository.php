@@ -13,6 +13,8 @@ interface iModelRepository
 
     public function filter(array $filter);
 
+    public function filterContains(array $filter);
+
     public function create($data);
 
     public function firstOrCreate($id, $data);

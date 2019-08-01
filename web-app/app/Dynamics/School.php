@@ -25,6 +25,7 @@ class School extends DynamicsRepository implements iModelRepository
         'city' => 'educ_schoolcity'
     ];
 
+
     public function all()
     {
         $collection = parent::all();
@@ -32,6 +33,9 @@ class School extends DynamicsRepository implements iModelRepository
 
 
     }
+
+    public static $filter_quote = '\'';
+
 
 
 }

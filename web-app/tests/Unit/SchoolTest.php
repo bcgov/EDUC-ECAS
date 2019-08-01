@@ -36,11 +36,13 @@ class SchoolTest extends BaseMigrations
 
 
     /** @test */
-    public function the_api_should_return_more_than_50_schools()
+    public function the_api_can_filter_by_school_name()
     {
-        $results = $this->api->all();
+        $results = $this->api->filterContains([ 'name' => '100']);
+
         $this->assertInstanceOf('Illuminate\Support\Collection', $results);
-        $this->assertTrue(count($results) > 50 );
+        $this->assertTrue(count($results) == 2 );
+        $this->assertTrue($results[0]['name'] == '100 Mile House Elementary');
 
     }
 
