@@ -34,7 +34,7 @@ class Assignment extends DynamicsRepository implements iModelRepository
 
     public static $links = [
         'session_id'     => Session::class,
-        'id'        => Profile::class,
+        'contact_id'     => Profile::class,
         'role_id'        => Role::class,
         'status'         => AssignmentStatus::class,
         'contract_stage' => ContractStage::class

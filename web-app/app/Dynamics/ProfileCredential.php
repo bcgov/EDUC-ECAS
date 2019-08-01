@@ -26,8 +26,8 @@ class ProfileCredential extends DynamicsRepository implements iModelRepository
     ];
 
     public static $links = [
-        'id'       => Profile::class,
-        'credential_id' => Credential::class
+        'contact_id'        => Profile::class,
+        'credential_id'     => Credential::class
     ];
 
 }
