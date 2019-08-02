@@ -44,12 +44,11 @@
                         <form-error :errors="errors" field="phone"></form-error>
                     </div>
                     <div class="form-group col">
-                        <label for="social_insurance_number">S.I.N.</label>
+                        <label for="social_insurance_number">Social Insurance Number</label>
                         <input v-if=" ! user_local.is_SIN_on_file" v-model="user_local.social_insurance_number" type="text" class="form-control"
                                name="social_insurance_number" id="social_insurance_number">
-                        <div v-if="user_local.is_SIN_on_file">
-                            <p class="px-3 py-1"><i class="fas fa-check"></i>Received - thank you</p>
-                        </div>
+                        <input v-if="user_local.is_SIN_on_file" disabled type="text" class="form-control"
+                               name="social_insurance_number" placeholder="Received - thank you">
                     </div>
                 </div>
                 <div class="form-row">
