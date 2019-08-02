@@ -44,11 +44,11 @@
                                         <font-awesome-icon v-else icon="trash" @click="deleteCredential(credential)"
                                                            alt="delete" style="color: red;"/>
                                     </div>
-                                    <div class="col">{{ credential.name }}</div>
+                                    <div class="col">{{ credential.credential.name }}</div>
                                 </div>
                                 <div class="row pt-3">
                                     <div class="col-1">
-                                        <button class="btn btn-primary btn-sm" @click="addCredential">
+                                        <button class="btn btn-primary btn-sm" @click="addCredential(new_credential)">
                                             <span>
                                                 <div class="loader text-center" v-show="working"></div>
                                             </span>
@@ -58,7 +58,7 @@
                                     <div class="col">
                                         <select v-model="new_credential">
                                             <option value="0">Select New Credential</option>
-                                            <option v-for="credential in credentials_available" :value="credential.id">
+                                            <option v-for="credential in credentials_available" :value="credential">
                                                 {{ credential.name }}
                                             </option>
                                         </select>
@@ -205,20 +205,20 @@
             }
         },
         methods: {
-            addCredential() {
-                console.log('adding credential');
+            addCredential(selection) {
+                console.log('adding credential', selection);
 
                 this.working = true;
 
                 var form = this;
 
                 axios.post('/api/' + form.getUser.id + '/profile-credentials', {
-                    credential_id: form.new_credential
+                    credential_id: form.new_credential.id
                 })
                     .then(function (response) {
                         form.working = false;
                         Event.fire('credential-added', response.data);
-                        console.log('Success!')
+                        console.log('Create Success!', response.data)
                     })
                     .catch(function (error) {
                         form.working = false;
@@ -235,8 +235,8 @@
                 axios.delete('/api/' + form.getUser.id + '/profile-credentials/' + profile_credential.id )
                     .then(function (response) {
                         form.working = false;
-                        Event.fire('credential-deleted', response.data);
-                        console.log('Success!')
+                        Event.fire('credential-deleted', profile_credential.credential.id);
+                        console.log('Delete Success!', profile_credential.credential.id )
                     })
                     .catch(function (error) {
                         form.working = false;
@@ -250,34 +250,40 @@
                 }).length
             },
             pushCredential(profile_credential) {
-                console.log('pushing credential');
+                console.log('pushing credential', profile_credential.data.credential.id );
 
                 // Get the credential
-                let index = this.credentials_available.findIndex(elm => elm.id === profile_credential.credential_id);
-                let credential = this.credentials_available[index];
-                credential.credential_id = credential.id;
-                credential.id = profile_credential.id;
+                var index = this.credentials_available.findIndex( function(credential){
+                    return credential.id === profile_credential.data.credential.id;
+                });
+
+                console.log('credential index', index);
 
                 // Remove the credential from the available list
                 this.credentials_available.splice(index, 1);
 
                 // Add to the applied list
-                this.credentials_applied.unshift(credential)
+                this.credentials_applied.push(profile_credential.data);
 
                 this.new_credential = 0;
             },
             removeCredential(profile_credential) {
-                console.log('remove credential')
+                console.log('removeCredential', profile_credential);
 
                 // Get the credential
-                let index = this.credentials_applied.findIndex(elm => elm.id === profile_credential.id)
-                let credential = this.credentials_applied[index]
+                let index = this.credentials_applied.findIndex(credential => credential.credential.id === profile_credential);
+
+                console.log('get the credential', index);
+
+                let credential = this.credentials_applied[index].credential;
+
+
 
                 // Remove the credential from the applied list
-                this.credentials_applied.splice(index, 1)
+                this.credentials_applied.splice(index, 1);
 
                 // Add to the available list
-                this.credentials_available.unshift(credential)
+                this.credentials_available.unshift(credential);
 
                 this.new_credential = 0;
             },

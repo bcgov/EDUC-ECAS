@@ -2,7 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Dynamics\Credential;
 use App\Dynamics\Decorators\CacheDecorator;
+use App\Dynamics\ProfileCredential;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\App;
 
@@ -27,7 +29,7 @@ class ProfileCredentialResource extends JsonResource
             'id'            => $this['id'],
             'contact_id'    => $this['contact_id'],
             'credential'    => new SimpleResource($credentials->firstWhere('id', $this['credential_id'])),
-            'verified'      => ($this['verified'] == "Yes") ? TRUE : FALSE,
+            'verified'      => $this['verified'] == ProfileCredential::$status['Yes'] ? TRUE : FALSE,
         ];
     }
 }

@@ -47,8 +47,8 @@ class ProfileCredentialTest extends BaseMigrations
     /** @test */
     public function get_filtered_set_of_credentials_via_the_api()
     {
-        $filtered = $this->api->filter([ 'contact_id' => '1a2abe23-3d64-e911-b80a-005056833c5b' ]);
-
+        $profile = (new Profile())->all()->first();
+        $filtered = $this->api->filter([ 'contact_id' => $profile['id'] ]);
 
         $this->assertInstanceOf('Illuminate\Support\Collection', $filtered);
         $this->verifySingle($filtered->first());
@@ -56,20 +56,21 @@ class ProfileCredentialTest extends BaseMigrations
     }
 
 
-
+    /** @test */
     public function create_a_new_credential_via_the_api()
     {
         $profile = (new Profile())->all()->first();
         $credential = (new Credential())->all()->first();
 
-        $results = $this->api->create([
+        $new_record_id = $this->api->create([
             'contact_id'    => $profile['id'],
             'credential_id' => $credential['id'],
-            'verified'      => 'Unverified'
+            'verified'      => '610410002'
         ]);
 
-        // TODO - assert something - create not working at present
-        // TODO - re-enable this test
+        $results = $this->api->get($new_record_id);
+
+        $this->verifySingle($results);
 
     }
 

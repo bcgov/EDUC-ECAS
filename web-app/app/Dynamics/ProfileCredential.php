@@ -30,4 +30,10 @@ class ProfileCredential extends DynamicsRepository implements iModelRepository
         'credential_id'     => Credential::class
     ];
 
+    public static $status = [
+        'Yes'           => 610410000,
+        'No'            => 610410001,
+        'Unverified'    => 610410002
+    ];
+
 }

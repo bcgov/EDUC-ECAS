@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Dynamics\Decorators\CacheDecorator;
+use App\Dynamics\ProfileCredential;
 use App\Interfaces\iModelRepository;
 use App\Http\Resources\ProfileCredentialResource;
 use Illuminate\Http\Request;
@@ -40,7 +41,7 @@ class ProfileCredentialController extends BaseController
         $credentials =  $this->model->filter(['contact_id' => $profile['id']]);
 
         $filtered = $credentials->filter( function ($credential) {
-            return $credential['verified'] <> "No";
+            return $credential['verified'] <> ProfileCredential::$status['No'];
         });
 
         return $filtered;
@@ -76,23 +77,20 @@ class ProfileCredentialController extends BaseController
         $profile_credential_id = $this->model->create([
             'contact_id'    => $profile['id'],
             'credential_id' => $request['credential_id'],
-            'verified'      => 'Unverified'
+            'verified'      => ProfileCredential::$status['Unverified']
         ]);
 
-        return 'success: ' . $profile_credential_id;
+        $new_record = $this->model->get($profile_credential_id);
 
-        //$new_record = $this->model->all();
-
-        //return Response::json(new ProfileCredentialResource($new_record), 200);
+        return new ProfileCredentialResource($new_record);
     }
 
-    public function destroy($profile_id, $id)
+    public function destroy(Request $request, $profile_id, $id)
     {
+        // check user is updating their own profile
         $profile = $this->profile->get($profile_id);
+        $this->checkOwner($request, $profile['federated_id']);
 
-        if($this->user->id <> $profile['federated_id']) {
-            abort(401, 'unauthorized');
-        }
 
         $this->model->delete($id);
 
