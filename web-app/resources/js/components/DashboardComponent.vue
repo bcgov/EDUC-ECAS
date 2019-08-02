@@ -16,7 +16,7 @@
                             <div class="card-body">
                                 <p v-show="!new_user">{{ getUser.email }}<br/>
                                     {{ getUser.address_1 }}<br/>
-                                    {{ getUser.city }}, {{ getUser.region.id }} {{ getUser.postal_code }}
+                                    {{ getUser.city }}, <span v-if="mounted">{{ getUser.region.id }}</span> {{ getUser.postal_code }}
                                 </p>
                                 <p v-if="getUser.professional_certificate_bc">
                                     <strong>BC Professional Certificate:</strong> {{ getUser.professional_certificate_bc }}
@@ -169,7 +169,8 @@
                 filter: '',
                 current_session: {},
                 new_user: false,
-                working: false
+                working: false,
+                mounted: false
             }
         },
         mounted() {
@@ -184,9 +185,11 @@
             Event.listen('session_status_updated', this.updateSessionStatus);
 
             if (this.getUser.id === undefined) {
-                this.new_user = true
+                this.new_user = true;
                 this.showProfile()
             }
+
+            this.mounted = true;
         },
         computed: {
             ...mapGetters([
