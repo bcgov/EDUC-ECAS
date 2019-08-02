@@ -16,9 +16,11 @@ class Assignment extends DynamicsRepository implements iModelRepository
 
     public static $primary_key = 'educ_assignmentid';
 
-    const APPLIED_STATUS = 'Applied';
-    const ACCEPTED_STATUS = 'Accepted';
-    const DECLINED_STATUS = 'Declined';
+    const OPEN_STATUS       = 'Open';
+    const APPLIED_STATUS    = 'Applied';
+    const ACCEPTED_STATUS   = 'Accepted';
+    const DECLINED_STATUS   = 'Declined';
+    const WITHDREW_STATUS   = 'Withdrew';
 
     const INACTIVE_STATE = 1;
 

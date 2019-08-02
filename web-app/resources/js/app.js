@@ -65,9 +65,9 @@ const store = new Vuex.Store({
             state.sessions = sessions;
         },
         'UPDATE_SESSION_STATUS' (state, response) {
-            const index = state.sessions.findIndex(session => session.id === response.session_id)
-            let session = state.sessions[index]
-            session.status = response.status
+            const index = state.sessions.findIndex(session => session.id === response.session_id);
+            let session = state.sessions[index];
+            session.status = response.status;
             Vue.set(state.sessions, index, session)
         }
     },

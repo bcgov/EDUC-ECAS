@@ -295,7 +295,7 @@
                 return session.status === status
             },
             sessionStatus(session) {
-                switch (session.status) {
+                switch (session.status.name) {
                     case 'Applied':
                         return "You've Applied"
                     case 'Invited':
@@ -334,7 +334,8 @@
                 this.$store.commit('SET_USER', user.data)
             },
             updateSessionStatus(response) {
-                this.$store.commit('UPDATE_SESSION_STATUS', response)
+                console.log('updateSessionStatus', response);
+                this.$store.commit('UPDATE_SESSION_STATUS', response);
             }
         }
 

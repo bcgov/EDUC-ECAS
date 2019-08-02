@@ -76,7 +76,7 @@ class ProfileTest extends BaseMigrations
     }
 
 
-    /** @test */
+
     public function delete_a_single_profile_via_the_api()
     {
 

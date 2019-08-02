@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Dynamics\Decorators\CacheDecorator;
+use App\Http\Resources\AssignmentResource;
 use App\Http\Resources\ProfileCredentialResource;
 use App\Http\Resources\ProfileResource;
 use App\Http\Resources\SchoolResource;
@@ -55,11 +56,29 @@ class DashboardController extends Controller
 
         if($profile['id']) {
             $profile_credentials    = ( new CacheDecorator(App::make('App\\' . $repository .'\ProfileCredential')))->filter(['contact_id'=> $profile['id']]);
+            $assignments            = ( new CacheDecorator(App::make('App\\' . $repository .'\Assignment')))->filter(['contact_id'=> $profile['id']]);
         } else {
             $profile_credentials    = collect([]);
+            $assignments            = collect([]);
         }
 
         $sessions               = ( new CacheDecorator(App::make('App\\' . $repository .'\Session')))->all();
+
+        $sessions_with_assignments = collect([]);
+
+        $sessions->each( function ($session, $index) use($assignments, $profile, $sessions_with_assignments) {
+
+            // filter for any assignments with the same assignment_id AND contact_id
+            $filtered_assignments = $assignments->filter( function($assignment) use($session, $profile) {
+                return $assignment['session_id'] == $session['id'] AND $assignment['contact_id'] == $profile['id'];
+            });
+
+            // if found, add them to $session
+            $session['assignment']    = $filtered_assignments->count() > 0 ? $filtered_assignments->first() : null;
+
+            $sessions_with_assignments->push($session);
+        });
+
         $districts              = ( new CacheDecorator(App::make('App\\' . $repository .'\District')))->all();
         $credentials            = ( new CacheDecorator(App::make('App\\' . $repository .'\Credential')))->all();
         $regions                = ( new CacheDecorator(App::make('App\\' . $repository .'\Region')))->all();
@@ -69,10 +88,11 @@ class DashboardController extends Controller
 
         // TODO ------------------------------------ end of mess -------------------------------------
 
+
         return view('dashboard', [
             'user'                  => new ProfileResource($profile),
             'user_credentials'      => ProfileCredentialResource::collection($profile_credentials),
-            'sessions'              => SessionResource::collection($sessions),
+            'sessions'              => SessionResource::collection($sessions_with_assignments),
             'subjects'              => SimpleResource::collection($subjects),
             'districts'             => SimpleResource::collection($districts),
             'regions'               => SimpleResource::collection($regions),

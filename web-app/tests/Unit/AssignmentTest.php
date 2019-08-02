@@ -4,6 +4,8 @@ namespace Tests\Unit;
 
 use App\Dynamics\Assignment;
 use App\Dynamics\Decorators\CacheDecorator;
+use App\Dynamics\Profile;
+use App\Dynamics\Session;
 use Tests\BaseMigrations;
 
 class AssignmentTest extends BaseMigrations
@@ -39,6 +41,68 @@ class AssignmentTest extends BaseMigrations
     }
 
 
+    /** @test */
+    public function create_a_new_assignment_via_the_api()
+    {
+        $profile = (new Profile())->all()->first();
+        $session = (new Session())->all()->first();
+
+        $new_record_id = $this->api->create([
+            'contact_id'    => $profile['id'],
+            'session_id'    => $session['id']
+        ]);
+
+        $results = $this->api->get($new_record_id);
+
+        $this->verifySingle($results);
+
+    }
+
+    // disable - we don't want to delete too many Dynamics records
+    public function delete_an_assignment_via_the_api()
+    {
+        $assignment = $this->api->all()->first();
+
+        $result = $this->api->delete($assignment['id']);
+
+        $this->assertTrue($result);
+
+    }
+
+
+//    /** @test */
+//    public function delete_jonathans_duplicate_assignments()
+//    {
+//        $assignments = $this->api->filter(['contact_id' => "a9dbd5d8-3db3-e911-b80d-005056833c5b" ]);
+//
+//        $result = $this->api->delete($assignments->first()['id']);
+//
+//        dd($result, $assignments->count());
+//
+//        $this->assertTrue($result);
+//
+//    }
+
+
+    /** @test */
+    public function update_an_assignment_via_the_api()
+    {
+        $profile = (new Profile())->all()->first();
+        $session = (new Session())->all()->first();
+
+        $assignment_id = $this->api->all()->first();
+
+        $new_assignment = $this->api->update($assignment_id['id'], [
+            'contact_id'    => $profile['id'],
+            'session_id'    => $session['id']
+        ]);
+
+        // clean up as this test will have likely messed up an existing assignment record in Dynamics
+        $this->api->delete($assignment_id['id']);
+
+        $this->verifySingle($new_assignment);
+
+    }
 
     /** @test */
     public function get_filtered_set_of_assignments_via_the_api()

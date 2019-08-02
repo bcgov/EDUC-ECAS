@@ -33,6 +33,9 @@
             <template v-else-if="isStatus(session, 'Completed')">
                 <p>This session is now complete. If there are fees or expenses attached to the session please submit receipts if required. Payments can be expected within 4-6 weeks. If you have any questions, please contact exams@gov.bc.ca</p>
             </template>
+            <template v-else-if="isStatus(session, 'Withdrew')">
+                <p>You have voluntarily withdrawn from this session.</p>
+            </template>
             <template v-else>
                 <p>Unknown Session Status</p>
             </template>
@@ -41,11 +44,11 @@
             <div class="row">
                 <template v-if="isStatus(session, 'Open')">
                     <div class="col">
-                        <button class="btn btn-danger btn-block" v-on:click="applyToSession(session, false)">
+                        <button class="btn btn-danger btn-block" v-on:click="closeModal()">
                             No thank you</button>
                     </div>
                     <div class="col">
-                        <button v-show=" ! working" class="btn btn-primary btn-block" v-on:click="applyToSession(session)">
+                        <button v-show=" ! working" class="btn btn-primary btn-block" v-on:click="applyToSession(session, true)">
                             Yes please</button>
                         <span>
                                 <div class="loader text-center" v-show="working"></div>
@@ -64,7 +67,7 @@
                             Decline</button>
                     </div>
                     <div class="col">
-                        <button v-if="hasSIN" class="btn btn-primary btn-block" v-on:click="acceptInvitation(session)">
+                        <button v-if="hasSIN" class="btn btn-primary btn-block" v-on:click="acceptInvitation(session, true )">
                             Accept</button>
                         <button v-else class="btn btn-primary btn-block" v-on:click="editProfile">
                             Add SIN</button>
@@ -103,7 +106,7 @@
                 'getUser'
             ]),
             hasSIN() {
-                return this.getUser.social_insurance_number ? true : false
+                return this.getUser.is_SIN_on_file;
             }
         },
         methods: {
@@ -111,29 +114,31 @@
                 this.$modal.hide('session_form');
             },
 
-
             isStatus: function (session, status) {
-                return session.status === status
+                return session.status.name === status
             },
+
             acceptInvitation(session, accept) {
 
-                // If nothing passed in assume user wants to accept
-                if (accept === undefined) accept = true;
+                let action = accept ? 'Accepted' : 'Declined';
 
-                let action = accept ? 'Accepted' : 'Declined'
-
-                this.postSession(session, action)
+                this.updateAssignment(session, action)
             },
+
             applyToSession (session, attend) {
 
-                // If nothing passed in assume user wants to attend
-                if (attend === undefined) attend = true;
+                if(attend) {
+                    this.createAssignment(session);
+                }
 
-                let action = attend ? 'Applied' : 'Open'
+                if(! attend) {
+                    this.updateAssignment(session, 'Withdrew')
+                }
 
-                this.postSession(session, action)
             },
-            postSession(session, action) {
+
+
+            createAssignment(session) {
 
                 var form = this;
 
@@ -141,29 +146,57 @@
                     return
                 }
 
+                form.working = true;
+
+                axios.post('/api/' + form.getUser.id + '/assignments', {
+                    session_id:     session.id
+                })
+                    .then(function (response) {
+                        Event.fire('session_status_updated', response.data.data );
+                        session.status = response.data.data.status;
+                        form.working = false;
+                        console.log('assignment created', response.data.data )
+                    })
+                    .catch(function (error) {
+                        console.log('Failure!', error);
+                        form.working = false;
+                    });
+
+            },
+
+            updateAssignment(session, action) {
+
+                var form = this;
+
+                if (this.working) {
+                    return
+                }
+
+                console.log('updateAssignment', action, session.status);
+
                 // Only post if something needs to be done
-                if (action !== session.status) {
+                if (action !== session.status.name ) {
 
                     form.working = true;
 
-                    axios.post('/api/' + form.getUser.id + '/assignments', {
-                        assignment_id: session.assignment_id,
-                        session_id: session.id,
-                        action: action
+                    axios.patch('/api/' + form.getUser.id + '/assignments/' + session.assignment.id, {
+                        session_id:     session.id,
+                        action:         action
                     })
                         .then(function (response) {
-                            Event.fire('session_status_updated', response.data);
-                            session.status = action;
+                            Event.fire('session_status_updated', response.data.data );
+                            session.status = response.data.data.status;
                             this.closeModal();
                             form.working = false;
-                            console.log(response.data)
+                            console.log(response.data.data)
                         })
                         .catch(function (error) {
-                            console.log('Failure!')
+                            console.log('Update Session Failure!', error);
                             form.working = false;
                         });
                 }
-            }
+            },
+
         }
     }
 </script>

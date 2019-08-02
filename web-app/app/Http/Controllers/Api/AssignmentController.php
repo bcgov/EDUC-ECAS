@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Dynamics\Assignment;
 use App\Dynamics\Decorators\CacheDecorator;
+use App\Http\Resources\AssignmentResource;
 use App\Interfaces\iModelRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
 class AssignmentController extends BaseController
@@ -49,41 +52,62 @@ class AssignmentController extends BaseController
 
         // TODO - validate record
 
-
-
         $new_record_id = $this->model->create([
             'contact_id' => $profile['id'],
             'session_id' => $request['session_id']
+            // The initial status automatically defaults to `Applied`
         ]);
 
+        return new AssignmentResource($this->model->get($new_record_id));
+    }
 
-        // TODO - Remove before flight
-        // TODO - Not sure why we're updating records in the store() method -- ask Dirk
-/*
-        if ($action == Assignment::APPLIED_STATUS) {
+    public function update(Request $request, $profile_id, $assignment_id)
+    {
 
+        // check user is updating their own profile
+        $profile = $this->profile->get($profile_id);
+        $this->checkOwner($request, $profile['federated_id']);
+
+        // TODO - validate record - there's too much logic in the Vue component. Javascript data can be manipulated by the user
+
+        Log::debug('Assignment update - requested action: ' . $request['action'] );
+
+        if ($request['action'] == Assignment::WITHDREW_STATUS) {
+            $new_status = $this->assignment_statuses->firstWhere('name', Assignment::WITHDREW_STATUS);
+
+            $updated_assignment = $this->model->update($assignment_id, [
+                'status' => $new_status['id'],
+                'state'  => Assignment::INACTIVE_STATE
+            ]);
         }
-        elseif ($action == Assignment::ACCEPTED_STATUS) {
+        elseif ($request['action'] == Assignment::APPLIED_STATUS) {
+            $assignment_status_key = array_search(Assignment::APPLIED_STATUS, array_column($this->assignment_statuses, 'name'));
+
+            $updated_assignment = $this->model->update($assignment_id, [
+                'status' => $this->assignment_statuses[$assignment_status_key]['id']
+            ]);
+        }
+        elseif ($request['action'] == Assignment::ACCEPTED_STATUS) {
             $assignment_status_key = array_search(Assignment::ACCEPTED_STATUS, array_column($this->assignment_statuses, 'name'));
-            Assignment::update($request['assignment_id'], ['status' => $this->assignment_statuses[$assignment_status_key]['id']]);
+
+            $updated_assignment = $this->model->update($assignment_id, [
+                'status' => $this->assignment_statuses[$assignment_status_key]['id']
+            ]);
         }
-        elseif ($action == Assignment::DECLINED_STATUS) {
+        elseif ($request['action'] == Assignment::DECLINED_STATUS) {
             $assignment_status_key = array_search(Assignment::DECLINED_STATUS, array_column($this->assignment_statuses, 'name'));
-            Assignment::update($request['assignment_id'], [
+
+            $updated_assignment = $this->model->update($assignment_id, [
                 'status' => $this->assignment_statuses[$assignment_status_key]['id'],
                 'state'  => Assignment::INACTIVE_STATE
             ]);
-        }*/
+        }
 
-        return Response::json($this->model->get($new_record_id), 200);
+
+        return new AssignmentResource($updated_assignment);
     }
 
     public function show($id)
-    {
-        abort(405, 'method not allowed');
-    }
-
-    public function update($id, Request $request)
     {
         abort(405, 'method not allowed');
     }

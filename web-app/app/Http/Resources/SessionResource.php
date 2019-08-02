@@ -26,7 +26,6 @@ class SessionResource extends JsonResource
 
         $sessionActivities      = ( new CacheDecorator(App::make('App\\' . $repository .'\SessionActivity')))->all();
         $sessionTypes           = ( new CacheDecorator(App::make('App\\' . $repository .'\SessionType')))->all();
-        $assignments            = ( new CacheDecorator(App::make('App\\' . $repository .'\Assignment')))->all();
         $assignment_statuses    = ( new CacheDecorator(App::make('App\\' . $repository .'\AssignmentStatus')))->all();
 
         // Display a nicely formatted date string
@@ -45,10 +44,7 @@ class SessionResource extends JsonResource
         // Create a status field and populate by looking up related records in the assignment resource (if exists)
         // and display the status from the assignment_status resource
 
-        // TODO - Replace Auth::id() below -- won't work when called from the the api
-        $assignment       = $assignments->where('session_id', $this['id'])->where('contact_id', Auth::id() )->all();
-        $status_id        = $assignments->where('session_id', $this['id'])->where('contact_id', Auth::id() )->pluck('status');
-        $status           = $status_id == null ? $assignment_statuses->firstWhere('id',$status_id) : "Open";
+        $status           = $this['assignment'] == null ? [ 'id' => 0, 'name' => 'Open' ] : $assignment_statuses->firstWhere('id', $this['assignment']['status']);
 
         return [
                 'id'                => $this['id'],
@@ -59,7 +55,7 @@ class SessionResource extends JsonResource
                 'address'           => $this['address'],
                 'city'              => $this['city'],
                 'status'            => $status,
-                'assignment'        => $assignment ? new AssignmentResource($assignment) : (object) [],
+                'assignment'        => $this['assignment']
 
         ];
     }
