@@ -79,10 +79,10 @@ class DashboardController extends Controller
             $sessions_with_assignments->push($session);
         });
 
-        $districts              = ( new CacheDecorator(App::make('App\\' . $repository .'\District')))->all();
+        //$districts              = ( new CacheDecorator(App::make('App\\' . $repository .'\District')))->all();
         $credentials            = ( new CacheDecorator(App::make('App\\' . $repository .'\Credential')))->all();
         $regions                = ( new CacheDecorator(App::make('App\\' . $repository .'\Region')))->all();
-        $schools                = ( new CacheDecorator(App::make('App\\' . $repository .'\School')))->all();
+        //$schools                = ( new CacheDecorator(App::make('App\\' . $repository .'\School')))->all();
         $subjects               = ( new CacheDecorator(App::make('App\\' . $repository .'\Subject')))->all();
 
 
@@ -94,10 +94,10 @@ class DashboardController extends Controller
             'user_credentials'      => ProfileCredentialResource::collection($profile_credentials),
             'sessions'              => SessionResource::collection($sessions_with_assignments),
             'subjects'              => SimpleResource::collection($subjects),
-            'districts'             => SimpleResource::collection($districts),
+            //'districts'             => SimpleResource::collection($districts),
             'regions'               => SimpleResource::collection($regions),
             'credentials'           => SimpleResource::collection($credentials),
-            'schools'               => SchoolResource::collection($schools),
+            //'schools'               => SchoolResource::collection($schools),
 
             'api_token' => $user->api_token
         ]);

@@ -12,14 +12,12 @@ abstract class BaseController extends Controller
 {
 
     protected $model;
-    protected $user;
     protected $api_token;
 
 
     public function __construct(iModelRepository $model)
     {
         $this->model            = $model;
-        $this->user             = Auth::user();
     }
 
 

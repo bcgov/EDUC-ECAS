@@ -9,10 +9,8 @@
             :user_credentials="{{ json_encode($user_credentials) }}"
             :sessions="{{ json_encode($sessions) }}"
             :subjects="{{ json_encode($subjects) }}"
-            :districts="{{ json_encode($districts) }}"
             :regions="{{ json_encode($regions) }}"
             :credentials="{{ json_encode($credentials) }}"
-            :schools="{{ json_encode($schools) }}"
         >
         </dashboard-component>
     </div>

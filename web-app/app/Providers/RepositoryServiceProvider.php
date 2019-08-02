@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Http\Controllers\Api\AssignmentController;
+use App\Http\Controllers\Api\DistrictSearchController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\ProfileCredentialController;
+use App\Http\Controllers\Api\SchoolSearchController;
 use App\Http\Controllers\DashboardController;
 use App\Interfaces\iModelRepository;
 use Illuminate\Support\Facades\App;
@@ -43,6 +45,18 @@ class RepositoryServiceProvider extends ServiceProvider
             ->needs(iModelRepository::class)
             ->give(function () {
                 return $this->getRepository('ProfileCredential');
+            });
+
+        $this->app->when(DistrictSearchController::class)
+            ->needs(iModelRepository::class)
+            ->give(function () {
+                return $this->getRepository('District');
+            });
+
+        $this->app->when(SchoolSearchController::class)
+            ->needs(iModelRepository::class)
+            ->give(function () {
+                return $this->getRepository('School');
             });
 
     }
