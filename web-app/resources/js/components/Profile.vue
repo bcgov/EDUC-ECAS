@@ -90,19 +90,25 @@
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="district">Current District</label>
-                        <select class="form-control" v-model="user_local.district" id="district">
-                            <option value="">None</option>
-                            <option v-for="district in districts" :value="district">
-                                {{ district.name }}
-                            </option>
-                        </select>
+                        <vue-bootstrap-typeahead
+                                v-model="districtQuery"
+                                :serializer="s => s.name"
+                                :data="schools"
+                                id="district"
+                                :placeholder="districtPlacholder"
+                                @hit="user_local.district = $event"
+                        />
                     </div>
                     <div class="form-group col">
                         <label for="school">Current School</label>
-                        <select class="form-control" v-model="user_local.school" id="school">
-                            <option value="">None</option>
-                            <option :value="school" v-for="school in schools">{{ school.name }}</option>
-                        </select>
+                        <vue-bootstrap-typeahead
+                                v-model="schoolQuery"
+                                :serializer="s => s.name"
+                                :data="schools"
+                                id="school"
+                                :placeholder="schoolPlacholder"
+                                @hit="user_local.school = $event"
+                        />
                     </div>
                 </div>
                 <div class="form-row">
@@ -145,24 +151,28 @@
 
 <script>
     import FormError from './FormError.vue';
+    import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
 
     export default {
         name: "Profile",
         props: {
             user: {},
-            schools: {},
             regions: {},
-            districts: {},
             new_user: false
         },
         components: {
             FormError,
+            VueBootstrapTypeahead
         },
         data() {
             return {
-                user_local: {...this.user},
-                errors: {},
-                working: false
+                user_local:     {...this.user},
+                errors:         {},
+                working:        false,
+                schools:        [],
+                schoolQuery:    '',
+                districts:      [],
+                districtQuery:  ''
             }
         },
         mounted() {
@@ -171,11 +181,43 @@
             }
         },
         computed: {
+            schoolPlacholder() {
+              if(this.user_local.school) {
+                  return this.user_local.school.name;
+              }
+
+              return 'Search by school name ...';
+
+            },
+            districtPlacholder() {
+                if(this.user_local.district) {
+                    return this.user_local.district.name;
+                }
+
+                return 'Search by district name ...';
+
+            },
             showCancel() {
                 return !this.new_user
             }
         },
+        watch: {
+            schoolQuery: _.debounce(function(school) { this.getSchoolNames(school) }, 500),
+            districtQuery: _.debounce(function(district) { this.getDistrictNames(district) }, 500),
+        },
         methods: {
+            async getSchoolNames(query) {
+                const res = await fetch('/api/schools?q=:query'.replace(':query', query));
+                const suggestions = await res.json();
+                console.log('schools', suggestions);
+                this.schools = suggestions.data
+            },
+            async getDistrictNames(query) {
+                const res = await fetch('/api/districts?q=:query'.replace(':query', query));
+                const suggestions = await res.json();
+                console.log('districts', suggestions);
+                this.schools = suggestions.data
+            },
             closeModal() {
                 this.$modal.hide('profile_form');
             },
@@ -206,20 +248,19 @@
                     professional_certificate_bc: form.user_local.professional_certificate_bc,
                     professional_certificate_yk: form.user_local.professional_certificate_yk,
                     professional_certificate_other: form.user_local.professional_certificate_other,
-                    school: form.user_local.school,
                     address_1: form.user_local.address_1,
                     address_2: form.user_local.address_2,
                     city: form.user_local.city,
                     region: form.user_local.region.id,
                     postal_code: form.user_local.postal_code,
+                    school_id: form.user_local.school.id,
                     district_id: form.user_local.district.id,
-                    school_id: form.user_local.school.id
-                }
+                };
 
                 if (this.new_user) {
                     axios.post('/api/profiles', data)
                         .then(function (response) {
-                            console.log('Create Profile');
+                            console.log('Create Profile'. data.school_id);
                             form.closeModal();
                             form.working = false;
                             Event.fire('profile-updated', response.data)
@@ -235,7 +276,7 @@
                 else {
                     axios.patch('/api/profiles/' + this.user.id, data)
                         .then(function (response) {
-                            console.log('Patch Profile');
+                            console.log('Patch Profile', data.school_id);
                             form.working = false;
                             form.closeModal();
                             Event.fire('profile-updated', response.data)

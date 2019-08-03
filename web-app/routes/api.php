@@ -22,13 +22,11 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::resource('/{profile_id}/profile-credentials'       , 'Api\ProfileCredentialController' );
     Route::resource('/{profile_id}/assignments'               , 'Api\AssignmentController');
 
-    Route::get('/districts'                                   , 'Api\DistrictSearchController@index');
-    Route::get('/schools'                                     , 'Api\SchoolSearchController@index');
-
-
 
 });
 
+// TODO - place these under guard like the others above once key cloak is working
 
-
+Route::get('/districts'                                   , 'Api\DistrictSearchController@index');
+Route::get('/schools'                                     , 'Api\SchoolSearchController@index');
 

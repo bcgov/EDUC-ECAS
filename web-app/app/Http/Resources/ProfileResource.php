@@ -19,8 +19,9 @@ class ProfileResource extends JsonResource
 
         $repository         = env('DATASET') == 'Dynamics' ? 'Dynamics' : 'MockEntities\Repository';
 
-        $districts  = ( new CacheDecorator(App::make('App\\' . $repository .'\District')))->all();
-        $schools    = ( new CacheDecorator(App::make('App\\' . $repository .'\School')))->all();
+        $district  = ( new CacheDecorator(App::make('App\\' . $repository .'\District')))->get($this['district_id']);
+        $school    = ( new CacheDecorator(App::make('App\\' . $repository .'\School')))->get($this['school_id']);
+
         $regions    = ( new CacheDecorator(App::make('App\\' . $repository .'\Region')))->all();
 
         return [
@@ -37,8 +38,8 @@ class ProfileResource extends JsonResource
           'city'                                   =>  $this['city'],
           'region'                                 =>  new SimpleResource($regions->firstWhere('id', $this['region'])),
           'postal_code'                            =>  $this['postal_code'],
-          'district'                               =>  new SimpleResource($districts->firstWhere('id', $this['district_id'])),
-          'school'                                 =>  new SchoolResource($schools->firstWhere('id', $this['school_id'])),
+          'district'                               =>  new SimpleResource($district),
+          'school'                                 =>  new SchoolResource($school),
           'professional_certificate_bc'            =>  $this['professional_certificate_bc'],
           'professional_certificate_yk'            =>  $this['professional_certificate_yk'],
           'professional_certificate_other'         =>  $this['professional_certificate_other'],

@@ -299,7 +299,7 @@ abstract class DynamicsRepository
     * @return array
     * @throws \GuzzleHttp\Exception\GuzzleException
     */
-    private static function loadCollection($id)
+    protected static function loadCollection($id, $quote = '')
     {
         if (static::$api_verb == 'operations') {
             $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '&$select=' . implode(',', static::$fields);
@@ -309,7 +309,7 @@ abstract class DynamicsRepository
         }
 
         if ($id) {
-            $query .= '&$filter=' . static::$primary_key . ' eq ' . $id . '';
+            $query .= '&$filter=' . static::$primary_key . " eq " . $quote . $id . $quote;
         }
 
         $response = self::queryAPI('GET', $query);
