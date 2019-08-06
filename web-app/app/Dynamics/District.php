@@ -8,7 +8,9 @@
 
 namespace App\Dynamics;
 
-class District extends DynamicsRepository
+use App\Interfaces\iModelRepository;
+
+class District extends DynamicsRepository implements iModelRepository
 {
     public static $table = 'educ_districtcodes';
 
@@ -22,4 +24,16 @@ class District extends DynamicsRepository
         'id'   => 'educ_districtcodeid',
         'name' => 'educ_districtnamenumber'
     ];
+
+
+    public function all()
+    {
+        $collection = parent::all();
+        return $collection->sortBy('name')->values();
+
+
+    }
+
+    public static $filter_quote = '\'';
+
 }

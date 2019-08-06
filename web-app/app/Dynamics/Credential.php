@@ -8,7 +8,9 @@
 
 namespace App\Dynamics;
 
-class Credential extends DynamicsRepository
+use App\Interfaces\iModelRepository;
+
+class Credential extends DynamicsRepository implements iModelRepository
 {
     public static $table = 'educ_credentialcodes';
 
@@ -22,4 +24,12 @@ class Credential extends DynamicsRepository
         'id'   => 'educ_credentialcodeid',
         'name' => 'educ_name'
     ];
+
+    public function all()
+    {
+        $collection = parent::all();
+        return $collection->sortBy('name')->values();
+
+
+    }
 }

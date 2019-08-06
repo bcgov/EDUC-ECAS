@@ -8,7 +8,9 @@
 
 namespace App\Dynamics;
 
-class SessionActivity extends DynamicsRepository
+use App\Interfaces\iModelRepository;
+
+class SessionActivity extends DynamicsRepository implements iModelRepository
 {
     public static $table = 'educ_sessionactivitycodes';
 

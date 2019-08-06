@@ -8,7 +8,9 @@
 
 namespace App\Dynamics;
 
-class Subject extends DynamicsRepository
+use App\Interfaces\iModelRepository;
+
+class Subject extends DynamicsRepository implements iModelRepository
 {
     public static $table = 'educ_subjectcodes';
 

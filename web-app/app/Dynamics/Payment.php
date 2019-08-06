@@ -8,7 +8,9 @@
 
 namespace App\Dynamics;
 
-class Payment extends DynamicsRepository
+use App\Interfaces\iModelRepository;
+
+class Payment extends DynamicsRepository implements iModelRepository
 {
     public static $table = 'contact';
 
