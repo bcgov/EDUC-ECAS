@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
-class SchoolSearchController extends BaseController
+class SchoolSearchController extends ApiBaseController
 {
 
 

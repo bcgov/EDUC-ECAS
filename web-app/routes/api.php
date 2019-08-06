@@ -15,18 +15,11 @@ use Illuminate\Http\Request;
 
 
 
+// Note - these routes are all protected by the 'BaseController' from which these classes extend
 
-Route::group(['middleware' => ['auth:api']], function() {
-
-    Route::resource('/profiles'                               , 'Api\ProfileController', ['except' => ['index']]);
-    Route::resource('/{profile_id}/profile-credentials'       , 'Api\ProfileCredentialController' );
-    Route::resource('/{profile_id}/assignments'               , 'Api\AssignmentController');
-
-
-});
-
-// TODO - place these under guard like the others above once key cloak is working
-
+Route::resource('/profiles'                               , 'Api\ProfileController', ['except' => ['index']]);
+Route::resource('/{profile_id}/profile-credentials'       , 'Api\ProfileCredentialController' );
+Route::resource('/{profile_id}/assignments'               , 'Api\AssignmentController');
 Route::get('/districts'                                   , 'Api\DistrictSearchController@index');
 Route::get('/schools'                                     , 'Api\SchoolSearchController@index');
 

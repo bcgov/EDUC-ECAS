@@ -3,11 +3,11 @@
 namespace App\Http\Resources;
 
 use App\Dynamics\Decorators\CacheDecorator;
-use App\Http\Controllers\Interfaces\iModelRepository;
+
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
+
 
 class SessionResource extends JsonResource
 {

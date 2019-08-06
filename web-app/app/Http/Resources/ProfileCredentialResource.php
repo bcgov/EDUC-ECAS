@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Dynamics\Credential;
 use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\ProfileCredential;
 use Illuminate\Http\Resources\Json\JsonResource;

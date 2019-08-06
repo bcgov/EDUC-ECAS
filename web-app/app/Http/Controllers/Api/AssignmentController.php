@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
-class AssignmentController extends BaseController
+class AssignmentController extends ApiBaseController
 {
 
     private $profile;

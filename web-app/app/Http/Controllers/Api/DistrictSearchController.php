@@ -8,7 +8,7 @@ use App\Http\Resources\SimpleResource;
 use Illuminate\Http\Request;
 
 
-class DistrictSearchController extends BaseController
+class DistrictSearchController extends ApiBaseController
 {
 
 

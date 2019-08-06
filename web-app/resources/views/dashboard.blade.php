@@ -15,4 +15,3 @@
         </dashboard-component>
     </div>
 @endsection
-h

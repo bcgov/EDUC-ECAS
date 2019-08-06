@@ -3,16 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 
-use App\Http\Controllers\Controller;
 use App\Http\Resources\ProfileResource;
-use App\Interfaces\iModelRepository;
-use App\Rules\SocialInsuranceNumberRule;
-use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 
-class ProfileController extends BaseController
+
+class ProfileController extends ApiBaseController
 {
 
 
@@ -43,11 +39,7 @@ class ProfileController extends BaseController
  */
     public function store(Request $request)
     {
-
-        $api_token = explode(' ', $request->headers->get('Authorization'));
-
-        $user = User::where('api_token', $api_token[1])
-            ->get();
+        $user = $this->getUser($request);
 
         $request = $this->validateProfileRequest($request);
         $data = $request->all();  // TODO - Remove before flight - dangerous

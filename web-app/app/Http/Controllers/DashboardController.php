@@ -4,23 +4,23 @@ namespace App\Http\Controllers;
 
 
 use App\Dynamics\Decorators\CacheDecorator;
-use App\Http\Resources\AssignmentResource;
 use App\Http\Resources\ProfileCredentialResource;
 use App\Http\Resources\ProfileResource;
-use App\Http\Resources\SchoolResource;
 use App\Http\Resources\SessionResource;
 use App\Http\Resources\SimpleResource;
 use App\Interfaces\iModelRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
  * Main Controller for the application
  */
-class DashboardController extends Controller
+class DashboardController extends EcasBaseController
 {
 
     private $profile;
+    private $token;
 
     /**
      * Create a new controller instance.
@@ -29,7 +29,6 @@ class DashboardController extends Controller
      */
     public function __construct(iModelRepository $profile)
     {
-        $this->middleware('auth');
         $this->profile = $profile;
 
     }
@@ -38,17 +37,20 @@ class DashboardController extends Controller
     /*
      * Main entry point for the single page Vue.js application
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $user       = Auth::user();
+        $token = $request->session()->get('token');
+        $user = $this->getUserByToken($token);
 
-        $profile    = $this->profile->firstOrCreate($user->id, [
+
+        $profile    = $this->profile->firstOrCreate($user['sub'], [
             // TODO - replace the values below with data from BCeID
-            'first_name'  => 'BCeID_first',
-            'last_name'   => 'BCeID_last',
-            'email'       => 'bceid@example.com',
+            'first_name'  => $user['given_name'],
+            'last_name'   => $user['family_name'],
+            'email'       => $user['email']
         ]);
+
 
         // TODO -----------------------  move this mess of code to a service provider ---------------------
 
@@ -79,10 +81,8 @@ class DashboardController extends Controller
             $sessions_with_assignments->push($session);
         });
 
-        //$districts              = ( new CacheDecorator(App::make('App\\' . $repository .'\District')))->all();
         $credentials            = ( new CacheDecorator(App::make('App\\' . $repository .'\Credential')))->all();
         $regions                = ( new CacheDecorator(App::make('App\\' . $repository .'\Region')))->all();
-        //$schools                = ( new CacheDecorator(App::make('App\\' . $repository .'\School')))->all();
         $subjects               = ( new CacheDecorator(App::make('App\\' . $repository .'\Subject')))->all();
 
 
@@ -94,13 +94,14 @@ class DashboardController extends Controller
             'user_credentials'      => ProfileCredentialResource::collection($profile_credentials),
             'sessions'              => SessionResource::collection($sessions_with_assignments),
             'subjects'              => SimpleResource::collection($subjects),
-            //'districts'             => SimpleResource::collection($districts),
             'regions'               => SimpleResource::collection($regions),
             'credentials'           => SimpleResource::collection($credentials),
-            //'schools'               => SchoolResource::collection($schools),
 
-            'api_token' => $user->api_token
+            'api_token'             => $token
+
         ]);
+
+
 
     }
 

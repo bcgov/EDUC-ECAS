@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
 
-class ProfileCredentialController extends BaseController
+class ProfileCredentialController extends ApiBaseController
 {
 
     private $profile;

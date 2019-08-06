@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 
 /**
@@ -38,31 +35,17 @@ class KeycloakAuthController extends Controller
      * @provider
      * @return
      */
-    public function callback()
+    public function callback(Request $request)
     {
 
         $userData = Socialite::driver(self::PROVIDER)
             ->stateless()
             ->user();
-        /* Note : */
-        /* 1) Callback url is same for login and logout request. so this function executed twice. */
-        /* 2) Must add below code, Because user data not retrieved while logout calls is requested. */
-        if(!isset($userData->id)){
-            return redirect('/logout');
-        }
 
-        $user = User::updateOrCreate(
-            [
-                'id'    => $userData->id
-            ],
-            [
-                'name'          =>  $userData->name,
-                'api_token'     =>  Str::random(60)
-            ]
-        );
+        // store the user object with token in a session
+        $request->session()->put('token', $userData->token);
 
-        Auth::login($user, true);
-        return redirect()->to('/Dashboard'); // Redirect to a secure page
+        return redirect()->to('/Dashboard');
 
     }
 
@@ -73,8 +56,8 @@ class KeycloakAuthController extends Controller
     public function logout()
     {
 
-        /* logout from laravel auth */
-        Auth::logout();
+        // TODO - destroy the session
+
         /* redirect to keycloak logout url */
         return $this->redirect(
             Socialite::driver(self::PROVIDER)->getLogoutUrl()

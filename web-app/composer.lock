@@ -4,52 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e7d70c9697384b2b2c20d44c19c8d7aa",
+    "content-hash": "3c1d9b55e88456865182601382794348",
     "packages": [
-        {
-            "name": "avdevs/keycloak",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/avdevs/keycloak.git",
-                "reference": "eadd39d1c61f3a62b99f24e36387bca7f6b4d2d2"
-            },
-            "require": {
-                "firebase/php-jwt": "^5.0",
-                "league/oauth2-client": "^2.4",
-                "php": "^7.1.3",
-                "socialiteproviders/manager": "^3.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Avdevs\\Keycloak\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dhaval Patel",
-                    "email": "dhaval@avdevs.com"
-                }
-            ],
-            "description": "Keycloak OAuth2 Provider for Laravel Socialite",
-            "keywords": [
-                "Avdevs",
-                "Keycloak Provider",
-                "Laravel",
-                "OAuth2",
-                "Socialite Provider"
-            ],
-            "time": "2019-03-22T09:51:37+00:00"
-        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",
@@ -152,28 +108,30 @@
         },
         {
             "name": "doctrine/lexer",
-            "version": "1.0.2",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/lexer.git",
-                "reference": "1febd6c3ef84253d7c815bed85fc622ad207a9f8"
+                "reference": "e17f069ede36f7534b95adec71910ed1b49c74ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/lexer/zipball/1febd6c3ef84253d7c815bed85fc622ad207a9f8",
-                "reference": "1febd6c3ef84253d7c815bed85fc622ad207a9f8",
+                "url": "https://api.github.com/repos/doctrine/lexer/zipball/e17f069ede36f7534b95adec71910ed1b49c74ea",
+                "reference": "e17f069ede36f7534b95adec71910ed1b49c74ea",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2"
+                "php": "^7.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.5"
+                "doctrine/coding-standard": "^6.0",
+                "phpstan/phpstan": "^0.11.8",
+                "phpunit/phpunit": "^8.2"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -187,12 +145,12 @@
             ],
             "authors": [
                 {
-                    "name": "Roman Borschel",
-                    "email": "roman@code-factory.org"
-                },
-                {
                     "name": "Guilherme Blanco",
                     "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
                 },
                 {
                     "name": "Johannes Schmitt",
@@ -208,7 +166,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2019-06-08T11:03:04+00:00"
+            "time": "2019-07-30T19:33:28+00:00"
         },
         {
             "name": "dragonmantank/cron-expression",
@@ -421,52 +379,6 @@
                 "trusted proxy"
             ],
             "time": "2019-07-29T16:49:45+00:00"
-        },
-        {
-            "name": "firebase/php-jwt",
-            "version": "v5.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/firebase/php-jwt.git",
-                "reference": "9984a4d3a32ae7673d6971ea00bae9d0a1abba0e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/9984a4d3a32ae7673d6971ea00bae9d0a1abba0e",
-                "reference": "9984a4d3a32ae7673d6971ea00bae9d0a1abba0e",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": " 4.8.35"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Firebase\\JWT\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Neuman Vong",
-                    "role": "Developer",
-                    "email": "neuman+pear@twilio.com"
-                },
-                {
-                    "name": "Anant Narayanan",
-                    "role": "Developer",
-                    "email": "anant@php.net"
-                }
-            ],
-            "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
-            "homepage": "https://github.com/firebase/php-jwt",
-            "time": "2017-06-27T22:17:23+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -745,16 +657,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.8.29",
+            "version": "v5.8.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "489ae2218c7eb138caac780de584d8df9fe8160b"
+                "reference": "7ccf0cf63931a8d8391aed90e6fc011381ea6838"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/489ae2218c7eb138caac780de584d8df9fe8160b",
-                "reference": "489ae2218c7eb138caac780de584d8df9fe8160b",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/7ccf0cf63931a8d8391aed90e6fc011381ea6838",
+                "reference": "7ccf0cf63931a8d8391aed90e6fc011381ea6838",
                 "shasum": ""
             },
             "require": {
@@ -888,32 +800,32 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2019-07-16T14:05:28+00:00"
+            "time": "2019-07-30T14:08:47+00:00"
         },
         {
             "name": "laravel/socialite",
-            "version": "v4.1.3",
+            "version": "v4.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/socialite.git",
-                "reference": "f92e15a8ba4dfd730cddc775a7c1ca2251f30cff"
+                "reference": "ab5974b13b775e14d11f220064a110d60743eee0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/socialite/zipball/f92e15a8ba4dfd730cddc775a7c1ca2251f30cff",
-                "reference": "f92e15a8ba4dfd730cddc775a7c1ca2251f30cff",
+                "url": "https://api.github.com/repos/laravel/socialite/zipball/ab5974b13b775e14d11f220064a110d60743eee0",
+                "reference": "ab5974b13b775e14d11f220064a110d60743eee0",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "guzzlehttp/guzzle": "~6.0",
-                "illuminate/http": "~5.7.0|~5.8.0|~5.9.0",
-                "illuminate/support": "~5.7.0|~5.8.0|~5.9.0",
+                "illuminate/http": "~5.7.0|~5.8.0|^6.0",
+                "illuminate/support": "~5.7.0|~5.8.0|^6.0",
                 "league/oauth1-client": "~1.0",
                 "php": "^7.1.3"
             },
             "require-dev": {
-                "illuminate/contracts": "~5.7.0|~5.8.0|~5.9.0",
+                "illuminate/contracts": "~5.7.0|~5.8.0|^6.0",
                 "mockery/mockery": "~1.0",
                 "phpunit/phpunit": "~7.0"
             },
@@ -952,7 +864,7 @@
                 "laravel",
                 "oauth"
             ],
-            "time": "2019-04-02T17:06:04+00:00"
+            "time": "2019-07-30T16:07:14+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -1165,73 +1077,6 @@
             "time": "2016-08-17T00:36:58+00:00"
         },
         {
-            "name": "league/oauth2-client",
-            "version": "2.4.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thephpleague/oauth2-client.git",
-                "reference": "cc114abc622a53af969e8664722e84ca36257530"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth2-client/zipball/cc114abc622a53af969e8664722e84ca36257530",
-                "reference": "cc114abc622a53af969e8664722e84ca36257530",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^6.0",
-                "paragonie/random_compat": "^1|^2|^9.99",
-                "php": "^5.6|^7.0"
-            },
-            "require-dev": {
-                "eloquent/liberator": "^2.0",
-                "eloquent/phony-phpunit": "^1.0|^3.0",
-                "jakub-onderka/php-parallel-lint": "^0.9.2",
-                "phpunit/phpunit": "^5.7|^6.0",
-                "squizlabs/php_codesniffer": "^2.3|^3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-2.x": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "League\\OAuth2\\Client\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Alex Bilbie",
-                    "email": "hello@alexbilbie.com",
-                    "homepage": "http://www.alexbilbie.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Woody Gilk",
-                    "homepage": "https://github.com/shadowhand",
-                    "role": "Contributor"
-                }
-            ],
-            "description": "OAuth 2.0 Client Library",
-            "keywords": [
-                "Authentication",
-                "SSO",
-                "authorization",
-                "identity",
-                "idp",
-                "oauth",
-                "oauth2",
-                "single sign on"
-            ],
-            "time": "2018-11-22T18:33:57+00:00"
-        },
-        {
             "name": "monolog/monolog",
             "version": "1.24.0",
             "source": {
@@ -1311,16 +1156,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.21.3",
+            "version": "2.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "58bdbbfab17ccd2ec7347b99e997f18232def4dc"
+                "reference": "1a0e48b5f656065ba3c265b058b25d36c2162a5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/58bdbbfab17ccd2ec7347b99e997f18232def4dc",
-                "reference": "58bdbbfab17ccd2ec7347b99e997f18232def4dc",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/1a0e48b5f656065ba3c265b058b25d36c2162a5e",
+                "reference": "1a0e48b5f656065ba3c265b058b25d36c2162a5e",
                 "shasum": ""
             },
             "require": {
@@ -1331,7 +1176,7 @@
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.14 || ^3.0",
                 "kylekatarnls/multi-tester": "^1.1",
-                "phpmd/phpmd": "^2.6",
+                "phpmd/phpmd": "dev-php-7.1-compatibility",
                 "phpstan/phpstan": "^0.11",
                 "phpunit/phpunit": "^7.5 || ^8.0",
                 "squizlabs/php_codesniffer": "^3.4"
@@ -1374,7 +1219,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2019-07-18T18:47:28+00:00"
+            "time": "2019-07-28T09:02:12+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -3905,24 +3750,24 @@
         },
         {
             "name": "laravel/dusk",
-            "version": "v5.3.0",
+            "version": "v5.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/dusk.git",
-                "reference": "17bcb092516805e68d598035f6315bcb9845bbe7"
+                "reference": "9af5a654ff2c552852e4d37a8283735bf6ce2b79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/dusk/zipball/17bcb092516805e68d598035f6315bcb9845bbe7",
-                "reference": "17bcb092516805e68d598035f6315bcb9845bbe7",
+                "url": "https://api.github.com/repos/laravel/dusk/zipball/9af5a654ff2c552852e4d37a8283735bf6ce2b79",
+                "reference": "9af5a654ff2c552852e4d37a8283735bf6ce2b79",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "ext-zip": "*",
                 "facebook/webdriver": "^1.7",
-                "illuminate/console": "~5.7.0|~5.8.0|~5.9.0",
-                "illuminate/support": "~5.7.0|~5.8.0|~5.9.0",
+                "illuminate/console": "~5.7.0|~5.8.0|^6.0",
+                "illuminate/support": "~5.7.0|~5.8.0|^6.0",
                 "nesbot/carbon": "^1.20|^2.0",
                 "php": ">=7.1.0",
                 "symfony/console": "^4.0",
@@ -3966,7 +3811,7 @@
                 "testing",
                 "webdriver"
             ],
-            "time": "2019-07-11T21:05:48+00:00"
+            "time": "2019-07-30T15:07:18+00:00"
         },
         {
             "name": "maximebf/debugbar",
