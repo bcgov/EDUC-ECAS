@@ -8,19 +8,21 @@
 
 namespace App\Dynamics;
 
-class Profile extends DynamicsRepository
+use App\Interfaces\iModelRepository;
+
+
+class Profile extends DynamicsRepository implements iModelRepository
 {
     public static $table = 'contacts';
 
-    // TODO: this field isn't populated yet, use the contact id for testing
-    // When SiteMinder authentication has been put in place we will want to use the federated id
-//     public $primary_key = 'educ_federatedid';
     public static $primary_key = 'contactid';
 
     public static $data_bind = 'educ_Contact';
 
     public static $fields = [
-        'id'                             => 'contactid', // TODO: also need to change it here
+
+        'id'                             => 'contactid',
+        'federated_id'                   => 'educ_federatedid',
         'preferred_first_name'           => 'educ_preferredfirstname',
         'first_name'                     => 'firstname',
         'last_name'                      => 'lastname',
@@ -42,4 +44,43 @@ class Profile extends DynamicsRepository
     public static $links = [
         'district_id' => District::class
     ];
+
+
+    public static $filter_quote = '\'';
+
+
+    public function firstOrCreate($federated_id, $data)
+    {
+        $existing = $this->filter([ 'federated_id' => $federated_id ]);
+
+        if (count($existing) == 0) {
+
+            return [
+                'federated_id'                   => $federated_id,
+                'id'                             => null,
+                'preferred_first_name'           => null,
+                'first_name'                     => $data['first_name'],
+                'last_name'                      => $data['last_name'],
+                'email'                          => $data['email'],
+                'phone'                          => null,
+                'social_insurance_number'        => null,
+                'address_1'                      => null,
+                'address_2'                      => null,
+                'city'                           => null,
+                'region'                         => null,
+                'postal_code'                    => null,
+                'district_id'                    => null,
+                'school_id'                      => null,
+                'professional_certificate_bc'    => null,
+                'professional_certificate_yk'    => null,
+                'professional_certificate_other' => null,
+            ];
+
+        }
+
+        return $existing[0];
+
+    }
+
+
 }

@@ -8,7 +8,9 @@
 
 namespace App\Dynamics;
 
-class Session extends DynamicsRepository
+use App\Interfaces\iModelRepository;
+
+class Session extends DynamicsRepository implements iModelRepository
 {
     public static $table = 'educ_sessions';
 
@@ -28,4 +30,12 @@ class Session extends DynamicsRepository
         'address'     => 'educ_locationaddress',
         'city'        => 'educ_locationcity',
     ];
+
+    public function all()
+    {
+        $collection = parent::all();
+        return $collection->sortBy('start_date')->values();
+
+
+    }
 }

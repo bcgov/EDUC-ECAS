@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>ECAS</title>
+    <title>BC Ministry of Education - ECAS</title>
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
@@ -13,25 +13,11 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="api-token" content="{{ $api_token }}">
     
 </head>
 <body class="d-flex flex-column h-100">
     <main class="flex-shrink-0">
-
-        @if (Route::has('login'))
-            <div class="top-right links">
-                @auth
-                    <a href="{{ url('/home') }}">Home</a>
-                @else
-                    <a href="{{ route('login') }}">Login</a>
-
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}">Register</a>
-                    @endif
-                @endauth
-            </div>
-        @endif
-
         <div class="row bg-primary">
             <div class="col offset-1">
                 <img src="/logo-banner.svg" height="80px">
@@ -53,18 +39,17 @@
     <footer class="footer mt-auto">
         <div class="container">
             <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/disclaimer">Disclaimer</a></li>
-                <li><a href="/privacy">Privacy</a></li>
-                <li><a href="/accessibility">Accessibility</a></li>
-                <li><a href="/copyright">Copyright</a></li>
-                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="https://www2.gov.bc.ca/">Home</a></li>
+                <li><a href="https://www2.gov.bc.ca/gov/content/home/disclaimer">Disclaimer</a></li>
+                <li><a href="https://www2.gov.bc.ca/gov/content/home/privacy">Privacy</a></li>
+                <li><a href="https://www2.gov.bc.ca/gov/content/home/accessibility">Accessibility</a></li>
+                <li><a href="https://www2.gov.bc.ca/gov/content/home/copyright">Copyright</a></li>
+                <li><a href="https://www2.gov.bc.ca/gov/content/home/contact-us">Contact Us</a></li>
             </ul>
         </div>
     </footer>
 
 <script src="/js/app.js"></script>
-{{--<script src="{{ asset('js/app.js') }}"></script>--}}
 
 </body>
 </html>

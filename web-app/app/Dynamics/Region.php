@@ -8,7 +8,9 @@
 
 namespace App\Dynamics;
 
-class Region extends DynamicsRepository
+use App\Interfaces\iModelRepository;
+
+class Region extends DynamicsRepository implements iModelRepository
 {
     public static $table = 'educ_provincestatecodes';
 

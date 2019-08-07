@@ -1,18 +1,17 @@
 @extends('app')
 
+@section('api_token'){{ $api_token }}@endsection
+
 @section('content')
     <div id="app">
-        <dashboard
-        :user="{{ $user }}"
-        :credentials="{{ $credentials }}"
-        :sessions="{{ $sessions }}"
-        :subjects="{{ $subjects }}"
-        :schools="{{ $schools }}"
-        :regions="{{ $regions }}"
-        :districts="{{ $districts }}"
-        :user_credentials="{{ $user_credentials }}"
-        dusk="dashboard-component"
+        <dashboard-component
+            :user="{{ json_encode($user) }}"
+            :user_credentials="{{ json_encode($user_credentials) }}"
+            :sessions="{{ json_encode($sessions) }}"
+            :subjects="{{ json_encode($subjects) }}"
+            :regions="{{ json_encode($regions) }}"
+            :credentials="{{ json_encode($credentials) }}"
         >
-    </dashboard>
+        </dashboard-component>
     </div>
 @endsection

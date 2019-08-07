@@ -11,28 +11,13 @@
 |
 */
 
-// BC Government standard Footer
-Route::get('/disclaimer', 'PageController@disclaimer');
-Route::get('/privacy', 'PageController@privacy');
-Route::get('/accessibility', 'PageController@accessibility');
-Route::get('/copyright', 'PageController@copyright');
-Route::get('/contact', 'PageController@contact');
+// Keycloak routes
+Route::get('/redirect',         'KeycloakAuthController@redirect')->name('login');
+Route::get('/logout',           'KeycloakAuthController@logout');
+Route::get('/callback',         'KeycloakAuthController@callback');
 
 // App Specific Routes
+Route::get('/'                  , function () { return redirect('Dashboard'); });
+Route::get('/Dashboard'         , 'DashboardController@index')->name('Dashboard');
 
-Route::get('/apitest', 'DashboardController@apitest');
 
-Route::get('/', 'DashboardController@index');
-Route::post('/login', 'DashboardController@postLogin');
-Route::get('/Profile', 'DashboardController@profile');
-Route::get('/Dashboard', 'DashboardController@index');
-Route::post('/Dashboard/credential', 'DashboardController@storeCredential');
-Route::post('/Dashboard/credential/delete', 'DashboardController@deleteCredential');
-Route::post('/Dashboard/profile', 'DashboardController@storeProfile');
-Route::patch('/Dashboard/profile', 'DashboardController@updateProfile');
-Route::post('/Dashboard/post', 'DashboardController@post');
-Route::post('/Dashboard/session', 'DashboardController@storeAssignment');
-
-Route::get('/Expenses/{session_id}', 'ExpenseController@index');
-
-Route::get('/connect', 'DashboardController@dynamics');

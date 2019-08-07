@@ -8,7 +8,9 @@
 
 namespace App\Dynamics;
 
-class Role extends DynamicsRepository
+use App\Interfaces\iModelRepository;
+
+class Role extends DynamicsRepository implements iModelRepository
 {
     public static $table = 'educ_rolecodes';
 
