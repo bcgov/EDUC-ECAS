@@ -150,7 +150,7 @@
     import {mapGetters} from 'vuex'
 
     export default {
-        name: "Dashboard",
+        name: "dashboard-component",
         props: {
             user: {},
             credentials: {},
