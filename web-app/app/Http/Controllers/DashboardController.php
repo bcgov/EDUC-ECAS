@@ -21,7 +21,7 @@ class DashboardController extends EcasBaseController
 
 
     private $profile;
-    private $token;
+
 
     /**
      * Create a new controller instance.

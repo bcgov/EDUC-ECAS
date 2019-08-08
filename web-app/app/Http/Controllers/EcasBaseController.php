@@ -13,7 +13,6 @@ use Laravel\Socialite\Facades\Socialite;
 class EcasBaseController extends Controller
 {
 
-    protected $user;
 
 
     protected function checkOwner(Request $request, $federated_id )
@@ -26,9 +25,9 @@ class EcasBaseController extends Controller
 
         // TODO - We need try and catch logic here - in case the token isn't valid
 
-        $this->user = Socialite::driver('keycloak')->getUserByToken($bearer_token);
+        $user = Socialite::driver('keycloak')->getUserByToken($bearer_token);
 
-        return $this->user['sub'] == $federated_id;
+        return $user['sub'] == $federated_id;
 
 
     }
@@ -46,11 +45,11 @@ class EcasBaseController extends Controller
     protected function getUser(Request $request)
     {
 
-        $api_token = explode(' ', $request->headers->get('Authorization'));
+        $token = $this->getBearerToken($request);
 
         // TODO - We need try and catch logic here - in case the token isn't valid
 
-        return Socialite::driver('keycloak')->getUserByToken($api_token);
+        return Socialite::driver('keycloak')->getUserByToken($token);
 
     }
 
@@ -58,9 +57,9 @@ class EcasBaseController extends Controller
     private function getBearerToken(Request $request )
     {
 
-        $api_token = explode(' ', $request->headers->get('Authorization'));
+        $authorization_array = explode(' ', $request->headers->get('Authorization'));
 
-        return $api_token[1];
+        return $authorization_array[1];
 
     }
 
