@@ -205,9 +205,19 @@
                     return session.status.name === dashboard.filter
                 })
             },
+            credentialsIdsInUse() {
+
+                var arrayOfCredentialIds = [];
+
+                this.credentials_applied.forEach( function (applied) {
+                    arrayOfCredentialIds.push(applied.credential.id);
+                });
+
+                return arrayOfCredentialIds;
+            },
             credentialsAvailable() {
                 // subtract applied_credentials from credentials
-                return this.credentials.filter(x => ! this.credentials_applied.includes(x));
+                return this.credentials.filter(x => ! this.credentialsIdsInUse.includes(x.id));
 
             }
         },
