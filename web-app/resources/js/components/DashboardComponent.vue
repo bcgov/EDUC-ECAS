@@ -135,7 +135,7 @@
         </modal>
         <modal name="profile_form" height="auto" :scrollable="true" :clickToClose="false">
             <profile
-                    :user="getUser"
+                    :user="user"
                     :schools="schools"
                     :regions="regions"
                     :districts="districts"
@@ -184,7 +184,7 @@
             Event.listen('profile-updated', this.updateProfile);
             Event.listen('session_status_updated', this.updateSessionStatus);
 
-            if (this.getUser.id === undefined) {
+            if (this.getUser.id === null) {
                 this.new_user = true;
                 this.showProfile()
             }
