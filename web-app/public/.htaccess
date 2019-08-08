@@ -4,8 +4,8 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php/$1 [L]
 
-# REMOVE BEFORE PRODUCTION DEVELOPMENT
-AuthType Basic
-AuthName "Restricted access"
-AuthUserFile /opt/app-root/src/.htpasswd
-require valid-user
+## REMOVE BEFORE PRODUCTION DEVELOPMENT
+#AuthType Basic
+#AuthName "Restricted access"
+#AuthUserFile /opt/app-root/src/.htpasswd
+#require valid-user
