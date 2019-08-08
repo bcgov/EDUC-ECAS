@@ -54,7 +54,7 @@ class EcasBaseController extends Controller
     }
 
 
-    private function getBearerToken(Request $request )
+    protected function getBearerToken(Request $request )
     {
 
         $authorization_array = explode(' ', $request->headers->get('Authorization'));

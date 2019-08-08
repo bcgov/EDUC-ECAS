@@ -152,6 +152,7 @@
 <script>
     import FormError from './FormError.vue';
     import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
+    import axios from 'axios';
 
     export default {
         name: "Profile",
@@ -226,7 +227,7 @@
             },
             saveProfile() {
 
-                console.log('saving profile')
+                console.log('saving profile: ');
 
                 if (this.working) {
                     return
@@ -234,11 +235,10 @@
 
                 this.working = true;
 
-                var form = this
+                var form = this;
 
                 // Data must be registered here to interact with the form
                 var data = {
-                    id: form.user_local.id,
                     email: form.user_local.email,
                     phone: form.user_local.phone,
                     preferred_first_name: form.user_local.preferred_first_name,
@@ -274,6 +274,9 @@
                         });
                 }
                 else {
+
+                    data.id = form.user_local.id;
+
                     axios.patch('/api/profiles/' + this.user.id, data)
                         .then(function (response) {
                             console.log('Patch Profile', data.school_id);
