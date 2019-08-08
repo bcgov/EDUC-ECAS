@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -23,9 +24,7 @@ class EcasBaseController extends Controller
         logger('API_TOKEN: ' . $bearer_token);
         logger('FEDERATED_ID ' . $federated_id);
 
-        // TODO - We need try and catch logic here - in case the token isn't valid
-
-        $user = Socialite::driver('keycloak')->getUserByToken($bearer_token);
+        $user = $this->getUserFromKeycloak($bearer_token);
 
         return $user['sub'] == $federated_id;
 
@@ -36,9 +35,7 @@ class EcasBaseController extends Controller
     protected function getUserByToken($token)
     {
 
-        // TODO - We need try and catch logic here - in case the token isn't valid
-
-        return Socialite::driver('keycloak')->getUserByToken($token);
+        return $this->getUserFromKeycloak($token);
 
     }
 
@@ -47,9 +44,7 @@ class EcasBaseController extends Controller
 
         $token = $this->getBearerToken($request);
 
-        // TODO - We need try and catch logic here - in case the token isn't valid
-
-        return Socialite::driver('keycloak')->getUserByToken($token);
+        return $this->getUserFromKeycloak($token);
 
     }
 
@@ -60,6 +55,13 @@ class EcasBaseController extends Controller
         $authorization_array = explode(' ', $request->headers->get('Authorization'));
 
         return $authorization_array[1];
+
+    }
+
+    private function getUserFromKeycloak($token)
+    {
+
+        return Socialite::driver('keycloak')->getUserByToken($token);
 
     }
 
