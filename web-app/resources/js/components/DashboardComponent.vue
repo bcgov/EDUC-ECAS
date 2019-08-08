@@ -58,7 +58,7 @@
                                     <div class="col">
                                         <select v-model="new_credential">
                                             <option value="0">Select New Credential</option>
-                                            <option v-for="credential in credentials_available" :value="credential">
+                                            <option v-for="credential in credentialsAvailable" :value="credential">
                                                 {{ credential.name }}
                                             </option>
                                         </select>
@@ -164,7 +164,6 @@
         data() {
             return {
                 credentials_applied: [...this.user_credentials],
-                credentials_available: [...this.credentials],
                 new_credential: 0,
                 filter: '',
                 current_session: {},
@@ -205,6 +204,11 @@
                     }
                     return session.status === dashboard.filter
                 })
+            },
+            credentialsAvailable() {
+                // subtract applied_credentials from credentials
+                return this.credentials.filter(x => ! this.credentials_applied.includes(x));
+
             }
         },
         methods: {
@@ -255,16 +259,6 @@
             pushCredential(profile_credential) {
                 console.log('pushing credential', profile_credential.data.credential.id );
 
-                // Get the credential
-                var index = this.credentials_available.findIndex( function(credential){
-                    return credential.id === profile_credential.data.credential.id;
-                });
-
-                console.log('credential index', index);
-
-                // Remove the credential from the available list
-                this.credentials_available.splice(index, 1);
-
                 // Add to the applied list
                 this.credentials_applied.push(profile_credential.data);
 
@@ -280,13 +274,9 @@
 
                 let credential = this.credentials_applied[index].credential;
 
-
-
                 // Remove the credential from the applied list
                 this.credentials_applied.splice(index, 1);
 
-                // Add to the available list
-                this.credentials_available.unshift(credential);
 
                 this.new_credential = 0;
             },
