@@ -202,7 +202,7 @@
                     if (dashboard.filter.length === 0) {
                         return true
                     }
-                    return session.status === dashboard.filter
+                    return session.status.name === dashboard.filter
                 })
             },
             credentialsAvailable() {
@@ -253,7 +253,7 @@
             countStatus(status) {
                 // var status
                 return Object.values(this.getSessions).filter(function (assignment) {
-                    return assignment.status === status
+                    return assignment.status.name === status
                 }).length
             },
             pushCredential(profile_credential) {
@@ -280,10 +280,7 @@
 
                 this.new_credential = 0;
             },
-
-            isStatus: function (session, status) {
-                return session.status === status
-            },
+            
             sessionStatus(session) {
                 switch (session.status.name) {
                     case 'Applied':
