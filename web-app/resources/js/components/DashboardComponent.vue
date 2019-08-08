@@ -183,7 +183,7 @@
             Event.listen('profile-updated', this.updateProfile);
             Event.listen('session_status_updated', this.updateSessionStatus);
 
-            if (this.getUser.id === null) {
+            if ( ! this.user.id) {
                 this.new_user = true;
                 this.showProfile()
             }
@@ -280,7 +280,7 @@
 
                 this.new_credential = 0;
             },
-            
+
             sessionStatus(session) {
                 switch (session.status.name) {
                     case 'Applied':
