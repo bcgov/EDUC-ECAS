@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{2314de1a-ce5b-e911-a978-000d3af45d23}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="educ_name" select="1" preview="1" icon="1">
+        <row id="educ_assignmentid" name="result">
+          <cell name="educ_contact" width="100" />
+          <cell name="a_4afb4b23bc5be911a978000d3af45d23.educ_preferredfirstname" width="100" disableSorting="1" />
+          <cell name="a_4afb4b23bc5be911a978000d3af45d23.emailaddress1" width="100" disableSorting="1" />
+          <cell name="a_4afb4b23bc5be911a978000d3af45d23.address1_city" width="100" disableSorting="1" />
+          <cell name="educ_role" width="100" />
+          <cell name="statuscode" width="100" />
+          <cell name="educ_contractstage" width="100" />
+          <cell name="educ_contractapprovedby" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical">
+        <entity name="educ_assignment">
+          <order attribute="educ_contact" descending="false" />
+          <attribute name="educ_contact" />
+          <attribute name="statuscode" />
+          <attribute name="educ_role" />
+          <attribute name="educ_contractstage" />
+          <attribute name="educ_contractapprovedby" />
+          <link-entity name="contact" visible="false" link-type="outer" to="educ_contact" from="contactid" alias="a_4afb4b23bc5be911a978000d3af45d23">
+            <attribute name="address1_city" />
+            <attribute name="educ_preferredfirstname" />
+            <attribute name="emailaddress1" />
+          </link-entity>
+          <attribute name="educ_assignmentid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.7</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Session Assignment Related View" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

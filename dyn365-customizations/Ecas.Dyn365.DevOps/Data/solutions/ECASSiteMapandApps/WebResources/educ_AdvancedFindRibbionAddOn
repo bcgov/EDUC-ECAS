@@ -1,0 +1,10 @@
+var UCIAdvancedFind = {
+	open: function(){
+		var advFindUrl = Xrm.Utility.getGlobalContext().getClientUrl() + "/main.aspx?pagetype=advancedfind";
+		Xrm.Navigation.openUrl(advFindUrl,{width:900,height:600})
+	},
+	isDesktop: function() {
+		return Xrm.Utility.getGlobalContext().client.getFormFactor()==1;
+		
+	}
+};

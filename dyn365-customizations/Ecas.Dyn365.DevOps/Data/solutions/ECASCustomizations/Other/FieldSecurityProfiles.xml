@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FieldSecurityProfiles>
+  <FieldSecurityProfile name="PIA Access Security Level" description="Fields with PIA considerations such as SIN and Federated ID will only be accessible to Admins and ECAS admins" fieldsecurityprofileid="{e1876cda-505d-e911-a98d-000d3af438b6}">
+    <FieldPermissions>
+      <FieldPermission>
+        <EntityName>contact</EntityName>
+        <AttributeName>educ_socialinsurancenumber</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+      </FieldPermission>
+      <FieldPermission>
+        <EntityName>contact</EntityName>
+        <AttributeName>educ_federatedid</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>0</CanUpdate>
+        <CanCreate>0</CanCreate>
+      </FieldPermission>
+    </FieldPermissions>
+  </FieldSecurityProfile>
+</FieldSecurityProfiles>

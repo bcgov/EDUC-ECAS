@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{2166c76d-8c2f-4070-a1f1-2a4e225fcad7}</savedqueryid>
+    <layoutxml>
+      <grid name="" jump="educ_name" select="1" icon="1" preview="1">
+        <row name="educ_provincestatecode" id="educ_provincestatecodeid">
+          <cell name="educ_provincestatecode" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="educ_name" width="300" />
+          <cell name="createdby" width="100" />
+          <cell name="createdon" width="125" />
+          <cell name="modifiedby" width="100" />
+          <cell name="modifiedon" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>2</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="educ_provincestatecode">
+          <attribute name="educ_name" />
+          <attribute name="createdon" />
+          <order attribute="educ_name" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <attribute name="educ_provincestatecode" />
+          <attribute name="createdby" />
+          <attribute name="modifiedon" />
+          <attribute name="modifiedby" />
+          <attribute name="educ_provincestatecodeid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.1</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Province State Code Associated View" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

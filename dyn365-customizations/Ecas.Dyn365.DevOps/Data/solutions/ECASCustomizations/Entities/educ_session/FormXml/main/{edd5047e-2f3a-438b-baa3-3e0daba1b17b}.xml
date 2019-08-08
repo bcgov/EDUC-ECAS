@@ -1,0 +1,457 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms>
+  <systemform>
+    <formid>{edd5047e-2f3a-438b-baa3-3e0daba1b17b}</formid>
+    <IntroducedVersion>0.0.0.1</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form shownavigationbar="true" showImage="false" maxWidth="1920">
+      <tabs>
+        <tab id="{41332d75-3a39-4cb9-82f2-b1c4e7d8ac13}" name="{41332d75-3a39-4cb9-82f2-b1c4e7d8ac13}" verticallayout="true" IsUserDefined="1" locklevel="0" expanded="true" showlabel="true">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="50%">
+              <sections>
+                <section id="{2b00b297-4954-47c8-a5c7-0047a5281032}" IsUserDefined="0" showlabel="false" showbar="false">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{dddbd886-3f25-442b-928b-62171faa26b8}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="Name" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="educ_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_name" uniqueid="{4b39d360-be4d-adb9-5c12-719b6170d171}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{de9c75c3-c1db-6bb9-b3b6-e982882d8053}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="Session Activity" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="educ_sessionactivity" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="educ_sessionactivity" uniqueid="{05363812-76eb-3520-e8e6-89151733ed5a}">
+                          <parameters>
+                            <AutoResolve>true</AutoResolve>
+                            <DisableMru>false</DisableMru>
+                            <DisableQuickFind>false</DisableQuickFind>
+                            <DisableViewPicker>true</DisableViewPicker>
+                            <DefaultViewId>{4199C298-1AB8-42D1-AF8D-D4D29734500B}</DefaultViewId>
+                            <AllowFilterOff>false</AllowFilterOff>
+                            <AvailableViewIds>{4199C298-1AB8-42D1-AF8D-D4D29734500B},{A35171D6-1FC6-4430-8CB9-5DC5EAABF20D}</AvailableViewIds>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{be7ae3ac-2d24-1191-db6d-b0166711ec96}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="Session Type" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="educ_sessiontype" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="educ_sessiontype" uniqueid="{84514e75-e27a-0d0c-e838-a6790d6dc472}">
+                          <parameters>
+                            <AutoResolve>true</AutoResolve>
+                            <DisableMru>false</DisableMru>
+                            <DisableQuickFind>false</DisableQuickFind>
+                            <DisableViewPicker>true</DisableViewPicker>
+                            <DefaultViewId>{7593D069-3474-4B55-B3EB-CB4EC43D889B}</DefaultViewId>
+                            <AllowFilterOff>false</AllowFilterOff>
+                            <AvailableViewIds>{7593D069-3474-4B55-B3EB-CB4EC43D889B},{B133ADBF-FC0E-4801-B93F-7399E53BF416}</AvailableViewIds>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{908250b6-6689-d8c8-dc06-61472978ba63}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="Project Code" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="educ_projectcode" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="educ_projectcode" uniqueid="{dda1ebcd-35b0-aeec-c606-1520252c5a92}">
+                          <parameters>
+                            <AutoResolve>true</AutoResolve>
+                            <DisableMru>false</DisableMru>
+                            <DisableQuickFind>false</DisableQuickFind>
+                            <DisableViewPicker>true</DisableViewPicker>
+                            <DefaultViewId>{6038325F-F93B-49DA-A896-C73943875DFB}</DefaultViewId>
+                            <AllowFilterOff>false</AllowFilterOff>
+                            <AvailableViewIds>{6038325F-F93B-49DA-A896-C73943875DFB},{19F5AA84-8010-4772-A6DA-DE79C83477D3}</AvailableViewIds>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{7ad41bd6-95ab-4b89-e3ea-2452872119d3}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="Start Date" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="educ_startdate" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="educ_startdate" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{e74456dd-c259-11b2-36e9-2549c813ba0b}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="End Date" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="educ_enddate" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="educ_enddate" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{5c87ed18-b59e-4dcf-9a2f-8e371921506a}" locklevel="1" showlabel="true" visible="false">
+                        <labels>
+                          <label description="Owner" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" uniqueid="{6bb146d9-d441-8c87-bdda-e93011c783b8}">
+                          <parameters>
+                            <AutoResolve>true</AutoResolve>
+                            <DisableMru>false</DisableMru>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+                <section id="{1e263886-9ecb-90a5-7332-b7e6881c2bba}" name="{41332d75-3a39-4cb9-82f2-b1c4e7d8ac13}_section_3" IsUserDefined="0" locklevel="0" showlabel="true" columns="1" showbar="false" layout="varwidth" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="LOCATION" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{b75b370d-d6d7-169a-6391-b9ec7bb03ea0}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="Name" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="educ_locationname" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_locationname" uniqueid="{a3aa8726-e644-d540-78b2-4820c00d3471}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{e877ceb5-bda8-b13b-0d41-983d197a4061}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="Address" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="educ_locationaddress" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_locationaddress" uniqueid="{c0332ab5-02ec-71c7-579a-ce832e8116e0}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{0ac18ec3-bac1-ea6e-81db-4dd8b897e1ae}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="City" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="educ_locationcity" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_locationcity" uniqueid="{404247cb-6926-995a-0710-5515c3a24741}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{57682d89-818c-52b1-2463-ab4e4d11bbc8}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="Postal Code" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="educ_locationpostalcode" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_locationpostalcode" uniqueid="{a8601c0a-46e2-5056-47d4-49d5e1733711}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+            <column width="50%">
+              <sections>
+                <section id="{4904d7b9-36b3-76ca-35c7-5900a47da56a}" name="{41332d75-3a39-4cb9-82f2-b1c4e7d8ac13}_section_2" IsUserDefined="0" locklevel="0" showlabel="true" columns="1" showbar="false" layout="varwidth" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="ASSESSMENT INFORMATION" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{eba770ed-0a2d-5eda-cb2e-07411d90a5b6}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="Forecast Number of Assessments" languagecode="1033" />
+                        </labels>
+                        <control id="educ_forecastnumberofassessments" classid="{C6D124CA-7EDA-4a60-AEA9-7FB8D318B68F}" datafieldname="educ_forecastnumberofassessments" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{78900dd1-7751-36c9-743d-06d3bda5b179}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="Actual Number of Assessments" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="educ_actualnumberofassessments" classid="{C6D124CA-7EDA-4a60-AEA9-7FB8D318B68F}" datafieldname="educ_actualnumberofassessments" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{cc9ad0ec-7903-4674-e207-0900c7c7035e}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Planned Marker Days" languagecode="1033" />
+                        </labels>
+                        <control id="educ_plannedmarkerdays" classid="{C6D124CA-7EDA-4a60-AEA9-7FB8D318B68F}" datafieldname="educ_plannedmarkerdays" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{6672a8e3-7d50-db1c-3424-c1b84d905ebb}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="Actual Marker Days" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="educ_actualmarkerdays" classid="{C6D124CA-7EDA-4a60-AEA9-7FB8D318B68F}" datafieldname="educ_actualmarkerdays" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{a88bbcad-770b-695d-7442-972b5eaa0617}" showlabel="false" userspacer="true">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+                <section name="{41332d75-3a39-4cb9-82f2-b1c4e7d8ac13}_section_4" showlabel="true" showbar="true" locklevel="0" id="{e1d0ca14-5492-6d4b-59dd-301296450111}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="Expense Authority Approval" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{786b0cd9-e537-d862-b119-d2a53ae70322}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Approval Signature" languagecode="1033" />
+                        </labels>
+                        <control id="educ_approvalsignature" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" datafieldname="educ_approvalsignature" disabled="false" uniqueid="{b89e2be4-11a7-dd20-484d-8574bd134b75}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{d12e3d27-7aa8-b680-7e0e-6e13dd6c213e}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Expense Authority Approval Date" languagecode="1033" />
+                        </labels>
+                        <control id="educ_expenseauthorityapprovaldate" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="educ_expenseauthorityapprovaldate" disabled="true" uniqueid="{7a05ab91-b8cc-860d-a727-12a2146d2524}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{983600c3-6d22-d64b-61d6-8385854ba096}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Expense Authority Name" languagecode="1033" />
+                        </labels>
+                        <control id="educ_expenseauthorityname" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="educ_expenseauthorityname" disabled="true" uniqueid="{a7be922c-65c2-bc68-25ae-5dc17b5b54dd}">
+                          <parameters>
+                            <AutoResolve>true</AutoResolve>
+                            <DisableMru>false</DisableMru>
+                            <DisableQuickFind>false</DisableQuickFind>
+                            <DisableViewPicker>false</DisableViewPicker>
+                            <DefaultViewId>{E88CA999-0B16-4AE9-B6A9-9EDC840D42D8}</DefaultViewId>
+                            <AllowFilterOff>false</AllowFilterOff>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{da094e08-e209-78d6-e7d4-c339d85c1926}" showlabel="true" locklevel="0" visible="false">
+                        <labels>
+                          <label description="Approval Authority Signature Text" languagecode="1033" />
+                        </labels>
+                        <control id="educ_approvalauthoritysignaturetext" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="educ_approvalauthoritysignaturetext" disabled="false" uniqueid="{9b12a4ae-9252-5d65-0754-b68c3793aba4}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab id="{bab51178-667c-018c-9547-7b077a93817d}" name="tab_2" IsUserDefined="0" locklevel="0" expanded="true" showlabel="true">
+          <labels>
+            <label description="Assignments" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="{b090d947-eb6e-e2e8-242e-4001249d6b48}" name="tab_2_section_1" IsUserDefined="0" locklevel="0" showlabel="false" columns="1" showbar="false" layout="varwidth" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="Section" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{4e93a235-4c48-4c29-3178-7d2adac34d29}" showlabel="true" rowspan="17" auto="false" colspan="1">
+                        <labels>
+                          <label description="Assignments" languagecode="1033" />
+                        </labels>
+                        <control id="Assignments" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" uniqueid="{4d93d493-4bcd-d2bc-98a2-cb52d73b41c3}" indicationOfSubgrid="true">
+                          <parameters>
+                            <ViewId>{2314DE1A-CE5B-E911-A978-000D3AF45D23}</ViewId>
+                            <IsUserView>false</IsUserView>
+                            <RelationshipName>educ_session_educ_assignment</RelationshipName>
+                            <TargetEntityType>educ_assignment</TargetEntityType>
+                            <AutoExpand>Fixed</AutoExpand>
+                            <EnableQuickFind>false</EnableQuickFind>
+                            <EnableViewPicker>true</EnableViewPicker>
+                            <ViewIds>{0CA3286D-7F60-E911-A97F-000D3AF43D1A},{A6571D9A-D45C-E911-A980-000D3AF475A9},{2314DE1A-CE5B-E911-A978-000D3AF45D23}</ViewIds>
+                            <EnableJumpBar>false</EnableJumpBar>
+                            <ChartGridMode>Grid</ChartGridMode>
+                            <VisualizationId>{8A2A7D79-5B7B-E911-B80A-005056833C5B}</VisualizationId>
+                            <IsUserChart>false</IsUserChart>
+                            <EnableChartPicker>false</EnableChartPicker>
+                            <RecordsPerPage>14</RecordsPerPage>
+                            <HeaderColorCode>#F3F3F3</HeaderColorCode>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{24d7ab6b-edc1-464f-a6b5-4d9f1f738330}" columns="111" labelwidth="130" celllabelalignment="Left" celllabelposition="Left">
+        <rows>
+          <row>
+            <cell id="{0cd34410-e458-97cc-066c-bbc13c271c08}" locklevel="0" showlabel="true">
+              <labels>
+                <label description="Status Reason" languagecode="1033" />
+              </labels>
+              <control disabled="false" id="header_statuscode" classid="{5D68B988-0661-4db2-BC3E-17598AD3BE6C}" datafieldname="statuscode" uniqueid="{10c7d593-0b87-8e6b-31a3-e1a0c56ac5b3}" />
+            </cell>
+            <cell id="{d959b68a-076b-b7a7-d3ec-aa88b935c146}" locklevel="0" showlabel="true">
+              <labels>
+                <label description="Publish Session" languagecode="1033" />
+              </labels>
+              <control disabled="false" id="header_educ_publishsession" classid="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}" datafieldname="educ_publishsession" />
+            </cell>
+            <cell id="{07a68ab1-3ea5-94bb-bb9d-53c72c908b1c}" locklevel="0" showlabel="true">
+              <labels>
+                <label description="Owner" languagecode="1033" />
+              </labels>
+              <control disabled="false" id="header_ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
+            </cell>
+          </row>
+          <row>
+            <cell id="{ed18b677-4273-52d5-9b90-ad81a78e8ca7}" locklevel="0" showlabel="true" visible="false">
+              <labels>
+                <label description="Status" languagecode="1033" />
+              </labels>
+              <control disabled="false" id="header_statecode" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="statecode" uniqueid="{3566d85d-e4ee-c887-b1b5-4b3c744993c8}" />
+            </cell>
+            <cell id="{aa175681-2cd4-aa39-2c00-8c5343d3d81b}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{081d7882-8902-6d28-7182-9274080e5ab0}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <footer id="{9d26f4db-2e4f-4da6-9b8a-db9825f11828}" columns="111">
+        <rows>
+          <row>
+            <cell id="{040ae183-e9a7-983d-4c3e-6e30d07181e0}" locklevel="0" showlabel="true">
+              <labels>
+                <label description="Created On" languagecode="1033" />
+              </labels>
+              <control disabled="true" id="footer_createdon" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="createdon" />
+            </cell>
+            <cell id="{b7743903-7c3e-c668-bba1-0e0293b5c817}" locklevel="0" showlabel="true">
+              <labels>
+                <label description="Modified On" languagecode="1033" />
+              </labels>
+              <control disabled="true" id="footer_modifiedon" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="modifiedon" />
+            </cell>
+            <cell id="{4448b444-ed34-0b6b-2d51-79de8750486c}" locklevel="0" showlabel="true">
+              <labels>
+                <label description="Modified By" languagecode="1033" />
+              </labels>
+              <control disabled="true" id="footer_modifiedby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="modifiedby" />
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <Navigation>
+        <NavBar></NavBar>
+        <NavBarAreas>
+          <NavBarArea Id="Info">
+            <Titles>
+              <Title Text="Common" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Sales">
+            <Titles>
+              <Title Text="Sales" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Service">
+            <Titles>
+              <Title Text="Service" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Marketing">
+            <Titles>
+              <Title Text="Marketing" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="ProcessCenter">
+            <Titles>
+              <Title Text="Process Sessions" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+        </NavBarAreas>
+      </Navigation>
+      <controlDescriptions>
+        <controlDescription forControl="{b89e2be4-11a7-dd20-484d-8574bd134b75}">
+          <customControl id="{E0DECE4B-6FC8-4a8f-A065-082708572369}">
+            <parameters>
+              <datafieldname>educ_approvalsignature</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="0" name="MscrmControls.Signature.SignatureControl">
+            <parameters>
+              <value>educ_approvalsignature</value>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="MscrmControls.Signature.SignatureControl">
+            <parameters>
+              <value>educ_approvalsignature</value>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="MscrmControls.Signature.SignatureControl">
+            <parameters>
+              <value>educ_approvalsignature</value>
+            </parameters>
+          </customControl>
+        </controlDescription>
+      </controlDescriptions>
+      <formLibraries>
+        <Library name="educ_session.js" libraryUniqueId="{ddde1ae5-d918-6860-a224-3a7d53d15ee9}" />
+      </formLibraries>
+      <events>
+        <event name="onchange" application="false" active="false" attribute="educ_approvalsignature">
+          <Handlers>
+            <Handler functionName="clearBase64StringPrefix" libraryName="educ_session.js" handlerUniqueId="{82c51a6a-dc82-3265-e158-bc66b46a2a21}" enabled="true" parameters="" passExecutionContext="false" />
+          </Handlers>
+        </event>
+      </events>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Information" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="A form for this entity." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms>
+  <systemform>
+    <formid>{c7087e4e-bb5f-48ea-83e4-6845389b971b}</formid>
+    <IntroducedVersion>0.0.0.7</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab verticallayout="true" id="{5024530d-8eb3-4cd3-9185-cbc599c0dbbc}" IsUserDefined="1" name="{5024530d-8eb3-4cd3-9185-cbc599c0dbbc}" locklevel="0" expanded="true" showlabel="true">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="50%">
+              <sections>
+                <section showlabel="false" showbar="false" IsUserDefined="0" id="{ebc0fb10-82c4-4ed9-bd71-a66f14108ee8}">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{0700821e-10d3-527a-0415-1a4303d879c1}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Expense Code" languagecode="1033" />
+                        </labels>
+                        <control id="educ_expensecode" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_expensecode" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{ce340712-bf5e-4cb3-8e72-135424078557}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Expense Name" languagecode="1033" />
+                        </labels>
+                        <control id="educ_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_name" uniqueid="{252cce67-d757-559c-ec3d-5d2c18979a26}" disabled="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+            <column width="50%">
+              <sections>
+                <section name="{5024530d-8eb3-4cd3-9185-cbc599c0dbbc}_section_2" showlabel="false" showbar="false" locklevel="0" id="{1b197966-64ce-e9c3-2cd1-8cd036bb0a7d}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115">
+                  <labels>
+                    <label description="Section" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{721104cb-3223-3d47-1e4c-761c4465d8e8}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Receipt Required" languagecode="1033" />
+                        </labels>
+                        <control id="educ_receiptrequired" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" datafieldname="educ_receiptrequired" disabled="false" uniqueid="{504533d6-7158-cb6b-a60d-8572a820eab4}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{b0a5b40e-66eb-1963-9580-734ca8565693}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Rate" languagecode="1033" />
+                        </labels>
+                        <control id="educ_rate" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="educ_rate" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{bc17a8ab-0714-c912-ec53-4058473a2302}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Receipt Limit" languagecode="1033" />
+                        </labels>
+                        <control id="educ_receiptlimit" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="educ_receiptlimit" disabled="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{fa2c1a61-8aea-4886-8eb8-a80d2f495fce}" columns="11" labelwidth="130" celllabelalignment="Left" celllabelposition="Left">
+        <rows>
+          <row>
+            <cell id="{48de886c-3dd5-4d6e-6241-4b03709cbbc4}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="Status" languagecode="1033" />
+              </labels>
+              <control id="header_statecode" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="statecode" disabled="false" />
+            </cell>
+            <cell id="{392a6c5b-a3a8-b7dc-c7dc-b442e1931bca}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="Owner" languagecode="1033" />
+              </labels>
+              <control id="header_ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" disabled="false" />
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <footer id="{4836c88d-78be-4c67-badd-5ac1b76325cd}" columns="111">
+        <rows>
+          <row>
+            <cell id="{65e7c047-1459-d846-8a4c-3781c58c652a}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="Created On" languagecode="1033" />
+              </labels>
+              <control id="footer_createdon" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="createdon" disabled="true" />
+            </cell>
+            <cell id="{5bbecd02-97e4-c445-abbb-d7554c4e1085}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="Created By" languagecode="1033" />
+              </labels>
+              <control id="footer_createdby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="createdby" disabled="true" />
+            </cell>
+            <cell id="{dc809cc2-0b14-3876-0d14-cb9d14669d0b}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="Modified By" languagecode="1033" />
+              </labels>
+              <control id="footer_modifiedby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="modifiedby" disabled="true" />
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <Navigation>
+        <NavBar></NavBar>
+        <NavBarAreas>
+          <NavBarArea Id="Info">
+            <Titles>
+              <Title LCID="1033" Text="Common" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Sales">
+            <Titles>
+              <Title LCID="1033" Text="Sales" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Service">
+            <Titles>
+              <Title LCID="1033" Text="Service" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Marketing">
+            <Titles>
+              <Title LCID="1033" Text="Marketing" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="ProcessCenter">
+            <Titles>
+              <Title LCID="1033" Text="Process Sessions" />
+            </Titles>
+          </NavBarArea>
+        </NavBarAreas>
+      </Navigation>
+      <controlDescriptions>
+        <controlDescription forControl="{504533d6-7158-cb6b-a60d-8572a820eab4}">
+          <customControl id="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}">
+            <parameters>
+              <datafieldname>educ_receiptrequired</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="0" name="MscrmControls.OptionSet.OptionSetControl">
+            <parameters>
+              <value>educ_receiptrequired</value>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="MscrmControls.OptionSet.OptionSetControl">
+            <parameters>
+              <value>educ_receiptrequired</value>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="MscrmControls.OptionSet.OptionSetControl">
+            <parameters>
+              <value>educ_receiptrequired</value>
+            </parameters>
+          </customControl>
+        </controlDescription>
+      </controlDescriptions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Information" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="A form for this entity." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

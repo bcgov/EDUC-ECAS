@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<optionset Name="educ_ecasyesno" localizedName="ECAS Yes No" description="Yes No value with no Null-able option">
+  <OptionSetType>picklist</OptionSetType>
+  <IsGlobal>1</IsGlobal>
+  <IntroducedVersion>0.0.1.5</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <ExternalTypeName></ExternalTypeName>
+  <displaynames>
+    <displayname description="ECAS Yes No" languagecode="1033" />
+  </displaynames>
+  <Descriptions>
+    <Description description="Yes No value with no Null-able option" languagecode="1033" />
+  </Descriptions>
+  <options>
+    <option value="610410000" ExternalValue="" Color="#0000ff">
+      <labels>
+        <label description="Yes" languagecode="1033" />
+      </labels>
+      <Descriptions>
+        <Description description="" languagecode="1033" />
+      </Descriptions>
+    </option>
+    <option value="610410001" ExternalValue="" Color="#0000ff">
+      <labels>
+        <label description="No" languagecode="1033" />
+      </labels>
+      <Descriptions>
+        <Description description="" languagecode="1033" />
+      </Descriptions>
+    </option>
+  </options>
+</optionset>

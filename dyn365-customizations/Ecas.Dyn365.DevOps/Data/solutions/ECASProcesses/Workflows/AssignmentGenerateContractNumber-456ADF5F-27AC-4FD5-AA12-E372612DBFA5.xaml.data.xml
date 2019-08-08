@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Workflow WorkflowId="{456adf5f-27ac-4fd5-aa12-e372612dbfa5}" Name="Assignment: Generate Contract Number">
+  <XamlFileName>/Workflows/AssignmentGenerateContractNumber-456ADF5F-27AC-4FD5-AA12-E372612DBFA5.xaml</XamlFileName>
+  <Type>1</Type>
+  <Subprocess>0</Subprocess>
+  <Category>0</Category>
+  <Mode>0</Mode>
+  <Scope>4</Scope>
+  <OnDemand>1</OnDemand>
+  <TriggerOnUpdateAttributeList>statuscode</TriggerOnUpdateAttributeList>
+  <TriggerOnCreate>0</TriggerOnCreate>
+  <TriggerOnDelete>0</TriggerOnDelete>
+  <AsyncAutodelete>1</AsyncAutodelete>
+  <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+  <StateCode>1</StateCode>
+  <StatusCode>2</StatusCode>
+  <RunAs>1</RunAs>
+  <IsTransacted>1</IsTransacted>
+  <IntroducedVersion>0.0.0.7</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <PrimaryEntity>educ_assignment</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName languagecode="1033" description="Assignment: Generate Contract Number" />
+  </LocalizedNames>
+  <labels>
+    <steplabels id="{7697759a-95af-4083-82fd-62229879636a}" />
+    <steplabels id="{d00a2a1f-bd94-4993-aefb-d7ebb0dc1987}" />
+  </labels>
+</Workflow>

@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Role id="{33163aa5-034e-e911-a980-000d3af475a9}" name="ECAS BUS  ADMIN">
+  <IsCustomizable>1</IsCustomizable>
+  <RolePrivileges>
+    <RolePrivilege name="prvAppendeduc_assignment" level="Local" />
+    <RolePrivilege name="prvAppendeduc_countrycode" level="Local" />
+    <RolePrivilege name="prvAppendeduc_credential" level="Local" />
+    <RolePrivilege name="prvAppendeduc_credentialcode" level="Local" />
+    <RolePrivilege name="prvAppendeduc_districtcode" level="Local" />
+    <RolePrivilege name="prvAppendeduc_exoense" level="Local" />
+    <RolePrivilege name="prvAppendeduc_expensecode" level="Local" />
+    <RolePrivilege name="prvAppendeduc_projectcode" level="Local" />
+    <RolePrivilege name="prvAppendeduc_provincestatecode" level="Local" />
+    <RolePrivilege name="prvAppendeduc_rolecode" level="Local" />
+    <RolePrivilege name="prvAppendeduc_schoollist" level="Local" />
+    <RolePrivilege name="prvAppendeduc_session" level="Local" />
+    <RolePrivilege name="prvAppendeduc_sessionactivitycode" level="Local" />
+    <RolePrivilege name="prvAppendeduc_sessiontypecode" level="Local" />
+    <RolePrivilege name="prvAppendeduc_subjectcode" level="Local" />
+    <RolePrivilege name="prvAppendeduc_teachingexperience" level="Local" />
+    <RolePrivilege name="prvAppendmsdyn_PostAlbum" level="Local" />
+    <RolePrivilege name="prvAppendmsdyn_relationshipinsightsunifiedconfig" level="Local" />
+    <RolePrivilege name="prvAppendmsdyn_wallsavedqueryusersettings" level="Local" />
+    <RolePrivilege name="prvAppendToeduc_assignment" level="Local" />
+    <RolePrivilege name="prvAppendToeduc_countrycode" level="Local" />
+    <RolePrivilege name="prvAppendToeduc_credential" level="Local" />
+    <RolePrivilege name="prvAppendToeduc_credentialcode" level="Local" />
+    <RolePrivilege name="prvAppendToeduc_districtcode" level="Local" />
+    <RolePrivilege name="prvAppendToeduc_exoense" level="Local" />
+    <RolePrivilege name="prvAppendToeduc_expensecode" level="Local" />
+    <RolePrivilege name="prvAppendToeduc_projectcode" level="Local" />
+    <RolePrivilege name="prvAppendToeduc_provincestatecode" level="Local" />
+    <RolePrivilege name="prvAppendToeduc_rolecode" level="Local" />
+    <RolePrivilege name="prvAppendToeduc_schoollist" level="Local" />
+    <RolePrivilege name="prvAppendToeduc_session" level="Local" />
+    <RolePrivilege name="prvAppendToeduc_sessionactivitycode" level="Local" />
+    <RolePrivilege name="prvAppendToeduc_sessiontypecode" level="Local" />
+    <RolePrivilege name="prvAppendToeduc_subjectcode" level="Local" />
+    <RolePrivilege name="prvAppendToeduc_teachingexperience" level="Local" />
+    <RolePrivilege name="prvAppendTomsdyn_PostAlbum" level="Local" />
+    <RolePrivilege name="prvAppendTomsdyn_relationshipinsightsunifiedconfig" level="Local" />
+    <RolePrivilege name="prvAppendTomsdyn_wallsavedqueryusersettings" level="Local" />
+    <RolePrivilege name="prvCreateeduc_assignment" level="Local" />
+    <RolePrivilege name="prvCreateeduc_credential" level="Local" />
+    <RolePrivilege name="prvCreateeduc_exoense" level="Local" />
+    <RolePrivilege name="prvCreateeduc_session" level="Local" />
+    <RolePrivilege name="prvCreateeduc_teachingexperience" level="Local" />
+    <RolePrivilege name="prvCreateSharePointData" level="Global" />
+    <RolePrivilege name="prvDeleteeduc_credential" level="Local" />
+    <RolePrivilege name="prvReadSdkMessage" level="Global" />
+    <RolePrivilege name="prvReadSdkMessageProcessingStep" level="Global" />
+    <RolePrivilege name="prvReadSdkMessageProcessingStepImage" level="Global" />
+    <RolePrivilege name="prvReadSharePointData" level="Global" />
+    <RolePrivilege name="prvReadSharePointDocument" level="Global" />
+    <RolePrivilege name="prvWriteContact" level="Global" />
+    <RolePrivilege name="prvWriteeduc_assignment" level="Local" />
+    <RolePrivilege name="prvWriteeduc_credential" level="Local" />
+    <RolePrivilege name="prvWriteeduc_exoense" level="Local" />
+    <RolePrivilege name="prvWriteeduc_session" level="Local" />
+    <RolePrivilege name="prvWriteeduc_teachingexperience" level="Local" />
+    <RolePrivilege name="prvWriteSharePointData" level="Global" />
+  </RolePrivileges>
+</Role>

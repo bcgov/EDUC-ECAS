@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{a9acff48-71ab-4188-a07c-45d13162fe60}</savedqueryid>
+    <layoutxml>
+      <grid name="" preview="1" icon="1" select="1" jump="educ_name">
+        <row id="educ_credentialid" name="educ_credential">
+          <cell name="educ_contact" imageproviderwebresource="$webresource:" imageproviderfunctionname="" width="200" />
+          <cell name="educ_credential" imageproviderwebresource="$webresource:" imageproviderfunctionname="" width="200" />
+          <cell name="educ_verifiedcredential" width="100" />
+          <cell name="educ_credentialsyear" width="100" />
+          <cell name="createdby" width="100" />
+          <cell name="modifiedby" width="100" />
+          <cell name="modifiedon" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>2</querytype>
+    <fetchxml>
+      <fetch mapping="logical" version="1.0">
+        <entity name="educ_credential">
+          <order descending="false" attribute="educ_contact" />
+          <filter type="and">
+            <condition value="0" attribute="statecode" operator="eq" />
+          </filter>
+          <attribute name="modifiedon" />
+          <attribute name="modifiedby" />
+          <attribute name="educ_credential" />
+          <attribute name="createdby" />
+          <attribute name="educ_contact" />
+          <attribute name="educ_verifiedcredential" />
+          <attribute name="educ_credentialsyear" />
+          <attribute name="educ_credentialid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.1</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Credential Associated View" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

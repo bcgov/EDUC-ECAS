@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>1</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{66a996de-d8a5-4e1f-b420-20745dab080e}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" preview="1" icon="1" select="1" jump="educ_name">
+        <row id="educ_assignmentid" name="result">
+          <cell name="educ_role" width="100" />
+          <cell name="educ_name" width="300" />
+          <cell name="educ_calculatedfee" width="100" />
+          <cell name="educ_contractstage" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>4</querytype>
+    <fetchxml>
+      <fetch mapping="logical" version="1.0">
+        <entity name="educ_assignment">
+          <attribute name="educ_name" />
+          <order descending="false" attribute="educ_name" />
+          <filter type="and">
+            <condition value="0" attribute="statecode" operator="eq" />
+          </filter>
+          <filter type="or" isquickfindfields="1">
+            <condition attribute="statuscode" operator="like" value="{0}" />
+            <condition attribute="educ_session" operator="like" value="{0}" />
+            <condition attribute="educ_role" operator="like" value="{0}" />
+            <condition attribute="educ_contact" operator="like" value="{0}" />
+            <condition attribute="educ_name" operator="like" value="{0}" />
+          </filter>
+          <attribute name="educ_role" />
+          <attribute name="educ_contractstage" />
+          <attribute name="educ_calculatedfee" />
+          <attribute name="educ_assignmentid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.7</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Quick Find Active Assignments" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

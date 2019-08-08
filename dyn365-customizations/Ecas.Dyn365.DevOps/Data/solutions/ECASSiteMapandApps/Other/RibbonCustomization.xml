@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RibbonDiffXml>
+  <CustomActions>
+    <CustomAction Id="educ.ApplicationRibbon.OpenAdvancedFind.Button.CustomAction" Location="Mscrm.GlobalTab.New.Controls._children" Sequence="25">
+      <CommandUIDefinition>
+        <Button Alt="$LocLabels:educ.ApplicationRibbon.OpenAdvancedFind.Button.Alt" Command="educ.ApplicationRibbon.OpenAdvancedFind.Command" Id="educ.ApplicationRibbon.OpenAdvancedFind.Button" LabelText="$LocLabels:educ.ApplicationRibbon.OpenAdvancedFind.Button.LabelText" Sequence="25" TemplateAlias="o1" ToolTipTitle="$LocLabels:educ.ApplicationRibbon.OpenAdvancedFind.Button.ToolTipTitle" ToolTipDescription="$LocLabels:educ.ApplicationRibbon.OpenAdvancedFind.Button.ToolTipDescription" ModernImage="$webresource:educ_AdvancedFindIcon_White" />
+      </CommandUIDefinition>
+    </CustomAction>
+  </CustomActions>
+  <Templates>
+    <RibbonTemplates Id="Mscrm.Templates"></RibbonTemplates>
+  </Templates>
+  <CommandDefinitions>
+    <CommandDefinition Id="educ.ApplicationRibbon.OpenAdvancedFind.Command">
+      <EnableRules>
+        <EnableRule Id="educ.ApplicationRibbon.IsDesktop.EnableRule" />
+      </EnableRules>
+      <DisplayRules />
+      <Actions>
+        <JavaScriptFunction FunctionName="UCIAdvancedFind.open" Library="$webresource:educ_AdvancedFindRibbonAddOn" />
+      </Actions>
+    </CommandDefinition>
+  </CommandDefinitions>
+  <RuleDefinitions>
+    <TabDisplayRules />
+    <DisplayRules />
+    <EnableRules>
+      <EnableRule Id="educ.ApplicationRibbon.IsDesktop.EnableRule">
+        <CustomRule FunctionName="UCIAdvancedFind.isDesktop" Library="$webresource:educ_AdvancedFindRibbonAddOn" />
+      </EnableRule>
+    </EnableRules>
+  </RuleDefinitions>
+  <LocLabels>
+    <LocLabel Id="educ.ApplicationRibbon.OpenAdvancedFind.Button.Alt">
+      <Titles>
+        <Title description="Advanced Find" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="educ.ApplicationRibbon.OpenAdvancedFind.Button.LabelText">
+      <Titles>
+        <Title description="Advanced Find" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="educ.ApplicationRibbon.OpenAdvancedFind.Button.ToolTipDescription">
+      <Titles>
+        <Title description="Open the Web Client Advanced Find" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="educ.ApplicationRibbon.OpenAdvancedFind.Button.ToolTipTitle">
+      <Titles>
+        <Title description="Advanced Find" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+  </LocLabels>
+</RibbonDiffXml>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Workflow WorkflowId="{9a45ea49-720c-4cd6-95eb-e151124f4fc1}" Name="Expense: Set Session and Expense Authority when record created">
+  <XamlFileName>/Workflows/ExpenseSetSessionandExpenseAuthoritywhenrecordcrea-9A45EA49-720C-4CD6-95EB-E151124F4FC1.xaml</XamlFileName>
+  <Type>1</Type>
+  <Subprocess>0</Subprocess>
+  <Category>0</Category>
+  <Mode>0</Mode>
+  <Scope>4</Scope>
+  <OnDemand>0</OnDemand>
+  <TriggerOnUpdateAttributeList>educ_session</TriggerOnUpdateAttributeList>
+  <TriggerOnCreate>1</TriggerOnCreate>
+  <TriggerOnDelete>0</TriggerOnDelete>
+  <AsyncAutodelete>1</AsyncAutodelete>
+  <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+  <StateCode>1</StateCode>
+  <StatusCode>2</StatusCode>
+  <RunAs>1</RunAs>
+  <IsTransacted>1</IsTransacted>
+  <IntroducedVersion>0.0.0.1</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <PrimaryEntity>educ_exoense</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName languagecode="1033" description="Expense: Set Session and Expense Authority when record created" />
+  </LocalizedNames>
+</Workflow>

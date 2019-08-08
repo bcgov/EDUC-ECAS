@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{9021ef47-0849-4c6e-b385-0362f8bdd064}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="educ_name" select="1" icon="1" preview="1">
+        <row name="result" id="educ_sessionid">
+          <cell name="educ_name" width="300" />
+          <cell name="educ_sessionactivity" width="100" />
+          <cell name="educ_sessiontype" width="100" />
+          <cell name="educ_locationname" width="300" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="educ_publishsession" width="100" />
+          <cell name="statuscode" width="200" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="createdby" width="100" />
+          <cell name="modifiedby" width="100" />
+          <cell name="modifiedon" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="educ_session">
+          <attribute name="educ_name" />
+          <order attribute="educ_name" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="1" />
+          </filter>
+          <attribute name="educ_sessiontype" />
+          <attribute name="educ_sessionactivity" />
+          <attribute name="educ_locationname" />
+          <attribute name="statuscode" />
+          <attribute name="educ_publishsession" />
+          <attribute name="modifiedon" />
+          <attribute name="modifiedby" />
+          <attribute name="createdby" />
+          <attribute name="educ_sessionid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.1</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Inactive Sessions" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

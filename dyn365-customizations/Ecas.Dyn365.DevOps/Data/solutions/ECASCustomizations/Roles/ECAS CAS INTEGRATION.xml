@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Role id="{79843f54-0d4e-e911-a980-000d3af475a9}" name="ECAS CAS INTEGRATION">
+  <IsCustomizable>1</IsCustomizable>
+  <RolePrivileges>
+    <RolePrivilege name="prvAppendContact" level="Global" />
+    <RolePrivilege name="prvAppendeduc_countrycode" level="Global" />
+    <RolePrivilege name="prvAppendeduc_credential" level="Global" />
+    <RolePrivilege name="prvAppendeduc_credentialcode" level="Global" />
+    <RolePrivilege name="prvAppendeduc_districtcode" level="Global" />
+    <RolePrivilege name="prvAppendeduc_projectcode" level="Global" />
+    <RolePrivilege name="prvAppendeduc_provincestatecode" level="Global" />
+    <RolePrivilege name="prvAppendeduc_schoollist" level="Global" />
+    <RolePrivilege name="prvAppendeduc_session" level="Global" />
+    <RolePrivilege name="prvAppendeduc_sessionactivitycode" level="Global" />
+    <RolePrivilege name="prvAppendeduc_sessiontypecode" level="Global" />
+    <RolePrivilege name="prvAppendToContact" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_countrycode" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_credential" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_credentialcode" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_districtcode" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_projectcode" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_provincestatecode" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_schoollist" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_session" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_sessionactivitycode" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_sessiontypecode" level="Global" />
+    <RolePrivilege name="prvCreateContact" level="Global" />
+    <RolePrivilege name="prvCreateSharePointData" level="Global" />
+    <RolePrivilege name="prvReadContact" level="Global" />
+    <RolePrivilege name="prvReadeduc_countrycode" level="Global" />
+    <RolePrivilege name="prvReadeduc_credential" level="Global" />
+    <RolePrivilege name="prvReadeduc_credentialcode" level="Global" />
+    <RolePrivilege name="prvReadeduc_districtcode" level="Global" />
+    <RolePrivilege name="prvReadeduc_payment" level="Local" />
+    <RolePrivilege name="prvReadeduc_projectcode" level="Global" />
+    <RolePrivilege name="prvReadeduc_provincestatecode" level="Global" />
+    <RolePrivilege name="prvReadeduc_schoollist" level="Global" />
+    <RolePrivilege name="prvReadeduc_session" level="Global" />
+    <RolePrivilege name="prvReadeduc_sessionactivitycode" level="Global" />
+    <RolePrivilege name="prvReadeduc_sessiontypecode" level="Global" />
+    <RolePrivilege name="prvReadPluginAssembly" level="Global" />
+    <RolePrivilege name="prvReadPluginType" level="Global" />
+    <RolePrivilege name="prvReadSdkMessage" level="Global" />
+    <RolePrivilege name="prvReadSdkMessageProcessingStep" level="Global" />
+    <RolePrivilege name="prvReadSdkMessageProcessingStepImage" level="Global" />
+    <RolePrivilege name="prvReadSharePointData" level="Global" />
+    <RolePrivilege name="prvReadSharePointDocument" level="Global" />
+    <RolePrivilege name="prvWriteContact" level="Global" />
+    <RolePrivilege name="prvWriteeduc_payment" level="Local" />
+    <RolePrivilege name="prvWriteSharePointData" level="Global" />
+  </RolePrivileges>
+</Role>

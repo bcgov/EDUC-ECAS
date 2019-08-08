@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{52de08dd-cd7c-e911-b80a-005056833c5b}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" preview="1" icon="1" select="1" jump="educ_name">
+        <row id="educ_assignmentid" name="result">
+          <cell name="educ_session" width="100" />
+          <cell name="educ_contact" width="100" />
+          <cell name="a_4c86de549f62e911b80a005056833c5b.educ_preferredfirstname" width="100" disableSorting="1" />
+          <cell name="a_4c86de549f62e911b80a005056833c5b.emailaddress1" width="100" disableSorting="1" />
+          <cell name="educ_role" width="100" />
+          <cell name="educ_contractstage" width="100" />
+          <cell name="educ_contractapprovedby" width="100" />
+          <cell name="statuscode" width="100" />
+          <cell name="educ_calculatedfee" width="100" />
+          <cell name="aa.educ_expenseauthorityname" width="100" disableSorting="1" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+        <entity name="educ_assignment">
+          <attribute name="statuscode" />
+          <attribute name="educ_session" />
+          <attribute name="educ_role" />
+          <attribute name="educ_contractstage" />
+          <attribute name="educ_contractapprovedby" />
+          <attribute name="educ_calculatedfee" />
+          <attribute name="educ_contact" />
+          <order descending="false" attribute="educ_session" />
+          <order descending="false" attribute="statuscode" />
+          <link-entity name="educ_session" from="educ_sessionid" to="educ_session" alias="aa">
+            <filter type="and">
+              <condition attribute="statecode" operator="eq" value="0" />
+            </filter>
+            <attribute name="educ_expenseauthorityname" />
+          </link-entity>
+          <link-entity alias="a_4c86de549f62e911b80a005056833c5b" name="contact" from="contactid" to="educ_contact" link-type="outer" visible="false">
+            <attribute name="educ_preferredfirstname" />
+            <attribute name="emailaddress1" />
+          </link-entity>
+          <attribute name="educ_assignmentid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.1.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Assignments for Active Sessions" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Used in Sessions Dashboard" languagecode="1033" />
+    </Descriptions>
+  </savedquery>
+</savedqueries>

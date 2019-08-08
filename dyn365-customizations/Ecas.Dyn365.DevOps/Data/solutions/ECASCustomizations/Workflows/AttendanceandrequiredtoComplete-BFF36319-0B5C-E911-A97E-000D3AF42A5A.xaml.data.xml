@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Workflow WorkflowId="{bff36319-0b5c-e911-a97e-000d3af42a5a}" Name="Attendance and required to Complete" Description="The system will prevent a user from setting the Session Assignment Status to Completed if the Attendance Duration field is NULL">
+  <XamlFileName>/Workflows/AttendanceandrequiredtoComplete-BFF36319-0B5C-E911-A97E-000D3AF42A5A.xaml</XamlFileName>
+  <Type>1</Type>
+  <Subprocess>0</Subprocess>
+  <Category>2</Category>
+  <Mode>1</Mode>
+  <Scope>4</Scope>
+  <OnDemand>0</OnDemand>
+  <TriggerOnCreate>0</TriggerOnCreate>
+  <TriggerOnDelete>0</TriggerOnDelete>
+  <AsyncAutodelete>0</AsyncAutodelete>
+  <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+  <StateCode>1</StateCode>
+  <StatusCode>2</StatusCode>
+  <RunAs>1</RunAs>
+  <IsTransacted>1</IsTransacted>
+  <IntroducedVersion>0.0.0.7</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <BusinessProcessType>0</BusinessProcessType>
+  <PrimaryEntity>educ_assignment</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName languagecode="1033" description="Attendance and required to Complete" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description languagecode="1033" description="The system will prevent a user from setting the Session Assignment Status to Completed if the Attendance Duration field is NULL" />
+  </Descriptions>
+  <labels>
+    <steplabels id="{b6594feb-f23c-4a74-921e-4986813101ee}">
+      <label languagecode="1033" description="Attendance Days is required to Complete a Session" />
+    </steplabels>
+  </labels>
+  <ProcessTriggers>
+    <ProcessTrigger processtriggerid="{4237f368-d35f-e911-a982-000d3af47939}">
+      <controltype>1</controltype>
+      <scope>2</scope>
+      <controlname>statuscode</controlname>
+      <event>change</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_assignment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{4337f368-d35f-e911-a982-000d3af47939}">
+      <scope>2</scope>
+      <event>load</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_assignment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{4437f368-d35f-e911-a982-000d3af47939}">
+      <controltype>1</controltype>
+      <scope>2</scope>
+      <controlname>educ_attendancedays</controlname>
+      <event>change</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_assignment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{4537f368-d35f-e911-a982-000d3af47939}">
+      <scope>2</scope>
+      <event>load</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_assignment</primaryentitytypecode>
+    </ProcessTrigger>
+  </ProcessTriggers>
+</Workflow>

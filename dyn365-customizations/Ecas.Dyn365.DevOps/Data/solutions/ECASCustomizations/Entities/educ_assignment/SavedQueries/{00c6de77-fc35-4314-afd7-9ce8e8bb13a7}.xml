@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{00c6de77-fc35-4314-afd7-9ce8e8bb13a7}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="educ_name" select="1" icon="1" preview="1">
+        <row id="educ_assignmentid" name="result">
+          <cell name="educ_session" width="100" />
+          <cell name="educ_contact" width="100" />
+          <cell name="educ_role" width="100" />
+          <cell name="educ_contractstage" width="100" />
+          <cell name="educ_contractapprovedby" width="100" />
+          <cell name="statuscode" width="100" />
+          <cell name="educ_calculatedfee" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>1</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="educ_assignment">
+          <order attribute="educ_contact" descending="false" />
+          <attribute name="statuscode" />
+          <attribute name="educ_session" />
+          <attribute name="educ_role" />
+          <attribute name="educ_contractstage" />
+          <attribute name="educ_contractapprovedby" />
+          <attribute name="educ_contact" />
+          <attribute name="educ_calculatedfee" />
+          <attribute name="educ_assignmentid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.7</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Assignment Advanced Find View" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

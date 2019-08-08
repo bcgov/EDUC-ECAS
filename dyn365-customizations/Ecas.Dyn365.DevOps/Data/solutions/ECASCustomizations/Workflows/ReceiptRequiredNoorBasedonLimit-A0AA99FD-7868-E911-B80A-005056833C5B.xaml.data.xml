@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Workflow WorkflowId="{a0aa99fd-7868-e911-b80a-005056833c5b}" Name="Receipt Required No or Based on Limit" Description="If Receipt Required = No then Rate must have a value else IF Receipt Required = Based on Limit then Receipt Limit must have a value">
+  <XamlFileName>/Workflows/ReceiptRequiredNoorBasedonLimit-A0AA99FD-7868-E911-B80A-005056833C5B.xaml</XamlFileName>
+  <Type>1</Type>
+  <Subprocess>0</Subprocess>
+  <Category>2</Category>
+  <Mode>1</Mode>
+  <Scope>4</Scope>
+  <OnDemand>0</OnDemand>
+  <TriggerOnCreate>0</TriggerOnCreate>
+  <TriggerOnDelete>0</TriggerOnDelete>
+  <AsyncAutodelete>0</AsyncAutodelete>
+  <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+  <StateCode>1</StateCode>
+  <StatusCode>2</StatusCode>
+  <RunAs>1</RunAs>
+  <IsTransacted>1</IsTransacted>
+  <IntroducedVersion>0.0.0.7</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <BusinessProcessType>0</BusinessProcessType>
+  <PrimaryEntity>educ_expensecode</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName languagecode="1033" description="Receipt Required No or Based on Limit" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description languagecode="1033" description="If Receipt Required = No then Rate must have a value else IF Receipt Required = Based on Limit then Receipt Limit must have a value" />
+  </Descriptions>
+  <ProcessTriggers>
+    <ProcessTrigger processtriggerid="{37d5672f-7e68-e911-b80a-005056833c5b}">
+      <controltype>1</controltype>
+      <scope>2</scope>
+      <controlname>educ_receiptrequired</controlname>
+      <event>change</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_expensecode</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{38d5672f-7e68-e911-b80a-005056833c5b}">
+      <scope>2</scope>
+      <event>load</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_expensecode</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{39d5672f-7e68-e911-b80a-005056833c5b}">
+      <controltype>1</controltype>
+      <scope>2</scope>
+      <controlname>educ_receiptrequired</controlname>
+      <event>change</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_expensecode</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{3ad5672f-7e68-e911-b80a-005056833c5b}">
+      <scope>2</scope>
+      <event>load</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_expensecode</primaryentitytypecode>
+    </ProcessTrigger>
+  </ProcessTriggers>
+</Workflow>

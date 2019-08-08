@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Workflow WorkflowId="{d3cd3bb0-dff9-4d01-8789-6cfd0cc2777e}" Name="Assignment : Generate Payment Records">
+  <XamlFileName>/Workflows/AssignmentGeneratePaymentRecords-D3CD3BB0-DFF9-4D01-8789-6CFD0CC2777E.xaml</XamlFileName>
+  <Type>1</Type>
+  <Subprocess>0</Subprocess>
+  <Category>3</Category>
+  <Mode>0</Mode>
+  <Scope>4</Scope>
+  <OnDemand>0</OnDemand>
+  <TriggerOnCreate>0</TriggerOnCreate>
+  <TriggerOnDelete>0</TriggerOnDelete>
+  <AsyncAutodelete>0</AsyncAutodelete>
+  <SyncWorkflowLogOnFailure>1</SyncWorkflowLogOnFailure>
+  <StateCode>1</StateCode>
+  <StatusCode>2</StatusCode>
+  <CreateStage>40</CreateStage>
+  <RunAs>1</RunAs>
+  <SdkMessageId>{39004255-af73-e911-a990-000d3af438b6}</SdkMessageId>
+  <UniqueName>AssignmentGeneratePaymentRecords</UniqueName>
+  <IsTransacted>1</IsTransacted>
+  <IntroducedVersion>0.0.0.3</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <FormId>{00000000-0000-0000-0000-000000000000}</FormId>
+  <PrimaryEntity>educ_assignment</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName languagecode="1033" description="Assignment : Generate Payment Records" />
+  </LocalizedNames>
+  <labels>
+    <steplabels id="{152118ed-0b73-45cf-ac5a-7d08e208264f}">
+      <label languagecode="1033" description="Payments can only be generated for &quot;Attendance Recorded&quot; Assignments&quot;" />
+    </steplabels>
+  </labels>
+</Workflow>

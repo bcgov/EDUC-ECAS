@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{5118a846-55a4-e911-b80c-005056833c5b}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="educ_name" select="1" icon="1" preview="1">
+        <row name="result" id="educ_exoenseid">
+          <cell name="educ_assignment" width="100" />
+          <cell name="educ_name" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="a_b043cd6b4e70e911b80a005056833c5b.educ_rate" width="100" disableSorting="1" />
+          <cell name="educ_quantity" width="100" />
+          <cell name="educ_amount" width="100" />
+          <cell name="statuscode" width="100" />
+          <cell name="educ_description" width="100" />
+          <cell name="educ_payment" width="100" />
+          <cell name="educ_expenseauthority" width="100" />
+          <cell name="educ_supplementalexpense" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+        <entity name="educ_exoense">
+          <attribute name="educ_name" />
+          <attribute name="statuscode" />
+          <attribute name="educ_quantity" />
+          <attribute name="educ_payment" />
+          <attribute name="educ_description" />
+          <attribute name="educ_amount" />
+          <attribute name="educ_assignment" />
+          <attribute name="educ_expenseauthority" />
+          <attribute name="educ_supplementalexpense" />
+          <order attribute="educ_assignment" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+            <condition attribute="createdon" operator="this-fiscal-year" />
+          </filter>
+          <link-entity name="educ_expensecode" from="educ_expensecodeid" to="educ_expensecode" visible="false" link-type="outer" alias="a_b043cd6b4e70e911b80a005056833c5b">
+            <attribute name="educ_rate" />
+          </link-entity>
+          <attribute name="educ_exoenseid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.1.6</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Active Expenses This Fiscal" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

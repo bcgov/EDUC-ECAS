@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <LocalizedNames>
+    <LocalizedName description="Expense and Payments Dashbaord" languagecode="1033" />
+  </LocalizedNames>
+  <FormId>{9d2729cd-31a1-e911-b80c-005056833c5b}</FormId>
+  <IsCustomizable>1</IsCustomizable>
+  <IsDefault>0</IsDefault>
+  <FormXml>
+    <forms type="dashboard">
+      <form>
+        <tabs>
+          <tab showlabel="false" verticallayout="true" id="{4c3a0a80-6b9d-4195-8a1e-2be0f29d8215}">
+            <labels>
+              <label description="Tab" languagecode="1033" />
+            </labels>
+            <columns>
+              <column width="100%">
+                <sections>
+                  <section showlabel="false" showbar="false" columns="1111" id="{51fdc387-f541-4c26-80c6-39413d327152}">
+                    <labels>
+                      <label description="Section" languagecode="1033" />
+                    </labels>
+                    <rows>
+                      <row>
+                        <cell colspan="1" rowspan="9" showlabel="false" id="{5e12fba5-a28e-4cee-b23b-bd01abffbba6}" auto="false">
+                          <labels>
+                            <label description="Expense" languagecode="1033" />
+                          </labels>
+                          <control id="Componentd33931c" uniqueid="{b22c4958-69ae-1dcd-b1a0-dbb44cdbea49}" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                            <parameters>
+                              <TargetEntityType>educ_exoense</TargetEntityType>
+                              <ChartGridMode>Chart</ChartGridMode>
+                              <EnableQuickFind>false</EnableQuickFind>
+                              <EnableViewPicker>false</EnableViewPicker>
+                              <EnableJumpBar>false</EnableJumpBar>
+                              <RecordsPerPage>7</RecordsPerPage>
+                              <HeaderColorCode>#F5F6F9</HeaderColorCode>
+                              <ViewId>{B8DF27B6-F4A2-4821-B028-42375B48FFC8}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds>{B8DF27B6-F4A2-4821-B028-42375B48FFC8}</ViewIds>
+                              <AutoExpand>Fixed</AutoExpand>
+                              <VisualizationId>{A519EBFC-2EA1-E911-B80C-005056833C5B}</VisualizationId>
+                              <IsUserChart>false</IsUserChart>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RelationshipName />
+                            </parameters>
+                          </control>
+                        </cell>
+                        <cell colspan="1" rowspan="9" showlabel="false" id="{e21d010b-9dab-42b3-9a3a-f1668f30d7e5}" auto="false">
+                          <labels>
+                            <label description="Expense" languagecode="1033" />
+                          </labels>
+                          <control id="Componenteb73a8b" uniqueid="{6e0180c5-b2ac-2557-d23b-ee8211a1a15c}" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                            <parameters>
+                              <TargetEntityType>educ_exoense</TargetEntityType>
+                              <ChartGridMode>Chart</ChartGridMode>
+                              <EnableQuickFind>false</EnableQuickFind>
+                              <EnableViewPicker>false</EnableViewPicker>
+                              <EnableJumpBar>false</EnableJumpBar>
+                              <RecordsPerPage>9</RecordsPerPage>
+                              <HeaderColorCode>#F5F6F9</HeaderColorCode>
+                              <ViewId>{5118A846-55A4-E911-B80C-005056833C5B}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds>{B8DF27B6-F4A2-4821-B028-42375B48FFC8},{5118A846-55A4-E911-B80C-005056833C5B}</ViewIds>
+                              <AutoExpand>Fixed</AutoExpand>
+                              <VisualizationId>{62CAD9E2-55A4-E911-B80C-005056833C5B}</VisualizationId>
+                              <IsUserChart>false</IsUserChart>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RelationshipName />
+                            </parameters>
+                          </control>
+                        </cell>
+                        <cell colspan="1" rowspan="9" showlabel="false" id="{ef07a7f9-3d5f-4047-8b18-6894499af757}" auto="false">
+                          <labels>
+                            <label description="Expense" languagecode="1033" />
+                          </labels>
+                          <control id="Component80dc2b1" uniqueid="{255e879c-1a7c-bded-d34a-a67e3e51d862}" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                            <parameters>
+                              <TargetEntityType>educ_exoense</TargetEntityType>
+                              <ChartGridMode>Chart</ChartGridMode>
+                              <EnableQuickFind>false</EnableQuickFind>
+                              <EnableViewPicker>false</EnableViewPicker>
+                              <EnableJumpBar>false</EnableJumpBar>
+                              <RecordsPerPage>7</RecordsPerPage>
+                              <HeaderColorCode />
+                              <ViewId>{B8DF27B6-F4A2-4821-B028-42375B48FFC8}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds />
+                              <AutoExpand>Fixed</AutoExpand>
+                              <VisualizationId>{6A162DAB-E17F-E911-B80C-005056833C5B}</VisualizationId>
+                              <IsUserChart>false</IsUserChart>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RelationshipName />
+                            </parameters>
+                          </control>
+                        </cell>
+                        <cell colspan="1" rowspan="9" showlabel="false" id="{ad9becd7-6c13-478b-a43e-4f7c7537a309}" auto="false">
+                          <labels>
+                            <label description="Expense" languagecode="1033" />
+                          </labels>
+                          <control id="Component17b0f6f" uniqueid="{46d71c74-e728-9860-536a-4145b5c324bc}" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                            <parameters>
+                              <TargetEntityType>educ_exoense</TargetEntityType>
+                              <ChartGridMode>Chart</ChartGridMode>
+                              <EnableQuickFind>false</EnableQuickFind>
+                              <EnableViewPicker>false</EnableViewPicker>
+                              <EnableJumpBar>false</EnableJumpBar>
+                              <RecordsPerPage>7</RecordsPerPage>
+                              <HeaderColorCode>#F5F6F9</HeaderColorCode>
+                              <ViewId>{C30E3AD0-2DA1-E911-B80C-005056833C5B}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds>{B8DF27B6-F4A2-4821-B028-42375B48FFC8}</ViewIds>
+                              <AutoExpand>Fixed</AutoExpand>
+                              <VisualizationId>{0C3D1686-D27C-E911-B80A-005056833C5B}</VisualizationId>
+                              <IsUserChart>false</IsUserChart>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RelationshipName />
+                            </parameters>
+                          </control>
+                        </cell>
+                      </row>
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row>
+                        <cell colspan="2" rowspan="9" showlabel="false" id="{dd856e8c-9428-49be-94c9-59a0eba7b85a}" auto="false">
+                          <labels>
+                            <label description="Payment" languagecode="1033" />
+                          </labels>
+                          <control id="Component492c1b3" uniqueid="{397bec20-b23a-77cb-eb21-71d692eb390d}" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                            <parameters>
+                              <TargetEntityType>educ_payment</TargetEntityType>
+                              <ChartGridMode>Chart</ChartGridMode>
+                              <EnableQuickFind>false</EnableQuickFind>
+                              <EnableViewPicker>false</EnableViewPicker>
+                              <EnableJumpBar>false</EnableJumpBar>
+                              <RecordsPerPage>7</RecordsPerPage>
+                              <HeaderColorCode />
+                              <ViewId>{7A36E23C-5950-4662-BEF3-70C8A71B1D8F}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds />
+                              <AutoExpand>Fixed</AutoExpand>
+                              <VisualizationId>{AF4471BB-2FA1-E911-B80C-005056833C5B}</VisualizationId>
+                              <IsUserChart>false</IsUserChart>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RelationshipName />
+                            </parameters>
+                          </control>
+                        </cell>
+                        <cell colspan="2" rowspan="9" showlabel="false" id="{b4e7d506-28c6-4fcc-b2e9-ed01e652383b}" auto="false">
+                          <labels>
+                            <label description="Payment" languagecode="1033" />
+                          </labels>
+                          <control id="Component5631ba1" uniqueid="{c7681012-4023-7c44-e3b2-0836ca802132}" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                            <parameters>
+                              <TargetEntityType>educ_payment</TargetEntityType>
+                              <ChartGridMode>Chart</ChartGridMode>
+                              <EnableQuickFind>false</EnableQuickFind>
+                              <EnableViewPicker>false</EnableViewPicker>
+                              <EnableJumpBar>false</EnableJumpBar>
+                              <RecordsPerPage>9</RecordsPerPage>
+                              <HeaderColorCode>#F5F6F9</HeaderColorCode>
+                              <ViewId>{1BEC2B1E-69AD-E911-B80D-005056833C5B}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds>{7A36E23C-5950-4662-BEF3-70C8A71B1D8F},{1BEC2B1E-69AD-E911-B80D-005056833C5B}</ViewIds>
+                              <AutoExpand>Fixed</AutoExpand>
+                              <VisualizationId>{6631A5EA-2FA1-E911-B80C-005056833C5B}</VisualizationId>
+                              <IsUserChart>false</IsUserChart>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RelationshipName />
+                            </parameters>
+                          </control>
+                        </cell>
+                      </row>
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row>
+                        <cell id="{29681865-b2cb-ce86-6c55-c813cc4b7eed}" showlabel="false" colspan="4" auto="false" rowspan="12">
+                          <labels>
+                            <label description="Payments" languagecode="1033" />
+                          </labels>
+                          <control id="Component6775753" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                            <parameters>
+                              <ViewId>{1BEC2B1E-69AD-E911-B80D-005056833C5B}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <RelationshipName />
+                              <TargetEntityType>educ_payment</TargetEntityType>
+                              <AutoExpand>Fixed</AutoExpand>
+                              <EnableQuickFind>true</EnableQuickFind>
+                              <EnableViewPicker>true</EnableViewPicker>
+                              <ViewIds />
+                              <EnableJumpBar>true</EnableJumpBar>
+                              <ChartGridMode>Grid</ChartGridMode>
+                              <VisualizationId />
+                              <IsUserChart>false</IsUserChart>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RecordsPerPage>8</RecordsPerPage>
+                              <HeaderColorCode />
+                            </parameters>
+                          </control>
+                        </cell>
+                      </row>
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                    </rows>
+                  </section>
+                </sections>
+              </column>
+            </columns>
+          </tab>
+        </tabs>
+      </form>
+    </forms>
+  </FormXml>
+  <IntroducedVersion>0.0.1.6</IntroducedVersion>
+  <IsTabletEnabled>0</IsTabletEnabled>
+</Dashboard>

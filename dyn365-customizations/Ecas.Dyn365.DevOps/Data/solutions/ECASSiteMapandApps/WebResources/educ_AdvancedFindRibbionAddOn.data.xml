@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WebResource>
+  <WebResourceId>{42f12926-0865-e911-b80a-005056833c5b}</WebResourceId>
+  <Name>educ_AdvancedFindRibbionAddOn</Name>
+  <DisplayName>Advanced Find Ribbon Add On</DisplayName>
+  <Description>Allows for a custom Advanced Find function to be added to the Global Action ribbon. Required until Dynamics On Prem Unified Interface adds Advanced Find, Bulk Edit, Export functionality.</Description>
+  <LanguageCode>1033</LanguageCode>
+  <WebResourceType>3</WebResourceType>
+  <IntroducedVersion>0.0.0.2</IntroducedVersion>
+  <IsEnabledForMobileClient>0</IsEnabledForMobileClient>
+  <IsAvailableForMobileOffline>0</IsAvailableForMobileOffline>
+  <DependencyXml>&lt;Dependencies&gt;&lt;Dependency componentType="WebResource"/&gt;&lt;/Dependencies&gt;</DependencyXml>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>1</CanBeDeleted>
+  <IsHidden>0</IsHidden>
+  <FileName>/WebResources/educ_AdvancedFindRibbionAddOn42F12926-0865-E911-B80A-005056833C5B</FileName>
+</WebResource>

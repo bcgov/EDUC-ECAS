@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{0280e5c5-9457-48d0-b005-0818e08e6a0d}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" preview="1" icon="1" select="1" jump="educ_name">
+        <row id="educ_assignmentid" name="result">
+          <cell name="educ_session" width="100" />
+          <cell name="educ_contact" width="100" />
+          <cell name="educ_role" width="100" />
+          <cell name="educ_contractstage" width="100" />
+          <cell name="educ_contractapprovedby" width="100" />
+          <cell name="statuscode" width="100" />
+          <cell name="educ_calculatedfee" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch mapping="logical" version="1.0">
+        <entity name="educ_assignment">
+          <order descending="false" attribute="educ_session" />
+          <order descending="false" attribute="educ_role" />
+          <filter type="and">
+            <condition value="0" attribute="statecode" operator="eq" />
+          </filter>
+          <attribute name="statuscode" />
+          <attribute name="educ_session" />
+          <attribute name="educ_role" />
+          <attribute name="educ_contractstage" />
+          <attribute name="educ_contractapprovedby" />
+          <attribute name="educ_calculatedfee" />
+          <attribute name="educ_contact" />
+          <attribute name="educ_assignmentid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.7</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Active Assignments" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WebResource>
+  <WebResourceId>{ed3e87a9-004e-e911-a980-000d3af475a9}</WebResourceId>
+  <Name>educ_logo.png</Name>
+  <DisplayName>educ_logo.png</DisplayName>
+  <WebResourceType>5</WebResourceType>
+  <IntroducedVersion>0.0.0.1</IntroducedVersion>
+  <IsEnabledForMobileClient>0</IsEnabledForMobileClient>
+  <IsAvailableForMobileOffline>0</IsAvailableForMobileOffline>
+  <DependencyXml>&lt;Dependencies&gt;&lt;Dependency componentType="WebResource"/&gt;&lt;/Dependencies&gt;</DependencyXml>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>1</CanBeDeleted>
+  <IsHidden>0</IsHidden>
+  <FileName>/WebResources/educ_logopngED3E87A9-004E-E911-A980-000D3AF475A9</FileName>
+</WebResource>

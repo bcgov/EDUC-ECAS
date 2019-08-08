@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AppModule>
+  <UniqueName>educ_ECAS</UniqueName>
+  <IntroducedVersion>0.0.0.1</IntroducedVersion>
+  <WebResourceId>ed3e87a9-004e-e911-a980-000d3af475a9</WebResourceId>
+  <FormFactor>1</FormFactor>
+  <ClientType>4</ClientType>
+  <AppModuleComponents>
+    <AppModuleComponent type="62" schemaName="educ_ECAS" />
+    <AppModuleComponent type="60" id="{b8653bc5-ce7c-e911-b80a-005056833c5b}" />
+    <AppModuleComponent type="60" id="{6048715e-9d7e-e911-b80a-005056833c5b}" />
+    <AppModuleComponent type="60" id="{1d7d2ea7-1496-e911-b80c-005056833c5b}" />
+    <AppModuleComponent type="60" id="{9d2729cd-31a1-e911-b80c-005056833c5b}" />
+    <AppModuleComponent type="1" schemaName="activitypointer" />
+    <AppModuleComponent type="1" schemaName="educ_assignment" />
+    <AppModuleComponent type="26" id="{0280e5c5-9457-48d0-b005-0818e08e6a0d}" />
+    <AppModuleComponent type="26" id="{00c6de77-fc35-4314-afd7-9ce8e8bb13a7}" />
+    <AppModuleComponent type="26" id="{393c50d4-45f2-4511-b60b-d007b888a925}" />
+    <AppModuleComponent type="26" id="{8aefc83a-9ed5-4220-982d-383f8f29fc39}" />
+    <AppModuleComponent type="26" id="{ada19dca-5723-4a0a-b299-e8e2fb6a354f}" />
+    <AppModuleComponent type="59" id="{d63bb879-d07c-e911-b80a-005056833c5b}" />
+    <AppModuleComponent type="1" schemaName="incident" />
+    <AppModuleComponent type="1" schemaName="contact" />
+    <AppModuleComponent type="60" id="{726861fb-680c-4637-b982-4df71c4dc50f}" />
+    <AppModuleComponent type="26" id="{857a36b8-014e-e911-a980-000d3af475a9}" />
+    <AppModuleComponent type="26" id="{b6ba8edf-014e-e911-a980-000d3af475a9}" />
+    <AppModuleComponent type="26" id="{7df4527d-a096-e911-b80c-005056833c5b}" />
+    <AppModuleComponent type="59" id="{4d8731e4-a496-e911-b80c-005056833c5b}" />
+    <AppModuleComponent type="60" id="{70ad8b15-e3f3-4d7d-9e4b-16cb4e51b484}" />
+    <AppModuleComponent type="1" schemaName="educ_countrycode" />
+    <AppModuleComponent type="1" schemaName="educ_credential" />
+    <AppModuleComponent type="1" schemaName="educ_credentialcode" />
+    <AppModuleComponent type="1" schemaName="educ_districtcode" />
+    <AppModuleComponent type="1" schemaName="entitlement" />
+    <AppModuleComponent type="1" schemaName="educ_exoense" />
+    <AppModuleComponent type="1" schemaName="educ_expensecode" />
+    <AppModuleComponent type="1" schemaName="educ_payment" />
+    <AppModuleComponent type="1" schemaName="educ_projectcode" />
+    <AppModuleComponent type="1" schemaName="educ_provincestatecode" />
+    <AppModuleComponent type="1" schemaName="queueitem" />
+    <AppModuleComponent type="1" schemaName="educ_rolecode" />
+    <AppModuleComponent type="1" schemaName="educ_schoollist" />
+    <AppModuleComponent type="1" schemaName="role" />
+    <AppModuleComponent type="1" schemaName="educ_session" />
+    <AppModuleComponent type="1" schemaName="educ_sessionactivitycode" />
+    <AppModuleComponent type="1" schemaName="educ_sessiontypecode" />
+    <AppModuleComponent type="1" schemaName="subject" />
+    <AppModuleComponent type="1" schemaName="systemuser" />
+    <AppModuleComponent type="60" id="{4753864d-24e5-4c20-a001-a73e9af1bf9f}" />
+    <AppModuleComponent type="26" id="{51af2f40-36bb-4198-9b0c-71a986c7c953}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000010001019}" />
+  </AppModuleComponents>
+  <AppModuleRoleMaps>
+    <Role id="{79843f54-0d4e-e911-a980-000d3af475a9}" />
+    <Role id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />
+    <Role id="{8f991e1c-0d4e-e911-a980-000d3af475a9}" />
+    <Role id="{627090ff-40a3-4053-8790-584edc5be201}" />
+    <Role id="{b52873d5-0c4e-e911-a980-000d3af475a9}" />
+    <Role id="{bd194fa2-5765-e911-b80a-005056833c5b}" />
+    <Role id="{33163aa5-034e-e911-a980-000d3af475a9}" />
+  </AppModuleRoleMaps>
+  <LocalizedNames>
+    <LocalizedName description="ECAS" languagecode="1033" />
+  </LocalizedNames>
+</AppModule>

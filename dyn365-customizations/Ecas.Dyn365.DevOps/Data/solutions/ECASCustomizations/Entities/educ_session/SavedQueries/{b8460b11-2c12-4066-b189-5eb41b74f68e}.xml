@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>1</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{b8460b11-2c12-4066-b189-5eb41b74f68e}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="educ_name" select="1" icon="1" preview="1">
+        <row name="result" id="educ_sessionid">
+          <cell name="educ_name" width="300" />
+          <cell name="educ_sessiontype" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="educ_startdate" width="100" />
+          <cell name="educ_sessionactivity" width="100" />
+          <cell name="educ_enddate" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>4</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="educ_session">
+          <attribute name="educ_name" />
+          <order attribute="educ_name" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <filter type="or" isquickfindfields="1">
+            <condition attribute="educ_sessiontype" operator="like" value="{0}" />
+            <condition attribute="educ_sessionactivity" operator="like" value="{0}" />
+            <condition attribute="educ_name" operator="like" value="{0}" />
+            <condition attribute="educ_locationpostalcode" operator="like" value="{0}" />
+            <condition attribute="educ_locationname" operator="like" value="{0}" />
+            <condition attribute="educ_locationcity" operator="like" value="{0}" />
+          </filter>
+          <attribute name="educ_startdate" />
+          <attribute name="educ_sessiontype" />
+          <attribute name="educ_sessionactivity" />
+          <attribute name="educ_enddate" />
+          <attribute name="educ_sessionid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.1</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Quick Find Active Sessions" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>
