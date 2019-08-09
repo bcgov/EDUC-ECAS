@@ -43,7 +43,7 @@ class ProfileController extends ApiBaseController
 
         $request = $this->validateProfileRequest($request);
         $data = $request->all();  // TODO - Remove before flight - dangerous
-        $data['federated_id'] = $user->id;
+        $data['federated_id'] = $user['sub'];
 
         $new_model_id = $this->model->create($data);
 

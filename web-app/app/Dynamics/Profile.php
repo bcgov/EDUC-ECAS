@@ -67,7 +67,7 @@ class Profile extends DynamicsRepository implements iModelRepository
                 'address_1'                      => null,
                 'address_2'                      => null,
                 'city'                           => null,
-                'region'                         => null,
+                'region'                         => 'BC',
                 'postal_code'                    => null,
                 'district_id'                    => null,
                 'school_id'                      => null,

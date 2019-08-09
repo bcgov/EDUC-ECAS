@@ -9,6 +9,7 @@ use App\Http\Resources\ProfileResource;
 use App\Http\Resources\SessionResource;
 use App\Http\Resources\SimpleResource;
 use App\Interfaces\iModelRepository;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Laravel\Socialite\Facades\Socialite;
@@ -21,7 +22,7 @@ class DashboardController extends EcasBaseController
 
 
     private $profile;
-    private $token;
+
 
     /**
      * Create a new controller instance.
@@ -42,7 +43,12 @@ class DashboardController extends EcasBaseController
     {
 
         $token = $request->session()->get('token');
-        $user = $this->getUserByToken($token);
+
+        try {
+            $user = $this->getUserByToken($token);
+        } catch(ClientException $e) {
+            return redirect('/redirect')->with(['err'=>['Your session has expired. Please login again']]);
+        }
 
 
         $profile    = $this->profile->firstOrCreate($user['sub'], [

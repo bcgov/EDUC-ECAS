@@ -58,7 +58,7 @@
                                     <div class="col">
                                         <select v-model="new_credential">
                                             <option value="0">Select New Credential</option>
-                                            <option v-for="credential in credentials_available" :value="credential">
+                                            <option v-for="credential in credentialsAvailable" :value="credential">
                                                 {{ credential.name }}
                                             </option>
                                         </select>
@@ -135,7 +135,7 @@
         </modal>
         <modal name="profile_form" height="auto" :scrollable="true" :clickToClose="false">
             <profile
-                    :user="getUser"
+                    :user="user"
                     :schools="schools"
                     :regions="regions"
                     :districts="districts"
@@ -150,7 +150,7 @@
     import {mapGetters} from 'vuex'
 
     export default {
-        name: "Dashboard",
+        name: "DashboardComponent",
         props: {
             user: {},
             credentials: {},
@@ -164,7 +164,6 @@
         data() {
             return {
                 credentials_applied: [...this.user_credentials],
-                credentials_available: [...this.credentials],
                 new_credential: 0,
                 filter: '',
                 current_session: {},
@@ -184,7 +183,7 @@
             Event.listen('profile-updated', this.updateProfile);
             Event.listen('session_status_updated', this.updateSessionStatus);
 
-            if (this.getUser.id === undefined) {
+            if ( ! this.user.id) {
                 this.new_user = true;
                 this.showProfile()
             }
@@ -203,8 +202,23 @@
                     if (dashboard.filter.length === 0) {
                         return true
                     }
-                    return session.status === dashboard.filter
+                    return session.status.name === dashboard.filter
                 })
+            },
+            credentialsIdsInUse() {
+
+                var arrayOfCredentialIds = [];
+
+                this.credentials_applied.forEach( function (applied) {
+                    arrayOfCredentialIds.push(applied.credential.id);
+                });
+
+                return arrayOfCredentialIds;
+            },
+            credentialsAvailable() {
+                // subtract applied_credentials from credentials
+                return this.credentials.filter(x => ! this.credentialsIdsInUse.includes(x.id));
+
             }
         },
         methods: {
@@ -249,21 +263,11 @@
             countStatus(status) {
                 // var status
                 return Object.values(this.getSessions).filter(function (assignment) {
-                    return assignment.status === status
+                    return assignment.status.name === status
                 }).length
             },
             pushCredential(profile_credential) {
                 console.log('pushing credential', profile_credential.data.credential.id );
-
-                // Get the credential
-                var index = this.credentials_available.findIndex( function(credential){
-                    return credential.id === profile_credential.data.credential.id;
-                });
-
-                console.log('credential index', index);
-
-                // Remove the credential from the available list
-                this.credentials_available.splice(index, 1);
 
                 // Add to the applied list
                 this.credentials_applied.push(profile_credential.data);
@@ -280,20 +284,13 @@
 
                 let credential = this.credentials_applied[index].credential;
 
-
-
                 // Remove the credential from the applied list
                 this.credentials_applied.splice(index, 1);
 
-                // Add to the available list
-                this.credentials_available.unshift(credential);
 
                 this.new_credential = 0;
             },
 
-            isStatus: function (session, status) {
-                return session.status === status
-            },
             sessionStatus(session) {
                 switch (session.status.name) {
                     case 'Applied':

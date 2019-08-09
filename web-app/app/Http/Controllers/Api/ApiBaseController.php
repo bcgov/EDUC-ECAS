@@ -10,7 +10,6 @@ abstract class ApiBaseController extends EcasBaseController
 {
 
     protected $model;
-    protected $user;
 
 
     public function __construct(iModelRepository $model)
