@@ -32,6 +32,7 @@ usage() {
               Supported components:
                 - api
                 - frontend
+                - cas-api
 
               Examples:
                 $0 build api
@@ -80,6 +81,7 @@ build-ecas-frontend() {
   #
   BASE_IMAGE="registry.access.redhat.com/rhscl/php-71-rhel7"
   echo -e "\nBuilding ecas-frontend image from ${BASE_IMAGE}..."
+
   ${S2I_EXE} build \
     '../web-app' \
     "$BASE_IMAGE" \
@@ -92,10 +94,27 @@ build-ecas-api() {
   #
   BASE_IMAGE="registry.access.redhat.com/dotnet/dotnet-21-rhel7"
   echo -e "\nBuilding ecas-api image from ${BASE_IMAGE}..."
+
   ${S2I_EXE} build \
     '../web-api/Ecas.Dyn365Service' \
     "$BASE_IMAGE" \
     'ecas-api'
+}
+
+build-ecas-cas-api() {
+  #
+  # cas-api
+  #
+  SOURCE_REPOSITORY=https://github.com/JonTaylorBCGov/CASInterfaceService.git
+  DOTNET_STARTUP_PROJECT=CASInterfaceService/cas-interface-service.csproj
+  BASE_IMAGE="registry.access.redhat.com/dotnet/dotnet-21-rhel7"
+  echo -e "\nBuilding cas-api image from ${BASE_IMAGE}..."
+
+  ${S2I_EXE} build \
+    -e "DOTNET_STARTUP_PROJECT=${DOTNET_STARTUP_PROJECT}" \
+    "$SOURCE_REPOSITORY" \
+    "$BASE_IMAGE" \
+    'cas-api'
 }
 
 build-ecas-all() {
