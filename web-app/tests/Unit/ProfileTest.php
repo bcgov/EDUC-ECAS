@@ -3,8 +3,11 @@
 namespace Tests\Unit;
 
 use App\Dynamics\Decorators\CacheDecorator;
+use App\Dynamics\District;
 use App\Dynamics\Profile;
+use App\Dynamics\School;
 use Tests\BaseMigrations;
+use Faker\Generator as Faker;
 
 class ProfileTest extends BaseMigrations
 {
@@ -12,6 +15,8 @@ class ProfileTest extends BaseMigrations
     public $api;
     public $fake;
     public $profile;
+    public $schools;
+    public $districts;
 
     public function setUp(): void
     {
@@ -22,6 +27,9 @@ class ProfileTest extends BaseMigrations
         factory(\App\MockEntities\District::class, 1)->create();
         $this->profile = Factory(\App\MockEntities\Profile::class)->create();
 
+        $this->districts = (new District())->all()->pluck('id')->toArray();
+        $this->schools = (new School())->all()->pluck('id')->toArray();
+
     }
 
 
@@ -29,13 +37,15 @@ class ProfileTest extends BaseMigrations
     public function filter_for_a_single_profile_via_the_api()
     {
 
-        $federated_id = 'aabb-cccd-eeef-ffgg';
+        $new_data = factory(\App\MockEntities\Profile::class)->make([
+            'district_id'   => $this->randomElement($this->districts),
+            'school_id'     => $this->randomElement($this->schools)
+        ])->toArray();
 
-        $result = $this->api->all()->first();
 
-        $this->api->update($result['id'], ['federated_id' => $federated_id]);
+        $new_record_id = $this->api->create($new_data);
 
-        $singleProfile = $this->api->filter(['federated_id' => $federated_id]);
+        $singleProfile = $this->api->filter(['federated_id' => $new_data['federated_id']]);
 
         $this->verifySingle($singleProfile[0]);
 
@@ -76,15 +86,21 @@ class ProfileTest extends BaseMigrations
     }
 
 
-
+    /** @test */
     public function delete_a_single_profile_via_the_api()
     {
 
-        $result = $this->api->all()->first();
+        $new_data = factory(\App\MockEntities\Profile::class)->make([
+            'district_id'   => $this->randomElement($this->districts),
+            'school_id'     => $this->randomElement($this->schools)
+        ])->toArray();
 
-        $this->api->delete($result['id']);
 
-        $this->assertTrue(count($this->api->filter([ 'federated_id' => $result['federated_id']])) == 0);
+        $new_record_id = $this->api->create($new_data);
+
+        $result = $this->api->delete($new_record_id);
+
+        $this->assertTrue($result);
 
     }
 
@@ -150,6 +166,14 @@ class ProfileTest extends BaseMigrations
         $this->assertArrayHasKey('professional_certificate_bc', $result);
         $this->assertArrayHasKey('professional_certificate_yk', $result);
         $this->assertArrayHasKey('professional_certificate_other', $result);
+
+    }
+
+    private function randomElement($array)
+    {
+
+        $index = array_rand($array);
+        return $array[$index];
 
     }
 

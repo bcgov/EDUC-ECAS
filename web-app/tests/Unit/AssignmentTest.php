@@ -47,10 +47,7 @@ class AssignmentTest extends BaseMigrations
         $profile = (new Profile())->all()->first();
         $session = (new Session())->all()->first();
 
-        $new_record_id = $this->api->create([
-            'contact_id'    => $profile['id'],
-            'session_id'    => $session['id']
-        ]);
+        $new_record_id = $this->createAnAssignment($profile['id'],$session['id']);
 
         $results = $this->api->get($new_record_id);
 
@@ -58,12 +55,15 @@ class AssignmentTest extends BaseMigrations
 
     }
 
-    // disable - we don't want to delete too many Dynamics records
+    /** @test */
     public function delete_an_assignment_via_the_api()
     {
-        $assignment = $this->api->all()->first();
+        $profile = (new Profile())->all()->first();
+        $session = (new Session())->all()->first();
 
-        $result = $this->api->delete($assignment['id']);
+        $new_record_id = $this->createAnAssignment($profile['id'],$session['id']);
+
+        $result = $this->api->delete($new_record_id);
 
         $this->assertTrue($result);
 
@@ -90,15 +90,15 @@ class AssignmentTest extends BaseMigrations
         $profile = (new Profile())->all()->first();
         $session = (new Session())->all()->first();
 
-        $assignment_id = $this->api->all()->first();
+        $new_record_id = $this->createAnAssignment($profile['id'],$session['id']);
 
-        $new_assignment = $this->api->update($assignment_id['id'], [
+        $new_assignment = $this->api->update($new_record_id, [
             'contact_id'    => $profile['id'],
             'session_id'    => $session['id']
         ]);
 
         // clean up as this test will have likely messed up an existing assignment record in Dynamics
-        $this->api->delete($assignment_id['id']);
+        $this->api->delete($new_record_id);
 
         $this->verifySingle($new_assignment);
 
@@ -162,6 +162,15 @@ class AssignmentTest extends BaseMigrations
         $this->assertArrayHasKey('contract_stage', $result);
         $this->assertArrayHasKey('status', $result);
         $this->assertArrayHasKey('state', $result);
+
+    }
+
+    private function createAnAssignment($contact_id, $session_id)
+    {
+        return $this->api->create([
+            'contact_id'    => $contact_id,
+            'session_id'    => $session_id
+        ]);
 
     }
 

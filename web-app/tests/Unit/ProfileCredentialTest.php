@@ -62,11 +62,7 @@ class ProfileCredentialTest extends BaseMigrations
         $profile = (new Profile())->all()->first();
         $credential = (new Credential())->all()->first();
 
-        $new_record_id = $this->api->create([
-            'contact_id'    => $profile['id'],
-            'credential_id' => $credential['id'],
-            'verified'      => '610410002'
-        ]);
+        $new_record_id = $this->create_a_credential($profile['id'], $credential['id']);
 
         $results = $this->api->get($new_record_id);
 
@@ -75,16 +71,18 @@ class ProfileCredentialTest extends BaseMigrations
     }
 
 
-
+    /** @test */
     public function delete_a_credential_via_the_api()
     {
-        $credential = (new ProfileCredential())->all()->first();
+        $profile = (new Profile())->all()->first();
+        $credential = (new Credential())->all()->first();
 
-        $results = $this->api->delete($credential['id']);
+        $new_record_id = $this->create_a_credential($profile['id'], $credential['id']);
 
-        // TODO - re-enable this test; don't want to run it as it deletes credentials from api
-        // Better to add a new record and then delete it - but create isn't working at present
 
+        $result = $this->api->delete($new_record_id);
+
+        $this->assertTrue($result);
     }
 
 
@@ -126,6 +124,17 @@ class ProfileCredentialTest extends BaseMigrations
         $this->assertArrayHasKey('credential_id', $result);
         $this->assertArrayHasKey('verified', $result);
 
+
+    }
+
+    private function create_a_credential($contact_id, $credential_id)
+    {
+
+        return $this->api->create([
+            'contact_id'    => $contact_id,
+            'credential_id' => $credential_id,
+            'verified'      => '610410002'
+        ]);
 
     }
 
