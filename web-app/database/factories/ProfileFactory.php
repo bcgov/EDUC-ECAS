@@ -15,14 +15,15 @@ $factory->define(Profile::class, function (Faker $faker) {
 
     return [
 
-        'federated_id'                   =>  '',  //REQUIRED - LINKS TO USER.ID,
+        //REQUIRED - LINKS TO USER.ID,
+        'federated_id'                   =>  $faker->lexify('?????-?????-?????-?????'),
 
         'preferred_first_name'           =>  $faker->firstName,
         'first_name'                     =>  $faker->firstName,
         'last_name'                      =>  $faker->lastName,
         'email'                          =>  $faker->email,
-        'phone'                          =>  $faker->phoneNumber,
-        'social_insurance_number'        =>  $faker->numberBetween(100000000,999999999),
+        'phone'                          =>  $faker->numerify('250#######'),
+        'social_insurance_number'        =>  $faker->numerify('#########'),
         'address_1'                      =>  $faker->streetAddress,
         'address_2'                      =>  $faker->streetAddress,
         'city'                           =>  $faker->city,
