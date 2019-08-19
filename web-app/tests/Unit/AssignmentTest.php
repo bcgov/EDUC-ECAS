@@ -55,34 +55,6 @@ class AssignmentTest extends BaseMigrations
 
     }
 
-    /** @test */
-    public function delete_an_assignment_via_the_api()
-    {
-        $profile = (new Profile())->all()->first();
-        $session = (new Session())->all()->first();
-
-        $new_record_id = $this->createAnAssignment($profile['id'],$session['id']);
-
-        $result = $this->api->delete($new_record_id);
-
-        $this->assertTrue($result);
-
-    }
-
-
-//    /** @test */
-//    public function delete_jonathans_duplicate_assignments()
-//    {
-//        $assignments = $this->api->filter(['contact_id' => "a9dbd5d8-3db3-e911-b80d-005056833c5b" ]);
-//
-//        $result = $this->api->delete($assignments->first()['id']);
-//
-//        dd($result, $assignments->count());
-//
-//        $this->assertTrue($result);
-//
-//    }
-
 
     /** @test */
     public function update_an_assignment_via_the_api()
@@ -96,10 +68,7 @@ class AssignmentTest extends BaseMigrations
             'contact_id'    => $profile['id'],
             'session_id'    => $session['id']
         ]);
-
-        // clean up as this test will have likely messed up an existing assignment record in Dynamics
-        $this->api->delete($new_record_id);
-
+        
         $this->verifySingle($new_assignment);
 
     }

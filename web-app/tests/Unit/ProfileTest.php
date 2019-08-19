@@ -86,25 +86,6 @@ class ProfileTest extends BaseMigrations
     }
 
 
-    /** @test */
-    public function delete_a_single_profile_via_the_api()
-    {
-
-        $new_data = factory(\App\MockEntities\Profile::class)->make([
-            'district_id'   => $this->randomElement($this->districts),
-            'school_id'     => $this->randomElement($this->schools)
-        ])->toArray();
-
-
-        $new_record_id = $this->api->create($new_data);
-
-        $result = $this->api->delete($new_record_id);
-
-        $this->assertTrue($result);
-
-    }
-
-
 
     /** @test */
     public function get_all_profiles_from_api()
