@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Dynamics\Assignment;
+use App\Dynamics\District;
+use App\Dynamics\Profile;
+use App\Dynamics\ProfileCredential;
 use App\Dynamics\School;
 use App\Http\Controllers\Api\AssignmentController;
 use App\Http\Controllers\Api\DistrictSearchController;
@@ -12,7 +16,6 @@ use App\Http\Controllers\DashboardController;
 use App\Interfaces\iModelRepository;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -28,38 +31,38 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->when(DashboardController::class)
             ->needs(iModelRepository::class)
             ->give(function () {
-                return $this->getRepository('Profile');
+                return $this->app->make(Profile::class);
             });
 
 
         $this->app->when(AssignmentController::class)
             ->needs(iModelRepository::class)
             ->give(function () {
-                return $this->getRepository('Assignment');
+                return $this->app->make(Assignment::class);
             });
 
         $this->app->when(ProfileController::class)
             ->needs(iModelRepository::class)
             ->give(function () {
-                return $this->getRepository('Profile');
+                return $this->app->make(Profile::class);
             });
 
         $this->app->when(ProfileCredentialController::class)
             ->needs(iModelRepository::class)
             ->give(function () {
-                return $this->getRepository('ProfileCredential');
+                return $this->app->make(ProfileCredential::class);
             });
 
         $this->app->when(DistrictSearchController::class)
             ->needs(iModelRepository::class)
             ->give(function () {
-                return $this->getRepository('District');
+                return $this->app->make(District::class);
             });
 
         $this->app->when(SchoolSearchController::class)
             ->needs(iModelRepository::class)
             ->give(function () {
-                return $this->getRepository('School');
+                return $this->app->make(School::class);
             });
 
 
@@ -83,14 +86,4 @@ class RepositoryServiceProvider extends ServiceProvider
     }
 
 
-    private function getRepository($className)
-    {
-        if(env('DATASET') == 'MockEntities') {
-            return App::make('App\MockEntities\Repository\\' . $className);
-        }
-        return App::make('App\Dynamics\\' . $className );
-
-
-
-    }
 }

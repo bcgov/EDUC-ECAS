@@ -4,6 +4,10 @@ namespace Tests\Unit;
 
 use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\Subject;
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
 use Tests\BaseMigrations;
 
 
@@ -11,13 +15,31 @@ class SubjectTest extends BaseMigrations
 {
 
     public $api;
-    public $fake;
+
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->api = new Subject();
-        $this->fake = new \App\MockEntities\Repository\Subject(new \App\MockEntities\Subject());
+
+        $mock = new MockHandler([
+            new Response(200, [], json_encode([ 'value' => [
+                (object) [
+                    'educ_subjectcode'  => '23457888',
+                    'educ_name'         => 'Math'
+                ],
+                (object) [
+                    'educ_subjectcode'  => '23457890',
+                    'educ_name'         => 'English'
+                ]
+            ]
+            ])),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handler]);
+
+        $this->api = new Subject($client);
+
     }
 
 
@@ -26,7 +48,7 @@ class SubjectTest extends BaseMigrations
     {
         $results = $this->api->all();
         $this->assertInstanceOf('Illuminate\Support\Collection', $results);
-        // API is returning an empty array at present - $this->verifySingle($results->first());
+        $this->verifySingle($results->first());
 
     }
 
@@ -36,7 +58,7 @@ class SubjectTest extends BaseMigrations
     {
         $results = (new CacheDecorator($this->api))->all();
         $this->assertInstanceOf('Illuminate\Support\Collection', $results);
-        // API is returning an empty array at present - $this->verifySingle($results->first());
+        $this->verifySingle($results->first());
 
     }
 

@@ -6,28 +6,52 @@ use App\Dynamics\Assignment;
 use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\Profile;
 use App\Dynamics\Session;
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
 use Tests\BaseMigrations;
 
 class AssignmentTest extends BaseMigrations
 {
 
     public $api;
-    public $fake;
     public $assignments;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->api = new Assignment();
-        $this->fake = new \App\MockEntities\Repository\Assignment(new \App\MockEntities\Assignment());
 
-        $this->assignments = factory(\App\MockEntities\Assignment::class, 5)->create([
-            'contact_id'        => 1,
-            'role_id'           => 1,
-            'session_id'        => 1,
-            'contract_stage'    => 1,
-            'status'            => 1
+        $mock = new MockHandler([
+            new Response(200, [], json_encode([ 'value' => [
+                (object) [
+                    "educ_assignmentid"     => "225762e7-b0c2-e911-b80d-005056833c5b",
+                    "_educ_session_value"   => "668def59-6b68-e911-b80a-005056833c5b",
+                    "_educ_contact_value"   => "6b3566c2-3ba3-e911-b80c-005056833c5b",
+                    "_educ_role_value"      => null,
+                    "educ_contractstage"    => 610410000,
+                    "statuscode"            => 1,
+                    "statecode"             => 0
+                ],
+                (object) [
+                    "educ_assignmentid"     => "225762e7-b0c2-e911-b80d-005056833c5b",
+                    "_educ_session_value"   => "668def59-6b68-e911-b80a-005056833c5b",
+                    "_educ_contact_value"   => "6b3566c2-3ba3-e911-b80c-005056833c5b",
+                    "_educ_role_value"      => null,
+                    "educ_contractstage"    => 610410000,
+                    "statuscode"            => 1,
+                    "statecode"             => 0
+                ]
+            ]
+            ])),
         ]);
+
+        $handler = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handler]);
+
+        $this->api = new Assignment($client);
+
+
     }
 
 
@@ -44,14 +68,24 @@ class AssignmentTest extends BaseMigrations
     /** @test */
     public function create_a_new_assignment_via_the_api()
     {
-        $profile = (new Profile())->all()->first();
-        $session = (new Session())->all()->first();
+        $expected_response = 'b85d7fd4-dcc5-e911-b80d-005056833c5b';
 
-        $new_record_id = $this->createAnAssignment($profile['id'],$session['id']);
+        $mock = new MockHandler([
+            new Response(200, [], $expected_response),
+        ]);
 
-        $results = $this->api->get($new_record_id);
+        $handler = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handler]);
 
-        $this->verifySingle($results);
+        $api = new Assignment($client);
+
+
+        $new_record_id = $api->create([
+            'contact_id'    => '6b3566c2-3ba3-e911-b80c-005056833c5b',
+            'session_id'    => '668def59-6b68-e911-b80a-005056833c5b'
+        ]);
+
+        $this->assertTrue($new_record_id == $expected_response );
 
     }
 
@@ -59,27 +93,66 @@ class AssignmentTest extends BaseMigrations
     /** @test */
     public function update_an_assignment_via_the_api()
     {
-        $profile = (new Profile())->all()->first();
-        $session = (new Session())->all()->first();
+        $record_under_test = "225762e7-b0c2-e911-b80d-005056833c5b";
+        $session_id         = "668def59-6b68-e911-b80a-005056833c5b";
+        $contact_id         = "6b3566c2-3ba3-e911-b80c-005056833c5b";
 
-        $new_record_id = $this->createAnAssignment($profile['id'],$session['id']);
 
-        $new_assignment = $this->api->update($new_record_id, [
-            'contact_id'    => $profile['id'],
-            'session_id'    => $session['id']
+        $mock = new MockHandler([
+            new Response( 200, []),
+            new Response(200, [], json_encode([ 'value' => [
+                (object) [
+                    "educ_assignmentid"     => $record_under_test,
+                    "_educ_session_value"   => $session_id,
+                    "_educ_contact_value"   => $contact_id,
+                    "_educ_role_value"      => null,
+                    "educ_contractstage"    => 610410000,
+                    "statuscode"            => 1,
+                    "statecode"             => 0
+                ]
+            ]
+            ])),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handler]);
+
+        $api = new Assignment($client);
+
+
+        $updated_assignment = $api->update($record_under_test, [
+            'contact_id'    => $contact_id,
+            'session_id'    => $session_id
         ]);
         
-        $this->verifySingle($new_assignment);
+        $this->verifySingle($updated_assignment);
 
     }
 
     /** @test */
     public function get_filtered_set_of_assignments_via_the_api()
     {
-        
-        $expected = $this->api->all()->last();
-        
-        $result = $this->api->filter([ 'contact_id' => $expected['contact_id'] ]);
+        $mock = new MockHandler([
+            new Response(200, [], json_encode([ 'value' => [
+                (object) [
+                    "educ_assignmentid"     => "225762e7-b0c2-e911-b80d-005056833c5b",
+                    "_educ_session_value"   => "668def59-6b68-e911-b80a-005056833c5b",
+                    "_educ_contact_value"   => "6b3566c2-3ba3-e911-b80c-005056833c5b",
+                    "_educ_role_value"      => null,
+                    "educ_contractstage"    => 610410000,
+                    "statuscode"            => 1,
+                    "statecode"             => 0
+                ]
+            ]
+            ])),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handler]);
+
+        $api = new Assignment($client);
+
+        $result = $api->filter([ 'contact_id' => '6b3566c2-3ba3-e911-b80c-005056833c5b' ]);
 
         $this->assertInstanceOf('Illuminate\Support\Collection', $result);
         $this->verifySingle($result->first());
@@ -92,28 +165,6 @@ class AssignmentTest extends BaseMigrations
     public function get_all_assignments_from_api_cached()
     {
         $results = (new CacheDecorator($this->api))->all();
-
-        $this->assertInstanceOf('Illuminate\Support\Collection', $results);
-        $this->verifySingle($results->first());
-    }
-
-    /** @test */
-    public function get_all_assignments_from_fake_local_database()
-    {
-
-        $results = $this->fake->all();
-
-
-        $this->assertInstanceOf('Illuminate\Support\Collection', $results);
-        $this->verifySingle($results->first());
-    }
-
-
-    /** @test */
-    public function get_all_assignments_from_fake_local_database_then_cached()
-    {
-
-        $results = (new CacheDecorator($this->fake))->all();
 
         $this->assertInstanceOf('Illuminate\Support\Collection', $results);
         $this->verifySingle($results->first());
@@ -134,14 +185,7 @@ class AssignmentTest extends BaseMigrations
 
     }
 
-    private function createAnAssignment($contact_id, $session_id)
-    {
-        return $this->api->create([
-            'contact_id'    => $contact_id,
-            'session_id'    => $session_id
-        ]);
 
-    }
 
 
 }

@@ -17,7 +17,6 @@ class SchoolTest extends BaseMigrations
 
 
     public $api;
-    public $guzzle_client;
     public $schools;
 
     public function setUp(): void
