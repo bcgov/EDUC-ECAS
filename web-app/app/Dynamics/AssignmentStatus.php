@@ -10,11 +10,9 @@ namespace App\Dynamics;
 
 use App\Interfaces\iModelRepository;
 
-class AssignmentStatus extends DynamicsRepository implements iModelRepository
+class AssignmentStatus extends DynamicsMetaRepository implements iModelRepository
 {
     public static $table = 'educ_assignment';
-
-    public static $api_verb = 'metadata';
 
     public static $primary_key = 'statuscode';
 

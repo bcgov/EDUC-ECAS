@@ -12,7 +12,7 @@ use App\Interfaces\iModelRepository;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use Laravel\Socialite\Facades\Socialite;
+
 
 /*
  * Main Controller for the application

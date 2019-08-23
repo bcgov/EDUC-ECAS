@@ -2,7 +2,7 @@
 
 namespace App\Dynamics;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use Illuminate\Support\Facades\Log;
 
 /*
@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Log;
 abstract class DynamicsRepository
 {
 
+    protected $guzzle_client;
 
     /*
      * What is the table in Dynamics that defines this model
@@ -72,15 +73,21 @@ abstract class DynamicsRepository
     public static $cache = 0;   // cache duration in minutes
 
 
+    public function __construct(ClientInterface $guzzle_client)
+    {
+        $this->guzzle_client = $guzzle_client;
+    }
+
 
     public function delete($id)
     {
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '(' . $id . ')';
 
-        self::queryAPI('DELETE', $query);
+        $response = $this->guzzle_client->request('DELETE', $query);
+
 
         // Assuming the delete worked!
-        return true;
+        return $response;
     }
 
     /*
@@ -95,7 +102,7 @@ abstract class DynamicsRepository
                  '&$filter=' . static::$fields[key($filter)] . ' eq ' .
                 static::$filter_quote . current($filter) . static::$filter_quote;
 
-        $response = self::queryAPI('GET', $query);
+        $response = $this->guzzle_client->request('GET', $query);
 
         $data = json_decode($response->getBody()->getContents())->value;
 
@@ -117,7 +124,7 @@ abstract class DynamicsRepository
             '&$filter=contains(' . static::$fields[key($filter)] . ',' .
             static::$filter_quote . current($filter) . static::$filter_quote . ')';
 
-        $response = static::queryAPI('GET', $query);
+        $response = $this->guzzle_client->request('GET', $query);
 
         $data = json_decode($response->getBody()->getContents())->value;
 
@@ -136,7 +143,13 @@ abstract class DynamicsRepository
     {
 
         Log::debug('Loading all() from Dynamics: ');
-        $collection = self::loadCollection(null);
+        $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '&$select=' . implode(',', static::$fields);
+
+        $response = $this->guzzle_client->request('GET', $query);
+
+        $data = json_decode($response->getBody()->getContents())->value;
+
+        $collection = self::convertDynamicsToLocalVariables($data);
 
         return $collection;
     }
@@ -150,7 +163,15 @@ abstract class DynamicsRepository
     public function get($id)
     {
 
-        $collection = self::loadCollection($id);
+        $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '&$select=' . implode(',', static::$fields);
+
+        $query .= '&$filter=' . static::$primary_key . " eq " . static::$filter_quote . $id . static::$filter_quote;
+
+        $response = $this->guzzle_client->request('GET', $query);
+
+        $data = json_decode($response->getBody()->getContents())->value;
+
+        $collection = self::convertDynamicsToLocalVariables($data);
 
         return current($collection)[0];
 
@@ -171,7 +192,9 @@ abstract class DynamicsRepository
 
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table;
 
-        $response = self::queryAPI('POST', $query, $data);
+        $response = $this->guzzle_client->request('POST', $query, [
+            'json' => self::mapToDynamics($data)
+        ]);
 
         // Returns the id of the created record
         return $response->getBody()->getContents();
@@ -182,7 +205,9 @@ abstract class DynamicsRepository
     {
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '(' . $id . ')';
 
-        $response = self::queryAPI('PATCH', $query, $data);
+        $response = $this->guzzle_client->request('PATCH', $query, [
+            'json' => self::mapToDynamics($data)
+        ]);
 
         // Returns an array of the returned data
         $data = json_decode($response->getBody()->getContents());
@@ -237,28 +262,12 @@ abstract class DynamicsRepository
         return $mapped_data;
     }
 
-    /*
-     * Convert a single data record into local variable names
-     * Expecting a single row of data
-     */
-    private static function mapToLocal($data)
-    {
-        $mapped_data = [];
-
-        foreach (static::$fields as $our_name => $dynamics_name) {
-            if (isset($data[$dynamics_name])) {
-                $mapped_data[$our_name] = $data[$dynamics_name];
-            }
-        }
-
-        return $mapped_data;
-    }
 
     /*
      * Convert a collection of records into local variable names
      * Expecting an array filed with data objects
      */
-    private static function convertDynamicsToLocalVariables($data)
+    protected static function convertDynamicsToLocalVariables($data)
     {
         // Dynamics field names are unreadable junk!
         // We want to define our own easy readable variables and disconnect from Dynamics
@@ -276,77 +285,7 @@ abstract class DynamicsRepository
         return collect($collection);
     }
 
-    /*
-     * Here is the connection to the Dynamics API
-     */
-    protected static function connection()
-    {
-        
-        return new Client([
-            // Base URI is used with relative requests
-            'base_uri' => env('DYNAMICSBASEURL'),
-            'timeout'  => env('DYNAMICS_TIMEOUT'),
-            'headers'  => [
-                'Authorization' => env('API_KEY')
-            ]
-        ]);
-    }
 
-    /*
-    * Read data from Dynamics
-    *
-    * @param $id
-    * @return array
-    * @throws \GuzzleHttp\Exception\GuzzleException
-    */
-    protected static function loadCollection($id, $quote = '')
-    {
-        if (static::$api_verb == 'operations') {
-            $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '&$select=' . implode(',', static::$fields);
-        }
-        elseif (static::$api_verb == 'metadata') {
-            $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?entityName=' . static::$table . '&optionSetName=' . static::$primary_key;
-        }
 
-        if ($id) {
-            $query .= '&$filter=' . static::$primary_key . " eq " . $quote . $id . $quote;
-        }
 
-        $response = self::queryAPI('GET', $query);
-
-        if (static::$api_verb == 'operations') {
-            $data = json_decode($response->getBody()->getContents())->value;
-        }
-        elseif (static::$api_verb == 'metadata') {
-            $data = json_decode($response->getBody()->getContents())->Options;
-        }
-
-        $collection = self::convertDynamicsToLocalVariables($data);
-
-        return $collection;
-    }
-
-    /*
-     * Perform a call to the API
-     *
-     * @param $query
-     * @return mixed|\Psr\Http\Message\ResponseInterface
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    private static function queryAPI($method, $query, $data = null)
-    {
-        Log::debug(strtoupper($method) . ': ' . $query);
-
-        // TODO: Should have failure handling, we assume this all works fine
-        if ($method == 'GET' || $method == 'DELETE') {
-            $response = self::connection()->request($method, $query);
-        }
-        else {
-            $response = self::connection()->request($method, $query, [
-                'json' => self::mapToDynamics($data)
-            ]);
-        }
-
-        return $response;
-    }
 }

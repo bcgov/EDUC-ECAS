@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Dynamics\School;
 use App\Http\Controllers\Api\AssignmentController;
 use App\Http\Controllers\Api\DistrictSearchController;
 use App\Http\Controllers\Api\ProfileController;
@@ -9,6 +10,8 @@ use App\Http\Controllers\Api\ProfileCredentialController;
 use App\Http\Controllers\Api\SchoolSearchController;
 use App\Http\Controllers\DashboardController;
 use App\Interfaces\iModelRepository;
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
@@ -58,6 +61,14 @@ class RepositoryServiceProvider extends ServiceProvider
             ->give(function () {
                 return $this->getRepository('School');
             });
+
+
+        $this->app->bind(
+            ClientInterface::class,
+            function () {
+                return new Client( config('dynamics.connection'));
+            }
+        );
 
     }
 
