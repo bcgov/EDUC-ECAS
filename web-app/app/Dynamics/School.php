@@ -19,12 +19,15 @@ class School extends DynamicsRepository implements iModelRepository
 
     public static $cache = 480; // 8 Hours
 
+
+    public static $filter_quote = '\'';
+
+
     public static $fields = [
         'id'   => 'educ_schoolcode',
         'name' => 'educ_name',
         'city' => 'educ_schoolcity'
     ];
-
 
     public function all()
     {
@@ -34,21 +37,7 @@ class School extends DynamicsRepository implements iModelRepository
 
     }
 
-    public static $filter_quote = '\'';
 
 
-    /*
-     * Read data from Dynamics
-     * if no $id is passed in the all records from the table are returned
-     * Passing in and $id will return on specific record based on the table's primary key
-     */
-    public function get($id)
-    {
-
-        $collection = self::loadCollection($id, '\'');
-
-        return current($collection)[0];
-
-    }
 
 }
