@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Dynamics\Decorators\CacheDecorator;
+use App\Dynamics\Profile;
 use App\Dynamics\ProfileCredential;
+use App\Http\Controllers\EcasBaseController;
 use App\Interfaces\iModelRepository;
 use App\Http\Resources\ProfileCredentialResource;
 use Illuminate\Http\Request;
@@ -14,18 +16,17 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
 
-class ProfileCredentialController extends ApiBaseController
+class ProfileCredentialController extends EcasBaseController
 {
 
     private $profile;
+    private $profile_credential;
 
-    public function __construct(iModelRepository $model)
+    public function __construct(ProfileCredential $profile_credential, Profile $profile)
     {
 
-        parent::__construct($model);
-
-        $repository                     = env('DATASET') == 'Dynamics' ? 'Dynamics' : 'MockEntities\Repository';
-        $this->profile                  = ( new CacheDecorator(App::make('App\\' . $repository .'\Profile')));
+        $this->profile_credential       = $profile_credential;
+        $this->profile                  = $profile;
 
     }
 
@@ -38,7 +39,7 @@ class ProfileCredentialController extends ApiBaseController
             abort(401, 'unauthorized');
         }
 
-        $credentials =  $this->model->filter(['contact_id' => $profile['id']]);
+        $credentials =  $this->profile_credential->filter(['contact_id' => $profile['id']]);
 
         $filtered = $credentials->filter( function ($credential) {
             return $credential['verified'] <> ProfileCredential::$status['No'];
@@ -74,13 +75,13 @@ class ProfileCredentialController extends ApiBaseController
         ]);
 
 
-        $profile_credential_id = $this->model->create([
+        $profile_credential_id = $this->profile_credential->create([
             'contact_id'    => $profile['id'],
             'credential_id' => $request['credential_id'],
             'verified'      => ProfileCredential::$status['Unverified']
         ]);
 
-        $new_record = $this->model->get($profile_credential_id);
+        $new_record = $this->profile_credential->get($profile_credential_id);
 
         return new ProfileCredentialResource($new_record);
     }
@@ -92,7 +93,7 @@ class ProfileCredentialController extends ApiBaseController
         $this->checkOwner($request, $profile['federated_id']);
 
 
-        $this->model->delete($id);
+        $this->profile_credential->delete($id);
 
         return Response::json(['message' => 'success'], 204);
     }

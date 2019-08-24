@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Dynamics\Assignment;
 use App\Dynamics\Decorators\CacheDecorator;
+use App\Dynamics\School;
+use App\Http\Controllers\EcasBaseController;
 use App\Http\Resources\AssignmentResource;
 use App\Http\Resources\SchoolResource;
 use App\Interfaces\iModelRepository;
@@ -13,8 +15,16 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
-class SchoolSearchController extends ApiBaseController
+class SchoolSearchController extends EcasBaseController
 {
+
+    private $school;
+
+    public function __construct(School $school)
+    {
+        $this->school = $school;
+
+    }
 
 
 
@@ -26,7 +36,7 @@ class SchoolSearchController extends ApiBaseController
         $query = $request->get('q');
 
         if($query) {
-            $search_results = $this->model->filterContains(['name'  => $request->get('q')]);
+            $search_results = $this->school->filterContains(['name'  => $request->get('q')]);
 
             return SchoolResource::collection($search_results);
         }

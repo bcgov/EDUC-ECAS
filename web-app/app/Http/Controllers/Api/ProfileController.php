@@ -3,13 +3,33 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Dynamics\District;
+use App\Dynamics\Profile;
+use App\Dynamics\Region;
+use App\Dynamics\School;
+use App\Http\Controllers\EcasBaseController;
 use App\Http\Resources\ProfileResource;
 use Illuminate\Http\Request;
 
 
 
-class ProfileController extends ApiBaseController
+class ProfileController extends EcasBaseController
 {
+
+    protected $profile;
+    protected $school;
+    protected $district;
+    protected $region;
+
+
+    public function __construct(Profile $profile, School $school, District $district, Region $region)
+    {
+        $this->profile              = $profile;
+        $this->school               = $school;
+        $this->district             = $district;
+        $this->region               = $region;
+
+    }
 
 
     public function index()
@@ -24,13 +44,13 @@ class ProfileController extends ApiBaseController
     {
 
         // check user is updating their own profile
-        $profile = $this->model->get($id);
+        $profile = $this->profile->get($id);
         $this->checkOwner($request, $profile['federated_id']);
 
 
-        $profile = $this->model->filter(['federated_id'=> $id])->first();
+        $profile = $this->profile->filter(['federated_id'=> $id])->first();
 
-        return new ProfileResource($profile);
+        return new ProfileResource($profile, $this->school, $this->district, $this->region);
     }
 
 
@@ -45,9 +65,9 @@ class ProfileController extends ApiBaseController
         $data = $request->all();  // TODO - Remove before flight - dangerous
         $data['federated_id'] = $user['sub'];
 
-        $new_model_id = $this->model->create($data);
+        $new_model_id = $this->profile->create($data);
 
-        return new ProfileResource($this->model->get($new_model_id));
+        return new ProfileResource($this->profile->get($new_model_id), $this->school, $this->district, $this->region);
     }
 
     /*
@@ -57,7 +77,7 @@ class ProfileController extends ApiBaseController
     {
 
         // check user is updating their own profile
-        $profile = $this->model->get($id);
+        $profile = $this->profile->get($id);
         $this->checkOwner($request, $profile['federated_id']);
 
 
@@ -66,9 +86,9 @@ class ProfileController extends ApiBaseController
         // TODO - Remove before flight - map specific fields
         $data = $request->all();
         $data['federated_id'] = $profile['federated_id'];
-        $response = $this->model->update($profile['id'], $data);
+        $response = $this->profile->update($profile['id'], $data);
 
-        return new ProfileResource($response);
+        return new ProfileResource($response, $this->school, $this->district, $this->region);
     }
 
 

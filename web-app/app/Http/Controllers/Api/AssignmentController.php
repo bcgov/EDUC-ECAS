@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Dynamics\Assignment;
+use App\Dynamics\AssignmentStatus;
 use App\Dynamics\Decorators\CacheDecorator;
+use App\Dynamics\Profile;
+use App\Http\Controllers\EcasBaseController;
 use App\Http\Resources\AssignmentResource;
 use App\Interfaces\iModelRepository;
 use Illuminate\Http\Request;
@@ -12,20 +15,19 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
-class AssignmentController extends ApiBaseController
+class AssignmentController extends EcasBaseController
 {
 
     private $profile;
-    private $assignment_statuses;
+    private $assignment_status;
+    private $assignment;
 
-    public function __construct(iModelRepository $model)
+    public function __construct(Assignment $assignment, Profile $profile, AssignmentStatus $assignment_status)
     {
 
-        parent::__construct($model);
-
-        $repository                     = env('DATASET') == 'Dynamics' ? 'Dynamics' : 'MockEntities\Repository';
-        $this->assignment_statuses      = ( new CacheDecorator(App::make('App\\' . $repository .'\AssignmentStatus')))->all();
-        $this->profile                  = ( new CacheDecorator(App::make('App\\' . $repository .'\Profile')));
+        $this->profile              = $profile;
+        $this->assignment           = $assignment;
+        $this->assignment_status    = $assignment_status;
 
     }
 
@@ -39,7 +41,7 @@ class AssignmentController extends ApiBaseController
             abort(401, 'unauthorized');
         }
 
-        return $this->model->filter(['contact_id' => $profile['id']]);
+        return $this->assignment->filter(['contact_id' => $profile['id']]);
     }
 
 
@@ -52,13 +54,13 @@ class AssignmentController extends ApiBaseController
 
         // TODO - validate record
 
-        $new_record_id = $this->model->create([
+        $new_record_id = $this->assignment->create([
             'contact_id' => $profile['id'],
             'session_id' => $request['session_id']
             // The initial status automatically defaults to `Applied`
         ]);
 
-        return new AssignmentResource($this->model->get($new_record_id));
+        return new AssignmentResource($this->assignment->get($new_record_id));
     }
 
     public function update(Request $request, $profile_id, $assignment_id)
@@ -75,7 +77,7 @@ class AssignmentController extends ApiBaseController
         if ($request['action'] == Assignment::WITHDREW_STATUS) {
             $new_status = $this->assignment_statuses->firstWhere('name', Assignment::WITHDREW_STATUS);
 
-            $updated_assignment = $this->model->update($assignment_id, [
+            $updated_assignment = $this->assignment->update($assignment_id, [
                 'status' => $new_status['id'],
                 'state'  => Assignment::INACTIVE_STATE
             ]);
@@ -83,21 +85,21 @@ class AssignmentController extends ApiBaseController
         elseif ($request['action'] == Assignment::APPLIED_STATUS) {
             $assignment_status_key = array_search(Assignment::APPLIED_STATUS, array_column($this->assignment_statuses, 'name'));
 
-            $updated_assignment = $this->model->update($assignment_id, [
+            $updated_assignment = $this->assignment->update($assignment_id, [
                 'status' => $this->assignment_statuses[$assignment_status_key]['id']
             ]);
         }
         elseif ($request['action'] == Assignment::ACCEPTED_STATUS) {
             $assignment_status_key = array_search(Assignment::ACCEPTED_STATUS, array_column($this->assignment_statuses, 'name'));
 
-            $updated_assignment = $this->model->update($assignment_id, [
+            $updated_assignment = $this->assignment->update($assignment_id, [
                 'status' => $this->assignment_statuses[$assignment_status_key]['id']
             ]);
         }
         elseif ($request['action'] == Assignment::DECLINED_STATUS) {
             $assignment_status_key = array_search(Assignment::DECLINED_STATUS, array_column($this->assignment_statuses, 'name'));
 
-            $updated_assignment = $this->model->update($assignment_id, [
+            $updated_assignment = $this->assignment->update($assignment_id, [
                 'status' => $this->assignment_statuses[$assignment_status_key]['id'],
                 'state'  => Assignment::INACTIVE_STATE
             ]);

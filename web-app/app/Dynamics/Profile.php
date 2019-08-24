@@ -82,5 +82,21 @@ class Profile extends DynamicsRepository implements iModelRepository
 
     }
 
+    /*
+     * Read data from Dynamics
+     */
+    public function get($id)
+    {
+
+        $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '&$select=' . implode(',', static::$fields);
+
+        $query .= '&$filter=' . static::$primary_key . " eq " .  $id;
+
+        $collection = $this->retrieveData($query);
+
+        return current($collection)[0];
+
+    }
+
 
 }

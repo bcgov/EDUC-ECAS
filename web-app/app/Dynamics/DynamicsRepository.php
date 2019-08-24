@@ -102,13 +102,8 @@ abstract class DynamicsRepository
                  '&$filter=' . static::$fields[key($filter)] . ' eq ' .
                 static::$filter_quote . current($filter) . static::$filter_quote;
 
-        $response = $this->guzzle_client->request('GET', $query);
+        return $this->retrieveData($query);
 
-        $data = json_decode($response->getBody()->getContents())->value;
-
-        $collection = self::convertDynamicsToLocalVariables($data);
-
-        return $collection;
     }
 
 
@@ -124,13 +119,8 @@ abstract class DynamicsRepository
             '&$filter=contains(' . static::$fields[key($filter)] . ',' .
             static::$filter_quote . current($filter) . static::$filter_quote . ')';
 
-        $response = $this->guzzle_client->request('GET', $query);
+        return  $this->retrieveData($query);
 
-        $data = json_decode($response->getBody()->getContents())->value;
-
-        $collection = self::convertDynamicsToLocalVariables($data);
-
-        return $collection;
     }
 
 
@@ -145,20 +135,13 @@ abstract class DynamicsRepository
         Log::debug('Loading all() from Dynamics: ');
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '&$select=' . implode(',', static::$fields);
 
-        $response = $this->guzzle_client->request('GET', $query);
+        return $this->retrieveData($query);
 
-        $data = json_decode($response->getBody()->getContents())->value;
-
-        $collection = self::convertDynamicsToLocalVariables($data);
-
-        return $collection;
     }
 
 
     /*
      * Read data from Dynamics
-     * if no $id is passed in the all records from the table are returned
-     * Passing in and $id will return on specific record based on the table's primary key
      */
     public function get($id)
     {
@@ -167,11 +150,7 @@ abstract class DynamicsRepository
 
         $query .= '&$filter=' . static::$primary_key . " eq " . static::$filter_quote . $id . static::$filter_quote;
 
-        $response = $this->guzzle_client->request('GET', $query);
-
-        $data = json_decode($response->getBody()->getContents())->value;
-
-        $collection = self::convertDynamicsToLocalVariables($data);
+        $collection = $this->retrieveData($query);
 
         return current($collection)[0];
 
@@ -216,6 +195,16 @@ abstract class DynamicsRepository
         // TODO - Investigate why the API is not returning the complete updated record -- some fields are missing
         // Workaround - get a fresh copy instead
         return $this->get($id);
+
+    }
+
+    protected function retrieveData(String $query){
+
+        $response = $this->guzzle_client->request('GET', $query);
+
+        $data = json_decode($response->getBody()->getContents())->value;
+
+        return self::convertDynamicsToLocalVariables($data);
 
     }
 
