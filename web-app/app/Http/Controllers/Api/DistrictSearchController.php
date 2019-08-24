@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 
 
-use App\Dynamics\District;
+use App\Dynamics\Interfaces\iDistrict;
 use App\Http\Controllers\EcasBaseController;
 use App\Http\Resources\SimpleResource;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ class DistrictSearchController extends EcasBaseController
 
     private $district;
 
-    public function __construct(District $district)
+    public function __construct(iDistrict $district)
     {
         $this->district = $district;
 

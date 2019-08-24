@@ -8,7 +8,7 @@
 
 namespace App\Dynamics;
 
-use App\Interfaces\iModelRepository;
+use App\Dynamics\Interfaces\iModelRepository;
 
 class Role extends DynamicsRepository implements iModelRepository
 {

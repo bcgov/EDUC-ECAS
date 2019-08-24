@@ -7,7 +7,7 @@ use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\Profile;
 use App\Dynamics\ProfileCredential;
 use App\Http\Controllers\EcasBaseController;
-use App\Interfaces\iModelRepository;
+use App\Dynamics\Interfaces\iModelRepository;
 use App\Http\Resources\ProfileCredentialResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;

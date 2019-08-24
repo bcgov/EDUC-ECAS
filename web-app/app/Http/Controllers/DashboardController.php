@@ -2,27 +2,30 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Dynamics\Assignment;
-use App\Dynamics\Credential;
-use App\Dynamics\District;
-use App\Dynamics\Profile;
-use App\Dynamics\ProfileCredential;
-use App\Dynamics\Region;
-use App\Dynamics\School;
-use App\Dynamics\Session;
-use App\Dynamics\Subject;
+use App\Dynamics\Interfaces\iAssignment;
+use App\Dynamics\Interfaces\iCredential;
+use App\Dynamics\Interfaces\iDistrict;
+use App\Dynamics\Interfaces\iProfile;
+use App\Dynamics\Interfaces\iProfileCredential;
+use App\Dynamics\Interfaces\iRegion;
+use App\Dynamics\Interfaces\iSchool;
+use App\Dynamics\Interfaces\iSession;
+use App\Dynamics\Interfaces\iSubject;
 use App\Http\Resources\ProfileCredentialResource;
 use App\Http\Resources\ProfileResource;
 use App\Http\Resources\SessionResource;
 use App\Http\Resources\SimpleResource;
-use App\Interfaces\iModelRepository;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
 
 
 /*
  * Main Controller for the application
+ */
+
+/**
+ * Class DashboardController
+ * @package App\Http\Controllers
  */
 class DashboardController extends EcasBaseController
 {
@@ -42,18 +45,26 @@ class DashboardController extends EcasBaseController
     /**
      * Create a new controller instance.
      *
-     * @param iModelRepository $profile
+     * @param iProfile $profile
+     * @param iProfileCredential $profile_credential
+     * @param iAssignment $assignment
+     * @param iSession $session
+     * @param iCredential $credential
+     * @param iRegion $region
+     * @param iSubject $subject
+     * @param iSchool $school
+     * @param iDistrict $district
      */
     public function __construct(
-                                Profile $profile,
-                                ProfileCredential $profile_credential,
-                                Assignment $assignment,
-                                Session $session,
-                                Credential $credential,
-                                Region $region,
-                                Subject $subject,
-                                School $school,
-                                District $district)
+                                iProfile $profile,
+                                iProfileCredential $profile_credential,
+                                iAssignment $assignment,
+                                iSession $session,
+                                iCredential $credential,
+                                iRegion $region,
+                                iSubject $subject,
+                                iSchool $school,
+                                iDistrict $district)
     {
         $this->profile              = $profile;
         $this->profile_credential   = $profile_credential;

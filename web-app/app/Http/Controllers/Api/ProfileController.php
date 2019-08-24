@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 
-use App\Dynamics\District;
-use App\Dynamics\Profile;
-use App\Dynamics\Region;
-use App\Dynamics\School;
+use App\Dynamics\Interfaces\iDistrict;
+use App\Dynamics\Interfaces\iProfile;
+use App\Dynamics\Interfaces\iRegion;
+use App\Dynamics\Interfaces\iSchool;
 use App\Http\Controllers\EcasBaseController;
 use App\Http\Resources\ProfileResource;
 use Illuminate\Http\Request;
@@ -22,7 +22,7 @@ class ProfileController extends EcasBaseController
     protected $region;
 
 
-    public function __construct(Profile $profile, School $school, District $district, Region $region)
+    public function __construct(iProfile $profile, iSchool $school, iDistrict $district, iRegion $region)
     {
         $this->profile              = $profile;
         $this->school               = $school;

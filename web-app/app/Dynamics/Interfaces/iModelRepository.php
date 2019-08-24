@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Interfaces;
+namespace App\Dynamics\Interfaces;
 
 
 interface iModelRepository

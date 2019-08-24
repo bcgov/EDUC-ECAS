@@ -2,12 +2,11 @@
 
 namespace App\Http\Resources;
 
-use App\Dynamics\Decorators\CacheDecorator;
-use App\Dynamics\District;
-use App\Dynamics\Region;
-use App\Dynamics\School;
+
+use App\Dynamics\Interfaces\iDistrict;
+use App\Dynamics\Interfaces\iRegion;
+use App\Dynamics\Interfaces\iSchool;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\App;
 
 class ProfileResource extends JsonResource
 {
@@ -16,7 +15,7 @@ class ProfileResource extends JsonResource
     private $district;
     private $region;
 
-    public function __construct($resource, School $school, District $district, Region $region)
+    public function __construct($resource, iSchool $school, iDistrict $district, iRegion $region)
     {
         parent::__construct($resource);
         $this->school   = $school;

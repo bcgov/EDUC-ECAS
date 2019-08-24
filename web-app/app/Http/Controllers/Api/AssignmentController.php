@@ -4,16 +4,14 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Dynamics\Assignment;
-use App\Dynamics\AssignmentStatus;
-use App\Dynamics\Decorators\CacheDecorator;
-use App\Dynamics\Profile;
+use App\Dynamics\Interfaces\iAssignment;
+use App\Dynamics\Interfaces\iAssignmentStatus;
+use App\Dynamics\Interfaces\iProfile;
 use App\Http\Controllers\EcasBaseController;
 use App\Http\Resources\AssignmentResource;
-use App\Interfaces\iModelRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Response;
+
 
 class AssignmentController extends EcasBaseController
 {
@@ -22,7 +20,7 @@ class AssignmentController extends EcasBaseController
     private $assignment_status;
     private $assignment;
 
-    public function __construct(Assignment $assignment, Profile $profile, AssignmentStatus $assignment_status)
+    public function __construct(iAssignment $assignment, iProfile $profile, iAssignmentStatus $assignment_status)
     {
 
         $this->profile              = $profile;
@@ -70,12 +68,14 @@ class AssignmentController extends EcasBaseController
         $profile = $this->profile->get($profile_id);
         $this->checkOwner($request, $profile['federated_id']);
 
+        $assignment_statuses = $this->assignment_status->all();
+
         // TODO - validate record - there's too much logic in the Vue component. Javascript data can be manipulated by the user
 
         Log::debug('Assignment update - requested action: ' . $request['action'] );
 
         if ($request['action'] == Assignment::WITHDREW_STATUS) {
-            $new_status = $this->assignment_statuses->firstWhere('name', Assignment::WITHDREW_STATUS);
+            $new_status = $assignment_statuses->firstWhere('name', Assignment::WITHDREW_STATUS);
 
             $updated_assignment = $this->assignment->update($assignment_id, [
                 'status' => $new_status['id'],
@@ -83,24 +83,24 @@ class AssignmentController extends EcasBaseController
             ]);
         }
         elseif ($request['action'] == Assignment::APPLIED_STATUS) {
-            $assignment_status_key = array_search(Assignment::APPLIED_STATUS, array_column($this->assignment_statuses, 'name'));
+            $assignment_status_key = array_search(Assignment::APPLIED_STATUS, array_column($assignment_statuses, 'name'));
 
             $updated_assignment = $this->assignment->update($assignment_id, [
-                'status' => $this->assignment_statuses[$assignment_status_key]['id']
+                'status' => $assignment_statuses[$assignment_status_key]['id']
             ]);
         }
         elseif ($request['action'] == Assignment::ACCEPTED_STATUS) {
-            $assignment_status_key = array_search(Assignment::ACCEPTED_STATUS, array_column($this->assignment_statuses, 'name'));
+            $assignment_status_key = array_search(Assignment::ACCEPTED_STATUS, array_column($assignment_statuses, 'name'));
 
             $updated_assignment = $this->assignment->update($assignment_id, [
-                'status' => $this->assignment_statuses[$assignment_status_key]['id']
+                'status' => $assignment_statuses[$assignment_status_key]['id']
             ]);
         }
         elseif ($request['action'] == Assignment::DECLINED_STATUS) {
-            $assignment_status_key = array_search(Assignment::DECLINED_STATUS, array_column($this->assignment_statuses, 'name'));
+            $assignment_status_key = array_search(Assignment::DECLINED_STATUS, array_column($assignment_statuses, 'name'));
 
             $updated_assignment = $this->assignment->update($assignment_id, [
-                'status' => $this->assignment_statuses[$assignment_status_key]['id'],
+                'status' => $assignment_statuses[$assignment_status_key]['id'],
                 'state'  => Assignment::INACTIVE_STATE
             ]);
         }

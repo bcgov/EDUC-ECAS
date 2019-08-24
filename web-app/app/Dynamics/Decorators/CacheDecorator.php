@@ -4,10 +4,41 @@
 namespace App\Dynamics\Decorators;
 
 
-use App\Interfaces\iModelRepository;
+use App\Dynamics\Interfaces\iAssignment;
+use App\Dynamics\Interfaces\iAssignmentStatus;
+use App\Dynamics\Interfaces\iContractStage;
+use App\Dynamics\Interfaces\iCredential;
+use App\Dynamics\Interfaces\iDistrict;
+use App\Dynamics\Interfaces\iModelRepository;
+use App\Dynamics\Interfaces\iPayment;
+use App\Dynamics\Interfaces\iProfile;
+use App\Dynamics\Interfaces\iProfileCredential;
+use App\Dynamics\Interfaces\iRegion;
+use App\Dynamics\Interfaces\iRole;
+use App\Dynamics\Interfaces\iSchool;
+use App\Dynamics\Interfaces\iSession;
+use App\Dynamics\Interfaces\iSessionActivity;
+use App\Dynamics\Interfaces\iSessionType;
+use App\Dynamics\Interfaces\iSubject;
 use Illuminate\Support\Facades\Cache;
 
-class CacheDecorator implements iModelRepository
+class CacheDecorator implements
+                                iAssignment,
+                                iAssignmentStatus,
+                                iContractStage,
+                                iCredential,
+                                iDistrict,
+                                iPayment,
+                                iProfile,
+                                iProfileCredential,
+                                iRegion,
+                                iRole,
+                                iSchool,
+                                iSession,
+                                iSessionActivity,
+                                iSessionType,
+                                iSubject
+
 {
     
     const CACHE_DURATION = 28800; // 8 hours in seconds

@@ -2,25 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
-
-use App\Dynamics\Assignment;
-use App\Dynamics\Decorators\CacheDecorator;
-use App\Dynamics\School;
+use App\Dynamics\Interfaces\iSchool;
 use App\Http\Controllers\EcasBaseController;
-use App\Http\Resources\AssignmentResource;
 use App\Http\Resources\SchoolResource;
-use App\Interfaces\iModelRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Response;
 
 class SchoolSearchController extends EcasBaseController
 {
 
     private $school;
 
-    public function __construct(School $school)
+    public function __construct(iSchool $school)
     {
         $this->school = $school;
 
@@ -46,7 +38,5 @@ class SchoolSearchController extends EcasBaseController
 
 
     }
-
-
 
 }
