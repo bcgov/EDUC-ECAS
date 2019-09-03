@@ -31,19 +31,12 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  */
 
 let token = document.getElementsByTagName('META').namedItem('csrf-token').content;
-let api_token = document.getElementsByTagName('META').namedItem('api-token').content;
 
 
 if (token) {
     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-}
-
-if (api_token) {
-    window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + api_token;
-} else {
-    console.error('Api token not found');
 }
 
 

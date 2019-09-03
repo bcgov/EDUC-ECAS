@@ -7,27 +7,31 @@ use App\Dynamics\Interfaces\iDistrict;
 use App\Dynamics\Interfaces\iProfile;
 use App\Dynamics\Interfaces\iRegion;
 use App\Dynamics\Interfaces\iSchool;
-use App\Http\Controllers\EcasBaseController;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\ProfileResource;
+use App\Keycloak\KeycloakGuard;
+use App\Rules\SocialInsuranceNumberRule;
 use Illuminate\Http\Request;
 
 
 
-class ProfileController extends EcasBaseController
+class ProfileController extends Controller
 {
 
     protected $profile;
     protected $school;
     protected $district;
     protected $region;
+    protected $authentication;
 
 
-    public function __construct(iProfile $profile, iSchool $school, iDistrict $district, iRegion $region)
+    public function __construct(iProfile $profile, iSchool $school, iDistrict $district, iRegion $region, KeycloakGuard $auth)
     {
         $this->profile              = $profile;
         $this->school               = $school;
         $this->district             = $district;
         $this->region               = $region;
+        $this->authentication       = $auth;
 
     }
 
@@ -35,20 +39,27 @@ class ProfileController extends EcasBaseController
     public function index()
     {
 
-        abort('404');
+        abort('405');  // disabled
 
     }
 
 
-    public function show($id, Request $request)
+    public function show($profile_id, Request $request)
     {
 
-        // check user is updating their own profile
-        $profile = $this->profile->get($id);
-        $this->checkOwner($request, $profile['federated_id']);
+        $user_id = $this->authentication->id();
+
+        if( ! $user_id ) {
+            abort(401, 'unauthorized');
+        }
+
+        $profile = $this->profile->get($profile_id);
 
 
-        $profile = $this->profile->filter(['federated_id'=> $id])->first();
+        if( $profile['id'] <> $profile_id ) {
+            abort(401, 'unauthorized');
+        }
+
 
         return new ProfileResource($profile, $this->school, $this->district, $this->region);
     }
@@ -59,15 +70,19 @@ class ProfileController extends EcasBaseController
  */
     public function store(Request $request)
     {
-        $user = $this->getUser($request);
+        $user_id = $this->authentication->id();
 
-        $request = $this->validateProfileRequest($request);
+        $this->validateProfileRequest($request);
         $data = $request->all();  // TODO - Remove before flight - dangerous
-        $data['federated_id'] = $user['sub'];
+        $data['federated_id'] = $user_id;
 
         $new_model_id = $this->profile->create($data);
 
-        return new ProfileResource($this->profile->get($new_model_id), $this->school, $this->district, $this->region);
+        $profile = $this->profile->get($new_model_id);
+
+        $resource = new ProfileResource($profile , $this->school, $this->district, $this->region);
+
+        return $resource;
     }
 
     /*
@@ -76,26 +91,33 @@ class ProfileController extends EcasBaseController
     public function update($id, Request $request)
     {
 
+        $federated_id = $this->authentication->id();
+
         // check user is updating their own profile
         $profile = $this->profile->get($id);
-        $this->checkOwner($request, $profile['federated_id']);
 
+        if($federated_id <> $profile['federated_id'])
+        {
+            abort(401, 'unauthorized');
+        }
 
         $this->validateProfileRequest($request);
 
         // TODO - Remove before flight - map specific fields
         $data = $request->all();
         $data['federated_id'] = $profile['federated_id'];
+
+
+        // TODO - swap $id with $profile['id'] below
         $response = $this->profile->update($profile['id'], $data);
 
-        return new ProfileResource($response, $this->school, $this->district, $this->region);
+        return $response;
     }
 
 
     public function destroy($federated_id)
     {
-        abort(401, 'method not available');
-        // unauthorized
+        abort(404, 'method not available');
 
     }
 
@@ -107,7 +129,7 @@ class ProfileController extends EcasBaseController
     private function validateProfileRequest(Request $request): Request
     {
         // Get rid of spaces
-        $remove_spaces_from = ['postal_code', 'sin'];
+        $remove_spaces_from = ['sin'];
         foreach ($remove_spaces_from as $field) {
             if (isset($request[$field])) {
                 $request[$field] = preg_replace('/\s+/', '', $request[$field]);
@@ -138,7 +160,7 @@ class ProfileController extends EcasBaseController
             'city'                          => 'required',
             'region'                        => 'required',
             'postal_code'                   => 'required|regex:/^\D\d\D\s?\d\D\d$/i',
-            //'social_insurance_number'       => [ new SocialInsuranceNumberRule ]
+            'social_insurance_number'       => [ new SocialInsuranceNumberRule() ]
         ],
             [
                 'first_name.required'  => 'Required',

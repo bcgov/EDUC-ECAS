@@ -18,7 +18,7 @@ import Vuex from 'vuex'
  * Vue components. It will recursively scan this directory for the Vue
  * components and automatically register them with their "basename".
  *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
+ * Eg. ./components/DashboardLauncher.vue -> <example-component></example-component>
  */
 
 // const files = require.context('./', true, /\.vue$/i);
@@ -29,13 +29,8 @@ import VModal from 'vue-js-modal'
 Vue.use(Vuex);
 Vue.use(VModal, { dynamic: true, injectModalsContainer: true });
 
-Vue.component('DashboardComponent'     , require('./components/DashboardComponent.vue').default);
-// Vue.component('ecas-dashboard'          , require('./components/EcasDashboard.vue').default);
-// Vue.component('ecas-logout'             , require('./components/EcasLogout.vue').default);
-// Vue.component('ecas-profile'            , require('./components/EcasProfile.vue').default);
-// Vue.component('profile-credentials'     , require('./components/ProfileCredentials.vue').default);
-// Vue.component('marking-sessions'        , require('./components/MarkingSessions.vue').default);
-
+Vue.component('ExampleComponent'        , require('./components/DashboardLauncher.vue').default);
+//Vue.component('DashboardComponent'      , require('./components/DashboardComponent.vue').default);
 Vue.component('session'                 , require('./components/SessionModal.vue').default);
 Vue.component('profile'                 , require('./components/Profile.vue').default);
 
@@ -94,10 +89,12 @@ const store = new Vuex.Store({
     }
 });
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import VueKeyCloak from '@dsb-norge/vue-keycloak-js';
+
 
 library.add(faCheck)
 library.add(faTrash)
@@ -106,13 +103,35 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false;
 
+function tokenInterceptor (keycloak) {
+    axios.interceptors.request.use(config => {
+        console.log('tokenInterceptor success', config);
+        config.headers.Authorization = `Bearer ` + keycloak.token ;
+        return config
+    }, error => {
+        console.log('tokenInterceptor error', error);
+        return Promise.reject(error);
+    })
+}
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#app',
-    store
+window.vue = Vue.use(VueKeyCloak, {
+
+    config: '/api/keycloak_config',
+    init:   {onLoad: 'login-required'},
+
+    onReady: (keycloak) => {
+        tokenInterceptor(keycloak);
+        console.log(`I wonder what Keycloak returns: `, keycloak);
+        /* eslint-disable no-new */
+        new Vue({
+            el: '#app',
+            store
+        })
+    }
 });

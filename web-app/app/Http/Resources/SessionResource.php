@@ -22,11 +22,6 @@ class SessionResource extends JsonResource
     public function toArray($request)
     {
 
-        $repository             = env('DATASET') == 'Dynamics' ? 'Dynamics' : 'MockEntities\Repository';
-
-        $sessionActivities      = ( new CacheDecorator(App::make('App\\' . $repository .'\SessionActivity')))->all();
-        $sessionTypes           = ( new CacheDecorator(App::make('App\\' . $repository .'\SessionType')))->all();
-        $assignment_statuses    = ( new CacheDecorator(App::make('App\\' . $repository .'\AssignmentStatus')))->all();
 
         // Display a nicely formatted date string
         $start_carbon = Carbon::create($this['start_date']);
@@ -41,20 +36,16 @@ class SessionResource extends JsonResource
             $date_string .= $end_carbon->format('M j');
         }
 
-        // Create a status field and populate by looking up related records in the assignment resource (if exists)
-        // and display the status from the assignment_status resource
-
-        $status           = $this['assignment'] == null ? [ 'id' => 0, 'name' => 'Open' ] : $assignment_statuses->firstWhere('id', $this['assignment']['status']);
 
         return [
                 'id'                => $this['id'],
-                'activity'          => $sessionActivities->firstWhere('id',$this['activity_id']),
-                'type'              => $sessionTypes->firstWhere('id',$this['type_id']),
+                'activity'          => $this['activity'],
+                'type'              => $this['type'],
                 'date'              => $date_string,
                 'location'          => $this['location'],
                 'address'           => $this['address'],
                 'city'              => $this['city'],
-                'status'            => $status,
+                'status'            => $this['status'],
                 'assignment'        => $this['assignment']
 
         ];

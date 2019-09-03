@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Dynamics\Decorators\CacheDecorator;
+use App\Dynamics\Interfaces\iCredential;
 use App\Dynamics\ProfileCredential;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\App;
@@ -18,8 +19,6 @@ class ProfileCredentialResource extends JsonResource
     public function toArray($request)
     {
 
-        $repository             = env('DATASET') == 'Dynamics' ? 'Dynamics' : 'MockEntities\Repository';
-        $credentials            = ( new CacheDecorator(App::make('App\\' . $repository .'\Credential')))->all();
 
         // Dynamics reports credentials as one of: "Yes", "No" or "Unverified"
         // This application transforms the verification field into a Boolean
@@ -27,7 +26,7 @@ class ProfileCredentialResource extends JsonResource
         return [
             'id'            => $this['id'],
             'contact_id'    => $this['contact_id'],
-            'credential'    => new SimpleResource($credentials->firstWhere('id', $this['credential_id'])),
+            'credential'    => new SimpleResource($this['credential']),
             'verified'      => $this['verified'] == ProfileCredential::$status['Yes'] ? TRUE : FALSE,
         ];
     }

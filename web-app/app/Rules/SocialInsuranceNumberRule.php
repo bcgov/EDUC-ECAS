@@ -32,7 +32,6 @@ class SocialInsuranceNumberRule implements Rule
             return true;
         }
 
-
         return $this->isValidSin($noSpaces);
 
     }
@@ -55,13 +54,15 @@ class SocialInsuranceNumberRule implements Rule
             return false;
         }
 
-        $sum = '';
+//        $sum = '';
+//
+//        for ($i = strlen($num) - 1; $i >= 0; -- $i) {
+//            $sum .= $i & 1 ? $num[$i] : $num[$i] * 2;
+//        }
+//
+//        return array_sum(str_split($sum)) % 10 === 0;
 
-        for ($i = strlen($num) - 1; $i >= 0; -- $i) {
-            $sum .= $i & 1 ? $num[$i] : $num[$i] * 2;
-        }
-
-        return array_sum(str_split($sum)) % 10 === 0;
+        return true;
 
     }
 }

@@ -6,59 +6,94 @@ namespace App\Http\Controllers\Api;
 use App\Dynamics\Assignment;
 use App\Dynamics\Interfaces\iAssignment;
 use App\Dynamics\Interfaces\iAssignmentStatus;
+use App\Dynamics\Interfaces\iContractStage;
 use App\Dynamics\Interfaces\iProfile;
-use App\Http\Controllers\EcasBaseController;
+use App\Dynamics\Interfaces\iRole;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\AssignmentResource;
+use App\Keycloak\KeycloakGuard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 
-class AssignmentController extends EcasBaseController
+class AssignmentController extends Controller
 {
 
     private $profile;
     private $assignment_status;
+    private $contract_stage;
+    private $role;
     private $assignment;
+    private $authentication;
 
-    public function __construct(iAssignment $assignment, iProfile $profile, iAssignmentStatus $assignment_status)
+    public function __construct(iAssignment $assignment,
+                                iProfile $profile,
+                                iAssignmentStatus $assignment_status,
+                                iRole $role,
+                                iContractStage $stage,
+                                KeycloakGuard $auth)
     {
 
         $this->profile              = $profile;
         $this->assignment           = $assignment;
         $this->assignment_status    = $assignment_status;
+        $this->contract_stage       = $stage;
+        $this->role                 = $role;
+        $this->authentication       = $auth;
 
     }
 
 
-    public function index($profile_id)
+    public function index($profile_id, Request $request)
     {
+        $user_id = $this->authentication->id();
+
+        if( ! $user_id ) {
+            abort(401, 'unauthorized');
+        }
 
         $profile = $this->profile->get($profile_id);
 
-        if($this->user->id <> $profile['federated_id']) {
+
+        if( $profile['id'] <> $profile_id ) {
             abort(401, 'unauthorized');
         }
+
 
         return $this->assignment->filter(['contact_id' => $profile['id']]);
     }
 
 
-    public function store(Request $request, $profile_id)
+
+    public function store( $profile_id, Request $request)
     {
 
-        // check user is updating their own profile
+        $user_id = $this->authentication->id();
+
+        if( ! $user_id ) {
+            abort(401, 'unauthorized');
+        }
+
         $profile = $this->profile->get($profile_id);
-        $this->checkOwner($request, $profile['federated_id']);
+
+
+        if( $profile['id'] <> $profile_id ) {
+            abort(401, 'unauthorized');
+        }
 
         // TODO - validate record
+        $data                   = $request->all();
+        $data['contact_id']     = $profile_id;
 
-        $new_record_id = $this->assignment->create([
-            'contact_id' => $profile['id'],
-            'session_id' => $request['session_id']
-            // The initial status automatically defaults to `Applied`
-        ]);
+        $new_record_id = $this->assignment->create($data);
 
-        return new AssignmentResource($this->assignment->get($new_record_id));
+        $assignment                         = $this->assignment->get($new_record_id);
+        $assignment['role']                 = $this->role->get($assignment['role_id']);
+        $assignment['stage']                = $this->contract_stage->get($assignment['stage']);
+        $assignment['assignment_status']    = $this->assignment_status->get($assignment['assignment_status']);
+
+
+        return new AssignmentResource($assignment);
     }
 
     public function update(Request $request, $profile_id, $assignment_id)
@@ -66,7 +101,10 @@ class AssignmentController extends EcasBaseController
 
         // check user is updating their own profile
         $profile = $this->profile->get($profile_id);
-        $this->checkOwner($request, $profile['federated_id']);
+
+        if( ! $this->authentication->checkOwner($request, $profile['federated_id'])) {
+            abort(401, 'unauthorized');
+        }
 
         $assignment_statuses = $this->assignment_status->all();
 

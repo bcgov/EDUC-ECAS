@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Dynamics\Interfaces\iDistrict;
-use App\Http\Controllers\EcasBaseController;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\SimpleResource;
 use Illuminate\Http\Request;
 
 
-class DistrictSearchController extends EcasBaseController
+class DistrictSearchController extends Controller
 {
 
     private $district;
@@ -25,7 +25,7 @@ class DistrictSearchController extends EcasBaseController
     public function index(Request $request)
     {
 
-        // TODO - Validate user
+        // There's no need to validate user requests -- public data
 
         $query = $request->get('q');
 

@@ -3,44 +3,44 @@
 namespace Tests\Api;
 
 
-use App\Http\Resources\SimpleResource;
-use App\MockEntities\Profile;
-use App\MockEntities\ProfileCredential;
+use App\Dynamics\Credential;
+use App\Dynamics\ProfileCredential;
 use Tests\BaseMigrations;
 
 
 class ProfileCredentialTest extends BaseMigrations
 {
 
-    private $profile_credentials;
-    private $user;
-    private $profile;
-
-    public function setUp() : void
-    {
-        parent::setUp();
-        Factory(\App\MockEntities\Credential::class, 5)->create();
-        $this->user = Factory(\App\User::class)->create();
-
-        $this->profile = Factory(Profile::class)->create([
-            'federated_id'  => $this->user->id,
-            'school_id'     => 1,
-            'district_id'   => 1
-        ]);
-        $this->profile_credentials = Factory(ProfileCredential::class,2)->create([
-            'verified'      => "Yes"
-        ]);
-
-    }
 
     /** @test */
     public function a_user_can_get_all_profile_credentials()
     {
-        $this->actingAs($this->user, 'api');
+        $mock_profile_id    = 'abc';
+        $mock_federated_id  = '123';
 
-        $response = $this->get('/api/' . $this->profile->id . '/profile-credentials' );
+        $this->mockUserId($mock_federated_id);
+
+        $this->mockGetProfile($mock_profile_id, $this->validProfileData([
+            'id'                    => $mock_profile_id,
+            'federated_id'          => $mock_federated_id
+        ]));
+
+        $this->mockFilterProfileCredential($mock_profile_id, [
+            [
+                'contact_id'    => 'abc',
+                'credential_id' => 'efg',
+                'verified'      => 610410002 // not yet verified
+            ],
+            [
+                'contact_id'    => 'abc',
+                'credential_id' => 'mmm',
+                'verified'      => 610410000 // verified yes
+            ]
+        ]);
+
+        $response = $this->get('/api/' . $mock_profile_id . '/profile-credentials' );
         $response
-            ->assertJsonFragment(['contact_id' => (string) $this->profile->id])
+            ->assertJsonFragment(['contact_id' => (string) $mock_profile_id])
             ->assertJsonCount(2);
     }
 
@@ -48,15 +48,33 @@ class ProfileCredentialTest extends BaseMigrations
     /** @test */
     public function a_user_does_not_receive_credentials_verified_as_no()
     {
-        $this->actingAs($this->user, 'api');
+        $mock_profile_id    = 'abc';
+        $mock_federated_id  = '123';
 
-        $no_credentials = Factory(ProfileCredential::class,2)->create([
-            'verified'      => "No"
+        $this->mockUserId($mock_federated_id);
+
+        $this->mockGetProfile($mock_profile_id, $this->validProfileData([
+            'id'                    => $mock_profile_id,
+            'federated_id'          => $mock_federated_id
+        ]));
+
+        $this->mockFilterProfileCredential($mock_profile_id, [
+            [
+                'contact_id'    => 'abc',
+                'credential_id' => 'efg',
+                'verified'      => 610410002 // not yet verified
+            ],
+            [
+                'contact_id'    => 'abc',
+                'credential_id' => 'mmm',
+                'verified'      => 610410001 // verified no
+            ]
         ]);
 
-        $response = $this->get('/api/'. $this->profile->id . '/profile-credentials' );
-
-        $response->assertJsonCount(2);
+        $response = $this->get('/api/' . $mock_profile_id . '/profile-credentials' );
+        $response
+            ->assertJsonFragment(['contact_id' => (string) $mock_profile_id])
+            ->assertJsonCount(1);
     }
 
 
@@ -65,18 +83,34 @@ class ProfileCredentialTest extends BaseMigrations
     {
         $this->withExceptionHandling();
 
-        $response = $this->get('/api/' . $this->profile->id . '/profile-credentials' );
-        $response->assertStatus(302); // unauthorised
+        $this->mockUserId(null);
+
+        $response = $this->get('/api/' . 'an_unknown_profile_id' . '/profile-credentials' );
+        $response->assertStatus(401); // unauthorised
     }
 
     /** @test */
     public function a_user_can_delete_a_profile_credential()
     {
-        $this->actingAs($this->user, 'api');
+        $mock_profile_id    = 'abc';
+        $mock_federated_id  = '123';
+        $record_id_to_be_deleted = 'efg';
 
-        $record_2b_deleted = $this->profile_credentials->last();
+        $this->mockUserId($mock_federated_id);
 
-        $response = $this->delete('/api/' . $this->profile->id . '/profile-credentials/' . $record_2b_deleted->id  );
+        $this->mockGetProfile($mock_profile_id, $this->validProfileData([
+            'id'                    => $mock_profile_id,
+            'federated_id'          => $mock_federated_id
+        ]));
+
+        $this->mockDeleteProfileCredential($record_id_to_be_deleted, [
+            'id'            => $record_id_to_be_deleted,
+            'contact_id'    => $mock_profile_id,
+            'credential_id' => 'efg',
+            'verified'      => 610410002 // not yet verified
+        ]);
+
+        $response = $this->delete('/api/' . $mock_profile_id . '/profile-credentials/' . $record_id_to_be_deleted  );
 
         $response->assertStatus(204 ); // success
     }
@@ -85,12 +119,24 @@ class ProfileCredentialTest extends BaseMigrations
     /** @test */
     public function a_user_cannot_delete_another_users_profile_credential()
     {
-        $another_user = Factory(\App\User::class)->create();
-        $this->actingAs($another_user, 'api');
+        $mock_profile_id    = 'abc';
+        $mock_federated_id  = '123';
+        $record_id_to_be_deleted = 'efg';
 
-        $record_2b_deleted = $this->profile_credentials->last();
+        $this->mockUserId($mock_federated_id);
 
-        $response = $this->delete('/api/' . $this->profile->id . '/profile-credentials/' . $record_2b_deleted->id  );
+        $this->mockGetProfile($mock_profile_id, $this->validProfileData([
+            'federated_id'          => $mock_federated_id
+        ]));
+
+        $this->mockCannotDeleteProfileCredential($record_id_to_be_deleted, [
+            'id'            => $record_id_to_be_deleted,
+            'contact_id'    => 'some_other_users_id',
+            'credential_id' => 'efg',
+            'verified'      => 610410002 // not yet verified
+        ]);
+
+        $response = $this->delete('/api/' . $mock_profile_id . '/profile-credentials/' . $record_id_to_be_deleted  );
 
         $response->assertStatus(401 ); // unauthorized
     }
@@ -98,57 +144,206 @@ class ProfileCredentialTest extends BaseMigrations
 
 
     /** @test */
-    public function a_user_can_create_a_profile_credentials()
+    public function a_user_can_create_a_profile_credential()
     {
-        $this->actingAs($this->user, 'api');
+        $mock_profile_id            = 'abc';
+        $mock_federated_id          = '123';
+        $mock_credential_id         = 'efg';
+        $new_profile_credential     = [
+            'contact_id'    => $mock_profile_id,
+            'credential_id' => $mock_credential_id,
+            'verified'      =>  610410002 // all new records are assigned an 'unverified' status
+        ];
+        $new_profile_credential_id  = 'new_id';
 
-        $credential = Factory(\App\MockEntities\Credential::class)->create();
+        $this->mockUserId($mock_federated_id);
 
-        $response = $this->post('/api/' . $this->profile->id . '/profile-credentials', [
-            'credential_id'       => $credential->id
-        ] );
+        $this->mockGetProfile($mock_profile_id, $this->validProfileData([
+            'id'                    => $mock_profile_id,
+            'federated_id'          => $mock_federated_id
+        ]));
+
+        $this->mockCreateProfileCredential($new_profile_credential_id, $new_profile_credential);
+
+        $this->mockGetCredential($mock_credential_id, [
+           'id'         => $mock_credential_id,
+           'name'       => 'Name of Credential'
+        ]);
+
+        $response = $this->post('/api/' . $mock_profile_id . '/profile-credentials', $new_profile_credential );
 
         $response
-            ->assertJsonFragment(['contact_id'      => (string) $this->profile->id])
-            ->assertJsonFragment(['credential'      => new SimpleResource($credential)]);
+            ->assertJsonFragment(['contact_id'      => (string) $mock_profile_id ])
+            ->assertJsonFragment(['credential'      => [
+                'id'        => (string) $mock_credential_id,
+                'name'      => (string) 'Name of Credential'
+            ]])
+            ->assertJsonFragment(['verified'        => (boolean) false ]);
     }
 
-
-    /** @test */
-    public function a_user_can_create_two_identical_profile_credentials()
-    {
-
-        $this->actingAs($this->user, 'api');
-
-        $this->post('/api/' . $this->profile->id . '/profile-credentials', [
-            'credential_id'       => 7
-        ] );
-
-        $response = $this->post('/api/' . $this->profile->id . '/profile-credentials', [
-            'credential_id'       => 7
-        ] );
-
-        $response->assertStatus(200 ); // okay
-    }
 
 
     /** @test */
     public function a_user_cannot_create_a_profile_credential_with_a_verified_status()
     {
 
-        $this->actingAs($this->user, 'api');
+        $mock_profile_id            = 'abc';
+        $mock_federated_id          = '123';
+        $mock_credential_id         = 'efg';
+        $new_profile_credential     = [
+            'contact_id'    => $mock_profile_id,
+            'credential_id' => $mock_credential_id,
+            'verified'      =>  610410002 // all new records are assigned an 'unverified' status
+        ];
+        $new_profile_credential_id  = 'new_id';
 
-        $response = $this->post('/api/' . $this->profile->id . '/profile-credentials', [
-            'credential_id'       => 7,
-            'verified'            => "Yes"  // using "Yes" here as that's how Dynamics records it
-        ] );
+        $this->mockUserId($mock_federated_id);
+
+        $this->mockGetProfile($mock_profile_id, $this->validProfileData([
+            'id'                    => $mock_profile_id,
+            'federated_id'          => $mock_federated_id
+        ]));
+
+        $this->mockCreateProfileCredential($new_profile_credential_id, $new_profile_credential);
+
+        $this->mockGetCredential($mock_credential_id, [
+            'id'         => $mock_credential_id,
+            'name'       => 'Name of Credential'
+        ]);
+
+        // Attempt to submit a `verified` credential
+        $modified_profile_credential = $new_profile_credential;
+        $modified_profile_credential['verified'] = ProfileCredential::$status['Yes'];
+
+        $response = $this->post('/api/' . $mock_profile_id . '/profile-credentials', $new_profile_credential );
 
         $response
-            ->assertJsonFragment(['contact_id'      => (string) $this->profile->id])
-            ->assertJsonFragment(['verified'        => false]);
+            ->assertJsonFragment(['verified'        => (boolean) false ]);
     }
 
 
+    /** @test */
+    public function a_user_cannot_update_a_profile_credential()
+    {
+        $this->withExceptionHandling();
+        $mock_profile_id            = 'abc';
+
+        $response = $this->patch('/api/'. $mock_profile_id .'/profile-credentials/' . 'any_profile_credential_id', []);
+        $response->assertStatus(405); // route not available
+
+
+    }
+
+    /** @test */
+    public function a_user_cannot_get_a_profile_credential()
+    {
+        $this->withExceptionHandling();
+        $mock_profile_id            = 'abc';
+
+        $response = $this->get('/api/'. $mock_profile_id .'/profile-credentials/' . 'any_profile_credential_id', []);
+        $response->assertStatus(405); // route not available
+
+
+    }
+
+    private function mockFilterProfileCredential($profile_id, Array $data)
+    {
+
+        // mock the Profile Credential
+        $repository = \Mockery::mock(ProfileCredential::class);
+        $repository->shouldReceive('filter')
+            ->with(['contact_id' => $profile_id])
+            ->once()
+            ->andReturn(collect($data));
+
+        // load the mock into the IoC container
+        $this->app->instance(ProfileCredential::class, $repository);
+
+    }
+
+
+
+
+    private function mockDeleteProfileCredential($profile_credential_id, Array $data)
+    {
+
+        // mock the Profile Credential
+        $repository = \Mockery::mock(ProfileCredential::class);
+
+        $repository->shouldReceive('get')
+            ->with($profile_credential_id)
+            ->once()
+            ->andReturn($data)
+            ->ordered();
+
+        $repository->shouldReceive('delete')
+            ->with($profile_credential_id)
+            ->once()
+            ->andReturn(TRUE )
+            ->ordered();
+
+        // load the mock into the IoC container
+        $this->app->instance(ProfileCredential::class, $repository);
+
+    }
+
+    private function mockCannotDeleteProfileCredential($profile_credential_id, Array $data)
+    {
+
+        // mock the Profile Credential
+        $repository = \Mockery::mock(ProfileCredential::class);
+
+        $repository->shouldReceive('get')
+            ->with($profile_credential_id)
+            ->once()
+            ->andReturn($data);
+
+        // load the mock into the IoC container
+        $this->app->instance(ProfileCredential::class, $repository);
+
+    }
+
+
+    private function mockCreateProfileCredential($new_record_id, Array $data)
+    {
+
+        $new_record                 = $data;
+        $new_record['id']           = $new_record_id;
+
+        // mock the Profile Credential
+        $repository = \Mockery::mock(ProfileCredential::class);
+        $repository->shouldReceive('create')
+            ->with($data)
+            ->once()
+            ->andReturn($new_record)
+            ->ordered();
+
+        $repository->shouldReceive('get')
+            ->with($new_record_id)
+            ->once()
+            ->andReturn($new_record)
+            ->ordered();
+
+        // load the mock into the IoC container
+        $this->app->instance(ProfileCredential::class, $repository);
+
+    }
+
+
+    private function mockGetCredential($credential_id, Array $data = [] )
+    {
+
+        // mock the Credential
+        $repository = \Mockery::mock(Credential::class);
+        $repository->shouldReceive('get')
+            ->with($credential_id)
+            ->once()
+            ->andReturn($data);
+
+        // load the mock into the IoC container
+        $this->app->instance(Credential::class, $repository);
+
+    }
 
 
 }

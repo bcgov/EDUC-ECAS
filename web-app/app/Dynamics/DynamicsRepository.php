@@ -189,11 +189,12 @@ abstract class DynamicsRepository
         ]);
 
         // Returns an array of the returned data
-        $data = json_decode($response->getBody()->getContents());
+        $data_returned = json_decode($response->getBody()->getContents());
 
+        // Unbelievably, the field names returned from an update request differ
+        // from the field names returned from a get request.  For consistency,
+        // we request a fresh copy of the record from the API.
 
-        // TODO - Investigate why the API is not returning the complete updated record -- some fields are missing
-        // Workaround - get a fresh copy instead
         return $this->get($id);
 
     }

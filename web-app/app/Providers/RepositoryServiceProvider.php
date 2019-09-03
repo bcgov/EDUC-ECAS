@@ -4,24 +4,32 @@ namespace App\Providers;
 
 use App\Dynamics\Assignment;
 use App\Dynamics\AssignmentStatus;
+use App\Dynamics\ContractStage;
 use App\Dynamics\Credential;
 use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\District;
 use App\Dynamics\Interfaces\iAssignment;
 use App\Dynamics\Interfaces\iAssignmentStatus;
+use App\Dynamics\Interfaces\iContractStage;
 use App\Dynamics\Interfaces\iCredential;
 use App\Dynamics\Interfaces\iDistrict;
 use App\Dynamics\Interfaces\iProfile;
 use App\Dynamics\Interfaces\iProfileCredential;
 use App\Dynamics\Interfaces\iRegion;
+use App\Dynamics\Interfaces\iRole;
 use App\Dynamics\Interfaces\iSchool;
 use App\Dynamics\Interfaces\iSession;
+use App\Dynamics\Interfaces\iSessionActivity;
+use App\Dynamics\Interfaces\iSessionType;
 use App\Dynamics\Interfaces\iSubject;
 use App\Dynamics\Profile;
 use App\Dynamics\ProfileCredential;
 use App\Dynamics\Region;
+use App\Dynamics\Role;
 use App\Dynamics\School;
 use App\Dynamics\Session;
+use App\Dynamics\SessionActivity;
+use App\Dynamics\SessionType;
 use App\Dynamics\Subject;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -46,6 +54,10 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(iAssignment::class, function ($app) {
             return new CacheDecorator($app->make(Assignment::class));
+        });
+
+        $this->app->bind(iAssignmentStatus::class, function ($app) {
+            return new CacheDecorator($app->make(AssignmentStatus::class));
         });
 
         $this->app->bind(iSession::class, function ($app) {
@@ -74,6 +86,22 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(iAssignmentStatus::class, function ($app) {
             return new CacheDecorator($app->make(AssignmentStatus::class));
+        });
+
+        $this->app->bind(iSessionActivity::class, function ($app) {
+            return new CacheDecorator($app->make(SessionActivity::class));
+        });
+
+        $this->app->bind(iSessionType::class, function ($app) {
+            return new CacheDecorator($app->make(SessionType::class));
+        });
+
+        $this->app->bind(iRole::class, function ($app) {
+            return new CacheDecorator($app->make(Role::class));
+        });
+
+        $this->app->bind(iContractStage::class, function ($app) {
+            return new CacheDecorator($app->make(ContractStage::class));
         });
 
         $this->app->bind(ClientInterface::class, function () {

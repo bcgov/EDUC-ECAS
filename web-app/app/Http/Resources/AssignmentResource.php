@@ -16,18 +16,14 @@ class AssignmentResource extends JsonResource
      */
     public function toArray($request)
     {
-        $repository             = env('DATASET') == 'Dynamics' ? 'Dynamics' : 'MockEntities\Repository';
-        $roles                  = ( new CacheDecorator(App::make('App\\' . $repository .'\Role')))->all();
-        $contract_stages        = ( new CacheDecorator(App::make('App\\' . $repository .'\ContractStage')))->all();
-        $assignment_statuses    = ( new CacheDecorator(App::make('App\\' . $repository .'\AssignmentStatus')))->all();
 
         return [
             'id'                => $this['id'],
             'session_id'        => $this['session_id'],
             'contact_id'        => $this['contact_id'],
-            'role'              => new RoleResource($roles->firstWhere('id', $this['role_id'])),
-            'contract_stage'    => new SimpleResource($contract_stages->firstWhere('id', $this['contract_stage'])),
-            'status'            => new SimpleResource($assignment_statuses->firstWhere('id', $this['status'])),
+            'role'              => new RoleResource($this['role']),
+            'contract_stage'    => new SimpleResource($this['stage']),
+            'status'            => new SimpleResource($this['assignment_status']),
             'state'             => (Boolean) $this['state']
 
         ];
