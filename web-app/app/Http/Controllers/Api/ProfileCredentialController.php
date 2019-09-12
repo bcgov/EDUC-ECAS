@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Api;
 use App\Dynamics\Interfaces\iCredential;
 use App\Dynamics\Interfaces\iProfile;
 use App\Dynamics\Interfaces\iProfileCredential;
-use App\Dynamics\Profile;
 use App\Dynamics\ProfileCredential;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProfileCredentialResource;
@@ -88,13 +87,13 @@ class ProfileCredentialController extends Controller
         ]);
 
 
-        $profile_credential = $this->profile_credential->create([
+        $profile_credential_id = $this->profile_credential->create([
             'contact_id'    => $profile['id'],
             'credential_id' => $request['credential_id'],
             'verified'      => ProfileCredential::$status['Unverified']  // all new profile credentials are 'Unverified'
         ]);
 
-        $new_record = $this->profile_credential->get($profile_credential['id']);
+        $new_record = $this->profile_credential->get($profile_credential_id);
 
         $new_record['credential'] = $this->credential->get($new_record['credential_id']);
 

@@ -99,10 +99,13 @@ class AssignmentController extends Controller
     public function update(Request $request, $profile_id, $assignment_id)
     {
 
+        $federated_id = $this->authentication->id();
+
         // check user is updating their own profile
         $profile = $this->profile->get($profile_id);
 
-        if( ! $this->authentication->checkOwner($request, $profile['federated_id'])) {
+        if($federated_id <> $profile['federated_id'])
+        {
             abort(401, 'unauthorized');
         }
 
@@ -142,6 +145,10 @@ class AssignmentController extends Controller
                 'state'  => Assignment::INACTIVE_STATE
             ]);
         }
+
+        $updated_assignment['role']                 = $this->role->get($updated_assignment['role_id']);
+        $updated_assignment['stage']                = $this->contract_stage->get($updated_assignment['stage']);
+        $updated_assignment['assignment_status']    = $this->assignment_status->get($updated_assignment['assignment_status']);
 
 
         return new AssignmentResource($updated_assignment);
