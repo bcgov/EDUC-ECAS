@@ -56,7 +56,6 @@ class ProfileResource extends JsonResource
           'school'                                 =>  $this['school_id'] ? new SchoolResource($school) : null,
           'professional_certificate_bc'            =>  $this['professional_certificate_bc'],
           'professional_certificate_yk'            =>  $this['professional_certificate_yk'],
-          'professional_certificate_other'         =>  $this['professional_certificate_other'],
         ];
     }
 }

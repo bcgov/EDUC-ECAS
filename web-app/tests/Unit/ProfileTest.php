@@ -173,7 +173,6 @@ class ProfileTest extends BaseMigrations
         $this->assertArrayHasKey('school_id', $result);
         $this->assertArrayHasKey('professional_certificate_bc', $result);
         $this->assertArrayHasKey('professional_certificate_yk', $result);
-        $this->assertArrayHasKey('professional_certificate_other', $result);
 
     }
 

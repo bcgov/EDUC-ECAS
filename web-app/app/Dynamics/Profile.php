@@ -38,7 +38,6 @@ class Profile extends DynamicsRepository implements iModelRepository
         'school_id'                      => 'educ_currentschool',
         'professional_certificate_bc'    => 'educ_professionalcertificatebc',
         'professional_certificate_yk'    => 'educ_professionalcertificateyk',
-        'professional_certificate_other' => 'educ_professionalcertificateother',
     ];
 
     public static $links = [
@@ -73,7 +72,6 @@ class Profile extends DynamicsRepository implements iModelRepository
                 'school_id'                      => null,
                 'professional_certificate_bc'    => null,
                 'professional_certificate_yk'    => null,
-                'professional_certificate_other' => null,
             ];
 
         }

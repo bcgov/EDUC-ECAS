@@ -30,8 +30,6 @@
                                 </p>
                                 <p v-if="getUser.professional_certificate_yk">
                                     <strong>Yukon Professional Certificate:</strong> {{ getUser.professional_certificate_yk }}</p>
-                                <p v-if="getUser.professional_certificate_other">
-                                    <strong>Other Certificate:</strong> {{ getUser.professional_certificate_other }}</p>
                                 <p v-if="getUser.district">
                                     <strong>District:</strong> {{ getUser.district.name }}</p>
                                 <p v-if="getUser.school">

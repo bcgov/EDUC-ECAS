@@ -122,11 +122,6 @@
                         <input type="text" class="form-control" name="professional_certificate_yk"
                                v-model="user_local.professional_certificate_yk" id="professional_certificate_yk">
                     </div>
-                    <div class="form-group col">
-                        <label for="professional_certificate_other">Other</label>
-                        <input type="text" class="form-control" name="professional_certificate_other"
-                               v-model="user_local.professional_certificate_other" id="professional_certificate_other">
-                    </div>
                 </div>
                 <div class="form-group row">
                     <div class="col" v-show="showCancel">
@@ -247,7 +242,6 @@
                     social_insurance_number: form.user_local.social_insurance_number,
                     professional_certificate_bc: form.user_local.professional_certificate_bc,
                     professional_certificate_yk: form.user_local.professional_certificate_yk,
-                    professional_certificate_other: form.user_local.professional_certificate_other,
                     address_1: form.user_local.address_1,
                     address_2: form.user_local.address_2,
                     city: form.user_local.city,

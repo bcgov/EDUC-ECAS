@@ -67,7 +67,6 @@ abstract class BaseMigrations extends TestCase
             'postal_code'           => 'H0H0H0',
             'social_insurance_number'   => '123456789',
             'professional_certificate_bc'       => 'mmc-12345',
-            'professional_certificate_other'    => 'qwr-12345',
             'professional_certificate_yk'       => 'yt-123456'
 
         ];
