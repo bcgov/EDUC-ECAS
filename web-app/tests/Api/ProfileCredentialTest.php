@@ -315,7 +315,7 @@ class ProfileCredentialTest extends BaseMigrations
         $repository->shouldReceive('create')
             ->with($data)
             ->once()
-            ->andReturn($new_record)
+            ->andReturn($new_record_id)
             ->ordered();
 
         $repository->shouldReceive('get')
