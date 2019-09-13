@@ -1,6 +1,13 @@
 <template>
     <div class="card">
-        <div class="card-header"><h1>Teacher Profile</h1></div>
+        <div class="card-header">
+                <div class="row ml-1">
+                    <div><h1>Teacher Profile</h1></div>
+                    <div class="ml-auto mr-3">
+                        <div>* Required</div>
+                    </div>
+                </div>
+        </div>
         <div class="card-body">
             <form>
                 <div class="form-row">
@@ -113,14 +120,30 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col">
-                        <label for="professional_certificate_bc">BC Certificate</label>
-                        <input type="text" class="form-control" name="professional_certificate_bc"
-                               v-model="user_local.professional_certificate_bc" id="professional_certificate_bc">
+                        <label class="control-label">BC Certificate</label>
+                        <div class="pl-3">
+                            <label class="radio-inline control-label" for="certificate_bc_yes">
+                                <input type="radio" name="professional_certificate_bc"
+                                       v-model="user_local.professional_certificate_bc" id="certificate_bc_yes" value="Yes"> Yes
+                            </label>
+                            <label class="radio-inline control-label pl-3" for="certificate_bc_no">
+                                <input type="radio" name="professional_certificate_bc"
+                                       v-model="user_local.professional_certificate_bc" id="certificate_bc_no" value="No"> No
+                            </label>
+                        </div>
                     </div>
                     <div class="form-group col">
-                        <label for="professional_certificate_yk">YK Certificate</label>
-                        <input type="text" class="form-control" name="professional_certificate_yk"
-                               v-model="user_local.professional_certificate_yk" id="professional_certificate_yk">
+                        <label class="control-label">Yukon Certificate</label>
+                        <div class="pl-3">
+                            <label class="radio-inline control-label" for="certificate_yk_yes">
+                                <input type="radio" name="professional_certificate_bc"
+                                       v-model="user_local.professional_certificate_yk" id="certificate_yk_yes" value="Yes"> Yes
+                            </label>
+                            <label class="radio-inline control-label pl-3" for="certificate_yk_no">
+                                <input type="radio" name="professional_certificate_bc"
+                                       v-model="user_local.professional_certificate_yk" id="certificate_yk_no" value="No"> No
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -136,8 +159,8 @@
                         </button>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">* Required</div>
+                <div class="col-12 text-center" v-show="! showCancel">
+                    <button type="button" class="btn btn-link" @click="$keycloak.logoutFn" v-if="$keycloak.authenticated">Log out, I'll save this later</button>
                 </div>
             </form>
         </div>
@@ -247,14 +270,13 @@
                     city: form.user_local.city,
                     region: form.user_local.region.id,
                     postal_code: form.user_local.postal_code,
-                    school_id: form.user_local.school.id,
-                    district_id: form.user_local.district.id,
+                    school: form.user_local.school,
+                    district: form.user_local.district,
                 };
 
                 if (this.new_user) {
                     axios.post('/api/profiles', data)
                         .then(function (response) {
-                            console.log('Create Profile'. data.school_id);
                             form.closeModal();
                             form.working = false;
                             Event.fire('profile-updated', response.data)
@@ -263,6 +285,7 @@
                             console.log('Failure!', data);
                             form.working = false;
                             if (error.response.status === 422){
+                                console.log("errors: ", error.response.data.errors );
                                 form.errors = error.response.data.errors;
                             }
                         });

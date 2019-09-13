@@ -20,7 +20,6 @@ use App\Http\Resources\ProfileResource;
 use App\Http\Resources\SessionResource;
 use App\Http\Resources\SimpleResource;
 use App\Keycloak\KeycloakGuard;
-use Illuminate\Http\Request;
 
 
 /*
@@ -56,8 +55,10 @@ class DashboardSetupController extends Controller
      * @param iProfile $profile
      * @param iProfileCredential $profile_credential
      * @param iAssignment $assignment
+     * @param iAssignmentStatus $assignment_status
      * @param iSession $session
      * @param iSessionActivity $session_activity
+     * @param iSessionType $session_type
      * @param iCredential $credential
      * @param iRegion $region
      * @param iSubject $subject

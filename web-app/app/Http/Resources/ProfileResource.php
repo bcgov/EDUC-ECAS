@@ -34,9 +34,6 @@ class ProfileResource extends JsonResource
     public function toArray($request)
     {
 
-        $district   = $this->district->get($this['district_id']);
-        $school     = $this->school->get($this['school_id']);
-        $region     = $this->region->get($this['region']);
 
         return [
           'id'                                     =>  $this['id'],
@@ -50,10 +47,10 @@ class ProfileResource extends JsonResource
           'address_1'                              =>  $this['address_1'],
           'address_2'                              =>  $this['address_2'],
           'city'                                   =>  $this['city'],
-          'region'                                 =>  new SimpleResource($region),
+          'region'                                 =>  $this['region'] ? new SimpleResource($this->region->get($this['region'])) : null,
           'postal_code'                            =>  $this['postal_code'],
-          'district'                               =>  $this['district_id'] ? new SimpleResource($district) : null,
-          'school'                                 =>  $this['school_id'] ? new SchoolResource($school) : null,
+          'district'                               =>  $this['district_id'] ? new SimpleResource($this->district->get($this['district_id'])) : null,
+          'school'                                 =>  $this['school_id'] ? new SchoolResource($this->school->get($this['school_id'])) : null,
           'professional_certificate_bc'            =>  $this['professional_certificate_bc'],
           'professional_certificate_yk'            =>  $this['professional_certificate_yk'],
         ];
