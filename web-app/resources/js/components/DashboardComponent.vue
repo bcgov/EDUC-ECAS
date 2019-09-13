@@ -52,14 +52,6 @@
                                     <div class="col">{{ credential.credential.name }}</div>
                                 </div>
                                 <div class="row pt-3">
-                                    <div class="col-1">
-                                        <button class="btn btn-primary btn-sm" @click="addCredential(new_credential)">
-                                            <span>
-                                                <div class="loader text-center" v-show="working"></div>
-                                            </span>
-                                            <div v-show="!working">+</div>
-                                        </button>
-                                    </div>
                                     <div class="col">
                                         <select v-model="new_credential">
                                             <option value="0">Select New Credential</option>
@@ -68,46 +60,74 @@
                                             </option>
                                         </select>
                                     </div>
+                                    <div class="col">
+                                        <button class="btn btn-primary btn-sm" @click="addCredential(new_credential)"
+                                                :disabled="disableAddCredentialButton">
+                                            <span>
+                                                <div class="loader text-center" v-show="working"></div>
+                                            </span>
+                                            <div v-show="!working">Add</div>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row pt-3">
                     <div class="col">
                         <div class="card">
                             <div class="card-header pb-0">
-                                <h2 class="float-left">Marking Sessions</h2>
-                                <ul class="nav nav-tabs justify-content-end pt-2">
-                                    <li class="nav-item mb-0">
-                                        <a href="#"
-                                           @click="filter = ''"
-                                           class="nav-link"
-                                           :class="{ 'active': filter === '' }">All
-                                            <span class="badge badge-pill badge-primary">{{ getSessions.length }}</span></a>
-                                    </li>
-                                    <li class="nav-item mb-0">
-                                        <a href="#"
-                                           @click="filter = 'Applied'"
-                                           class="nav-link"
-                                           :class="{ 'active': filter === 'Applied' }">Applied
-                                            <span class="badge badge-pill badge-primary">{{ countStatus('Applied') }}</span></a>
-                                    </li>
-                                    <li class="nav-item mb-0">
-                                        <a href="#"
-                                           @click="filter = 'Invited'"
-                                           class="nav-link"
-                                           :class="{ 'active': filter === 'Invited' }">Invited
-                                            <span class="badge badge-pill badge-primary">{{ countStatus('Invited') }}</span></a>
-                                    </li>
-                                    <li class="nav-item mb-0">
-                                        <a href="#"
-                                           @click="filter = 'Scheduled'"
-                                           class="nav-link"
-                                           :class="{ 'active': filter === 'Scheduled' }">Going
-                                            <span class="badge badge-pill badge-primary">{{ countStatus('Scheduled') }}</span></a>
-                                    </li>
-                                </ul>
+                                <div class="row">
+                                    <div class="col">
+                                        <h2>Marking Sessions</h2>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        Click on a session below to apply, accept or decline
+                                    </div>
+                                    <div class="col-6">
+
+                                        <ul class="nav nav-tabs justify-content-end pt-2">
+                                            <li class="nav-item mb-0">
+                                                <a href="#"
+                                                   @click="filter = ''"
+                                                   class="nav-link"
+                                                   :class="{ 'active': filter === '' }">All
+                                                    <span class="badge badge-pill badge-primary">{{ getSessions.length }}</span></a>
+                                            </li>
+                                            <li class="nav-item mb-0">
+                                                <a href="#"
+                                                   @click="filter = 'Applied'"
+                                                   class="nav-link"
+                                                   :class="{ 'active': filter === 'Applied' }">Applied
+                                                    <span class="badge badge-pill badge-primary">{{ countStatus('Applied') }}</span></a>
+                                            </li>
+                                            <li class="nav-item mb-0">
+                                                <a href="#"
+                                                   @click="filter = 'Invited'"
+                                                   class="nav-link"
+                                                   :class="{ 'active': filter === 'Invited' }">Invited
+                                                    <span class="badge badge-pill badge-primary">{{ countStatus('Invited') }}</span></a>
+                                            </li>
+                                            <li class="nav-item mb-0">
+                                                <a href="#"
+                                                   @click="filter = 'Scheduled'"
+                                                   class="nav-link"
+                                                   :class="{ 'active': filter === 'Scheduled' }">Going
+                                                    <span class="badge badge-pill badge-primary">{{ countStatus('Scheduled') }}</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="float-left">
+
+
+                                </div>
+
+
+
                             </div>
                             <div class="card-body">
                                 <table class="table table-hover">
@@ -220,11 +240,17 @@
 
                 return arrayOfCredentialIds;
             },
+
             credentialsAvailable() {
                 // subtract applied_credentials from credentials
                 return this.credentials.filter(x => ! this.credentialsIdsInUse.includes(x.id));
 
+            },
+
+            disableAddCredentialButton() {
+                return this.new_credential === "0" || this.new_credential === 0;
             }
+
         },
         methods: {
             addCredential(selection) {
@@ -265,6 +291,7 @@
                         console.log('Failure!')
                     });
             },
+
             countStatus(status) {
                 // var status
                 return Object.values(this.getSessions).filter(function (assignment) {
