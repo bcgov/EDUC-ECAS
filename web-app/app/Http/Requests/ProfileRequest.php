@@ -38,8 +38,8 @@ class ProfileRequest extends FormRequest
             'region'                        => 'required|alpha|size:2',
             'postal_code'                   => [ new PostalCodeRule($this['region']) ],
             'social_insurance_number'       => [ new SocialInsuranceNumberRule() ],
-            'professional_certificate_bc'   => 'in:Yes,No',
-            'professional_certificate_yk'   => 'in:Yes,No'
+            'professional_certificate_bc'   => 'nullable|in:Yes,No',
+            'professional_certificate_yk'   => 'nullable|in:Yes,No'
         ];
     }
     
@@ -99,8 +99,7 @@ class ProfileRequest extends FormRequest
             unset($input['district']);
         }
         
-        // The following step probably ins't necessary since the user input isn't displayed publicly,
-        // but nevertheless as good practice we'll sanitize all strings
+        // We'll sanitize all strings
 
         $input['first_name']                = filter_var($input['name'],                FILTER_SANITIZE_STRING);
         $input['last_name']                 = filter_var($input['last_name'],           FILTER_SANITIZE_STRING);
