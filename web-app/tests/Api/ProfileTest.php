@@ -278,9 +278,6 @@ class ProfileTest extends BaseMigrations
     public function an_authenticated_user_cannot_create_a_blank_profile()
     {
 
-        $mock_federated_id  = '123';
-        $this->mockUserId($mock_federated_id);
-
         $this->withExceptionHandling();
 
         $this->post('/api/profiles', $this->validProfileData([
@@ -306,8 +303,6 @@ class ProfileTest extends BaseMigrations
     /** @test */
     public function an_authenticated_user_cannot_create_a_profile_without_a_valid_email()
     {
-        $mock_federated_id  = '123';
-        $this->mockUserId($mock_federated_id);
 
         $this->withExceptionHandling();
 
@@ -357,8 +352,6 @@ class ProfileTest extends BaseMigrations
     public function a_new_profile_must_have_a_postal_code()
     {
         // Valid: Six alternating letters and numbers, spaces don't matter
-        $mock_federated_id  = '123';
-        $this->mockUserId($mock_federated_id);
 
         $this->withExceptionHandling();
 
@@ -372,8 +365,6 @@ class ProfileTest extends BaseMigrations
     public function new_profile_cannot_have_a_numeric_postal_code()
     {
         // Valid: Six alternating letters and numbers, spaces don't matter
-        $mock_federated_id  = '123';
-        $this->mockUserId($mock_federated_id);
 
         $this->withExceptionHandling();
 
@@ -385,8 +376,6 @@ class ProfileTest extends BaseMigrations
     /** @test */
     public function new_profile_sin_cannot_have_fewer_than_9_digits()
     {
-        $mock_federated_id  = '123';
-        $this->mockUserId($mock_federated_id);
 
         $this->withExceptionHandling();
 
@@ -436,9 +425,6 @@ class ProfileTest extends BaseMigrations
     /** @test */
     public function new_profile_sin_cannot_have_alpha_characters()
     {
-
-        $mock_federated_id  = '123';
-        $this->mockUserId($mock_federated_id);
 
         $this->withExceptionHandling();
 
@@ -492,9 +478,6 @@ class ProfileTest extends BaseMigrations
     /** @test */
     public function new_profile_sin_may_not_have_dashes_between_numbers()
     {
-
-        $mock_federated_id  = '123';
-        $this->mockUserId($mock_federated_id);
 
         $this->withExceptionHandling();
 

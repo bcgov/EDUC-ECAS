@@ -1,0 +1,117 @@
+<?php
+
+namespace App\Http\Requests;
+
+use App\Rules\PostalCodeRule;
+use App\Rules\SocialInsuranceNumberRule;
+use Illuminate\Foundation\Http\FormRequest;
+
+class ProfileRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        
+        //$this->sanitize();
+        
+        return [
+            'first_name'                    => 'required',
+            'last_name'                     => 'required',
+            'email'                         => 'required|email',
+            'phone'                         => 'required',
+            'address_1'                     => 'required',
+            'city'                          => 'required',
+            'region'                        => 'required|alpha|size:2',
+            'postal_code'                   => [ new PostalCodeRule($this['region']) ],
+            'social_insurance_number'       => [ new SocialInsuranceNumberRule() ],
+            'professional_certificate_bc'   => 'in:Yes,No',
+            'professional_certificate_yk'   => 'in:Yes,No'
+        ];
+    }
+    
+    
+    public function messages()
+    {
+        return [
+            'first_name.required'  => 'Your first name is required',
+            'last_name.required'   => 'Your last name is required',
+            'email.required'       => 'An email is required',
+            'email.email'          => 'Invalid email',
+            'phone.required'       => 'A phone number is required',
+            'address_1.required'   => 'An address is required',
+            'city.required'        => 'A city name is required',
+            'region.required'      => 'A province or state is required',
+        ];
+    }
+
+
+    public function sanitize()
+    {
+        $input = $this->all();
+
+        // Make sure the user isn't attempting to change their federated_id
+        if( ! $input['federated_id']) {
+            unset($input['federated_id']);
+        }
+
+        // Make sure the user isn't attempting to change their Dynamics contact_id
+        if( ! $input['id']) {
+            unset($input['id']);
+        }
+
+        // Get rid of spaces
+        $remove_spaces_from = ['sin'];
+        foreach ($remove_spaces_from as $field) {
+            if (isset($request[$field])) {
+                $request[$field] = preg_replace('/\s+/', '', $input[$field]);
+            }
+        }
+
+        // Sanitize phone numbers, remove everything that isn't a number
+        $sanitize_to_integer = ['phone'];
+        foreach ($sanitize_to_integer as $field) {
+            $request[$field] = preg_replace('/[^0-9.]/', '', $input[$field]);
+        }
+
+        // Populate 'school_id'
+        if ( ! $input['school']['id']) {
+            $input['school_id'] = $input['school']['id'];
+            unset($input['school']);
+        }
+
+        // Populate 'district_id'
+        if ( ! $input['district']['id']) {
+            $input['district_id'] = $input['district']['id'];
+            unset($input['district']);
+        }
+        
+        // The following step probably ins't necessary since the user input isn't displayed publicly,
+        // but nevertheless as good practice we'll sanitize all strings
+
+        $input['first_name']                = filter_var($input['name'],                FILTER_SANITIZE_STRING);
+        $input['last_name']                 = filter_var($input['last_name'],           FILTER_SANITIZE_STRING);
+        $input['preferred_first_name']      = filter_var($input['preferred_first_name'],FILTER_SANITIZE_STRING);
+        $input['email']                     = filter_var($input['email'],               FILTER_SANITIZE_STRING);
+        $input['phone']                     = filter_var($input['phone'],               FILTER_SANITIZE_STRING);
+        $input['address_1']                 = filter_var($input['address_1'],           FILTER_SANITIZE_STRING);
+        $input['address_2']                 = filter_var($input['address_2'],           FILTER_SANITIZE_STRING);
+        $input['city']                      = filter_var($input['city'],                FILTER_SANITIZE_STRING);
+
+
+        $this->replace($input);
+    }
+}
