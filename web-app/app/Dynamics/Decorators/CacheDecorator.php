@@ -69,9 +69,9 @@ class CacheDecorator implements
 
     public function firstOrCreate($id, $data)
     {
-        return Cache::remember(self::cacheKey($id),self::CACHE_DURATION , function () use($id, $data) {
-            return $this->model->firstOrCreate($id, $data);
-        });
+
+        return $this->model->firstOrCreate($id, $data);
+
     }
 
 
@@ -97,7 +97,10 @@ class CacheDecorator implements
         Cache::forget(self::cacheKey($id));
         Cache::forget($this->cacheKey());
 
-        return $this->model->update($id, $data);
+        return Cache::remember(self::cacheKey($id),self::CACHE_DURATION , function () use($id, $data) {
+            return $this->model->update($id, $data);
+        });
+
     }
 
 
