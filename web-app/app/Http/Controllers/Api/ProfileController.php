@@ -102,9 +102,9 @@ class ProfileController extends Controller
         $data['federated_id'] = $profile['federated_id'];
 
 
-        $response = $this->profile->update($profile['id'], $data);
+        $profile = $this->profile->update($profile['id'], $data);
 
-        return $response;
+        return new ProfileResource($profile , $this->school, $this->district, $this->region);
     }
 
 

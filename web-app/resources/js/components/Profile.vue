@@ -136,11 +136,11 @@
                         <label class="control-label">Yukon Certificate</label>
                         <div class="pl-3">
                             <label class="radio-inline control-label" for="certificate_yk_yes">
-                                <input type="radio" name="professional_certificate_bc"
+                                <input type="radio" name="professional_certificate_yk"
                                        v-model="user_local.professional_certificate_yk" id="certificate_yk_yes" value="Yes"> Yes
                             </label>
                             <label class="radio-inline control-label pl-3" for="certificate_yk_no">
-                                <input type="radio" name="professional_certificate_bc"
+                                <input type="radio" name="professional_certificate_yk"
                                        v-model="user_local.professional_certificate_yk" id="certificate_yk_no" value="No"> No
                             </label>
                         </div>
@@ -296,10 +296,10 @@
 
                     axios.patch('/api/profiles/' + this.user.id, data)
                         .then(function (response) {
-                            console.log('Patch Profile', data.school_id);
+                            console.log('Patch Profile', response );
                             form.working = false;
                             form.closeModal();
-                            Event.fire('profile-updated', response.data)
+                            Event.fire('profile-updated', response )
                         })
                         .catch(function (error) {
                             console.log('Failure!');

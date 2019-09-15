@@ -26,7 +26,7 @@ class ProfileRequest extends FormRequest
     public function rules()
     {
         
-        //$this->sanitize();
+        $this->sanitize();
         
         return [
             'first_name'                    => 'required',
@@ -64,12 +64,12 @@ class ProfileRequest extends FormRequest
         $input = $this->all();
 
         // Make sure the user isn't attempting to change their federated_id
-        if( ! $input['federated_id']) {
+        if( isset($input['federated_id'] )) {
             unset($input['federated_id']);
         }
 
         // Make sure the user isn't attempting to change their Dynamics contact_id
-        if( ! $input['id']) {
+        if( isset($input['id'] )) {
             unset($input['id']);
         }
 
@@ -88,20 +88,20 @@ class ProfileRequest extends FormRequest
         }
 
         // Populate 'school_id'
-        if ( ! $input['school']['id']) {
+        if ( $input['school']['id']) {
             $input['school_id'] = $input['school']['id'];
             unset($input['school']);
         }
 
         // Populate 'district_id'
-        if ( ! $input['district']['id']) {
+        if ( $input['district']['id']) {
             $input['district_id'] = $input['district']['id'];
             unset($input['district']);
         }
         
         // We'll sanitize all strings
 
-        $input['first_name']                = filter_var($input['name'],                FILTER_SANITIZE_STRING);
+        $input['first_name']                = filter_var($input['first_name'],          FILTER_SANITIZE_STRING);
         $input['last_name']                 = filter_var($input['last_name'],           FILTER_SANITIZE_STRING);
         $input['preferred_first_name']      = filter_var($input['preferred_first_name'],FILTER_SANITIZE_STRING);
         $input['email']                     = filter_var($input['email'],               FILTER_SANITIZE_STRING);

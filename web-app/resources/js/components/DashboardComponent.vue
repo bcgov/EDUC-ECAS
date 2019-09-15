@@ -25,11 +25,14 @@
                                     {{ getUser.address_1 }}<br/>
                                     {{ getUser.city }}, <span v-if="mounted">{{ getUser.region.id }}</span> {{ getUser.postal_code }}
                                 </p>
-                                <p v-if="getUser.professional_certificate_bc">
-                                    <strong>BC Professional Certificate:</strong> {{ getUser.professional_certificate_bc }}
+                                <p v-if="getUser.professional_certificate_bc === 'Yes'">
+                                    <strong>BC Professional Certificate:</strong>
+                                    <font-awesome-icon icon="check" alt="BC Professional Certificate"/>
                                 </p>
-                                <p v-if="getUser.professional_certificate_yk">
-                                    <strong>Yukon Professional Certificate:</strong> {{ getUser.professional_certificate_yk }}</p>
+                                <p v-if="getUser.professional_certificate_yk === 'Yes'" >
+                                    <strong>Yukon Professional Certificate:</strong>
+                                    <font-awesome-icon icon="check" alt="Yukon Professional Certificate"/>
+                                </p>
                                 <p v-if="getUser.district">
                                     <strong>District:</strong> {{ getUser.district.name }}</p>
                                 <p v-if="getUser.school">
@@ -358,9 +361,9 @@
             },
             updateProfile(user) {
                 // We must have a valid user now
-                console.log('updateProfile event', user.data);
+                console.log('updateProfile event', user.data.data);
                 this.new_user = false;
-                this.$store.commit('SET_USER', user.data)
+                this.$store.commit('SET_USER', user.data.data)
             },
             updateSessionStatus(response) {
                 console.log('updateSessionStatus', response);
