@@ -30,7 +30,7 @@ class Assignment extends DynamicsRepository implements iModelRepository
         'contact_id'     => '_educ_contact_value',
         'role_id'        => '_educ_role_value',
         'contract_stage' => 'educ_contractstage',
-        'status'         => 'statuscode',
+        'status_id'      => 'statuscode',
         'state'          => 'statecode'
     ];
 

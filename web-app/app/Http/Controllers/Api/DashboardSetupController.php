@@ -15,6 +15,7 @@ use App\Dynamics\Interfaces\iSessionActivity;
 use App\Dynamics\Interfaces\iSessionType;
 use App\Dynamics\Interfaces\iSubject;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AssignmentResource;
 use App\Http\Resources\ProfileCredentialResource;
 use App\Http\Resources\ProfileResource;
 use App\Http\Resources\SessionResource;
@@ -124,23 +125,21 @@ class DashboardSetupController extends Controller
         $sessions                   = $this->session->all();
         $session_activities         = $this->session_activity->all();
         $session_types              = $this->session_type->all();
-        $assignment_statuses        = $this->assignment_status->all();
 
-        $sessions_with_assignments = $sessions->map( function ($session) use($assignments, $profile, $session_activities, $session_types, $assignment_statuses) {
+
+
+        $sessions_with_assignments = $sessions->map( function ($session) use($assignments, $profile, $session_activities, $session_types) {
 
             // filter for any assignments with the same assignment_id AND contact_id
             $filtered_assignments = $assignments->filter( function($assignment) use($session, $profile) {
                 return $assignment['session_id'] == $session['id'] AND $assignment['contact_id'] == $profile['id'];
             });
 
-            // if found, add them to $session
-            $session['assignment']  = $filtered_assignments->count() > 0 ? $filtered_assignments->first() : null;
+            $session['assignment']  = $filtered_assignments->first();
 
             $session['activity']    = $session_activities->firstWhere('id',$session['activity_id']);
 
             $session['type']        = $session_types->firstWhere('id',$session['type_id']);
-
-            $session['status']      = $session['assignment'] == null ? [ 'id' => 0, 'name' => 'Open' ] : $assignment_statuses->firstWhere('id', $session['assignment']['status']);
 
             return $session;
         });

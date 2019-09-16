@@ -29,8 +29,7 @@ import VModal from 'vue-js-modal'
 Vue.use(Vuex);
 Vue.use(VModal, { dynamic: true, injectModalsContainer: true });
 
-Vue.component('ExampleComponent'        , require('./components/DashboardLauncher.vue').default);
-//Vue.component('DashboardComponent'      , require('./components/DashboardComponent.vue').default);
+Vue.component('DashboardLauncher'       , require('./components/DashboardLauncher.vue').default);
 Vue.component('session'                 , require('./components/SessionModal.vue').default);
 Vue.component('profile'                 , require('./components/Profile.vue').default);
 
@@ -62,7 +61,7 @@ const store = new Vuex.Store({
         'UPDATE_SESSION_STATUS' (state, response) {
             const index = state.sessions.findIndex(session => session.id === response.session_id);
             let session = state.sessions[index];
-            session.status = response.status;
+            session.assignment.status = response.status;
             Vue.set(state.sessions, index, session)
         }
     },
@@ -73,19 +72,6 @@ const store = new Vuex.Store({
         getSessions: (state) => {
             return state.sessions
         }
-        // filterSessions: state  => {
-        //     return state.sessions.filter(function(session) {
-        //         // if (filter_term.length == 0) {
-        //         //     return true
-        //         // }
-        //         return session.status == 'Applied'
-        //     })
-        // }
-        // salesAccounts: state => {
-        //     return state.accounts.filter(function(account) {
-        //         return account.category == 'Sales'
-        //     })
-        // }
     }
 });
 

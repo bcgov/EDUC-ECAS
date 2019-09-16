@@ -88,9 +88,8 @@ class AssignmentController extends Controller
         $new_record_id = $this->assignment->create($data);
 
         $assignment                         = $this->assignment->get($new_record_id);
-        $assignment['role']                 = $this->role->get($assignment['role_id']);
-        $assignment['stage']                = $this->contract_stage->get($assignment['stage']);
-        $assignment['assignment_status']    = $this->assignment_status->get($assignment['assignment_status']);
+
+        Log::debug(print_r($assignment, true));
 
 
         return new AssignmentResource($assignment);
@@ -145,10 +144,6 @@ class AssignmentController extends Controller
                 'state'  => Assignment::INACTIVE_STATE
             ]);
         }
-
-        $updated_assignment['role']                 = $this->role->get($updated_assignment['role_id']);
-        $updated_assignment['stage']                = $this->contract_stage->get($updated_assignment['stage']);
-        $updated_assignment['assignment_status']    = $this->assignment_status->get($updated_assignment['assignment_status']);
 
 
         return new AssignmentResource($updated_assignment);
