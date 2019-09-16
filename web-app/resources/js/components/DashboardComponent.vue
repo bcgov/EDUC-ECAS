@@ -163,7 +163,7 @@
         </modal>
         <modal name="profile_form" height="auto" :scrollable="true" :clickToClose="false">
             <profile
-                    :user="user"
+                    :user="getUser"
                     :schools="schools"
                     :regions="regions"
                     :districts="districts"
