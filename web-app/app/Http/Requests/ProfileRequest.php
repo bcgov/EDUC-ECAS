@@ -29,15 +29,19 @@ class ProfileRequest extends FormRequest
         $this->sanitize();
         
         return [
+            'preferred_first_name'          => 'nullable',
             'first_name'                    => 'required',
             'last_name'                     => 'required',
             'email'                         => 'required|email',
             'phone'                         => 'required',
             'address_1'                     => 'required',
+            'address_2'                     => 'nullable',
             'city'                          => 'required',
             'region'                        => 'required|alpha|size:2',
+            'school'                        => 'nullable|array',
+            'district'                      => 'nullable|array',
             'postal_code'                   => [ new PostalCodeRule($this['region']) ],
-            'social_insurance_number'       => [ new SocialInsuranceNumberRule() ],
+            'social_insurance_number'       => [ 'nullable', new SocialInsuranceNumberRule() ],
             'professional_certificate_bc'   => 'nullable|in:Yes,No',
             'professional_certificate_yk'   => 'nullable|in:Yes,No'
         ];
@@ -61,7 +65,23 @@ class ProfileRequest extends FormRequest
 
     public function sanitize()
     {
-        $input = $this->all();
+        $input = $this->only([
+            'preferred_first_name',
+            'first_name',
+            'last_name',
+            'email',
+            'phone',
+            'social_insurance_number',
+            'address_1',
+            'address_2',
+            'city',
+            'region',
+            'postal_code',
+            'district',
+            'school',
+            'professional_certificate_bc',
+            'professional_certificate_yk'
+        ]);
 
         // Make sure the user isn't attempting to change their federated_id
         if( isset($input['federated_id'] )) {
@@ -73,13 +93,6 @@ class ProfileRequest extends FormRequest
             unset($input['id']);
         }
 
-        // Get rid of spaces
-        $remove_spaces_from = ['sin'];
-        foreach ($remove_spaces_from as $field) {
-            if (isset($request[$field])) {
-                $request[$field] = preg_replace('/\s+/', '', $input[$field]);
-            }
-        }
 
         // Sanitize phone numbers, remove everything that isn't a number
         $sanitize_to_integer = ['phone'];
