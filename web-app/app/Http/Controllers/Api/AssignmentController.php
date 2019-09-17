@@ -89,13 +89,11 @@ class AssignmentController extends Controller
 
         $assignment                         = $this->assignment->get($new_record_id);
 
-        Log::debug(print_r($assignment, true));
-
 
         return new AssignmentResource($assignment);
     }
 
-    public function update(Request $request, $profile_id, $assignment_id)
+    public function update( $profile_id, $assignment_id, Request $request )
     {
 
         $federated_id = $this->authentication->id();
@@ -118,29 +116,31 @@ class AssignmentController extends Controller
             $new_status = $assignment_statuses->firstWhere('name', Assignment::WITHDREW_STATUS);
 
             $updated_assignment = $this->assignment->update($assignment_id, [
-                'status' => $new_status['id'],
+                'status_id' => $new_status['id'],
                 'state'  => Assignment::INACTIVE_STATE
             ]);
         }
         elseif ($request['action'] == Assignment::APPLIED_STATUS) {
-            $assignment_status_key = array_search(Assignment::APPLIED_STATUS, array_column($assignment_statuses, 'name'));
+            $assignment_status = $assignment_statuses->firstWhere('name' , Assignment::APPLIED_STATUS);
+
 
             $updated_assignment = $this->assignment->update($assignment_id, [
-                'status' => $assignment_statuses[$assignment_status_key]['id']
+                'status_id'            => $assignment_status['id']
             ]);
         }
         elseif ($request['action'] == Assignment::ACCEPTED_STATUS) {
-            $assignment_status_key = array_search(Assignment::ACCEPTED_STATUS, array_column($assignment_statuses, 'name'));
+            $assignment_status = $assignment_statuses->firstWhere('name' , Assignment::ACCEPTED_STATUS);
 
             $updated_assignment = $this->assignment->update($assignment_id, [
-                'status' => $assignment_statuses[$assignment_status_key]['id']
+                'status_id' => $assignment_status['id']
             ]);
         }
         elseif ($request['action'] == Assignment::DECLINED_STATUS) {
-            $assignment_status_key = array_search(Assignment::DECLINED_STATUS, array_column($assignment_statuses, 'name'));
+            $assignment_status = $assignment_statuses->firstWhere('name' , Assignment::DECLINED_STATUS);
+
 
             $updated_assignment = $this->assignment->update($assignment_id, [
-                'status' => $assignment_statuses[$assignment_status_key]['id'],
+                'status_id' => $assignment_status['id'],
                 'state'  => Assignment::INACTIVE_STATE
             ]);
         }

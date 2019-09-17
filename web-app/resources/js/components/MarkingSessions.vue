@@ -143,7 +143,7 @@
 
             countStatus(status) {
                 // var status
-                return Object.values(this.sessions).filter(function (session) {
+                return Object.values(this.dateFilteredSessions).filter(function (session) {
                     return session.assignment.status.name === status
                 }).length
             },

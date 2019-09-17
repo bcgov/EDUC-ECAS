@@ -14,9 +14,6 @@ use Illuminate\Http\Request;
 */
 
 
-
-// Note - these routes are all protected by the 'BaseController' from which these classes extend
-
 Route::resource('/profiles'                               , 'Api\ProfileController', ['except' => ['index']]);
 Route::resource('/{profile_id}/profile-credentials'       , 'Api\ProfileCredentialController' );
 Route::resource('/{profile_id}/assignments'               , 'Api\AssignmentController');
