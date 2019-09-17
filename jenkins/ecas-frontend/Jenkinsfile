@@ -38,7 +38,7 @@ node {
             echo "Found ${buildconfigs.count()} buildconfigs: ${buildconfigs.names()}"
             
             // Kick off any builds in parallel ...
-            def builds = buildconfigs.startBuild()
+            def builds = buildconfigs.startBuild().logs('-f')
             echo "Started ${builds.count()} builds: ${builds.names()}"
 
             timeout(WAIT_TIMEOUT) {
