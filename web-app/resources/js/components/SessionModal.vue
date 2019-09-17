@@ -125,6 +125,10 @@
                 this.$modal.hide('session_form');
             },
 
+            editProfile() {
+                Event.fire('launch-profile-modal');
+            },
+
             isStatus: function (session, status) {
                 return session.assignment.status.name === status
             },

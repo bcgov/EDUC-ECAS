@@ -279,7 +279,8 @@
                         .then(function (response) {
                             form.closeModal();
                             form.working = false;
-                            Event.fire('profile-updated', response.data)
+                            console.log('Create Profile', response );
+                            Event.fire('profile-updated', response );
                         })
                         .catch(function (error) {
                             console.log('Failure!', data);

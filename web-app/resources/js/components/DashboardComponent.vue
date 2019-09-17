@@ -10,7 +10,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col">
+                    <div class="col pb-3">
                         <div class="card">
                             <div class="card-header">
                                 <button @click="showProfile" class="float-right btn btn-primary">Edit</button>
@@ -40,7 +40,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col pb-3">
                         <div class="card">
                             <div class="card-header">
                                 <h2>Credentials</h2>
@@ -138,6 +138,7 @@
             Event.listen('credential-added', this.pushCredential);
             Event.listen('credential-deleted', this.removeCredential);
             Event.listen('profile-updated', this.updateProfile);
+            Event.listen('launch-profile-modal', this.showProfile);
 
             if ( ! this.user.id) {
                 this.new_user = true;
