@@ -180,7 +180,7 @@ class AssignmentTest extends BaseMigrations
         $this->assertArrayHasKey('contact_id', $result);
         $this->assertArrayHasKey('role_id', $result);
         $this->assertArrayHasKey('contract_stage', $result);
-        $this->assertArrayHasKey('status', $result);
+        $this->assertArrayHasKey('status_id', $result);
         $this->assertArrayHasKey('state', $result);
 
     }

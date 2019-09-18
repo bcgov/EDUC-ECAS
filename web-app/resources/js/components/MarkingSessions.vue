@@ -23,7 +23,7 @@
                                         <a @click="filter = ''"
                                            class="nav-link"
                                            :class="{ 'active': filter === '' }">All
-                                            <span class="badge badge-pill badge-primary">{{ sessions.length }}</span></a>
+                                            <span class="badge badge-pill badge-primary">{{ dateFilteredSessions.length }}</span></a>
                                     </li>
                                     <li v-for="status in uniqueSessionStatus" class="nav-item mb-0">
                                         <a @click="filter = status"
