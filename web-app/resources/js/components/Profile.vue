@@ -56,6 +56,7 @@
                                name="social_insurance_number" id="social_insurance_number">
                         <input v-if="user_local.is_SIN_on_file" disabled type="text" class="form-control"
                                name="social_insurance_number" placeholder="Received - thank you">
+                        <form-error :errors="errors" field="social_insurance_number"></form-error>
                     </div>
                 </div>
                 <div class="form-row">

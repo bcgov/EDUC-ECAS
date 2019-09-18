@@ -32,7 +32,7 @@ class SocialInsuranceNumberRule implements Rule
             return true;
         }
 
-        return $this->isValidSin($noSpaces);
+        return $this->isValidSin($noSpaces) AND $this->is_valid_luhn($noSpaces);
 
     }
 
@@ -43,7 +43,7 @@ class SocialInsuranceNumberRule implements Rule
      */
     public function message()
     {
-        return 'The Social Insurance Number is not valid.';
+        return 'The SIN is not valid';
     }
 
 
@@ -54,15 +54,22 @@ class SocialInsuranceNumberRule implements Rule
             return false;
         }
 
-//        $sum = '';
-//
-//        for ($i = strlen($num) - 1; $i >= 0; -- $i) {
-//            $sum .= $i & 1 ? $num[$i] : $num[$i] * 2;
-//        }
-//
-//        return array_sum(str_split($sum)) % 10 === 0;
 
         return true;
 
+    }
+
+
+    function is_valid_luhn(string $number)
+    {
+        $sum = 0;
+        $flag = 0;
+
+        for ($i = strlen($number) - 1; $i >= 0; $i--) {
+            $add = $flag++ & 1 ? $number[$i] * 2 : $number[$i];
+            $sum += $add > 9 ? $add - 9 : $add;
+        }
+
+        return $sum % 10 === 0;
     }
 }
