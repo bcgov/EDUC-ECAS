@@ -113,7 +113,7 @@ window.vue = Vue.use(VueKeyCloak, {
 
     onReady: (keycloak) => {
         tokenInterceptor(keycloak);
-        console.log(`I wonder what Keycloak returns: `, keycloak);
+        //console.log(`Keycloak returns: `, keycloak);
         /* eslint-disable no-new */
         new Vue({
             el: '#app',
