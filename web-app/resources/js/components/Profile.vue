@@ -81,9 +81,9 @@
                                 <form-error :errors="errors" field="city"></form-error>
                             </div>
                             <div class="form-group col">
-                                <label for="region" class="required">Province</label>
+                                <label for="region" class="required">{{ regionLabel }}</label>
                                 <select class="form-control" v-model="user_local.region" id="region" name="region">
-                                    <option :value="region" v-for="region in regions">{{ region.id }}</option>
+                                    <option :value="region" v-for="region in regions">{{ region.name }}</option>
                                 </select>
                             </div>
                         </div>
@@ -228,6 +228,14 @@
             },
             showCancel() {
                 return !this.new_user
+            },
+
+            regionLabel() {
+                if(this.user_local.country.name === 'Canada') {
+                    return 'Province';
+                }
+
+                return 'State';
             }
         },
         watch: {
@@ -236,13 +244,26 @@
         },
         methods: {
             async getSchoolNames(query) {
-                const res = await fetch('/api/schools?q=:query'.replace(':query', query));
+                const res = await fetch('/api/schools?q=:query'.replace(':query', query),
+                    {
+                        headers : {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        }
+
+                    });
                 const suggestions = await res.json();
                 console.log('schools', suggestions);
                 this.schools = suggestions.data
             },
             async getDistrictNames(query) {
-                const res = await fetch('/api/districts?q=:query'.replace(':query', query));
+                const res = await fetch('/api/districts?q=:query'.replace(':query', query), {
+                    headers : {
+                        'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                    }
+
+                });
                 const suggestions = await res.json();
                 console.log('districts', suggestions);
                 this.schools = suggestions.data

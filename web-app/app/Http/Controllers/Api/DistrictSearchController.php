@@ -6,8 +6,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Dynamics\Interfaces\iDistrict;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SearchRequest;
 use App\Http\Resources\SimpleResource;
-use Illuminate\Http\Request;
 
 
 class DistrictSearchController extends Controller
@@ -17,15 +17,14 @@ class DistrictSearchController extends Controller
 
     public function __construct(iDistrict $district)
     {
-        $this->district = $district;
+        $this->district         = $district;
 
     }
 
 
-    public function index(Request $request)
+    public function index(SearchRequest $request)
     {
 
-        // There's no need to validate user requests -- public data
 
         $query = $request->get('q');
 

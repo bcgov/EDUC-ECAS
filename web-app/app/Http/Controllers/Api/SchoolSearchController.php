@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Dynamics\Interfaces\iSchool;
 use App\Http\Controllers\Controller;
-use App\Keycloak\KeycloakGuard;
+use App\Http\Requests\SearchRequest;
 use App\Http\Resources\SchoolResource;
-use Illuminate\Http\Request;
+
+
 
 class SchoolSearchController extends Controller
 {
@@ -21,10 +22,9 @@ class SchoolSearchController extends Controller
     }
 
 
-    public function index(Request $request)
+    public function index(SearchRequest $request)
     {
 
-        // There's no need to validate user requests -- public data
 
         $query = $request->get('q');
 
