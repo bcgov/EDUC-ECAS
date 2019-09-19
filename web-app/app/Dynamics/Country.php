@@ -10,34 +10,25 @@ namespace App\Dynamics;
 
 use App\Dynamics\Interfaces\iModelRepository;
 
-
-class School extends DynamicsRepository implements iModelRepository
+class Country extends DynamicsRepository implements iModelRepository
 {
-    public static $table = 'educ_schoollists';
+    const CANADA = 'dce72c48-af6a-e911-b80a-005056833c5b';
 
-    public static $primary_key = 'educ_schoollistid';
+    public static $table = 'educ_countrycodes';
+
+    public static $primary_key = 'educ_countrycodeid';
 
     public static $cache = 480; // 8 Hours
 
-    public static $data_bind = 'educ_CurrentSchoold';  // note '...Schoold' is not a typo
+    public static $data_bind = 'educ_Countryid';
 
 
     public static $filter_quote = '\'';
 
-
     public static $fields = [
-        'id'   => 'educ_schoollistid',
-        'name' => 'educ_name',
-        'city' => 'educ_schoolcity'
+        'id'   => 'educ_countrycodeid',
+        'name' => 'educ_name'
     ];
-
-    public function all()
-    {
-        $collection = parent::all();
-        return $collection->sortBy('name')->values();
-
-
-    }
 
 
     /*
@@ -55,5 +46,4 @@ class School extends DynamicsRepository implements iModelRepository
         return current($collection)[0];
 
     }
-
 }

@@ -51,7 +51,7 @@
                         <form-error :errors="errors" field="phone"></form-error>
                     </div>
                     <div class="form-group col">
-                        <label for="social_insurance_number">Social Insurance Number</label>
+                        <label for="social_insurance_number">Social Insurance Num.</label>
                         <input v-if=" ! user_local.is_SIN_on_file" v-model="user_local.social_insurance_number" type="text" class="form-control"
                                name="social_insurance_number" id="social_insurance_number">
                         <input v-if="user_local.is_SIN_on_file" disabled type="text" class="form-control"
@@ -74,16 +74,24 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="form-group">
-                            <label for="city" class="required">City</label>
-                            <input v-model="user_local.city" type="text" class="form-control" name="city" id="city">
-                            <form-error :errors="errors" field="city"></form-error>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label for="city" class="required">City</label>
+                                <input v-model="user_local.city" type="text" class="form-control" name="city" id="city">
+                                <form-error :errors="errors" field="city"></form-error>
+                            </div>
+                            <div class="form-group col">
+                                <label for="region" class="required">Province</label>
+                                <select class="form-control" v-model="user_local.region" id="region" name="region">
+                                    <option :value="region" v-for="region in regions">{{ region.id }}</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col">
-                                <label for="region">Province</label>
-                                <select class="form-control" v-model="user_local.region" id="region" name="region">
-                                    <option :value="region" v-for="region in regions">{{ region.name }}</option>
+                                <label for="country" class="required">Country</label>
+                                <select class="form-control" v-model="user_local.country" id="country" name="country">
+                                    <option :value="country" v-for="country in countries">{{ country.name }}</option>
                                 </select>
                             </div>
                             <div class="form-group col">
@@ -178,6 +186,7 @@
         props: {
             user: {},
             regions: {},
+            countries: {},
             new_user: false
         },
         components: {
@@ -270,6 +279,7 @@
                     address_2: form.user_local.address_2,
                     city: form.user_local.city,
                     region: form.user_local.region.id,
+                    country: form.user_local.country,
                     postal_code: form.user_local.postal_code,
                     school: form.user_local.school,
                     district: form.user_local.district,

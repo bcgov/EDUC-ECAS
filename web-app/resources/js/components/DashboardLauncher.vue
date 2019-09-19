@@ -6,6 +6,7 @@
                 :sessions="dashboard.sessions"
                 :subjects="dashboard.subjects"
                 :regions="dashboard.regions"
+                :countries="dashboard.countries"
                 :credentials="dashboard.credentials" >
         </dashboard-component>
     </div>

@@ -7,6 +7,7 @@ namespace App\Dynamics\Decorators;
 use App\Dynamics\Interfaces\iAssignment;
 use App\Dynamics\Interfaces\iAssignmentStatus;
 use App\Dynamics\Interfaces\iContractStage;
+use App\Dynamics\Interfaces\iCountry;
 use App\Dynamics\Interfaces\iCredential;
 use App\Dynamics\Interfaces\iDistrict;
 use App\Dynamics\Interfaces\iModelRepository;
@@ -32,6 +33,7 @@ class CacheDecorator implements
                                 iProfile,
                                 iProfileCredential,
                                 iRegion,
+                                iCountry,
                                 iRole,
                                 iSchool,
                                 iSession,

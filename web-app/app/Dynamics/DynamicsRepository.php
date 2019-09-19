@@ -102,6 +102,8 @@ abstract class DynamicsRepository
                  '&$filter=' . static::$fields[key($filter)] . ' eq ' .
                 static::$filter_quote . current($filter) . static::$filter_quote;
 
+        Log::debug('Filter query: ' . $query);
+
         return $this->retrieveData($query);
 
     }
@@ -183,6 +185,8 @@ abstract class DynamicsRepository
     public function update($id, $data)
     {
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '(' . $id . ')';
+
+        Log::debug('Update ' . static::$table . ' query: ' . $query);
 
         $response = $this->guzzle_client->request('PATCH', $query, [
             'json' => self::mapToDynamics($data)

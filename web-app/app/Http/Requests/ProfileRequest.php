@@ -76,6 +76,7 @@ class ProfileRequest extends FormRequest
             'address_2',
             'city',
             'region',
+            'country',
             'postal_code',
             'district',
             'school',
@@ -110,6 +111,12 @@ class ProfileRequest extends FormRequest
         if ( $input['district']['id']) {
             $input['district_id'] = $input['district']['id'];
             unset($input['district']);
+        }
+
+        // Populate 'district_id'
+        if ( $input['country']['id']) {
+            $input['country_id'] = $input['country']['id'];
+            unset($input['country']);
         }
         
         // We'll sanitize all strings

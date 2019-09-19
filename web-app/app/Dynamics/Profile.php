@@ -33,20 +33,22 @@ class Profile extends DynamicsRepository implements iModelRepository
         'address_2'                      => 'address1_line2',
         'city'                           => 'address1_city',
         'region'                         => 'address1_stateorprovince',
+        'country_id'                     => '_educ_countryid_value',
         'postal_code'                    => 'address1_postalcode',
         'district_id'                    => '_educ_district_value',
-        'school_id'                      => 'educ_currentschool',
+        'school_id'                      => '_educ_currentschoold_value',  // note '..schoold..' is not a typo
         'professional_certificate_bc'    => 'educ_professionalcertificatebc',
         'professional_certificate_yk'    => 'educ_professionalcertificateyk',
     ];
 
     public static $links = [
-        'district_id' => District::class
+        'district_id'   => District::class,
+        'school_id'     => School::class,
+        'country_id'    => Country::class
     ];
 
 
     public static $filter_quote = '\'';
-
 
     public function firstOrCreate($federated_id, $data)
     {
@@ -67,6 +69,7 @@ class Profile extends DynamicsRepository implements iModelRepository
                 'address_2'                      => null,
                 'city'                           => null,
                 'region'                         => 'BC',
+                'country_id'                     => Country::CANADA,
                 'postal_code'                    => null,
                 'district_id'                    => null,
                 'school_id'                      => null,

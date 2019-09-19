@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Dynamics\Interfaces\iCountry;
 use App\Dynamics\Interfaces\iDistrict;
 use App\Dynamics\Interfaces\iProfile;
 use App\Dynamics\Interfaces\iRegion;
@@ -21,14 +22,21 @@ class ProfileController extends Controller
     protected $district;
     protected $region;
     protected $authentication;
+    protected $country;
 
 
-    public function __construct(iProfile $profile, iSchool $school, iDistrict $district, iRegion $region, KeycloakGuard $auth)
+    public function __construct(iProfile $profile,
+                                iSchool $school,
+                                iDistrict $district,
+                                iRegion $region,
+                                iCountry $country,
+                                KeycloakGuard $auth)
     {
         $this->profile              = $profile;
         $this->school               = $school;
         $this->district             = $district;
         $this->region               = $region;
+        $this->country              = $country;
         $this->authentication       = $auth;
 
     }
@@ -59,7 +67,7 @@ class ProfileController extends Controller
         }
 
 
-        return new ProfileResource($profile, $this->school, $this->district, $this->region);
+        return new ProfileResource($profile, $this->school, $this->district, $this->region, $this->country);
     }
 
 
@@ -77,7 +85,7 @@ class ProfileController extends Controller
 
         $profile = $this->profile->get($new_model_id);
 
-        $resource = new ProfileResource($profile , $this->school, $this->district, $this->region);
+        $resource = new ProfileResource($profile , $this->school, $this->district, $this->region, $this->country);
 
         return $resource;
     }
@@ -104,7 +112,7 @@ class ProfileController extends Controller
 
         $profile = $this->profile->update($profile['id'], $data);
 
-        return new ProfileResource($profile , $this->school, $this->district, $this->region);
+        return new ProfileResource($profile , $this->school, $this->district, $this->region, $this->country);
     }
 
 

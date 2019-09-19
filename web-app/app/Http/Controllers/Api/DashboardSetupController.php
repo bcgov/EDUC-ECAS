@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Dynamics\Interfaces\iAssignment;
 use App\Dynamics\Interfaces\iAssignmentStatus;
+use App\Dynamics\Interfaces\iCountry;
 use App\Dynamics\Interfaces\iCredential;
 use App\Dynamics\Interfaces\iDistrict;
 use App\Dynamics\Interfaces\iProfile;
@@ -44,6 +45,7 @@ class DashboardSetupController extends Controller
     private $session_type;
     private $credential;
     private $region;
+    private $country;
     private $subject;
     private $school;
     private $district;
@@ -62,6 +64,7 @@ class DashboardSetupController extends Controller
      * @param iSessionType $session_type
      * @param iCredential $credential
      * @param iRegion $region
+     * @param iCountry $country
      * @param iSubject $subject
      * @param iSchool $school
      * @param iDistrict $district
@@ -77,6 +80,7 @@ class DashboardSetupController extends Controller
                                 iSessionType $session_type,
                                 iCredential $credential,
                                 iRegion $region,
+                                iCountry $country,
                                 iSubject $subject,
                                 iSchool $school,
                                 iDistrict $district,
@@ -91,6 +95,7 @@ class DashboardSetupController extends Controller
         $this->session_type         = $session_type;
         $this->credential           = $credential;
         $this->region               = $region;
+        $this->country              = $country;
         $this->subject              = $subject;
         $this->school               = $school;
         $this->district             = $district;
@@ -153,11 +158,12 @@ class DashboardSetupController extends Controller
         });
 
         return [
-            'user'                  => new ProfileResource($profile, $this->school, $this->district, $this->region ),
+            'user'                  => new ProfileResource($profile, $this->school, $this->district, $this->region, $this->country ),
             'user_credentials'      => ProfileCredentialResource::collection($modified_profile_credentials),
             'sessions'              => SessionResource::collection($sessions_with_assignments),
             'subjects'              => SimpleResource::collection($this->subject->all()),
             'regions'               => SimpleResource::collection($this->region->all()),
+            'countries'             => SimpleResource::collection($this->country->all()),
             'credentials'           => SimpleResource::collection($this->credential->all()),
 
         ];

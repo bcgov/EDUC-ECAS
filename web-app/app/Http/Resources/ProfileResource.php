@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 
+use App\Dynamics\Interfaces\iCountry;
 use App\Dynamics\Interfaces\iDistrict;
 use App\Dynamics\Interfaces\iRegion;
 use App\Dynamics\Interfaces\iSchool;
@@ -14,13 +15,15 @@ class ProfileResource extends JsonResource
     private $school;
     private $district;
     private $region;
+    private $country;
 
-    public function __construct($resource, iSchool $school, iDistrict $district, iRegion $region)
+    public function __construct($resource, iSchool $school, iDistrict $district, iRegion $region, iCountry $country)
     {
         parent::__construct($resource);
         $this->school   = $school;
         $this->district = $district;
         $this->region   = $region;
+        $this->country  = $country;
 
     }
 
@@ -51,6 +54,7 @@ class ProfileResource extends JsonResource
           'postal_code'                            =>  $this['postal_code'],
           'district'                               =>  $this['district_id'] ? new SimpleResource($this->district->get($this['district_id'])) : null,
           'school'                                 =>  $this['school_id'] ? new SchoolResource($this->school->get($this['school_id'])) : null,
+          'country'                                =>  $this['country_id'] ? new SimpleResource($this->country->get($this['country_id'])) : null,
           'professional_certificate_bc'            =>  $this['professional_certificate_bc'],
           'professional_certificate_yk'            =>  $this['professional_certificate_yk'],
         ];

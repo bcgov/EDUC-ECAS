@@ -87,9 +87,8 @@
         <modal name="profile_form" height="auto" :scrollable="true" :clickToClose="false">
             <profile
                     :user="getUser"
-                    :schools="schools"
                     :regions="regions"
-                    :districts="districts"
+                    :countries="countries"
                     :new_user="new_user"
                     dusk="profile-component"
             ></profile>
@@ -114,9 +113,8 @@
             user_credentials: {},
             sessions: {},
             subjects: {},
-            schools: {},
             regions: {},
-            districts: {}
+            countries: {},
         },
         data() {
             return {

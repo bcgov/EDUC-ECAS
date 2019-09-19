@@ -5,12 +5,14 @@ namespace App\Providers;
 use App\Dynamics\Assignment;
 use App\Dynamics\AssignmentStatus;
 use App\Dynamics\ContractStage;
+use App\Dynamics\Country;
 use App\Dynamics\Credential;
 use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\District;
 use App\Dynamics\Interfaces\iAssignment;
 use App\Dynamics\Interfaces\iAssignmentStatus;
 use App\Dynamics\Interfaces\iContractStage;
+use App\Dynamics\Interfaces\iCountry;
 use App\Dynamics\Interfaces\iCredential;
 use App\Dynamics\Interfaces\iDistrict;
 use App\Dynamics\Interfaces\iProfile;
@@ -70,6 +72,10 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(iRegion::class, function ($app) {
             return new CacheDecorator($app->make(Region::class));
+        });
+
+        $this->app->bind(iCountry::class, function ($app) {
+            return new CacheDecorator($app->make(Country::class));
         });
 
         $this->app->bind(iSubject::class, function ($app) {
