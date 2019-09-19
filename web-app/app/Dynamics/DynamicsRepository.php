@@ -134,8 +134,9 @@ abstract class DynamicsRepository
     public function all()
     {
 
-        Log::debug('Loading all() from Dynamics: ');
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '&$select=' . implode(',', static::$fields);
+
+        Log::debug('Loading all() from Dynamics ' .static::$table. ' : ' .$query);
 
         return $this->retrieveData($query);
 

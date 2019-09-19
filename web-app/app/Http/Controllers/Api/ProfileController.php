@@ -76,10 +76,11 @@ class ProfileController extends Controller
  */
     public function store(ProfileRequest $request)
     {
-        $user_id = $this->authentication->id();
+        $user = $this->authentication->user();
 
-        $data = $request->all();
-        $data['federated_id'] = $user_id;
+        $data                   = $request->validated();
+        $data['federated_id']   = $user['sub'];
+        $data['username']       = $user['preferred_username'];
 
         $new_model_id = $this->profile->create($data);
 
@@ -96,18 +97,19 @@ class ProfileController extends Controller
     public function update($id, ProfileRequest $request)
     {
 
-        $federated_id = $this->authentication->id();
+        $user = $this->authentication->user();
 
         // check user is updating their own profile
         $profile = $this->profile->get($id);
 
-        if($federated_id <> $profile['federated_id'])
+        if($user['sub'] <> $profile['federated_id'])
         {
             abort(401, 'unauthorized');
         }
 
-        $data = $request->all();
-        $data['federated_id'] = $profile['federated_id'];
+        $data                   = $request->validated();
+        $data['federated_id']   = $profile['federated_id'];
+        $data['username']       = $user['preferred_username'];
 
 
         $profile = $this->profile->update($profile['id'], $data);

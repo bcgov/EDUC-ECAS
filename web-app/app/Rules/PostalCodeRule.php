@@ -7,16 +7,16 @@ use Illuminate\Contracts\Validation\Rule;
 class PostalCodeRule implements Rule
 {
 
-    private $region;
+    private $country;
 
     /**
      * Create a new rule instance.
      *
-     * @param $region
+     * @param $country
      */
-    public function __construct($region)
+    public function __construct($country)
     {
-        $this->region = $region;
+        $this->country = $country;
 
     }
 
@@ -35,9 +35,8 @@ class PostalCodeRule implements Rule
             return false;
         }
 
-        // TODO - replace region tests below with a country test when the country field is available
         // A Canadian postal code is required for Canadian addresses
-        if ($this->region == 'BC' or $this->region == 'YT') {
+        if ($this->country == 'Canada') {
 
             $regExTest = preg_match('/^\D\d\D\s?\d\D\d$/i', $value);
 

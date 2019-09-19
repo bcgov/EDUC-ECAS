@@ -24,6 +24,7 @@ class Profile extends DynamicsRepository implements iModelRepository
         'id'                             => 'contactid',
         'federated_id'                   => 'educ_federatedid',
         'preferred_first_name'           => 'educ_preferredfirstname',
+        'username'                       => 'educ_federatedusername',
         'first_name'                     => 'firstname',
         'last_name'                      => 'lastname',
         'email'                          => 'emailaddress1',
@@ -58,7 +59,6 @@ class Profile extends DynamicsRepository implements iModelRepository
 
             return [
                 'federated_id'                   => $federated_id,
-                'id'                             => null,
                 'preferred_first_name'           => null,
                 'first_name'                     => $data['first_name'],
                 'last_name'                      => $data['last_name'],

@@ -25,8 +25,10 @@ class ProfileRequest extends FormRequest
      */
     public function rules()
     {
+        $input = $this->only(['country']);
         
         $this->sanitize();
+
         
         return [
             'preferred_first_name'          => 'nullable',
@@ -38,9 +40,10 @@ class ProfileRequest extends FormRequest
             'address_2'                     => 'nullable',
             'city'                          => 'required',
             'region'                        => 'required|alpha|size:2',
+            'country'                       => 'required|array',
             'school'                        => 'nullable|array',
             'district'                      => 'nullable|array',
-            'postal_code'                   => [ new PostalCodeRule($this['region']) ],
+            'postal_code'                   => [ new PostalCodeRule($input['country']['name']) ],
             'social_insurance_number'       => [ 'nullable', new SocialInsuranceNumberRule() ],
             'professional_certificate_bc'   => 'nullable|in:Yes,No',
             'professional_certificate_yk'   => 'nullable|in:Yes,No'
@@ -59,6 +62,7 @@ class ProfileRequest extends FormRequest
             'address_1.required'   => 'An address is required',
             'city.required'        => 'A city name is required',
             'region.required'      => 'A province or state is required',
+            'country.required'     => 'A country is required',
         ];
     }
 
@@ -129,6 +133,7 @@ class ProfileRequest extends FormRequest
         $input['address_1']                 = filter_var($input['address_1'],           FILTER_SANITIZE_STRING);
         $input['address_2']                 = filter_var($input['address_2'],           FILTER_SANITIZE_STRING);
         $input['city']                      = filter_var($input['city'],                FILTER_SANITIZE_STRING);
+        $input['postal_code']               = filter_var($input['postal_code'],         FILTER_SANITIZE_STRING);
 
 
         $this->replace($input);
