@@ -3,8 +3,10 @@
 namespace App\Http\Resources;
 
 
+use App\Dynamics\Session;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
+use phpDocumentor\Reflection\Types\Boolean;
 
 
 class SessionResource extends JsonResource
@@ -48,6 +50,8 @@ class SessionResource extends JsonResource
                 'location'          => $this['location'],
                 'address'           => $this['address'],
                 'city'              => $this['city'],
+                'is_published'      => (Boolean) $this['is_published'],
+                'session_status'    => array_keys(Session::$status,$this['status'])[0],
                 'assignment'        => $this->when($this['assignment'], new AssignmentResource($this['assignment']) , new AssignmentNullResource([]))
 
         ];

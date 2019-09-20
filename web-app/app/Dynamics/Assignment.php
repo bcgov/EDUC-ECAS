@@ -38,7 +38,7 @@ class Assignment extends DynamicsRepository implements iModelRepository
         'session_id'     => Session::class,
         'contact_id'     => Profile::class,
         'role_id'        => Role::class,
-        'status'         => AssignmentStatus::class,
+        'status_id'      => AssignmentStatus::class,
         'contract_stage' => ContractStage::class
     ];
 }

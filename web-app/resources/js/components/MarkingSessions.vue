@@ -98,14 +98,22 @@
 
         computed: {
 
+            publicSessions() {
+                return this.sessions.filter( function (session) {
+                    return session.is_published || ( (! session.is_published) && session.assignment.id != '0' );
+
+                })
+            },
+
+
             dateFilteredSessions() {
 
                 if(this.showPastSessions) {
                     // display all sessions
-                    return this.sessions;
+                    return this.publicSessions;
                 }
 
-                return this.sessions.filter( function (session) {
+                return this.publicSessions.filter( function (session) {
 
                     return ! session.isPast;
 
