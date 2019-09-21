@@ -7,6 +7,10 @@
 
 require('./bootstrap');
 
+// resolves known issue with Internet Explorer
+//
+require('es6-promise').polyfill();
+
 window.Vue = require('vue');
 window.Vuex = require('vuex');
 
