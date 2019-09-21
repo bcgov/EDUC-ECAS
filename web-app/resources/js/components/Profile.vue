@@ -109,7 +109,7 @@
                         <vue-bootstrap-typeahead
                                 v-model="districtQuery"
                                 :serializer="s => s.name"
-                                :data="schools"
+                                :data="districts"
                                 id="district"
                                 :placeholder="districtPlacholder"
                                 @hit="user_local.district = $event"
@@ -244,30 +244,29 @@
         },
         methods: {
             async getSchoolNames(query) {
-                const res = await fetch('/api/schools?q=:query'.replace(':query', query),
-                    {
-                        headers : {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        }
+                await axios.get('/api/schools?q=:query'.replace(':query', query))
+                    .then( response => {
+                        console.log('search controller returned:  ', response.data.data  );
+                        this.schools = response.data.data;
 
+                    })
+                    .catch( error => {
+                        console.log('Fail!', error, query);
                     });
-                const suggestions = await res.json();
-                console.log('schools', suggestions);
-                this.schools = suggestions.data
+
             },
             async getDistrictNames(query) {
-                const res = await fetch('/api/districts?q=:query'.replace(':query', query), {
-                    headers : {
-                        'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                    }
+                await axios.get('/api/districts?q=:query'.replace(':query', query))
+                    .then( response => {
+                        console.log('search controller returned:  ', response.data.data  );
+                        this.districts = response.data.data;
 
-                });
-                const suggestions = await res.json();
-                console.log('districts', suggestions);
-                this.schools = suggestions.data
+                    })
+                    .catch( error => {
+                        console.log('Fail!', error, query);
+                    });
             },
+
             closeModal() {
                 this.$modal.hide('profile_form');
             },
@@ -324,8 +323,6 @@
                         });
                 }
                 else {
-
-                    data.id = form.user_local.id;
 
                     axios.patch('/api/profiles/' + this.user.id, data)
                         .then(function (response) {

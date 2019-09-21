@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 
+use App\Keycloak\KeycloakGuard;
 use Illuminate\Foundation\Http\FormRequest;
 
 
@@ -18,7 +19,8 @@ class SearchRequest extends FormRequest
     public function authorize()
     {
 
-        return true;
+        $authentication = resolve(KeycloakGuard::class);
+        return $authentication->hasUser();
 
     }
 
@@ -30,7 +32,7 @@ class SearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'q'  => 'required|alpha_num|max:15',
+            'q'  => 'required|string|max:80',
         ];
     }
 }
