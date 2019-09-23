@@ -97,9 +97,9 @@ class AssignmentTest extends BaseMigrations
             'contact_id'            =>  $mock_profile_id,
             'session_id'            =>  'new_session_id',
             'role_id'               =>  $role_id,
-            'stage'                 =>  $contract_stage,
-            'assignment_status'     =>  $assignment_status,
-            'state'                 =>  $state
+            'status_id'             =>  $assignment_status,
+            'state'                 =>  $state,
+            'contract_stage'        =>  $contract_stage
         ];
 
         $this->mockUserId($mock_federated_id);
@@ -110,9 +110,8 @@ class AssignmentTest extends BaseMigrations
         ]));
 
         $this->mockCreateAssignment('new_assignment_id', $new_assignment);
-        $this->mockGetRole($role_id, 'Some role name');
-        $this->mockGetContractStage($contract_stage, 'Some contract_stage');
-        $this->mockGetAssignmentStatus($assignment_status, 'Some assignment status');
+        $this->mockAllAssignmentStatus();
+
 
         $response = $this->post( '/api/' . $mock_profile_id .'/assignments' , $new_assignment);
 
@@ -202,15 +201,17 @@ class AssignmentTest extends BaseMigrations
     }
 
 
-    private function mockGetAssignmentStatus($assignment_status, $name )
+    private function mockAllAssignmentStatus()
     {
-        $data['id']     = $assignment_status;
-        $data['name']   = $name;
+       $data = collect([
+
+
+       ]);
 
         // mock the Role
         $repository = \Mockery::mock(AssignmentStatus::class);
-        $repository->shouldReceive('get')
-            ->with($assignment_status)
+        $repository->shouldReceive('all')
+            ->with()
             ->once()
             ->andReturn($data);
 

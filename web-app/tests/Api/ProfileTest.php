@@ -3,6 +3,7 @@
 namespace Tests\Api;
 
 
+use App\Dynamics\Country;
 use App\Dynamics\District;
 use App\Dynamics\Profile;
 use App\Dynamics\Region;
@@ -22,19 +23,23 @@ class ProfileTest extends BaseMigrations
         $mock_school_id     = 'myt';
         $mock_region        = 'BC';
         $mock_federated_id  = '123';
+        $mock_country       = 'some_id';
 
         $this->mockUserId($mock_federated_id);
         $this->mockGetProfile($mock_profile_id, $this->validProfileData([
             'district_id'       => $mock_district_id,
             'school_id'         => $mock_school_id,
             'region'            => $mock_region,
-            'federated_id'      => $mock_federated_id
+            'federated_id'      => $mock_federated_id,
+            'country_id'        => $mock_country
         ]));
         $this->mockDistrict($mock_district_id);
         $this->mockSchool($mock_school_id);
         $this->mockRegion($mock_region);
+        $this->mockCountry($mock_country);
 
         $response = $this->get('/api/profiles/' . $mock_profile_id);
+
         $response->assertJsonFragment(['first_name' => $this->validProfileData()['first_name']]);
         $response->assertJsonCount(1);
     }
@@ -49,6 +54,7 @@ class ProfileTest extends BaseMigrations
         $this->mockUserId(null);
 
         $response = $this->get('/api/profiles/' . 'does_not_matter' );
+
         $response->assertStatus(401); // unauthorized
 
     }
@@ -64,17 +70,20 @@ class ProfileTest extends BaseMigrations
         $mock_school_id     = 'myt';
         $mock_region        = 'BC';
         $mock_federated_id  = '123';
+        $mock_country       = 'some_id';
 
         $this->mockUserId($mock_federated_id);
         $this->mockGetProfile($mock_profile_id, $this->validProfileData([
             'district_id'       => $mock_district_id,
             'school_id'         => $mock_school_id,
             'region'            => $mock_region,
-            'federated_id'      => $mock_federated_id
+            'federated_id'      => $mock_federated_id,
+            'country_id'        => $mock_country
         ]));
         $this->mockDistrict($mock_district_id);
         $this->mockSchool($mock_school_id);
         $this->mockRegion($mock_region);
+        $this->mockCountry($mock_country);
 
         $response = $this->get('/api/profiles/' . $mock_profile_id);
         $response->assertJsonMissing(['social_insurance_number']);
@@ -90,6 +99,7 @@ class ProfileTest extends BaseMigrations
         $mock_school_id     = 'myt';
         $mock_region        = 'BC';
         $mock_federated_id  = '123';
+        $mock_country       = 'some_id';
 
         $this->mockUserId($mock_federated_id);
         $this->mockGetProfile($mock_profile_id, $this->validProfileData([
@@ -97,11 +107,13 @@ class ProfileTest extends BaseMigrations
             'school_id'                 => $mock_school_id,
             'region'                    => $mock_region,
             'federated_id'              => $mock_federated_id,
+            'country_id'                => $mock_country,
             'social_insurance_number'   => ''
         ]));
         $this->mockDistrict($mock_district_id);
         $this->mockSchool($mock_school_id);
         $this->mockRegion($mock_region);
+        $this->mockCountry($mock_country);
 
         $response = $this->get('/api/profiles/' . $mock_profile_id);
 
@@ -119,17 +131,20 @@ class ProfileTest extends BaseMigrations
         $mock_school_id     = 'myt';
         $mock_region        = 'BC';
         $mock_federated_id  = '123';
+        $mock_country       = 'some_id';
 
         $this->mockUserId($mock_federated_id);
         $this->mockGetProfile($mock_profile_id, $this->validProfileData([
             'district_id'       => $mock_district_id,
             'school_id'         => $mock_school_id,
             'region'            => $mock_region,
-            'federated_id'      => $mock_federated_id
+            'federated_id'      => $mock_federated_id,
+            'country_id'        => $mock_country,
         ]));
         $this->mockDistrict($mock_district_id);
         $this->mockSchool($mock_school_id);
         $this->mockRegion($mock_region);
+        $this->mockCountry($mock_country);
 
         $response = $this->get('/api/profiles/' . $mock_profile_id);
 
@@ -143,55 +158,11 @@ class ProfileTest extends BaseMigrations
     {
         $this->withExceptionHandling();
 
-
-
         $response = $this->get('/api/profiles');
         $response->assertStatus(405); // route not available
     }
 
 
-    /** @test */
-    public function an_authenticated_user_can_update_their_own_profile()
-    {
-
-        $mock_profile_id    = 'abc';
-        $mock_district_id   = 'cfd';
-        $mock_school_id     = 'myt';
-        $mock_region        = 'BC';
-        $mock_federated_id  = '123';
-
-
-        $initial_profile    = $this->validProfileData([
-            'id'                => $mock_profile_id,
-            'district_id'       => $mock_district_id,
-            'school_id'         => $mock_school_id,
-            'region'            => $mock_region,
-            'federated_id'      => $mock_federated_id
-        ]);
-
-        $modified_profile   = $this->validProfileData([
-            'first_name'    => 'New Name',
-            'id'                => $mock_profile_id,
-            'district_id'       => $mock_district_id,
-            'school_id'         => $mock_school_id,
-            'region'            => $mock_region,
-            'federated_id'      => $mock_federated_id
-        ]);
-
-
-        $this->mockUserId($mock_federated_id);
-
-        $this->mockUpdateProfile($mock_profile_id, $initial_profile, $modified_profile );
-
-
-        $response = $this->patch('/api/profiles/' . $mock_profile_id, $modified_profile );
-
-        $response
-            ->assertStatus(200)
-            ->assertJsonFragment([
-                'first_name'    => "New Name"
-            ]);
-    }
 
 
     /** @test */
@@ -204,18 +175,20 @@ class ProfileTest extends BaseMigrations
         $mock_school_id     = 'myt';
         $mock_region        = 'BC';
         $mock_federated_id  = '123';
+        $mock_country_id    = 'some_guid';
 
 
-        $initial_profile    = $this->validProfileData([
+        $initial_profile    = $this->validProfilePostData([
             'id'                => $mock_profile_id,
             'district_id'       => $mock_district_id,
             'school_id'         => $mock_school_id,
             'region'            => $mock_region,
-            'federated_id'      => 'bad_federated_id'
+            'federated_id'      => 'bad_federated_id',
+            'country_id'        => $mock_country_id
         ]);
 
 
-        $this->mockUserId($mock_federated_id);
+        $this->mockUser($mock_federated_id);
 
         $this->mockGetProfile($mock_profile_id, $initial_profile );
 
@@ -242,36 +215,11 @@ class ProfileTest extends BaseMigrations
     /** @test */
     public function an_authenticated_user_can_create_profile()
     {
-        $mock_profile_id    = 'abc';
-        $mock_district_id   = 'cfd';
-        $mock_school_id     = 'myt';
-        $mock_region        = 'BC';
-        $mock_federated_id  = '123';
+        $this->withExceptionHandling();
 
+        $response = $this->post('/api/profiles', $this->validProfilePostData());
 
-        $valid_profile          = $this->validProfileData([
-            'id'                => $mock_profile_id,
-            'district_id'       => $mock_district_id,
-            'school_id'         => $mock_school_id,
-            'region'            => $mock_region,
-            'federated_id'      => $mock_federated_id
-        ]);
-
-
-        $this->mockUserId($mock_federated_id);
-
-        $this->mockCreateProfile( $valid_profile );
-
-        $this->mockDistrict($mock_district_id);
-        $this->mockSchool($mock_school_id);
-        $this->mockRegion($mock_region);
-
-
-        $valid_profile['federated_id'] = $mock_federated_id;
-
-        $response = $this->post('/api/profiles', $valid_profile );
-
-        $response->assertOk();
+        $response->assertSessionDoesntHaveErrors();
     }
 
     /** @test */
@@ -280,7 +228,7 @@ class ProfileTest extends BaseMigrations
 
         $this->withExceptionHandling();
 
-        $this->post('/api/profiles', $this->validProfileData([
+        $this->post('/api/profiles', $this->validProfilePostData([
             'first_name'  => '',
             'last_name'   => '',
             'email'       => '',
@@ -306,46 +254,21 @@ class ProfileTest extends BaseMigrations
 
         $this->withExceptionHandling();
 
-        $this->post('/api/profiles', $this->validProfileData(['email' => 'notanemail']))
+        $this->post('/api/profiles', $this->validProfilePostData(['email' => 'notanemail']))
             ->assertSessionHasErrors('email');
 
     }
 
     /** @test */
-    public function an_authenticated_user_can_create_a_profile_with_postal_code_that_includes_a_space()
+    public function a_profile_can_include_a_postal_code_with_a_space()
     {
-        // Valid: Six alternating letters and numbers, spaces don't matter
-        $mock_profile_id    = 'abc';
-        $mock_district_id   = 'cfd';
-        $mock_school_id     = 'myt';
-        $mock_region        = 'BC';
-        $mock_federated_id  = '123';
+        $this->withExceptionHandling();
 
+        $response = $this->post('/api/profiles', $this->validProfilePostData([
+            'postal_code'   => 'V8R 5N5'
+        ]));
 
-        $valid_profile          = $this->validProfileData([
-            'id'                => $mock_profile_id,
-            'district_id'       => $mock_district_id,
-            'school_id'         => $mock_school_id,
-            'region'            => $mock_region,
-            'federated_id'      => $mock_federated_id,
-            'postal_code'       => 'V7W 1J7'
-        ]);
-
-
-        $this->mockUserId($mock_federated_id);
-
-        $this->mockCreateProfile( $valid_profile );
-
-        $this->mockDistrict($mock_district_id);
-        $this->mockSchool($mock_school_id);
-        $this->mockRegion($mock_region);
-
-
-        $valid_profile['federated_id'] = $mock_federated_id;
-
-        $response = $this->post('/api/profiles', $valid_profile );
-
-        $response->assertOk();
+        $response->assertSessionDoesntHaveErrors();
     }
 
     /** @test */
@@ -355,21 +278,51 @@ class ProfileTest extends BaseMigrations
 
         $this->withExceptionHandling();
 
-        $this->post('/api/profiles', $this->validProfileData(['postal_code' => '']))
+        $this->post('/api/profiles', $this->validProfilePostData(['postal_code' => '']))
             ->assertSessionHasErrors('postal_code');
 
     }
 
-
     /** @test */
-    public function new_profile_cannot_have_a_numeric_postal_code()
+    public function usa_profile_can_have_a_numeric_postal_code()
     {
         // Valid: Six alternating letters and numbers, spaces don't matter
 
         $this->withExceptionHandling();
 
-        $this->post('/api/profiles', $this->validProfileData(['postal_code' => '123456']))
-            ->assertSessionHasErrors('postal_code');
+        $response = $this->post('/api/profiles', [
+            'first_name'                        => 'required',
+            'last_name'                         => 'required',
+            'preferred_first_name'              => 'bob',
+            'email'                             => 'test@example.com',
+            'phone'                             => '2508123353',
+            'address_1'                         => 'Address field 1',
+            'address_2'                         => 'Address field 2',
+            'city'                              => 'Victoria',
+            'region'                            => 'BC',
+            'postal_code'                       => '12345678',
+            'professional_certificate_bc'       => 'Yes',
+            'professional_certificate_yk'       => 'No',
+            'country'   =>  [
+                'id'            =>                  'some_country_guid',
+                'name'          =>                  'United States'
+            ]
+        ]);
+        $response->assertSessionDoesntHaveErrors();
+    }
+
+
+    /** @test */
+    public function canadian_profile_cannot_have_a_numeric_postal_code()
+    {
+        // Valid: Six alternating letters and numbers, spaces don't matter
+
+        $this->withExceptionHandling();
+
+        $response = $this->post('/api/profiles', $this->validProfilePostData([
+            'postal_code'   => '123456'
+        ]));
+        $response->assertSessionHasErrors('postal_code');
     }
 
 
@@ -379,7 +332,7 @@ class ProfileTest extends BaseMigrations
 
         $this->withExceptionHandling();
 
-        $data = $this->validProfileData(['social_insurance_number' => '125 789']);
+        $data = $this->validProfilePostData(['social_insurance_number' => '125 789']);
         $response = $this->post('/api/profiles', $data);
         $response->assertSessionHasErrors('social_insurance_number');
 
@@ -388,36 +341,11 @@ class ProfileTest extends BaseMigrations
     /** @test */
     public function new_profile_sin_can_be_blank()
     {
-        $mock_profile_id    = 'abc';
-        $mock_district_id   = 'cfd';
-        $mock_school_id     = 'myt';
-        $mock_region        = 'BC';
-        $mock_federated_id  = '123';
 
+        $data = $this->validProfilePostData(['social_insurance_number' => '']);
+        $response = $this->post('/api/profiles', $data);
 
-        $valid_profile          = $this->validProfileData([
-            'id'                            => $mock_profile_id,
-            'district_id'                   => $mock_district_id,
-            'school_id'                     => $mock_school_id,
-            'region'                        => $mock_region,
-            'federated_id'                  => $mock_federated_id,
-            'social_insurance_number'       => ''
-        ]);
-
-
-        $this->mockUserId($mock_federated_id);
-
-        $this->mockCreateProfile( $valid_profile );
-
-        $this->mockDistrict($mock_district_id);
-        $this->mockSchool($mock_school_id);
-        $this->mockRegion($mock_region);
-
-
-        $valid_profile['federated_id'] = $mock_federated_id;
-
-        $response = $this->post('/api/profiles', $valid_profile);
-        $response->assertOk();
+        $response->assertSessionDoesntHaveErrors('social_insurance_number');
 
     }
 
@@ -428,7 +356,7 @@ class ProfileTest extends BaseMigrations
 
         $this->withExceptionHandling();
 
-        $data = $this->validProfileData(['social_insurance_number' => '123w4w56a']);
+        $data = $this->validProfilePostData(['social_insurance_number' => '123w4w56a']);
         $response = $this->post('/api/profiles', $data);
         $response->assertSessionHasErrors('social_insurance_number');
 
@@ -440,50 +368,28 @@ class ProfileTest extends BaseMigrations
     {
 
         // Use: http://id-check.artega.biz/pin-ca.php to generate a fictitious SIN
-        $mock_profile_id    = 'abc';
-        $mock_district_id   = 'cfd';
-        $mock_school_id     = 'myt';
-        $mock_region        = 'BC';
-        $mock_federated_id  = '123';
+        $this->withExceptionHandling();
 
+        $data = $this->validProfilePostData(['social_insurance_number' => '783302648']);
+        $response = $this->post('/api/profiles', $data);
 
-        $valid_profile          = $this->validProfileData([
-            'id'                            => $mock_profile_id,
-            'district_id'                   => $mock_district_id,
-            'school_id'                     => $mock_school_id,
-            'region'                        => $mock_region,
-            'federated_id'                  => $mock_federated_id,
-            'social_insurance_number'       => '783302649'
-        ]);
+        $response->assertSessionHasErrors('social_insurance_number');
 
-
-        $this->mockUserId($mock_federated_id);
-
-        $this->mockCreateProfile( $valid_profile );
-
-        $this->mockDistrict($mock_district_id);
-        $this->mockSchool($mock_school_id);
-        $this->mockRegion($mock_region);
-
-
-        $valid_profile['federated_id'] = $mock_federated_id;
-
-        $response = $this->post('/api/profiles', $valid_profile);
-        $response->assertOk();
 
     }
 
 
 
     /** @test */
-    public function new_profile_sin_may_not_have_dashes_between_numbers()
+    public function new_profile_sin_may_have_dashes_between_numbers()
     {
 
         $this->withExceptionHandling();
 
-        $data = $this->validProfileData(['social_insurance_number' => '783-302-649']);
+        $data = $this->validProfilePostData(['social_insurance_number' => '883-302-645']);
         $response = $this->post('/api/profiles', $data);
-        $response->assertSessionHasErrors('social_insurance_number');
+
+        $response->assertStatus(302);  // passed validation
 
     }
 
@@ -492,36 +398,12 @@ class ProfileTest extends BaseMigrations
     public function new_profile_sin_may_have_blanks_between_triplets()
     {
 
-        $mock_profile_id    = 'abc';
-        $mock_district_id   = 'cfd';
-        $mock_school_id     = 'myt';
-        $mock_region        = 'BC';
-        $mock_federated_id  = '123';
+        $this->withExceptionHandling();
 
+        $data = $this->validProfilePostData(['social_insurance_number' => '883 302 645']);
+        $response = $this->post('/api/profiles', $data);
 
-        $valid_profile          = $this->validProfileData([
-            'id'                            => $mock_profile_id,
-            'district_id'                   => $mock_district_id,
-            'school_id'                     => $mock_school_id,
-            'region'                        => $mock_region,
-            'federated_id'                  => $mock_federated_id,
-            'social_insurance_number'       => '783 302 649'
-        ]);
-
-
-        $this->mockUserId($mock_federated_id);
-
-        $this->mockCreateProfile( $valid_profile );
-
-        $this->mockDistrict($mock_district_id);
-        $this->mockSchool($mock_school_id);
-        $this->mockRegion($mock_region);
-
-
-        $valid_profile['federated_id'] = $mock_federated_id;
-
-        $response = $this->post('/api/profiles', $valid_profile);
-        $response->assertOk();
+        $response->assertStatus(302);  // passed validation
 
     }
 
@@ -530,74 +412,23 @@ class ProfileTest extends BaseMigrations
     /** @test */
     public function new_profile_sin_cannot_be_any_9_digit_number()
     {
-        $mock_federated_id  = '123';
-        $this->mockUserId($mock_federated_id);
 
         $this->withExceptionHandling();
 
-        $data = $this->validProfileData(['social_insurance_number' => '883302649']);
+        $data = $this->validProfilePostData(['social_insurance_number' => '883302645']);
         $response = $this->post('/api/profiles', $data);
+
         $response->assertSessionHasErrors('social_insurance_number');
 
     }
 
-
-
-    private function mockUpdateProfile($profile_id, Array $initial_data, Array $modified_data )
-    {
-
-        // mock the Profile
-        $repository = \Mockery::mock(Profile::class);
-
-        $repository->shouldReceive('get')
-            ->with($profile_id)
-            ->andReturn($initial_data)
-            ->once()
-            ->ordered();
-
-        $repository->shouldReceive('update')
-            ->with($profile_id, $modified_data)
-            ->andReturn($modified_data)
-            ->once()
-            ->ordered();
-
-
-        // load the mock into the IoC container
-        $this->app->instance(Profile::class, $repository);
-
-    }
-
-    private function mockCreateProfile(Array $data )
-    {
-
-        $new_data       = $data;
-        $new_data['id'] = 'some_new_id';
-
-        // mock the Profile
-        $repository = \Mockery::mock(Profile::class);
-
-        $repository->shouldReceive('create')
-            ->with($data)
-            ->andReturn($new_data['id'])
-            ->once()
-            ->ordered();
-
-        $repository->shouldReceive('get')
-            ->with($new_data['id'])
-            ->andReturn($new_data)
-            ->once()
-            ->ordered();
-
-        // load the mock into the IoC container
-        $this->app->instance(Profile::class, $repository);
-
-    }
+    
 
 
     private function mockDistrict($district_id )
     {
 
-        // mock the Profile
+        // mock the District
         $repository = \Mockery::mock(District::class);
         $repository->shouldReceive('get')
             ->with($district_id)
@@ -615,7 +446,7 @@ class ProfileTest extends BaseMigrations
     private function mockSchool( $school_id )
     {
 
-        // mock the Profile
+        // mock the School
         $repository = \Mockery::mock(School::class);
         $repository->shouldReceive('get')
             ->with($school_id)
@@ -634,7 +465,7 @@ class ProfileTest extends BaseMigrations
     private function mockRegion( $region )
     {
 
-        // mock the Profile
+        // mock the Region
         $repository = \Mockery::mock(Region::class);
         $repository->shouldReceive('get')
             ->with($region)
@@ -646,6 +477,25 @@ class ProfileTest extends BaseMigrations
 
         // load the mock into the IoC container
         $this->app->instance(Region::class, $repository);
+
+    }
+
+
+    private function mockCountry( $country_id )
+    {
+
+        // mock the Country
+        $repository = \Mockery::mock(Country::class);
+        $repository->shouldReceive('get')
+            ->with($country_id)
+            ->once()
+            ->andReturn([
+                'name'  => 'Canada',
+                'id'    => $country_id
+            ]);
+
+        // load the mock into the IoC container
+        $this->app->instance(Country::class, $repository);
 
     }
 

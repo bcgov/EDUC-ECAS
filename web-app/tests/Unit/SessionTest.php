@@ -31,6 +31,9 @@ class SessionTest extends BaseMigrations
                     'educ_locationname'             => 'Langley Secondary School',
                     'educ_locationaddress'          => '1234 Walnut Street',
                     'educ_locationcity'             => 'Langley',
+                    'statecode'                     => 1,
+                    'statuscode'                    => 1,
+                    'educ_publishsession'           => True
                 ],
                 (object) [
                     'educ_sessionid'                => '84462934-ac72-e911-b80a-005056833c5b',
@@ -41,6 +44,9 @@ class SessionTest extends BaseMigrations
                     'educ_locationname'             => 'Burnaby Secondary School',
                     'educ_locationaddress'          => '1234 Burnaby Street',
                     'educ_locationcity'             => 'Burnaby',
+                    'statecode'                     => 1,
+                    'statuscode'                    => 1,
+                    'educ_publishsession'           => True
                 ]
             ]
             ])),

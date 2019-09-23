@@ -30,6 +30,7 @@ class ProfileTest extends BaseMigrations
                 (object)[
                     'contactid' => '6b3566c2-3ba3-e911-b80c-005056833c5b',
                     'educ_federatedid' => '6b3566c2-3ba3-e911-b80c',
+                    'educ_federatedusername' => 'example_bceid',
                     'educ_preferredfirstname' => 'Vic',
                     'firstname' => 'Victor',
                     'lastname' => 'Dantas',
@@ -40,9 +41,10 @@ class ProfileTest extends BaseMigrations
                     'address1_line2' => '',
                     'address1_city' => 'Calgary',
                     'address1_stateorprovince' => 'AB',
+                    '_educ_countryid_value'  => 'aaaa-bbbb-cccc-dddd',
                     'address1_postalcode' => 'V8R4N4',
                     '_educ_district_value' => '8ca7af66-b06a-e911-b80a-005056833c5b',
-                    'educ_currentschool' => '8585001',
+                    '_educ_currentschoold_value' => '8585001',
                     'educ_professionalcertificatebc' => 'AB1235',
                     'educ_professionalcertificateyk' => 'XX2345',
                     'educ_professionalcertificateother' => 'BC5556678',
@@ -53,6 +55,7 @@ class ProfileTest extends BaseMigrations
                 (object)[
                     'contactid' => '6b3566c2-3ba3-e911-b80c-005056833c5b',
                     'educ_federatedid' => '6b3566c2-3ba3-e911-b80c',
+                    'educ_federatedusername' => 'example_bceid',
                     'educ_preferredfirstname' => 'Vic',
                     'firstname' => 'Victor',
                     'lastname' => 'Dantas',
@@ -63,9 +66,10 @@ class ProfileTest extends BaseMigrations
                     'address1_line2' => '',
                     'address1_city' => 'Calgary',
                     'address1_stateorprovince' => 'AB',
+                    '_educ_countryid_value'  => 'aaaa-bbbb-cccc-dddd',
                     'address1_postalcode' => 'V8R4N4',
                     '_educ_district_value' => '8ca7af66-b06a-e911-b80a-005056833c5b',
-                    'educ_currentschool' => '8585001',
+                    '_educ_currentschoold_value' => '8585001',
                     'educ_professionalcertificatebc' => 'AB1235',
                     'educ_professionalcertificateyk' => 'XX2345',
                     'educ_professionalcertificateother' => 'BC5556678',
@@ -81,6 +85,7 @@ class ProfileTest extends BaseMigrations
 
     }
 
+    /** @test */
     public function filter_for_a_single_profile_via_the_api()
     {
 

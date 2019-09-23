@@ -26,12 +26,12 @@ class SchoolTest extends BaseMigrations
         $mock = new MockHandler([
             new Response(200, [], json_encode([ 'value' => [
                 (object) [
-                        'educ_schoolcode'   => '2345678',
+                        'educ_schoollistid'   => '2345678',
                         'educ_name'         => 'Collingwood School',
                         'educ_schoolcity'   => 'West Vancouver',
                     ],
                 (object) [
-                        'educ_schoolcode'   => '2345698',
+                        'educ_schoollistid'   => '2345698',
                         'educ_name'         => 'Collingwood School',
                         'educ_schoolcity'   => 'West Vancouver',
                     ]
