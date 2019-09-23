@@ -17,7 +17,7 @@
 </head>
 <body class="d-flex flex-column h-100">
     <main class="flex-shrink-0">
-        <div class="row bg-primary">
+        <div class="row bg-primary pt-2">
             <div class="col offset-1">
                 <img src="/logo-banner.svg" height="80px">
             </div>
