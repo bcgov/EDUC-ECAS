@@ -30,10 +30,6 @@ class PostalCodeRule implements Rule
     public function passes($attribute, $value)
     {
 
-        // A postal code is required
-        if (! $value) {
-            return false;
-        }
 
         // A Canadian postal code is required for Canadian addresses
         if ($this->country == 'Canada') {

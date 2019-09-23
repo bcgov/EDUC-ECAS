@@ -25,16 +25,11 @@ class SocialInsuranceNumberRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        $noSpaces = preg_replace('/\s+/', '', $value);
 
-        if(empty($value)) {
-            // field not required
-            return true;
-        }
-
-        return $this->isValidSin($noSpaces) AND $this->is_valid_luhn($noSpaces);
+        return $this->is_valid_luhn($value);
 
     }
+
 
     /**
      * Get the validation error message.
@@ -47,20 +42,9 @@ class SocialInsuranceNumberRule implements Rule
     }
 
 
-    private function isValidSin(String $num)
-    {
-
-        if( ! preg_match('/^\d{9}$/', $num)) {
-            return false;
-        }
 
 
-        return true;
-
-    }
-
-
-    function is_valid_luhn(string $number)
+    private function is_valid_luhn(string $number)
     {
         $sum = 0;
         $flag = 0;

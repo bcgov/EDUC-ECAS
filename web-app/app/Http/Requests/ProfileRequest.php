@@ -44,20 +44,23 @@ class ProfileRequest extends FormRequest
         ]);
 
 
-        // Sanitize phone numbers, remove everything that isn't a number
-        $sanitize_to_integer = ['phone'];
-        foreach ($sanitize_to_integer as $field) {
-            $request[$field] = preg_replace('/[^0-9.]/', '', $input[$field]);
+        if (isset($input['social_insurance_number'])) {
+            $input['social_insurance_number'] = preg_replace('/[^0-9.]/', '', $input['social_insurance_number']);
         }
 
+
+        // Sanitize phone number, remove everything that isn't a number
+        $input['phone'] = preg_replace('/[^0-9.]/', '', $input['phone']);
+
+
         // Populate 'school_id'
-        if ( $input['school']['id']) {
+        if ( isset($input['school']['id'])) {
             $input['school_id'] = $input['school']['id'];
             unset($input['school']);
         }
 
         // Populate 'district_id'
-        if ( $input['district']['id']) {
+        if ( isset($input['district']['id'])) {
             $input['district_id'] = $input['district']['id'];
             unset($input['district']);
         }
@@ -96,20 +99,20 @@ class ProfileRequest extends FormRequest
 
         
         return [
-            'preferred_first_name'          => 'nullable',
-            'first_name'                    => 'required',
-            'last_name'                     => 'required',
+            'preferred_first_name'          => 'nullable|string|max:50',
+            'first_name'                    => 'required|string|max:50',
+            'last_name'                     => 'required|string|max:50',
             'email'                         => 'required|email',
-            'phone'                         => 'required',
-            'address_1'                     => 'required',
-            'address_2'                     => 'nullable',
-            'city'                          => 'required',
+            'phone'                         => 'required|numeric|digits_between:10,50',
+            'address_1'                     => 'required|string|max:200',
+            'address_2'                     => 'nullable|string|max:200',
+            'city'                          => 'required|string|max:80',
             'region'                        => 'required|alpha|size:2',
-            'country_id'                    => 'required',
-            'school_id'                     => 'nullable',
-            'district_id'                   => 'nullable',
-            'postal_code'                   => [ new PostalCodeRule($input['country']['name']) ],
-            'social_insurance_number'       => [ 'nullable', new SocialInsuranceNumberRule() ],
+            'country_id'                    => 'required|string|max:50',
+            'school_id'                     => 'nullable|string|max:50',
+            'district_id'                   => 'nullable|string|max:50',
+            'postal_code'                   => [ 'required' , 'string' , 'max:20' , new PostalCodeRule($input['country']['name']) ],
+            'social_insurance_number'       => [ 'nullable', 'numeric' , 'digits:9' , new SocialInsuranceNumberRule() ],
             'professional_certificate_bc'   => 'nullable|in:Yes,No',
             'professional_certificate_yk'   => 'nullable|in:Yes,No'
         ];
