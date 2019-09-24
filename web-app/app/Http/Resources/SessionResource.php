@@ -6,7 +6,6 @@ namespace App\Http\Resources;
 use App\Dynamics\Session;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
-use phpDocumentor\Reflection\Types\Boolean;
 
 
 class SessionResource extends JsonResource
