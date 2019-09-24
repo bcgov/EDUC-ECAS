@@ -103,7 +103,7 @@ class ProfileRequest extends FormRequest
             'first_name'                    => 'required|string|max:50',
             'last_name'                     => 'required|string|max:50',
             'email'                         => 'required|email',
-            'phone'                         => 'required|numeric|digits_between:10,50',
+            'phone'                         => 'required|numeric|digits:10',
             'address_1'                     => 'required|string|max:200',
             'address_2'                     => 'nullable|string|max:200',
             'city'                          => 'required|string|max:80',
