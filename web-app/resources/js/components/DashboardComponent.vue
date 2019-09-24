@@ -21,8 +21,10 @@
                                 </h2>
                             </div>
                             <div class="card-body">
-                                <p v-show="!new_user">{{ getUser.email }}<br/>
+                                <p v-show="!new_user">
+                                    {{ getUser.email }}<br/>
                                     {{ getUser.address_1 }}<br/>
+                                    <span v-if="getUser.address_2">{{ getUser.address_2 }}<br /></span>
                                     {{ getUser.city }}, <span v-if="mounted">{{ getUser.region.id }}</span> {{ getUser.postal_code }}
                                 </p>
                                 <p v-if="getUser.professional_certificate_bc === 'Yes'">
