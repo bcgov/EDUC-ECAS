@@ -178,8 +178,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        // Placed dusk in "do not discover" list in composer to fix OpenShift issue, load it specifically here
-        Laravel\Dusk\DuskServiceProvider::class
 
     ],
 
