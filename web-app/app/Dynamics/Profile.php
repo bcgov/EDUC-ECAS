@@ -60,22 +60,9 @@ class Profile extends DynamicsRepository implements iModelRepository
             return [
                 'id'                             => null,
                 'federated_id'                   => $federated_id,
-                'preferred_first_name'           => null,
                 'first_name'                     => $data['first_name'],
                 'last_name'                      => $data['last_name'],
                 'email'                          => $data['email'],
-                'phone'                          => null,
-                'social_insurance_number'        => null,
-                'address_1'                      => null,
-                'address_2'                      => null,
-                'city'                           => null,
-                'region'                         => 'BC',
-                'country_id'                     => Country::CANADA,
-                'postal_code'                    => null,
-                'district_id'                    => null,
-                'school_id'                      => null,
-                'professional_certificate_bc'    => null,
-                'professional_certificate_yk'    => null,
             ];
 
         }

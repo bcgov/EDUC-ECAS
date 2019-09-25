@@ -18,6 +18,7 @@ use App\Dynamics\Interfaces\iSubject;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AssignmentResource;
 use App\Http\Resources\ProfileCredentialResource;
+use App\Http\Resources\ProfileNewResource;
 use App\Http\Resources\ProfileResource;
 use App\Http\Resources\SessionResource;
 use App\Http\Resources\SimpleResource;
@@ -158,7 +159,8 @@ class DashboardSetupController extends Controller
         });
 
         return [
-            'user'                  => new ProfileResource($profile, $this->school, $this->district, $this->region, $this->country ),
+            'user'                  => $profile['id'] ? new ProfileResource($profile, $this->school, $this->district, $this->region, $this->country ) :
+                new ProfileNewResource($profile, $this->region, $this->country ),
             'user_credentials'      => ProfileCredentialResource::collection($modified_profile_credentials),
             'sessions'              => SessionResource::collection($sessions_with_assignments),
             'subjects'              => SimpleResource::collection($this->subject->all()),

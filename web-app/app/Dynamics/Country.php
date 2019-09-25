@@ -12,7 +12,6 @@ use App\Dynamics\Interfaces\iModelRepository;
 
 class Country extends DynamicsRepository implements iModelRepository
 {
-    const CANADA = 'dce72c48-af6a-e911-b80a-005056833c5b';
 
     public static $table = 'educ_countrycodes';
 
