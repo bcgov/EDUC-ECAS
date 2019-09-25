@@ -58,6 +58,7 @@ class Profile extends DynamicsRepository implements iModelRepository
         if (count($existing) == 0) {
 
             return [
+                'id'                             => null,
                 'federated_id'                   => $federated_id,
                 'preferred_first_name'           => null,
                 'first_name'                     => $data['first_name'],
