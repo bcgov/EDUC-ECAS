@@ -16,8 +16,6 @@ class District extends DynamicsRepository implements iModelRepository
 
     public static $primary_key = 'educ_districtcodeid';
 
-    public static $cache = 480; // 8 Hours
-
     public static $data_bind = 'educ_District';
 
     public static $filter_quote = '\'';

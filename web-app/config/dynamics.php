@@ -10,6 +10,10 @@ return [
         ]
     ],
 
+    'cache' => [
+        'seconds' => env('CACHE_DURATION_SECONDS', 28800)
+    ]
+
 
 
 ];

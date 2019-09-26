@@ -42,20 +42,21 @@ class CacheDecorator implements
                                 iSubject
 
 {
-    
-    const CACHE_DURATION = 28800; // 8 hours in seconds
+
     protected $model;
+    protected $duration;
 
  
     public function __construct(iModelRepository $model)
     {
         $this->model = $model;
+        $this->duration = config('dynamics.cache.seconds');
     }
 
 
     public function all()
     {
-        return Cache::remember($this->cacheKey(),self::CACHE_DURATION , function ()
+        return Cache::remember($this->cacheKey(),$this->duration , function ()
         {
             return $this->model->all();
         });
@@ -63,7 +64,7 @@ class CacheDecorator implements
 
     public function get($id)
     {
-        return Cache::remember(self::cacheKey($id),self::CACHE_DURATION , function () use($id) {
+        return Cache::remember(self::cacheKey($id),$this->duration , function () use($id) {
             return $this->model->get($id);
         });
     }
@@ -99,7 +100,7 @@ class CacheDecorator implements
         Cache::forget(self::cacheKey($id));
         Cache::forget($this->cacheKey());
 
-        return Cache::remember(self::cacheKey($id),self::CACHE_DURATION , function () use($id, $data) {
+        return Cache::remember(self::cacheKey($id),$this->duration , function () use($id, $data) {
             return $this->model->update($id, $data);
         });
 
@@ -114,12 +115,6 @@ class CacheDecorator implements
         return $this->model->delete($id);
     }
 
-    public function prebuildCache()
-    {
-
-        // TODO -
-
-    }
 
     private function cacheKey($id = null)
     {

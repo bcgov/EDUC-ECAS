@@ -58,10 +58,6 @@ class RepositoryServiceProvider extends ServiceProvider
             return new CacheDecorator($app->make(Assignment::class));
         });
 
-        $this->app->bind(iAssignmentStatus::class, function ($app) {
-            return new CacheDecorator($app->make(AssignmentStatus::class));
-        });
-
         $this->app->bind(iSession::class, function ($app) {
             return new CacheDecorator($app->make(Session::class));
         });

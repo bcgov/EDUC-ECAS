@@ -32,7 +32,6 @@ class Session extends DynamicsRepository implements iModelRepository
     // The session history is further restricted in Vue
     public static $max_history_months = 16;
 
-    public static $cache = 480; // 8 Hours
 
     public static $fields = [
         'id'            => 'educ_sessionid',
@@ -52,6 +51,7 @@ class Session extends DynamicsRepository implements iModelRepository
 
     public function all()
     {
+
 
         // The number of sessions listed in Dynamics is expected to grow over time.  Since the Dynamics API
         // will only return a maximum of 50 records we restricted the number of sessions by session end_date

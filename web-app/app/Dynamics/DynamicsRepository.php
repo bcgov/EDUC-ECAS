@@ -70,8 +70,6 @@ abstract class DynamicsRepository
     public static $filter_quote = '';
 
 
-    public static $cache = 0;   // cache duration in minutes
-
 
     public function __construct(ClientInterface $guzzle_client)
     {

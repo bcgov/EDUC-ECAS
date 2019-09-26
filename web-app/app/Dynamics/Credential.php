@@ -18,8 +18,6 @@ class Credential extends DynamicsRepository implements iModelRepository
 
     public static $data_bind = 'educ_Credential';
 
-    public static $cache = 480; // 8 Hours
-
     public static $fields = [
         'id'   => 'educ_credentialcodeid',
         'name' => 'educ_name'

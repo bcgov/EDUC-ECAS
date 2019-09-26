@@ -17,8 +17,6 @@ class Country extends DynamicsRepository implements iModelRepository
 
     public static $primary_key = 'educ_countrycodeid';
 
-    public static $cache = 480; // 8 Hours
-
     public static $data_bind = 'educ_Countryid';
 
 

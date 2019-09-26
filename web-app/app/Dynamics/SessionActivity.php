@@ -16,8 +16,6 @@ class SessionActivity extends DynamicsRepository implements iModelRepository
 
     public static $primary_key = 'educ_sessionactivitycodeid';
 
-    public static $cache = 480; // 8 Hours
-
     public static $fields = [
         'id'   => 'educ_sessionactivitycodeid',
         'code' => 'educ_sessionactivitycode',

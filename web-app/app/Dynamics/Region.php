@@ -16,8 +16,6 @@ class Region extends DynamicsRepository implements iModelRepository
 
     public static $primary_key = 'educ_provincestatecode';
 
-    public static $cache = 480; // 8 Hours
-
     public static $filter_quote = '\'';
 
     public static $fields = [

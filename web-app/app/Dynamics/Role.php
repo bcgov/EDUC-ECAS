@@ -18,8 +18,6 @@ class Role extends DynamicsRepository implements iModelRepository
 
     public static $data_bind = 'educ_Role';
 
-    public static $cache = 480; // 8 Hours
-
     public static $fields = [
         'id'   => 'educ_rolecodeid',
         'name' => 'educ_name',
