@@ -105,15 +105,33 @@
                 })
             },
 
+            replaceSelected() {
+
+                // The Ministry business rules require that 'Selected" assignments are
+                // displayed as 'Applied'
+
+                let sanitized = [];
+
+                this.publicSessions.forEach( function (session) {
+                     if(session.assignment.status.name === 'Selected') {
+                        session.assignment.status.name = "Applied"
+                     }
+
+                     sanitized.push(session);
+                });
+
+                return sanitized;
+            },
+
 
             dateFilteredSessions() {
 
                 if(this.showPastSessions) {
                     // display all sessions
-                    return this.publicSessions;
+                    return this.replaceSelected;
                 }
 
-                return this.publicSessions.filter( function (session) {
+                return this.replaceSelected.filter( function (session) {
 
                     return ! session.isPast;
 
