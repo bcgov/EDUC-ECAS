@@ -80,7 +80,7 @@ class ProfileController extends Controller
 
         $data                   = $request->validated();
         $data['federated_id']   = $user['sub'];
-        $data['username']       = $user['preferred_username'];
+        $data['username']       = $this->removeSuffix($user['preferred_username']);
 
         $new_model_id = $this->profile->create($data);
 
@@ -109,7 +109,7 @@ class ProfileController extends Controller
 
         $data                   = $request->validated();
         $data['federated_id']   = $profile['federated_id'];
-        $data['username']       = $user['preferred_username'];
+        $data['username']       = $this->removeSuffix($user['preferred_username']);
 
 
         $profile = $this->profile->update($profile['id'], $data);
@@ -121,6 +121,13 @@ class ProfileController extends Controller
     public function destroy($id)
     {
         abort(404, 'method not available');
+
+    }
+
+    private function removeSuffix($username)
+    {
+        // remove `@bceid` from user names
+        return explode('@bceid', $username)[0];
 
     }
 
