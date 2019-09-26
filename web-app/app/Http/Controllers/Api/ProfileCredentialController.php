@@ -10,6 +10,7 @@ use App\Dynamics\ProfileCredential;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProfileCredentialResource;
 use App\Keycloak\KeycloakGuard;
+use App\Rules\ValidProfileCredential;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
@@ -69,7 +70,7 @@ class ProfileCredentialController extends Controller
     /*
  * Attach a credential to a User
  */
-    public function store(Request $request, $profile_id )
+    public function store($profile_id , Request $request)
     {
 
         $user_id = $this->authentication->id();
@@ -83,7 +84,7 @@ class ProfileCredentialController extends Controller
 
 
         $this->validate($request, [
-            'credential_id' => 'required',
+            'credential_id' => [ 'required','string','max:50', new ValidProfileCredential($this->credential) ],
         ]);
 
 
@@ -100,7 +101,7 @@ class ProfileCredentialController extends Controller
         return new ProfileCredentialResource($new_record);
     }
 
-    public function destroy(Request $request, $profile_id, $id)
+    public function destroy($profile_id, $id)
     {
 
         $user_id = $this->authentication->id();

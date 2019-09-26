@@ -16,8 +16,6 @@ class ProfileCredential extends DynamicsRepository implements iModelRepository
 
     public static $primary_key = 'educ_credentialid';
 
-    public static $cache = 0; // Do Not Cache
-
     public static $fields = [
         'id'            => 'educ_credentialid',
         'contact_id'    => '_educ_contact_value',
