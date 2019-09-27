@@ -28,7 +28,7 @@ class Session extends DynamicsRepository implements iModelRepository
 
     public static $data_bind = 'educ_Session';
 
-    // The number of years of session history that should be shown to the user.
+    // The number of months of session history that should be shown to the user.
     // The session history is further restricted in Vue
     public static $max_history_months = 16;
 
@@ -54,7 +54,7 @@ class Session extends DynamicsRepository implements iModelRepository
 
 
         // The number of sessions listed in Dynamics is expected to grow over time.  Since the Dynamics API
-        // will only return a maximum of 50 records we restricted the number of sessions by session end_date
+        // will only return a maximum of 50 records we restricted the number of sessions by session start_date
 
         $oldest_date_shown = (date_modify(new \DateTime(), '-'. self::$max_history_months . ' months'))->format('Y-m-d');
 
