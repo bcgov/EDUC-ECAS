@@ -7,8 +7,7 @@ RewriteRule ^(.*)$ index.php/$1 [L]
 RewriteCond %{HTTP:Authorization} ^(.*)
 RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
 
-## REMOVE BEFORE PRODUCTION DEVELOPMENT
-#AuthType Basic
-#AuthName "Restricted access"
-#AuthUserFile /opt/app-root/src/.htpasswd
-#require valid-user
+
+<IfModule mod_headers.c>
+	Header always append X-Frame-Options SAMEORIGIN
+</IfModule>
