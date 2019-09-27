@@ -19,6 +19,8 @@ class Assignment extends DynamicsRepository implements iModelRepository
     const OPEN_STATUS       = 'Open';
     const APPLIED_STATUS    = 'Applied';
     const ACCEPTED_STATUS   = 'Accepted';
+    const SELECTED_STATUS   = 'Selected';
+    const INVITED_STATUS    = 'Invited';
     const DECLINED_STATUS   = 'Declined';
     const WITHDREW_STATUS   = 'Withdrew';
 
