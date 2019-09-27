@@ -13,8 +13,8 @@
         <EntityName>contact</EntityName>
         <AttributeName>educ_federatedid</AttributeName>
         <CanRead>4</CanRead>
-        <CanUpdate>0</CanUpdate>
-        <CanCreate>0</CanCreate>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
       </FieldPermission>
     </FieldPermissions>
   </FieldSecurityProfile>

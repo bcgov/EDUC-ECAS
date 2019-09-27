@@ -60,11 +60,11 @@
                       </cell>
                     </row>
                     <row>
-                      <cell id="{a12bee50-5973-911a-eb22-01e61a3375d7}" locklevel="0" showlabel="true">
+                      <cell id="{95619c25-2014-cc77-1233-3ee7e7c89e3a}" showlabel="true" locklevel="0">
                         <labels>
                           <label description="Current School" languagecode="1033" />
                         </labels>
-                        <control disabled="false" id="educ_currentschool" datafieldname="educ_currentschool" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+                        <control id="educ_currentschoold" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="educ_currentschoold" disabled="false" />
                       </cell>
                     </row>
                   </rows>

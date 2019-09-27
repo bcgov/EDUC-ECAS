@@ -38,7 +38,7 @@
           <Type>nvarchar</Type>
           <Name>address1_country</Name>
           <LogicalName>address1_country</LogicalName>
-          <RequiredLevel>required</RequiredLevel>
+          <RequiredLevel>none</RequiredLevel>
           <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
           <ImeMode>active</ImeMode>
           <ValidForUpdateApi>1</ValidForUpdateApi>
@@ -214,6 +214,40 @@
             <Description description="Type the main phone number associated with the primary address." languagecode="1033" />
           </Descriptions>
         </attribute>
+        <attribute PhysicalName="educ_Countryid">
+          <Type>lookup</Type>
+          <Name>educ_countryid</Name>
+          <LogicalName>educ_countryid</LogicalName>
+          <RequiredLevel>required</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>0.0.1.9</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <LookupStyle>single</LookupStyle>
+          <LookupTypes />
+          <displaynames>
+            <displayname description="Country" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
+        </attribute>
         <attribute PhysicalName="educ_CurrentSchool">
           <Type>nvarchar</Type>
           <Name>educ_currentschool</Name>
@@ -243,6 +277,40 @@
           <Format>text</Format>
           <MaxLength>100</MaxLength>
           <Length>200</Length>
+          <displaynames>
+            <displayname description="zz_Current School" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="educ_CurrentSchoold">
+          <Type>lookup</Type>
+          <Name>educ_currentschoold</Name>
+          <LogicalName>educ_currentschoold</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>0.0.1.9</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <LookupStyle>single</LookupStyle>
+          <LookupTypes />
           <displaynames>
             <displayname description="Current School" languagecode="1033" />
           </displaynames>
@@ -319,6 +387,41 @@
           </displaynames>
           <Descriptions>
             <Description description="" languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="educ_FederatedUserName">
+          <Type>nvarchar</Type>
+          <Name>educ_federatedusername</Name>
+          <LogicalName>educ_federatedusername</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>0.0.1.9</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <Format>text</Format>
+          <MaxLength>100</MaxLength>
+          <Length>200</Length>
+          <displaynames>
+            <displayname description="Federated User Name" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="The username of the Contacts BCeID account" languagecode="1033" />
           </Descriptions>
         </attribute>
         <attribute PhysicalName="educ_IncompleteSessions">
@@ -417,7 +520,7 @@
           <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
           <IsDataSourceSecret>0</IsDataSourceSecret>
           <AutoNumberFormat></AutoNumberFormat>
-          <AppDefaultValue>-1</AppDefaultValue>
+          <AppDefaultValue>610410000</AppDefaultValue>
           <optionset Name="educ_contact_educ_methodofpayment">
             <OptionSetType>picklist</OptionSetType>
             <IntroducedVersion>0.0.0.1</IntroducedVersion>
@@ -585,7 +688,7 @@
           <MaxLength>20</MaxLength>
           <Length>40</Length>
           <displaynames>
-            <displayname description="Professional Certificate Other" languagecode="1033" />
+            <displayname description="zz_Professional Certificate Other" languagecode="1033" />
           </displaynames>
           <Descriptions>
             <Description description="" languagecode="1033" />
@@ -620,7 +723,7 @@
           <AppDefaultValue>-1</AppDefaultValue>
           <OptionSetName>educ_ayesornonullable</OptionSetName>
           <displaynames>
-            <displayname description="Professional Certificate Other Verified" languagecode="1033" />
+            <displayname description="zz_Professional Certificate Other Verified" languagecode="1033" />
           </displaynames>
           <Descriptions>
             <Description description="" languagecode="1033" />

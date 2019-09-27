@@ -6,7 +6,7 @@
       <LocalizedName description="ECAS Processes" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>0.0.0.7</Version>
+    <Version>0.0.0.8</Version>
     <Managed>2</Managed>
     <Publisher>
       <UniqueName>quartech</UniqueName>
@@ -632,11 +632,11 @@
         <Dependent key="1" type="29" displayName="Assignment: Copy Rate from Role" id="{2e12d76e-cbc5-43a3-9f2b-0f2ce0218a3b}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="79" type="2" schemaName="educ_professionalcertificateother" displayName="Professional Certificate Other" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" />
+        <Required key="79" type="2" schemaName="educ_professionalcertificateother" displayName="zz_Professional Certificate Other" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" />
         <Dependent key="80" type="29" displayName="Contact : Reset Professional Certificate Other Verification Flag" id="{a32cc484-e493-e911-b80c-005056833c5b}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="81" type="2" schemaName="educ_professionalcertificateotherverified" displayName="Professional Certificate Other Verified" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" />
+        <Required key="81" type="2" schemaName="educ_professionalcertificateotherverified" displayName="zz_Professional Certificate Other Verified" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" />
         <Dependent key="80" type="29" displayName="Contact : Reset Professional Certificate Other Verification Flag" id="{a32cc484-e493-e911-b80c-005056833c5b}" />
       </MissingDependency>
       <MissingDependency>

@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Ecas.Dyn365.CAS.ScheduledJob" GeneratedClassName="Environment">
+  <Profiles />
+  <Settings>
+    <Setting Name="WebApiUri" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost:9999/</Value>
+    </Setting>
+    <Setting Name="UserName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Password" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Workflow WorkflowId="{a52c7034-26de-e911-b80e-005056833c5b}" Name="ToC Duration validation based on ToC value" Description="If ToC = Yes then ToC duration is required. If ToC = No then ToC duration must be null and not required">
+  <XamlFileName>/Workflows/ToCDurationvalidationbasedonToCvalue-A52C7034-26DE-E911-B80E-005056833C5B.xaml</XamlFileName>
+  <Type>1</Type>
+  <Subprocess>0</Subprocess>
+  <Category>2</Category>
+  <Mode>1</Mode>
+  <Scope>4</Scope>
+  <OnDemand>0</OnDemand>
+  <TriggerOnCreate>0</TriggerOnCreate>
+  <TriggerOnDelete>0</TriggerOnDelete>
+  <AsyncAutodelete>0</AsyncAutodelete>
+  <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+  <StateCode>1</StateCode>
+  <StatusCode>2</StatusCode>
+  <RunAs>1</RunAs>
+  <IsTransacted>1</IsTransacted>
+  <IntroducedVersion>0.0.1.9</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <BusinessProcessType>0</BusinessProcessType>
+  <PrimaryEntity>educ_assignment</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName languagecode="1033" description="ToC Duration validation based on ToC value" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description languagecode="1033" description="If ToC = Yes then ToC duration is required. If ToC = No then ToC duration must be null and not required" />
+  </Descriptions>
+  <labels>
+    <steplabels id="{ab5ab4da-fb28-4b41-860d-8593dedd1676}">
+      <label languagecode="1033" description="ToC Duration cannot have a value if ToC is No as it will not be included in the Fee calculation" />
+    </steplabels>
+  </labels>
+  <ProcessTriggers>
+    <ProcessTrigger processtriggerid="{b42c7034-26de-e911-b80e-005056833c5b}">
+      <controltype>1</controltype>
+      <scope>1</scope>
+      <controlname>educ_toc</controlname>
+      <event>change</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_assignment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{b52c7034-26de-e911-b80e-005056833c5b}">
+      <scope>1</scope>
+      <event>load</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_assignment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{b62c7034-26de-e911-b80e-005056833c5b}">
+      <controltype>1</controltype>
+      <scope>1</scope>
+      <controlname>educ_tocduration</controlname>
+      <event>change</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_assignment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{b72c7034-26de-e911-b80e-005056833c5b}">
+      <scope>1</scope>
+      <event>load</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_assignment</primaryentitytypecode>
+    </ProcessTrigger>
+  </ProcessTriggers>
+</Workflow>

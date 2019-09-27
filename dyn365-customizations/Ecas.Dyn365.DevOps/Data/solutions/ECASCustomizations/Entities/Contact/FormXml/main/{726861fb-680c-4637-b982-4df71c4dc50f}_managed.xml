@@ -98,11 +98,20 @@
                       </cell>
                     </row>
                     <row>
-                      <cell id="{78d21b96-8234-b341-69ea-e58cec78b0e3}" showlabel="true" locklevel="0">
+                      <cell id="{74513668-de48-e268-c730-dbb83ac7448a}" showlabel="true" locklevel="0">
                         <labels>
                           <label description="" languagecode="1033" />
                         </labels>
-                        <control disabled="false" id="educ_currentschool" datafieldname="educ_currentschool" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" uniqueid="{53e4c40e-c910-9a86-7069-d2b551650397}" />
+                        <control id="educ_currentschoold" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="educ_currentschoold" disabled="false" uniqueid="{1676935e-da03-b5ad-54c2-c3e868068442}">
+                          <parameters>
+                            <AutoResolve>true</AutoResolve>
+                            <DisableMru>true</DisableMru>
+                            <DisableQuickFind>true</DisableQuickFind>
+                            <DisableViewPicker>true</DisableViewPicker>
+                            <DefaultViewId>{53A24123-4184-4C6F-BE4B-EF9DB16F7228}</DefaultViewId>
+                            <AllowFilterOff>false</AllowFilterOff>
+                          </parameters>
+                        </control>
                       </cell>
                     </row>
                     <row>
@@ -135,22 +144,6 @@
                           <label description="" languagecode="1033" />
                         </labels>
                         <control disabled="false" id="educ_professionalcertificateykverified" datafieldname="educ_professionalcertificateykverified" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" />
-                      </cell>
-                    </row>
-                    <row>
-                      <cell id="{e28b97d4-7882-c901-ba3e-56a3987851b2}" showlabel="true" locklevel="0">
-                        <labels>
-                          <label description="" languagecode="1033" />
-                        </labels>
-                        <control disabled="false" id="educ_professionalcertificateother" datafieldname="educ_professionalcertificateother" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
-                      </cell>
-                    </row>
-                    <row>
-                      <cell id="{e95087da-ed76-2927-d270-28ea5e290711}" showlabel="true" locklevel="0">
-                        <labels>
-                          <label description="" languagecode="1033" />
-                        </labels>
-                        <control disabled="false" id="educ_professionalcertificateotherverified" datafieldname="educ_professionalcertificateotherverified" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" />
                       </cell>
                     </row>
                   </rows>
@@ -197,11 +190,20 @@
                       </cell>
                     </row>
                     <row>
-                      <cell id="{9c003313-b641-413b-9333-621a77ac22e3}" showlabel="true" locklevel="0">
+                      <cell id="{d7015035-e957-7bad-1eac-7abc48047272}" showlabel="true" locklevel="0">
                         <labels>
-                          <label description="Country" languagecode="1033" />
+                          <label description="" languagecode="1033" />
                         </labels>
-                        <control disabled="false" id="address1_country" datafieldname="address1_country" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" uniqueid="{7a0add62-2121-20d3-8840-95483b4a6843}" />
+                        <control id="educ_countryid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="educ_countryid" disabled="false" uniqueid="{4578cd2b-a218-835b-a663-8135b7ec5e26}">
+                          <parameters>
+                            <AutoResolve>true</AutoResolve>
+                            <DisableMru>true</DisableMru>
+                            <DisableQuickFind>true</DisableQuickFind>
+                            <DisableViewPicker>true</DisableViewPicker>
+                            <DefaultViewId>{FEDCA53A-7C22-4D77-B5E2-73FC105F1198}</DefaultViewId>
+                            <AllowFilterOff>false</AllowFilterOff>
+                          </parameters>
+                        </control>
                       </cell>
                     </row>
                     <row>
@@ -251,13 +253,26 @@
                   </labels>
                   <rows>
                     <row>
+                      <cell id="{d84dead6-399b-582b-7b47-d60d40dcc45a}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="educ_federatedusername" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_federatedusername" disabled="false" />
+                      </cell>
+                      <cell id="{c84e6421-4073-bc77-c439-73285dd89041}" showlabel="false">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                      </cell>
+                    </row>
+                    <row>
                       <cell id="{3e570e4b-2224-0a10-590a-76de808b1be1}" showlabel="true" locklevel="0">
                         <labels>
                           <label description="" languagecode="1033" />
                         </labels>
                         <control disabled="false" id="educ_federatedid" datafieldname="educ_federatedid" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
                       </cell>
-                      <cell id="{c84e6421-4073-bc77-c439-73285dd89041}" showlabel="false">
+                      <cell id="{ed95d395-d6ab-a0a2-5dcd-9640b90a9078}" showlabel="false">
                         <labels>
                           <label description="" languagecode="1033" />
                         </labels>
@@ -1181,92 +1196,6 @@
                 <IsUserView>false</IsUserView>
                 <TargetEntityType>educ_provincestatecode</TargetEntityType>
                 <displayValue>educ_provincestatecode</displayValue>
-              </data-set>
-            </parameters>
-          </customControl>
-        </controlDescription>
-        <controlDescription forControl="{7a0add62-2121-20d3-8840-95483b4a6843}">
-          <customControl id="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}">
-            <parameters>
-              <datafieldname>address1_country</datafieldname>
-            </parameters>
-          </customControl>
-          <customControl formFactor="0" name="MscrmControls.AutoComplete.AutoCompleteControl">
-            <parameters>
-              <value>address1_country</value>
-              <dataSourceSwitch isGroup="true" static="true">DataSetGroup</dataSourceSwitch>
-              <data-set name="dynamicSource">
-                <ViewId>{FEDCA53A-7C22-4D77-B5E2-73FC105F1198}</ViewId>
-                <IsUserView>false</IsUserView>
-                <TargetEntityType>educ_countrycode</TargetEntityType>
-                <displayValue>educ_name</displayValue>
-              </data-set>
-            </parameters>
-          </customControl>
-          <customControl formFactor="1" name="MscrmControls.AutoComplete.AutoCompleteControl">
-            <parameters>
-              <value>address1_country</value>
-              <dataSourceSwitch isGroup="true" static="true">DataSetGroup</dataSourceSwitch>
-              <data-set name="dynamicSource">
-                <ViewId>{FEDCA53A-7C22-4D77-B5E2-73FC105F1198}</ViewId>
-                <IsUserView>false</IsUserView>
-                <TargetEntityType>educ_countrycode</TargetEntityType>
-                <displayValue>educ_name</displayValue>
-              </data-set>
-            </parameters>
-          </customControl>
-          <customControl formFactor="2" name="MscrmControls.AutoComplete.AutoCompleteControl">
-            <parameters>
-              <value>address1_country</value>
-              <dataSourceSwitch isGroup="true" static="true">DataSetGroup</dataSourceSwitch>
-              <data-set name="dynamicSource">
-                <ViewId>{FEDCA53A-7C22-4D77-B5E2-73FC105F1198}</ViewId>
-                <IsUserView>false</IsUserView>
-                <TargetEntityType>educ_countrycode</TargetEntityType>
-                <displayValue>educ_name</displayValue>
-              </data-set>
-            </parameters>
-          </customControl>
-        </controlDescription>
-        <controlDescription forControl="{53e4c40e-c910-9a86-7069-d2b551650397}">
-          <customControl id="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}">
-            <parameters>
-              <datafieldname>educ_currentschool</datafieldname>
-            </parameters>
-          </customControl>
-          <customControl formFactor="0" name="MscrmControls.AutoComplete.AutoCompleteControl">
-            <parameters>
-              <value>educ_currentschool</value>
-              <dataSourceSwitch isGroup="true" static="true">DataSetGroup</dataSourceSwitch>
-              <data-set name="dynamicSource">
-                <ViewId>{53A24123-4184-4C6F-BE4B-EF9DB16F7228}</ViewId>
-                <IsUserView>false</IsUserView>
-                <TargetEntityType>educ_schoollist</TargetEntityType>
-                <displayValue>educ_name</displayValue>
-              </data-set>
-            </parameters>
-          </customControl>
-          <customControl formFactor="1" name="MscrmControls.AutoComplete.AutoCompleteControl">
-            <parameters>
-              <value>educ_currentschool</value>
-              <dataSourceSwitch isGroup="true" static="true">DataSetGroup</dataSourceSwitch>
-              <data-set name="dynamicSource">
-                <ViewId>{53A24123-4184-4C6F-BE4B-EF9DB16F7228}</ViewId>
-                <IsUserView>false</IsUserView>
-                <TargetEntityType>educ_schoollist</TargetEntityType>
-                <displayValue>educ_name</displayValue>
-              </data-set>
-            </parameters>
-          </customControl>
-          <customControl formFactor="2" name="MscrmControls.AutoComplete.AutoCompleteControl">
-            <parameters>
-              <value>educ_currentschool</value>
-              <dataSourceSwitch isGroup="true" static="true">DataSetGroup</dataSourceSwitch>
-              <data-set name="dynamicSource">
-                <ViewId>{53A24123-4184-4C6F-BE4B-EF9DB16F7228}</ViewId>
-                <IsUserView>false</IsUserView>
-                <TargetEntityType>educ_schoollist</TargetEntityType>
-                <displayValue>educ_name</displayValue>
               </data-set>
             </parameters>
           </customControl>

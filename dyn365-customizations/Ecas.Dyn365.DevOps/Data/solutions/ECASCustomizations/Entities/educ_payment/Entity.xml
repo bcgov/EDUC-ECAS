@@ -215,6 +215,40 @@
             <Description description="" languagecode="1033" />
           </Descriptions>
         </attribute>
+        <attribute PhysicalName="educ_CASResponse">
+          <Type>ntext</Type>
+          <Name>educ_casresponse</Name>
+          <LogicalName>educ_casresponse</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>0.0.0.1</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <Format></Format>
+          <MaxLength>5000</MaxLength>
+          <displaynames>
+            <displayname description="CAS Response" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
+        </attribute>
         <attribute PhysicalName="educ_name">
           <Type>nvarchar</Type>
           <Name>educ_name</Name>
@@ -796,14 +830,14 @@
                   <label description="Ready" languagecode="1033" />
                 </labels>
               </status>
-              <status value="610410000" state="0" TransitionData="" Color="#0000ff">
-                <labels>
-                  <label description="Processing" languagecode="1033" />
-                </labels>
-              </status>
               <status value="610410001" state="0" TransitionData="" Color="#0000ff">
                 <labels>
                   <label description="Ready for Processing" languagecode="1033" />
+                </labels>
+              </status>
+              <status value="610410000" state="0" TransitionData="" Color="#0000ff">
+                <labels>
+                  <label description="Processing" languagecode="1033" />
                 </labels>
               </status>
               <status value="610410002" state="0" TransitionData="" Color="#0000ff">
@@ -821,9 +855,14 @@
                   <label description="Failed" languagecode="1033" />
                 </labels>
               </status>
+              <status value="610410006" state="0" TransitionData="" Color="#0000ff">
+                <labels>
+                  <label description="Sent to CAS" languagecode="1033" />
+                </labels>
+              </status>
               <status value="610410005" state="0" TransitionData="" Color="#0000ff">
                 <labels>
-                  <label description="Payment Processed" languagecode="1033" />
+                  <label description="Payment Processed by CAS" languagecode="1033" />
                 </labels>
               </status>
               <status value="2" state="1" TransitionData="" Color="#0000ff">

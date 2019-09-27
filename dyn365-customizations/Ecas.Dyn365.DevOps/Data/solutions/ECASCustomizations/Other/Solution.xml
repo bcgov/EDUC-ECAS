@@ -8,7 +8,7 @@
     <Descriptions>
       <Description description="ECAS - All custom entities, fields, forms, views" languagecode="1033" />
     </Descriptions>
-    <Version>0.0.1.9</Version>
+    <Version>0.0.2.0</Version>
     <Managed>2</Managed>
     <Publisher>
       <UniqueName>quartech</UniqueName>
@@ -111,6 +111,7 @@
       <RootComponent type="29" id="{6fac5498-d45f-e911-a982-000d3af47939}" behavior="0" />
       <RootComponent type="29" id="{7b764a59-4e5e-e911-a982-000d3af42a5a}" behavior="0" />
       <RootComponent type="29" id="{a0aa99fd-7868-e911-b80a-005056833c5b}" behavior="0" />
+      <RootComponent type="29" id="{a52c7034-26de-e911-b80e-005056833c5b}" behavior="0" />
       <RootComponent type="29" id="{bff36319-0b5c-e911-a97e-000d3af42a5a}" behavior="0" />
       <RootComponent type="29" id="{e9bb3432-4c5e-e911-a97a-000d3af45d23}" behavior="0" />
       <RootComponent type="36" id="{0d3eb7cb-095e-e911-a97a-000d3af45d23}" behavior="0" />

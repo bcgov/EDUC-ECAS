@@ -15,7 +15,6 @@
           <cell name="educ_preferredfirstname" width="100" />
           <cell name="educ_professionalcertificatebc" width="100" />
           <cell name="educ_professionalcertificateyk" width="100" />
-          <cell name="educ_professionalcertificateother" width="100" />
           <cell name="address1_composite" width="100" disableSorting="1" />
           <cell name="address1_city" width="100" />
           <cell name="emailaddress1" width="100" />
@@ -43,7 +42,6 @@
               </filter>
             </filter>
           </filter>
-          <attribute name="educ_professionalcertificateother" />
           <attribute name="educ_professionalcertificateyk" />
           <attribute name="educ_professionalcertificatebc" />
           <attribute name="educ_preferredfirstname" />
