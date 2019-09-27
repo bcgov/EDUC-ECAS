@@ -3,7 +3,9 @@
 namespace App\Exceptions;
 
 use Exception;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
 
 class Handler extends ExceptionHandler
 {
@@ -13,7 +15,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+//        ClientException::class
     ];
 
     /**
@@ -34,6 +36,11 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
+
+        if ($exception instanceof ClientException) {
+            Log::error($exception->getCode().': '.$exception->getMessage());
+        }
+
         parent::report($exception);
     }
 

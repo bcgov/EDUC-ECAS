@@ -1,0 +1,227 @@
+---
+kind: Template
+apiVersion: v1
+metadata:
+  name: ${NAME}
+objects:
+
+- kind: Secret
+  apiVersion: v1
+  metadata:
+    name: ${NAME}-dynamics-credentials
+    labels:
+      name: ${NAME}
+      app: ${APP_GROUP}
+      app-group: ${APP_GROUP}
+  stringData:
+    username: ${DYNAMICS_USERNAME}
+    password: ${DYNAMICS_PASSWORD}
+    domain: ${DYNAMICS_DOMAIN}
+  type: Opaque
+
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: ${NAME}
+    labels:
+      name: ${NAME}
+      app: ${APP_GROUP}
+      app-group: ${APP_GROUP}
+  spec:
+    ports:
+    - name: ${NAME}
+      port: ${{PORT}}
+      protocol: TCP
+      targetPort: ${{PORT}}
+    selector:
+      name: ${NAME}
+
+- kind: Route
+  apiVersion: v1
+  metadata:
+    name: ${NAME}
+    labels:
+      name: ${NAME}
+      app: ${APP_GROUP}
+      app-group: ${APP_GROUP}
+  spec:
+    host: ${APPLICATION_DOMAIN}
+    port:
+      targetPort: ${NAME}
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+    to:
+      kind: Service
+      name: ${NAME}
+      weight: 100
+
+- kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    name: ${NAME}
+    labels:
+      name: ${NAME}
+      app: ${APP_GROUP}
+      app-group: ${APP_GROUP}
+  spec:
+    replicas: 1
+    selector:
+      name: ${NAME}
+    strategy:
+      type: Rolling
+    template:
+      metadata:
+        name: ${NAME}
+        labels:
+          name: ${NAME}
+          app: ${APP_GROUP}
+          app-group: ${APP_GROUP}
+      spec:
+        containers:
+        - name: ${NAME}
+          image: " "
+          ports:
+          - containerPort: ${{PORT}}
+            protocol: TCP
+          env:
+          - name: ASPNETCORE_ENVIRONMENT
+            value: ${ASPNETCORE_ENVIRONMENT}
+          - name: DynamicsAuthenticationSettings__ActiveEnvironment
+            value: ${DYNAMICS_ENVIRONMENT}
+          - name: DynamicsAuthenticationSettings__OnPremWebApiUrl
+            value: ${DYNAMICS_ENDPOINT}
+          - name: DynamicsAuthenticationSettings__OnPremUserName
+            valueFrom:
+              secretKeyRef:
+                name: ${NAME}-dynamics-credentials
+                key: username
+          - name: DynamicsAuthenticationSettings__OnPremPassword
+            valueFrom:
+              secretKeyRef:
+                name: ${NAME}-dynamics-credentials
+                key: password
+          - name: DynamicsAuthenticationSettings__OnPremDomain
+            valueFrom:
+              secretKeyRef:
+                name: ${NAME}-dynamics-credentials
+                key: domain
+          readinessProbe:
+            timeoutSeconds: 30
+            initialDelaySeconds: 3
+            httpGet:
+              path: "/api/environmentinformation"
+              port: ${{PORT}}
+          livenessProbe:
+            timeoutSeconds: 30
+            initialDelaySeconds: 300
+            httpGet:
+              path: "/api/environmentinformation"
+              port: ${{PORT}}
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: ${CPU_LIMIT}
+              memory: ${MEMORY_LIMIT}
+            requests:
+              cpu: ${CPU_REQUEST}
+              memory: ${MEMORY_REQUEST}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+        - ${NAME}
+        from:
+          kind: ImageStreamTag
+          name: ${NAME}:${TAG_NAME}
+          namespace: ${IMAGE_NAMESPACE}
+
+parameters:
+- name: NAME
+  displayName: Name
+  description: The name assigned to all the objects defined in this template.
+  required: true
+  value: ecas-api
+- name: APP_GROUP
+  displayName: App Group
+  description: Used to group components together.
+  required: true
+  value: ecas
+- name: APPLICATION_DOMAIN
+  displayName: Application Hostname
+  description: The exposed hostname that will route to the service, if left blank a value will be defaulted.
+  required: false
+  value: ""
+- name: IMAGE_NAMESPACE
+  displayName: Namespace containing application images.
+  required: true
+  value: pvpywj-tools
+- name: TAG_NAME
+  displayName: Environment TAG name
+  description: The TAG name for this environment, e.g., dev, test, prod.
+  required: true
+  value: dev
+- name: PORT
+  displayName: Port
+  description: The port on which the service will listen.
+  required: true
+  value: "8080"
+- name: ASPNETCORE_ENVIRONMENT
+  displayName: ASP .NetCore Environment
+  description: The ASP .NetCore Environment configuration for the environment.
+  required: true
+  value: "Development"
+- name: DYNAMICS_ENVIRONMENT
+  displayName: Dynamics Environment
+  description: The environment to use for the Dynamics service.
+  required: true
+  value: "OnPrem"
+- name: DYNAMICS_ENDPOINT
+  displayName: Dynamics Endpoint
+  description: The endpoint for the Dynamics service.
+  required: true
+  value: ""
+- name: DYNAMICS_USERNAME
+  displayName: Dynamics Username
+  description: The username for authenticating with the Dynamics service.
+  required: true
+  value: ""
+- name: DYNAMICS_PASSWORD
+  displayName: Dynamics Password
+  description: The password for authenticating with the Dynamics service.
+  required: true
+  value: ""
+- name: DYNAMICS_DOMAIN
+  displayName: Dynamics Domain
+  description: The domain for authenticating with the Dynamics service.
+  required: true
+  value: ""
+- name: CPU_REQUEST
+  displayName: Resources CPU Request
+  description: The resources CPU request (in cores) for this build.
+  required: true
+  value: 10m
+- name: CPU_LIMIT
+  displayName: Resources CPU Limit
+  description: The resources CPU limit (in cores) for this build.
+  required: true
+  value: 250m
+- name: MEMORY_REQUEST
+  displayName: Resources Memory Request
+  description: The resources Memory request (in Mi, Gi, etc) for this build.
+  required: true
+  value: 10Mi
+- name: MEMORY_LIMIT
+  displayName: Resources Memory Limit
+  description: The resources Memory limit (in Mi, Gi, etc) for this build.
+  required: true
+  value: 1Gi

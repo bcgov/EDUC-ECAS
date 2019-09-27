@@ -1,136 +1,97 @@
 ﻿<template>
     <div>
         <div class="card">
-            <div class="card-header"><h1>Dashboard</h1></div>
             <div class="card-body">
                 <div class="row">
                     <div class="col">
+                        <div id="logout">
+                            <button type="button" class="btn btn-primary" @click="$keycloak.logoutFn" v-if="$keycloak.authenticated">Log out</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col pb-3">
                         <div class="card">
                             <div class="card-header">
                                 <button @click="showProfile" class="float-right btn btn-primary">Edit</button>
-                                <h2>{{ getUser.preferred_first_name }} {{ getUser.last_name }}</h2>
+                                <h2>
+                                    <span v-if="getUser.preferred_first_name">{{ getUser.preferred_first_name }}</span>
+                                    <span v-else>{{ getUser.first_name }}</span>
+                                    {{ getUser.last_name }}
+                                </h2>
                             </div>
                             <div class="card-body">
-                                <p>{{ getUser.email }}<br/>
+                                <p v-show="!new_user">
+                                    {{ getUser.email }}<br/>
                                     {{ getUser.address_1 }}<br/>
-                                    {{ getUser.city }}, {{ getUser.region }}</p>
-                                <p v-if="typeof getUser.professional_certificate_bc !== 'undefined' && getUser.professional_certificate_bc.length > 1">
-                                    <strong>BC Professional Certificate:</strong> {{ getUser.professional_certificate_bc }}
+                                    <span v-if="getUser.address_2">{{ getUser.address_2 }}<br /></span>
+                                    {{ getUser.city }}, <span v-if="mounted">{{ getUser.region.id }}</span> {{ getUser.postal_code }}
                                 </p>
-                                <p v-if="typeof getUser.professional_certificate_yk !== 'undefined' && getUser.professional_certificate_yk.length > 1">
-                                    <strong>Yukon Professional Certificate:</strong> {{ getUser.professional_certificate_yk
-                                    }}</p>
-                                <p v-if="typeof getUser.professional_certificate_other !== 'undefined' && getUser.professional_certificate_other.length > 1">
-                                    <strong>Other Certificate:</strong> {{ getUser.professional_certificate_other }}</p>
+                                <p v-if="getUser.professional_certificate_bc === 'Yes'">
+                                    <strong>BC Professional Certificate:</strong>
+                                    <font-awesome-icon icon="check" alt="BC Professional Certificate"/>
+                                </p>
+                                <p v-if="getUser.professional_certificate_yk === 'Yes'" >
+                                    <strong>Yukon Professional Certificate:</strong>
+                                    <font-awesome-icon icon="check" alt="Yukon Professional Certificate"/>
+                                </p>
+                                <p v-if="getUser.district">
+                                    <strong>District:</strong> {{ getUser.district.name }}</p>
+                                <p v-if="getUser.school">
+                                    <strong>School:</strong> {{ getUser.school.name }}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col pb-3">
                         <div class="card">
                             <div class="card-header">
                                 <h2>Credentials</h2>
                             </div>
                             <div class="card-body">
                                 <div class="row" v-for="credential in credentials_applied">
-                                    <div class="col-1"><i class="fas fa-igloo"></i></div>
-                                    <div class="col">{{ credential.name }}</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-1">
-                                        <button class="btn btn-primary btn-sm" @click="addCredential">+</button>
+                                    <div class="col-1 text-center">
+                                        <font-awesome-icon v-if="credential.verified" icon="check" alt="verified"/>
+                                        <font-awesome-icon v-else icon="trash" @click="deleteCredential(credential)"
+                                                           alt="delete" style="color: red;"/>
                                     </div>
+                                    <div class="col">{{ credential.credential.name }}</div>
+                                </div>
+                                <div class="row pt-3">
                                     <div class="col">
                                         <select v-model="new_credential">
                                             <option value="0">Select New Credential</option>
-                                            <option v-for="credential in credentials_available" :value="credential.id">
+                                            <option v-for="credential in credentialsAvailable" :value="credential">
                                                 {{ credential.name }}
                                             </option>
                                         </select>
                                     </div>
+                                    <div class="col">
+                                        <button :class="credentialButtonClass" @click="addCredential(new_credential)"
+                                                :disabled="disableAddCredentialButton">
+                                            <span>
+                                                <div class="loader text-center" v-show="working"></div>
+                                            </span>
+                                            <div v-show="!working">Add</div>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-header">
-                                <h2 class="float-left">Marking Sessions</h2>
-                                <ul class="nav nav-tabs justify-content-end">
-                                    <li class="nav-item">
-                                        <a href="#"
-                                           @click="filter = ''"
-                                           class="nav-link"
-                                           :class="{ 'active': filter == '' }">All
-                                            <span class="badge badge-pill badge-primary">{{ sessions_local.length }}</span></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#"
-                                           @click="filter = 'Applied'"
-                                           class="nav-link"
-                                           :class="{ 'active': filter == 'Applied' }">Applied
-                                            <span class="badge badge-pill badge-primary">{{ countStatus('Applied') }}</span></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#"
-                                           @click="filter = 'Invited'"
-                                           class="nav-link"
-                                           :class="{ 'active': filter == 'Invited' }">Invited
-                                            <span class="badge badge-pill badge-primary">{{ countStatus('Invited') }}</span></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#"
-                                           @click="filter = 'Scheduled'"
-                                           class="nav-link"
-                                           :class="{ 'active': filter == 'Scheduled' }">Going
-                                            <span class="badge badge-pill badge-primary">{{ countStatus('Scheduled') }}</span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-hover">
-                                    <tr>
-                                        <th>Type</th>
-                                        <th>Activity</th>
-                                        <th>Dates</th>
-                                        <th>Location</th>
-                                        <th>Status</th>
-                                    </tr>
-                                    <tbody>
-                                        <tr @click="viewSession(session)"
-                                            v-for="session in filteredSessions(sessions_local)">
-                                            <td>{{ session.type }}</td>
-                                            <td>{{ session.activity }}</td>
-                                            <td>{{ session.dates }}</td>
-                                            <td>{{ session.location }}</td>
-                                            <td>
-                                                <template v-if="isStatus(session, 'Invited')">Accept Invitation!</template>
-                                                <template v-else-if="isStatus(session, 'Scheduled')">You're Going!
-                                                </template>
-                                                <template v-else-if="isStatus(session, 'Applied')">You've Applied</template>
-                                                <template v-else-if="isStatus(session, 'Declined')">Declined</template>
-                                                <template v-else-if="isStatus(session, 'Open')">Open</template>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <marking-sessions :sessions="this.getSessions"></marking-sessions>
+
+
+
+
             </div>
         </div>
-        <modal name="session_form" height="auto">
-            <session :session="current_session"></session>
-        </modal>
-        <modal name="profile_form" height="auto" :scrollable="true">
+        <modal name="profile_form" height="auto" :scrollable="true" :clickToClose="false">
             <profile
                     :user="getUser"
-                    :schools="schools"
                     :regions="regions"
-                    :districts="districts"
-                    :payments="payments"
+                    :countries="countries"
+                    :new_user="new_user"
                     dusk="profile-component"
             ></profile>
         </modal>
@@ -138,110 +99,193 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
+    import {mapGetters} from 'vuex'
+    import MarkingSessions from './MarkingSessions.vue';
 
     export default {
-        name: "Dashboard",
+        name: "DashboardComponent",
+
+        components: {
+            MarkingSessions
+        },
+
         props: {
             user: {},
             credentials: {},
+            user_credentials: {},
             sessions: {},
             subjects: {},
-            schools: {},
             regions: {},
-            districts: {},
-            payments: {}
+            countries: {},
         },
         data() {
             return {
-                sessions_local: this.sessions,
-                credentials_applied: [],
-                credentials_available: [...this.credentials],
+                credentials_applied: [...this.user_credentials],
                 new_credential: 0,
                 filter: '',
-                current_session: {}
+                current_session: {},
+                new_user: false,
+                working: false,
+                mounted: false
             }
         },
         mounted() {
             console.log('Dashboard Mounted')
-            this.$store.commit('SET_USER', this.user)
-            Event.listen('credential-added', this.pushCredential)
-            Event.listen('profile-updated', this.updateProfile)
 
-            if (this.getUser.id === undefined) {
+            this.$store.commit('SET_USER', this.user);
+            this.$store.commit('SET_SESSIONS', this.sessions);
+
+            Event.listen('credential-added', this.pushCredential);
+            Event.listen('credential-deleted', this.removeCredential);
+            Event.listen('profile-updated', this.updateProfile);
+            Event.listen('launch-profile-modal', this.showProfile);
+
+            if ( ! this.user.id) {
+                this.new_user = true;
                 this.showProfile()
             }
+
+            this.mounted = true;
         },
         computed: {
             ...mapGetters([
-                'getUser'
-                ])
+                'getUser',
+                'getSessions'
+            ]),
+
+            credentialsIdsInUse() {
+
+                var arrayOfCredentialIds = [];
+
+                this.credentials_applied.forEach( function (applied) {
+                    arrayOfCredentialIds.push(applied.credential.id);
+                });
+
+                return arrayOfCredentialIds;
+            },
+
+            credentialsAvailable() {
+                // subtract applied_credentials from credentials
+                return this.credentials.filter(x => ! this.credentialsIdsInUse.includes(x.id));
+
+            },
+
+            disableAddCredentialButton() {
+                return this.new_credential === "0" || this.new_credential === 0;
+            },
+
+            credentialButtonClass() {
+                if (this.disableAddCredentialButton) {
+                    return 'd-none';
+                }
+
+                else return 'btn btn-primary btn-sm';
+
+            }
+
         },
         methods: {
-            addCredential: function () {
-                console.log('adding credential')
+            addCredential(selection) {
+                console.log('adding credential', selection);
 
-                var form = this
+                this.working = true;
 
-                axios.post('/Dashboard/credential', {
-                    credential_id: form.new_credential
+                var form = this;
+
+                axios.post('/api/' + form.getUser.id + '/profile-credentials', {
+                    credential_id: form.new_credential.id
                 })
                     .then(function (response) {
-                        Event.fire('credential-added', response.data)
-                        console.log('Success!')
+                        form.working = false;
+                        Event.fire('credential-added', response.data);
+                        console.log('Create Success!', response.data)
                     })
                     .catch(function (error) {
+                        form.working = false;
+                        console.log('Failure!', error)
+                    });
+            },
+            deleteCredential(profile_credential) {
+                console.log('removing credential');
+
+                this.working = true;
+
+                var form = this;
+
+                axios.delete('/api/' + form.getUser.id + '/profile-credentials/' + profile_credential.id )
+                    .then(function (response) {
+                        form.working = false;
+                        Event.fire('credential-deleted', profile_credential.credential.id);
+                        console.log('Delete Success!', profile_credential.credential.id )
+                    })
+                    .catch(function (error) {
+                        form.working = false;
                         console.log('Failure!')
                     });
             },
-            countStatus: function (status) {
-                // var status
-                return Object.values(this.sessions_local).filter(function (assignment) {
-                    return assignment.status == status
-                }).length
-            },
-            pushCredential(credential) {
-                console.log('pushing credential')
 
-                // Remove the credential from the available list
-                this.credentials_available.splice(this.credentials_available.findIndex(elm => elm.id === credential.id), 1)
+
+            pushCredential(profile_credential) {
+                console.log('pushing credential', profile_credential.data.credential.id );
 
                 // Add to the applied list
-                this.credentials_applied.unshift(credential)
+                this.credentials_applied.push(profile_credential.data);
 
                 this.new_credential = 0;
             },
-            filteredSessions(sessions) {
-                var dashboard = this
+            removeCredential(profile_credential) {
+                console.log('removeCredential', profile_credential);
 
-                return sessions.filter(function (session) {
-                    if (dashboard.filter.length == 0) {
-                        return true
-                    }
-                    return session.status == dashboard.filter
-                })
+                // Get the credential
+                let index = this.credentials_applied.findIndex(credential => credential.credential.id === profile_credential);
+
+                console.log('get the credential', index);
+
+                let credential = this.credentials_applied[index].credential;
+
+                // Remove the credential from the applied list
+                this.credentials_applied.splice(index, 1);
+
+
+                this.new_credential = 0;
             },
-            isStatus: function (session, status) {
-                return session.status == status
-            },
-            viewSession(session) {
-                console.log('View Session')
-                this.current_session = session
-                this.$modal.show('session_form');
-            },
-            closeModal() {
-                this.$modal.hide('session_form');
-            },
+
+
+
             showProfile() {
                 this.$modal.show('profile_form');
             },
             updateProfile(user) {
-                this.$store.commit('SET_USER', user)
-            }
+                // We must have a valid user now
+                console.log('updateProfile event', user.data.data);
+                this.new_user = false;
+                this.$store.commit('SET_USER', user.data.data)
+            },
+
         }
 
     }
 </script>
 
 <style>
+    .nav-tabs {
+        border-bottom: none;
+    }
+    .loader {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        margin: auto;
+        animation: spin 2s linear infinite;
+    }
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 </style>

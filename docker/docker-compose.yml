@@ -1,0 +1,56 @@
+version: '3'
+services:
+
+  # ecas-frontend
+  #  DYNAMICSBASEURL=https://ecaswebapi.azurewebsites.net/api
+  ecas-frontend:
+    image: ecas-frontend
+    ports:
+      - 7070:8080
+    networks:
+      - webnet
+    environment:
+      - APP_KEY=base64:sf+TeOK14bHa/pqupMwHbV5MUBFeZF/OPFh+LU++0w8=
+      - APP_DEBUG=true
+      - APP_URL=http://localhost
+      - DOCUMENTROOT=/public
+      - DYNAMICSBASEURL=${DYNAMICSBASEURL:-http://ecas-api:8080/api}
+
+  # ecas-api
+  #
+  ecas-api:
+    image: ecas-api
+    ports:
+      - 8080:8080
+    networks:
+      - webnet
+
+  # cas-api
+  #
+  cas-api:
+    image: cas-api
+    ports:
+      - 8081:8080
+    networks:
+      - webnet
+
+#   # ecas-frontend-dev
+#   #
+#   ecas-frontend-dev:
+#     build:
+#       context: ..
+#       dockerfile: docker/ecas-frontend/Dockerfile-dev
+#     working_dir: /web-app
+#     ports:
+#       - 8081:80
+#     volumes:
+#       - ../web-app:/web-app
+#     networks:
+#       - webnet
+#     environment:
+#       - CHOKIDAR_USEPOLLING=true
+#       - APP_KEY=base64:sf+TeOK14bHa/pqupMwHbV5MUBFeZF/OPFh+LU++0w8=
+#       - APP_DEBUG=true
+
+networks:
+  webnet:

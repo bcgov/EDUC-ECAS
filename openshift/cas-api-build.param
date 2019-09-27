@@ -1,0 +1,18 @@
+#=========================================================
+# OpenShift template parameters for:
+# Component: .
+# Template File: templates/cas-api/cas-api-build.json
+#=========================================================
+NAME=cas-api
+GIT_REPO_URL=https://github.com/JonTaylorBCGov/CASInterfaceService.git
+GIT_REF=master
+SOURCE_CONTEXT_DIR=
+SOURCE_IMAGE_KIND=DockerImage
+SOURCE_IMAGE_NAME=registry.access.redhat.com/dotnet/dotnet-21-rhel7
+SOURCE_IMAGE_TAG=latest
+DOTNET_STARTUP_PROJECT=CASInterfaceService/cas-interface-service.csproj
+OUTPUT_IMAGE_TAG=latest
+CPU_REQUEST=10m
+CPU_LIMIT=1000m
+MEMORY_REQUEST=10Mi
+MEMORY_LIMIT=1Gi
