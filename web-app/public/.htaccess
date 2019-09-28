@@ -11,5 +11,5 @@ RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
 <IfModule mod_headers.c>
 	Header always append X-Frame-Options SAMEORIGIN
 	Header set X-XSS-Protection "1; mode=block"
-	Header set X-XSS-Protection "1; mode=block"
+    Header set X-Content-Type-Options nosniff
 </IfModule>
