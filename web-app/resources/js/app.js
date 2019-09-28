@@ -7,9 +7,6 @@
 
 require('./bootstrap');
 
-// resolves known issue with Internet Explorer
-//
-require('es6-promise').polyfill();
 
 window.Vue = require('vue');
 window.Vuex = require('vuex');
@@ -25,8 +22,6 @@ import Vuex from 'vuex'
  * Eg. ./components/DashboardLauncher.vue -> <example-component></example-component>
  */
 
-// const files = require.context('./', true, /\.vue$/i);
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 import VModal from 'vue-js-modal'
 
@@ -95,11 +90,11 @@ Vue.config.productionTip = false;
 
 function tokenInterceptor (keycloak) {
     axios.interceptors.request.use(config => {
-        console.log('tokenInterceptor success', config);
+        //console.log('tokenInterceptor success', config);
         config.headers.Authorization = `Bearer ` + keycloak.token ;
         return config
     }, error => {
-        console.log('tokenInterceptor error', error);
+        //console.log('tokenInterceptor error', error);
         return Promise.reject(error);
     })
 }
