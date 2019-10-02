@@ -242,7 +242,15 @@
                         <labels>
                           <label description="" languagecode="1033" />
                         </labels>
-                        <control disabled="false" id="educ_suppliernumber" datafieldname="educ_suppliernumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+                        <control disabled="false" id="educ_suppliernumber" datafieldname="educ_suppliernumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" uniqueid="{3ed6d4e3-2651-a4bd-30dd-bcd014b77d44}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{26ad1174-32a9-bb7d-158b-56cdeb260e45}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="educ_suppliersitenumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_suppliersitenumber" disabled="false" uniqueid="{b27e087c-e86a-d745-c565-6a90b3136b9e}" />
                       </cell>
                     </row>
                   </rows>

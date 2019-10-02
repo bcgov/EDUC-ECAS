@@ -26,7 +26,7 @@
     <Description languagecode="1033" description="If Contract Stage is updated to Signed AND Contract Approved By has a value then update the record status." />
   </Descriptions>
   <ProcessTriggers>
-    <ProcessTrigger processtriggerid="{7008ed5f-39b3-e911-b80d-005056833c5b}">
+    <ProcessTrigger processtriggerid="{177c4128-eedf-e911-b80e-005056833c5b}">
       <controltype>1</controltype>
       <scope>2</scope>
       <controlname>educ_contractstage</controlname>
@@ -35,7 +35,23 @@
       <iscustomizable>1</iscustomizable>
       <primaryentitytypecode>educ_assignment</primaryentitytypecode>
     </ProcessTrigger>
-    <ProcessTrigger processtriggerid="{7108ed5f-39b3-e911-b80d-005056833c5b}">
+    <ProcessTrigger processtriggerid="{187c4128-eedf-e911-b80e-005056833c5b}">
+      <scope>2</scope>
+      <event>load</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_assignment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{197c4128-eedf-e911-b80e-005056833c5b}">
+      <controltype>1</controltype>
+      <scope>2</scope>
+      <controlname>statuscode</controlname>
+      <event>change</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_assignment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{1a7c4128-eedf-e911-b80e-005056833c5b}">
       <scope>2</scope>
       <event>load</event>
       <pipelinestage>0</pipelinestage>

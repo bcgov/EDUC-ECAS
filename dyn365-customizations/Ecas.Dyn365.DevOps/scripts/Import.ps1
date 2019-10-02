@@ -1,7 +1,7 @@
 ﻿param (
     # The connection parameters for the target organization
     [Parameter(Mandatory)]
-    [ValidateSet('OnlineDev-ECAS','OnlineTest-ECAS','OnpremiseUAT-ECAS','AndrewVMDEV-ECAS','OnpremisePROD-ECAS')] # update this list based on files in the CrmConnectionParameters folder
+    [ValidateSet('OnpremiseDEV-ECAS','OnpremiseTEST-ECAS','OnpremiseUAT-ECAS','OnpremisePROD-ECAS')] # update this list based on files in the CrmConnectionParameters folder
     [string]
     $CrmConnectionName,
 

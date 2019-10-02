@@ -27,11 +27,11 @@
   </Descriptions>
   <labels>
     <steplabels id="{405aa361-8a73-46fe-8a57-fd67f1edc3e1}">
-      <label languagecode="1033" description="The Contract must be updated to Signed in order to Confirm or Complete an Assignement" />
+      <label languagecode="1033" description="The Contract must be updated to Signed in order to set the Assignment Status to Confirmed, Attendance Recorded or Completed" />
     </steplabels>
   </labels>
   <ProcessTriggers>
-    <ProcessTrigger processtriggerid="{eae0ded1-3fb3-e911-b80d-005056833c5b}">
+    <ProcessTrigger processtriggerid="{95d04874-efdf-e911-b80e-005056833c5b}">
       <controltype>1</controltype>
       <scope>2</scope>
       <controlname>statuscode</controlname>
@@ -40,14 +40,14 @@
       <iscustomizable>1</iscustomizable>
       <primaryentitytypecode>educ_assignment</primaryentitytypecode>
     </ProcessTrigger>
-    <ProcessTrigger processtriggerid="{ebe0ded1-3fb3-e911-b80d-005056833c5b}">
+    <ProcessTrigger processtriggerid="{96d04874-efdf-e911-b80e-005056833c5b}">
       <scope>2</scope>
       <event>load</event>
       <pipelinestage>0</pipelinestage>
       <iscustomizable>1</iscustomizable>
       <primaryentitytypecode>educ_assignment</primaryentitytypecode>
     </ProcessTrigger>
-    <ProcessTrigger processtriggerid="{ece0ded1-3fb3-e911-b80d-005056833c5b}">
+    <ProcessTrigger processtriggerid="{97d04874-efdf-e911-b80e-005056833c5b}">
       <controltype>1</controltype>
       <scope>2</scope>
       <controlname>educ_contractstage</controlname>
@@ -56,7 +56,7 @@
       <iscustomizable>1</iscustomizable>
       <primaryentitytypecode>educ_assignment</primaryentitytypecode>
     </ProcessTrigger>
-    <ProcessTrigger processtriggerid="{ede0ded1-3fb3-e911-b80d-005056833c5b}">
+    <ProcessTrigger processtriggerid="{98d04874-efdf-e911-b80e-005056833c5b}">
       <scope>2</scope>
       <event>load</event>
       <pipelinestage>0</pipelinestage>

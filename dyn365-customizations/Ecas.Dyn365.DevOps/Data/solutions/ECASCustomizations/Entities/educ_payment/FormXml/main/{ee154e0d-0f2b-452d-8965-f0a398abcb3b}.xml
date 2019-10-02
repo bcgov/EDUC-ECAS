@@ -20,6 +20,14 @@
                   </labels>
                   <rows>
                     <row>
+                      <cell id="{7b9addb5-824b-d42e-33ec-b8e5ddc429ac}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Assignment" languagecode="1033" />
+                        </labels>
+                        <control id="educ_assignment" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="educ_assignment" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
                       <cell id="{35713aa6-1d02-7628-a717-a9d02700cd41}" showlabel="true" locklevel="0">
                         <labels>
                           <label description="Payment Type" languagecode="1033" />
@@ -36,13 +44,31 @@
                       </cell>
                     </row>
                     <row>
-                      <cell id="{a0387e0f-0371-4322-af84-8af8e9ca2194}" showlabel="true" locklevel="0" visible="false">
+                      <cell id="{a0142b25-d930-6cc3-c328-6178910a1b61}" showlabel="true" locklevel="0">
                         <labels>
-                          <label description="Payment" languagecode="1033" />
+                          <label description="Payment Auto Number" languagecode="1033" />
                         </labels>
-                        <control id="educ_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_name" uniqueid="{280e3d54-259b-54a0-4711-8bd6e74a021e}" disabled="false" />
+                        <control id="educ_paymentautonumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_paymentautonumber" disabled="false" />
                       </cell>
                     </row>
+                  </rows>
+                </section>
+                <section name="{be44b3d5-5d51-48e4-8a2d-9c97ec3a0497}_section_3" showlabel="true" showbar="true" locklevel="0" id="{42a4ac55-a452-7d67-c450-d1ab6102aeb3}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left" height="auto">
+                  <labels>
+                    <label description="CAS RESPONSE" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{9461e601-8d27-4b00-0493-16c5c17728b6}" showlabel="false" locklevel="0" auto="true" rowspan="4">
+                        <labels>
+                          <label description="CAS Response" languagecode="1033" />
+                        </labels>
+                        <control id="educ_casresponse" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="educ_casresponse" disabled="false" uniqueid="{e8b71175-15ac-a010-c995-6340c40963dd}" />
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row height="auto" />
                   </rows>
                 </section>
                 <section name="{be44b3d5-5d51-48e4-8a2d-9c97ec3a0497}_section_2" showlabel="true" showbar="true" locklevel="0" id="{05dbdb39-10ad-a400-5937-47c1b8926036}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
@@ -91,16 +117,17 @@
       <header id="{de8cd9f3-2945-42c4-b2ea-81672ef971c6}" columns="111">
         <rows>
           <row>
-            <cell id="{ab28855e-133d-4039-93a5-93ea81ca69aa}" showlabel="false">
+            <cell id="{79330843-eabe-e41a-e6c1-4b6e1cb5d90a}" showlabel="true" locklevel="0">
               <labels>
-                <label description="" languagecode="1033" />
+                <label description="Payment" languagecode="1033" />
               </labels>
+              <control id="header_educ_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_name" disabled="false" />
             </cell>
             <cell id="{2766daad-4336-c3c3-5c53-ea402b239ddb}" showlabel="true" locklevel="0">
               <labels>
                 <label description="Status Reason" languagecode="1033" />
               </labels>
-              <control id="header_statuscode" classid="{5D68B988-0661-4db2-BC3E-17598AD3BE6C}" datafieldname="statuscode" disabled="false" />
+              <control id="header_statuscode" classid="{5D68B988-0661-4db2-BC3E-17598AD3BE6C}" datafieldname="statuscode" disabled="true" uniqueid="{23605510-2554-a5a9-433e-76a7590c2ade}" />
             </cell>
             <cell id="{ca3d55e5-69a5-d384-dbb8-8e4c8e095839}" showlabel="true" locklevel="0">
               <labels>

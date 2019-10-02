@@ -62,11 +62,11 @@ namespace BCGov.Dyn365.CASIntegration.Plugin
 
                 var ecasServiceAccountUserId = new Guid(Helpers.GetSystemConfigurations(service, "Default", "ECASServiceAccountUserId")[0]["ecas_value"].ToString());
                 IOrganizationService adminService = serviceFactory.CreateOrganizationService(ecasServiceAccountUserId);
-                var configs = Helpers.GetSystemConfigurations(adminService, "CAS", string.Empty);
+                var configs = Helpers.GetSystemConfigurations(adminService, "CAS-AP", string.Empty);
                 
-                string clientKey = Helpers.GetConfigKeyValue(configs, "ClientKey", "CAS");
-                string clientId = Helpers.GetConfigKeyValue(configs, "ClientId", "CAS");
-                string url = Helpers.GetConfigKeyValue(configs, "InterfaceUrl", "CAS");
+                string clientKey = Helpers.GetConfigKeyValue(configs, "ClientKey", "CAS-AP");
+                string clientId = Helpers.GetConfigKeyValue(configs, "ClientId", "CAS-AP");
+                string url = Helpers.GetConfigKeyValue(configs, "InterfaceUrl", "CAS-AP");
 
                 var jsonRequest = GenerateInvoice(service, configs, postImageEntity).ToJSONString();
 
@@ -209,26 +209,28 @@ namespace BCGov.Dyn365.CASIntegration.Plugin
                 firstName = (string)contactEntity["firstname"];
                 lastName = (string)contactEntity["lastname"];
 
-                if (contactEntity.Contains("address3_line1"))
-                    addressLine1 = (string)contactEntity["address3_line1"];
-                if (contactEntity.Contains("address3_line2"))
-                    addressLine1 = (string)contactEntity["address3_line2"];
-                if (contactEntity.Contains("address3_line3"))
-                    addressLine1 = (string)contactEntity["address3_line3"];
-                if (contactEntity.Contains("address3_city"))
-                    city = (string)contactEntity["address3_city"];
-                if (contactEntity.Contains("address3_stateorprovince"))
-                    province = (string)contactEntity["address3_stateorprovince"];
-                if (contactEntity.Contains("address3_country"))
-                    country = (string)contactEntity["address3_country"];
-                if (contactEntity.Contains("address3_postalcode"))
-                    postalCode = (string)contactEntity["address3_postalcode"];
+                if (contactEntity.Contains("address1_line1"))
+                    addressLine1 = (string)contactEntity["address1_line1"];
+                if (contactEntity.Contains("address1_line2"))
+                    addressLine2 = (string)contactEntity["address1_line2"];
+                if (contactEntity.Contains("address1_line3"))
+                    addressLine3 = (string)contactEntity["address1_line3"];
+                if (contactEntity.Contains("address1_city"))
+                    city = (string)contactEntity["address1_city"];
+                if (contactEntity.Contains("address1_stateorprovince"))
+                    province = (string)contactEntity["address1_stateorprovince"];
+                if (contactEntity.Contains("address1_country"))
+                    country = (string)contactEntity["address1_country"];
+                if (contactEntity.Contains("address1_postalcode"))
+                    postalCode = (string)contactEntity["address1_postalcode"];
             }
             #endregion
 
             #region Invoice Details
             DateTime? invoiceDate = DateTime.MinValue;
             string invoiceNumber = string.Empty;
+
+            //TODO: ETL on Method of payment. 
             string methodOfPayment = "GEN CHQ";
             //methodOfPayment = "GEN EFT";
 
@@ -237,7 +239,7 @@ namespace BCGov.Dyn365.CASIntegration.Plugin
             if (!paymentEntity.Contains("ecas_paymentnumber"))
                 throw new InvalidPluginExecutionException("Payment Number is empty..");
 
-            invoiceDate = (DateTime)paymentEntity["createdon"];
+            invoiceDate = DateTime.Now;
             invoiceNumber = (string)paymentEntity["ecas_paymentnumber"];
 
             #endregion
@@ -258,7 +260,7 @@ namespace BCGov.Dyn365.CASIntegration.Plugin
             Invoice result = new Invoice()
             {
                 //Mandatory values
-                InvoiceType = Helpers.GetConfigKeyValue(configs, "InvoiceType", "CAS"),
+                InvoiceType = Helpers.GetConfigKeyValue(configs, "InvoiceType", "CAS-AP"),
                 SupplierNumber = supplierNumber,
                 SupplierSiteNumber = siteNumber,
                 InvoiceDate = invoiceDate.Value,
@@ -266,31 +268,34 @@ namespace BCGov.Dyn365.CASIntegration.Plugin
                 InvoiceAmount = ((Money)paymentEntity["ecas_amount"]).Value,
                 PayGroup = methodOfPayment,                
                 DateInvoiceReceived = invoiceDate.Value,
-                RemittanceCode = Helpers.GetConfigKeyValue(configs, "RemittanceCode", "CAS"),
+                RemittanceCode = Helpers.GetConfigKeyValue(configs, "RemittanceCode", "CAS-AP"),
+                //TODO - Special Handling
                 SpecialHandling = false,
-                Terms = paymentEntity.FormattedValues["ecas_terms"],
-                GLDate = (DateTime)paymentEntity["ecas_gldate"],
-                InvoiceBatchName = Helpers.GetConfigKeyValue(configs, "BatchName", "CAS"),
+                //TODO - 
+                Terms = Helpers.GetConfigKeyValue(configs, "Terms", "CAS-AP"),
+                PayAloneFlag = Helpers.GetConfigKeyValue(configs, "PayAloneFlag", "CAS-AP"),
+                GLDate = invoiceDate,
+                InvoiceBatchName = Helpers.GetConfigKeyValue(configs, "BatchName", "CAS-AP"),
 
                 //Optional Value
                 QualifiedReceiver = ((EntityReference)paymentEntity["ownerid"]).Name,
-                PaymentAdviceComments = paymentEntity.Contains("ecas_paymentadvicecomments") ? (string)paymentEntity["ecas_paymentadvicecomments"] : "",
-                RemittanceMessage1 = paymentEntity.Contains("ecas_remittancemessage1") ? (string)paymentEntity["ecas_remittancemessage1"] : "",
-                RemittanceMessage2 = paymentEntity.Contains("ecas_remittancemessage2") ? (string)paymentEntity["ecas_remittancemessage2"] : "",
-                RemittanceMessage3 = paymentEntity.Contains("ecas_remittancemessage3") ? (string)paymentEntity["ecas_remittancemessage3"] : "",
-                CurrencyCode = Helpers.GetConfigKeyValue(configs, "CurrencyCode", "CAS"),
+                //TODO: First 40 char charcters of session name
+                PaymentAdviceComments = paymentEntity.Contains("ecas_paymentadvicecomments") ? 
+                    (string)paymentEntity["ecas_paymentadvicecomments"] : "",
+                CurrencyCode = Helpers.GetConfigKeyValue(configs, "CurrencyCode", "CAS-AP"),
 
                 //Invoice Line Details
                 InvoiceLineNumber = 1,
                 InvoiceLineType = "Item",
                 LineCode = paymentEntity.FormattedValues["ecas_linecode"],
                 InvoiceLineAmount = ((Money)paymentEntity["ecas_amount"]).Value,
-                DefaultDistributionAccount = Helpers.GetConfigKeyValue(configs, "DefaultDistributionAccount", "CAS")                
+                DefaultDistributionAccount = Helpers.GetConfigKeyValue(configs, "DefaultDistributionAccount", 
+                    "CAS-AP")                
             };
             
 
             if (((OptionSetValue)paymentEntity["ecas_specialhandling"]).Value == 100000001 || 
-                supplierNumber.Equals(Helpers.GetConfigKeyValue(configs, "BlockNumber", "CAS"), 
+                supplierNumber.Equals(Helpers.GetConfigKeyValue(configs, "BlockNumber", "CAS-AP"), 
                 StringComparison.InvariantCultureIgnoreCase)) //DBack or Block
             {
                 if (!string.IsNullOrEmpty(firstName))

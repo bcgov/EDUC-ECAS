@@ -8,7 +8,7 @@
     <Descriptions>
       <Description description="ECAS - All custom entities, fields, forms, views" languagecode="1033" />
     </Descriptions>
-    <Version>0.0.2.0</Version>
+    <Version>0.0.2.1</Version>
     <Managed>2</Managed>
     <Publisher>
       <UniqueName>quartech</UniqueName>
@@ -82,6 +82,7 @@
     <RootComponents>
       <RootComponent type="1" schemaName="contact" behavior="2" />
       <RootComponent type="1" schemaName="educ_assignment" behavior="0" />
+      <RootComponent type="1" schemaName="educ_config" behavior="0" />
       <RootComponent type="1" schemaName="educ_countrycode" behavior="0" />
       <RootComponent type="1" schemaName="educ_credential" behavior="0" />
       <RootComponent type="1" schemaName="educ_credentialcode" behavior="0" />
@@ -135,6 +136,7 @@
       <RootComponent type="60" id="{79ee0c4b-408b-4c39-abcd-0419baf51fb2}" behavior="0" />
       <RootComponent type="60" id="{8ee724be-8080-4c9f-a443-d24c2097e06a}" behavior="0" />
       <RootComponent type="60" id="{9d2729cd-31a1-e911-b80c-005056833c5b}" behavior="0" />
+      <RootComponent type="60" id="{a4361f88-37f2-42be-a05e-b132830e070f}" behavior="0" />
       <RootComponent type="60" id="{b2d87f8b-e657-4b40-8a8a-90218f4fc21a}" behavior="0" />
       <RootComponent type="60" id="{b6663f05-632b-4a3f-b25d-38b1e847005c}" behavior="0" />
       <RootComponent type="60" id="{b8653bc5-ce7c-e911-b80a-005056833c5b}" behavior="0" />
@@ -206,15 +208,15 @@
       </MissingDependency>
       <MissingDependency>
         <Required key="13" type="66" schemaName="MscrmControls.OptionSet.OptionSetControl" displayName="MscrmControls.OptionSet.OptionSetControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="15" type="60" displayName="Information" parentDisplayName="Expense Code" id="{c7087e4e-bb5f-48ea-83e4-6845389b971b}" />
+        <Dependent key="15" type="60" displayName="Expense Quick Create" parentDisplayName="Expense" id="{ec4dde39-c27f-4325-8b6e-932bfa4746b9}" />
       </MissingDependency>
       <MissingDependency>
         <Required key="13" type="66" schemaName="MscrmControls.OptionSet.OptionSetControl" displayName="MscrmControls.OptionSet.OptionSetControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="16" type="60" displayName="Information" parentDisplayName="Expense" id="{f328d84f-a698-4e72-9297-67ac7efb3dde}" />
+        <Dependent key="16" type="60" displayName="Information" parentDisplayName="Expense Code" id="{c7087e4e-bb5f-48ea-83e4-6845389b971b}" />
       </MissingDependency>
       <MissingDependency>
         <Required key="13" type="66" schemaName="MscrmControls.OptionSet.OptionSetControl" displayName="MscrmControls.OptionSet.OptionSetControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="17" type="60" displayName="Expense Quick Create" parentDisplayName="Expense" id="{ec4dde39-c27f-4325-8b6e-932bfa4746b9}" />
+        <Dependent key="17" type="60" displayName="Information" parentDisplayName="Expense" id="{f328d84f-a698-4e72-9297-67ac7efb3dde}" />
       </MissingDependency>
       <MissingDependency>
         <Required key="18" type="66" schemaName="MscrmControls.Signature.SignatureControl" displayName="MscrmControls.Signature.SignatureControl" solution="CustomControlsCore (9.0.0002.3034)" />
@@ -226,7 +228,11 @@
       </MissingDependency>
       <MissingDependency>
         <Required key="21" type="66" schemaName="MscrmControls.FlipSwitch.FlipSwitchControl" displayName="MscrmControls.FlipSwitch.FlipSwitchControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="16" type="60" displayName="Information" parentDisplayName="Expense" id="{f328d84f-a698-4e72-9297-67ac7efb3dde}" />
+        <Dependent key="12" type="60" displayName="Information" parentDisplayName="Assignment" id="{7723906c-0273-46ed-ba86-05a21ba4a657}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="21" type="66" schemaName="MscrmControls.FlipSwitch.FlipSwitchControl" displayName="MscrmControls.FlipSwitch.FlipSwitchControl" solution="CustomControlsCore (9.0.0002.3034)" />
+        <Dependent key="17" type="60" displayName="Information" parentDisplayName="Expense" id="{f328d84f-a698-4e72-9297-67ac7efb3dde}" />
       </MissingDependency>
       <MissingDependency>
         <Required key="22" type="61" schemaName="msdyn_/ActivityFeeds.Form.js" displayName="msdyn_/ActivityFeeds.Form.js" solution="ActivityFeedsCore (9.0.0.0)" />

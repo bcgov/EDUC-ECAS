@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EntityRelationships>
   <EntityRelationship Name="business_unit_educ_assignment" />
+  <EntityRelationship Name="business_unit_educ_config" />
   <EntityRelationship Name="business_unit_educ_countrycode" />
   <EntityRelationship Name="business_unit_educ_credential" />
   <EntityRelationship Name="business_unit_educ_credentialcode" />
@@ -43,6 +44,8 @@
   <EntityRelationship Name="educ_systemuser_educ_session_ExpenseAuthorityName" />
   <EntityRelationship Name="lk_educ_assignment_createdby" />
   <EntityRelationship Name="lk_educ_assignment_modifiedby" />
+  <EntityRelationship Name="lk_educ_config_createdby" />
+  <EntityRelationship Name="lk_educ_config_modifiedby" />
   <EntityRelationship Name="lk_educ_countrycode_createdby" />
   <EntityRelationship Name="lk_educ_countrycode_modifiedby" />
   <EntityRelationship Name="lk_educ_credential_createdby" />
@@ -76,6 +79,7 @@
   <EntityRelationship Name="lk_educ_teachingexperience_createdby" />
   <EntityRelationship Name="lk_educ_teachingexperience_modifiedby" />
   <EntityRelationship Name="owner_educ_assignment" />
+  <EntityRelationship Name="owner_educ_config" />
   <EntityRelationship Name="owner_educ_countrycode" />
   <EntityRelationship Name="owner_educ_credential" />
   <EntityRelationship Name="owner_educ_credentialcode" />
@@ -93,6 +97,7 @@
   <EntityRelationship Name="owner_educ_subjectcode" />
   <EntityRelationship Name="owner_educ_teachingexperience" />
   <EntityRelationship Name="team_educ_assignment" />
+  <EntityRelationship Name="team_educ_config" />
   <EntityRelationship Name="team_educ_countrycode" />
   <EntityRelationship Name="team_educ_credential" />
   <EntityRelationship Name="team_educ_credentialcode" />
@@ -115,6 +120,7 @@
   <EntityRelationship Name="TransactionCurrency_educ_payment" />
   <EntityRelationship Name="TransactionCurrency_educ_rolecode" />
   <EntityRelationship Name="user_educ_assignment" />
+  <EntityRelationship Name="user_educ_config" />
   <EntityRelationship Name="user_educ_countrycode" />
   <EntityRelationship Name="user_educ_credential" />
   <EntityRelationship Name="user_educ_credentialcode" />

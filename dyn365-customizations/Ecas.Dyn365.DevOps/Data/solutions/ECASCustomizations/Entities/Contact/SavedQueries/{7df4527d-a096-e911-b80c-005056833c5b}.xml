@@ -25,6 +25,14 @@
     <fetchxml>
       <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
         <entity name="contact">
+          <attribute name="educ_professionalcertificateyk" />
+          <attribute name="educ_professionalcertificatebc" />
+          <attribute name="educ_preferredfirstname" />
+          <attribute name="lastname" />
+          <attribute name="firstname" />
+          <attribute name="emailaddress1" />
+          <attribute name="address1_city" />
+          <attribute name="address1_composite" />
           <order attribute="address1_city" descending="false" />
           <filter type="and">
             <filter type="or">
@@ -36,20 +44,8 @@
                 <condition attribute="educ_professionalcertificateyk" operator="not-null" />
                 <condition attribute="educ_professionalcertificateykverified" operator="null" />
               </filter>
-              <filter type="and">
-                <condition attribute="educ_professionalcertificateother" operator="not-null" />
-                <condition attribute="educ_professionalcertificateotherverified" operator="null" />
-              </filter>
             </filter>
           </filter>
-          <attribute name="educ_professionalcertificateyk" />
-          <attribute name="educ_professionalcertificatebc" />
-          <attribute name="educ_preferredfirstname" />
-          <attribute name="lastname" />
-          <attribute name="firstname" />
-          <attribute name="emailaddress1" />
-          <attribute name="address1_city" />
-          <attribute name="address1_composite" />
           <attribute name="contactid" />
         </entity>
       </fetch>
