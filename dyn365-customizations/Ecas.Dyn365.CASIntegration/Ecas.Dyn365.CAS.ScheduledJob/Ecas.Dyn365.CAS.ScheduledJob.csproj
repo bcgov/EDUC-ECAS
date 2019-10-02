@@ -11,19 +11,4 @@
     </Reference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Environment.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Environment.settings</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Environment.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Environment.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-
 </Project>

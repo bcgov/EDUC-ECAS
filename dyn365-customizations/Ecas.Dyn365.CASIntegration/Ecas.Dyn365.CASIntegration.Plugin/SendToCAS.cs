@@ -53,7 +53,7 @@ namespace BCGov.Dyn365.CASIntegration.Plugin
                     return;
 
                 var postImageEntity = context.PostEntityImages["PostImage"] as Entity;
-                if (!postImageEntity.Contains("vsd_payee"))
+                if (!postImageEntity.Contains("ecas_payee"))
                     throw new InvalidPluginExecutionException("Payee lookup is empty on the payment..");
                 if (!postImageEntity.Contains("educ_amount"))
                     throw new InvalidPluginExecutionException("Amount is empty on the payment");
@@ -228,8 +228,7 @@ namespace BCGov.Dyn365.CASIntegration.Plugin
 
             #region Invoice Details
             DateTime? invoiceDate = DateTime.MinValue;
-            string invoiceNumber = string.Empty;
-
+       
             //TODO: ETL on Method of payment. 
             string methodOfPayment = "GEN CHQ";
             //methodOfPayment = "GEN EFT";
@@ -240,7 +239,7 @@ namespace BCGov.Dyn365.CASIntegration.Plugin
                 throw new InvalidPluginExecutionException("Payment Number is empty..");
 
             invoiceDate = DateTime.Now;
-            invoiceNumber = (string)paymentEntity["ecas_paymentnumber"];
+            //invoiceNumber = (string)paymentEntity["ecas_paymentnumber"];
 
             #endregion
 
@@ -256,6 +255,8 @@ namespace BCGov.Dyn365.CASIntegration.Plugin
             if (!paymentEntity.Contains("ecas_gldate"))
                 throw new InvalidPluginExecutionException("GL Date is empty..");
             #endregion
+
+            var invoiceNumber = string.Format("ED-{0}", DateTime.Today.ToShortDateString().Replace("/", "-"));
 
             Invoice result = new Invoice()
             {
@@ -273,7 +274,7 @@ namespace BCGov.Dyn365.CASIntegration.Plugin
                 SpecialHandling = false,
                 //TODO - 
                 Terms = Helpers.GetConfigKeyValue(configs, "Terms", "CAS-AP"),
-                PayAloneFlag = Helpers.GetConfigKeyValue(configs, "PayAloneFlag", "CAS-AP"),
+                PayAloneFlag = "N",
                 GLDate = invoiceDate,
                 InvoiceBatchName = Helpers.GetConfigKeyValue(configs, "BatchName", "CAS-AP"),
 
@@ -289,36 +290,37 @@ namespace BCGov.Dyn365.CASIntegration.Plugin
                 InvoiceLineType = "Item",
                 LineCode = paymentEntity.FormattedValues["ecas_linecode"],
                 InvoiceLineAmount = ((Money)paymentEntity["ecas_amount"]).Value,
-                DefaultDistributionAccount = Helpers.GetConfigKeyValue(configs, "DefaultDistributionAccount", 
-                    "CAS-AP")                
+                DefaultDistributionAccount = ((OptionSetValue)paymentEntity["educ_paymenttype"]).Value == 610410000 ? 
+                    Helpers.GetConfigKeyValue(configs, "FeeDistributionAccount", "CAS-AP") : 
+                    Helpers.GetConfigKeyValue(configs, "ExpensesDistributionAccount", "CAS-AP")
             };
             
 
-            if (((OptionSetValue)paymentEntity["ecas_specialhandling"]).Value == 100000001 || 
-                supplierNumber.Equals(Helpers.GetConfigKeyValue(configs, "BlockNumber", "CAS-AP"), 
-                StringComparison.InvariantCultureIgnoreCase)) //DBack or Block
-            {
-                if (!string.IsNullOrEmpty(firstName))
-                    result.NameLine1 = firstName;
-                if (!string.IsNullOrEmpty(lastName))
-                    result.NameLine2 = lastName;
-                if (!string.IsNullOrEmpty(addressLine1))
-                    result.AddressLine1 = addressLine1;
-                if (!string.IsNullOrEmpty(addressLine2))
-                    result.AddressLine2 = addressLine2;
-                if (!string.IsNullOrEmpty(addressLine3))
-                    result.AddressLine3 = addressLine3;
-                if (!string.IsNullOrEmpty(city))
-                    result.City = city;
-                if (!string.IsNullOrEmpty(country))
-                    result.Country = country;
-                if (!string.IsNullOrEmpty(province))
-                    result.Province = province;
-                if (!string.IsNullOrEmpty(postalCode))
-                    result.PostalCode = postalCode;
+            //if (((OptionSetValue)paymentEntity["ecas_specialhandling"]).Value == 100000001 || 
+            //    supplierNumber.Equals(Helpers.GetConfigKeyValue(configs, "BlockNumber", "CAS-AP"), 
+            //    StringComparison.InvariantCultureIgnoreCase)) //DBack or Block
+            //{
+            //    if (!string.IsNullOrEmpty(firstName))
+            //        result.NameLine1 = firstName;
+            //    if (!string.IsNullOrEmpty(lastName))
+            //        result.NameLine2 = lastName;
+            //    if (!string.IsNullOrEmpty(addressLine1))
+            //        result.AddressLine1 = addressLine1;
+            //    if (!string.IsNullOrEmpty(addressLine2))
+            //        result.AddressLine2 = addressLine2;
+            //    if (!string.IsNullOrEmpty(addressLine3))
+            //        result.AddressLine3 = addressLine3;
+            //    if (!string.IsNullOrEmpty(city))
+            //        result.City = city;
+            //    if (!string.IsNullOrEmpty(country))
+            //        result.Country = country;
+            //    if (!string.IsNullOrEmpty(province))
+            //        result.Province = province;
+            //    if (!string.IsNullOrEmpty(postalCode))
+            //        result.PostalCode = postalCode;
 
-                result.PayAloneFlag = "Y";
-            }
+            //    result.PayAloneFlag = "Y";
+            //}
 
             return result;
         }

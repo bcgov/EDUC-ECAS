@@ -15,10 +15,24 @@ namespace Ecas.Dyn365.CAS.ScheduledJob.ScheduleJobSession
 
         public bool VerifyStatusOfInProgressPayments()
         {
-            var endPoint = string.Format("${}/api/operation=ecas_payments&$filter=ecas_paymentid eq ${paymentid}");
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, endPoint);
-            request.Content = new StringContent(content.ToString(), Encoding.UTF8, "application/json");
+            foreach (var item in GetProcessingCASPaymentPayment())
+            {
 
+            }
+
+            return true;
+        }
+
+        private List<Guid> GetProcessingCASPaymentPayment()
+        {
+            var webapiurl = "https://localhost";
+
+            var endPoint = string.Format("${webapiurl}/api/operation=ecas_payments&$filter=ecas_paymentid eq");
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, endPoint);
+            request.Content = new StringContent(endPoint.ToString(), Encoding.UTF8, "application/json");
+
+
+            return new List<Guid>();
         }
 
 

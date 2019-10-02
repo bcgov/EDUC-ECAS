@@ -1,5 +1,6 @@
 ﻿using Ecas.Dyn365.CASIntegration.Plugin;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,60 +35,63 @@ namespace Ecas.Dyn365.CASIntegration.Workflows.Utils
         {
             bool isError = false;
             var Log = new StringBuilder();
+            var paymentrecord = organizationService.Retrieve("ecas_payment", paymentId,
+                    new ColumnSet("ecas_paymentid", "ecas_invoicenumber", "ecas_suppliernumber", "ecas_suppliersitenumber"));
 
+            HttpClient httpClient = null;
             try
             {
                 Log.AppendLine("\r\nOUTPUT PARAMETERS:");
-                var configs = Helpers.GetSystemConfigurations(organizationService, "CAS-AP"", string.Empty);
+                var configs = Helpers.GetSystemConfigurations(organizationService, "CAS-AP", string.Empty);
 
                 string userMessage = string.Empty;
-                HttpClient httpClient = null;
-                try
+
+                string clientKey = Helpers.GetConfigKeyValue(configs, "ClientKey", "CAS-AP");
+                string clientId = Helpers.GetConfigKeyValue(configs, "ClientId", "CAS-AP");
+                string url = Helpers.GetConfigKeyValue(configs, "InterfaceUrl", "CAS-AP");
+
+                httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Add("clientID", clientId);
+                httpClient.DefaultRequestHeaders.Add("secret", clientKey);
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                httpClient.BaseAddress = new Uri(url);
+                httpClient.Timeout = new TimeSpan(1, 0, 0);  // 1 hour timeout 
+
+                var jsonRequest = string.Format("$!$\"invoiceNumber\":\"{0}\",\"supplierNumber\":\"{1}\",\"supplierSiteNumber\":\"{2}\"$&$",
+                    paymentrecord.GetAttributeValue<string>("ecas_invoicenumber"),
+                    paymentrecord.GetAttributeValue<string>("ecas_suppliernumber"),
+                    paymentrecord.GetAttributeValue<string>("ecas_suppliersitenumber")).Replace("$!$", "{").Replace("$&$", "}");
+
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "/api/CASAPRetreive/GetTransactionRecords");
+                request.Content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = httpClient.SendAsync(request).Result;
+
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    string clientKey = Helpers.GetConfigKeyValue(configs, "ClientKey", "CAS-AP"");
-                    string clientId = Helpers.GetConfigKeyValue(configs, "ClientId", "CAS-AP"");
-                    string url = Helpers.GetConfigKeyValue(configs, "InterfaceUrl", "CAS-AP"");
-
-                    httpClient = new HttpClient();
-                    httpClient.DefaultRequestHeaders.Add("clientID", clientId);
-                    httpClient.DefaultRequestHeaders.Add("secret", clientKey);
-                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    httpClient.BaseAddress = new Uri(url);
-                    httpClient.Timeout = new TimeSpan(1, 0, 0);  // 1 hour timeout 
-
-                    var jsonRequest = string.Format("$!$\"invoiceNumber\":\"{0}\",\"supplierNumber\":\"{1}\",\"supplierSiteNumber\":\"{2}\"$&$", "", "", "").Replace("$!$", "{").Replace("$&$", "}"); ;
-
-                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "/api/CASAPRetreive/GetTransactionRecords");
-                    request.Content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
-
-                    HttpResponseMessage response = httpClient.SendAsync(request).Result;
-
-                    if (response.StatusCode == HttpStatusCode.OK)
+                    userMessage = response.Content.ReadAsStringAsync().Result;
+                    if (!userMessage.Contains("SUCCEEDED"))
                     {
-                        userMessage = response.Content.ReadAsStringAsync().Result;
-                        if (!userMessage.Contains("SUCCEEDED"))
-                        {
-                            throw new InvalidPluginExecutionException(userMessage);
-                        }
+                        throw new InvalidPluginExecutionException(userMessage);
                     }
-                    else
-                        throw new InvalidPluginExecutionException(response.StatusCode.ToString() + "\r\n" + jsonRequest);
                 }
-                catch (Exception ex1)
-                {
-                    Log.AppendLine("Error:" + ex1.Message);
-                    isError = true;
-                }
-                finally
-                {
-                    if (httpClient != null)
-                        httpClient.Dispose();
+                else
+                    throw new InvalidPluginExecutionException(response.StatusCode.ToString() + "\r\n" + jsonRequest);
+            }
+            catch (Exception ex1)
+            {
+                Log.AppendLine("Error:" + ex1.Message);
+                isError = true;
+            }
+            finally
+            {
+                if (httpClient != null)
+                    httpClient.Dispose();
 
-                    Log.AppendLine((string)paymentEntity["vsd_name"] + " END..");
-                }
+                //Log.AppendLine((string)paymentEntity["ecas_name"] + " END..");
             }
 
-            return new PaymentStatusCheckerResult { Success = !isError, Message = Log.ToString()  };
+            return new PaymentStatusCheckerResult { Success = !isError, Message = Log.ToString() };
         }
     }
 }

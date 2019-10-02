@@ -1,2 +1,13 @@
 D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Workflows\obj\Debug\Ecas.Dyn365.CASIntegration.Workflows.csprojAssemblyReference.cache
 D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Workflows\obj\Debug\Ecas.Dyn365.CASIntegration.Workflows.csproj.CoreCompileInputs.cache
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Workflows\bin\Debug\Ecas.Dyn365.CASIntegration.Workflows.dll
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Workflows\bin\Debug\Ecas.Dyn365.CASIntegration.Workflows.pdb
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Workflows\bin\Debug\Microsoft.Crm.Sdk.Proxy.dll
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Workflows\bin\Debug\Microsoft.Xrm.Sdk.dll
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Workflows\bin\Debug\Microsoft.Xrm.Sdk.Workflow.dll
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Workflows\bin\Debug\Microsoft.Crm.Sdk.Proxy.xml
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Workflows\bin\Debug\Microsoft.Xrm.Sdk.xml
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Workflows\bin\Debug\Microsoft.Xrm.Sdk.Workflow.xml
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Workflows\obj\Debug\Ecas.Dyn365.CASIntegration.Workflows.csproj.CopyComplete
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Workflows\obj\Debug\Ecas.Dyn365.CASIntegration.Workflows.dll
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Workflows\obj\Debug\Ecas.Dyn365.CASIntegration.Workflows.pdb
