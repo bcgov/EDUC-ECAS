@@ -1,12 +1,14 @@
 <?php
 
+$api_key = base64_encode(env('DYNAMICS_USERNAME') . ':' . env('DYNAMICS_PASSWORD'));
+
 return [
 
     'connection' => [
         'base_uri' => env('DYNAMICSBASEURL'),
         'timeout'  => env('DYNAMICS_TIMEOUT'),
         'headers'  => [
-            'Authorization' => env('API_KEY')
+            'Authorization' => 'Basic ' . $api_key
         ]
     ],
 
