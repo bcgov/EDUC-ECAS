@@ -7,6 +7,7 @@ using System.ServiceModel;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using Newtonsoft.Json.Linq;
 
 namespace Ecas.Dyn365.CAS.ScheduledJob.ScheduleJobSession
 {
@@ -25,20 +26,37 @@ namespace Ecas.Dyn365.CAS.ScheduledJob.ScheduleJobSession
 
         private List<Guid> GetProcessingCASPaymentPayment()
         {
-            var webapiurl = @"https://localhost:8000";
+            var webapiurl = @"https://localhost:44331/api/";
 
-            var endPoint = string.Format("${webapiurl}/api/operation=ecas_payments&$filter=ecas_paymentid eq");
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, endPoint);
-            request.Content = new StringContent(endPoint.ToString(), Encoding.UTF8, "application/json");
+            var query =
+                //string.Format("${webapiurl}/api/operations?statement=educ_payments&$select=educ_paymentid,educ_invoicenumber,educ_suppliernumber,educ_suppliersitenumber&$filter=statuscode eq 610410006");
+                string.Format("operations?statement=educ_payments&$select=educ_paymentid&$filter=statuscode eq 1",
+                webapiurl);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, query);
+            //request.Content = new StringContent(query.ToString(), Encoding.UTF8, "application/json");
+            request.Headers.Add("Prefer", "odata.maxpagesize=5000");
 
+            HttpResponseMessage response = getHttpClient(webapiurl).SendAsync(request).Result;
+            if (response.IsSuccessStatusCode) //200
+            {
+                var r = response.Content.ReadAsStringAsync().Result.TrimStart(new char[] { '[' }).TrimEnd(new char[] { ']' });
+                var results = JObject.Parse(r);
+            }
+            else
+            {
+                throw new Exception(string.Format("Failed to retrieve payments", response.Content));
+            }
 
             return new List<Guid>();
         }
 
 
 
-        private HttpClient getHttpClient(string userName, string password, string webAPIBaseAddress)
+        private HttpClient getHttpClient(string webAPIBaseAddress)
         {
+            string userName = "";
+            string password = "";
+
             var client = new HttpClient(new HttpClientHandler()
             {
                 ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => { return true; }

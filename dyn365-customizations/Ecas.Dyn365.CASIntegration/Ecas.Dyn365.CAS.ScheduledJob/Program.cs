@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ecas.Dyn365.CAS.ScheduledJob.ScheduleJobSession;
+using System;
 
 namespace Ecas.Dyn365.CAS.ScheduledJob
 {
@@ -6,7 +7,12 @@ namespace Ecas.Dyn365.CAS.ScheduledJob
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Fetching Payments currently being processed by CAS");
+
+            var checkCASPaymentUtil = new CheckPaymentStatusLogic();
+            checkCASPaymentUtil.VerifyStatusOfInProgressPayments();
+
+            Console.ReadLine();
         }
     }
 }

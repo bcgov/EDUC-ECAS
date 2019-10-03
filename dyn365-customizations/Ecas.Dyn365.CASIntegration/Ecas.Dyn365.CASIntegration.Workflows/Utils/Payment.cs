@@ -18,15 +18,16 @@ namespace Ecas.Dyn365.CASIntegration.Workflows.Utils
         IOrganizationService organizationService;
         ITracingService tracingService;
 
-        public Payment(Guid _paymentId, IOrganizationService _organizationService, ITracingService _tracingService)
+        public Payment(IOrganizationService _organizationService, ITracingService _tracingService, 
+            Guid _paymentId)
         {
-            if (_paymentId == Guid.Empty) throw new ArgumentNullException("Payment Id cannot be null");
             if (_organizationService == null) throw new ArgumentNullException("Organization Service cannot be null");
             if (_tracingService == null) throw new ArgumentNullException("Tracing Service Id cannot be null");
+            if (_paymentId == Guid.Empty) throw new ArgumentNullException("Payment Id cannot be null");
 
-            paymentId = _paymentId;
             organizationService = _organizationService;
             tracingService = _tracingService;
+            paymentId = _paymentId;
 
             tracingService.Trace("Loaded Payment Util");
         }
@@ -35,12 +36,22 @@ namespace Ecas.Dyn365.CASIntegration.Workflows.Utils
         {
             bool isError = false;
             var Log = new StringBuilder();
-            var paymentrecord = organizationService.Retrieve("ecas_payment", paymentId,
-                    new ColumnSet("ecas_paymentid", "ecas_invoicenumber", "ecas_suppliernumber", "ecas_suppliersitenumber"));
+            var paymentrecord = organizationService.Retrieve("educ_payment", paymentId,
+                    new ColumnSet("educ_paymentid", "educ_invoicenumber", "educ_suppliernumber", "educ_suppliersitenumber"));
+
+            var invoiceNumber = paymentrecord.GetAttributeValue<string>("educ_invoicenumber");
+            var supplierNumber = paymentrecord.GetAttributeValue<string>("educ_suppliernumber");
+            var supplierSiteNumber = paymentrecord.GetAttributeValue<string>("educ_suppliersitenumber");
 
             HttpClient httpClient = null;
             try
             {
+                if (string.IsNullOrEmpty(invoiceNumber)) Log.AppendLine("Invoice Number cannot be null");
+                if (string.IsNullOrEmpty(supplierNumber)) Log.AppendLine("Supplier Number cannot be null");
+                if (string.IsNullOrEmpty(supplierSiteNumber)) Log.AppendLine("Supplier Site Number Id cannot be null");
+
+                if (Log.Length > 0) throw new InvalidPluginExecutionException(Log.ToString());
+
                 Log.AppendLine("\r\nOUTPUT PARAMETERS:");
                 var configs = Helpers.GetSystemConfigurations(organizationService, "CAS-AP", string.Empty);
 
@@ -58,9 +69,7 @@ namespace Ecas.Dyn365.CASIntegration.Workflows.Utils
                 httpClient.Timeout = new TimeSpan(1, 0, 0);  // 1 hour timeout 
 
                 var jsonRequest = string.Format("$!$\"invoiceNumber\":\"{0}\",\"supplierNumber\":\"{1}\",\"supplierSiteNumber\":\"{2}\"$&$",
-                    paymentrecord.GetAttributeValue<string>("ecas_invoicenumber"),
-                    paymentrecord.GetAttributeValue<string>("ecas_suppliernumber"),
-                    paymentrecord.GetAttributeValue<string>("ecas_suppliersitenumber")).Replace("$!$", "{").Replace("$&$", "}");
+                    invoiceNumber, supplierNumber, supplierSiteNumber).Replace("$!$", "{").Replace("$&$", "}");
 
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "/api/CASAPRetreive/GetTransactionRecords");
                 request.Content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
@@ -88,7 +97,9 @@ namespace Ecas.Dyn365.CASIntegration.Workflows.Utils
                 if (httpClient != null)
                     httpClient.Dispose();
 
-                //Log.AppendLine((string)paymentEntity["ecas_name"] + " END..");
+                Log.AppendLine((string)paymentrecord["educ_name"] + " END..");
+
+                paymentrecord["educ_casresponse"] = Log.ToString();
             }
 
             return new PaymentStatusCheckerResult { Success = !isError, Message = Log.ToString() };

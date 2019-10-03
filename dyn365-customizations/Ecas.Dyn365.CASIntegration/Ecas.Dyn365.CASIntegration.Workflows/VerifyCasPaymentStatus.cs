@@ -28,8 +28,8 @@ namespace Ecas.Dyn365.CASIntegration.Workflows
             //Read Payment Id
             var paymentId = Payment.Get<EntityReference>(context).Id;
             crmWorkflowContext.TracingService.Trace("Payment Id retrieved");
-            Utils.Payment paymentUtils = new Utils.Payment(paymentId, crmWorkflowContext.OrganizationService,
-                crmWorkflowContext.TracingService);
+            Utils.Payment paymentUtils = new Utils.Payment(crmWorkflowContext.OrganizationService,
+                crmWorkflowContext.TracingService, paymentId);
             paymentUtils.VerifyStatus();
         }
     }
