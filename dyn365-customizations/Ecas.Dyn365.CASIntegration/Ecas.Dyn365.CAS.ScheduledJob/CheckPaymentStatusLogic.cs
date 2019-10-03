@@ -25,7 +25,7 @@ namespace Ecas.Dyn365.CAS.ScheduledJob.ScheduleJobSession
 
         private List<Guid> GetProcessingCASPaymentPayment()
         {
-            var webapiurl = "https://localhost";
+            var webapiurl = @"https://localhost:8000";
 
             var endPoint = string.Format("${webapiurl}/api/operation=ecas_payments&$filter=ecas_paymentid eq");
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, endPoint);
