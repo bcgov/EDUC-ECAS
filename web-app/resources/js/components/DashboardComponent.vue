@@ -57,8 +57,8 @@
                                     <div class="col">{{ credential.credential.name }}</div>
                                 </div>
                                 <div class="row pt-3">
-                                    <div class="col">
-                                        <select v-model="new_credential">
+                                    <div class="form-group col">
+                                        <select v-model="new_credential" class="form-control">
                                             <option value="0">Select New Credential</option>
                                             <option v-for="credential in credentialsAvailable" :value="credential">
                                                 {{ credential.name }}
