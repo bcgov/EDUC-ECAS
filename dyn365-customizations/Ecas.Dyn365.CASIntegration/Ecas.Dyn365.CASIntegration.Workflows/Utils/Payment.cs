@@ -32,7 +32,7 @@ namespace Ecas.Dyn365.CASIntegration.Workflows.Utils
             tracingService.Trace("Loaded Payment Util");
         }
 
-        public PaymentStatusCheckerResult VerifyStatus()
+        public PaymentStatusCheckerResult VerifyAndUpdateStatus()
         {
             bool isError = false;
             var Log = new StringBuilder();
@@ -82,6 +82,12 @@ namespace Ecas.Dyn365.CASIntegration.Workflows.Utils
                     if (!userMessage.Contains("SUCCEEDED"))
                     {
                         throw new InvalidPluginExecutionException(userMessage);
+                    }
+                    else
+                    {
+                        //Payment Processed By ECAS
+                        paymentrecord["statuscode"] = new OptionSetValue(610410005);
+                        organizationService.Update(paymentrecord);
                     }
                 }
                 else

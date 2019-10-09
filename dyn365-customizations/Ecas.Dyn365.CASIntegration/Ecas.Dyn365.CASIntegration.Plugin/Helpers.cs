@@ -22,14 +22,14 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
         {
             List<Entity> result = new List<Entity>();
 
-            QueryExpression exp = new QueryExpression("ecas_config");
+            QueryExpression exp = new QueryExpression("educ_config");
             exp.NoLock = true;
             exp.ColumnSet.AllColumns = true;
             exp.Criteria.AddCondition("statecode", ConditionOperator.Equal, 0); //Active
             if (!string.IsNullOrEmpty(group))
-                exp.Criteria.AddCondition("ecas_group", ConditionOperator.Equal, group);
+                exp.Criteria.AddCondition("educ_group", ConditionOperator.Equal, group);
             if (!string.IsNullOrEmpty(key))
-                exp.Criteria.AddCondition("ecas_key", ConditionOperator.Equal, key);
+                exp.Criteria.AddCondition("educ_key", ConditionOperator.Equal, key);
 
             var coll = service.RetrieveMultiple(exp);
             if (coll != null && coll.Entities != null && coll.Entities.Count > 0)
@@ -48,12 +48,12 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
 
             foreach (var configEntity in configurations)
             {
-                if (configEntity["ecas_key"].ToString().Equals(key, StringComparison.InvariantCultureIgnoreCase))
+                if (configEntity["educ_key"].ToString().Equals(key, StringComparison.InvariantCultureIgnoreCase))
                 {
                     bool isFinal = false;
                     if (!string.IsNullOrEmpty(group))
                     {
-                        if (configEntity["ecas_group"].ToString().Equals(group, StringComparison.InvariantCultureIgnoreCase))
+                        if (configEntity["educ_group"].ToString().Equals(group, StringComparison.InvariantCultureIgnoreCase))
                             isFinal = true;
                         else
                             isFinal = false;
@@ -62,7 +62,7 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
                         isFinal = true;
 
                     if (isFinal)
-                        return configEntity["ecas_value"].ToString();
+                        return configEntity["educ_value"].ToString();
                 }
             }
 
@@ -76,12 +76,12 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
 
             foreach (var configEntity in configurations)
             {
-                if (configEntity["ecas_key"].ToString().Equals(key, StringComparison.InvariantCultureIgnoreCase))
+                if (configEntity["educ_key"].ToString().Equals(key, StringComparison.InvariantCultureIgnoreCase))
                 {
                     bool isFinal = false;
                     if (!string.IsNullOrEmpty(group))
                     {
-                        if (configEntity["ecas_group"].ToString().Equals(group, StringComparison.InvariantCultureIgnoreCase))
+                        if (configEntity["educ_group"].ToString().Equals(group, StringComparison.InvariantCultureIgnoreCase))
                             isFinal = true;
                         else
                             isFinal = false;
@@ -91,7 +91,7 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
 
 
                     if (isFinal)
-                        return configEntity["ecas_securevalue"].ToString();
+                        return configEntity["educ_securevalue"].ToString();
                 }
             }
 

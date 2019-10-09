@@ -78,7 +78,7 @@
     </Compile>
     <Compile Include="Utils\PaymentStatusCheckerResult.cs" />
     <Compile Include="Utils\Payment.cs" />
-    <Compile Include="VerifyCasPaymentStatus.cs" />
+    <Compile Include="VerifyAndUpdateCasPaymentStatus.cs" />
     <Compile Include="WorkFlowActivityBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

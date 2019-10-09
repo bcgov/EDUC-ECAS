@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Ecas.Dyn365.CASIntegration.Workflows
 {
-    public class VerifyCasPaymentStatus : WorkFlowActivityBase 
+    public class VerifyAndUpdateCasPaymentStatus : WorkFlowActivityBase 
     {
         [RequiredArgument]
         [Input("Payment")]
@@ -30,7 +30,7 @@ namespace Ecas.Dyn365.CASIntegration.Workflows
             crmWorkflowContext.TracingService.Trace("Payment Id retrieved");
             Utils.Payment paymentUtils = new Utils.Payment(crmWorkflowContext.OrganizationService,
                 crmWorkflowContext.TracingService, paymentId);
-            paymentUtils.VerifyStatus();
+            paymentUtils.VerifyAndUpdateStatus();
         }
     }
 }

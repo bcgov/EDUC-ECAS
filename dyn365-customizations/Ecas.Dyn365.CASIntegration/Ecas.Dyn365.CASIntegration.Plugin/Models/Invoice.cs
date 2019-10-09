@@ -75,7 +75,7 @@ namespace BCGov.Dyn365.CASIntegration.Plugin.Payment
                 City,
                 Country,
                 Province,
-                PostalCode.Replace(" ", ""),
+                PostalCode = !string.IsNullOrEmpty(PostalCode) ? PostalCode.Replace(" ", ""): string.Empty,
                 QualifiedReceiver,
                 Terms,
                 PayAloneFlag,
