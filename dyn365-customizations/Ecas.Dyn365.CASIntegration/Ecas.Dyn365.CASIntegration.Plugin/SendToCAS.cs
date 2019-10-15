@@ -24,8 +24,6 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
             IOrganizationService service = serviceFactory.CreateOrganizationService(context.UserId);
             ITracingService traceService = (ITracingService)serviceProvider.GetService(typeof(ITracingService));
 
-            traceService.Trace("Initializing plugin..");
-
             if (context.Depth > 1)
                 return;
 
@@ -82,7 +80,7 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
                 httpClient.DefaultRequestHeaders.Add("secret", clientKey);
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 httpClient.BaseAddress = new Uri(url);
-                httpClient.Timeout = new TimeSpan(1, 0, 0);  // 1 hour timeout 
+                httpClient.Timeout = new TimeSpan(0, 2, 0);  // 2 minutes to execute within the sandbox mode
 
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "/api/CASAPTransaction");
                 request.Content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
@@ -93,9 +91,8 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
 
                 traceService.Trace("-----REQUEST INFO------");
                 traceService.Trace("URL:" + url);
-                traceService.Trace("ClientId:" + clientId);
-                traceService.Trace("ClientKey:" + clientKey);
-
+                traceService.Trace("clientID:" + clientId);
+                traceService.Trace("secret:" + clientKey);
 
                 HttpResponseMessage response = httpClient.SendAsync(request).Result;
 
@@ -263,7 +260,7 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
 
             EntityReference sessionLookup = paymentEntity["educ_session"] as EntityReference;
             var sessionEntity = service.Retrieve(sessionLookup.LogicalName.ToLowerInvariant(), sessionLookup.Id,
-                new ColumnSet("educ_name"));
+                new ColumnSet(true));
 
             string sessionShortName = string.Empty;
             if (sessionEntity.Contains("educ_name"))
@@ -304,6 +301,8 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
             #endregion
 
             var invoiceNumber = string.Format("ED-{0}", DateTime.Today.ToShortDateString().Replace("/", "-"));
+            string distributionCode = GetDistributionCode(service, traceService, sessionEntity,
+                ((OptionSetValue)paymentEntity["educ_paymenttype"]).Value == 610410000);
 
             Invoice result = new Invoice()
             {
@@ -325,19 +324,16 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
 
                 //Optional Value
                 QualifiedReceiver = ((EntityReference)paymentEntity["ownerid"]).Name,
-                //TODO: First 40 char charcters of session name
+                //First 40 char charcters of session name
                 PaymentAdviceComments = sessionShortName,
                 CurrencyCode = Helpers.GetConfigKeyValue(configs, "CurrencyCode", "CAS-AP"),
 
                 //Invoice Line Details
                 InvoiceLineNumber = 1,
                 InvoiceLineType = "Item",
-                //TODO
                 LineCode = Helpers.GetConfigKeyValue(configs, "LineCode", "CAS-AP"),
                 InvoiceLineAmount = ((Money)paymentEntity["educ_amount"]).Value,
-                DefaultDistributionAccount = ((OptionSetValue)paymentEntity["educ_paymenttype"]).Value == 610410000 ? 
-                    Helpers.GetConfigKeyValue(configs, "FeeDistributionAccount", "CAS-AP") : 
-                    Helpers.GetConfigKeyValue(configs, "ExpensesDistributionAccount", "CAS-AP")
+                DefaultDistributionAccount = distributionCode
             };
 
             traceService.Trace("Invoice Envelope Loaded");
@@ -369,6 +365,33 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
             //}
 
             return result;
+        }
+
+        private string GetDistributionCode(IOrganizationService service, ITracingService traceService,
+            Entity sessionEntity, bool isFee)
+        {
+            traceService.Trace("Looking up Project information. Composing Distribution code");
+
+            EntityReference projectLookup = sessionEntity["educ_projectcode"] as EntityReference;
+            var projectEntity = service.Retrieve(projectLookup.LogicalName.ToLowerInvariant(), projectLookup.Id,
+                new ColumnSet(true));
+
+            if (!projectEntity.Contains("educ_responsibilitycenter"))
+                throw new InvalidPluginExecutionException("Resposibility Center in Project Entity is empty..");
+            if (!projectEntity.Contains("educ_serviceline"))
+                throw new InvalidPluginExecutionException("Service Line in Project Entity is empty..");
+            if (!projectEntity.Contains("educ_projectcode"))
+                throw new InvalidPluginExecutionException("Project Code in Project Entity is empty..");
+
+
+            //Client(3) / RC(5) / Service Line(5) / STOB(4) / Project #(7) / Location(6) / Future(4) 
+            string distributionCode = string.Format("062.{0}.{1}.{2}.{3}.000000.0000", 
+                projectEntity.GetAttributeValue<string>("educ_responsibilitycenter"), 
+                projectEntity.GetAttributeValue<string>("educ_serviceline"),
+                isFee ? "6016" : "6017",
+                projectEntity.GetAttributeValue<string>("educ_projectcode"));
+
+            return distributionCode;
         }
     }
 }
