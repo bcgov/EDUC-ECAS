@@ -8,15 +8,13 @@
 
 namespace App\Dynamics;
 
-use App\Interfaces\iModelRepository;
+use App\Dynamics\Interfaces\iModelRepository;
 
 class ProfileCredential extends DynamicsRepository implements iModelRepository
 {
     public static $table = 'educ_credentials';
 
     public static $primary_key = 'educ_credentialid';
-
-    public static $cache = 0; // Do Not Cache
 
     public static $fields = [
         'id'            => 'educ_credentialid',

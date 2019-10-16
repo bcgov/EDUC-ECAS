@@ -13,13 +13,21 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::middleware(['cache.headers:private;max_age=300;etag'])->group(function () {
+    Route::resource('/profiles'                               , 'Api\ProfileController', ['except' => ['index']]);
+    Route::resource('/{profile_id}/profile-credentials'       , 'Api\ProfileCredentialController' );
+    Route::resource('/{profile_id}/assignments'               , 'Api\AssignmentController');
+    Route::get('/dashboard'                                   , 'Api\DashboardSetupController@index');
+
+});
 
 
-// Note - these routes are all protected by the 'BaseController' from which these classes extend
+Route::middleware(['cache.headers:public;max_age=172800'])->group(function () {
+    Route::get('/districts'                                   , 'Api\DistrictSearchController@index');
+    Route::get('/schools'                                     , 'Api\SchoolSearchController@index');
 
-Route::resource('/profiles'                               , 'Api\ProfileController', ['except' => ['index']]);
-Route::resource('/{profile_id}/profile-credentials'       , 'Api\ProfileCredentialController' );
-Route::resource('/{profile_id}/assignments'               , 'Api\AssignmentController');
-Route::get('/districts'                                   , 'Api\DistrictSearchController@index');
-Route::get('/schools'                                     , 'Api\SchoolSearchController@index');
+});
+
+Route::get('/keycloak_config'                             , 'Api\KeycloakConfigController@index'  )
+    ->middleware(['cache.headers:public;immutable']);
 

@@ -8,7 +8,7 @@
 
 namespace App\Dynamics;
 
-use App\Interfaces\iModelRepository;
+use App\Dynamics\Interfaces\iModelRepository;
 
 class Assignment extends DynamicsRepository implements iModelRepository
 {
@@ -19,6 +19,8 @@ class Assignment extends DynamicsRepository implements iModelRepository
     const OPEN_STATUS       = 'Open';
     const APPLIED_STATUS    = 'Applied';
     const ACCEPTED_STATUS   = 'Accepted';
+    const SELECTED_STATUS   = 'Selected';
+    const INVITED_STATUS    = 'Invited';
     const DECLINED_STATUS   = 'Declined';
     const WITHDREW_STATUS   = 'Withdrew';
 
@@ -30,7 +32,7 @@ class Assignment extends DynamicsRepository implements iModelRepository
         'contact_id'     => '_educ_contact_value',
         'role_id'        => '_educ_role_value',
         'contract_stage' => 'educ_contractstage',
-        'status'         => 'statuscode',
+        'status_id'      => 'statuscode',
         'state'          => 'statecode'
     ];
 
@@ -38,7 +40,7 @@ class Assignment extends DynamicsRepository implements iModelRepository
         'session_id'     => Session::class,
         'contact_id'     => Profile::class,
         'role_id'        => Role::class,
-        'status'         => AssignmentStatus::class,
+        'status_id'      => AssignmentStatus::class,
         'contract_stage' => ContractStage::class
     ];
 }

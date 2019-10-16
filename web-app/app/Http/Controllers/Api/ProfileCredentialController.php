@@ -3,42 +3,51 @@
 namespace App\Http\Controllers\Api;
 
 
-use App\Dynamics\Decorators\CacheDecorator;
+use App\Dynamics\Interfaces\iCredential;
+use App\Dynamics\Interfaces\iProfile;
+use App\Dynamics\Interfaces\iProfileCredential;
 use App\Dynamics\ProfileCredential;
-use App\Interfaces\iModelRepository;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\ProfileCredentialResource;
+use App\Keycloak\KeycloakGuard;
+use App\Rules\ValidProfileCredential;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
 
-class ProfileCredentialController extends ApiBaseController
+class ProfileCredentialController extends Controller
 {
 
     private $profile;
+    private $profile_credential;
+    private $authentication;
+    private $credential;
 
-    public function __construct(iModelRepository $model)
+    public function __construct(iProfileCredential $profile_credential, iProfile $profile, iCredential $credential, KeycloakGuard $auth)
     {
 
-        parent::__construct($model);
-
-        $repository                     = env('DATASET') == 'Dynamics' ? 'Dynamics' : 'MockEntities\Repository';
-        $this->profile                  = ( new CacheDecorator(App::make('App\\' . $repository .'\Profile')));
+        $this->profile_credential       = $profile_credential;
+        $this->profile                  = $profile;
+        $this->credential               = $credential;
+        $this->authentication           = $auth;
 
     }
 
     public function index($profile_id)
     {
 
-        $profile = $this->profile->get($profile_id);
+        // check user is updating their own profile
 
-        if($this->user->id <> $profile['federated_id']) {
+        $user_id = $this->authentication->id();
+
+        if( ! $user_id ) {
             abort(401, 'unauthorized');
         }
 
-        $credentials =  $this->model->filter(['contact_id' => $profile['id']]);
+        $profile = $this->profile->get($profile_id);
+
+
+        $credentials =  $this->profile_credential->filter(['contact_id' => $profile['id']]);
 
         $filtered = $credentials->filter( function ($credential) {
             return $credential['verified'] <> ProfileCredential::$status['No'];
@@ -53,7 +62,7 @@ class ProfileCredentialController extends ApiBaseController
         abort(405, 'method not allowed');
     }
 
-    public function update($id, Request $request)
+    public function update(Request $request, $id)
     {
         abort(405, 'method not allowed');
     }
@@ -61,38 +70,56 @@ class ProfileCredentialController extends ApiBaseController
     /*
  * Attach a credential to a User
  */
-    public function store(Request $request, $profile_id )
+    public function store($profile_id , Request $request)
     {
+
+        $user_id = $this->authentication->id();
+
+        if( ! $user_id ) {
+            abort(401, 'unauthorized');
+        }
 
         // check user is updating their own profile
         $profile = $this->profile->get($profile_id);
-        $this->checkOwner($request, $profile['federated_id']);
 
 
         $this->validate($request, [
-            'credential_id' => 'required'
+            'credential_id' => [ 'required','string','max:50', new ValidProfileCredential($this->credential) ],
         ]);
 
 
-        $profile_credential_id = $this->model->create([
+        $profile_credential_id = $this->profile_credential->create([
             'contact_id'    => $profile['id'],
             'credential_id' => $request['credential_id'],
-            'verified'      => ProfileCredential::$status['Unverified']
+            'verified'      => ProfileCredential::$status['Unverified']  // all new profile credentials are 'Unverified'
         ]);
 
-        $new_record = $this->model->get($profile_credential_id);
+        $new_record = $this->profile_credential->get($profile_credential_id);
+
+        $new_record['credential'] = $this->credential->get($new_record['credential_id']);
 
         return new ProfileCredentialResource($new_record);
     }
 
-    public function destroy(Request $request, $profile_id, $id)
+    public function destroy($profile_id, $id)
     {
-        // check user is updating their own profile
+
+        $user_id = $this->authentication->id();
+
+        if( ! $user_id ) {
+            abort(401, 'unauthorized');
+        }
+
+        // check user is deleting their own profile credential record
         $profile = $this->profile->get($profile_id);
-        $this->checkOwner($request, $profile['federated_id']);
 
+        $record_for_deletion = $this->profile_credential->get($id);
 
-        $this->model->delete($id);
+        if( $record_for_deletion['contact_id'] <> $profile['id'] ) {
+            abort(401, 'unauthorized');
+        }
+
+        $this->profile_credential->delete($id);
 
         return Response::json(['message' => 'success'], 204);
     }

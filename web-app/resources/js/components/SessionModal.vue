@@ -11,27 +11,38 @@
                 <p>Would you to like to apply for this Session?</p>
             </template>
             <template v-else-if="isStatus(session, 'Applied')">
-                <p>Thank you for your application for this session. The Ministry is reviewing all applications for eligibility and will notify you one way or the other. If you need to un-apply please check the box below.</p>
+                <p>Thank you for your application for this session. The Ministry is reviewing all applications for
+                    eligibility and will notify you one way or the other. If you need to un-apply please check the box
+                    below.</p>
             </template>
             <template v-else-if="isStatus(session, 'Invited')">
                 <p>You are invited to participate in this session.</p>
                 <p v-if="hasSIN">Please accept or decline as soon as possible.</p>
-                <p v-else><a @click.prevent="editProfile" href="">You must include a Social Insurance Number in your profile to attend a Session!</a></p>
+                <p v-else><a @click.prevent="editProfile" href="">You must include a Social Insurance Number in your
+                    profile to attend a Session!</a></p>
             </template>
             <template v-else-if="isStatus(session, 'Accepted')">
-                <p>Thank you for accepting your invitation to participate in this session. A contract is being created and you will be notified when it is ready for signing. If you need to cancel your participation before receiving the contract, please check the box below.</p>
+                <p>Thank you for accepting your invitation to participate in this session. A contract is being created
+                    and you will be notified when it is ready for signing. If you need to cancel your participation
+                    before receiving the contract, please check the box below.</p>
             </template>
             <template v-else-if="isStatus(session, 'Declined')">
                 <p>You have declined your invitation for this session.</p>
             </template>
             <template v-else-if="isStatus(session, 'Contract')">
-                <p>Your contract is ready for signature. Please download, sign, date, and scan back to exams@gov.bc.ca as soon as possible. If you are no longer able to participate in this session, please Decline below.</p>
+                <p>Your contract is ready for signature. Please download, sign, date, and scan back to exams@gov.bc.ca
+                    as soon as possible. If you are no longer able to participate in this session, please Decline
+                    below.</p>
             </template>
             <template v-else-if="isStatus(session, 'Confirmed')">
-                <p>Thank you for returning your signed contract. At this point the Ministry is relying on you to participate in the session. In an unexpected situation comes up and you need to withdraw, please contact exams@gov.bc.ca</p>
+                <p>Thank you for returning your signed contract. At this point the Ministry is relying on you to
+                    participate in the session. In an unexpected situation comes up and you need to withdraw, please
+                    contact exams@gov.bc.ca</p>
             </template>
             <template v-else-if="isStatus(session, 'Completed')">
-                <p>This session is now complete. If there are fees or expenses attached to the session please submit receipts if required. Payments can be expected within 4-6 weeks. If you have any questions, please contact exams@gov.bc.ca</p>
+                <p>This session is now complete. If there are fees or expenses attached to the session please submit
+                    receipts if required. Payments can be expected within 4-6 weeks. If you have any questions, please
+                    contact exams@gov.bc.ca</p>
             </template>
             <template v-else-if="isStatus(session, 'Withdrew')">
                 <p>You have voluntarily withdrawn from this session.</p>
@@ -114,8 +125,12 @@
                 this.$modal.hide('session_form');
             },
 
+            editProfile() {
+                Event.fire('launch-profile-modal');
+            },
+
             isStatus: function (session, status) {
-                return session.status.name === status
+                return session.assignment.status.name === status
             },
 
             acceptInvitation(session, accept) {
@@ -154,6 +169,7 @@
                     .then(function (response) {
                         Event.fire('session_status_updated', response.data.data );
                         session.status = response.data.data.status;
+                        form.closeModal();
                         form.working = false;
                         console.log('assignment created', response.data.data )
                     })
@@ -175,7 +191,7 @@
                 console.log('updateAssignment', action, session.status);
 
                 // Only post if something needs to be done
-                if (action !== session.status.name ) {
+                if (action !== session.assignment.status.name ) {
 
                     form.working = true;
 
@@ -186,7 +202,7 @@
                         .then(function (response) {
                             Event.fire('session_status_updated', response.data.data );
                             session.status = response.data.data.status;
-                            this.closeModal();
+                            form.closeModal();
                             form.working = false;
                             console.log(response.data.data)
                         })

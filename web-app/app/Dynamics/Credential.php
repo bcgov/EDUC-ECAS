@@ -8,7 +8,7 @@
 
 namespace App\Dynamics;
 
-use App\Interfaces\iModelRepository;
+use App\Dynamics\Interfaces\iModelRepository;
 
 class Credential extends DynamicsRepository implements iModelRepository
 {
@@ -17,8 +17,6 @@ class Credential extends DynamicsRepository implements iModelRepository
     public static $primary_key = 'educ_credentialcodeid';
 
     public static $data_bind = 'educ_Credential';
-
-    public static $cache = 480; // 8 Hours
 
     public static $fields = [
         'id'   => 'educ_credentialcodeid',

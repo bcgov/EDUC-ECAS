@@ -8,15 +8,13 @@
 
 namespace App\Dynamics;
 
-use App\Interfaces\iModelRepository;
+use App\Dynamics\Interfaces\iModelRepository;
 
 class Subject extends DynamicsRepository implements iModelRepository
 {
     public static $table = 'educ_subjectcodes';
 
     public static $primary_key = 'educ_subjectcode';
-
-    public static $cache = 480; // 8 Hours
 
     public static $fields = [
         'id'   => 'educ_subjectcode',

@@ -13,12 +13,11 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="api-token" content="{{ $api_token }}">
     
 </head>
 <body class="d-flex flex-column h-100">
     <main class="flex-shrink-0">
-        <div class="row bg-primary">
+        <div class="row bg-primary pt-2">
             <div class="col offset-1">
                 <img src="/logo-banner.svg" height="80px">
             </div>

@@ -4,6 +4,13 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col">
+                        <div id="logout">
+                            <button type="button" class="btn btn-primary" @click="$keycloak.logoutFn" v-if="$keycloak.authenticated">Log out</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col pb-3">
                         <div class="card">
                             <div class="card-header">
                                 <button @click="showProfile" class="float-right btn btn-primary">Edit</button>
@@ -14,17 +21,20 @@
                                 </h2>
                             </div>
                             <div class="card-body">
-                                <p v-show="!new_user">{{ getUser.email }}<br/>
+                                <p v-show="!new_user">
+                                    {{ getUser.email }}<br/>
                                     {{ getUser.address_1 }}<br/>
+                                    <span v-if="getUser.address_2">{{ getUser.address_2 }}<br /></span>
                                     {{ getUser.city }}, <span v-if="mounted">{{ getUser.region.id }}</span> {{ getUser.postal_code }}
                                 </p>
-                                <p v-if="getUser.professional_certificate_bc">
-                                    <strong>BC Professional Certificate:</strong> {{ getUser.professional_certificate_bc }}
+                                <p v-if="getUser.professional_certificate_bc === 'Yes'">
+                                    <strong>BC Professional Certificate:</strong>
+                                    <font-awesome-icon icon="check" alt="BC Professional Certificate"/>
                                 </p>
-                                <p v-if="getUser.professional_certificate_yk">
-                                    <strong>Yukon Professional Certificate:</strong> {{ getUser.professional_certificate_yk }}</p>
-                                <p v-if="getUser.professional_certificate_other">
-                                    <strong>Other Certificate:</strong> {{ getUser.professional_certificate_other }}</p>
+                                <p v-if="getUser.professional_certificate_yk === 'Yes'" >
+                                    <strong>Yukon Professional Certificate:</strong>
+                                    <font-awesome-icon icon="check" alt="Yukon Professional Certificate"/>
+                                </p>
                                 <p v-if="getUser.district">
                                     <strong>District:</strong> {{ getUser.district.name }}</p>
                                 <p v-if="getUser.school">
@@ -32,7 +42,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col pb-3">
                         <div class="card">
                             <div class="card-header">
                                 <h2>Credentials</h2>
@@ -47,98 +57,40 @@
                                     <div class="col">{{ credential.credential.name }}</div>
                                 </div>
                                 <div class="row pt-3">
-                                    <div class="col-1">
-                                        <button class="btn btn-primary btn-sm" @click="addCredential(new_credential)">
-                                            <span>
-                                                <div class="loader text-center" v-show="working"></div>
-                                            </span>
-                                            <div v-show="!working">+</div>
-                                        </button>
-                                    </div>
-                                    <div class="col">
-                                        <select v-model="new_credential">
+                                    <div class="form-group col">
+                                        <select v-model="new_credential" class="form-control">
                                             <option value="0">Select New Credential</option>
                                             <option v-for="credential in credentialsAvailable" :value="credential">
                                                 {{ credential.name }}
                                             </option>
                                         </select>
                                     </div>
+                                    <div class="col">
+                                        <button :class="credentialButtonClass" @click="addCredential(new_credential)"
+                                                :disabled="disableAddCredentialButton">
+                                            <span>
+                                                <div class="loader text-center" v-show="working"></div>
+                                            </span>
+                                            <div v-show="!working">Add</div>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-header pb-0">
-                                <h2 class="float-left">Marking Sessions</h2>
-                                <ul class="nav nav-tabs justify-content-end pt-2">
-                                    <li class="nav-item mb-0">
-                                        <a href="#"
-                                           @click="filter = ''"
-                                           class="nav-link"
-                                           :class="{ 'active': filter === '' }">All
-                                            <span class="badge badge-pill badge-primary">{{ getSessions.length }}</span></a>
-                                    </li>
-                                    <li class="nav-item mb-0">
-                                        <a href="#"
-                                           @click="filter = 'Applied'"
-                                           class="nav-link"
-                                           :class="{ 'active': filter === 'Applied' }">Applied
-                                            <span class="badge badge-pill badge-primary">{{ countStatus('Applied') }}</span></a>
-                                    </li>
-                                    <li class="nav-item mb-0">
-                                        <a href="#"
-                                           @click="filter = 'Invited'"
-                                           class="nav-link"
-                                           :class="{ 'active': filter === 'Invited' }">Invited
-                                            <span class="badge badge-pill badge-primary">{{ countStatus('Invited') }}</span></a>
-                                    </li>
-                                    <li class="nav-item mb-0">
-                                        <a href="#"
-                                           @click="filter = 'Scheduled'"
-                                           class="nav-link"
-                                           :class="{ 'active': filter === 'Scheduled' }">Going
-                                            <span class="badge badge-pill badge-primary">{{ countStatus('Scheduled') }}</span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-hover">
-                                    <tr>
-                                        <th>Type</th>
-                                        <th>Activity</th>
-                                        <th>Dates</th>
-                                        <th>Location</th>
-                                        <th>Status</th>
-                                    </tr>
-                                    <tbody>
-                                    <tr @click="viewSession(session)"
-                                        v-for="session in filteredSessions">
-                                        <td>{{ session.type.name }}</td>
-                                        <td>{{ session.activity.name }}</td>
-                                        <td nowrap>{{ session.date }}</td>
-                                        <td>{{ session.location }}</td>
-                                        <td>{{ sessionStatus(session) }}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <marking-sessions :sessions="this.getSessions"></marking-sessions>
+
+
+
+
             </div>
         </div>
-        <modal name="session_form" height="auto">
-            <session :session="current_session"></session>
-        </modal>
         <modal name="profile_form" height="auto" :scrollable="true" :clickToClose="false">
             <profile
-                    :user="user"
-                    :schools="schools"
+                    :user="getUser"
                     :regions="regions"
-                    :districts="districts"
+                    :countries="countries"
                     :new_user="new_user"
                     dusk="profile-component"
             ></profile>
@@ -148,18 +100,23 @@
 
 <script>
     import {mapGetters} from 'vuex'
+    import MarkingSessions from './MarkingSessions.vue';
 
     export default {
         name: "DashboardComponent",
+
+        components: {
+            MarkingSessions
+        },
+
         props: {
             user: {},
             credentials: {},
             user_credentials: {},
             sessions: {},
             subjects: {},
-            schools: {},
             regions: {},
-            districts: {}
+            countries: {},
         },
         data() {
             return {
@@ -181,7 +138,7 @@
             Event.listen('credential-added', this.pushCredential);
             Event.listen('credential-deleted', this.removeCredential);
             Event.listen('profile-updated', this.updateProfile);
-            Event.listen('session_status_updated', this.updateSessionStatus);
+            Event.listen('launch-profile-modal', this.showProfile);
 
             if ( ! this.user.id) {
                 this.new_user = true;
@@ -193,18 +150,9 @@
         computed: {
             ...mapGetters([
                 'getUser',
-                'getSessions',
-                'filterSessions'
+                'getSessions'
             ]),
-            filteredSessions() {
-                var dashboard = this
-                return this.getSessions.filter(function (session) {
-                    if (dashboard.filter.length === 0) {
-                        return true
-                    }
-                    return session.status.name === dashboard.filter
-                })
-            },
+
             credentialsIdsInUse() {
 
                 var arrayOfCredentialIds = [];
@@ -215,11 +163,26 @@
 
                 return arrayOfCredentialIds;
             },
+
             credentialsAvailable() {
                 // subtract applied_credentials from credentials
                 return this.credentials.filter(x => ! this.credentialsIdsInUse.includes(x.id));
 
+            },
+
+            disableAddCredentialButton() {
+                return this.new_credential === "0" || this.new_credential === 0;
+            },
+
+            credentialButtonClass() {
+                if (this.disableAddCredentialButton) {
+                    return 'd-none';
+                }
+
+                else return 'btn btn-primary btn-sm';
+
             }
+
         },
         methods: {
             addCredential(selection) {
@@ -260,12 +223,8 @@
                         console.log('Failure!')
                     });
             },
-            countStatus(status) {
-                // var status
-                return Object.values(this.getSessions).filter(function (assignment) {
-                    return assignment.status.name === status
-                }).length
-            },
+
+
             pushCredential(profile_credential) {
                 console.log('pushing credential', profile_credential.data.credential.id );
 
@@ -291,49 +250,18 @@
                 this.new_credential = 0;
             },
 
-            sessionStatus(session) {
-                switch (session.status.name) {
-                    case 'Applied':
-                        return "You've Applied"
-                    case 'Invited':
-                        return 'Accept Invitation!'
-                    case 'Accepted':
-                        return 'Contract Pending'
-                    case 'Contract':
-                        return 'Contract Pending'
-                    case 'Confirmed':
-                        return "You're Going!"
-                    case 'Declined':
-                        return 'Declined'
-                    case 'Withdrew':
-                        return 'Withdrew'
-                    case 'Completed':
-                        return 'Closed'
-                }
 
-                return 'Open'
-            },
-            viewSession(session) {
-                console.log('View Session')
-                this.current_session = session
-                this.$modal.show('session_form');
-            },
-            closeModal() {
-                this.$modal.hide('session_form');
-            },
+
             showProfile() {
                 this.$modal.show('profile_form');
             },
             updateProfile(user) {
                 // We must have a valid user now
-                console.log('updateProfile event', user.data);
+                console.log('updateProfile event', user.data.data);
                 this.new_user = false;
-                this.$store.commit('SET_USER', user.data)
+                this.$store.commit('SET_USER', user.data.data)
             },
-            updateSessionStatus(response) {
-                console.log('updateSessionStatus', response);
-                this.$store.commit('UPDATE_SESSION_STATUS', response);
-            }
+
         }
 
     }

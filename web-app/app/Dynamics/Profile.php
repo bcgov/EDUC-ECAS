@@ -8,7 +8,7 @@
 
 namespace App\Dynamics;
 
-use App\Interfaces\iModelRepository;
+use App\Dynamics\Interfaces\iModelRepository;
 
 
 class Profile extends DynamicsRepository implements iModelRepository
@@ -24,6 +24,7 @@ class Profile extends DynamicsRepository implements iModelRepository
         'id'                             => 'contactid',
         'federated_id'                   => 'educ_federatedid',
         'preferred_first_name'           => 'educ_preferredfirstname',
+        'username'                       => 'educ_federatedusername',
         'first_name'                     => 'firstname',
         'last_name'                      => 'lastname',
         'email'                          => 'emailaddress1',
@@ -33,21 +34,22 @@ class Profile extends DynamicsRepository implements iModelRepository
         'address_2'                      => 'address1_line2',
         'city'                           => 'address1_city',
         'region'                         => 'address1_stateorprovince',
+        'country_id'                     => '_educ_countryid_value',
         'postal_code'                    => 'address1_postalcode',
         'district_id'                    => '_educ_district_value',
-        'school_id'                      => 'educ_currentschool',
+        'school_id'                      => '_educ_currentschoold_value',  // note '..schoold..' is not a typo
         'professional_certificate_bc'    => 'educ_professionalcertificatebc',
         'professional_certificate_yk'    => 'educ_professionalcertificateyk',
-        'professional_certificate_other' => 'educ_professionalcertificateother',
     ];
 
     public static $links = [
-        'district_id' => District::class
+        'district_id'   => District::class,
+        'school_id'     => School::class,
+        'country_id'    => Country::class
     ];
 
 
     public static $filter_quote = '\'';
-
 
     public function firstOrCreate($federated_id, $data)
     {
@@ -56,29 +58,32 @@ class Profile extends DynamicsRepository implements iModelRepository
         if (count($existing) == 0) {
 
             return [
-                'federated_id'                   => $federated_id,
                 'id'                             => null,
-                'preferred_first_name'           => null,
+                'federated_id'                   => $federated_id,
                 'first_name'                     => $data['first_name'],
                 'last_name'                      => $data['last_name'],
                 'email'                          => $data['email'],
-                'phone'                          => null,
-                'social_insurance_number'        => null,
-                'address_1'                      => null,
-                'address_2'                      => null,
-                'city'                           => null,
-                'region'                         => 'BC',
-                'postal_code'                    => null,
-                'district_id'                    => null,
-                'school_id'                      => null,
-                'professional_certificate_bc'    => null,
-                'professional_certificate_yk'    => null,
-                'professional_certificate_other' => null,
             ];
 
         }
 
         return $existing[0];
+
+    }
+
+    /*
+     * Read data from Dynamics
+     */
+    public function get($id)
+    {
+
+        $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '&$select=' . implode(',', static::$fields);
+
+        $query .= '&$filter=' . static::$primary_key . " eq " .  $id;
+
+        $collection = $this->retrieveData($query);
+
+        return current($collection)[0];
 
     }
 

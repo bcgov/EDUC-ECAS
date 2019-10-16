@@ -4,21 +4,41 @@ namespace Tests\Unit;
 
 use App\Dynamics\Credential;
 use App\Dynamics\Decorators\CacheDecorator;
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
 use Tests\BaseMigrations;
 
 class CredentialTest extends BaseMigrations
 {
 
     public $api;
-    public $fake;
     public $credentials;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->api = new Credential();
-        $this->fake = new \App\MockEntities\Repository\Credential(new \App\MockEntities\Credential());
-        $this->credentials = factory(\App\MockEntities\Credential::class, 7)->create();
+
+        $mock = new MockHandler([
+            new Response(200, [], json_encode([ 'value' => [
+                (object) [
+                    "educ_credentialcodeid"     => "668def59-6b68-e911-b80a-005056833c5b",
+                    "educ_name"                 => "Credentialed Literacy 12 I"
+                ],
+                (object) [
+                    "educ_credentialcodeid"    => "668def59-6b68-e911-b80a-005056833c5i",
+                    "educ_name"                => "Credentialed Literacy 11 I"
+                ]
+            ]
+            ])),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handler]);
+
+        $this->api = new Credential($client);
+
     }
 
     /** @test */
@@ -41,27 +61,7 @@ class CredentialTest extends BaseMigrations
         $this->verifySingle($credentials->first());
     }
 
-    /** @test */
-    public function get_fake_credentials()
-    {
-        $credentials = $this->fake->all();
 
-
-        $this->assertInstanceOf('Illuminate\Support\Collection', $credentials);
-        $this->verifySingle($credentials->first());
-
-    }
-
-
-    /** @test */
-    public function get_fake_cache_credentials()
-    {
-        $credentials = (new CacheDecorator($this->fake))->all();
-
-        $this->assertInstanceOf('Illuminate\Support\Collection', $credentials);
-        $this->verifySingle($credentials->first());
-    }
-    
 
     
     private function verifySingle($result)

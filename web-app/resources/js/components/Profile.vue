@@ -1,6 +1,13 @@
 <template>
     <div class="card">
-        <div class="card-header"><h1>Teacher Profile</h1></div>
+        <div class="card-header">
+                <div class="row ml-1">
+                    <div><h1>Teacher Profile</h1></div>
+                    <div class="ml-auto mr-3">
+                        <div>* Required</div>
+                    </div>
+                </div>
+        </div>
         <div class="card-body">
             <form>
                 <div class="form-row">
@@ -44,11 +51,12 @@
                         <form-error :errors="errors" field="phone"></form-error>
                     </div>
                     <div class="form-group col">
-                        <label for="social_insurance_number">Social Insurance Number</label>
+                        <label for="social_insurance_number">Social Insurance Num.</label>
                         <input v-if=" ! user_local.is_SIN_on_file" v-model="user_local.social_insurance_number" type="text" class="form-control"
                                name="social_insurance_number" id="social_insurance_number">
                         <input v-if="user_local.is_SIN_on_file" disabled type="text" class="form-control"
                                name="social_insurance_number" placeholder="Received - thank you">
+                        <form-error :errors="errors" field="social_insurance_number"></form-error>
                     </div>
                 </div>
                 <div class="form-row">
@@ -66,16 +74,24 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="form-group">
-                            <label for="city" class="required">City</label>
-                            <input v-model="user_local.city" type="text" class="form-control" name="city" id="city">
-                            <form-error :errors="errors" field="city"></form-error>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label for="city" class="required">City</label>
+                                <input v-model="user_local.city" type="text" class="form-control" name="city" id="city">
+                                <form-error :errors="errors" field="city"></form-error>
+                            </div>
+                            <div class="form-group col">
+                                <label for="region" class="required">{{ regionLabel }}</label>
+                                <select class="form-control" v-model="user_local.region" id="region" name="region">
+                                    <option :value="region" v-for="region in regions">{{ region.name }}</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col">
-                                <label for="region">Province</label>
-                                <select class="form-control" v-model="user_local.region" id="region" name="region">
-                                    <option :value="region" v-for="region in regions">{{ region.name }}</option>
+                                <label for="country" class="required">Country</label>
+                                <select class="form-control" v-model="user_local.country" id="country" name="country">
+                                    <option :value="country" v-for="country in countries">{{ country.name }}</option>
                                 </select>
                             </div>
                             <div class="form-group col">
@@ -93,7 +109,7 @@
                         <vue-bootstrap-typeahead
                                 v-model="districtQuery"
                                 :serializer="s => s.name"
-                                :data="schools"
+                                :data="districts"
                                 id="district"
                                 :placeholder="districtPlacholder"
                                 @hit="user_local.district = $event"
@@ -113,19 +129,30 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col">
-                        <label for="professional_certificate_bc">BC Certificate</label>
-                        <input type="text" class="form-control" name="professional_certificate_bc"
-                               v-model="user_local.professional_certificate_bc" id="professional_certificate_bc">
+                        <label class="control-label">BC Certificate</label>
+                        <div class="pl-3">
+                            <label class="radio-inline control-label" for="certificate_bc_yes">
+                                <input type="radio" name="professional_certificate_bc"
+                                       v-model="user_local.professional_certificate_bc" id="certificate_bc_yes" value="Yes"> Yes
+                            </label>
+                            <label class="radio-inline control-label pl-3" for="certificate_bc_no">
+                                <input type="radio" name="professional_certificate_bc"
+                                       v-model="user_local.professional_certificate_bc" id="certificate_bc_no" value="No"> No
+                            </label>
+                        </div>
                     </div>
                     <div class="form-group col">
-                        <label for="professional_certificate_yk">YK Certificate</label>
-                        <input type="text" class="form-control" name="professional_certificate_yk"
-                               v-model="user_local.professional_certificate_yk" id="professional_certificate_yk">
-                    </div>
-                    <div class="form-group col">
-                        <label for="professional_certificate_other">Other</label>
-                        <input type="text" class="form-control" name="professional_certificate_other"
-                               v-model="user_local.professional_certificate_other" id="professional_certificate_other">
+                        <label class="control-label">Yukon Certificate</label>
+                        <div class="pl-3">
+                            <label class="radio-inline control-label" for="certificate_yk_yes">
+                                <input type="radio" name="professional_certificate_yk"
+                                       v-model="user_local.professional_certificate_yk" id="certificate_yk_yes" value="Yes"> Yes
+                            </label>
+                            <label class="radio-inline control-label pl-3" for="certificate_yk_no">
+                                <input type="radio" name="professional_certificate_yk"
+                                       v-model="user_local.professional_certificate_yk" id="certificate_yk_no" value="No"> No
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -141,8 +168,8 @@
                         </button>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">* Required</div>
+                <div class="col-12 text-center" v-show="! showCancel">
+                    <button type="button" class="btn btn-link" @click="$keycloak.logoutFn" v-if="$keycloak.authenticated">Log out, I'll save this later</button>
                 </div>
             </form>
         </div>
@@ -159,6 +186,7 @@
         props: {
             user: {},
             regions: {},
+            countries: {},
             new_user: false
         },
         components: {
@@ -200,6 +228,14 @@
             },
             showCancel() {
                 return !this.new_user
+            },
+
+            regionLabel() {
+                if(this.user_local.country.name === 'Canada') {
+                    return 'Province';
+                }
+
+                return 'State';
             }
         },
         watch: {
@@ -208,17 +244,29 @@
         },
         methods: {
             async getSchoolNames(query) {
-                const res = await fetch('/api/schools?q=:query'.replace(':query', query));
-                const suggestions = await res.json();
-                console.log('schools', suggestions);
-                this.schools = suggestions.data
+                await axios.get('/api/schools?q=:query'.replace(':query', query))
+                    .then( response => {
+                        console.log('search controller returned:  ', response.data.data  );
+                        this.schools = response.data.data;
+
+                    })
+                    .catch( error => {
+                        console.log('Fail!', error, query);
+                    });
+
             },
             async getDistrictNames(query) {
-                const res = await fetch('/api/districts?q=:query'.replace(':query', query));
-                const suggestions = await res.json();
-                console.log('districts', suggestions);
-                this.schools = suggestions.data
+                await axios.get('/api/districts?q=:query'.replace(':query', query))
+                    .then( response => {
+                        console.log('search controller returned:  ', response.data.data  );
+                        this.districts = response.data.data;
+
+                    })
+                    .catch( error => {
+                        console.log('Fail!', error, query);
+                    });
             },
+
             closeModal() {
                 this.$modal.hide('profile_form');
             },
@@ -247,42 +295,41 @@
                     social_insurance_number: form.user_local.social_insurance_number,
                     professional_certificate_bc: form.user_local.professional_certificate_bc,
                     professional_certificate_yk: form.user_local.professional_certificate_yk,
-                    professional_certificate_other: form.user_local.professional_certificate_other,
                     address_1: form.user_local.address_1,
                     address_2: form.user_local.address_2,
                     city: form.user_local.city,
                     region: form.user_local.region.id,
+                    country: form.user_local.country,
                     postal_code: form.user_local.postal_code,
-                    school_id: form.user_local.school.id,
-                    district_id: form.user_local.district.id,
+                    school: form.user_local.school,
+                    district: form.user_local.district,
                 };
 
                 if (this.new_user) {
                     axios.post('/api/profiles', data)
                         .then(function (response) {
-                            console.log('Create Profile'. data.school_id);
                             form.closeModal();
                             form.working = false;
-                            Event.fire('profile-updated', response.data)
+                            console.log('Create Profile', response );
+                            Event.fire('profile-updated', response );
                         })
                         .catch(function (error) {
                             console.log('Failure!', data);
                             form.working = false;
                             if (error.response.status === 422){
+                                console.log("errors: ", error.response.data.errors );
                                 form.errors = error.response.data.errors;
                             }
                         });
                 }
                 else {
 
-                    data.id = form.user_local.id;
-
                     axios.patch('/api/profiles/' + this.user.id, data)
                         .then(function (response) {
-                            console.log('Patch Profile', data.school_id);
+                            console.log('Patch Profile', response );
                             form.working = false;
                             form.closeModal();
-                            Event.fire('profile-updated', response.data)
+                            Event.fire('profile-updated', response )
                         })
                         .catch(function (error) {
                             console.log('Failure!');

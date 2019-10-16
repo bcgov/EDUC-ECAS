@@ -11,13 +11,11 @@
 |
 */
 
-// Keycloak routes
-Route::get('/redirect',         'KeycloakAuthController@redirect')->name('login');
-Route::get('/logout',           'KeycloakAuthController@logout');
-Route::get('/callback',         'KeycloakAuthController@callback');
-
 // App Specific Routes
-Route::get('/'                  , function () { return redirect('Dashboard'); });
-Route::get('/Dashboard'         , 'DashboardController@index')->name('Dashboard');
 
+Route::middleware(['cache.headers:private;max_age=300;etag'])->group(function () {
 
+    Route::get('/'                  , function () { return redirect('Dashboard'); });
+    Route::get('/Dashboard'         , 'DashboardController@index')->name('Dashboard');
+
+});

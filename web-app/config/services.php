@@ -49,7 +49,7 @@ return [
         'realm'                 => env('KEYCLOAK_REALM'),
         'client_id'             => env('KEYCLOAK_CLIENTID'),
         'client_secret'         => '',  // Socialite insists this key remain - even if Keycloak doesn't use it
-        'redirect'              => env('KEYCLOAK_REDIRECTURI')
+        'redirect'              => env('APP_URL') . '/callback'
     ],
 
 

@@ -4,25 +4,59 @@
 namespace App\Dynamics\Decorators;
 
 
-use App\Interfaces\iModelRepository;
+use App\Dynamics\Interfaces\iAssignment;
+use App\Dynamics\Interfaces\iAssignmentStatus;
+use App\Dynamics\Interfaces\iContractStage;
+use App\Dynamics\Interfaces\iCountry;
+use App\Dynamics\Interfaces\iCredential;
+use App\Dynamics\Interfaces\iDistrict;
+use App\Dynamics\Interfaces\iModelRepository;
+use App\Dynamics\Interfaces\iPayment;
+use App\Dynamics\Interfaces\iProfile;
+use App\Dynamics\Interfaces\iProfileCredential;
+use App\Dynamics\Interfaces\iRegion;
+use App\Dynamics\Interfaces\iRole;
+use App\Dynamics\Interfaces\iSchool;
+use App\Dynamics\Interfaces\iSession;
+use App\Dynamics\Interfaces\iSessionActivity;
+use App\Dynamics\Interfaces\iSessionType;
+use App\Dynamics\Interfaces\iSubject;
 use Illuminate\Support\Facades\Cache;
 
-class CacheDecorator implements iModelRepository
+class CacheDecorator implements
+                                iAssignment,
+                                iAssignmentStatus,
+                                iContractStage,
+                                iCredential,
+                                iDistrict,
+                                iPayment,
+                                iProfile,
+                                iProfileCredential,
+                                iRegion,
+                                iCountry,
+                                iRole,
+                                iSchool,
+                                iSession,
+                                iSessionActivity,
+                                iSessionType,
+                                iSubject
+
 {
-    
-    const CACHE_DURATION = 28800; // 8 hours in seconds
+
     protected $model;
+    protected $duration;
 
  
     public function __construct(iModelRepository $model)
     {
         $this->model = $model;
+        $this->duration = config('dynamics.cache.seconds');
     }
 
 
     public function all()
     {
-        return Cache::remember($this->cacheKey(),self::CACHE_DURATION , function ()
+        return Cache::remember($this->cacheKey(),$this->duration , function ()
         {
             return $this->model->all();
         });
@@ -30,7 +64,7 @@ class CacheDecorator implements iModelRepository
 
     public function get($id)
     {
-        return Cache::remember(self::cacheKey($id),self::CACHE_DURATION , function () use($id) {
+        return Cache::remember(self::cacheKey($id),$this->duration , function () use($id) {
             return $this->model->get($id);
         });
     }
@@ -38,9 +72,9 @@ class CacheDecorator implements iModelRepository
 
     public function firstOrCreate($id, $data)
     {
-        return Cache::remember(self::cacheKey($id),self::CACHE_DURATION , function () use($id, $data) {
-            return $this->model->firstOrCreate($id, $data);
-        });
+
+        return $this->model->firstOrCreate($id, $data);
+
     }
 
 
@@ -66,7 +100,10 @@ class CacheDecorator implements iModelRepository
         Cache::forget(self::cacheKey($id));
         Cache::forget($this->cacheKey());
 
-        return $this->model->update($id, $data);
+        return Cache::remember(self::cacheKey($id),$this->duration , function () use($id, $data) {
+            return $this->model->update($id, $data);
+        });
+
     }
 
 
@@ -78,12 +115,6 @@ class CacheDecorator implements iModelRepository
         return $this->model->delete($id);
     }
 
-    public function prebuildCache()
-    {
-
-        // TODO -
-
-    }
 
     private function cacheKey($id = null)
     {

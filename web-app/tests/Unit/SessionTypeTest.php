@@ -5,6 +5,10 @@ namespace Tests\Unit;
 
 use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\SessionType;
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
 use Tests\BaseMigrations;
 
 class SessionTypeTest extends BaseMigrations
@@ -18,10 +22,30 @@ class SessionTypeTest extends BaseMigrations
     public function setUp(): void
     {
         parent::setUp();
-        $this->api = new SessionType();
-        $this->fake = new \App\MockEntities\Repository\SessionType(new \App\MockEntities\SessionType());
 
-        $this->types = factory(\App\MockEntities\SessionType::class, 7)->create();
+
+        $mock = new MockHandler([
+            new Response(200, [], json_encode([ 'value' => [
+                (object) [
+                    'educ_sessiontypecodeid'    => 'a1376a88-016b-e911-b80a-005056833c5b',
+                    'educ_sessiontypecode'      => 'GLA 12 I',
+                    'educ_name'                 => 'Graduation Literacy Assessment Immersion, 12'
+                ],
+                (object) [
+                    'educ_sessiontypecodeid'    => 'a1376a88-016b-e911-b80a-005056833c5b',
+                    'educ_sessiontypecode'      => 'GLA 11 I',
+                    'educ_name'                 => 'Graduation Literacy Assessment Immersion, 11'
+                ]
+            ]
+            ])),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handler]);
+
+        $this->api = new SessionType($client);
+
+
     }
 
 
@@ -44,25 +68,6 @@ class SessionTypeTest extends BaseMigrations
 
     }
 
-    /** @test */
-    public function get_all_fake_records()
-    {
-        $results = $this->fake->all();
-        $this->assertInstanceOf('Illuminate\Support\Collection', $results);
-        $this->verifySingle($results->first());
-
-    }
-
-
-    /** @test */
-    public function get_all_fake_records_via_the_cache()
-    {
-        $results = (new CacheDecorator($this->fake))->all();
-        $this->assertInstanceOf('Illuminate\Support\Collection', $results);
-        $this->verifySingle($results->first());
-
-    }
-    
 
     private function verifySingle($result)
     {

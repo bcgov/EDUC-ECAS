@@ -3,138 +3,138 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Dynamics\Interfaces\iCountry;
+use App\Dynamics\Interfaces\iDistrict;
+use App\Dynamics\Interfaces\iProfile;
+use App\Dynamics\Interfaces\iRegion;
+use App\Dynamics\Interfaces\iSchool;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\ProfileRequest;
 use App\Http\Resources\ProfileResource;
-use Illuminate\Http\Request;
+use App\Keycloak\KeycloakGuard;
 
 
-
-class ProfileController extends ApiBaseController
+class ProfileController extends Controller
 {
+
+    protected $profile;
+    protected $school;
+    protected $district;
+    protected $region;
+    protected $authentication;
+    protected $country;
+
+
+    public function __construct(iProfile $profile,
+                                iSchool $school,
+                                iDistrict $district,
+                                iRegion $region,
+                                iCountry $country,
+                                KeycloakGuard $auth)
+    {
+        $this->profile              = $profile;
+        $this->school               = $school;
+        $this->district             = $district;
+        $this->region               = $region;
+        $this->country              = $country;
+        $this->authentication       = $auth;
+
+    }
 
 
     public function index()
     {
 
-        abort('404');
+        abort(404, 'method not available');
 
     }
 
 
-    public function show($id, Request $request)
+    public function show($profile_id)
     {
 
-        // check user is updating their own profile
-        $profile = $this->model->get($id);
-        $this->checkOwner($request, $profile['federated_id']);
+        $user_id = $this->authentication->id();
+
+        if( ! $user_id ) {
+            abort(401, 'unauthorized');
+        }
+
+        $profile = $this->profile->get($profile_id);
 
 
-        $profile = $this->model->filter(['federated_id'=> $id])->first();
+        if( $profile['id'] <> $profile_id ) {
+            abort(401, 'unauthorized');
+        }
 
-        return new ProfileResource($profile);
+
+        return new ProfileResource($profile, $this->school, $this->district, $this->region, $this->country);
     }
 
 
     /*
  * Create the Profile record (Contact in Dynamics)
  */
-    public function store(Request $request)
+    public function store(ProfileRequest $request)
     {
-        $user = $this->getUser($request);
+        $user = $this->authentication->user();
 
-        $request = $this->validateProfileRequest($request);
-        $data = $request->all();  // TODO - Remove before flight - dangerous
-        $data['federated_id'] = $user['sub'];
+        $data                   = $request->validated();
+        $data['federated_id']   = $user['sub'];
+        $data['username']       = $this->removeSuffix($user['preferred_username']);
 
-        $new_model_id = $this->model->create($data);
+        $new_model_id = $this->profile->create($data);
 
-        return new ProfileResource($this->model->get($new_model_id));
+        $profile = $this->profile->get($new_model_id);
+
+        $resource = new ProfileResource($profile , $this->school, $this->district, $this->region, $this->country);
+
+        return $resource;
     }
 
     /*
      * Update an existing user Profile (Contact in Dynamics)
      */
-    public function update($id, Request $request)
+    public function update($id, ProfileRequest $request)
     {
+
+        $user = $this->authentication->user();
 
         // check user is updating their own profile
-        $profile = $this->model->get($id);
-        $this->checkOwner($request, $profile['federated_id']);
+        $profile = $this->profile->get($id);
+
+        if($user['sub'] <> $profile['federated_id'])
+        {
+            abort(401, 'unauthorized');
+        }
+
+        $data                   = $request->validated();
+        $data['federated_id']   = $profile['federated_id'];
+        $data['username']       = $this->removeSuffix($user['preferred_username']);
 
 
-        $this->validateProfileRequest($request);
+        $profile = $this->profile->update($profile['id'], $data);
 
-        // TODO - Remove before flight - map specific fields
-        $data = $request->all();
-        $data['federated_id'] = $profile['federated_id'];
-        $response = $this->model->update($profile['id'], $data);
-
-        return new ProfileResource($response);
+        return new ProfileResource($profile , $this->school, $this->district, $this->region, $this->country);
     }
 
 
-    public function destroy($federated_id)
+    public function destroy($id)
     {
-        abort(401, 'method not available');
-        // unauthorized
+        abort(404, 'method not available');
 
     }
 
-
-    /*
-     * Create a new Assignment
-     * Or change the status of an existing Assignment
-     */
-    private function validateProfileRequest(Request $request): Request
+    private function removeSuffix($username)
     {
-        // Get rid of spaces
-        $remove_spaces_from = ['postal_code', 'sin'];
-        foreach ($remove_spaces_from as $field) {
-            if (isset($request[$field])) {
-                $request[$field] = preg_replace('/\s+/', '', $request[$field]);
-            }
-        }
+        // remove `@bceid` from user names
+        return explode('@bceid', $username)[0];
 
-        // Sanitize phone numbers, remove everything that isn't a number
-        $sanitize_to_integer = ['phone'];
-        foreach ($sanitize_to_integer as $field) {
-            $request[$field] = preg_replace('/[^0-9.]/', '', $request[$field]);
-        }
-
-        // If we pass in blank look-up ids Dynamics freaks out
-        // remove options that are blank
-        $remove_blank_options = ['district_id', 'school_id'];
-        foreach ($remove_blank_options as $field) {
-            if ( ! $request[$field]) {
-                unset($request[$field]);
-            }
-        }
-
-        $this->validate($request, [
-            'first_name'                    => 'required',
-            'last_name'                     => 'required',
-            'email'                         => 'required|email',
-            'phone'                         => 'required',
-            'address_1'                     => 'required',
-            'city'                          => 'required',
-            'region'                        => 'required',
-            'postal_code'                   => 'required|regex:/^\D\d\D\s?\d\D\d$/i',
-            //'social_insurance_number'       => [ new SocialInsuranceNumberRule ]
-        ],
-            [
-                'first_name.required'  => 'Required',
-                'last_name.required'   => 'Required',
-                'email.required'       => 'Required',
-                'email.email'          => 'Invalid email',
-                'phone.required'       => 'Required',
-                'address_1.required'   => 'Required',
-                'city.required'        => 'Required',
-                'region.required'      => 'Required',
-                'postal_code.required' => 'Required',
-                'postal_code.regex'    => 'Invalid Postal Code',
-            ]);
-
-        return $request;
     }
+
+
+
+
+
 
 
 

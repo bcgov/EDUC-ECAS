@@ -2,12 +2,32 @@
 
 namespace App\Http\Resources;
 
-use App\Dynamics\Decorators\CacheDecorator;
+
+use App\Dynamics\Interfaces\iCountry;
+use App\Dynamics\Interfaces\iDistrict;
+use App\Dynamics\Interfaces\iRegion;
+use App\Dynamics\Interfaces\iSchool;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\App;
 
 class ProfileResource extends JsonResource
 {
+
+    private $school;
+    private $district;
+    private $region;
+    private $country;
+
+    public function __construct($resource, iSchool $school, iDistrict $district, iRegion $region, iCountry $country)
+    {
+        parent::__construct($resource);
+        $this->school   = $school;
+        $this->district = $district;
+        $this->region   = $region;
+        $this->country  = $country;
+
+    }
+
+
     /**
      * Transform the resource into an array.
      *
@@ -17,12 +37,6 @@ class ProfileResource extends JsonResource
     public function toArray($request)
     {
 
-        $repository         = env('DATASET') == 'Dynamics' ? 'Dynamics' : 'MockEntities\Repository';
-
-        $district  = ( new CacheDecorator(App::make('App\\' . $repository .'\District')))->get($this['district_id']);
-        $school    = ( new CacheDecorator(App::make('App\\' . $repository .'\School')))->get($this['school_id']);
-
-        $regions    = ( new CacheDecorator(App::make('App\\' . $repository .'\Region')))->all();
 
         return [
           'id'                                     =>  $this['id'],
@@ -36,13 +50,13 @@ class ProfileResource extends JsonResource
           'address_1'                              =>  $this['address_1'],
           'address_2'                              =>  $this['address_2'],
           'city'                                   =>  $this['city'],
-          'region'                                 =>  new SimpleResource($regions->firstWhere('id', $this['region'])),
+          'region'                                 =>  $this['region'] ? new SimpleResource($this->region->get($this['region'])) : null,
           'postal_code'                            =>  $this['postal_code'],
-          'district'                               =>  $this['district_id'] ? new SimpleResource($district) : null,
-          'school'                                 =>  $this['school_id'] ? new SchoolResource($school) : null,
+          'district'                               =>  $this['district_id'] ? new SimpleResource($this->district->get($this['district_id'])) : null,
+          'school'                                 =>  $this['school_id'] ? new SchoolResource($this->school->get($this['school_id'])) : null,
+          'country'                                =>  $this['country_id'] ? new SimpleResource($this->country->get($this['country_id'])) : null,
           'professional_certificate_bc'            =>  $this['professional_certificate_bc'],
           'professional_certificate_yk'            =>  $this['professional_certificate_yk'],
-          'professional_certificate_other'         =>  $this['professional_certificate_other'],
         ];
     }
 }
