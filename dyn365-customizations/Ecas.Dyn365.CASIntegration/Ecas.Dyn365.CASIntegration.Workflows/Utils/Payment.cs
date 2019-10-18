@@ -81,12 +81,16 @@ namespace Ecas.Dyn365.CASIntegration.Workflows.Utils
                     userMessage = response.Content.ReadAsStringAsync().Result;
                     if (!userMessage.Contains("SUCCEEDED"))
                     {
+                        //CAS Processing Error
+                        paymentrecord["statuscode"] = new OptionSetValue(610410007);
+                        paymentrecord["ecas_casresponse"] = userMessage;
+                        organizationService.Update(paymentrecord);
                         throw new InvalidPluginExecutionException(userMessage);
                     }
                     else
                     {
-                        //Payment Processed By ECAS
-                        paymentrecord["statuscode"] = new OptionSetValue(610410005);
+                        //Payment Processed By CAS
+                        paymentrecord["statuscode"] = new OptionSetValue(610410008);
                         organizationService.Update(paymentrecord);
                     }
                 }

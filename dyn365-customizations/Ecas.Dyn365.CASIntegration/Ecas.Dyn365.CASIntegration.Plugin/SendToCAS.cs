@@ -79,10 +79,10 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
                 httpClient.DefaultRequestHeaders.Add("clientID", clientId);
                 httpClient.DefaultRequestHeaders.Add("secret", clientKey);
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                httpClient.BaseAddress = new Uri(url);
+                //httpClient.BaseAddress = new Uri(url);
                 httpClient.Timeout = new TimeSpan(0, 2, 0);  // 2 minutes to execute within the sandbox mode
 
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "/api/CASAPTransaction");
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url + "/api/CASAPTransaction");
                 request.Content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
 
                 traceService.Trace("-----JSON Payload Begin-----");
@@ -94,7 +94,20 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
                 traceService.Trace("clientID:" + clientId);
                 traceService.Trace("secret:" + clientKey);
 
-                HttpResponseMessage response = httpClient.SendAsync(request).Result;
+                HttpResponseMessage response = new HttpResponseMessage();
+                try
+                {
+                    response = httpClient.SendAsync(request).Result;
+                }
+                catch(Exception ex)
+                {
+                    while (ex.InnerException != null) { ex = ex.InnerException; }
+                    Console.WriteLine(ex.Message);
+                    if (!string.IsNullOrWhiteSpace(ex.StackTrace)) { Console.WriteLine(ex.StackTrace); }
+                    throw ex;
+
+                }
+
 
                 traceService.Trace("Invoked CAS AP Service");
 

@@ -15,8 +15,8 @@ namespace Ecas.Dyn365.CAS.ScheduledJob.ScheduleJobSession
     public class CheckPaymentStatusLogic
     {
         string webapiurl = string.Empty;
-        string userName = "";
-        string password = "";
+        string userName = "ecasadmin";
+        string password = "Ec@s201p!";
 
         public CheckPaymentStatusLogic()
         {
