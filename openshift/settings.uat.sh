@@ -1,0 +1,1 @@
+export FULLY_QUALIFIED_NAMESPACE=pvpywj-test
