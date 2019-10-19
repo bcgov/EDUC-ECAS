@@ -24,8 +24,13 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
             IOrganizationService service = serviceFactory.CreateOrganizationService(context.UserId);
             ITracingService traceService = (ITracingService)serviceProvider.GetService(typeof(ITracingService));
 
-            if (context.Depth > 1)
+            traceService.Trace("Loaded Sent to CAS Plugin");
+            traceService.Trace("Plugin Depth:" + context.Depth.ToString());
+
+            if (context.Depth > 2)
+            {
                 return;
+            }
 
             Entity targetEntity = null;
             if (context.Depth == 1 && context.InputParameters != null && context.InputParameters.Contains("Target") 
@@ -43,6 +48,7 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
             bool isError = false;
             string userMessage = string.Empty;
             HttpClient httpClient = null;
+            string invoiceNumber = string.Empty;
             try
             {
                 targetEntity = context.InputParameters["Target"] as Entity;
@@ -54,8 +60,6 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
                 traceService.Trace("Payment is Ready for Processing");
 
                 var postImageEntity = context.PostEntityImages["PostImage"] as Entity;
-                if (!postImageEntity.Contains("educ_payee"))
-                    throw new InvalidPluginExecutionException("Payee lookup is empty on the payment..");
                 if (!postImageEntity.Contains("educ_amount"))
                     throw new InvalidPluginExecutionException("Amount is empty on the payment");
 
@@ -73,7 +77,10 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
 
                 traceService.Trace("Loaded Settings");
 
-                var jsonRequest = GenerateInvoice(service, traceService, configs, postImageEntity).ToJSONString();
+                var invoice = GenerateInvoice(service, traceService, configs, postImageEntity);
+                invoiceNumber = invoice.InvoiceNumber;
+                traceService.Trace($"Invoice #{invoiceNumber} loaded" );
+                var jsonRequest = invoice.ToJSONString();
 
                 httpClient = new HttpClient();
                 httpClient.DefaultRequestHeaders.Add("clientID", clientId);
@@ -104,6 +111,7 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
                     while (ex.InnerException != null) { ex = ex.InnerException; }
                     Console.WriteLine(ex.Message);
                     if (!string.IsNullOrWhiteSpace(ex.StackTrace)) { Console.WriteLine(ex.StackTrace); }
+                    isError = true;
                     throw ex;
 
                 }
@@ -148,10 +156,16 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
                 if (!string.IsNullOrEmpty(userMessage))
                     updatePayment["educ_casresponse"] = userMessage;
 
-                if (isError)
+                if (!userMessage.Contains("SUCCEEDED"))
+                {
                     updatePayment["statuscode"] = new OptionSetValue(610410004); //Failed when attempting to send to CAS
+                }
                 else
+                {
                     updatePayment["statuscode"] = new OptionSetValue(610410006); //Sent
+                    updatePayment["educ_invoicenumber"] = invoiceNumber;
+                }
+
 
                 service.Update(updatePayment);
 
@@ -188,7 +202,14 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
             string country = string.Empty;
             string postalCode = string.Empty;
 
-            EntityReference payeeLookup = paymentEntity["educ_payee"] as EntityReference;
+            EntityReference assignmentLookup = paymentEntity["educ_assignment"] as EntityReference;
+            var assignmentEntity = service.Retrieve(assignmentLookup.LogicalName.ToLowerInvariant(), assignmentLookup.Id,
+                new ColumnSet(true));
+
+            //EntityReference payeeLookup = paymentEntity["educ_payee"] as EntityReference;
+            EntityReference payeeLookup = assignmentEntity["educ_contact"] as EntityReference;
+            if (payeeLookup == null || payeeLookup.Id == Guid.Empty)
+                throw new InvalidPluginExecutionException("Payee lookup is empty on the payment..");
 
             if (payeeLookup.LogicalName.Equals("account", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -264,14 +285,12 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
             #region AssignmentDetails & Session
             bool specialhandling = false;
 
-            EntityReference assignmentLookup = paymentEntity["educ_assignment"] as EntityReference;
-            var assignmentEntity = service.Retrieve(assignmentLookup.LogicalName.ToLowerInvariant(), assignmentLookup.Id,
-                new ColumnSet("educ_dcheque"));
-
             if (assignmentEntity.Contains("educ_dcheque"))
                 specialhandling = assignmentEntity.GetAttributeValue<bool>("educ_dcheque");
 
-            EntityReference sessionLookup = paymentEntity["educ_session"] as EntityReference;
+            traceService.Trace("Loaded Assignment Details");
+
+            EntityReference sessionLookup = assignmentEntity["educ_session"] as EntityReference;
             var sessionEntity = service.Retrieve(sessionLookup.LogicalName.ToLowerInvariant(), sessionLookup.Id,
                 new ColumnSet(true));
 

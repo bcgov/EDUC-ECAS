@@ -102,7 +102,8 @@ namespace Ecas.Dyn365.Workflows.Utils
             payment["educ_assignment"] = new EntityReference("educ_assignment", assignmentId);
             payment["educ_paymenttype"] = new OptionSetValue(paymentType);
             payment["educ_amount"] = new Money(paymentAmount);
-            payment["statuscode"] = new OptionSetValue(1);
+            //Active
+            //payment["statuscode"] = new OptionSetValue(1);
 
             var paymentId = organizationService.Create(payment);
 
