@@ -155,12 +155,12 @@ parameters:
   displayName: Suffix
   description: A name suffix used for all objects.
   required: false
-  value: 
+  value:
 - name: APP_NAME
   displayName: App Name
   description: Used to group components together in the OpenShift console.
   required: true
-  value: ECAS
+  value: ecas
 - name: APP_GROUP
   displayName: App Group
   description: Used to group components together.
