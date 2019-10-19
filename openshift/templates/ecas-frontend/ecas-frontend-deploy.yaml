@@ -2,16 +2,16 @@
 kind: Template
 apiVersion: v1
 metadata:
-  name: ${NAME}
+  name: ${NAME}${SUFFIX}
 objects:
 
 - kind: Service
   apiVersion: v1
   metadata:
-    name: ${NAME}
+    name: ${NAME}${SUFFIX}
     labels:
-      name: ${NAME}
-      app: ${APP_GROUP}
+      name: ${NAME}${SUFFIX}
+      app: ${APP_NAME}${SUFFIX}
       app-group: ${APP_GROUP}
   spec:
     ports:
@@ -20,15 +20,15 @@ objects:
       protocol: TCP
       targetPort: ${{PORT}}
     selector:
-      name: ${NAME}
+      name: ${NAME}${SUFFIX}
 
 - kind: Route
   apiVersion: v1
   metadata:
-    name: ${NAME}
+    name: ${NAME}${SUFFIX}
     labels:
-      name: ${NAME}
-      app: ${APP_GROUP}
+      name: ${NAME}${SUFFIX}
+      app: ${APP_NAME}${SUFFIX}
       app-group: ${APP_GROUP}
   spec:
     host: ${APPLICATION_DOMAIN}
@@ -39,33 +39,33 @@ objects:
       termination: edge
     to:
       kind: Service
-      name: ${NAME}
+      name: ${NAME}${SUFFIX}
       weight: 100
 
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
-    name: ${NAME}
+    name: ${NAME}${SUFFIX}
     labels:
-      name: ${NAME}
-      app: ${APP_GROUP}
+      name: ${NAME}${SUFFIX}
+      app: ${APP_NAME}${SUFFIX}
       app-group: ${APP_GROUP}
   spec:
     replicas: 1
     selector:
-      name: ${NAME}
+      name: ${NAME}${SUFFIX}
     strategy:
       type: Rolling
     template:
       metadata:
-        name: ${NAME}
+        name: ${NAME}${SUFFIX}
         labels:
-          name: ${NAME}
-          app: ${APP_GROUP}
+          name: ${NAME}${SUFFIX}
+          app: ${APP_NAME}${SUFFIX}
           app-group: ${APP_GROUP}
       spec:
         containers:
-        - name: ${NAME}
+        - name: ${NAME}${SUFFIX}
           env:
           - name: APP_KEY
             value: ${APP_KEY}
@@ -114,7 +114,7 @@ objects:
       imageChangeParams:
         automatic: true
         containerNames:
-        - ${NAME}
+        - ${NAME}${SUFFIX}
         from:
           kind: ImageStreamTag
           name: ${NAME}:${TAG_NAME}
@@ -126,6 +126,16 @@ parameters:
   description: The name assigned to all the objects defined in this template.
   required: true
   value: ecas-frontend
+- name: SUFFIX
+  displayName: Suffix
+  description: A name suffix used for all objects.
+  required: false
+  value: 
+- name: APP_NAME
+  displayName: App Name
+  description: Used to group components together in the OpenShift console.
+  required: true
+  value: ECAS
 - name: APP_GROUP
   displayName: App Group
   description: Used to group components together.

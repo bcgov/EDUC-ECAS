@@ -2,20 +2,20 @@
 kind: Template
 apiVersion: v1
 metadata:
-  name: "${NAME}-deployment-template"
+  name: "${NAME}${SUFFIX}-deployment-template"
   creationTimestamp: 
 objects:
 
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
-    name: "${NAME}"
+    name: "${NAME}${SUFFIX}"
     labels:
-      name: ${NAME}
-      app: ${APP_GROUP}
+      name: ${NAME}${SUFFIX}
+      app: ${APP_NAME}${SUFFIX}
       app-group: ${APP_GROUP}
     annotations:
-      description: Defines how to deploy ${NAME}
+      description: Defines how to deploy ${NAME}${SUFFIX}
   spec:
     strategy:
       type: Rolling
@@ -25,24 +25,24 @@ objects:
       imageChangeParams:
         automatic: true
         containerNames:
-        - "${NAME}"
+        - "${NAME}${SUFFIX}"
         from:
           kind: ImageStreamTag
           namespace: "${IMAGE_NAMESPACE}"
           name: "${SOURCE_IMAGE_NAME}:${TAG_NAME}"
     replicas: 1
     selector:
-      name: "${NAME}"
+      name: "${NAME}${SUFFIX}"
     template:
       metadata:
-        name: "${NAME}"
+        name: "${NAME}${SUFFIX}"
         labels:
-          name: ${NAME}
-          app: ${APP_GROUP}
+          name: ${NAME}${SUFFIX}
+          app: ${APP_NAME}${SUFFIX}
           app-group: ${APP_GROUP}
       spec:
         containers:
-        - name: "${NAME}"
+        - name: "${NAME}${SUFFIX}"
           image: ''
           ports:
           - containerPort: 8080
@@ -81,10 +81,10 @@ objects:
 - kind: Service
   apiVersion: v1
   metadata:
-    name: "${NAME}"
+    name: "${NAME}${SUFFIX}"
     labels:
-      name: ${NAME}
-      app: ${APP_GROUP}
+      name: ${NAME}${SUFFIX}
+      app: ${APP_NAME}${SUFFIX}
       app-group: ${APP_GROUP}
     annotations:
       description: Exposes and load balances the application pods.
@@ -95,7 +95,7 @@ objects:
       port: 8080
       targetPort: 8080
     selector:
-      name: "${NAME}"
+      name: "${NAME}${SUFFIX}"
     type: ClusterIP
     sessionAffinity: None
 
@@ -103,10 +103,10 @@ objects:
   kind: Route
   metadata:
     labels:
-      name: ${NAME}
-      app: ${APP_GROUP}
+      name: ${NAME}${SUFFIX}
+      app: ${APP_NAME}${SUFFIX}
       app-group: ${APP_GROUP}
-    name: "${NAME}"
+    name: "${NAME}${SUFFIX}"
   spec:
     host: "${APPLICATION_DOMAIN}"
     port:
@@ -116,16 +116,16 @@ objects:
       termination: edge
     to:
       kind: Service
-      name: "${NAME}"
+      name: "${NAME}${SUFFIX}"
       weight: 100
 
 - apiVersion: v1
   kind: Route
   metadata:
-    name: "${NAME}-siteminder-route"
+    name: "${NAME}${SUFFIX}-siteminder-route"
     labels:
-      name: ${NAME}-siteminder-route
-      app: ${APP_GROUP}
+      name: ${NAME}${SUFFIX}-siteminder-route
+      app: ${APP_NAME}${SUFFIX}
       app-group: ${APP_GROUP}
   spec:
     host: "${SITEMINDER_APPLICATION_DOMAIN}"
@@ -133,21 +133,21 @@ objects:
       targetPort: 8080-tcp
     to:
       kind: Service
-      name: "${NAME}"
+      name: "${NAME}${SUFFIX}"
       weight: 100
 
 - kind: HorizontalPodAutoscaler
   apiVersion: autoscaling/v1
   metadata:
-    name: "${NAME}"
+    name: "${NAME}${SUFFIX}"
     labels:
-      name: ${NAME}
-      app: ${APP_GROUP}
+      name: ${NAME}${SUFFIX}
+      app: ${APP_NAME}${SUFFIX}
       app-group: ${APP_GROUP}
   spec:
     scaleTargetRef:
       kind: DeploymentConfig
-      name: "${NAME}"
+      name: "${NAME}${SUFFIX}"
     minReplicas: 2
     maxReplicas: 4
 
@@ -165,9 +165,19 @@ objects:
 parameters:
 - name: NAME
   displayName: Name
-  description: The name assigned to all of the resources defined in this template.
+  description: The name assigned to all the objects defined in this template.
   required: true
   value: cas-api
+- name: SUFFIX
+  displayName: Suffix
+  description: A name suffix used for all objects.
+  required: false
+  value: 
+- name: APP_NAME
+  displayName: App Name
+  description: Used to group components together in the OpenShift console.
+  required: true
+  value: ECAS
 - name: APP_GROUP
   displayName: App Group
   description: Used to group components together.
