@@ -69,7 +69,10 @@
   <ItemGroup>
     <Compile Include="GenerateAssignmentPayments.cs" />
     <Compile Include="GetFiscalYearStartDate.cs" />
+    <Compile Include="GetSupplierInfoBySIN.cs" />
+    <Compile Include="Models\Supplier.cs" />
     <Compile Include="Utils\Assigment.cs" />
+    <Compile Include="Utils\SupplierInformation.cs" />
     <Compile Include="WorkFlowActivityBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
