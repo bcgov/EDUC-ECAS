@@ -4,13 +4,15 @@
 # Template File: templates/cas-api/cas-api-deploy.yaml
 #=========================================================
 # NAME=cas-api
+# SUFFIX=
+# APP_NAME=ecas
 # APP_GROUP=ecas
 # SOURCE_IMAGE_NAME=cas-api
 # IMAGE_NAMESPACE=pvpywj-tools
 TAG_NAME=test
 # ASPNETCORE_ENVIRONMENT=Production
-SITEMINDER_APPLICATION_DOMAIN=cas-api-pvpywj-test.pathfinder.bcgov
-APPLICATION_DOMAIN=cas-api-pvpywj-test.pathfinder.gov.bc.ca
+SITEMINDER_APPLICATION_DOMAIN=cas-api-test.pathfinder.bcgov
+APPLICATION_DOMAIN=cas-api-test.pathfinder.gov.bc.ca
 # CPU_REQUEST=10m
 # CPU_LIMIT=500m
 # MEMORY_REQUEST=10Mi
