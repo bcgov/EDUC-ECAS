@@ -3,17 +3,17 @@
 # Component: .
 # Template File: templates/cas-api/cas-api-deploy.yaml
 #=========================================================
-# NAME=cas-api
+NAME=cas-api
 SUFFIX=-uat
-# APP_NAME=ecas
-# APP_GROUP=ecas
-# SOURCE_IMAGE_NAME=cas-api
-# IMAGE_NAMESPACE=pvpywj-tools
+APP_NAME=ecas
+APP_GROUP=ecas
+SOURCE_IMAGE_NAME=cas-api
+IMAGE_NAMESPACE=pvpywj-tools
 TAG_NAME=uat
-# ASPNETCORE_ENVIRONMENT=Production
+ASPNETCORE_ENVIRONMENT=Production
 SITEMINDER_APPLICATION_DOMAIN=cas-api-uat.pathfinder.bcgov
 APPLICATION_DOMAIN=cas-api-uat.pathfinder.gov.bc.ca
-# CPU_REQUEST=10m
-# CPU_LIMIT=500m
-# MEMORY_REQUEST=10Mi
-# MEMORY_LIMIT=512Mi
+CPU_REQUEST=10m
+CPU_LIMIT=500m
+MEMORY_REQUEST=10Mi
+MEMORY_LIMIT=512Mi
