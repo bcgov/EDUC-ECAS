@@ -45,6 +45,51 @@ writeParameter(){
   )
 }
 
+toLower() {
+  echo $(echo ${@} | tr '[:upper:]' '[:lower:]')
+}
+
+getOperation() {
+  (
+    echo $(toLower ${OPERATION})
+  )
+}
+
+createOperation() {
+  (
+    action=$(getOperation)
+    if [ ${action} = "create" ]; then
+      return 0
+    else
+      return 1
+    fi
+  )
+}
+
+generateKey(){
+  (
+    _length=${1:-48}
+    # Format can be `-base64` or `-hex`
+    _format=${2:--base64}
+
+    echo $(openssl rand ${_format} ${_length})
+  )
+}
+
+generateUsername() {
+  # Generate a random username ...
+  _userName=User_$( generateKey | LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w 10   | head -n 1 )
+  _userName=$(echo -n "${_userName}")
+  echo ${_userName}
+}
+
+generatePassword() {
+  # Generate a random password ...
+  _password=$( generateKey | LC_CTYPE=C tr -dc 'a-zA-Z0-9_' | fold -w 20 | head -n 1 )
+  _password=$(echo -n "${_password}")
+  echo ${_password}
+}
+
 initialize(){
   # Define the name of the override param file.
   _scriptName=$(basename ${0%.*})
@@ -61,12 +106,24 @@ initialize(){
 
 initialize
 
-# Get the Dynamics credentials and endpoint
-readParameter "DYNAMICS_ENDPOINT - Please provide the URL of the Dynamics endpoint.  You MUST supply a value." DYNAMICS_ENDPOINT ""
-readParameter "DYNAMICS_USERNAME - Please provide the Dynamics username:" DYNAMICS_USERNAME "" 
-readParameter "DYNAMICS_PASSWORD - Please provide the Dynamics password:" DYNAMICS_PASSWORD "" 
-readParameter "DYNAMICS_DOMAIN - Please provide the Dynamics domain:" DYNAMICS_DOMAIN "" 
+if createOperation; then
+  # Get the Dynamics credentials and endpoint
+  readParameter "DYNAMICS_ENDPOINT - Please provide the URL of the Dynamics endpoint.  You MUST supply a value." DYNAMICS_ENDPOINT ""
+  readParameter "DYNAMICS_USERNAME - Please provide the Dynamics username:" DYNAMICS_USERNAME ""
+  readParameter "DYNAMICS_PASSWORD - Please provide the Dynamics password:" DYNAMICS_PASSWORD ""
+  readParameter "DYNAMICS_DOMAIN - Please provide the Dynamics domain:" DYNAMICS_DOMAIN ""
+  readParameter "ECAS_API_USERNAME - Please provide the ECAS API username.  If one is not specified a random one will be generated." ECAS_API_USERNAME $(generateUsername)
+  readParameter "ECAS_API_PASSWORD - Please provide the ECAS API password.  If one is not specified a random one will be generated." ECAS_API_PASSWORD $(generatePassword)
+else
+  # Secrets are removed from the configurations during update operations ...
+  printStatusMsg "Update operation detected ...\nSkipping the prompts for DYNAMICS_ENDPOINT, DYNAMICS_USERNAME, DYNAMICS_PASSWORD, DYNAMICS_DOMAIN, ECAS_API_USERNAME, and ECAS_API_PASSWORD secrets ...\n"
+  writeParameter "DYNAMICS_ENDPOINT" "prompt_skipped" "false"
+  writeParameter "DYNAMICS_USERNAME" "prompt_skipped" "false"
+  writeParameter "DYNAMICS_PASSWORD" "prompt_skipped" "false"
+  writeParameter "DYNAMICS_DOMAIN" "prompt_skipped" "false"
+  writeParameter "ECAS_API_USERNAME" "prompt_skipped" "false"
+  writeParameter "ECAS_API_PASSWORD" "prompt_skipped" "false"
+fi
 
 SPECIALDEPLOYPARMS="--param-file=${_overrideParamFile}"
 echo ${SPECIALDEPLOYPARMS}
-

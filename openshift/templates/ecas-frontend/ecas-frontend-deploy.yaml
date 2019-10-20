@@ -77,6 +77,16 @@ objects:
             value: ${DOCUMENTROOT}
           - name: DYNAMICSBASEURL
             value: ${DYNAMICSBASEURL}
+          - name: DYNAMICS_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: ${API_SERVICE_NAME}${SUFFIX}-credentials
+                key: username
+          - name: DYNAMICS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ${API_SERVICE_NAME}${SUFFIX}-credentials
+                key: password
           image: " "
           ports:
           - containerPort: ${{PORT}}
@@ -181,6 +191,11 @@ parameters:
   description: The endpoint for the internal Dynamics API component.
   required: true
   value: "http://ecas-api:8080/api"
+- name: API_SERVICE_NAME
+  displayName: API Service Name
+  description: The service name for the internal Dynamics API (ecas-api) component.
+  required: true
+  value: "ecas-api"
 - name: CPU_REQUEST
   displayName: Resources CPU Request
   description: The resources CPU request (in cores) for this build.

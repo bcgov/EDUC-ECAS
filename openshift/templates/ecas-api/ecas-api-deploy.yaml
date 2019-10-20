@@ -19,6 +19,19 @@ objects:
     domain: ${DYNAMICS_DOMAIN}
   type: Opaque
 
+- kind: Secret
+  apiVersion: v1
+  metadata:
+    name: ${NAME}${SUFFIX}-credentials
+    labels:
+      name: ${NAME}${SUFFIX}
+      app: ${APP_NAME}${SUFFIX}
+      app-group: ${APP_GROUP}
+  stringData:
+    username: ${ECAS_API_USERNAME}
+    password: ${ECAS_API_PASSWORD}
+  type: Opaque
+
 - kind: Service
   apiVersion: v1
   metadata:
@@ -106,6 +119,16 @@ objects:
               secretKeyRef:
                 name: ${NAME}${SUFFIX}-dynamics-credentials
                 key: domain
+          - name: ECasAPISecuritySettings__UserName
+            valueFrom:
+              secretKeyRef:
+                name: ${NAME}${SUFFIX}-credentials
+                key: username
+          - name: ECasAPISecuritySettings__Password
+            valueFrom:
+              secretKeyRef:
+                name: ${NAME}${SUFFIX}-credentials
+                key: password
           readinessProbe:
             timeoutSeconds: 30
             initialDelaySeconds: 3
@@ -213,6 +236,16 @@ parameters:
 - name: DYNAMICS_DOMAIN
   displayName: Dynamics Domain
   description: The domain for authenticating with the Dynamics service.
+  required: true
+  value: ""
+- name: ECAS_API_USERNAME
+  displayName: ECAS API Username
+  description: The username for authenticating with the ECAS API.
+  required: true
+  value: ""
+- name: ECAS_API_PASSWORD
+  displayName: ECAS API Password
+  description: The password for authenticating with the ECAS API.
   required: true
   value: ""
 - name: CPU_REQUEST
