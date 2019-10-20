@@ -14,6 +14,7 @@ objects:
       app: ${APP_NAME}${SUFFIX}
       app-group: ${APP_GROUP}
   stringData:
+    endpoint: ${DYNAMICS_ENDPOINT}
     username: ${DYNAMICS_USERNAME}
     password: ${DYNAMICS_PASSWORD}
     domain: ${DYNAMICS_DOMAIN}
@@ -103,7 +104,10 @@ objects:
           - name: DynamicsAuthenticationSettings__ActiveEnvironment
             value: ${DYNAMICS_ENVIRONMENT}
           - name: DynamicsAuthenticationSettings__OnPremWebApiUrl
-            value: ${DYNAMICS_ENDPOINT}
+            valueFrom:
+              secretKeyRef:
+                name: ${NAME}${SUFFIX}-dynamics-credentials
+                key: endpoint
           - name: DynamicsAuthenticationSettings__OnPremUserName
             valueFrom:
               secretKeyRef:
