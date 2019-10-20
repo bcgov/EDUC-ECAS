@@ -5,6 +5,20 @@ metadata:
   name: ${NAME}${SUFFIX}
 objects:
 
+- kind: Secret
+  apiVersion: v1
+  metadata:
+    name: ${NAME}${SUFFIX}
+    labels:
+      name: ${NAME}${SUFFIX}
+      app: ${APP_NAME}${SUFFIX}
+      app-group: ${APP_GROUP}
+  stringData:
+    keycloak-url: ${KEYCLOAK_AUTHSERVERURL}
+    keycloak-realm: ${KEYCLOAK_REALM}
+    keycloak-clientId: ${KEYCLOAK_CLIENTID}
+  type: Opaque
+
 - kind: Service
   apiVersion: v1
   metadata:
@@ -87,6 +101,23 @@ objects:
               secretKeyRef:
                 name: ${API_SERVICE_NAME}${SUFFIX}-credentials
                 key: password
+          - name: KEYCLOAK_AUTHSERVERURL
+            valueFrom:
+              secretKeyRef:
+                name: ${NAME}${SUFFIX}
+                key: keycloak-url
+          - name: KEYCLOAK_REALM
+            valueFrom:
+              secretKeyRef:
+                name: ${NAME}${SUFFIX}
+                key: keycloak-realm
+          - name: KEYCLOAK_CLIENTID
+            valueFrom:
+              secretKeyRef:
+                name: ${NAME}${SUFFIX}
+                key: keycloak-clientId
+          - name: CACHE_DURATION_SECONDS
+            value: ${CACHE_DURATION_SECONDS}
           image: " "
           ports:
           - containerPort: ${{PORT}}
@@ -196,6 +227,26 @@ parameters:
   description: The service name for the internal Dynamics API (ecas-api) component.
   required: true
   value: "ecas-api"
+- name: KEYCLOAK_AUTHSERVERURL
+  displayName: KeyCloak Authentication Server URL
+  description: The URL of the KeyCloak Authentication Server.
+  required: true
+  value: ""
+- name: KEYCLOAK_REALM
+  displayName: KeyCloak Realm
+  description: The KeyCloak Realm for the application.
+  required: true
+  value: ""
+- name: KEYCLOAK_CLIENTID
+  displayName: KeyCloak Client ID
+  description: The KeyCloak Client ID for the application.
+  required: true
+  value: ""
+- name: CACHE_DURATION_SECONDS
+  displayName: Cache Duration Seconds
+  description: The cache duration in seconds.
+  required: true
+  value: "28800"
 - name: CPU_REQUEST
   displayName: Resources CPU Request
   description: The resources CPU request (in cores) for this build.
