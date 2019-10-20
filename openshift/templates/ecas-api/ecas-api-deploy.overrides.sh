@@ -115,9 +115,10 @@ if createOperation; then
   readParameter "ECAS_API_USERNAME - Please provide the ECAS API username.  If one is not specified a random one will be generated." ECAS_API_USERNAME $(generateUsername)
   readParameter "ECAS_API_PASSWORD - Please provide the ECAS API password.  If one is not specified a random one will be generated." ECAS_API_PASSWORD $(generatePassword)
 else
+  readParameter "DYNAMICS_ENDPOINT - Please provide the URL of the Dynamics endpoint.  You MUST supply a value." DYNAMICS_ENDPOINT ""
+
   # Secrets are removed from the configurations during update operations ...
-  printStatusMsg "Update operation detected ...\nSkipping the prompts for DYNAMICS_ENDPOINT, DYNAMICS_USERNAME, DYNAMICS_PASSWORD, DYNAMICS_DOMAIN, ECAS_API_USERNAME, and ECAS_API_PASSWORD secrets ...\n"
-  writeParameter "DYNAMICS_ENDPOINT" "prompt_skipped" "false"
+  printStatusMsg "Update operation detected ...\nSkipping the prompts for DYNAMICS_USERNAME, DYNAMICS_PASSWORD, DYNAMICS_DOMAIN, ECAS_API_USERNAME, and ECAS_API_PASSWORD secrets ...\n"
   writeParameter "DYNAMICS_USERNAME" "prompt_skipped" "false"
   writeParameter "DYNAMICS_PASSWORD" "prompt_skipped" "false"
   writeParameter "DYNAMICS_DOMAIN" "prompt_skipped" "false"
