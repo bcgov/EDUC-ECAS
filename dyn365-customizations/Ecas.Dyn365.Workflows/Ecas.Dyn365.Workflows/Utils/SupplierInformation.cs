@@ -36,7 +36,7 @@ namespace Ecas.Dyn365.Workflows.Utils
 
             foreach (var supplierNumber in results.Entities)
             {
-                supplierInformation.LastName = supplierNumber.GetAttributeValue<string>("educ_name");
+                supplierInformation.LastName = supplierNumber.GetAttributeValue<string>("educ_lastname");
                 supplierInformation.SupplierNumber = supplierNumber.GetAttributeValue<string>("educ_suppliernumber");
                 supplierInformation.SupplierSiteNumber = supplierNumber.GetAttributeValue<string>("educ_suppliersitenumber");
                 supplierInformation.MethodOfPayment = supplierNumber.GetAttributeValue<string>("educ_methodofpayment");
