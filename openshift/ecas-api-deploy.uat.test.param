@@ -4,14 +4,14 @@
 # Template File: templates/ecas-api/ecas-api-deploy.yaml
 #=========================================================
 # NAME=ecas-api
-# SUFFIX=
+SUFFIX=-uat
 # APP_NAME=ecas
 # APP_GROUP=ecas
-APPLICATION_DOMAIN=ecas-api-prod.pathfinder.gov.bc.ca
+APPLICATION_DOMAIN=ecas-api-uat.pathfinder.gov.bc.ca
 # IMAGE_NAMESPACE=pvpywj-tools
-TAG_NAME=prod
+TAG_NAME=uat
 # PORT=8080
-ASPNETCORE_ENVIRONMENT=Production
+ASPNETCORE_ENVIRONMENT=Staging
 # DYNAMICS_ENVIRONMENT=OnPrem
 # DYNAMICS_ENDPOINT=
 # DYNAMICS_USERNAME=

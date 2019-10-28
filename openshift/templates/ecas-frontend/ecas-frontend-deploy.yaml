@@ -2,16 +2,30 @@
 kind: Template
 apiVersion: v1
 metadata:
-  name: ${NAME}
+  name: ${NAME}${SUFFIX}
 objects:
+
+- kind: Secret
+  apiVersion: v1
+  metadata:
+    name: ${NAME}${SUFFIX}
+    labels:
+      name: ${NAME}${SUFFIX}
+      app: ${APP_NAME}${SUFFIX}
+      app-group: ${APP_GROUP}
+  stringData:
+    keycloak-url: ${KEYCLOAK_AUTHSERVERURL}
+    keycloak-realm: ${KEYCLOAK_REALM}
+    keycloak-clientId: ${KEYCLOAK_CLIENTID}
+  type: Opaque
 
 - kind: Service
   apiVersion: v1
   metadata:
-    name: ${NAME}
+    name: ${NAME}${SUFFIX}
     labels:
-      name: ${NAME}
-      app: ${APP_GROUP}
+      name: ${NAME}${SUFFIX}
+      app: ${APP_NAME}${SUFFIX}
       app-group: ${APP_GROUP}
   spec:
     ports:
@@ -20,15 +34,15 @@ objects:
       protocol: TCP
       targetPort: ${{PORT}}
     selector:
-      name: ${NAME}
+      name: ${NAME}${SUFFIX}
 
 - kind: Route
   apiVersion: v1
   metadata:
-    name: ${NAME}
+    name: ${NAME}${SUFFIX}
     labels:
-      name: ${NAME}
-      app: ${APP_GROUP}
+      name: ${NAME}${SUFFIX}
+      app: ${APP_NAME}${SUFFIX}
       app-group: ${APP_GROUP}
   spec:
     host: ${APPLICATION_DOMAIN}
@@ -39,33 +53,33 @@ objects:
       termination: edge
     to:
       kind: Service
-      name: ${NAME}
+      name: ${NAME}${SUFFIX}
       weight: 100
 
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
-    name: ${NAME}
+    name: ${NAME}${SUFFIX}
     labels:
-      name: ${NAME}
-      app: ${APP_GROUP}
+      name: ${NAME}${SUFFIX}
+      app: ${APP_NAME}${SUFFIX}
       app-group: ${APP_GROUP}
   spec:
     replicas: 1
     selector:
-      name: ${NAME}
+      name: ${NAME}${SUFFIX}
     strategy:
       type: Rolling
     template:
       metadata:
-        name: ${NAME}
+        name: ${NAME}${SUFFIX}
         labels:
-          name: ${NAME}
-          app: ${APP_GROUP}
+          name: ${NAME}${SUFFIX}
+          app: ${APP_NAME}${SUFFIX}
           app-group: ${APP_GROUP}
       spec:
         containers:
-        - name: ${NAME}
+        - name: ${NAME}${SUFFIX}
           env:
           - name: APP_KEY
             value: ${APP_KEY}
@@ -77,6 +91,33 @@ objects:
             value: ${DOCUMENTROOT}
           - name: DYNAMICSBASEURL
             value: ${DYNAMICSBASEURL}
+          - name: DYNAMICS_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: ${API_SERVICE_NAME}${SUFFIX}-credentials
+                key: username
+          - name: DYNAMICS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ${API_SERVICE_NAME}${SUFFIX}-credentials
+                key: password
+          - name: KEYCLOAK_AUTHSERVERURL
+            valueFrom:
+              secretKeyRef:
+                name: ${NAME}${SUFFIX}
+                key: keycloak-url
+          - name: KEYCLOAK_REALM
+            valueFrom:
+              secretKeyRef:
+                name: ${NAME}${SUFFIX}
+                key: keycloak-realm
+          - name: KEYCLOAK_CLIENTID
+            valueFrom:
+              secretKeyRef:
+                name: ${NAME}${SUFFIX}
+                key: keycloak-clientId
+          - name: CACHE_DURATION_SECONDS
+            value: ${CACHE_DURATION_SECONDS}
           image: " "
           ports:
           - containerPort: ${{PORT}}
@@ -114,7 +155,7 @@ objects:
       imageChangeParams:
         automatic: true
         containerNames:
-        - ${NAME}
+        - ${NAME}${SUFFIX}
         from:
           kind: ImageStreamTag
           name: ${NAME}:${TAG_NAME}
@@ -126,6 +167,16 @@ parameters:
   description: The name assigned to all the objects defined in this template.
   required: true
   value: ecas-frontend
+- name: SUFFIX
+  displayName: Suffix
+  description: A name suffix used for all objects.
+  required: false
+  value:
+- name: APP_NAME
+  displayName: App Name
+  description: Used to group components together in the OpenShift console.
+  required: true
+  value: ecas
 - name: APP_GROUP
   displayName: App Group
   description: Used to group components together.
@@ -171,6 +222,31 @@ parameters:
   description: The endpoint for the internal Dynamics API component.
   required: true
   value: "http://ecas-api:8080/api"
+- name: API_SERVICE_NAME
+  displayName: API Service Name
+  description: The service name for the internal Dynamics API (ecas-api) component.
+  required: true
+  value: "ecas-api"
+- name: KEYCLOAK_AUTHSERVERURL
+  displayName: KeyCloak Authentication Server URL
+  description: The URL of the KeyCloak Authentication Server.
+  required: true
+  value: ""
+- name: KEYCLOAK_REALM
+  displayName: KeyCloak Realm
+  description: The KeyCloak Realm for the application.
+  required: true
+  value: ""
+- name: KEYCLOAK_CLIENTID
+  displayName: KeyCloak Client ID
+  description: The KeyCloak Client ID for the application.
+  required: true
+  value: ""
+- name: CACHE_DURATION_SECONDS
+  displayName: Cache Duration Seconds
+  description: The cache duration in seconds.
+  required: true
+  value: "28800"
 - name: CPU_REQUEST
   displayName: Resources CPU Request
   description: The resources CPU request (in cores) for this build.

@@ -4,8 +4,10 @@
 # Template File: templates/ecas-api/ecas-api-deploy.yaml
 #=========================================================
 NAME=ecas-api
+SUFFIX=
+APP_NAME=ecas
 APP_GROUP=ecas
-APPLICATION_DOMAIN=ecas-api-pvpywj-dev.pathfinder.gov.bc.ca
+APPLICATION_DOMAIN=ecas-api-dev.pathfinder.gov.bc.ca
 IMAGE_NAMESPACE=pvpywj-tools
 TAG_NAME=dev
 PORT=8080

@@ -4,8 +4,10 @@
 # Template File: templates/ecas-frontend/ecas-frontend-deploy.yaml
 #=========================================================
 # NAME=ecas-frontend
+# SUFFIX=
+# APP_NAME=ecas
 # APP_GROUP=ecas
-APPLICATION_DOMAIN=ecas-frontend-pvpywj-prod.pathfinder.gov.bc.ca
+APPLICATION_DOMAIN=ecas-frontend-prod.pathfinder.gov.bc.ca
 # IMAGE_NAMESPACE=pvpywj-tools
 TAG_NAME=prod
 # APP_KEY=[a-zA-Z0-9]{32}

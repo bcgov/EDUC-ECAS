@@ -1,21 +1,22 @@
 #=========================================================
 # OpenShift template parameters for:
 # Component: .
-# Template File: templates/ecas-frontend/ecas-frontend-deploy.yaml
+# Template File: templates/ecas-api/ecas-api-deploy.yaml
 #=========================================================
-NAME=ecas-frontend
-SUFFIX=
+NAME=ecas-api
+SUFFIX=-uat
 APP_NAME=ecas
 APP_GROUP=ecas
-APPLICATION_DOMAIN=ecas-frontend-dev.pathfinder.gov.bc.ca
+APPLICATION_DOMAIN=ecas-api-uat.pathfinder.gov.bc.ca
 IMAGE_NAMESPACE=pvpywj-tools
-TAG_NAME=dev
-# APP_KEY=[a-zA-Z0-9]{32}
-# API_KEY=[a-zA-Z0-9]{32}
-APP_DEBUG=false
-DOCUMENTROOT=/public
+TAG_NAME=uat
 PORT=8080
-DYNAMICSBASEURL=http://ecas-api:8080/api
+ASPNETCORE_ENVIRONMENT=Staging
+DYNAMICS_ENVIRONMENT=OnPrem
+DYNAMICS_ENDPOINT=
+DYNAMICS_USERNAME=
+DYNAMICS_PASSWORD=
+DYNAMICS_DOMAIN=
 CPU_REQUEST=10m
 CPU_LIMIT=250m
 MEMORY_REQUEST=10Mi

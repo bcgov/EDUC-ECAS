@@ -2,30 +2,44 @@
 kind: Template
 apiVersion: v1
 metadata:
-  name: ${NAME}
+  name: ${NAME}${SUFFIX}
 objects:
 
 - kind: Secret
   apiVersion: v1
   metadata:
-    name: ${NAME}-dynamics-credentials
+    name: ${NAME}${SUFFIX}-dynamics-credentials
     labels:
-      name: ${NAME}
-      app: ${APP_GROUP}
+      name: ${NAME}${SUFFIX}
+      app: ${APP_NAME}${SUFFIX}
       app-group: ${APP_GROUP}
   stringData:
+    endpoint: ${DYNAMICS_ENDPOINT}
     username: ${DYNAMICS_USERNAME}
     password: ${DYNAMICS_PASSWORD}
     domain: ${DYNAMICS_DOMAIN}
   type: Opaque
 
+- kind: Secret
+  apiVersion: v1
+  metadata:
+    name: ${NAME}${SUFFIX}-credentials
+    labels:
+      name: ${NAME}${SUFFIX}
+      app: ${APP_NAME}${SUFFIX}
+      app-group: ${APP_GROUP}
+  stringData:
+    username: ${ECAS_API_USERNAME}
+    password: ${ECAS_API_PASSWORD}
+  type: Opaque
+
 - kind: Service
   apiVersion: v1
   metadata:
-    name: ${NAME}
+    name: ${NAME}${SUFFIX}
     labels:
-      name: ${NAME}
-      app: ${APP_GROUP}
+      name: ${NAME}${SUFFIX}
+      app: ${APP_NAME}${SUFFIX}
       app-group: ${APP_GROUP}
   spec:
     ports:
@@ -34,15 +48,15 @@ objects:
       protocol: TCP
       targetPort: ${{PORT}}
     selector:
-      name: ${NAME}
+      name: ${NAME}${SUFFIX}
 
 - kind: Route
   apiVersion: v1
   metadata:
-    name: ${NAME}
+    name: ${NAME}${SUFFIX}
     labels:
-      name: ${NAME}
-      app: ${APP_GROUP}
+      name: ${NAME}${SUFFIX}
+      app: ${APP_NAME}${SUFFIX}
       app-group: ${APP_GROUP}
   spec:
     host: ${APPLICATION_DOMAIN}
@@ -53,33 +67,33 @@ objects:
       termination: edge
     to:
       kind: Service
-      name: ${NAME}
+      name: ${NAME}${SUFFIX}
       weight: 100
 
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
-    name: ${NAME}
+    name: ${NAME}${SUFFIX}
     labels:
-      name: ${NAME}
-      app: ${APP_GROUP}
+      name: ${NAME}${SUFFIX}
+      app: ${APP_NAME}${SUFFIX}
       app-group: ${APP_GROUP}
   spec:
     replicas: 1
     selector:
-      name: ${NAME}
+      name: ${NAME}${SUFFIX}
     strategy:
       type: Rolling
     template:
       metadata:
-        name: ${NAME}
+        name: ${NAME}${SUFFIX}
         labels:
-          name: ${NAME}
-          app: ${APP_GROUP}
+          name: ${NAME}${SUFFIX}
+          app: ${APP_NAME}${SUFFIX}
           app-group: ${APP_GROUP}
       spec:
         containers:
-        - name: ${NAME}
+        - name: ${NAME}${SUFFIX}
           image: " "
           ports:
           - containerPort: ${{PORT}}
@@ -90,22 +104,35 @@ objects:
           - name: DynamicsAuthenticationSettings__ActiveEnvironment
             value: ${DYNAMICS_ENVIRONMENT}
           - name: DynamicsAuthenticationSettings__OnPremWebApiUrl
-            value: ${DYNAMICS_ENDPOINT}
+            valueFrom:
+              secretKeyRef:
+                name: ${NAME}${SUFFIX}-dynamics-credentials
+                key: endpoint
           - name: DynamicsAuthenticationSettings__OnPremUserName
             valueFrom:
               secretKeyRef:
-                name: ${NAME}-dynamics-credentials
+                name: ${NAME}${SUFFIX}-dynamics-credentials
                 key: username
           - name: DynamicsAuthenticationSettings__OnPremPassword
             valueFrom:
               secretKeyRef:
-                name: ${NAME}-dynamics-credentials
+                name: ${NAME}${SUFFIX}-dynamics-credentials
                 key: password
           - name: DynamicsAuthenticationSettings__OnPremDomain
             valueFrom:
               secretKeyRef:
-                name: ${NAME}-dynamics-credentials
+                name: ${NAME}${SUFFIX}-dynamics-credentials
                 key: domain
+          - name: ECasAPISecuritySettings__UserName
+            valueFrom:
+              secretKeyRef:
+                name: ${NAME}${SUFFIX}-credentials
+                key: username
+          - name: ECasAPISecuritySettings__Password
+            valueFrom:
+              secretKeyRef:
+                name: ${NAME}${SUFFIX}-credentials
+                key: password
           readinessProbe:
             timeoutSeconds: 30
             initialDelaySeconds: 3
@@ -139,7 +166,7 @@ objects:
       imageChangeParams:
         automatic: true
         containerNames:
-        - ${NAME}
+        - ${NAME}${SUFFIX}
         from:
           kind: ImageStreamTag
           name: ${NAME}:${TAG_NAME}
@@ -151,6 +178,16 @@ parameters:
   description: The name assigned to all the objects defined in this template.
   required: true
   value: ecas-api
+- name: SUFFIX
+  displayName: Suffix
+  description: A name suffix used for all objects.
+  required: false
+  value:
+- name: APP_NAME
+  displayName: App Name
+  description: Used to group components together in the OpenShift console.
+  required: true
+  value: ecas
 - name: APP_GROUP
   displayName: App Group
   description: Used to group components together.
@@ -203,6 +240,16 @@ parameters:
 - name: DYNAMICS_DOMAIN
   displayName: Dynamics Domain
   description: The domain for authenticating with the Dynamics service.
+  required: true
+  value: ""
+- name: ECAS_API_USERNAME
+  displayName: ECAS API Username
+  description: The username for authenticating with the ECAS API.
+  required: true
+  value: ""
+- name: ECAS_API_PASSWORD
+  displayName: ECAS API Password
+  description: The password for authenticating with the ECAS API.
   required: true
   value: ""
 - name: CPU_REQUEST

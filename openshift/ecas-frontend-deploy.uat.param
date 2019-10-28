@@ -4,18 +4,18 @@
 # Template File: templates/ecas-frontend/ecas-frontend-deploy.yaml
 #=========================================================
 NAME=ecas-frontend
-SUFFIX=
+SUFFIX=-uat
 APP_NAME=ecas
 APP_GROUP=ecas
-APPLICATION_DOMAIN=ecas-frontend-dev.pathfinder.gov.bc.ca
+APPLICATION_DOMAIN=ecas-frontend-uat.pathfinder.gov.bc.ca
 IMAGE_NAMESPACE=pvpywj-tools
-TAG_NAME=dev
+TAG_NAME=uat
 # APP_KEY=[a-zA-Z0-9]{32}
 # API_KEY=[a-zA-Z0-9]{32}
 APP_DEBUG=false
 DOCUMENTROOT=/public
 PORT=8080
-DYNAMICSBASEURL=http://ecas-api:8080/api
+DYNAMICSBASEURL=http://ecas-api-uat:8080/api
 CPU_REQUEST=10m
 CPU_LIMIT=250m
 MEMORY_REQUEST=10Mi
