@@ -9,7 +9,7 @@
                 </div>
         </div>
         <div class="card-body">
-            <form>
+            <form v-on:keydown.enter.prevent>
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="first_name" class="required">First Name</label>
