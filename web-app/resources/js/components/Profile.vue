@@ -83,7 +83,7 @@
                             <div class="form-group col">
                                 <label for="region" class="required">{{ regionLabel }}</label>
                                 <select class="form-control" v-model="user_local.region" id="region" name="region">
-                                    <option :value="region" v-for="region in regions">{{ region.name }}</option>
+                                    <option :value="region" v-for="region in regions">{{ region.id }}</option>
                                 </select>
                             </div>
                         </div>
