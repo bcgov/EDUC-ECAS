@@ -192,61 +192,6 @@
                         <control disabled="false" id="educ_actualmarkerdays" classid="{C6D124CA-7EDA-4a60-AEA9-7FB8D318B68F}" datafieldname="educ_actualmarkerdays" />
                       </cell>
                     </row>
-                    <row>
-                      <cell id="{a88bbcad-770b-695d-7442-972b5eaa0617}" showlabel="false" userspacer="true">
-                        <labels>
-                          <label description="" languagecode="1033" />
-                        </labels>
-                      </cell>
-                    </row>
-                  </rows>
-                </section>
-                <section name="{41332d75-3a39-4cb9-82f2-b1c4e7d8ac13}_section_4" showlabel="true" showbar="true" locklevel="0" id="{e1d0ca14-5492-6d4b-59dd-301296450111}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
-                  <labels>
-                    <label description="Expense Authority Approval" languagecode="1033" />
-                  </labels>
-                  <rows>
-                    <row>
-                      <cell id="{786b0cd9-e537-d862-b119-d2a53ae70322}" showlabel="true" locklevel="0">
-                        <labels>
-                          <label description="Approval Signature" languagecode="1033" />
-                        </labels>
-                        <control id="educ_approvalsignature" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" datafieldname="educ_approvalsignature" disabled="false" uniqueid="{b89e2be4-11a7-dd20-484d-8574bd134b75}" />
-                      </cell>
-                    </row>
-                    <row>
-                      <cell id="{d12e3d27-7aa8-b680-7e0e-6e13dd6c213e}" showlabel="true" locklevel="0">
-                        <labels>
-                          <label description="Expense Authority Approval Date" languagecode="1033" />
-                        </labels>
-                        <control id="educ_expenseauthorityapprovaldate" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="educ_expenseauthorityapprovaldate" disabled="true" uniqueid="{7a05ab91-b8cc-860d-a727-12a2146d2524}" />
-                      </cell>
-                    </row>
-                    <row>
-                      <cell id="{983600c3-6d22-d64b-61d6-8385854ba096}" showlabel="true" locklevel="0">
-                        <labels>
-                          <label description="Expense Authority Name" languagecode="1033" />
-                        </labels>
-                        <control id="educ_expenseauthorityname" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="educ_expenseauthorityname" disabled="true" uniqueid="{a7be922c-65c2-bc68-25ae-5dc17b5b54dd}">
-                          <parameters>
-                            <AutoResolve>true</AutoResolve>
-                            <DisableMru>false</DisableMru>
-                            <DisableQuickFind>false</DisableQuickFind>
-                            <DisableViewPicker>false</DisableViewPicker>
-                            <DefaultViewId>{E88CA999-0B16-4AE9-B6A9-9EDC840D42D8}</DefaultViewId>
-                            <AllowFilterOff>false</AllowFilterOff>
-                          </parameters>
-                        </control>
-                      </cell>
-                    </row>
-                    <row>
-                      <cell id="{da094e08-e209-78d6-e7d4-c339d85c1926}" showlabel="true" locklevel="0" visible="false">
-                        <labels>
-                          <label description="Approval Authority Signature Text" languagecode="1033" />
-                        </labels>
-                        <control id="educ_approvalauthoritysignaturetext" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="educ_approvalauthoritysignaturetext" disabled="false" uniqueid="{9b12a4ae-9252-5d65-0754-b68c3793aba4}" />
-                      </cell>
-                    </row>
                   </rows>
                 </section>
               </sections>
@@ -266,7 +211,7 @@
                   </labels>
                   <rows>
                     <row>
-                      <cell id="{4e93a235-4c48-4c29-3178-7d2adac34d29}" showlabel="true" rowspan="17" auto="false" colspan="1">
+                      <cell id="{4e93a235-4c48-4c29-3178-7d2adac34d29}" showlabel="true" rowspan="33" auto="false" colspan="1">
                         <labels>
                           <label description="Assignments" languagecode="1033" />
                         </labels>
@@ -279,18 +224,34 @@
                             <AutoExpand>Fixed</AutoExpand>
                             <EnableQuickFind>false</EnableQuickFind>
                             <EnableViewPicker>true</EnableViewPicker>
-                            <ViewIds>{0CA3286D-7F60-E911-A97F-000D3AF43D1A},{A6571D9A-D45C-E911-A980-000D3AF475A9},{2314DE1A-CE5B-E911-A978-000D3AF45D23}</ViewIds>
+                            <ViewIds>{0CA3286D-7F60-E911-A97F-000D3AF43D1A},{315F6E2C-BEF1-E911-B80E-005056833C5B},{A6571D9A-D45C-E911-A980-000D3AF475A9},{2314DE1A-CE5B-E911-A978-000D3AF45D23}</ViewIds>
                             <EnableJumpBar>false</EnableJumpBar>
                             <ChartGridMode>Grid</ChartGridMode>
                             <VisualizationId>{8A2A7D79-5B7B-E911-B80A-005056833C5B}</VisualizationId>
                             <IsUserChart>false</IsUserChart>
                             <EnableChartPicker>false</EnableChartPicker>
-                            <RecordsPerPage>14</RecordsPerPage>
+                            <RecordsPerPage>30</RecordsPerPage>
                             <HeaderColorCode>#F3F3F3</HeaderColorCode>
                           </parameters>
                         </control>
                       </cell>
                     </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
                     <row />
                     <row />
                     <row />
@@ -410,40 +371,7 @@
           </NavBarArea>
         </NavBarAreas>
       </Navigation>
-      <controlDescriptions>
-        <controlDescription forControl="{b89e2be4-11a7-dd20-484d-8574bd134b75}">
-          <customControl id="{E0DECE4B-6FC8-4a8f-A065-082708572369}">
-            <parameters>
-              <datafieldname>educ_approvalsignature</datafieldname>
-            </parameters>
-          </customControl>
-          <customControl formFactor="0" name="MscrmControls.Signature.SignatureControl">
-            <parameters>
-              <value>educ_approvalsignature</value>
-            </parameters>
-          </customControl>
-          <customControl formFactor="1" name="MscrmControls.Signature.SignatureControl">
-            <parameters>
-              <value>educ_approvalsignature</value>
-            </parameters>
-          </customControl>
-          <customControl formFactor="2" name="MscrmControls.Signature.SignatureControl">
-            <parameters>
-              <value>educ_approvalsignature</value>
-            </parameters>
-          </customControl>
-        </controlDescription>
-      </controlDescriptions>
-      <formLibraries>
-        <Library name="educ_session.js" libraryUniqueId="{ddde1ae5-d918-6860-a224-3a7d53d15ee9}" />
-      </formLibraries>
-      <events>
-        <event name="onchange" application="false" active="false" attribute="educ_approvalsignature">
-          <Handlers>
-            <Handler functionName="clearBase64StringPrefix" libraryName="educ_session.js" handlerUniqueId="{82c51a6a-dc82-3265-e158-bc66b46a2a21}" enabled="true" parameters="" passExecutionContext="false" />
-          </Handlers>
-        </event>
-      </events>
+      <controlDescriptions />
     </form>
     <IsCustomizable>1</IsCustomizable>
     <CanBeDeleted>1</CanBeDeleted>

@@ -74,8 +74,11 @@
     <RolePrivilege name="prvDeleteeduc_subjectcode" level="Global" />
     <RolePrivilege name="prvDeleteeduc_teachingexperience" level="Local" />
     <RolePrivilege name="prvDeleteUserSettings" level="Local" />
+    <RolePrivilege name="prvReadAuditSummary" level="Global" />
+    <RolePrivilege name="prvReadeduc_cassupplierlookup" level="Global" />
     <RolePrivilege name="prvReadPluginAssembly" level="Global" />
     <RolePrivilege name="prvReadPluginType" level="Global" />
+    <RolePrivilege name="prvReadRecordAuditHistory" level="Global" />
     <RolePrivilege name="prvReadSdkMessage" level="Global" />
     <RolePrivilege name="prvReadSdkMessageProcessingStep" level="Global" />
     <RolePrivilege name="prvReadSdkMessageProcessingStepImage" level="Global" />

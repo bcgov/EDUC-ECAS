@@ -129,31 +129,7 @@
                       <row />
                       <row />
                       <row>
-                        <cell colspan="2" rowspan="9" showlabel="false" id="{dd856e8c-9428-49be-94c9-59a0eba7b85a}" auto="false">
-                          <labels>
-                            <label description="Payment" languagecode="1033" />
-                          </labels>
-                          <control id="Component492c1b3" uniqueid="{397bec20-b23a-77cb-eb21-71d692eb390d}" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
-                            <parameters>
-                              <TargetEntityType>educ_payment</TargetEntityType>
-                              <ChartGridMode>Chart</ChartGridMode>
-                              <EnableQuickFind>false</EnableQuickFind>
-                              <EnableViewPicker>false</EnableViewPicker>
-                              <EnableJumpBar>false</EnableJumpBar>
-                              <RecordsPerPage>7</RecordsPerPage>
-                              <HeaderColorCode />
-                              <ViewId>{7A36E23C-5950-4662-BEF3-70C8A71B1D8F}</ViewId>
-                              <IsUserView>false</IsUserView>
-                              <ViewIds />
-                              <AutoExpand>Fixed</AutoExpand>
-                              <VisualizationId>{AF4471BB-2FA1-E911-B80C-005056833C5B}</VisualizationId>
-                              <IsUserChart>false</IsUserChart>
-                              <EnableChartPicker>false</EnableChartPicker>
-                              <RelationshipName />
-                            </parameters>
-                          </control>
-                        </cell>
-                        <cell colspan="2" rowspan="9" showlabel="false" id="{b4e7d506-28c6-4fcc-b2e9-ed01e652383b}" auto="false">
+                        <cell colspan="1" rowspan="12" showlabel="false" id="{b4e7d506-28c6-4fcc-b2e9-ed01e652383b}" auto="false">
                           <labels>
                             <label description="Payment" languagecode="1033" />
                           </labels>
@@ -164,7 +140,7 @@
                               <EnableQuickFind>false</EnableQuickFind>
                               <EnableViewPicker>false</EnableViewPicker>
                               <EnableJumpBar>false</EnableJumpBar>
-                              <RecordsPerPage>9</RecordsPerPage>
+                              <RecordsPerPage>10</RecordsPerPage>
                               <HeaderColorCode>#F5F6F9</HeaderColorCode>
                               <ViewId>{1BEC2B1E-69AD-E911-B80D-005056833C5B}</ViewId>
                               <IsUserView>false</IsUserView>
@@ -177,17 +153,7 @@
                             </parameters>
                           </control>
                         </cell>
-                      </row>
-                      <row />
-                      <row />
-                      <row />
-                      <row />
-                      <row />
-                      <row />
-                      <row />
-                      <row />
-                      <row>
-                        <cell id="{29681865-b2cb-ce86-6c55-c813cc4b7eed}" showlabel="false" colspan="4" auto="false" rowspan="12">
+                        <cell id="{29681865-b2cb-ce86-6c55-c813cc4b7eed}" showlabel="false" colspan="3" auto="false" rowspan="15">
                           <labels>
                             <label description="Payments" languagecode="1033" />
                           </labels>
@@ -206,7 +172,7 @@
                               <VisualizationId />
                               <IsUserChart>false</IsUserChart>
                               <EnableChartPicker>false</EnableChartPicker>
-                              <RecordsPerPage>8</RecordsPerPage>
+                              <RecordsPerPage>11</RecordsPerPage>
                               <HeaderColorCode />
                             </parameters>
                           </control>
@@ -223,6 +189,27 @@
                       <row />
                       <row />
                       <row />
+                      <row>
+                        <cell id="{70a2356e-00da-0abe-3a0b-db710038232d}" showlabel="false">
+                          <labels>
+                            <label description="" languagecode="1033" />
+                          </labels>
+                        </cell>
+                      </row>
+                      <row>
+                        <cell id="{39468445-5221-8ac4-622a-50148d171068}" showlabel="false">
+                          <labels>
+                            <label description="" languagecode="1033" />
+                          </labels>
+                        </cell>
+                      </row>
+                      <row>
+                        <cell id="{d14ba33d-1648-1cbe-8542-8004568a8ae2}" showlabel="false">
+                          <labels>
+                            <label description="" languagecode="1033" />
+                          </labels>
+                        </cell>
+                      </row>
                     </rows>
                   </section>
                 </sections>

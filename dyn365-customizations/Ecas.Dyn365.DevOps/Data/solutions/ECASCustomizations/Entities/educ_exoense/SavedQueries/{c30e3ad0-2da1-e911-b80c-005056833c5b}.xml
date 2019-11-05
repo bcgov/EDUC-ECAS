@@ -18,7 +18,7 @@
           <cell name="statuscode" width="100" />
           <cell name="educ_description" width="100" />
           <cell name="educ_payment" width="100" />
-          <cell name="educ_expenseauthority" width="100" />
+          <cell name="a_36af046a8972e911b80a005056833c5b.educ_expenseauthorityid" width="100" disableSorting="1" />
           <cell name="educ_supplementalexpense" width="100" />
         </row>
       </grid>
@@ -34,7 +34,6 @@
           <attribute name="educ_description" />
           <attribute name="educ_amount" />
           <attribute name="educ_assignment" />
-          <attribute name="educ_expenseauthority" />
           <order attribute="educ_assignment" descending="false" />
           <filter type="and">
             <condition attribute="statecode" operator="eq" value="1" />
@@ -44,6 +43,9 @@
             <attribute name="educ_rate" />
           </link-entity>
           <attribute name="educ_supplementalexpense" />
+          <link-entity alias="a_36af046a8972e911b80a005056833c5b" name="educ_assignment" from="educ_assignmentid" to="educ_assignment" link-type="outer" visible="false">
+            <attribute name="educ_expenseauthorityid" />
+          </link-entity>
           <attribute name="educ_exoenseid" />
         </entity>
       </fetch>

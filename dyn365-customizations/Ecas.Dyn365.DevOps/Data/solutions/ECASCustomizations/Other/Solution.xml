@@ -8,7 +8,7 @@
     <Descriptions>
       <Description description="ECAS - All custom entities, fields, forms, views" languagecode="1033" />
     </Descriptions>
-    <Version>0.0.2.1</Version>
+    <Version>0.0.2.4</Version>
     <Managed>2</Managed>
     <Publisher>
       <UniqueName>quartech</UniqueName>
@@ -82,6 +82,7 @@
     <RootComponents>
       <RootComponent type="1" schemaName="contact" behavior="2" />
       <RootComponent type="1" schemaName="educ_assignment" behavior="0" />
+      <RootComponent type="1" schemaName="educ_cassupplierlookup" behavior="0" />
       <RootComponent type="1" schemaName="educ_config" behavior="0" />
       <RootComponent type="1" schemaName="educ_countrycode" behavior="0" />
       <RootComponent type="1" schemaName="educ_credential" behavior="0" />
@@ -99,6 +100,7 @@
       <RootComponent type="1" schemaName="educ_sessiontypecode" behavior="0" />
       <RootComponent type="1" schemaName="educ_subjectcode" behavior="0" />
       <RootComponent type="1" schemaName="educ_teachingexperience" behavior="0" />
+      <RootComponent type="1" schemaName="educ_usersignature" behavior="0" />
       <RootComponent type="1" schemaName="systemuser" behavior="0" />
       <RootComponent type="9" schemaName="educ_ayesornonullable" behavior="0" />
       <RootComponent type="9" schemaName="educ_ecasyesno" behavior="0" />
@@ -107,6 +109,7 @@
       <RootComponent type="20" id="{8f991e1c-0d4e-e911-a980-000d3af475a9}" behavior="0" />
       <RootComponent type="20" id="{b52873d5-0c4e-e911-a980-000d3af475a9}" behavior="0" />
       <RootComponent type="20" id="{bd194fa2-5765-e911-b80a-005056833c5b}" behavior="0" />
+      <RootComponent type="29" id="{16cd6c60-49e9-e911-b80e-005056833c5b}" behavior="0" />
       <RootComponent type="29" id="{1a3b40ff-5570-e911-b80a-005056833c5b}" behavior="0" />
       <RootComponent type="29" id="{3c26a464-6e5d-e911-a98d-000d3af438b6}" behavior="0" />
       <RootComponent type="29" id="{6fac5498-d45f-e911-a982-000d3af47939}" behavior="0" />
@@ -114,14 +117,17 @@
       <RootComponent type="29" id="{a0aa99fd-7868-e911-b80a-005056833c5b}" behavior="0" />
       <RootComponent type="29" id="{a52c7034-26de-e911-b80e-005056833c5b}" behavior="0" />
       <RootComponent type="29" id="{bff36319-0b5c-e911-a97e-000d3af42a5a}" behavior="0" />
+      <RootComponent type="29" id="{ce7974bb-d6f9-e911-b80e-005056833c5b}" behavior="0" />
       <RootComponent type="29" id="{e9bb3432-4c5e-e911-a97a-000d3af45d23}" behavior="0" />
       <RootComponent type="36" id="{0d3eb7cb-095e-e911-a97a-000d3af45d23}" behavior="0" />
       <RootComponent type="50" schemaName=":RibbonDiffXml" behavior="0" />
       <RootComponent type="60" id="{0882c115-ea2b-4a02-9abe-bb1cdb92a4df}" behavior="0" />
+      <RootComponent type="60" id="{12a5cb81-266a-44fb-aed8-ea63d3db50a7}" behavior="0" />
       <RootComponent type="60" id="{184f46be-510b-4cae-b102-01dc69b648f9}" behavior="0" />
       <RootComponent type="60" id="{1be163c3-9e7e-e911-b80a-005056833c5b}" behavior="0" />
       <RootComponent type="60" id="{1d7d2ea7-1496-e911-b80c-005056833c5b}" behavior="0" />
       <RootComponent type="60" id="{20b2c88e-5111-4ded-b0e4-f99df4ee47dd}" behavior="0" />
+      <RootComponent type="60" id="{20c71ab2-7bec-45a3-9c7b-8556ac621d9b}" behavior="0" />
       <RootComponent type="60" id="{2b4e948e-ecfa-4a8c-98af-50a6a21209c7}" behavior="0" />
       <RootComponent type="60" id="{3e83fd9f-fab7-4f32-a8a3-61de5303b597}" behavior="0" />
       <RootComponent type="60" id="{42852830-c917-49c6-8127-6a3fbb848d12}" behavior="0" />
@@ -131,10 +137,13 @@
       <RootComponent type="60" id="{4e82534e-d9e7-423c-b905-e0e85223b735}" behavior="0" />
       <RootComponent type="60" id="{5e5537f1-eee6-4d9b-98a7-c0eddc60f5a2}" behavior="0" />
       <RootComponent type="60" id="{6048715e-9d7e-e911-b80a-005056833c5b}" behavior="0" />
+      <RootComponent type="60" id="{69b3ca19-0cd6-490f-a5a8-798e787d13f6}" behavior="0" />
       <RootComponent type="60" id="{726861fb-680c-4637-b982-4df71c4dc50f}" behavior="0" />
       <RootComponent type="60" id="{7723906c-0273-46ed-ba86-05a21ba4a657}" behavior="0" />
       <RootComponent type="60" id="{79ee0c4b-408b-4c39-abcd-0419baf51fb2}" behavior="0" />
+      <RootComponent type="60" id="{8626174d-173a-44dc-918d-d6879fb84aab}" behavior="0" />
       <RootComponent type="60" id="{8ee724be-8080-4c9f-a443-d24c2097e06a}" behavior="0" />
+      <RootComponent type="60" id="{9a0abc56-33f4-e911-b80e-005056833c5b}" behavior="0" />
       <RootComponent type="60" id="{9d2729cd-31a1-e911-b80c-005056833c5b}" behavior="0" />
       <RootComponent type="60" id="{a4361f88-37f2-42be-a05e-b132830e070f}" behavior="0" />
       <RootComponent type="60" id="{b2d87f8b-e657-4b40-8a8a-90218f4fc21a}" behavior="0" />
@@ -142,7 +151,6 @@
       <RootComponent type="60" id="{b8653bc5-ce7c-e911-b80a-005056833c5b}" behavior="0" />
       <RootComponent type="60" id="{be9a0610-b878-46b2-91fb-eabb80b837ea}" behavior="0" />
       <RootComponent type="60" id="{c7087e4e-bb5f-48ea-83e4-6845389b971b}" behavior="0" />
-      <RootComponent type="60" id="{c7805b2d-7c7e-48d4-a09c-697f1d103123}" behavior="0" />
       <RootComponent type="60" id="{d2847edd-16a2-46c5-9597-83685c2f3406}" behavior="0" />
       <RootComponent type="60" id="{ec4dde39-c27f-4325-8b6e-932bfa4746b9}" behavior="0" />
       <RootComponent type="60" id="{edd5047e-2f3a-438b-baa3-3e0daba1b17b}" behavior="0" />
@@ -159,12 +167,14 @@
       <RootComponent type="61" schemaName="educ_Credential_Icon" behavior="0" />
       <RootComponent type="61" schemaName="educ_Educ_Logo_Banner" behavior="0" />
       <RootComponent type="61" schemaName="educ_expense.js" behavior="0" />
+      <RootComponent type="61" schemaName="educ_Expense_Authority_Assignment_Icon" behavior="0" />
       <RootComponent type="61" schemaName="educ_Expense_Icon" behavior="0" />
       <RootComponent type="61" schemaName="educ_GeneratePaymentIcon" behavior="0" />
       <RootComponent type="61" schemaName="educ_logo.png" behavior="0" />
       <RootComponent type="61" schemaName="educ_PaymentIcon" behavior="0" />
       <RootComponent type="61" schemaName="educ_session.js" behavior="0" />
       <RootComponent type="61" schemaName="educ_Session_Icon" behavior="0" />
+      <RootComponent type="61" schemaName="educ_translateImageBase64Encode.js" behavior="0" />
       <RootComponent type="62" schemaName="educ_ECAS" behavior="0" />
       <RootComponent type="70" id="{e1876cda-505d-e911-a98d-000d3af438b6}" behavior="0" />
       <RootComponent type="80" schemaName="educ_ECAS" behavior="0" />
@@ -195,51 +205,51 @@
         <Dependent key="3" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="9" type="66" schemaName="MscrmControls.AutoComplete.AutoCompleteControl" displayName="MscrmControls.AutoComplete.AutoCompleteControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="10" type="60" displayName="ECAS Contractor Form" parentDisplayName="Contact" id="{726861fb-680c-4637-b982-4df71c4dc50f}" />
+        <Required key="9" type="66" schemaName="MscrmControls.Signature.SignatureControl" displayName="MscrmControls.Signature.SignatureControl" solution="CustomControlsCore (9.0.0002.3034)" />
+        <Dependent key="10" type="60" displayName="Information" parentDisplayName="User Signature" id="{12a5cb81-266a-44fb-aed8-ea63d3db50a7}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="11" type="66" schemaName="MscrmControls.LinearGauge.LinearGaugeControl" displayName="MscrmControls.LinearGauge.LinearGaugeControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="12" type="60" displayName="Information" parentDisplayName="Assignment" id="{7723906c-0273-46ed-ba86-05a21ba4a657}" />
+        <Required key="11" type="66" schemaName="MscrmControls.InputMask.InputMaskControl" displayName="MscrmControls.InputMask.InputMaskControl" solution="CustomControlsCore (9.0.0002.3034)" />
+        <Dependent key="12" type="60" displayName="ECAS Contractor Form" parentDisplayName="Contact" id="{726861fb-680c-4637-b982-4df71c4dc50f}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="13" type="66" schemaName="MscrmControls.OptionSet.OptionSetControl" displayName="MscrmControls.OptionSet.OptionSetControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="14" type="60" displayName="Information" parentDisplayName="Credential" id="{4718540f-608d-4336-95c1-37fbea6c053f}" />
+        <Required key="13" type="66" schemaName="MscrmControls.AutoComplete.AutoCompleteControl" displayName="MscrmControls.AutoComplete.AutoCompleteControl" solution="CustomControlsCore (9.0.0002.3034)" />
+        <Dependent key="12" type="60" displayName="ECAS Contractor Form" parentDisplayName="Contact" id="{726861fb-680c-4637-b982-4df71c4dc50f}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="13" type="66" schemaName="MscrmControls.OptionSet.OptionSetControl" displayName="MscrmControls.OptionSet.OptionSetControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="15" type="60" displayName="Expense Quick Create" parentDisplayName="Expense" id="{ec4dde39-c27f-4325-8b6e-932bfa4746b9}" />
+        <Required key="14" type="66" schemaName="MscrmControls.LinearGauge.LinearGaugeControl" displayName="MscrmControls.LinearGauge.LinearGaugeControl" solution="CustomControlsCore (9.0.0002.3034)" />
+        <Dependent key="15" type="60" displayName="Information" parentDisplayName="Assignment" id="{7723906c-0273-46ed-ba86-05a21ba4a657}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="13" type="66" schemaName="MscrmControls.OptionSet.OptionSetControl" displayName="MscrmControls.OptionSet.OptionSetControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="16" type="60" displayName="Information" parentDisplayName="Expense Code" id="{c7087e4e-bb5f-48ea-83e4-6845389b971b}" />
+        <Required key="16" type="66" schemaName="MscrmControls.OptionSet.OptionSetControl" displayName="MscrmControls.OptionSet.OptionSetControl" solution="CustomControlsCore (9.0.0002.3034)" />
+        <Dependent key="17" type="60" displayName="Information" parentDisplayName="Credential" id="{4718540f-608d-4336-95c1-37fbea6c053f}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="13" type="66" schemaName="MscrmControls.OptionSet.OptionSetControl" displayName="MscrmControls.OptionSet.OptionSetControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="17" type="60" displayName="Information" parentDisplayName="Expense" id="{f328d84f-a698-4e72-9297-67ac7efb3dde}" />
+        <Required key="16" type="66" schemaName="MscrmControls.OptionSet.OptionSetControl" displayName="MscrmControls.OptionSet.OptionSetControl" solution="CustomControlsCore (9.0.0002.3034)" />
+        <Dependent key="18" type="60" displayName="Information" parentDisplayName="Expense Code" id="{c7087e4e-bb5f-48ea-83e4-6845389b971b}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="18" type="66" schemaName="MscrmControls.Signature.SignatureControl" displayName="MscrmControls.Signature.SignatureControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="19" type="60" displayName="Information" parentDisplayName="Session" id="{edd5047e-2f3a-438b-baa3-3e0daba1b17b}" />
+        <Required key="16" type="66" schemaName="MscrmControls.OptionSet.OptionSetControl" displayName="MscrmControls.OptionSet.OptionSetControl" solution="CustomControlsCore (9.0.0002.3034)" />
+        <Dependent key="19" type="60" displayName="Expense Quick Create" parentDisplayName="Expense" id="{ec4dde39-c27f-4325-8b6e-932bfa4746b9}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="20" type="66" schemaName="MscrmControls.InputMask.InputMaskControl" displayName="MscrmControls.InputMask.InputMaskControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="10" type="60" displayName="ECAS Contractor Form" parentDisplayName="Contact" id="{726861fb-680c-4637-b982-4df71c4dc50f}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="21" type="66" schemaName="MscrmControls.FlipSwitch.FlipSwitchControl" displayName="MscrmControls.FlipSwitch.FlipSwitchControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="12" type="60" displayName="Information" parentDisplayName="Assignment" id="{7723906c-0273-46ed-ba86-05a21ba4a657}" />
+        <Required key="16" type="66" schemaName="MscrmControls.OptionSet.OptionSetControl" displayName="MscrmControls.OptionSet.OptionSetControl" solution="CustomControlsCore (9.0.0002.3034)" />
+        <Dependent key="20" type="60" displayName="Information" parentDisplayName="Expense" id="{f328d84f-a698-4e72-9297-67ac7efb3dde}" />
       </MissingDependency>
       <MissingDependency>
         <Required key="21" type="66" schemaName="MscrmControls.FlipSwitch.FlipSwitchControl" displayName="MscrmControls.FlipSwitch.FlipSwitchControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="17" type="60" displayName="Information" parentDisplayName="Expense" id="{f328d84f-a698-4e72-9297-67ac7efb3dde}" />
+        <Dependent key="20" type="60" displayName="Information" parentDisplayName="Expense" id="{f328d84f-a698-4e72-9297-67ac7efb3dde}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="22" type="61" schemaName="msdyn_/ActivityFeeds.Form.js" displayName="msdyn_/ActivityFeeds.Form.js" solution="ActivityFeedsCore (9.0.0.0)" />
+        <Required key="21" type="66" schemaName="MscrmControls.FlipSwitch.FlipSwitchControl" displayName="MscrmControls.FlipSwitch.FlipSwitchControl" solution="CustomControlsCore (9.0.0002.3034)" />
+        <Dependent key="15" type="60" displayName="Information" parentDisplayName="Assignment" id="{7723906c-0273-46ed-ba86-05a21ba4a657}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="22" type="61" schemaName="msdyn_/RecordWall.htm" displayName="msdyn_/RecordWall.htm" solution="ActivityFeedsCore (9.0.0.0)" />
         <Dependent key="6" type="60" displayName="Information" parentDisplayName="User" id="{c0d7d7dd-afd0-4675-85fe-1cc5a48be6df}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="23" type="61" schemaName="msdyn_/RecordWall.htm" displayName="msdyn_/RecordWall.htm" solution="ActivityFeedsCore (9.0.0.0)" />
+        <Required key="23" type="61" schemaName="msdyn_/ActivityFeeds.Form.js" displayName="msdyn_/ActivityFeeds.Form.js" solution="ActivityFeedsCore (9.0.0.0)" />
         <Dependent key="6" type="60" displayName="Information" parentDisplayName="User" id="{c0d7d7dd-afd0-4675-85fe-1cc5a48be6df}" />
       </MissingDependency>
     </MissingDependencies>

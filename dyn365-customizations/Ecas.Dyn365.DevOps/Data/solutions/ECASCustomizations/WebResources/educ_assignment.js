@@ -47,3 +47,56 @@ displayPaymentGenerationConfirmationDialog = function () {
             //    console.log("Dialog closed using Cancel button or X.");
         });
 };
+
+populateExpenseAuthorityNameAndDate = function (selectedItems) {
+
+    for (var i = 0; i < selectedItems.length; i++) {
+        var parameters = {};
+        var assignmentId = selectedItems[i].Id;
+        assignmentId = assignmentId.replace(/[{}]/g, "");
+
+        console.log(assignmentId);
+
+        var apiAction = "educ_assignments(" + assignmentId + ")/Microsoft.Dynamics.CRM.educ_AssignmentPopulateExpenseAuthorityNameandDate";
+        var fullUri = Xrm.Page.context.getClientUrl() + "/api/data/v9.0/" + apiAction;
+
+        console.log(fullUri);
+
+        var req = new XMLHttpRequest();
+        req.open("POST", fullUri, true);
+        req.setRequestHeader("OData-MaxVersion", "4.0");
+        req.setRequestHeader("OData-Version", "4.0");
+        req.setRequestHeader("Accept", "application/json");
+        req.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+        req.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                req.onreadystatechange = null;
+                if (this.status === 200 || this.status === 204) {
+                    //var results = JSON.parse(this.response);
+
+                    //Xrm.Utility.alertDialog("Assigning Expense Authority to selected records.");
+                    /*Xrm.Utility.openEntityForm(Xrm.Page.data.entity.getEntityName(),
+                        Xrm.Page.data.entity.getId());*/
+                } else {
+                    Xrm.Utility.alertDialog(this.statusText);
+                }
+            }
+        };
+        req.send(JSON.stringify(parameters));
+    }
+};
+
+displayPopulateExpenseAuthorityNameAndDateConfirmationDialog = function (selectedItems) {
+    var confirmStrings = {
+        text: "Upon confirmation all assignments will be assigned you as the Expense Authority. If you would like to proceed please click 'Confirm'.",
+        confirmButtonLabel: "Confirm",
+        cancelButtonLabel: "Cancel",
+        title: "Expense Authority Approval"
+    };
+    var confirmOptions = { height: 200, width: 450 };
+    Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
+        function (success) {
+            if (success.confirmed)
+                populateExpenseAuthorityNameAndDate(selectedItems);
+        });
+};

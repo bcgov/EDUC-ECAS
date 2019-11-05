@@ -14,23 +14,33 @@ namespace Ecas.Dyn365.CASIntegration.Workflows
     {
         [RequiredArgument]
         [Input("Payment")]
-        [ReferenceTarget("educ_payment")]
-        public InArgument<EntityReference> Payment   { get; set; }
+        //[ReferenceTarget("educ_payment")]
+        public InArgument<string> Payment   { get; set; }
 
-        [Output("Success")]
-        public OutArgument<bool> Success { get; set; }
+        [Input("Success")]
+        public InOutArgument<bool> Success { get; set; }
 
-        [Output("ErrorMessage")]
-        public OutArgument<string> ErrorMessage { get; set; }
+        [Input("ErrorMessage")]
+        public InOutArgument<string> ErrorMessage { get; set; }
 
         public override void ExecuteCRMWorkFlowActivity(CodeActivityContext context, LocalWorkflowContext crmWorkflowContext)
         {
             //Read Payment Id
-            var paymentId = Payment.Get<EntityReference>(context).Id;
+            var paymentIdString = Payment.Get<string>(context);
+
+            Guid paymentId = Guid.Empty;
+            Guid.TryParse(paymentIdString, out paymentId);
+
+            if (paymentId == Guid.Empty) throw new InvalidPluginExecutionException("Invalid Payment Id. Id must be a Guid");
+
             crmWorkflowContext.TracingService.Trace("Payment Id retrieved");
             Utils.Payment paymentUtils = new Utils.Payment(crmWorkflowContext.OrganizationService,
                 crmWorkflowContext.TracingService, paymentId);
-            paymentUtils.VerifyAndUpdateStatus();
+            var result = paymentUtils.VerifyAndUpdateStatus();
+
+            Success.Set(context, result.Success);
+            ErrorMessage.Set(context, result.Message);
+
         }
     }
 }

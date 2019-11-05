@@ -75,17 +75,28 @@
                   </labels>
                   <rows>
                     <row>
-                      <cell id="{7b4557d0-18a0-2402-5a89-98a667cc9104}" showlabel="false" colspan="1" auto="false">
+                      <cell id="{c54197b5-a602-3b87-c422-88c59ccd17b7}" showlabel="true" locklevel="0">
                         <labels>
-                          <label description="Expense Authority" languagecode="1033" />
+                          <label description="" languagecode="1033" />
                         </labels>
-                        <control id="ExpenseAuthority" classid="{5C5600E0-1D6E-4205-A272-BE80DA87FD42}" datafieldname="educ_session" disabled="false">
+                        <control id="educ_expenseauthorityid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="educ_expenseauthorityid" disabled="true" uniqueid="{9d9b3373-28c0-bed6-6913-ba8ab506126b}">
                           <parameters>
-                            <QuickForms>&lt;QuickFormIds&gt;&lt;QuickFormId entityname="educ_session"&gt;c7805b2d-7c7e-48d4-a09c-697f1d103123&lt;/QuickFormId&gt;&lt;/QuickFormIds&gt;</QuickForms>
-                            <ControlMode>Edit</ControlMode>
-                            <DisplayAsCustomer360Tile>false</DisplayAsCustomer360Tile>
+                            <AutoResolve>true</AutoResolve>
+                            <DisableMru>false</DisableMru>
+                            <DisableQuickFind>false</DisableQuickFind>
+                            <DisableViewPicker>false</DisableViewPicker>
+                            <DefaultViewId>{E88CA999-0B16-4AE9-B6A9-9EDC840D42D8}</DefaultViewId>
+                            <AllowFilterOff>false</AllowFilterOff>
                           </parameters>
                         </control>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{8128a1d7-4edb-3231-ebab-7896dbc6ab86}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="educ_expenseauthorityapprovaldate" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="educ_expenseauthorityapprovaldate" disabled="true" uniqueid="{54a1c635-a6a2-a5a7-60e9-abab859d6186}" />
                       </cell>
                     </row>
                     <row>
@@ -202,11 +213,19 @@
                   </labels>
                   <rows>
                     <row>
-                      <cell id="{ebc08764-2e37-ab85-ee37-8eda16d0d5d5}" showlabel="true" locklevel="0">
+                      <cell id="{a83e8bab-168b-7d1c-259c-d9a888779d31}" showlabel="true" locklevel="0">
                         <labels>
                           <label description="" languagecode="1033" />
                         </labels>
-                        <control disabled="true" id="educ_rate" datafieldname="educ_rate" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" uniqueid="{073393be-373d-718c-caab-6cd7402d40d2}" />
+                        <control id="educ_rolerate" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="educ_rolerate" disabled="false" uniqueid="{14308daa-1014-545d-09aa-7021456d47ce}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{d173d297-25e5-1c4b-b32b-7658dee35760}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="educ_rate" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="educ_rate" disabled="false" uniqueid="{1d2680c2-4907-bee8-26a3-89596bb0c27c}" />
                       </cell>
                     </row>
                     <row>
@@ -312,7 +331,7 @@
                     <row />
                     <row />
                     <row />
-                    <row height="auto"></row>
+                    <row height="auto" />
                     <row>
                       <cell id="{cc22cade-ea9c-7a06-9e7a-464321c16de8}" showlabel="true" colspan="1" auto="false" rowspan="7">
                         <labels>

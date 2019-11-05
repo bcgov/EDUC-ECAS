@@ -33,6 +33,14 @@
                         <control id="domainname" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="domainname" disabled="false" />
                       </cell>
                     </row>
+                    <row>
+                      <cell auto="false" showlabel="true" locklevel="0" rowspan="1" colspan="1" id="{8b90bd6f-0038-4faf-82c2-ca8990c47409}" labelid="{4d66f41a-2925-434b-81e3-8980863462dc}" visible="false">
+                        <labels>
+                          <label description="Invitation Status" languagecode="1033" />
+                        </labels>
+                        <control id="invitestatuscode" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="invitestatuscode" disabled="true" uniqueid="{59c38ab0-2527-2481-d386-39935a7cd416}" />
+                      </cell>
+                    </row>
                   </rows>
                 </section>
                 <section name="online account information" showlabel="true" showbar="true" id="{50c53b90-8e97-4da4-8069-041d6a58aa05}" IsUserDefined="0" locklevel="0" labelid="{30402583-e278-4839-bcbe-188eef2776da}">
@@ -41,11 +49,10 @@
                   </labels>
                   <rows>
                     <row>
-                      <cell auto="false" showlabel="true" locklevel="0" rowspan="1" colspan="1" id="{8b90bd6f-0038-4faf-82c2-ca8990c47409}" labelid="{4d66f41a-2925-434b-81e3-8980863462dc}">
+                      <cell id="{8dd05cda-0295-99b3-d1a5-50c8e8bd2c26}" showlabel="false">
                         <labels>
-                          <label description="Invitation Status" languagecode="1033" />
+                          <label description="" languagecode="1033" />
                         </labels>
-                        <control id="invitestatuscode" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="invitestatuscode" disabled="true" />
                       </cell>
                     </row>
                   </rows>
@@ -95,6 +102,20 @@
                         <control id="address1_telephone1" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="address1_telephone1" />
                       </cell>
                     </row>
+                    <row>
+                      <cell id="{09e017e2-54d7-a275-1ce0-ac821db6de2b}" showlabel="true" locklevel="0" rowspan="7" visible="false">
+                        <labels>
+                          <label description="Signature Text" languagecode="1033" />
+                        </labels>
+                        <control id="educ_signaturetext" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="educ_signaturetext" disabled="false" uniqueid="{e0ba875c-3d2c-ad7b-2e22-34073c298150}" />
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
                   </rows>
                 </section>
               </sections>
@@ -224,7 +245,27 @@
               </sections>
             </column>
             <column width="50%">
-              <sections></sections>
+              <sections>
+                <section id="{2ab01076-9564-4580-8743-316630d4bccf}" name="ADMINISTRATION_TAB_column_5_section_1" columns="11" showlabel="false" showbar="false" IsUserDefined="0">
+                  <labels>
+                    <label description="section" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{08dc45b4-5720-4b3b-9ae5-0c30ca87d022}" showlabel="false">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                      </cell>
+                      <cell id="{73d723fe-37d8-4ed0-ab32-a146bc464805}" showlabel="false">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
             </column>
           </columns>
         </tab>
@@ -569,6 +610,7 @@
           </NavBarArea>
         </NavBarAreas>
       </Navigation>
+      <controlDescriptions></controlDescriptions>
       <DisplayConditions FallbackForm="true" Order="8">
         <Role Id="{627090ff-40a3-4053-8790-584edc5be201}" />
         <Role Id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />

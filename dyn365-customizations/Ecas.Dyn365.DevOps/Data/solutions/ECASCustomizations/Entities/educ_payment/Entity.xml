@@ -249,6 +249,41 @@
             <Description description="" languagecode="1033" />
           </Descriptions>
         </attribute>
+        <attribute PhysicalName="educ_InvoiceNumber">
+          <Type>nvarchar</Type>
+          <Name>educ_invoicenumber</Name>
+          <LogicalName>educ_invoicenumber</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>0.0.2.1</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <Format>text</Format>
+          <MaxLength>100</MaxLength>
+          <Length>200</Length>
+          <displaynames>
+            <displayname description="Invoice Number" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
+        </attribute>
         <attribute PhysicalName="educ_name">
           <Type>nvarchar</Type>
           <Name>educ_name</Name>
@@ -282,6 +317,40 @@
           </displaynames>
           <Descriptions>
             <Description description="The name of the custom entity." languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="educ_Payee">
+          <Type>lookup</Type>
+          <Name>educ_payee</Name>
+          <LogicalName>educ_payee</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>0.0.2.1</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <LookupStyle>single</LookupStyle>
+          <LookupTypes />
+          <displaynames>
+            <displayname description="Payee" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
           </Descriptions>
         </attribute>
         <attribute PhysicalName="educ_PaymentAutoNumber">
@@ -806,12 +875,12 @@
               <Description description="Status of the Payment" languagecode="1033" />
             </Descriptions>
             <states>
-              <state value="0" defaultstatus="610410000" invariantname="Active">
+              <state value="0" defaultstatus="610410001" invariantname="Active">
                 <labels>
                   <label description="Active" languagecode="1033" />
                 </labels>
               </state>
-              <state value="1" defaultstatus="2" invariantname="Inactive">
+              <state value="1" defaultstatus="610410008" invariantname="Inactive">
                 <labels>
                   <label description="Inactive" languagecode="1033" />
                 </labels>
@@ -861,11 +930,6 @@
               <Description description="Reason for the status of the Payment" languagecode="1033" />
             </Descriptions>
             <statuses>
-              <status value="1" state="0" TransitionData="" Color="#0000ff">
-                <labels>
-                  <label description="Ready" languagecode="1033" />
-                </labels>
-              </status>
               <status value="610410001" state="0" TransitionData="" Color="#0000ff">
                 <labels>
                   <label description="Ready for Processing" languagecode="1033" />
@@ -874,16 +938,6 @@
               <status value="610410000" state="0" TransitionData="" Color="#0000ff">
                 <labels>
                   <label description="Processing" languagecode="1033" />
-                </labels>
-              </status>
-              <status value="610410002" state="0" TransitionData="" Color="#0000ff">
-                <labels>
-                  <label description="Reconciliation Required" languagecode="1033" />
-                </labels>
-              </status>
-              <status value="610410003" state="0" TransitionData="" Color="#0000ff">
-                <labels>
-                  <label description="Manual Adjustment Required" languagecode="1033" />
                 </labels>
               </status>
               <status value="610410004" state="0" TransitionData="" Color="#0000ff">
@@ -896,14 +950,14 @@
                   <label description="Sent to CAS" languagecode="1033" />
                 </labels>
               </status>
-              <status value="610410005" state="0" TransitionData="" Color="#0000ff">
+              <status value="610410007" state="0" TransitionData="" Color="#0000ff">
                 <labels>
-                  <label description="Payment Processed by CAS" languagecode="1033" />
+                  <label description="CAS Processing Error" languagecode="1033" />
                 </labels>
               </status>
-              <status value="2" state="1" TransitionData="" Color="#0000ff">
+              <status value="610410008" state="1" TransitionData="" Color="#0000ff">
                 <labels>
-                  <label description="Sent" languagecode="1033" />
+                  <label description="Payment Processed" languagecode="1033" />
                 </labels>
               </status>
             </statuses>
@@ -1034,7 +1088,7 @@
       <IsDocumentRecommendationsEnabled>0</IsDocumentRecommendationsEnabled>
       <IsBPFEntity>0</IsBPFEntity>
       <OwnershipTypeMask>UserOwned</OwnershipTypeMask>
-      <IsAuditEnabled>0</IsAuditEnabled>
+      <IsAuditEnabled>1</IsAuditEnabled>
       <IsRetrieveAuditEnabled>0</IsRetrieveAuditEnabled>
       <IsRetrieveMultipleAuditEnabled>0</IsRetrieveMultipleAuditEnabled>
       <IsActivity>0</IsActivity>

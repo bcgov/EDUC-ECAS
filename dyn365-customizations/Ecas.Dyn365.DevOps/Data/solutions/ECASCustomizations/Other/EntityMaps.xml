@@ -10,4 +10,14 @@
       </AttributeMap>
     </AttributeMaps>
   </EntityMap>
+  <EntityMap>
+    <EntitySource>educ_assignment</EntitySource>
+    <EntityTarget>educ_exoense</EntityTarget>
+    <AttributeMaps>
+      <AttributeMap>
+        <AttributeSource>educ_session</AttributeSource>
+        <AttributeTarget>educ_session</AttributeTarget>
+      </AttributeMap>
+    </AttributeMaps>
+  </EntityMap>
 </EntityMaps>

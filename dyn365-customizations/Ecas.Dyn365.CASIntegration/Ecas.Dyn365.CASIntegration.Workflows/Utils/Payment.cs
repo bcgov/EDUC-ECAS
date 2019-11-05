@@ -37,13 +37,31 @@ namespace Ecas.Dyn365.CASIntegration.Workflows.Utils
             bool isError = false;
             var Log = new StringBuilder();
             var paymentrecord = organizationService.Retrieve("educ_payment", paymentId,
-                    new ColumnSet("educ_paymentid", "educ_invoicenumber", "educ_suppliernumber", "educ_suppliersitenumber"));
+                    new ColumnSet(true));
 
             var invoiceNumber = paymentrecord.GetAttributeValue<string>("educ_invoicenumber");
-            var supplierNumber = paymentrecord.GetAttributeValue<string>("educ_suppliernumber");
-            var supplierSiteNumber = paymentrecord.GetAttributeValue<string>("educ_suppliersitenumber");
+
+            tracingService.Trace($"Check Payment Status for Invoice: {invoiceNumber}");
+
+            EntityReference payeeLookup = paymentrecord["educ_payee"] as EntityReference;
+            if (payeeLookup == null || payeeLookup.Id == Guid.Empty)
+                throw new InvalidPluginExecutionException("Payee lookup is empty on the payment..");
+
+            var contactEntity = organizationService.Retrieve(payeeLookup.LogicalName.ToLowerInvariant(), payeeLookup.Id,
+                new ColumnSet("contactid", "educ_suppliernumber", "educ_suppliersitenumber", "firstname", "lastname"));
+
+            if (!contactEntity.Contains("educ_suppliernumber"))
+                throw new InvalidPluginExecutionException("Supplier Number on contact is empty..");
+            if (!contactEntity.Contains("educ_suppliersitenumber"))
+                throw new InvalidPluginExecutionException("Supplier Site Number on contact is empty..");
+
+            var supplierNumber = contactEntity.GetAttributeValue<string>("educ_suppliernumber");
+            var supplierSiteNumber = contactEntity.GetAttributeValue<string>("educ_suppliersitenumber");
+
+            tracingService.Trace($"Suplier Number: {supplierNumber}, Supplier Site Number: {supplierSiteNumber}");
 
             HttpClient httpClient = null;
+
             try
             {
                 if (string.IsNullOrEmpty(invoiceNumber)) Log.AppendLine("Invoice Number cannot be null");
@@ -71,7 +89,9 @@ namespace Ecas.Dyn365.CASIntegration.Workflows.Utils
                 var jsonRequest = string.Format("$!$\"invoiceNumber\":\"{0}\",\"supplierNumber\":\"{1}\",\"supplierSiteNumber\":\"{2}\"$&$",
                     invoiceNumber, supplierNumber, supplierSiteNumber).Replace("$!$", "{").Replace("$&$", "}");
 
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "/api/CASAPRetreive/GetTransactionRecords");
+                tracingService.Trace($"jsonRequest: {jsonRequest}");
+
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "/api/CASAPRetrieve/GetTransactionRecords");
                 request.Content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = httpClient.SendAsync(request).Result;
@@ -79,6 +99,9 @@ namespace Ecas.Dyn365.CASIntegration.Workflows.Utils
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     userMessage = response.Content.ReadAsStringAsync().Result;
+
+                    tracingService.Trace($"Successful Result: {userMessage}");
+
                     if (!userMessage.Contains("SUCCEEDED"))
                     {
                         //CAS Processing Error
@@ -95,10 +118,17 @@ namespace Ecas.Dyn365.CASIntegration.Workflows.Utils
                     }
                 }
                 else
+                {
+                    tracingService.Trace($"Failed Result: {response.StatusCode.ToString() + "\r\n" + jsonRequest}");
                     throw new InvalidPluginExecutionException(response.StatusCode.ToString() + "\r\n" + jsonRequest);
+                }
             }
             catch (Exception ex1)
             {
+                while (ex1.InnerException != null) { ex1 = ex1.InnerException; }
+
+                tracingService.Trace($"Error: {ex1.Message}");
+
                 Log.AppendLine("Error:" + ex1.Message);
                 isError = true;
             }
@@ -109,7 +139,7 @@ namespace Ecas.Dyn365.CASIntegration.Workflows.Utils
 
                 Log.AppendLine((string)paymentrecord["educ_name"] + " END..");
 
-                paymentrecord["educ_casresponse"] = Log.ToString();
+                //paymentrecord["educ_casresponse"] = Log.ToString();
             }
 
             return new PaymentStatusCheckerResult { Success = !isError, Message = Log.ToString() };

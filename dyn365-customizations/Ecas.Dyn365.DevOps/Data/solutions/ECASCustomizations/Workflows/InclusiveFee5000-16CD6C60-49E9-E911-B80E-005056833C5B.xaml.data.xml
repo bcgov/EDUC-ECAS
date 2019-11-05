@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Workflow WorkflowId="{16cd6c60-49e9-e911-b80e-005056833c5b}" Name="Inclusive Fee &gt; 5000" Description="If the Inclusive Fee is greater then 5000 display an error">
+  <XamlFileName>/Workflows/InclusiveFee5000-16CD6C60-49E9-E911-B80E-005056833C5B.xaml</XamlFileName>
+  <Type>1</Type>
+  <Subprocess>0</Subprocess>
+  <Category>2</Category>
+  <Mode>1</Mode>
+  <Scope>4</Scope>
+  <OnDemand>0</OnDemand>
+  <TriggerOnCreate>0</TriggerOnCreate>
+  <TriggerOnDelete>0</TriggerOnDelete>
+  <AsyncAutodelete>0</AsyncAutodelete>
+  <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+  <StateCode>1</StateCode>
+  <StatusCode>2</StatusCode>
+  <RunAs>1</RunAs>
+  <IsTransacted>1</IsTransacted>
+  <IntroducedVersion>0.0.2.1</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <BusinessProcessType>0</BusinessProcessType>
+  <PrimaryEntity>educ_assignment</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName languagecode="1033" description="Inclusive Fee &gt; 5000" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description languagecode="1033" description="If the Inclusive Fee is greater then 5000 display an error" />
+  </Descriptions>
+  <labels>
+    <steplabels id="{31a812e0-8026-4c43-acab-f47f087ad713}">
+      <label languagecode="1033" description="Inclusive Fee cannot be more then $5000." />
+    </steplabels>
+  </labels>
+  <ProcessTriggers>
+    <ProcessTrigger processtriggerid="{60d2db14-3cea-e911-b80e-005056833c5b}">
+      <controltype>1</controltype>
+      <scope>2</scope>
+      <controlname>educ_inclusivefee</controlname>
+      <event>change</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_assignment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{61d2db14-3cea-e911-b80e-005056833c5b}">
+      <scope>2</scope>
+      <event>load</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_assignment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{62d2db14-3cea-e911-b80e-005056833c5b}">
+      <controltype>1</controltype>
+      <scope>2</scope>
+      <controlname>educ_inclusivefee</controlname>
+      <event>change</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_assignment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{63d2db14-3cea-e911-b80e-005056833c5b}">
+      <scope>2</scope>
+      <event>load</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_assignment</primaryentitytypecode>
+    </ProcessTrigger>
+  </ProcessTriggers>
+</Workflow>

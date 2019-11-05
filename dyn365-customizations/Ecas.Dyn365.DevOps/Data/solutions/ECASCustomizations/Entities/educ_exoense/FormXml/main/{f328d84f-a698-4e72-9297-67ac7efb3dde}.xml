@@ -147,11 +147,11 @@
                       </cell>
                     </row>
                     <row>
-                      <cell id="{4da0be20-7087-1c03-351b-bea5b92ee1c3}" showlabel="true" locklevel="0">
+                      <cell id="{1e4b028b-2bee-49ac-23c0-dc1ba3339e20}" showlabel="true" locklevel="0">
                         <labels>
-                          <label description="Expense Authority" languagecode="1033" />
+                          <label description="Qualified Receiver" languagecode="1033" />
                         </labels>
-                        <control id="educ_expenseauthority" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="educ_expenseauthority" disabled="true" uniqueid="{cb04be19-7aab-b743-57a9-5765b1eac537}">
+                        <control id="educ_expenseapprovedby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="educ_expenseapprovedby" disabled="true" uniqueid="{182dcd85-b27e-ce7e-802b-17ec40284ea2}">
                           <parameters>
                             <AutoResolve>true</AutoResolve>
                             <DisableMru>false</DisableMru>
@@ -164,18 +164,15 @@
                       </cell>
                     </row>
                     <row>
-                      <cell id="{1e4b028b-2bee-49ac-23c0-dc1ba3339e20}" showlabel="true" locklevel="0">
+                      <cell id="{3bc257c7-a09e-cc24-013b-58d5cd217437}" showlabel="false" colspan="1" auto="false">
                         <labels>
-                          <label description="Expense Approved By" languagecode="1033" />
+                          <label description="Expense Authority" languagecode="1033" />
                         </labels>
-                        <control id="educ_expenseapprovedby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="educ_expenseapprovedby" disabled="true" uniqueid="{182dcd85-b27e-ce7e-802b-17ec40284ea2}">
+                        <control id="ExpenseAuthority_QV" classid="{5C5600E0-1D6E-4205-A272-BE80DA87FD42}" datafieldname="educ_assignment" disabled="false">
                           <parameters>
-                            <AutoResolve>true</AutoResolve>
-                            <DisableMru>false</DisableMru>
-                            <DisableQuickFind>false</DisableQuickFind>
-                            <DisableViewPicker>false</DisableViewPicker>
-                            <DefaultViewId>{E88CA999-0B16-4AE9-B6A9-9EDC840D42D8}</DefaultViewId>
-                            <AllowFilterOff>false</AllowFilterOff>
+                            <QuickForms>&lt;QuickFormIds&gt;&lt;QuickFormId entityname="educ_assignment"&gt;8626174d-173a-44dc-918d-d6879fb84aab&lt;/QuickFormId&gt;&lt;/QuickFormIds&gt;</QuickForms>
+                            <ControlMode>Edit</ControlMode>
+                            <DisplayAsCustomer360Tile>false</DisplayAsCustomer360Tile>
                           </parameters>
                         </control>
                       </cell>

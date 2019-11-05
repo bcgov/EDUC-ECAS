@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{50f16eb1-6ff2-e911-b80e-005056833c5b}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="fullname" select="1" icon="1" preview="1">
+        <row name="result" id="contactid">
+          <cell name="lastname" width="100" />
+          <cell name="firstname" width="100" />
+          <cell name="educ_cassupplierlastname" width="100" />
+          <cell name="educ_supplierissue" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="address1_city" width="100" />
+          <cell name="educ_socialinsurancenumber" width="100" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="educ_suppliernumber" width="100" />
+          <cell name="educ_suppliersitenumber" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+        <entity name="contact">
+          <attribute name="lastname" />
+          <attribute name="firstname" />
+          <attribute name="address1_city" />
+          <attribute name="educ_suppliersitenumber" />
+          <attribute name="educ_suppliernumber" />
+          <attribute name="educ_supplierissue" />
+          <attribute name="educ_socialinsurancenumber" />
+          <order attribute="lastname" descending="false" />
+          <filter type="and">
+            <condition attribute="educ_supplierissue" operator="not-null" />
+          </filter>
+          <attribute name="educ_cassupplierlastname" />
+          <attribute name="contactid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.2.1</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="CAS Supplier Issues" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

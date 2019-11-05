@@ -18,6 +18,7 @@
     <RolePrivilege name="prvAppendeduc_sessiontypecode" level="Local" />
     <RolePrivilege name="prvAppendeduc_subjectcode" level="Local" />
     <RolePrivilege name="prvAppendeduc_teachingexperience" level="Local" />
+    <RolePrivilege name="prvAppendeduc_usersignature" level="Local" />
     <RolePrivilege name="prvAppendmsdyn_PostAlbum" level="Local" />
     <RolePrivilege name="prvAppendmsdyn_relationshipinsightsunifiedconfig" level="Local" />
     <RolePrivilege name="prvAppendmsdyn_wallsavedqueryusersettings" level="Local" />
@@ -37,6 +38,7 @@
     <RolePrivilege name="prvAppendToeduc_sessiontypecode" level="Local" />
     <RolePrivilege name="prvAppendToeduc_subjectcode" level="Local" />
     <RolePrivilege name="prvAppendToeduc_teachingexperience" level="Local" />
+    <RolePrivilege name="prvAppendToeduc_usersignature" level="Local" />
     <RolePrivilege name="prvAppendTomsdyn_PostAlbum" level="Local" />
     <RolePrivilege name="prvAppendTomsdyn_relationshipinsightsunifiedconfig" level="Local" />
     <RolePrivilege name="prvAppendTomsdyn_wallsavedqueryusersettings" level="Local" />
@@ -45,8 +47,10 @@
     <RolePrivilege name="prvCreateeduc_exoense" level="Local" />
     <RolePrivilege name="prvCreateeduc_session" level="Local" />
     <RolePrivilege name="prvCreateeduc_teachingexperience" level="Local" />
+    <RolePrivilege name="prvCreateeduc_usersignature" level="Local" />
     <RolePrivilege name="prvCreateSharePointData" level="Global" />
     <RolePrivilege name="prvDeleteeduc_credential" level="Local" />
+    <RolePrivilege name="prvDeleteeduc_usersignature" level="Local" />
     <RolePrivilege name="prvReadSdkMessage" level="Global" />
     <RolePrivilege name="prvReadSdkMessageProcessingStep" level="Global" />
     <RolePrivilege name="prvReadSdkMessageProcessingStepImage" level="Global" />
@@ -58,6 +62,7 @@
     <RolePrivilege name="prvWriteeduc_exoense" level="Local" />
     <RolePrivilege name="prvWriteeduc_session" level="Local" />
     <RolePrivilege name="prvWriteeduc_teachingexperience" level="Local" />
+    <RolePrivilege name="prvWriteeduc_usersignature" level="Local" />
     <RolePrivilege name="prvWriteSharePointData" level="Global" />
   </RolePrivileges>
 </Role>

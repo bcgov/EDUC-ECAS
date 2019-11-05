@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EntityRelationships>
+  <EntityRelationship Name="business_unit_educ_config" />
+  <EntityRelationship Name="lk_educ_config_createdby" />
+  <EntityRelationship Name="lk_educ_config_modifiedby" />
+  <EntityRelationship Name="owner_educ_config" />
+  <EntityRelationship Name="team_educ_config" />
+  <EntityRelationship Name="user_educ_config" />
+</EntityRelationships>

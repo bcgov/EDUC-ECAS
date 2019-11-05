@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Workflow WorkflowId="{ce7974bb-d6f9-e911-b80e-005056833c5b}" Name="Display parent Role Rate or Historical Local Rate" Description="Display the parent Role Rate for active Assignments and the stored local rate for Inactive Assignments. Ensure historic records are not updated when Role Rates are updated">
+  <XamlFileName>/Workflows/DisplayparentRoleRateorHistoricalLocalRate-CE7974BB-D6F9-E911-B80E-005056833C5B.xaml</XamlFileName>
+  <Type>1</Type>
+  <Subprocess>0</Subprocess>
+  <Category>2</Category>
+  <Mode>1</Mode>
+  <Scope>4</Scope>
+  <OnDemand>0</OnDemand>
+  <TriggerOnCreate>0</TriggerOnCreate>
+  <TriggerOnDelete>0</TriggerOnDelete>
+  <AsyncAutodelete>0</AsyncAutodelete>
+  <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+  <StateCode>1</StateCode>
+  <StatusCode>2</StatusCode>
+  <RunAs>1</RunAs>
+  <IsTransacted>1</IsTransacted>
+  <IntroducedVersion>0.0.2.3</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <BusinessProcessType>0</BusinessProcessType>
+  <PrimaryEntity>educ_assignment</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName languagecode="1033" description="Display parent Role Rate or Historical Local Rate" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description languagecode="1033" description="Display the parent Role Rate for active Assignments and the stored local rate for Inactive Assignments. Ensure historic records are not updated when Role Rates are updated" />
+  </Descriptions>
+  <ProcessTriggers>
+    <ProcessTrigger processtriggerid="{75830a4b-d7f9-e911-b80e-005056833c5b}">
+      <controltype>1</controltype>
+      <scope>1</scope>
+      <controlname>statuscode</controlname>
+      <event>change</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_assignment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{76830a4b-d7f9-e911-b80e-005056833c5b}">
+      <scope>1</scope>
+      <event>load</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_assignment</primaryentitytypecode>
+    </ProcessTrigger>
+  </ProcessTriggers>
+</Workflow>

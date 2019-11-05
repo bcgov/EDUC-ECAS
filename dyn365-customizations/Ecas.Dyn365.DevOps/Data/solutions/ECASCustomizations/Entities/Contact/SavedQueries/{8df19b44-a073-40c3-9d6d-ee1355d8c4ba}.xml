@@ -33,6 +33,7 @@
           <filter type="or" isquickfindfields="1">
             <condition attribute="address1_postalcode" operator="like" value="{0}" />
             <condition attribute="educ_preferredfirstname" operator="like" value="{0}" />
+            <condition attribute="address1_telephone1" operator="like" value="{0}" />
             <condition attribute="address1_line2" operator="like" value="{0}" />
             <condition attribute="address1_line1" operator="like" value="{0}" />
             <condition attribute="lastname" operator="like" value="{0}" />
@@ -40,6 +41,7 @@
             <condition attribute="firstname" operator="like" value="{0}" />
             <condition attribute="emailaddress1" operator="like" value="{0}" />
             <condition attribute="address1_city" operator="like" value="{0}" />
+            <condition attribute="address1_composite" operator="like" value="{0}" />
           </filter>
           <attribute name="address1_line1" />
           <attribute name="address1_postalcode" />

@@ -29,6 +29,11 @@ $solutionExt = if($PackageType -eq "Managed") { "_managed" }
             Folder = "$projectRoot\data\solutions\ECASSiteMapandApps"
             PackageType = $PackageType
             ZipFile = "$projectRoot\temp\packed\ECASSiteMapandApps$solutionExt.zip"
+        },
+        [PSCustomObject]@{
+            Folder = "$projectRoot\data\solutions\BCCASAPIntegration"
+            PackageType = $PackageType
+            ZipFile = "$projectRoot\temp\packed\BCCASAPIntegration$solutionExt.zip"
         }
     )
     CrmPackageDefinition = @(
@@ -36,7 +41,8 @@ $solutionExt = if($PackageType -eq "Managed") { "_managed" }
             SolutionZipFiles = @(
                 "$projectRoot\temp\export\ECASCustomizations$solutionExt.zip",
                 "$projectRoot\temp\export\ECASProcesses$solutionExt.zip",
-                "$projectRoot\temp\export\ECASSiteMapandApps$solutionExt.zip"
+                "$projectRoot\temp\export\ECASSiteMapandApps$solutionExt.zip",
+		        "$projectRoot\temp\export\BCCASAPIntegration$solutionExt.zip"
             )
         }
     )

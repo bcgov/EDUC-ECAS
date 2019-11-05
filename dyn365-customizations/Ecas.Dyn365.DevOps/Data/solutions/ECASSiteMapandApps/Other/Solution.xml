@@ -8,7 +8,7 @@
     <Descriptions>
       <Description description="ECAS Sitemaps and Apps" languagecode="1033" />
     </Descriptions>
-    <Version>0.0.0.6</Version>
+    <Version>0.0.1.1</Version>
     <Managed>2</Managed>
     <Publisher>
       <UniqueName>quartech</UniqueName>
@@ -135,180 +135,256 @@
         <Dependent key="1" type="62" schemaName="educ_ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="12" type="1" schemaName="educ_projectcode" displayName="Project Code" solution="Active" />
+        <Required key="12" type="1" schemaName="educ_cassupplierlookup" displayName="CAS Supplier Lookup" solution="Active" />
         <Dependent key="1" type="62" schemaName="educ_ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="13" type="1" schemaName="educ_schoollist" displayName="School List" solution="Active" />
+        <Required key="13" type="1" schemaName="educ_projectcode" displayName="Project Code" solution="Active" />
         <Dependent key="1" type="62" schemaName="educ_ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="14" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
+        <Required key="14" type="1" schemaName="educ_schoollist" displayName="School List" solution="Active" />
         <Dependent key="1" type="62" schemaName="educ_ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="15" type="1" schemaName="educ_credential" displayName="Credential" solution="Active" />
+        <Required key="15" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
         <Dependent key="1" type="62" schemaName="educ_ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="16" type="1" schemaName="educ_session" displayName="Session" solution="Active" />
+        <Required key="16" type="1" schemaName="educ_usersignature" displayName="User Signature" solution="Active" />
         <Dependent key="1" type="62" schemaName="educ_ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="17" type="1" schemaName="entitlement" displayName="Entitlement" solution="msdynce_Service (9.0.5.56)" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="17" type="1" schemaName="educ_credential" displayName="Credential" solution="Active" />
+        <Dependent key="1" type="62" schemaName="educ_ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="9" type="1" schemaName="educ_districtcode" displayName="District Code" solution="Active" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="18" type="1" schemaName="educ_session" displayName="Session" solution="Active" />
+        <Dependent key="1" type="62" schemaName="educ_ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="0" type="1" schemaName="educ_exoense" displayName="Expense" solution="Active" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="19" type="1" schemaName="entitlement" displayName="Entitlement" solution="msdynce_Service (9.0.5.56)" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="3" type="1" schemaName="educ_payment" displayName="Payment" solution="Active" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="12" type="1" schemaName="educ_projectcode" displayName="Project Code" solution="Active" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="6" type="1" schemaName="educ_rolecode" displayName="Role Code" solution="Active" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="15" type="1" schemaName="educ_credential" displayName="Credential" solution="Active" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="10" type="1" schemaName="educ_credentialcode" displayName="Credential Code" solution="Active" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="5" type="1" schemaName="educ_expensecode" displayName="Expense Code" solution="Active" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="16" type="1" schemaName="educ_session" displayName="Session" solution="Active" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="11" type="1" schemaName="educ_sessionactivitycode" displayName="Session Activity Code" solution="Active" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="14" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="15" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
         <Required key="2" type="1" schemaName="educ_countrycode" displayName="Country Code" solution="Active" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="13" type="1" schemaName="educ_schoollist" displayName="School List" solution="Active" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="14" type="1" schemaName="educ_schoollist" displayName="School List" solution="Active" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="9" type="1" schemaName="educ_districtcode" displayName="District Code" solution="Active" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="0" type="1" schemaName="educ_exoense" displayName="Expense" solution="Active" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="3" type="1" schemaName="educ_payment" displayName="Payment" solution="Active" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="13" type="1" schemaName="educ_projectcode" displayName="Project Code" solution="Active" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="6" type="1" schemaName="educ_rolecode" displayName="Role Code" solution="Active" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="17" type="1" schemaName="educ_credential" displayName="Credential" solution="Active" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="10" type="1" schemaName="educ_credentialcode" displayName="Credential Code" solution="Active" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="5" type="1" schemaName="educ_expensecode" displayName="Expense Code" solution="Active" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="18" type="1" schemaName="educ_session" displayName="Session" solution="Active" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="11" type="1" schemaName="educ_sessionactivitycode" displayName="Session Activity Code" solution="Active" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
         <Required key="4" type="1" schemaName="educ_provincestatecode" displayName="Province State Code" solution="Active" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="19" type="1" schemaName="incident" displayName="Case" solution="msdynce_Service (9.0.5.56)" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="21" type="1" schemaName="incident" displayName="Case" solution="msdynce_Service (9.0.5.56)" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="12" type="1" schemaName="educ_cassupplierlookup" displayName="CAS Supplier Lookup" solution="Active" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
         <Required key="8" type="1" schemaName="educ_sessiontypecode" displayName="Session Type Code" solution="Active" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="20" type="20" displayName="ECAS BUS  ADMIN" solution="Active" id="{33163aa5-034e-e911-a980-000d3af475a9}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="22" type="20" displayName="ECAS PORTAL" solution="Active" id="{8f991e1c-0d4e-e911-a980-000d3af475a9}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="21" type="20" displayName="ECAS BASE ROLE" solution="Active" id="{bd194fa2-5765-e911-b80a-005056833c5b}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="23" type="20" displayName="ECAS BUS  ADMIN" solution="Active" id="{33163aa5-034e-e911-a980-000d3af475a9}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="22" type="20" displayName="ECAS SYSTEM ADMIN" solution="Active" id="{b52873d5-0c4e-e911-a980-000d3af475a9}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="24" type="20" displayName="ECAS BASE ROLE" solution="Active" id="{bd194fa2-5765-e911-b80a-005056833c5b}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="23" type="20" displayName="ECAS CAS INTEGRATION" solution="Active" id="{79843f54-0d4e-e911-a980-000d3af475a9}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="25" type="20" displayName="ECAS SYSTEM ADMIN" solution="Active" id="{b52873d5-0c4e-e911-a980-000d3af475a9}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="24" type="20" displayName="ECAS PORTAL" solution="Active" id="{8f991e1c-0d4e-e911-a980-000d3af475a9}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="26" type="20" displayName="ECAS CAS INTEGRATION" solution="Active" id="{79843f54-0d4e-e911-a980-000d3af475a9}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="25" type="26" schemaName="ECAS Inactive Contacts" displayName="ECAS Inactive Contacts" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" id="{b6ba8edf-014e-e911-a980-000d3af475a9}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="27" type="26" schemaName="Payment Associated View" displayName="Payment Associated View" parentSchemaName="educ_payment" parentDisplayName="Payment" solution="Active" id="{52b99c98-fdfd-41d1-b457-58ee85ab7d1f}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="26" type="26" schemaName="Unverified Certificates" displayName="Unverified Certificates" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" id="{7df4527d-a096-e911-b80c-005056833c5b}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="28" type="26" schemaName="Expense Lookup View" displayName="Expense Lookup View" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" id="{d20d8ebd-ad46-4b0d-aa5f-4e1743417482}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="27" type="26" schemaName="Assignment Advanced Find View" displayName="Assignment Advanced Find View" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" id="{00c6de77-fc35-4314-afd7-9ce8e8bb13a7}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="29" type="26" schemaName="ECAS Inactive Contacts" displayName="ECAS Inactive Contacts" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" id="{b6ba8edf-014e-e911-a980-000d3af475a9}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="28" type="26" schemaName="Inactive Assignments" displayName="Inactive Assignments" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" id="{ada19dca-5723-4a0a-b299-e8e2fb6a354f}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="30" type="26" schemaName="Active Assignments" displayName="Active Assignments" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" id="{0280e5c5-9457-48d0-b005-0818e08e6a0d}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="29" type="26" schemaName="Assignment Lookup View" displayName="Assignment Lookup View" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" id="{8aefc83a-9ed5-4220-982d-383f8f29fc39}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="31" type="26" schemaName="Inactive Expenses Last Fiscal" displayName="Inactive Expenses Last Fiscal" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" id="{c30e3ad0-2da1-e911-b80c-005056833c5b}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="30" type="26" schemaName="Assignment Associated View" displayName="Assignment Associated View" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" id="{393c50d4-45f2-4511-b60b-d007b888a925}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="32" type="26" schemaName="Inactive Expenses This Fiscal" displayName="Inactive Expenses This Fiscal" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" id="{2f3a98a3-2da1-e911-b80c-005056833c5b}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="31" type="26" schemaName="Active Assignments" displayName="Active Assignments" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" id="{0280e5c5-9457-48d0-b005-0818e08e6a0d}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="33" type="26" schemaName="Assignment Advanced Find View" displayName="Assignment Advanced Find View" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" id="{00c6de77-fc35-4314-afd7-9ce8e8bb13a7}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="32" type="26" schemaName="ECAS Active Contacts" displayName="ECAS Active Contacts" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" id="{857a36b8-014e-e911-a980-000d3af475a9}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="34" type="26" schemaName="Inactive Payments" displayName="Inactive Payments" parentSchemaName="educ_payment" parentDisplayName="Payment" solution="Active" id="{63392bdb-8cca-4808-b240-2214ec2879f9}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="33" type="59" schemaName="Assignments for Active Sessions - By Status Reason" displayName="Assignments for Active Sessions - By Status Reason" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" id="{d63bb879-d07c-e911-b80a-005056833c5b}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="35" type="26" schemaName="Payment Advanced Find View" displayName="Payment Advanced Find View" parentSchemaName="educ_payment" parentDisplayName="Payment" solution="Active" id="{1c21603e-e8b6-4185-99ee-3e34d74f04ac}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="34" type="59" schemaName="Unverified Certificates" displayName="Unverified Certificates" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" id="{4d8731e4-a496-e911-b80c-005056833c5b}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="36" type="26" schemaName="Inactive Assignments" displayName="Inactive Assignments" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" id="{ada19dca-5723-4a0a-b299-e8e2fb6a354f}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="35" type="60" displayName="Active Sessions - List Dashboard" solution="Active" id="{b8653bc5-ce7c-e911-b80a-005056833c5b}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="37" type="26" schemaName="Assignment Lookup View" displayName="Assignment Lookup View" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" id="{8aefc83a-9ed5-4220-982d-383f8f29fc39}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="36" type="60" displayName="Unified Interface User" parentDisplayName="User" solution="Active" id="{4753864d-24e5-4c20-a001-a73e9af1bf9f}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="38" type="26" schemaName="Assignment Associated View" displayName="Assignment Associated View" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" id="{393c50d4-45f2-4511-b60b-d007b888a925}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="37" type="60" displayName="Active Sessions and their Assignments" solution="Active" id="{6048715e-9d7e-e911-b80a-005056833c5b}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="39" type="26" schemaName="Payment Errors or Delays" displayName="Payment Errors or Delays" parentSchemaName="educ_payment" parentDisplayName="Payment" solution="Active" id="{1bec2b1e-69ad-e911-b80d-005056833c5b}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="38" type="60" displayName="ECAS Contractor Form" parentDisplayName="Contact" solution="Active" id="{726861fb-680c-4637-b982-4df71c4dc50f}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="40" type="26" schemaName="Inactive Expenses" displayName="Inactive Expenses" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" id="{0a1b7b0b-1320-44e8-b8a0-96fcdb8a0437}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="39" type="60" displayName="Contacts Dashboard" parentDisplayName="Contact" solution="msdynce_Service (9.0.5.56)" id="{70ad8b15-e3f3-4d7d-9e4b-16cb4e51b484}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="41" type="26" schemaName="ECAS Active Contacts" displayName="ECAS Active Contacts" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" id="{857a36b8-014e-e911-a980-000d3af475a9}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="40" type="60" displayName="Expense and Payments Dashbaord" solution="Active" id="{9d2729cd-31a1-e911-b80c-005056833c5b}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="42" type="26" schemaName="Active Expenses This Fiscal" displayName="Active Expenses This Fiscal" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" id="{5118a846-55a4-e911-b80c-005056833c5b}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="41" type="60" displayName="Credential Dashboard" solution="Active" id="{1d7d2ea7-1496-e911-b80c-005056833c5b}" />
-        <Dependent key="18" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="43" type="26" schemaName="Expense Associated View" displayName="Expense Associated View" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" id="{bdb4d1f1-818e-4f8e-b432-1fbf62202ad3}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="44" type="26" schemaName="Active Expenses" displayName="Active Expenses" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" id="{b8df27b6-f4a2-4821-b028-42375b48ffc8}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="45" type="26" schemaName="Payment Lookup View" displayName="Payment Lookup View" parentSchemaName="educ_payment" parentDisplayName="Payment" solution="Active" id="{f40641f8-146e-4640-b6e0-22c478f4f5dc}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="46" type="26" schemaName="Unverified Certificates" displayName="Unverified Certificates" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" id="{7df4527d-a096-e911-b80c-005056833c5b}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="47" type="26" schemaName="Active Payments" displayName="Active Payments" parentSchemaName="educ_payment" parentDisplayName="Payment" solution="Active" id="{7a36e23c-5950-4662-bef3-70c8a71b1d8f}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="48" type="26" schemaName="Expense Advanced Find View" displayName="Expense Advanced Find View" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" id="{848e7d99-2d98-4227-a74a-c1abeb1eca4f}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="49" type="59" schemaName="CAS Supplier Issues" displayName="CAS Supplier Issues" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" id="{891e7f36-71f2-e911-b80e-005056833c5b}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="50" type="59" schemaName="Assignments for Active Sessions - By Status Reason" displayName="Assignments for Active Sessions - By Status Reason" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" id="{d63bb879-d07c-e911-b80a-005056833c5b}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="51" type="59" schemaName="Unverified Certificates" displayName="Unverified Certificates" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" id="{4d8731e4-a496-e911-b80c-005056833c5b}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="52" type="60" displayName="Active Sessions - List Dashboard" solution="Active" id="{b8653bc5-ce7c-e911-b80a-005056833c5b}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="53" type="60" displayName="Unified Interface User" parentDisplayName="User" solution="Active" id="{4753864d-24e5-4c20-a001-a73e9af1bf9f}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="54" type="60" displayName="Active Sessions and their Assignments" solution="Active" id="{6048715e-9d7e-e911-b80a-005056833c5b}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="55" type="60" displayName="Expense and Payments Dashbaord" solution="Active" id="{9d2729cd-31a1-e911-b80c-005056833c5b}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="56" type="60" displayName="ECAS Contractor Form" parentDisplayName="Contact" solution="Active" id="{726861fb-680c-4637-b982-4df71c4dc50f}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="57" type="60" displayName="Contacts Dashboard" parentDisplayName="Contact" solution="msdynce_Service (9.0.5.56)" id="{70ad8b15-e3f3-4d7d-9e4b-16cb4e51b484}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="58" type="60" displayName="CAS Supplier Issues" solution="Active" id="{9a0abc56-33f4-e911-b80e-005056833c5b}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="59" type="60" displayName="Credential Dashboard" solution="Active" id="{1d7d2ea7-1496-e911-b80c-005056833c5b}" />
+        <Dependent key="20" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
     </MissingDependencies>
   </SolutionManifest>

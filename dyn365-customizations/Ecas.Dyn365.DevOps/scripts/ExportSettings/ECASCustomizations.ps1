@@ -40,6 +40,16 @@ $projectRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
                 SolutionName = 'ECASSiteMapandApps'
                 Managed = $true
                 ZipFile = "$projectRoot\temp\export\ECASSiteMapandApps_managed.zip"
+            },
+            [PSCustomObject]@{
+                SolutionName = 'BCCASAPIntegration'
+                Managed = $false
+                ZipFile = "$projectRoot\temp\export\BCCASAPIntegration.zip"
+            },
+            [PSCustomObject]@{
+                SolutionName = 'BCCASAPIntegration'
+                Managed = $true
+                ZipFile = "$projectRoot\temp\export\BCCASAPIntegration_managed.zip"
             }
         )
     }
@@ -58,6 +68,11 @@ $projectRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
             ZipFile = "$projectRoot\temp\export\ECASSiteMapandApps.zip"
             PackageType = 'Both'
             Folder = "$projectRoot\data\solutions\ECASSiteMapandApps"
+        },
+        [PSCustomObject]@{
+            ZipFile = "$projectRoot\temp\export\BCCASAPIntegration.zip"
+            PackageType = 'Both'
+            Folder = "$projectRoot\data\solutions\BCCASAPIntegration"
         }
     )
 }

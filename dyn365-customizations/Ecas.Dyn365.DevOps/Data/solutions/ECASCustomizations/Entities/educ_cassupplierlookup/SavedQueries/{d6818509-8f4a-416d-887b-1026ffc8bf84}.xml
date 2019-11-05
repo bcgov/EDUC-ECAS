@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{d6818509-8f4a-416d-887b-1026ffc8bf84}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="educ_name" select="1" icon="1" preview="1">
+        <row name="result" id="educ_cassupplierlookupid">
+          <cell name="educ_name" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="educ_suppliernumber" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="educ_suppliersitenumber" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="educ_lastname" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="educ_methodofpayment" width="100" />
+          <cell name="createdon" width="125" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="educ_cassupplierlookup">
+          <attribute name="createdon" />
+          <order attribute="createdon" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="1" />
+          </filter>
+          <attribute name="educ_suppliersitenumber" />
+          <attribute name="educ_suppliernumber" />
+          <attribute name="educ_name" />
+          <attribute name="educ_methodofpayment" />
+          <attribute name="educ_lastname" />
+          <attribute name="educ_cassupplierlookupid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.2.1</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Inactive CAS Suppliers Lookup" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

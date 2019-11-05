@@ -253,6 +253,14 @@
                         <control id="educ_suppliersitenumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_suppliersitenumber" disabled="false" uniqueid="{b27e087c-e86a-d745-c565-6a90b3136b9e}" />
                       </cell>
                     </row>
+                    <row>
+                      <cell id="{305705c5-cb78-27e8-edae-2123ea9cc96b}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Supplier Issue" languagecode="1033" />
+                        </labels>
+                        <control id="educ_supplierissue" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="educ_supplierissue" disabled="false" />
+                      </cell>
+                    </row>
                   </rows>
                 </section>
                 <section id="{0c01607c-0b32-ac21-67d0-1e32b7cc4059}" name="SUMMARY_TAB_section_10" IsUserDefined="0" showlabel="true" locklevel="0" showbar="false" layout="varwidth" columns="11" labelwidth="115" celllabelposition="Left" celllabelalignment="Left">

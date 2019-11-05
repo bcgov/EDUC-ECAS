@@ -14,13 +14,19 @@ namespace Ecas.Dyn365.CAS.ScheduledJob.ScheduleJobSession
 {
     public class CheckPaymentStatusLogic
     {
-        string webapiurl = string.Empty;
-        string userName = "ecasadmin";
-        string password = "Ec@s201p!";
+        string webApiUrl;
+        string userName;
+        string password;
 
-        public CheckPaymentStatusLogic()
+        public CheckPaymentStatusLogic(string _webApiUrl, string _userName, string _password)
         {
-            webapiurl = @"https://localhost:44331/api/";
+            webApiUrl = _webApiUrl;
+            userName = _userName;
+            password = _password;
+
+            if (string.IsNullOrEmpty(webApiUrl)) throw new NullReferenceException("WebApiUrl cannot be null");
+            if (string.IsNullOrEmpty(userName)) throw new NullReferenceException("UserName cannot be null");
+            if (string.IsNullOrEmpty(password)) throw new NullReferenceException("Password cannot be null");
         }
 
         public string VerifyStatusOfInProgressPayments()
@@ -50,12 +56,12 @@ namespace Ecas.Dyn365.CAS.ScheduledJob.ScheduleJobSession
             //Query Payments Sent to ECAS
             var query =
                 string.Format("operations?statement=educ_payments&$select=educ_paymentid&$filter=statuscode eq 610410006",
-                webapiurl);
+                webApiUrl);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, query);
             request.Content = new StringContent(query.ToString(), Encoding.UTF8, "application/json");
             request.Headers.Add("Prefer", "odata.maxpagesize=5000");
 
-            HttpResponseMessage response = getHttpClient(webapiurl).GetAsync(query.ToString()).Result;
+            HttpResponseMessage response = getHttpClient(webApiUrl).GetAsync(query.ToString()).Result;
             if (response.IsSuccessStatusCode) //200
             {
                 var r = response.Content.ReadAsStringAsync().Result;
@@ -75,13 +81,13 @@ namespace Ecas.Dyn365.CAS.ScheduledJob.ScheduleJobSession
 
         private string CheckPaymentStatus(Guid paymentId)
         {
-            var endpoint = string.Format("action?name=VerifyAndUpdateCasPaymentStatus",
-                webapiurl);
-            string action = "{'educ_payment': '" + paymentId.ToString() + "'}";
+            var endpoint = string.Format($"action?name=educ_payments({paymentId})/Microsoft.Dynamics.CRM.educ_CASAPVerifyPaymentStatus",
+                webApiUrl);
+            string action = "{'Payment': '" + paymentId.ToString() + "'}";
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, endpoint);
             request.Content = new StringContent(action, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = getHttpClient(webapiurl).SendAsync(request).Result;
+            HttpResponseMessage response = getHttpClient(webApiUrl).SendAsync(request).Result;
 
             if (response.IsSuccessStatusCode) //200
             {

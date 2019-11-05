@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Workflow WorkflowId="{ce7c4bbf-5b61-4577-ae92-3e5d63fcd158}" Name="Expense: Validate and set QR User" Description="Will validate that the last modified by user is NOT the EA user on the parent assignment. Workflow will update the record once to ensure the last Modified is the current user. If validation passes the workflow will update the QR user.">
+  <XamlFileName>/Workflows/ExpenseValidateandsetQRUser-CE7C4BBF-5B61-4577-AE92-3E5D63FCD158.xaml</XamlFileName>
+  <Type>1</Type>
+  <Subprocess>0</Subprocess>
+  <Category>0</Category>
+  <Mode>1</Mode>
+  <Scope>4</Scope>
+  <OnDemand>0</OnDemand>
+  <TriggerOnUpdateAttributeList>statuscode</TriggerOnUpdateAttributeList>
+  <TriggerOnCreate>1</TriggerOnCreate>
+  <TriggerOnDelete>0</TriggerOnDelete>
+  <AsyncAutodelete>0</AsyncAutodelete>
+  <SyncWorkflowLogOnFailure>1</SyncWorkflowLogOnFailure>
+  <StateCode>1</StateCode>
+  <StatusCode>2</StatusCode>
+  <CreateStage>40</CreateStage>
+  <UpdateStage>40</UpdateStage>
+  <RunAs>1</RunAs>
+  <IsTransacted>1</IsTransacted>
+  <IntroducedVersion>0.0.0.1</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <PrimaryEntity>educ_exoense</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName languagecode="1033" description="Expense: Validate and set QR User" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description languagecode="1033" description="Will validate that the last modified by user is NOT the EA user on the parent assignment. Workflow will update the record once to ensure the last Modified is the current user. If validation passes the workflow will update the QR user." />
+  </Descriptions>
+  <labels>
+    <steplabels id="{01b10653-3c9e-4e4b-b3f3-e8f46935d145}">
+      <label languagecode="1033" description="The Qualified Receiver cannot be the same as the Expense Authority. You cannot approve this expense" />
+    </steplabels>
+  </labels>
+</Workflow>

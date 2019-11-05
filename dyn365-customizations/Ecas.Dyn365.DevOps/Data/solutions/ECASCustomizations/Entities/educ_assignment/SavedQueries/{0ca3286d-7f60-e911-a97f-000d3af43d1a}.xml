@@ -15,7 +15,7 @@
           <cell name="a_4c86de549f62e911b80a005056833c5b.educ_preferredfirstname" width="100" disableSorting="1" />
           <cell name="a_4c86de549f62e911b80a005056833c5b.emailaddress1" width="100" disableSorting="1" />
           <cell name="educ_role" width="100" />
-          <cell name="educ_rate" width="100" />
+          <cell name="a_8486de549f62e911b80a005056833c5b.educ_rolerate" width="75" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
           <cell name="educ_inclusivefee" width="100" />
           <cell name="educ_attendancedays" width="100" />
           <cell name="educ_toc" width="100" />
@@ -37,13 +37,15 @@
           </filter>
           <attribute name="educ_tocduration" />
           <attribute name="educ_toc" />
-          <attribute name="educ_rate" />
           <attribute name="educ_inclusivefee" />
           <attribute name="educ_calculatedfee" />
           <attribute name="educ_attendancedays" />
           <link-entity alias="a_4c86de549f62e911b80a005056833c5b" name="contact" from="contactid" to="educ_contact" link-type="outer" visible="false">
             <attribute name="educ_preferredfirstname" />
             <attribute name="emailaddress1" />
+          </link-entity>
+          <link-entity alias="a_8486de549f62e911b80a005056833c5b" name="educ_rolecode" from="educ_rolecodeid" to="educ_role" link-type="outer" visible="false">
+            <attribute name="educ_rolerate" />
           </link-entity>
           <attribute name="educ_assignmentid" />
         </entity>

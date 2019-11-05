@@ -11,7 +11,7 @@
   </this:XrmWorkflow27da29de989e4fd595fdf46b900fcfac.CreatedEntities>
   <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
   <mxswa:Workflow>
-    <Sequence DisplayName="UpdateStep1">
+    <Sequence DisplayName="UpdateStep1: Update Unique Name">
       <Sequence.Variables>
         <Variable x:TypeArguments="x:Object" Name="UpdateStep1_1" />
         <Variable x:TypeArguments="x:Object" Name="UpdateStep1_2" />

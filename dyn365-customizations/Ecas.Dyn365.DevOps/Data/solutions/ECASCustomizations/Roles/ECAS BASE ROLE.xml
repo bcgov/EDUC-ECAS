@@ -34,6 +34,7 @@
     <RolePrivilege name="prvAppendeduc_sessiontypecode" level="Global" />
     <RolePrivilege name="prvAppendeduc_subjectcode" level="Global" />
     <RolePrivilege name="prvAppendeduc_teachingexperience" level="Global" />
+    <RolePrivilege name="prvAppendeduc_usersignature" level="Local" />
     <RolePrivilege name="prvAppendEmailTemplate" level="Local" />
     <RolePrivilege name="prvAppendEntitlement" level="Global" />
     <RolePrivilege name="prvAppendEntitlementTemplate" level="Global" />
@@ -100,6 +101,7 @@
     <RolePrivilege name="prvAppendToeduc_sessiontypecode" level="Global" />
     <RolePrivilege name="prvAppendToeduc_subjectcode" level="Global" />
     <RolePrivilege name="prvAppendToeduc_teachingexperience" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_usersignature" level="Local" />
     <RolePrivilege name="prvAppendToEmailServerProfile" level="Global" />
     <RolePrivilege name="prvAppendToEntitlement" level="Global" />
     <RolePrivilege name="prvAppendToEntitlementTemplate" level="Global" />
@@ -341,6 +343,7 @@
     <RolePrivilege name="prvReadeduc_sessiontypecode" level="Global" />
     <RolePrivilege name="prvReadeduc_subjectcode" level="Global" />
     <RolePrivilege name="prvReadeduc_teachingexperience" level="Global" />
+    <RolePrivilege name="prvReadeduc_usersignature" level="Local" />
     <RolePrivilege name="prvReadEmailServerProfile" level="Global" />
     <RolePrivilege name="prvReadEmailSignature" level="Local" />
     <RolePrivilege name="prvReadEmailTemplate" level="Local" />

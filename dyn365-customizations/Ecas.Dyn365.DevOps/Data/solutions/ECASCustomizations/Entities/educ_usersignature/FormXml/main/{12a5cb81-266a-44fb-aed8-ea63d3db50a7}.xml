@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms>
+  <systemform>
+    <formid>{12a5cb81-266a-44fb-aed8-ea63d3db50a7}</formid>
+    <IntroducedVersion>0.0.2.1</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form shownavigationbar="true" showImage="false" maxWidth="1920">
+      <tabs>
+        <tab verticallayout="true" id="{51d5d2de-767e-424b-a92a-705a5c3b3589}" IsUserDefined="1" name="{51d5d2de-767e-424b-a92a-705a5c3b3589}" locklevel="0" expanded="true" showlabel="true">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="50%">
+              <sections>
+                <section showlabel="false" showbar="false" IsUserDefined="0" id="{651fdb81-793c-4d0a-bd74-cd227c2bf421}">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{97d0de68-4c2b-eab6-7700-821853280b86}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="User" languagecode="1033" />
+                        </labels>
+                        <control id="educ_userid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="educ_userid" disabled="false" uniqueid="{6aed8484-618b-9c7a-e39c-c0b0ec27a353}">
+                          <parameters>
+                            <AutoResolve>true</AutoResolve>
+                            <DisableMru>false</DisableMru>
+                            <DisableQuickFind>false</DisableQuickFind>
+                            <DisableViewPicker>false</DisableViewPicker>
+                            <DefaultViewId>{E88CA999-0B16-4AE9-B6A9-9EDC840D42D8}</DefaultViewId>
+                            <AllowFilterOff>false</AllowFilterOff>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+            <column width="50%">
+              <sections>
+                <section name="{51d5d2de-767e-424b-a92a-705a5c3b3589}_section_2" showlabel="false" showbar="false" locklevel="0" id="{54139aed-2dea-5c92-3897-a29345cc8e63}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115">
+                  <labels>
+                    <label description="Section" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{d933ddc4-a25b-36a7-eca3-583d337240e6}" showlabel="true" locklevel="0" rowspan="6">
+                        <labels>
+                          <label description="User Signature" languagecode="1033" />
+                        </labels>
+                        <control id="educ_usersignature" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" datafieldname="educ_usersignature" disabled="false" uniqueid="{35589ad1-201d-056e-cc4c-343e68e17063}" />
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row>
+                      <cell id="{6c8e2193-d40b-d2ca-b54c-8e790d9d0410}" showlabel="true" locklevel="0" rowspan="6" visible="false">
+                        <labels>
+                          <label description="User Signature Text" languagecode="1033" />
+                        </labels>
+                        <control id="educ_usersignaturetext" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="educ_usersignaturetext" disabled="false" uniqueid="{1c832015-3293-e1ac-b98b-a568c235914d}" />
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{bba35daf-9771-46a7-be95-bd1648b4e5c9}" columns="111">
+        <rows>
+          <row>
+            <cell id="{b2e3d2d4-0b60-7d97-4c31-59721a9b1bd3}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{9bc2bd8c-c3aa-5e07-d418-59c754d91c92}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="Name" languagecode="1033" />
+              </labels>
+              <control id="header_educ_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_name" disabled="false" />
+            </cell>
+            <cell id="{286b5405-621e-e6bc-4a31-79ae5a452105}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="Owner" languagecode="1033" />
+              </labels>
+              <control id="header_ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" disabled="false" />
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <footer id="{009ef452-06dc-48a3-9b44-bbece5388474}" columns="111">
+        <rows>
+          <row>
+            <cell id="{913beda4-b9a1-0256-e362-2287ccb6778c}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="Created By" languagecode="1033" />
+              </labels>
+              <control id="footer_createdby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="createdby" disabled="true" />
+            </cell>
+            <cell id="{84667b2c-ad9c-d681-d3ab-496ab481e22b}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="Modified By" languagecode="1033" />
+              </labels>
+              <control id="footer_modifiedby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="modifiedby" disabled="true" />
+            </cell>
+            <cell id="{30733e18-195c-5096-c47c-7a003e261523}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="Modified On" languagecode="1033" />
+              </labels>
+              <control id="footer_modifiedon" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="modifiedon" disabled="true" />
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <Navigation>
+        <NavBar></NavBar>
+        <NavBarAreas>
+          <NavBarArea Id="Info">
+            <Titles>
+              <Title LCID="1033" Text="Common" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Sales">
+            <Titles>
+              <Title LCID="1033" Text="Sales" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Service">
+            <Titles>
+              <Title LCID="1033" Text="Service" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Marketing">
+            <Titles>
+              <Title LCID="1033" Text="Marketing" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="ProcessCenter">
+            <Titles>
+              <Title LCID="1033" Text="Process Sessions" />
+            </Titles>
+          </NavBarArea>
+        </NavBarAreas>
+      </Navigation>
+      <controlDescriptions>
+        <controlDescription forControl="{35589ad1-201d-056e-cc4c-343e68e17063}">
+          <customControl id="{E0DECE4B-6FC8-4a8f-A065-082708572369}">
+            <parameters>
+              <datafieldname>educ_usersignature</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="0" name="MscrmControls.Signature.SignatureControl">
+            <parameters>
+              <value>educ_usersignature</value>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="MscrmControls.Signature.SignatureControl">
+            <parameters>
+              <value>educ_usersignature</value>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="MscrmControls.Signature.SignatureControl">
+            <parameters>
+              <value>educ_usersignature</value>
+            </parameters>
+          </customControl>
+        </controlDescription>
+      </controlDescriptions>
+      <formLibraries>
+        <Library name="educ_translateImageBase64Encode.js" libraryUniqueId="{c6eb5317-59cd-5b38-109c-d5c92a167b17}" />
+      </formLibraries>
+      <events>
+        <event name="onchange" application="false" active="false" attribute="educ_usersignature">
+          <Handlers>
+            <Handler functionName="clearBase64StringPrefix" libraryName="educ_translateImageBase64Encode.js" handlerUniqueId="{8471916e-bac1-7576-0b1d-8bbaa3005b51}" enabled="true" parameters="'educ_usersignature' ,'educ_usersignaturetext'" passExecutionContext="true" />
+          </Handlers>
+        </event>
+      </events>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Information" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="A form for this entity." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

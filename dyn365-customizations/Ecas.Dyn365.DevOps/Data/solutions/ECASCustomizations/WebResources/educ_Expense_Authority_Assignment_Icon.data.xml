@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WebResource>
+  <WebResourceId>{003227a9-46f7-e911-b80e-005056833c5b}</WebResourceId>
+  <Name>educ_Expense_Authority_Assignment_Icon</Name>
+  <DisplayName>Expense Authority Assignment Icon</DisplayName>
+  <Description>Black background to be displayed on Sub Grid bar</Description>
+  <LanguageCode>1033</LanguageCode>
+  <WebResourceType>11</WebResourceType>
+  <IntroducedVersion>0.0.2.2</IntroducedVersion>
+  <IsEnabledForMobileClient>0</IsEnabledForMobileClient>
+  <IsAvailableForMobileOffline>0</IsAvailableForMobileOffline>
+  <DependencyXml>&lt;Dependencies&gt;&lt;Dependency componentType="WebResource"/&gt;&lt;/Dependencies&gt;</DependencyXml>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>1</CanBeDeleted>
+  <IsHidden>0</IsHidden>
+  <FileName>/WebResources/educ_Expense_Authority_Assignment_Icon003227A9-46F7-E911-B80E-005056833C5B</FileName>
+</WebResource>

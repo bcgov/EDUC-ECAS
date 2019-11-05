@@ -214,6 +214,41 @@
             <Description description="Type the main phone number associated with the primary address." languagecode="1033" />
           </Descriptions>
         </attribute>
+        <attribute PhysicalName="educ_CASSupplierLastName">
+          <Type>nvarchar</Type>
+          <Name>educ_cassupplierlastname</Name>
+          <LogicalName>educ_cassupplierlastname</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>0.0.2.2</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <Format>text</Format>
+          <MaxLength>40</MaxLength>
+          <Length>80</Length>
+          <displaynames>
+            <displayname description="CAS Supplier Last Name" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Populated with the Supplier's Last Name from the CAS Supplier Lookup if the last names don't match" languagecode="1033" />
+          </Descriptions>
+        </attribute>
         <attribute PhysicalName="educ_Countryid">
           <Type>lookup</Type>
           <Name>educ_countryid</Name>
@@ -834,6 +869,76 @@
           </displaynames>
           <Descriptions>
             <Description description="" languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="educ_SupplierIssue">
+          <Type>picklist</Type>
+          <Name>educ_supplierissue</Name>
+          <LogicalName>educ_supplierissue</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>0.0.2.1</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AppDefaultValue>-1</AppDefaultValue>
+          <optionset Name="educ_contact_educ_supplierissue">
+            <OptionSetType>picklist</OptionSetType>
+            <IntroducedVersion>0.0.2.1</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <displaynames>
+              <displayname description="Supplier Issue" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="Used to record any issues encountered when attempting to lookup a record in the CAS Supplier Lookup Entity when a SIN is entered or modified." languagecode="1033" />
+            </Descriptions>
+            <options>
+              <option value="610410000" ExternalValue="" Color="#0000ff">
+                <labels>
+                  <label description="New CAS User" languagecode="1033" />
+                </labels>
+                <Descriptions>
+                  <Description description="SIN provided did not match against an existing record. Please create new user in CAS" languagecode="1033" />
+                </Descriptions>
+              </option>
+              <option value="610410001" ExternalValue="" Color="#0000ff">
+                <labels>
+                  <label description="Last Name Mismatch" languagecode="1033" />
+                </labels>
+                <Descriptions>
+                  <Description description="The SIN provided on the contact matches with a record in CAS Supplier Lookup but the last names do not match" languagecode="1033" />
+                </Descriptions>
+              </option>
+              <option value="610410002" ExternalValue="" Color="#0000ff">
+                <labels>
+                  <label description="EFT form required" languagecode="1033" />
+                </labels>
+                <Descriptions>
+                  <Description description="The SIN provided on the contact matches with a record in CAS Supplier Lookup but method of payment is recorded as Cheque" languagecode="1033" />
+                </Descriptions>
+              </option>
+            </options>
+          </optionset>
+          <displaynames>
+            <displayname description="Supplier Issue" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Used to record any issues encountered when attempting to lookup a record in the CAS Supplier Lookup Entity when a SIN is entered or modified." languagecode="1033" />
           </Descriptions>
         </attribute>
         <attribute PhysicalName="educ_SupplierNumber">

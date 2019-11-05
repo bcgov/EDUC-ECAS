@@ -213,7 +213,7 @@
           <Format></Format>
           <MaxLength>17000</MaxLength>
           <displaynames>
-            <displayname description="Approval Authority Signature Text" languagecode="1033" />
+            <displayname description="zz_Approval Authority Signature Text" languagecode="1033" />
           </displaynames>
           <Descriptions>
             <Description description="Text field to map the Approval Authority Signature as text. Required to be able to include it in the contract Word template." languagecode="1033" />
@@ -247,7 +247,7 @@
           <Format></Format>
           <MaxLength>17000</MaxLength>
           <displaynames>
-            <displayname description="Approval Signature" languagecode="1033" />
+            <displayname description="zz_Approval Signature" languagecode="1033" />
           </displaynames>
           <Descriptions>
             <Description description="Pen control field to collect the Expense Authority approval on the Session for all Assignments" languagecode="1033" />
@@ -318,7 +318,7 @@
           <CanChangeDateTimeBehavior>1</CanChangeDateTimeBehavior>
           <Behavior>1</Behavior>
           <displaynames>
-            <displayname description="Expense Authority Approval Date" languagecode="1033" />
+            <displayname description="zz_Expense Authority Approval Date" languagecode="1033" />
           </displaynames>
           <Descriptions>
             <Description description="System populated with the date the Expense Authority Signature is provided" languagecode="1033" />
@@ -352,7 +352,7 @@
           <LookupStyle>single</LookupStyle>
           <LookupTypes />
           <displaynames>
-            <displayname description="Expense Authority Name" languagecode="1033" />
+            <displayname description="zz_Expense Authority Name" languagecode="1033" />
           </displaynames>
           <Descriptions>
             <Description description="System populated with the user that adds the Expense Authority Signature" languagecode="1033" />
@@ -1352,7 +1352,7 @@
       <IsDocumentRecommendationsEnabled>0</IsDocumentRecommendationsEnabled>
       <IsBPFEntity>0</IsBPFEntity>
       <OwnershipTypeMask>UserOwned</OwnershipTypeMask>
-      <IsAuditEnabled>0</IsAuditEnabled>
+      <IsAuditEnabled>1</IsAuditEnabled>
       <IsRetrieveAuditEnabled>0</IsRetrieveAuditEnabled>
       <IsRetrieveMultipleAuditEnabled>0</IsRetrieveMultipleAuditEnabled>
       <IsActivity>0</IsActivity>

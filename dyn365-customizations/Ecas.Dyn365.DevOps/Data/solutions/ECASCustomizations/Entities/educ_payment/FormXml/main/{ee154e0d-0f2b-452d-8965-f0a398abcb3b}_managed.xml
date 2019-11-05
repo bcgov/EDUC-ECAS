@@ -28,6 +28,23 @@
                       </cell>
                     </row>
                     <row>
+                      <cell id="{53d1d218-d406-529a-802c-6bbeb85681b3}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="educ_payee" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="educ_payee" disabled="false" uniqueid="{4db42b83-deac-0d05-be42-576edeb52dd7}">
+                          <parameters>
+                            <AutoResolve>true</AutoResolve>
+                            <DisableMru>false</DisableMru>
+                            <DisableQuickFind>false</DisableQuickFind>
+                            <DisableViewPicker>false</DisableViewPicker>
+                            <DefaultViewId>{A2D479C5-53E3-4C69-ADDD-802327E67A0D}</DefaultViewId>
+                            <AllowFilterOff>false</AllowFilterOff>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row>
                       <cell id="{35713aa6-1d02-7628-a717-a9d02700cd41}" showlabel="true" locklevel="0">
                         <labels>
                           <label description="" languagecode="1033" />
@@ -44,11 +61,11 @@
                       </cell>
                     </row>
                     <row>
-                      <cell id="{a0142b25-d930-6cc3-c328-6178910a1b61}" showlabel="true" locklevel="0">
+                      <cell id="{a0142b25-d930-6cc3-c328-6178910a1b61}" showlabel="true" locklevel="0" visible="false">
                         <labels>
                           <label description="" languagecode="1033" />
                         </labels>
-                        <control id="educ_paymentautonumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_paymentautonumber" disabled="false" />
+                        <control id="educ_paymentautonumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_paymentautonumber" disabled="false" uniqueid="{c8be1aaa-b09c-7d3d-4728-73926d3b8465}" />
                       </cell>
                     </row>
                   </rows>
@@ -127,7 +144,7 @@
               <labels>
                 <label description="" languagecode="1033" />
               </labels>
-              <control id="header_statuscode" classid="{5D68B988-0661-4db2-BC3E-17598AD3BE6C}" datafieldname="statuscode" disabled="true" uniqueid="{23605510-2554-a5a9-433e-76a7590c2ade}" />
+              <control id="header_statuscode" classid="{5D68B988-0661-4db2-BC3E-17598AD3BE6C}" datafieldname="statuscode" disabled="false" uniqueid="{23605510-2554-a5a9-433e-76a7590c2ade}" />
             </cell>
             <cell id="{ca3d55e5-69a5-d384-dbb8-8e4c8e095839}" showlabel="true" locklevel="0">
               <labels>

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Workflow WorkflowId="{c9c25f7d-b8f9-48fb-a1c2-cedc38654568}" Name="Assignment: Validate Max Fee">
+  <XamlFileName>/Workflows/AssignmentValidateMaxFee-C9C25F7D-B8F9-48FB-A1C2-CEDC38654568.xaml</XamlFileName>
+  <Type>1</Type>
+  <Subprocess>0</Subprocess>
+  <Category>0</Category>
+  <Mode>1</Mode>
+  <Scope>4</Scope>
+  <OnDemand>0</OnDemand>
+  <TriggerOnUpdateAttributeList>educ_tocduration,educ_role,educ_attendancedays</TriggerOnUpdateAttributeList>
+  <TriggerOnCreate>0</TriggerOnCreate>
+  <TriggerOnDelete>0</TriggerOnDelete>
+  <AsyncAutodelete>0</AsyncAutodelete>
+  <SyncWorkflowLogOnFailure>1</SyncWorkflowLogOnFailure>
+  <StateCode>1</StateCode>
+  <StatusCode>2</StatusCode>
+  <CreateStage>40</CreateStage>
+  <UpdateStage>40</UpdateStage>
+  <RunAs>1</RunAs>
+  <IsTransacted>1</IsTransacted>
+  <IntroducedVersion>0.0.1.0</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <PrimaryEntity>educ_assignment</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName languagecode="1033" description="Assignment: Validate Max Fee" />
+  </LocalizedNames>
+  <labels>
+    <steplabels id="{807969d2-91cc-46e3-82dc-6ff6b862ca7c}">
+      <label languagecode="1033" description="Attendance * Rate is greater then 5000. Please adjust the rate or duration to reduce the fee total " />
+    </steplabels>
+  </labels>
+</Workflow>

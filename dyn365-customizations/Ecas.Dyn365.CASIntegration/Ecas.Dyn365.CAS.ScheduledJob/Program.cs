@@ -9,7 +9,7 @@ namespace Ecas.Dyn365.CAS.ScheduledJob
         {
             Console.WriteLine("Fetching Payments currently being processed by CAS");
 
-            var checkCASPaymentUtil = new CheckPaymentStatusLogic();
+            var checkCASPaymentUtil = new CheckPaymentStatusLogic("", "", "");
             checkCASPaymentUtil.VerifyStatusOfInProgressPayments();
 
             Console.ReadLine();

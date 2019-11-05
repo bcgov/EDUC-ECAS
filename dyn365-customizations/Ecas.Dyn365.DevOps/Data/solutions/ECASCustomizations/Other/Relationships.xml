@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EntityRelationships>
   <EntityRelationship Name="business_unit_educ_assignment" />
+  <EntityRelationship Name="business_unit_educ_cassupplierlookup" />
   <EntityRelationship Name="business_unit_educ_config" />
   <EntityRelationship Name="business_unit_educ_countrycode" />
   <EntityRelationship Name="business_unit_educ_credential" />
@@ -18,6 +19,7 @@
   <EntityRelationship Name="business_unit_educ_sessiontypecode" />
   <EntityRelationship Name="business_unit_educ_subjectcode" />
   <EntityRelationship Name="business_unit_educ_teachingexperience" />
+  <EntityRelationship Name="business_unit_educ_usersignature" />
   <EntityRelationship Name="educ_contact_educ_assignment" />
   <EntityRelationship Name="educ_contact_educ_credentials" />
   <EntityRelationship Name="educ_contact_teachingexperiences" />
@@ -31,6 +33,7 @@
   <EntityRelationship Name="educ_educ_payment_educ_exoense_Payment" />
   <EntityRelationship Name="educ_educ_schoollist_contact_CurrentSchoold" />
   <EntityRelationship Name="educ_educ_session_educ_exoense_Session" />
+  <EntityRelationship Name="educ_payment_Payee" />
   <EntityRelationship Name="educ_projectcode_Sessions" />
   <EntityRelationship Name="educ_rolecode_educ_assignment" />
   <EntityRelationship Name="educ_schoollist_teachingexperiences" />
@@ -39,11 +42,15 @@
   <EntityRelationship Name="educ_sessionactivitycode_Sessions" />
   <EntityRelationship Name="educ_sessiontypecode_Sessions" />
   <EntityRelationship Name="educ_subjectcode_teachingexperiences" />
+  <EntityRelationship Name="educ_systemuser_educ_assignment_ExpenseAuthority" />
   <EntityRelationship Name="educ_systemuser_educ_exoense_ExpenseApprovedBy" />
   <EntityRelationship Name="educ_systemuser_educ_exoense_ExpenseAuthority" />
   <EntityRelationship Name="educ_systemuser_educ_session_ExpenseAuthorityName" />
+  <EntityRelationship Name="educ_systemuser_educ_usersignature_Userid" />
   <EntityRelationship Name="lk_educ_assignment_createdby" />
   <EntityRelationship Name="lk_educ_assignment_modifiedby" />
+  <EntityRelationship Name="lk_educ_cassupplierlookup_createdby" />
+  <EntityRelationship Name="lk_educ_cassupplierlookup_modifiedby" />
   <EntityRelationship Name="lk_educ_config_createdby" />
   <EntityRelationship Name="lk_educ_config_modifiedby" />
   <EntityRelationship Name="lk_educ_countrycode_createdby" />
@@ -78,7 +85,10 @@
   <EntityRelationship Name="lk_educ_subjectcode_modifiedby" />
   <EntityRelationship Name="lk_educ_teachingexperience_createdby" />
   <EntityRelationship Name="lk_educ_teachingexperience_modifiedby" />
+  <EntityRelationship Name="lk_educ_usersignature_createdby" />
+  <EntityRelationship Name="lk_educ_usersignature_modifiedby" />
   <EntityRelationship Name="owner_educ_assignment" />
+  <EntityRelationship Name="owner_educ_cassupplierlookup" />
   <EntityRelationship Name="owner_educ_config" />
   <EntityRelationship Name="owner_educ_countrycode" />
   <EntityRelationship Name="owner_educ_credential" />
@@ -96,7 +106,9 @@
   <EntityRelationship Name="owner_educ_sessiontypecode" />
   <EntityRelationship Name="owner_educ_subjectcode" />
   <EntityRelationship Name="owner_educ_teachingexperience" />
+  <EntityRelationship Name="owner_educ_usersignature" />
   <EntityRelationship Name="team_educ_assignment" />
+  <EntityRelationship Name="team_educ_cassupplierlookup" />
   <EntityRelationship Name="team_educ_config" />
   <EntityRelationship Name="team_educ_countrycode" />
   <EntityRelationship Name="team_educ_credential" />
@@ -114,12 +126,14 @@
   <EntityRelationship Name="team_educ_sessiontypecode" />
   <EntityRelationship Name="team_educ_subjectcode" />
   <EntityRelationship Name="team_educ_teachingexperience" />
+  <EntityRelationship Name="team_educ_usersignature" />
   <EntityRelationship Name="TransactionCurrency_educ_assignment" />
   <EntityRelationship Name="TransactionCurrency_educ_exoense" />
   <EntityRelationship Name="TransactionCurrency_educ_expensecode" />
   <EntityRelationship Name="TransactionCurrency_educ_payment" />
   <EntityRelationship Name="TransactionCurrency_educ_rolecode" />
   <EntityRelationship Name="user_educ_assignment" />
+  <EntityRelationship Name="user_educ_cassupplierlookup" />
   <EntityRelationship Name="user_educ_config" />
   <EntityRelationship Name="user_educ_countrycode" />
   <EntityRelationship Name="user_educ_credential" />
@@ -137,4 +151,5 @@
   <EntityRelationship Name="user_educ_sessiontypecode" />
   <EntityRelationship Name="user_educ_subjectcode" />
   <EntityRelationship Name="user_educ_teachingexperience" />
+  <EntityRelationship Name="user_educ_usersignature" />
 </EntityRelationships>

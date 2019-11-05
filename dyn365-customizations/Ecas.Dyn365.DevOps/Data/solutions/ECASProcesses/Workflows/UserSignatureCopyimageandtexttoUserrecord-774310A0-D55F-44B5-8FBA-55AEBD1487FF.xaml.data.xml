@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Workflow WorkflowId="{774310a0-d55f-44b5-8fba-55aebd1487ff}" Name="User Signature: Copy image and text to User record">
+  <XamlFileName>/Workflows/UserSignatureCopyimageandtexttoUserrecord-774310A0-D55F-44B5-8FBA-55AEBD1487FF.xaml</XamlFileName>
+  <Type>1</Type>
+  <Subprocess>0</Subprocess>
+  <Category>0</Category>
+  <Mode>0</Mode>
+  <Scope>4</Scope>
+  <OnDemand>0</OnDemand>
+  <TriggerOnUpdateAttributeList>educ_usersignature</TriggerOnUpdateAttributeList>
+  <TriggerOnCreate>1</TriggerOnCreate>
+  <TriggerOnDelete>0</TriggerOnDelete>
+  <AsyncAutodelete>1</AsyncAutodelete>
+  <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+  <StateCode>1</StateCode>
+  <StatusCode>2</StatusCode>
+  <RunAs>1</RunAs>
+  <IsTransacted>1</IsTransacted>
+  <IntroducedVersion>0.0.1.0</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <PrimaryEntity>educ_usersignature</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName languagecode="1033" description="User Signature: Copy image and text to User record" />
+  </LocalizedNames>
+</Workflow>

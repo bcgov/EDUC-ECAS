@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>1</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{4914c2da-9f21-4b13-a58d-2e66bf742e44}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="educ_name" select="1" icon="1" preview="1">
+        <row name="result" id="educ_cassupplierlookupid">
+          <cell name="educ_name" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="educ_lastname" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="educ_methodofpayment" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>4</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+        <entity name="educ_cassupplierlookup">
+          <attribute name="educ_name" />
+          <attribute name="educ_methodofpayment" />
+          <attribute name="educ_lastname" />
+          <order attribute="educ_name" descending="false" />
+          <filter type="or" isquickfindfields="1">
+            <condition attribute="educ_name" operator="like" value="{0}" />
+            <condition attribute="educ_lastname" operator="like" value="{0}" />
+          </filter>
+          <attribute name="educ_cassupplierlookupid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.2.1</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Quick Find Active CAS Suppliers Lookup" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>
