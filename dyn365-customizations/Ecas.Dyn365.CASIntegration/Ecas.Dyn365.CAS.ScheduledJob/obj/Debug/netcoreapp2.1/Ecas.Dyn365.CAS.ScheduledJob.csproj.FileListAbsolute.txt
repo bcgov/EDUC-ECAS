@@ -9,3 +9,4 @@ D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.D
 D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CAS.ScheduledJob\bin\Debug\netcoreapp2.1\Ecas.Dyn365.CAS.ScheduledJob.pdb
 D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CAS.ScheduledJob\obj\Debug\netcoreapp2.1\Ecas.Dyn365.CAS.ScheduledJob.dll
 D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CAS.ScheduledJob\obj\Debug\netcoreapp2.1\Ecas.Dyn365.CAS.ScheduledJob.pdb
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CAS.ScheduledJob\bin\Debug\netcoreapp2.1\appsettings.json

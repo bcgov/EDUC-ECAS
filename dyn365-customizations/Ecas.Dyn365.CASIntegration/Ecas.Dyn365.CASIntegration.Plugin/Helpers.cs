@@ -98,6 +98,26 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
             throw new InvalidPluginExecutionException(string.Format("Unable to find configuration with Key '{0}', Group '{1}'..", key, group));
         }
 
+        public static Entity GetSystemUserId(IOrganizationService service, string userName)
+        {
+            List<Entity> result = new List<Entity>();
+
+            QueryExpression exp = new QueryExpression("systemuser");
+            exp.NoLock = true;
+            exp.ColumnSet.AllColumns = true;
+            exp.Criteria.AddCondition("domainname", ConditionOperator.Equal, userName);
+
+
+            var coll = service.RetrieveMultiple(exp);
+            if (coll != null && coll.Entities != null && coll.Entities.Count > 0)
+                result = coll.Entities.ToList();
+
+            if (result.Count < 1)
+                throw new InvalidPluginExecutionException($"System User {userName} cannot be found");
+
+            return result[0];
+        }
+
         public static IOrganizationService InitializeOrganizationService(string serverUrl, string orgName, string deploymentType, string userName, string password)
         {
             Console.WriteLine(string.Format("Initializing organization service to '{0}'", serverUrl));

@@ -67,7 +67,10 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
 
                 traceService.Trace("Payment Set as Processing");
 
-                var ecasServiceAccountUserId = new Guid(Helpers.GetSystemConfigurations(service, "Default", "ECASServiceAccountUserId")[0]["educ_value"].ToString());
+                var systemUserConfig = Helpers.GetSystemConfigurations(service, "Default", "ECASServiceAccountUserId");
+                var ecasServiceAccountUserId = Helpers.GetSystemUserId(service, systemUserConfig[0].GetAttributeValue<string>("educ_value")).Id;
+
+                //var ecasServiceAccountUserId = new Guid(Helpers.GetSystemConfigurations(service, "Default", "ECASServiceAccountUserId")[0]["educ_value"].ToString());
                 IOrganizationService adminService = serviceFactory.CreateOrganizationService(ecasServiceAccountUserId);
                 var configs = Helpers.GetSystemConfigurations(adminService, "CAS-AP", string.Empty);
                 
@@ -166,8 +169,8 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
                     updatePayment["educ_invoicenumber"] = invoiceNumber;
                 }
 
-
-                service.Update(updatePayment);
+                if (!string.IsNullOrEmpty(userMessage))
+                    service.Update(updatePayment);
 
                 if (httpClient != null)
                     httpClient.Dispose();
@@ -332,7 +335,13 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
             //    throw new InvalidPluginExecutionException("Invoice Date is empty..");
             #endregion
 
-            var invoiceNumber = string.Format("ED-{0}", DateTime.Today.ToShortDateString().Replace("/", "-"));
+
+
+            //var invoiceNumber = string.Format("ED-{0}", DateTime.Today.ToShortDateString().Replace("/", "-"));
+            var batchName = string.Format("ED-{0}", DateTime.Today.ToShortDateString().Replace("/", "-"));
+            var invoiceNumber = $"{assignmentEntity.GetAttributeValue<string>("educ_contractnumber").Trim()}-{RandomString(5)}";
+
+
             string distributionCode = GetDistributionCode(service, traceService, sessionEntity,
                 ((OptionSetValue)paymentEntity["educ_paymenttype"]).Value == 610410000);
 
@@ -352,7 +361,7 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
                 Terms = Helpers.GetConfigKeyValue(configs, "Terms", "CAS-AP"),
                 PayAloneFlag = "N",
                 GLDate = invoiceDate,
-                InvoiceBatchName = Helpers.GetConfigKeyValue(configs, "BatchName", "CAS-AP"),
+                InvoiceBatchName = batchName,
 
                 //Optional Value
                 QualifiedReceiver = ((EntityReference)paymentEntity["ownerid"]).Name,
@@ -424,6 +433,15 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
                 projectEntity.GetAttributeValue<string>("educ_projectcode"));
 
             return distributionCode;
+        }
+
+
+        private string RandomString(int length)
+        {
+            Random random = new Random();
+            string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }

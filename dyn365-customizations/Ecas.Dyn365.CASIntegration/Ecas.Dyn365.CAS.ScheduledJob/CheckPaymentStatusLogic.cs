@@ -55,7 +55,7 @@ namespace Ecas.Dyn365.CAS.ScheduledJob.ScheduleJobSession
 
             //Query Payments Sent to ECAS
             var query =
-                string.Format("operations?statement=educ_payments&$select=educ_paymentid&$filter=statuscode eq 610410006",
+                string.Format("operations?statement=educ_payments&$select=educ_paymentid&$filter=statuscode eq 610410006 or statuscode eq 610410007",
                 webApiUrl);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, query);
             request.Content = new StringContent(query.ToString(), Encoding.UTF8, "application/json");

@@ -1,9 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EntityRelationships>
   <EntityRelationship Name="business_unit_educ_config" />
+  <EntityRelationship Name="business_unit_educ_payment" />
+  <EntityRelationship Name="educ_educ_assignment_educ_payment_Assignment" />
+  <EntityRelationship Name="educ_payment_Payee" />
+  <EntityRelationship Name="educ_session_educ_payment_Session" />
   <EntityRelationship Name="lk_educ_config_createdby" />
   <EntityRelationship Name="lk_educ_config_modifiedby" />
+  <EntityRelationship Name="lk_educ_payment_createdby" />
+  <EntityRelationship Name="lk_educ_payment_modifiedby" />
   <EntityRelationship Name="owner_educ_config" />
+  <EntityRelationship Name="owner_educ_payment" />
   <EntityRelationship Name="team_educ_config" />
+  <EntityRelationship Name="team_educ_payment" />
+  <EntityRelationship Name="TransactionCurrency_educ_payment" />
   <EntityRelationship Name="user_educ_config" />
+  <EntityRelationship Name="user_educ_payment" />
 </EntityRelationships>

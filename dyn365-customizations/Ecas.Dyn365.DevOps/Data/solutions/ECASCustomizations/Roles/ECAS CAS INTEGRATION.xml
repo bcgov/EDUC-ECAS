@@ -2,15 +2,106 @@
 <Role id="{79843f54-0d4e-e911-a980-000d3af475a9}" name="ECAS CAS INTEGRATION">
   <IsCustomizable>1</IsCustomizable>
   <RolePrivileges>
+    <RolePrivilege name="prvAppendeduc_assignment" level="Global" />
+    <RolePrivilege name="prvAppendeduc_cassupplierlookup" level="Global" />
+    <RolePrivilege name="prvAppendeduc_config" level="Global" />
+    <RolePrivilege name="prvAppendeduc_countrycode" level="Global" />
+    <RolePrivilege name="prvAppendeduc_credential" level="Global" />
+    <RolePrivilege name="prvAppendeduc_credentialcode" level="Global" />
+    <RolePrivilege name="prvAppendeduc_districtcode" level="Global" />
+    <RolePrivilege name="prvAppendeduc_exoense" level="Global" />
+    <RolePrivilege name="prvAppendeduc_expensecode" level="Global" />
+    <RolePrivilege name="prvAppendeduc_payment" level="Global" />
+    <RolePrivilege name="prvAppendeduc_projectcode" level="Global" />
+    <RolePrivilege name="prvAppendeduc_provincestatecode" level="Global" />
+    <RolePrivilege name="prvAppendeduc_rolecode" level="Global" />
+    <RolePrivilege name="prvAppendeduc_schoollist" level="Global" />
+    <RolePrivilege name="prvAppendeduc_session" level="Global" />
+    <RolePrivilege name="prvAppendeduc_sessionactivitycode" level="Global" />
+    <RolePrivilege name="prvAppendeduc_sessiontypecode" level="Global" />
+    <RolePrivilege name="prvAppendeduc_subjectcode" level="Global" />
+    <RolePrivilege name="prvAppendeduc_teachingexperience" level="Global" />
+    <RolePrivilege name="prvAppendeduc_usersignature" level="Global" />
+    <RolePrivilege name="prvAppendmsdyn_odatav4ds" level="Global" />
+    <RolePrivilege name="prvAppendmsdyn_PostAlbum" level="Global" />
+    <RolePrivilege name="prvAppendmsdyn_PostConfig" level="Global" />
+    <RolePrivilege name="prvAppendmsdyn_PostRuleConfig" level="Global" />
+    <RolePrivilege name="prvAppendmsdyn_relationshipinsightsunifiedconfig" level="Global" />
+    <RolePrivilege name="prvAppendmsdyn_siconfig" level="Global" />
+    <RolePrivilege name="prvAppendmsdyn_solutioncomponentdatasource" level="Global" />
+    <RolePrivilege name="prvAppendmsdyn_solutioncomponentsummary" level="Global" />
+    <RolePrivilege name="prvAppendmsdyn_wallsavedquery" level="Global" />
+    <RolePrivilege name="prvAppendmsdyn_wallsavedqueryusersettings" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_assignment" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_cassupplierlookup" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_config" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_countrycode" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_credential" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_credentialcode" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_districtcode" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_exoense" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_expensecode" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_payment" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_projectcode" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_provincestatecode" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_rolecode" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_schoollist" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_session" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_sessionactivitycode" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_sessiontypecode" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_subjectcode" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_teachingexperience" level="Global" />
+    <RolePrivilege name="prvAppendToeduc_usersignature" level="Global" />
+    <RolePrivilege name="prvAppendTomsdyn_odatav4ds" level="Global" />
+    <RolePrivilege name="prvAppendTomsdyn_PostAlbum" level="Global" />
+    <RolePrivilege name="prvAppendTomsdyn_PostConfig" level="Global" />
+    <RolePrivilege name="prvAppendTomsdyn_PostRuleConfig" level="Global" />
+    <RolePrivilege name="prvAppendTomsdyn_relationshipinsightsunifiedconfig" level="Global" />
+    <RolePrivilege name="prvAppendTomsdyn_siconfig" level="Global" />
+    <RolePrivilege name="prvAppendTomsdyn_solutioncomponentdatasource" level="Global" />
+    <RolePrivilege name="prvAppendTomsdyn_solutioncomponentsummary" level="Global" />
+    <RolePrivilege name="prvAppendTomsdyn_wallsavedquery" level="Global" />
+    <RolePrivilege name="prvAppendTomsdyn_wallsavedqueryusersettings" level="Global" />
     <RolePrivilege name="prvCreateSharePointData" level="Global" />
+    <RolePrivilege name="prvReadAccount" level="Global" />
+    <RolePrivilege name="prvReadeduc_assignment" level="Global" />
+    <RolePrivilege name="prvReadeduc_cassupplierlookup" level="Global" />
+    <RolePrivilege name="prvReadeduc_config" level="Global" />
+    <RolePrivilege name="prvReadeduc_countrycode" level="Global" />
+    <RolePrivilege name="prvReadeduc_credential" level="Global" />
+    <RolePrivilege name="prvReadeduc_credentialcode" level="Global" />
+    <RolePrivilege name="prvReadeduc_districtcode" level="Global" />
+    <RolePrivilege name="prvReadeduc_exoense" level="Global" />
+    <RolePrivilege name="prvReadeduc_expensecode" level="Global" />
+    <RolePrivilege name="prvReadeduc_payment" level="Global" />
+    <RolePrivilege name="prvReadeduc_projectcode" level="Global" />
+    <RolePrivilege name="prvReadeduc_provincestatecode" level="Global" />
+    <RolePrivilege name="prvReadeduc_rolecode" level="Global" />
+    <RolePrivilege name="prvReadeduc_schoollist" level="Global" />
+    <RolePrivilege name="prvReadeduc_session" level="Global" />
+    <RolePrivilege name="prvReadeduc_sessionactivitycode" level="Global" />
+    <RolePrivilege name="prvReadeduc_sessiontypecode" level="Global" />
+    <RolePrivilege name="prvReadeduc_subjectcode" level="Global" />
+    <RolePrivilege name="prvReadeduc_teachingexperience" level="Global" />
+    <RolePrivilege name="prvReadeduc_usersignature" level="Global" />
+    <RolePrivilege name="prvReadmsdyn_odatav4ds" level="Global" />
+    <RolePrivilege name="prvReadmsdyn_PostAlbum" level="Global" />
+    <RolePrivilege name="prvReadmsdyn_PostConfig" level="Global" />
+    <RolePrivilege name="prvReadmsdyn_PostRuleConfig" level="Global" />
+    <RolePrivilege name="prvReadmsdyn_relationshipinsightsunifiedconfig" level="Global" />
+    <RolePrivilege name="prvReadmsdyn_siconfig" level="Global" />
+    <RolePrivilege name="prvReadmsdyn_solutioncomponentdatasource" level="Global" />
+    <RolePrivilege name="prvReadmsdyn_solutioncomponentsummary" level="Global" />
+    <RolePrivilege name="prvReadmsdyn_wallsavedquery" level="Global" />
+    <RolePrivilege name="prvReadmsdyn_wallsavedqueryusersettings" level="Global" />
     <RolePrivilege name="prvReadSdkMessage" level="Global" />
     <RolePrivilege name="prvReadSdkMessageProcessingStep" level="Global" />
     <RolePrivilege name="prvReadSdkMessageProcessingStepImage" level="Global" />
     <RolePrivilege name="prvReadSharePointData" level="Global" />
     <RolePrivilege name="prvReadSharePointDocument" level="Global" />
     <RolePrivilege name="prvWriteContact" level="Global" />
-    <RolePrivilege name="prvWriteeduc_exoense" level="Local" />
-    <RolePrivilege name="prvWriteeduc_payment" level="Local" />
+    <RolePrivilege name="prvWriteeduc_exoense" level="Global" />
+    <RolePrivilege name="prvWriteeduc_payment" level="Global" />
     <RolePrivilege name="prvWriteSharePointData" level="Global" />
   </RolePrivileges>
 </Role>

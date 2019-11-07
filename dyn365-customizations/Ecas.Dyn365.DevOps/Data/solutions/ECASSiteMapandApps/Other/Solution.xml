@@ -8,7 +8,7 @@
     <Descriptions>
       <Description description="ECAS Sitemaps and Apps" languagecode="1033" />
     </Descriptions>
-    <Version>0.0.1.1</Version>
+    <Version>0.0.1.2</Version>
     <Managed>2</Managed>
     <Publisher>
       <UniqueName>quartech</UniqueName>

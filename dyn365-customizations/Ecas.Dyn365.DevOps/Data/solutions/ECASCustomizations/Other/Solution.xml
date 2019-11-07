@@ -8,7 +8,7 @@
     <Descriptions>
       <Description description="ECAS - All custom entities, fields, forms, views" languagecode="1033" />
     </Descriptions>
-    <Version>0.0.2.4</Version>
+    <Version>0.0.2.5</Version>
     <Managed>2</Managed>
     <Publisher>
       <UniqueName>quartech</UniqueName>
@@ -181,16 +181,16 @@
     </RootComponents>
     <MissingDependencies>
       <MissingDependency>
-        <Required key="0" type="1" schemaName="msdyn_wallsavedqueryusersettings" displayName="Filter" solution="ActivityFeedsCore (9.0.0.0)" />
-        <Dependent key="1" type="1" schemaName="systemuser" displayName="User" />
+        <Required key="0" type="1" schemaName="incident" displayName="Case" solution="msdynce_Service (9.0.5.56)" />
+        <Dependent key="1" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="2" type="1" schemaName="incident" displayName="Case" solution="msdynce_Service (9.0.5.56)" />
-        <Dependent key="3" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="2" type="1" schemaName="entitlement" displayName="Entitlement" solution="msdynce_Service (9.0.5.56)" />
+        <Dependent key="1" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="4" type="1" schemaName="entitlement" displayName="Entitlement" solution="msdynce_Service (9.0.5.56)" />
-        <Dependent key="3" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Required key="3" type="1" schemaName="msdyn_wallsavedqueryusersettings" displayName="Filter" solution="ActivityFeedsCore (9.0.0.0)" />
+        <Dependent key="4" type="1" schemaName="systemuser" displayName="User" />
       </MissingDependency>
       <MissingDependency>
         <Required key="5" type="2" schemaName="territoryid" displayName="Territory" parentSchemaName="systemuser" parentDisplayName="User" solution="msdynce_AppCommon (9.0.4.0066)" />
@@ -202,54 +202,54 @@
       </MissingDependency>
       <MissingDependency>
         <Required key="8" type="60" displayName="Contacts Dashboard" parentDisplayName="Contact" solution="msdynce_Service (9.0.5.56)" id="{70ad8b15-e3f3-4d7d-9e4b-16cb4e51b484}" />
-        <Dependent key="3" type="80" schemaName="educ_ECAS" displayName="ECAS" />
+        <Dependent key="1" type="80" schemaName="educ_ECAS" displayName="ECAS" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="9" type="66" schemaName="MscrmControls.Signature.SignatureControl" displayName="MscrmControls.Signature.SignatureControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="10" type="60" displayName="Information" parentDisplayName="User Signature" id="{12a5cb81-266a-44fb-aed8-ea63d3db50a7}" />
+        <Required key="9" type="66" schemaName="MscrmControls.AutoComplete.AutoCompleteControl" displayName="MscrmControls.AutoComplete.AutoCompleteControl" solution="CustomControlsCore (9.0.0002.3034)" />
+        <Dependent key="10" type="60" displayName="ECAS Contractor Form" parentDisplayName="Contact" id="{726861fb-680c-4637-b982-4df71c4dc50f}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="11" type="66" schemaName="MscrmControls.InputMask.InputMaskControl" displayName="MscrmControls.InputMask.InputMaskControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="12" type="60" displayName="ECAS Contractor Form" parentDisplayName="Contact" id="{726861fb-680c-4637-b982-4df71c4dc50f}" />
+        <Required key="11" type="66" schemaName="MscrmControls.LinearGauge.LinearGaugeControl" displayName="MscrmControls.LinearGauge.LinearGaugeControl" solution="CustomControlsCore (9.0.0002.3034)" />
+        <Dependent key="12" type="60" displayName="Information" parentDisplayName="Assignment" id="{7723906c-0273-46ed-ba86-05a21ba4a657}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="13" type="66" schemaName="MscrmControls.AutoComplete.AutoCompleteControl" displayName="MscrmControls.AutoComplete.AutoCompleteControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="12" type="60" displayName="ECAS Contractor Form" parentDisplayName="Contact" id="{726861fb-680c-4637-b982-4df71c4dc50f}" />
+        <Required key="13" type="66" schemaName="MscrmControls.OptionSet.OptionSetControl" displayName="MscrmControls.OptionSet.OptionSetControl" solution="CustomControlsCore (9.0.0002.3034)" />
+        <Dependent key="14" type="60" displayName="Information" parentDisplayName="Credential" id="{4718540f-608d-4336-95c1-37fbea6c053f}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="14" type="66" schemaName="MscrmControls.LinearGauge.LinearGaugeControl" displayName="MscrmControls.LinearGauge.LinearGaugeControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="15" type="60" displayName="Information" parentDisplayName="Assignment" id="{7723906c-0273-46ed-ba86-05a21ba4a657}" />
+        <Required key="13" type="66" schemaName="MscrmControls.OptionSet.OptionSetControl" displayName="MscrmControls.OptionSet.OptionSetControl" solution="CustomControlsCore (9.0.0002.3034)" />
+        <Dependent key="15" type="60" displayName="Information" parentDisplayName="Expense Code" id="{c7087e4e-bb5f-48ea-83e4-6845389b971b}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="16" type="66" schemaName="MscrmControls.OptionSet.OptionSetControl" displayName="MscrmControls.OptionSet.OptionSetControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="17" type="60" displayName="Information" parentDisplayName="Credential" id="{4718540f-608d-4336-95c1-37fbea6c053f}" />
+        <Required key="13" type="66" schemaName="MscrmControls.OptionSet.OptionSetControl" displayName="MscrmControls.OptionSet.OptionSetControl" solution="CustomControlsCore (9.0.0002.3034)" />
+        <Dependent key="16" type="60" displayName="Expense Quick Create" parentDisplayName="Expense" id="{ec4dde39-c27f-4325-8b6e-932bfa4746b9}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="16" type="66" schemaName="MscrmControls.OptionSet.OptionSetControl" displayName="MscrmControls.OptionSet.OptionSetControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="18" type="60" displayName="Information" parentDisplayName="Expense Code" id="{c7087e4e-bb5f-48ea-83e4-6845389b971b}" />
+        <Required key="13" type="66" schemaName="MscrmControls.OptionSet.OptionSetControl" displayName="MscrmControls.OptionSet.OptionSetControl" solution="CustomControlsCore (9.0.0002.3034)" />
+        <Dependent key="17" type="60" displayName="Information" parentDisplayName="Expense" id="{f328d84f-a698-4e72-9297-67ac7efb3dde}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="16" type="66" schemaName="MscrmControls.OptionSet.OptionSetControl" displayName="MscrmControls.OptionSet.OptionSetControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="19" type="60" displayName="Expense Quick Create" parentDisplayName="Expense" id="{ec4dde39-c27f-4325-8b6e-932bfa4746b9}" />
+        <Required key="18" type="66" schemaName="MscrmControls.Signature.SignatureControl" displayName="MscrmControls.Signature.SignatureControl" solution="CustomControlsCore (9.0.0002.3034)" />
+        <Dependent key="19" type="60" displayName="Information" parentDisplayName="User Signature" id="{12a5cb81-266a-44fb-aed8-ea63d3db50a7}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="16" type="66" schemaName="MscrmControls.OptionSet.OptionSetControl" displayName="MscrmControls.OptionSet.OptionSetControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="20" type="60" displayName="Information" parentDisplayName="Expense" id="{f328d84f-a698-4e72-9297-67ac7efb3dde}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="21" type="66" schemaName="MscrmControls.FlipSwitch.FlipSwitchControl" displayName="MscrmControls.FlipSwitch.FlipSwitchControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="20" type="60" displayName="Information" parentDisplayName="Expense" id="{f328d84f-a698-4e72-9297-67ac7efb3dde}" />
+        <Required key="20" type="66" schemaName="MscrmControls.InputMask.InputMaskControl" displayName="MscrmControls.InputMask.InputMaskControl" solution="CustomControlsCore (9.0.0002.3034)" />
+        <Dependent key="10" type="60" displayName="ECAS Contractor Form" parentDisplayName="Contact" id="{726861fb-680c-4637-b982-4df71c4dc50f}" />
       </MissingDependency>
       <MissingDependency>
         <Required key="21" type="66" schemaName="MscrmControls.FlipSwitch.FlipSwitchControl" displayName="MscrmControls.FlipSwitch.FlipSwitchControl" solution="CustomControlsCore (9.0.0002.3034)" />
-        <Dependent key="15" type="60" displayName="Information" parentDisplayName="Assignment" id="{7723906c-0273-46ed-ba86-05a21ba4a657}" />
+        <Dependent key="17" type="60" displayName="Information" parentDisplayName="Expense" id="{f328d84f-a698-4e72-9297-67ac7efb3dde}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="22" type="61" schemaName="msdyn_/RecordWall.htm" displayName="msdyn_/RecordWall.htm" solution="ActivityFeedsCore (9.0.0.0)" />
+        <Required key="21" type="66" schemaName="MscrmControls.FlipSwitch.FlipSwitchControl" displayName="MscrmControls.FlipSwitch.FlipSwitchControl" solution="CustomControlsCore (9.0.0002.3034)" />
+        <Dependent key="12" type="60" displayName="Information" parentDisplayName="Assignment" id="{7723906c-0273-46ed-ba86-05a21ba4a657}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="22" type="61" schemaName="msdyn_/ActivityFeeds.Form.js" displayName="msdyn_/ActivityFeeds.Form.js" solution="ActivityFeedsCore (9.0.0.0)" />
         <Dependent key="6" type="60" displayName="Information" parentDisplayName="User" id="{c0d7d7dd-afd0-4675-85fe-1cc5a48be6df}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="23" type="61" schemaName="msdyn_/ActivityFeeds.Form.js" displayName="msdyn_/ActivityFeeds.Form.js" solution="ActivityFeedsCore (9.0.0.0)" />
+        <Required key="23" type="61" schemaName="msdyn_/RecordWall.htm" displayName="msdyn_/RecordWall.htm" solution="ActivityFeedsCore (9.0.0.0)" />
         <Dependent key="6" type="60" displayName="Information" parentDisplayName="User" id="{c0d7d7dd-afd0-4675-85fe-1cc5a48be6df}" />
       </MissingDependency>
     </MissingDependencies>

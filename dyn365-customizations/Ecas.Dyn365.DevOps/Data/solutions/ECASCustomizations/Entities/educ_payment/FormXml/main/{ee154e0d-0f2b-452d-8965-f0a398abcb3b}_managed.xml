@@ -68,6 +68,14 @@
                         <control id="educ_paymentautonumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_paymentautonumber" disabled="false" uniqueid="{c8be1aaa-b09c-7d3d-4728-73926d3b8465}" />
                       </cell>
                     </row>
+                    <row>
+                      <cell id="{88024eb8-1c77-d45d-5e1b-0bac36ebe58d}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="educ_invoicenumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_invoicenumber" disabled="true" uniqueid="{69868872-a5eb-4e8a-e7c3-c13838e48aba}" />
+                      </cell>
+                    </row>
                   </rows>
                 </section>
                 <section name="{be44b3d5-5d51-48e4-8a2d-9c97ec3a0497}_section_3" showlabel="true" showbar="true" locklevel="0" id="{42a4ac55-a452-7d67-c450-d1ab6102aeb3}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left" height="auto">

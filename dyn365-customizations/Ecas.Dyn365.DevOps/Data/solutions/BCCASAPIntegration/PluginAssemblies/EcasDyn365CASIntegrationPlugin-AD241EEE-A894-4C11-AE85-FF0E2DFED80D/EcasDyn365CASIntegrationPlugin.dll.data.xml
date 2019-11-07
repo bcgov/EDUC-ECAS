@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PluginAssembly FullName="Ecas.Dyn365.CASIntegration.Plugin, Version=1.3.0.0, Culture=neutral, PublicKeyToken=ef84cd8dc966ca1c" PluginAssemblyId="ad241eee-a894-4c11-ae85-ff0e2dfed80d" CustomizationLevel="1">
+  <IsolationMode>2</IsolationMode>
+  <SourceType>0</SourceType>
+  <IntroducedVersion>1.0</IntroducedVersion>
+  <FileName>/PluginAssemblies/EcasDyn365CASIntegrationPlugin-AD241EEE-A894-4C11-AE85-FF0E2DFED80D/EcasDyn365CASIntegrationPlugin.dll</FileName>
+  <PluginTypes>
+    <PluginType AssemblyQualifiedName="Ecas.Dyn365.CASIntegration.Plugin.SendToCAS, Ecas.Dyn365.CASIntegration.Plugin, Version=1.3.0.0, Culture=neutral, PublicKeyToken=ef84cd8dc966ca1c" PluginTypeId="27759efb-38d7-4685-8a3c-410bf8d41f54" Name="Ecas.Dyn365.CASIntegration.Plugin.SendToCAS">
+      <FriendlyName>5dae2ca1-e860-467a-b0d5-c6d4accd1822</FriendlyName>
+    </PluginType>
+  </PluginTypes>
+</PluginAssembly>

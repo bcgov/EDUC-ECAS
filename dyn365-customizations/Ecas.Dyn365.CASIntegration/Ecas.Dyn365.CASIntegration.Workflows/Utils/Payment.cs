@@ -91,7 +91,7 @@ namespace Ecas.Dyn365.CASIntegration.Workflows.Utils
 
                 tracingService.Trace($"jsonRequest: {jsonRequest}");
 
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "/api/CASAPRetrieve/GetTransactionRecords");
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "/api/CASAPRetreive/GetTransactionRecords");
                 request.Content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = httpClient.SendAsync(request).Result;
@@ -106,9 +106,9 @@ namespace Ecas.Dyn365.CASIntegration.Workflows.Utils
                     {
                         //CAS Processing Error
                         paymentrecord["statuscode"] = new OptionSetValue(610410007);
-                        paymentrecord["ecas_casresponse"] = userMessage;
+                        paymentrecord["educ_casresponse"] = userMessage;
                         organizationService.Update(paymentrecord);
-                        throw new InvalidPluginExecutionException(userMessage);
+                        //throw new InvalidPluginExecutionException(userMessage);
                     }
                     else
                     {
