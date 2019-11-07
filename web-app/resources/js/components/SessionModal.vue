@@ -147,7 +147,7 @@
                 }
 
                 if(! attend) {
-                    this.updateAssignment(session, 'Withdrew')
+                    this.updateAssignment(session, 'Declined')
                 }
 
             },
@@ -171,7 +171,7 @@
                         session.status = response.data.data.status;
                         form.closeModal();
                         form.working = false;
-                        console.log('assignment created', response.data.data )
+                        console.log('assignment created' )
                     })
                     .catch(function (error) {
                         console.log('Failure!', error);
@@ -204,7 +204,7 @@
                             session.status = response.data.data.status;
                             form.closeModal();
                             form.working = false;
-                            console.log(response.data.data)
+                            console.log('assignment update success')
                         })
                         .catch(function (error) {
                             console.log('Update Session Failure!', error);
