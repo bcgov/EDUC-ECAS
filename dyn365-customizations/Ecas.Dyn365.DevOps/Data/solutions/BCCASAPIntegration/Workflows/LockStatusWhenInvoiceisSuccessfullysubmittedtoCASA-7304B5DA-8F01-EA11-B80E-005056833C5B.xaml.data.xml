@@ -11,8 +11,8 @@
   <TriggerOnDelete>0</TriggerOnDelete>
   <AsyncAutodelete>0</AsyncAutodelete>
   <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
-  <StateCode>1</StateCode>
-  <StatusCode>2</StatusCode>
+  <StateCode>0</StateCode>
+  <StatusCode>1</StatusCode>
   <RunAs>1</RunAs>
   <IsTransacted>1</IsTransacted>
   <IntroducedVersion>1.0</IntroducedVersion>
@@ -26,7 +26,7 @@
     <Description languagecode="1033" description="Click to add description" />
   </Descriptions>
   <ProcessTriggers>
-    <ProcessTrigger processtriggerid="{724816e8-8f01-ea11-b80e-005056833c5b}">
+    <ProcessTrigger processtriggerid="{7c984a27-a701-ea11-b80e-005056833c5b}">
       <controltype>1</controltype>
       <formid>{ee154e0d-0f2b-452d-8965-f0a398abcb3b}</formid>
       <scope>1</scope>
@@ -36,7 +36,25 @@
       <iscustomizable>1</iscustomizable>
       <primaryentitytypecode>educ_payment</primaryentitytypecode>
     </ProcessTrigger>
-    <ProcessTrigger processtriggerid="{734816e8-8f01-ea11-b80e-005056833c5b}">
+    <ProcessTrigger processtriggerid="{7d984a27-a701-ea11-b80e-005056833c5b}">
+      <formid>{ee154e0d-0f2b-452d-8965-f0a398abcb3b}</formid>
+      <scope>1</scope>
+      <event>load</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_payment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{7e984a27-a701-ea11-b80e-005056833c5b}">
+      <controltype>1</controltype>
+      <formid>{ee154e0d-0f2b-452d-8965-f0a398abcb3b}</formid>
+      <scope>1</scope>
+      <controlname>statuscode</controlname>
+      <event>change</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_payment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{7f984a27-a701-ea11-b80e-005056833c5b}">
       <formid>{ee154e0d-0f2b-452d-8965-f0a398abcb3b}</formid>
       <scope>1</scope>
       <event>load</event>

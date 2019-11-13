@@ -359,7 +359,7 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
                 RemittanceCode = Helpers.GetConfigKeyValue(configs, "RemittanceCode", "CAS-AP"),
                 SpecialHandling = specialhandling,
                 Terms = Helpers.GetConfigKeyValue(configs, "Terms", "CAS-AP"),
-                PayAloneFlag = "N",
+                PayAloneFlag = specialhandling ? "Y" : "N",
                 GLDate = invoiceDate,
                 InvoiceBatchName = batchName,
 
