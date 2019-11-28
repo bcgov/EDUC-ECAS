@@ -371,3 +371,4 @@ healthchecksdb
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
 web-api/.vs/Ecas.Dyn365Service/v15/.suo
+web-api/.vs/Ecas.Dyn365Service/v15/Server/sqlite3/storage.ide-shm
