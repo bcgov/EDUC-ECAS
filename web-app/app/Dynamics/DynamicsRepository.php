@@ -2,8 +2,7 @@
 
 namespace App\Dynamics;
 
-use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Cache;
+use GuzzleHttp\ClientInterface;
 use Illuminate\Support\Facades\Log;
 
 /*
@@ -14,8 +13,11 @@ use Illuminate\Support\Facades\Log;
  * To add functionality to the application new Dynamics entities will be created
  * which will require new PHP classes extending this class.
  */
-class DynamicsRepository
+abstract class DynamicsRepository
 {
+
+    protected $guzzle_client;
+
     /*
      * What is the table in Dynamics that defines this model
      */
@@ -45,8 +47,6 @@ class DynamicsRepository
      */
     public static $links = [];
 
-    // Cache the model for x minutes, or 0 don't cache
-    public static $cache = 0;
 
     /*
      * There a multiple "types" of Dynamics entities
@@ -62,14 +62,30 @@ class DynamicsRepository
      */
     public static $data_bind;
 
-    public static function delete($id)
+
+    /*
+     * Go figure, Dynamics requires quotes around the filter requests for a Profile, but not around the filter requests
+     * for Assignments and Credentials
+     */
+    public static $filter_quote = '';
+
+
+
+    public function __construct(ClientInterface $guzzle_client)
+    {
+        $this->guzzle_client = $guzzle_client;
+    }
+
+
+    public function delete($id)
     {
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '(' . $id . ')';
 
-        self::queryAPI('DELETE', $query);
+        $response = $this->guzzle_client->request('DELETE', $query);
+
 
         // Assuming the delete worked!
-        return true;
+        return $response;
     }
 
     /*
@@ -77,117 +93,123 @@ class DynamicsRepository
      * This function takes an array as a filter, but only filter based on one field!!
      * You would need to refactor to make it work if more than one filter field is required.
      */
-    public static function filter(array $filter)
+    public function filter(array $filter)
     {
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table .
                  '&$select=' . implode(',', static::$fields) .
-                 '&$filter=' . static::$fields[key($filter)] . ' eq \'' . current($filter) . '\'';
+                 '&$filter=' . static::$fields[key($filter)] . ' eq ' .
+                static::$filter_quote . current($filter) . static::$filter_quote;
 
-        $response = self::queryAPI('GET', $query);
+        Log::debug('Filter query: ' . $query);
 
-        $data = json_decode($response->getBody()->getContents())->value;
+        return $this->retrieveData($query);
 
-        $collection = self::convertDynamicsToLocalVariables($data);
-
-        return $collection;
     }
+
+
+    /*
+     * Read data from Dynamics, but filter by a specific field
+     * This function takes an array as a filter, but only filter based on one field!!
+     * You would need to refactor to make it work if more than one filter field is required.
+     */
+    public function filterContains(array $filter)
+    {
+        $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table .
+            '&$select=' . implode(',', static::$fields) .
+            '&$filter=contains(' . static::$fields[key($filter)] . ',' .
+            static::$filter_quote . current($filter) . static::$filter_quote . ')';
+
+        return  $this->retrieveData($query);
+
+    }
+
+
+    /*
+    * Read data from Dynamics
+    * if no $id is passed in the all records from the table are returned
+    * Passing in and $id will return on specific record based on the table's primary key
+    */
+    public function all()
+    {
+
+        $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '&$select=' . implode(',', static::$fields);
+
+        Log::debug('Loading all() from Dynamics ' .static::$table. ' : ' .$query);
+
+        return $this->retrieveData($query);
+
+    }
+
 
     /*
      * Read data from Dynamics
-     * if no $id is passed in the all records from the table are returned
-     * Passing in and $id will return on specific record based on the table's primary key
      */
-    public static function get($id = null)
+    public function get($id)
     {
-        $cache_key = static::cacheKey($id);
 
-        // Are we caching this model and does a cached copy exist
-        if (static::$cache > 0 && Cache::has($cache_key)) {
-            Log::debug('Loading from Cache: ' . $cache_key);
-            $collection = Cache::get($cache_key);
-        }
-        // This is a non-cached model or we don't have a current copy
-        // Need to get from Dynamics
-        else {
-            Log::debug('Loading from Dynamics: ' . $cache_key);
-            $collection = self::loadCollection($id);
+        $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '&$select=' . implode(',', static::$fields);
 
-            // Cache for future reference
-            if (static::$cache > 0) {
-                Log::debug('Caching collection ' . $cache_key);
-                Cache::put($cache_key, $collection, static::$cache);
-            }
-        }
+        $query .= '&$filter=' . static::$primary_key . " eq " . static::$filter_quote . $id . static::$filter_quote;
 
-        // Just looking for a single record?
-        if ($id) {
-            return current($collection);
-        }
+        $collection = $this->retrieveData($query);
 
-        return $collection;
+        return current($collection)[0];
+
     }
 
-    /*
-     * Generate a key for caching this model based on the class name and the primary key
-     * This allows us to cache a specific record based on $id
-     * Or cache and entire collection
-     */
-    public static function cacheKey($id)
+
+    public function firstOrCreate($id, $data)
     {
-        $pieces = explode('\\', get_called_class());
+        return 'method not implemented';
+        // overridden by Profile - none others
 
-        $name = array_pop($pieces);
-
-        return $id ? $name . '.' . $id : $name;
     }
 
-    public static function create($data)
+
+
+    public function create($data)
     {
+
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table;
 
-        $response = self::queryAPI('POST', $query, $data);
+        $response = $this->guzzle_client->request('POST', $query, [
+            'json' => self::mapToDynamics($data)
+        ]);
 
         // Returns the id of the created record
         return $response->getBody()->getContents();
     }
 
-    public static function settings()
-    {
-        $response = self::connection()->request('GET', env('DYNAMICSBASEURL') . '/EnvironmentInformation');
 
-        return $response->getBody()->getContents();
-    }
-
-    public static function health()
-    {
-        $response = self::connection()->request('GET', env('DYNAMICSBASEURL') . '/health');
-
-        return $response->getStatusCode();
-    }
-
-    public static function update($id, $data)
+    public function update($id, $data)
     {
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '(' . $id . ')';
 
-        $response = self::queryAPI('PATCH', $query, $data);
+        Log::debug('Update ' . static::$table . ' query: ' . $query);
+
+        $response = $this->guzzle_client->request('PATCH', $query, [
+            'json' => self::mapToDynamics($data)
+        ]);
 
         // Returns an array of the returned data
-        $data = json_decode($response->getBody()->getContents());
+        $data_returned = json_decode($response->getBody()->getContents());
 
-        // replace the stale cache
-        if (static::$cache > 0) {
-            Log::debug('Caching collection ' . static::cacheKey($id));
-            Cache::put(static::cacheKey($id), $data, static::$cache);
-        }
+        // Unbelievably, the field names returned from an update request differ
+        // from the field names returned from a get request.  For consistency,
+        // we request a fresh copy of the record from the API.
 
-        // TODO: This is handy for developing, but shouldn't be needed by Production
-        Log::debug('data returned from PATCH call to Dynamics API');
-        ob_start();
-        var_dump($data);
-        $data = ob_get_clean();
-        Log::debug($data);
+        return $this->get($id);
 
-        return self::mapToLocal($data);
+    }
+
+    protected function retrieveData(String $query){
+
+        $response = $this->guzzle_client->request('GET', $query);
+
+        $data = json_decode($response->getBody()->getContents())->value;
+
+        return self::convertDynamicsToLocalVariables($data);
+
     }
 
     /*
@@ -233,28 +255,12 @@ class DynamicsRepository
         return $mapped_data;
     }
 
-    /*
-     * Convert a single data record into local variable names
-     * Expecting a single row of data
-     */
-    private static function mapToLocal($data)
-    {
-        $mapped_data = [];
-
-        foreach (static::$fields as $our_name => $dynamics_name) {
-            if (isset($data[$dynamics_name])) {
-                $mapped_data[$our_name] = $data[$dynamics_name];
-            }
-        }
-
-        return $mapped_data;
-    }
 
     /*
      * Convert a collection of records into local variable names
      * Expecting an array filed with data objects
      */
-    private static function convertDynamicsToLocalVariables($data): array
+    protected static function convertDynamicsToLocalVariables($data)
     {
         // Dynamics field names are unreadable junk!
         // We want to define our own easy readable variables and disconnect from Dynamics
@@ -269,80 +275,10 @@ class DynamicsRepository
             }
         }
 
-        return $collection;
+        return collect($collection);
     }
 
-    /*
-     * Here is the connection to the Dynamics API
-     */
-    protected static function connection()
-    {
-        // TODO: Security headers hardcoded! Testing only! Need to move these to an environment file
-        return new Client([
-            // Base URI is used with relative requests
-            'base_uri' => env('DYNAMICSBASEURL'),
-            'timeout'  => 30.0,
-            'headers'  => [
-                'Authorization' => 'Basic ZWNhc2FkbWluOkVjQHMyMDFwIQ=='
-            ]
-        ]);
-    }
 
-    /*
-    * Read data from Dynamics
-    *
-    * @param $id
-    * @return array
-    * @throws \GuzzleHttp\Exception\GuzzleException
-    */
-    private static function loadCollection($id): array
-    {
-        if (static::$api_verb == 'operations') {
-            $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '&$select=' . implode(',', static::$fields);
-        }
-        elseif (static::$api_verb == 'metadata') {
-            $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?entityName=' . static::$table . '&optionSetName=' . static::$primary_key;
-        }
 
-        if ($id) {
-            $query .= '&$filter=' . static::$primary_key . ' eq \'' . $id . '\'';
-        }
 
-        $response = self::queryAPI('GET', $query);
-
-        if (static::$api_verb == 'operations') {
-            $data = json_decode($response->getBody()->getContents())->value;
-        }
-        elseif (static::$api_verb == 'metadata') {
-            $data = json_decode($response->getBody()->getContents())->Options;
-        }
-
-        $collection = self::convertDynamicsToLocalVariables($data);
-
-        return $collection;
-    }
-
-    /*
-     * Perform a call to the API
-     *
-     * @param $query
-     * @return mixed|\Psr\Http\Message\ResponseInterface
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    private static function queryAPI($method, $query, $data = null)
-    {
-        Log::debug(strtoupper($method) . ': ' . $query);
-
-        // TODO: Should have failure handling, we assume this all works fine
-        if ($method == 'GET' || $method == 'DELETE') {
-            $response = self::connection()->request($method, $query);
-        }
-        else {
-            $response = self::connection()->request($method, $query, [
-                'json' => self::mapToDynamics($data)
-            ]);
-        }
-
-        return $response;
-    }
 }

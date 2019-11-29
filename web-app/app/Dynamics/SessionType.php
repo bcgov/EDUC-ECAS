@@ -8,13 +8,13 @@
 
 namespace App\Dynamics;
 
-class SessionType extends DynamicsRepository
+use App\Dynamics\Interfaces\iModelRepository;
+
+class SessionType extends DynamicsRepository implements iModelRepository
 {
     public static $table = 'educ_sessiontypecodes';
 
     public static $primary_key = 'educ_sessiontypecodeid';
-
-    public static $cache = 480; // 8 Hours
 
     public static $fields = [
         'id'   => 'educ_sessiontypecodeid',

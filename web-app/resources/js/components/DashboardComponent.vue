@@ -4,6 +4,13 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col">
+                        <div id="logout">
+                            <button type="button" class="btn btn-primary" @click="$keycloak.logoutFn" v-if="$keycloak.authenticated">Log out</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col pb-3">
                         <div class="card">
                             <div class="card-header">
                                 <button @click="showProfile" class="float-right btn btn-primary">Edit</button>
@@ -14,27 +21,28 @@
                                 </h2>
                             </div>
                             <div class="card-body">
-                                <p v-show="!new_user">{{ getUser.email }}<br/>
+                                <p v-show="!new_user">
+                                    {{ getUser.email }}<br/>
                                     {{ getUser.address_1 }}<br/>
-                                    {{ getUser.city }}, {{ getUser.region }} {{ getUser.postal_code }}
+                                    <span v-if="getUser.address_2">{{ getUser.address_2 }}<br /></span>
+                                    {{ getUser.city }}, <span v-if="mounted">{{ getUser.region.id }}</span> {{ getUser.postal_code }}
                                 </p>
-                                <p v-if="getUser.professional_certificate_bc">
-                                    <strong>BC Professional Certificate:</strong> {{ getUser.professional_certificate_bc
-                                    }}
+                                <p v-if="getUser.professional_certificate_bc === 'Yes'">
+                                    <strong>BC Professional Certificate:</strong>
+                                    <font-awesome-icon icon="check" alt="BC Professional Certificate"/>
                                 </p>
-                                <p v-if="getUser.professional_certificate_yk">
-                                    <strong>Yukon Professional Certificate:</strong> {{
-                                    getUser.professional_certificate_yk }}</p>
-                                <p v-if="getUser.professional_certificate_other">
-                                    <strong>Other Certificate:</strong> {{ getUser.professional_certificate_other }}</p>
+                                <p v-if="getUser.professional_certificate_yk === 'Yes'" >
+                                    <strong>Yukon Professional Certificate:</strong>
+                                    <font-awesome-icon icon="check" alt="Yukon Professional Certificate"/>
+                                </p>
                                 <p v-if="getUser.district">
-                                    <strong>District:</strong> {{ getUser.district }}</p>
+                                    <strong>District:</strong> {{ getUser.district.name }}</p>
                                 <p v-if="getUser.school">
-                                    <strong>School:</strong> {{ getUser.school }}</p>
+                                    <strong>School:</strong> {{ getUser.school.name }}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col pb-3">
                         <div class="card">
                             <div class="card-header">
                                 <h2>Credentials</h2>
@@ -46,101 +54,43 @@
                                         <font-awesome-icon v-else icon="trash" @click="deleteCredential(credential)"
                                                            alt="delete" style="color: red;"/>
                                     </div>
-                                    <div class="col">{{ credential.name }}</div>
+                                    <div class="col">{{ credential.credential.name }}</div>
                                 </div>
                                 <div class="row pt-3">
-                                    <div class="col-1">
-                                        <button class="btn btn-primary btn-sm" @click="addCredential">
-                                            <span>
-                                                <div class="loader text-center" v-show="working"></div>
-                                            </span>
-                                            <div v-show="!working">+</div>
-                                        </button>
-                                    </div>
                                     <div class="col">
                                         <select v-model="new_credential">
                                             <option value="0">Select New Credential</option>
-                                            <option v-for="credential in credentials_available" :value="credential.id">
+                                            <option v-for="credential in credentialsAvailable" :value="credential">
                                                 {{ credential.name }}
                                             </option>
                                         </select>
                                     </div>
+                                    <div class="col">
+                                        <button :class="credentialButtonClass" @click="addCredential(new_credential)"
+                                                :disabled="disableAddCredentialButton">
+                                            <span>
+                                                <div class="loader text-center" v-show="working"></div>
+                                            </span>
+                                            <div v-show="!working">Add</div>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-header pb-0">
-                                <h2 class="float-left">Marking Sessions</h2>
-                                <ul class="nav nav-tabs justify-content-end pt-2">
-                                    <li class="nav-item mb-0">
-                                        <a href="#"
-                                           @click="filter = ''"
-                                           class="nav-link"
-                                           :class="{ 'active': filter == '' }">All
-                                            <span class="badge badge-pill badge-primary">{{ getSessions.length }}</span></a>
-                                    </li>
-                                    <li class="nav-item mb-0">
-                                        <a href="#"
-                                           @click="filter = 'Applied'"
-                                           class="nav-link"
-                                           :class="{ 'active': filter == 'Applied' }">Applied
-                                            <span class="badge badge-pill badge-primary">{{ countStatus('Applied') }}</span></a>
-                                    </li>
-                                    <li class="nav-item mb-0">
-                                        <a href="#"
-                                           @click="filter = 'Invited'"
-                                           class="nav-link"
-                                           :class="{ 'active': filter == 'Invited' }">Invited
-                                            <span class="badge badge-pill badge-primary">{{ countStatus('Invited') }}</span></a>
-                                    </li>
-                                    <li class="nav-item mb-0">
-                                        <a href="#"
-                                           @click="filter = 'Scheduled'"
-                                           class="nav-link"
-                                           :class="{ 'active': filter == 'Scheduled' }">Going
-                                            <span class="badge badge-pill badge-primary">{{ countStatus('Scheduled') }}</span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-hover">
-                                    <tr>
-                                        <th>Type</th>
-                                        <th>Activity</th>
-                                        <th>Dates</th>
-                                        <th>Location</th>
-                                        <th>Status</th>
-                                    </tr>
-                                    <tbody>
-                                    <tr @click="viewSession(session)"
-                                        v-for="session in filteredSessions">
-                                        <td>{{ session.type }}</td>
-                                        <td>{{ session.activity }}</td>
-                                        <td nowrap>{{ session.dates }}</td>
-                                        <td>{{ session.location }}</td>
-                                        <td>{{ sessionStatus(session) }}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <marking-sessions :sessions="this.getSessions"></marking-sessions>
+
+
+
+
             </div>
         </div>
-        <modal name="session_form" height="auto">
-            <session :session="current_session"></session>
-        </modal>
         <modal name="profile_form" height="auto" :scrollable="true" :clickToClose="false">
             <profile
                     :user="getUser"
-                    :schools="schools"
                     :regions="regions"
-                    :districts="districts"
+                    :countries="countries"
                     :new_user="new_user"
                     dusk="profile-component"
             ></profile>
@@ -150,187 +100,168 @@
 
 <script>
     import {mapGetters} from 'vuex'
+    import MarkingSessions from './MarkingSessions.vue';
 
     export default {
-        name: "Dashboard",
+        name: "DashboardComponent",
+
+        components: {
+            MarkingSessions
+        },
+
         props: {
             user: {},
             credentials: {},
             user_credentials: {},
             sessions: {},
             subjects: {},
-            schools: {},
             regions: {},
-            districts: {}
+            countries: {},
         },
         data() {
             return {
                 credentials_applied: [...this.user_credentials],
-                credentials_available: [...this.credentials],
                 new_credential: 0,
                 filter: '',
                 current_session: {},
                 new_user: false,
-                working: false
+                working: false,
+                mounted: false
             }
         },
         mounted() {
             console.log('Dashboard Mounted')
 
-            this.$store.commit('SET_USER', this.user)
-            this.$store.commit('SET_SESSIONS', this.sessions)
+            this.$store.commit('SET_USER', this.user);
+            this.$store.commit('SET_SESSIONS', this.sessions);
 
-            Event.listen('credential-added', this.pushCredential)
-            Event.listen('credential-deleted', this.removeCredential)
-            Event.listen('profile-updated', this.updateProfile)
-            Event.listen('session_status_updated', this.updateSessionStatus)
+            Event.listen('credential-added', this.pushCredential);
+            Event.listen('credential-deleted', this.removeCredential);
+            Event.listen('profile-updated', this.updateProfile);
+            Event.listen('launch-profile-modal', this.showProfile);
 
-            if (this.getUser.id === undefined) {
-                this.new_user = true
+            if ( ! this.user.id) {
+                this.new_user = true;
                 this.showProfile()
             }
+
+            this.mounted = true;
         },
         computed: {
             ...mapGetters([
                 'getUser',
-                'getSessions',
-                'filterSessions'
+                'getSessions'
             ]),
-            filteredSessions() {
-                var dashboard = this
-                return this.getSessions.filter(function (session) {
-                    if (dashboard.filter.length == 0) {
-                        return true
-                    }
-                    return session.status == dashboard.filter
-                })
+
+            credentialsIdsInUse() {
+
+                var arrayOfCredentialIds = [];
+
+                this.credentials_applied.forEach( function (applied) {
+                    arrayOfCredentialIds.push(applied.credential.id);
+                });
+
+                return arrayOfCredentialIds;
+            },
+
+            credentialsAvailable() {
+                // subtract applied_credentials from credentials
+                return this.credentials.filter(x => ! this.credentialsIdsInUse.includes(x.id));
+
+            },
+
+            disableAddCredentialButton() {
+                return this.new_credential === "0" || this.new_credential === 0;
+            },
+
+            credentialButtonClass() {
+                if (this.disableAddCredentialButton) {
+                    return 'd-none';
+                }
+
+                else return 'btn btn-primary btn-sm';
+
             }
+
         },
         methods: {
-            addCredential() {
-                console.log('adding credential')
+            addCredential(selection) {
+                console.log('adding credential', selection);
 
-                this.working = true
+                this.working = true;
 
-                var form = this
+                var form = this;
 
-                axios.post('/Dashboard/credential', {
-                    credential_id: form.new_credential,
-                    user_id: form.getUser.id
+                axios.post('/api/' + form.getUser.id + '/profile-credentials', {
+                    credential_id: form.new_credential.id
                 })
                     .then(function (response) {
-                        form.working = false
-                        Event.fire('credential-added', response.data)
-                        console.log('Success!')
+                        form.working = false;
+                        Event.fire('credential-added', response.data);
+                        console.log('Create Success!', response.data)
                     })
                     .catch(function (error) {
-                        form.working = false
-                        console.log('Failure!')
+                        form.working = false;
+                        console.log('Failure!', error)
                     });
             },
             deleteCredential(profile_credential) {
-                console.log('removing credential')
+                console.log('removing credential');
 
-                this.working = true
+                this.working = true;
 
-                var form = this
+                var form = this;
 
-                axios.post('/Dashboard/credential/delete', {
-                    profile_credential_id: profile_credential.id
-                })
+                axios.delete('/api/' + form.getUser.id + '/profile-credentials/' + profile_credential.id )
                     .then(function (response) {
-                        form.working = false
-                        Event.fire('credential-deleted', response.data)
-                        console.log('Success!')
+                        form.working = false;
+                        Event.fire('credential-deleted', profile_credential.credential.id);
+                        console.log('Delete Success!', profile_credential.credential.id )
                     })
                     .catch(function (error) {
-                        form.working = false
+                        form.working = false;
                         console.log('Failure!')
                     });
             },
-            countStatus(status) {
-                // var status
-                return Object.values(this.getSessions).filter(function (assignment) {
-                    return assignment.status == status
-                }).length
-            },
+
+
             pushCredential(profile_credential) {
-                console.log('pushing credential')
-
-                // Get the credential
-                let index = this.credentials_available.findIndex(elm => elm.id === profile_credential.credential_id)
-                let credential = this.credentials_available[index]
-                credential.credential_id = credential.id
-                credential.id = profile_credential.id
-
-                // Remove the credential from the available list
-                this.credentials_available.splice(index, 1)
+                console.log('pushing credential', profile_credential.data.credential.id );
 
                 // Add to the applied list
-                this.credentials_applied.unshift(credential)
+                this.credentials_applied.push(profile_credential.data);
 
                 this.new_credential = 0;
             },
             removeCredential(profile_credential) {
-                console.log('remove credential')
+                console.log('removeCredential', profile_credential);
 
                 // Get the credential
-                let index = this.credentials_applied.findIndex(elm => elm.id === profile_credential.id)
-                let credential = this.credentials_applied[index]
+                let index = this.credentials_applied.findIndex(credential => credential.credential.id === profile_credential);
+
+                console.log('get the credential', index);
+
+                let credential = this.credentials_applied[index].credential;
 
                 // Remove the credential from the applied list
-                this.credentials_applied.splice(index, 1)
+                this.credentials_applied.splice(index, 1);
 
-                // Add to the available list
-                this.credentials_available.unshift(credential)
 
                 this.new_credential = 0;
             },
 
-            isStatus: function (session, status) {
-                return session.status == status
-            },
-            sessionStatus(session) {
-                switch (session.status) {
-                    case 'Applied':
-                        return "You've Applied"
-                    case 'Invited':
-                        return 'Accept Invitation!'
-                    case 'Accepted':
-                        return 'Contract Pending'
-                    case 'Contract':
-                        return 'Contract Pending'
-                    case 'Confirmed':
-                        return "You're Going!"
-                    case 'Declined':
-                        return 'Declined'
-                    case 'Withdrew':
-                        return 'Withdrew'
-                    case 'Completed':
-                        return 'Closed'
-                }
 
-                return 'Open'
-            },
-            viewSession(session) {
-                console.log('View Session')
-                this.current_session = session
-                this.$modal.show('session_form');
-            },
-            closeModal() {
-                this.$modal.hide('session_form');
-            },
+
             showProfile() {
                 this.$modal.show('profile_form');
             },
             updateProfile(user) {
                 // We must have a valid user now
-                this.new_user = false
-                this.$store.commit('SET_USER', user)
+                console.log('updateProfile event', user.data.data);
+                this.new_user = false;
+                this.$store.commit('SET_USER', user.data.data)
             },
-            updateSessionStatus(response) {
-                this.$store.commit('UPDATE_SESSION_STATUS', response)
-            }
+
         }
 
     }

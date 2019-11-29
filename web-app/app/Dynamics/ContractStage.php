@@ -8,11 +8,11 @@
 
 namespace App\Dynamics;
 
-class ContractStage extends DynamicsRepository
+use App\Dynamics\Interfaces\iModelRepository;
+
+class ContractStage extends DynamicsMetaRepository implements iModelRepository
 {
     public static $table = 'educ_assignment';
-
-    public static $api_verb = 'metadata';
 
     public static $primary_key = 'educ_contractstage';
 

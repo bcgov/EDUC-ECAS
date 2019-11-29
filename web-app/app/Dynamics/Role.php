@@ -8,15 +8,15 @@
 
 namespace App\Dynamics;
 
-class Role extends DynamicsRepository
+use App\Dynamics\Interfaces\iModelRepository;
+
+class Role extends DynamicsRepository implements iModelRepository
 {
     public static $table = 'educ_rolecodes';
 
     public static $primary_key = 'educ_name';
 
     public static $data_bind = 'educ_Role';
-
-    public static $cache = 480; // 8 Hours
 
     public static $fields = [
         'id'   => 'educ_rolecodeid',
