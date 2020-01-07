@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms>
+  <systemform>
+    <formid>{79ee0c4b-408b-4c39-abcd-0419baf51fb2}</formid>
+    <IntroducedVersion>0.0.0.7</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form maxWidth="400">
+      <tabs>
+        <tab id="{25df35eb-5092-4ef6-bd88-f39ae1a76140}" name="tab_1" expanded="true" locklevel="0" showlabel="false">
+          <labels>
+            <label description="Contact Summary" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="{41c5bca0-15f4-48fd-b77a-860a39ef1589}" name="tab_1_column_1_section_1" showlabel="false" columns="1" showbar="false" IsUserDefined="0">
+                  <labels>
+                    <label description="section" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{e7c40514-caa0-93ab-e0b8-6ea0e9ecb39a}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="Email" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="emailaddress1" uniqueid="{23b608d4-c603-ad49-9c2a-2cd6398051b2}" datafieldname="emailaddress1" classid="{ADA2203E-B4CD-49be-9DDF-234642B43B52}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{0b71596b-102e-ab29-0116-169b84189c62}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="Line 1 Address" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="address1_line1" datafieldname="address1_line1" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{0405cab2-88d9-5334-cda8-a5ae9deb084c}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="City" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="address1_city" datafieldname="address1_city" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{b53406d9-588a-3b9b-9269-048c529c2ba8}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="ZIP/Postal Code" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="address1_postalcode" datafieldname="address1_postalcode" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{be0aeb86-c6b7-2660-c9dc-ea5c834eddb5}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="District" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="educ_district" datafieldname="educ_district" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{95619c25-2014-cc77-1233-3ee7e7c89e3a}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Current School" languagecode="1033" />
+                        </labels>
+                        <control id="educ_currentschoold" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="educ_currentschoold" disabled="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+                <section id="{ce06b4a5-6475-c049-0ac0-97e26102b0be}" name="tab_1_section_3" locklevel="0" showlabel="true" columns="1" showbar="false" IsUserDefined="0" celllabelposition="Left" celllabelalignment="Left" labelwidth="115" layout="varwidth">
+                  <labels>
+                    <label description="Credentials" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{235923bd-159e-805d-36a7-420bcd6a423d}" showlabel="false" rowspan="7" auto="false" colspan="1">
+                        <labels>
+                          <label description="Credentials (Contact)" languagecode="1033" />
+                        </labels>
+                        <control id="Credentials" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                          <parameters>
+                            <ViewId>{E982B871-CB5B-E911-A978-000D3AF45D23}</ViewId>
+                            <IsUserView>false</IsUserView>
+                            <RelationshipName>educ_contact_educ_credentials</RelationshipName>
+                            <TargetEntityType>educ_credential</TargetEntityType>
+                            <AutoExpand>Fixed</AutoExpand>
+                            <EnableQuickFind>false</EnableQuickFind>
+                            <EnableViewPicker>false</EnableViewPicker>
+                            <ViewIds>{DAF31B64-CA7B-4563-ADD3-641546AF0701},{E982B871-CB5B-E911-A978-000D3AF45D23}</ViewIds>
+                            <EnableJumpBar>false</EnableJumpBar>
+                            <ChartGridMode>All</ChartGridMode>
+                            <VisualizationId />
+                            <IsUserChart>false</IsUserChart>
+                            <EnableChartPicker>true</EnableChartPicker>
+                            <RecordsPerPage>5</RecordsPerPage>
+                            <HeaderColorCode>#F3F3F3</HeaderColorCode>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row>
+                      <cell id="{b0de5014-bdaa-7ed2-062c-cd92dad9229a}" locklevel="0" showlabel="false" visible="false">
+                        <labels>
+                          <label description="Address 1" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="address1_composite" uniqueid="{4ae74938-d0e6-67d2-0aab-ec7c6b7c216c}" datafieldname="address1_composite" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <DisplayConditions Order="3">
+        <Role Id="{627090ff-40a3-4053-8790-584edc5be201}" />
+        <Role Id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />
+      </DisplayConditions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="ECAS Contact and Credentials" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Shows the contact's personal info and credientials" languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

@@ -1,0 +1,2 @@
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration.Plugin\Ecas.Dyn365.CASIntegration.Plugin\obj\Debug\BCGov.Dyn365.CASIntegration.Plugin.csprojAssemblyReference.cache
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration.Plugin\Ecas.Dyn365.CASIntegration.Plugin\obj\Debug\BCGov.Dyn365.CASIntegration.Plugin.csproj.CoreCompileInputs.cache

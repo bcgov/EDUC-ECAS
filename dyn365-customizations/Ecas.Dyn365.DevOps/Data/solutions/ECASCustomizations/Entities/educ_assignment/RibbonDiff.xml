@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RibbonDiffXml>
+  <CustomActions>
+    <CustomAction Id="educ.educ_assignment.EAApproval.Button.CustomAction" Location="Mscrm.SubGrid.educ_assignment.MainTab.Management.Controls._children" Sequence="105">
+      <CommandUIDefinition>
+        <Button Command="educ.educ_assignment.Command1.Command" Id="educ.educ_assignment.EAApproval.Button" LabelText="$LocLabels:educ.educ_assignment.EAApproval.Button.LabelText" Sequence="105" TemplateAlias="o2" ModernImage="$webresource:educ_Expense_Authority_Assignment_Icon" />
+      </CommandUIDefinition>
+    </CustomAction>
+    <CustomAction Id="educ.educ_assignment.GeneratePayments.Button.CustomAction" Location="Mscrm.Form.educ_assignment.MainTab.Save.Controls._children" Sequence="75">
+      <CommandUIDefinition>
+        <Button Command="educ.educ_assignment.Command0.Command" Id="educ.educ_assignment.GeneratePayments.Button" Image16by16="" LabelText="$LocLabels:educ.educ_assignment.GeneratePayments.Button.LabelText" Sequence="75" TemplateAlias="o2" ToolTipTitle="$LocLabels:educ.educ_assignment.GeneratePayments.Button.ToolTipTitle" ToolTipDescription="$LocLabels:educ.educ_assignment.GeneratePayments.Button.ToolTipDescription" ModernImage="$webresource:educ_GeneratePaymentIcon" />
+      </CommandUIDefinition>
+    </CustomAction>
+  </CustomActions>
+  <Templates>
+    <RibbonTemplates Id="Mscrm.Templates"></RibbonTemplates>
+  </Templates>
+  <CommandDefinitions>
+    <CommandDefinition Id="educ.educ_assignment.Command0.Command">
+      <EnableRules />
+      <DisplayRules>
+        <DisplayRule Id="educ.educ_assignment.DisplayRule0.DisplayRule" />
+      </DisplayRules>
+      <Actions>
+        <JavaScriptFunction FunctionName="displayPaymentGenerationConfirmationDialog" Library="$webresource:educ_assignment.js" />
+      </Actions>
+    </CommandDefinition>
+    <CommandDefinition Id="educ.educ_assignment.Command1.Command">
+      <EnableRules>
+        <EnableRule Id="educ.educ_assignment.EnableRule0.EnableRule" />
+      </EnableRules>
+      <DisplayRules />
+      <Actions>
+        <JavaScriptFunction FunctionName="displayPopulateExpenseAuthorityNameAndDateConfirmationDialog" Library="$webresource:educ_assignment.js">
+          <CrmParameter Value="SelectedControlSelectedItemReferences" />
+        </JavaScriptFunction>
+      </Actions>
+    </CommandDefinition>
+  </CommandDefinitions>
+  <RuleDefinitions>
+    <TabDisplayRules />
+    <DisplayRules>
+      <DisplayRule Id="educ.educ_assignment.DisplayRule0.DisplayRule">
+        <ValueRule Field="statuscode" Value="610410007" />
+        <EntityPrivilegeRule PrivilegeType="Delete" PrivilegeDepth="Local" AppliesTo="PrimaryEntity" EntityName="educ_assignment" />
+      </DisplayRule>
+    </DisplayRules>
+    <EnableRules>
+      <EnableRule Id="educ.educ_assignment.EnableRule0.EnableRule">
+        <SelectionCountRule AppliesTo="SelectedEntity" Minimum="1" />
+      </EnableRule>
+    </EnableRules>
+  </RuleDefinitions>
+  <LocLabels>
+    <LocLabel Id="educ.educ_assignment.EAApproval.Button.LabelText">
+      <Titles>
+        <Title description="EA Approval" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="educ.educ_assignment.GeneratePayments.Button.LabelText">
+      <Titles>
+        <Title description="Generate Payments" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="educ.educ_assignment.GeneratePayments.Button.ToolTipDescription">
+      <Titles>
+        <Title description="Generate Payment Records to be processed by financial system" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="educ.educ_assignment.GeneratePayments.Button.ToolTipTitle">
+      <Titles>
+        <Title description="Generate Payment Records" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+  </LocLabels>
+</RibbonDiffXml>

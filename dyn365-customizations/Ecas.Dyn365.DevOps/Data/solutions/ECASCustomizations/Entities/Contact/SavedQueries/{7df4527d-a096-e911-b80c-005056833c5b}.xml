@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{7df4527d-a096-e911-b80c-005056833c5b}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="fullname" select="1" preview="1" icon="1">
+        <row name="result" id="contactid">
+          <cell name="firstname" width="100" />
+          <cell name="lastname" width="100" />
+          <cell name="educ_preferredfirstname" width="100" />
+          <cell name="educ_professionalcertificatebc" width="100" />
+          <cell name="educ_professionalcertificateyk" width="100" />
+          <cell name="address1_composite" width="100" disableSorting="1" />
+          <cell name="address1_city" width="100" />
+          <cell name="emailaddress1" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+        <entity name="contact">
+          <attribute name="educ_professionalcertificateyk" />
+          <attribute name="educ_professionalcertificatebc" />
+          <attribute name="educ_preferredfirstname" />
+          <attribute name="lastname" />
+          <attribute name="firstname" />
+          <attribute name="emailaddress1" />
+          <attribute name="address1_city" />
+          <attribute name="address1_composite" />
+          <order attribute="address1_city" descending="false" />
+          <filter type="and">
+            <filter type="or">
+              <filter type="and">
+                <condition attribute="educ_professionalcertificatebc" operator="not-null" />
+                <condition attribute="educ_professionalcertificatebcverified" operator="null" />
+              </filter>
+              <filter type="and">
+                <condition attribute="educ_professionalcertificateyk" operator="not-null" />
+                <condition attribute="educ_professionalcertificateykverified" operator="null" />
+              </filter>
+            </filter>
+          </filter>
+          <attribute name="contactid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.1.5</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Unverified Certificates" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Shows Contacts where Credentials have been entered but not yet Verified by ECAS" languagecode="1033" />
+    </Descriptions>
+  </savedquery>
+</savedqueries>

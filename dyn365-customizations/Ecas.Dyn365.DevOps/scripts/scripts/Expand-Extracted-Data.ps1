@@ -1,0 +1,1 @@
+﻿.\Export.ps1 -CrmConnectionName OnlineDev-LCLBPortal -ExportSettings LCLBPortalsData -Actions Expand-CrmData

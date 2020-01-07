@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Workflow WorkflowId="{9533e646-9ec7-4e66-bfc5-0613db18f9d1}" Name="Assignment: Contract Approval Required reminder email">
+  <XamlFileName>/Workflows/AssignmentContractApprovalRequiredreminderemail-9533E646-9EC7-4E66-BFC5-0613DB18F9D1.xaml</XamlFileName>
+  <Type>1</Type>
+  <Subprocess>0</Subprocess>
+  <Category>0</Category>
+  <Mode>0</Mode>
+  <Scope>4</Scope>
+  <OnDemand>0</OnDemand>
+  <TriggerOnUpdateAttributeList>educ_contractstage</TriggerOnUpdateAttributeList>
+  <TriggerOnCreate>1</TriggerOnCreate>
+  <TriggerOnDelete>0</TriggerOnDelete>
+  <AsyncAutodelete>1</AsyncAutodelete>
+  <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+  <StateCode>0</StateCode>
+  <StatusCode>1</StatusCode>
+  <RunAs>1</RunAs>
+  <IsTransacted>1</IsTransacted>
+  <IntroducedVersion>0.0.0.7</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <PrimaryEntity>educ_assignment</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName languagecode="1033" description="Assignment: Contract Approval Required reminder email" />
+  </LocalizedNames>
+  <labels>
+    <steplabels id="{3d88eeca-fe61-4ee8-821a-8d5ab3995b10}" />
+    <steplabels id="{4b417d4d-d4e5-4bf5-bcc3-62614c3a00ba}" />
+  </labels>
+</Workflow>

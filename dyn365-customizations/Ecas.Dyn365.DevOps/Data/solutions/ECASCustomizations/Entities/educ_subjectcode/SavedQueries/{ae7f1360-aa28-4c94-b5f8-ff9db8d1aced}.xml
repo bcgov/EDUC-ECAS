@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{ae7f1360-aa28-4c94-b5f8-ff9db8d1aced}</savedqueryid>
+    <layoutxml>
+      <grid name="" jump="educ_name" select="1" icon="1" preview="0">
+        <row name="educ_subjectcode" id="educ_subjectcodeid">
+          <cell name="educ_name" width="300" />
+          <cell name="educ_subjectcode" width="100" />
+          <cell name="createdby" width="100" />
+          <cell name="createdon" width="125" />
+          <cell name="modifiedby" width="100" />
+          <cell name="modifiedon" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>64</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="educ_subjectcode">
+          <attribute name="educ_subjectcodeid" />
+          <attribute name="educ_name" />
+          <attribute name="createdon" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <order attribute="educ_name" descending="false" />
+          <attribute name="educ_subjectcode" />
+          <attribute name="createdby" />
+          <attribute name="modifiedon" />
+          <attribute name="modifiedby" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.1</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Subject Code Lookup View" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

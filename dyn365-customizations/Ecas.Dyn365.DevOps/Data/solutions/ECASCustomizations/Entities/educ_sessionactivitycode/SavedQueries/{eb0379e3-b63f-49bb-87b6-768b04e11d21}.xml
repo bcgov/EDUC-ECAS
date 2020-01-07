@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{eb0379e3-b63f-49bb-87b6-768b04e11d21}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="educ_name" select="1" icon="1" preview="1">
+        <row name="result" id="educ_sessionactivitycodeid">
+          <cell name="educ_name" width="300" />
+          <cell name="educ_sessionactivitycode" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="createdby" width="100" />
+          <cell name="createdon" width="100" />
+          <cell name="modifiedby" width="100" />
+          <cell name="modifiedon" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="educ_sessionactivitycode">
+          <attribute name="educ_name" />
+          <order attribute="educ_name" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="1" />
+          </filter>
+          <attribute name="modifiedon" />
+          <attribute name="modifiedby" />
+          <attribute name="createdby" />
+          <attribute name="educ_sessionactivitycode" />
+          <attribute name="createdon" />
+          <attribute name="educ_sessionactivitycodeid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.1</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Inactive Session Activity Codes" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

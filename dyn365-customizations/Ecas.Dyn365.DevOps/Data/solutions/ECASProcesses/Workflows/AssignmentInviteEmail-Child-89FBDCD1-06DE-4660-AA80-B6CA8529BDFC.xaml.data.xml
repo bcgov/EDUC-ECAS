@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Workflow WorkflowId="{89fbdcd1-06de-4660-aa80-b6ca8529bdfc}" Name="Assignment: Invite Email - Child">
+  <XamlFileName>/Workflows/AssignmentInviteEmail-Child-89FBDCD1-06DE-4660-AA80-B6CA8529BDFC.xaml</XamlFileName>
+  <Type>1</Type>
+  <Subprocess>1</Subprocess>
+  <Category>0</Category>
+  <Mode>0</Mode>
+  <Scope>4</Scope>
+  <OnDemand>0</OnDemand>
+  <TriggerOnCreate>0</TriggerOnCreate>
+  <TriggerOnDelete>0</TriggerOnDelete>
+  <AsyncAutodelete>1</AsyncAutodelete>
+  <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+  <StateCode>0</StateCode>
+  <StatusCode>1</StatusCode>
+  <RunAs>1</RunAs>
+  <IsTransacted>1</IsTransacted>
+  <IntroducedVersion>0.0.0.7</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <PrimaryEntity>educ_assignment</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName languagecode="1033" description="Assignment: Invite Email - Child" />
+  </LocalizedNames>
+</Workflow>

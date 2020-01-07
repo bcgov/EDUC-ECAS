@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WebResource>
+  <WebResourceId>{85b13db9-92ef-e911-b80e-005056833c5b}</WebResourceId>
+  <Name>educ_translateImageBase64Encode.js</Name>
+  <DisplayName>translate_Image_Base64_Encode.js</DisplayName>
+  <Description>Takes two field names from an entity and transforms the PEN image text value field to strip out the leading 'data:image/png;base64,' value to ensure that the image can be included in Word Document templates.</Description>
+  <LanguageCode>1033</LanguageCode>
+  <WebResourceType>3</WebResourceType>
+  <IntroducedVersion>0.0.2.1</IntroducedVersion>
+  <IsEnabledForMobileClient>0</IsEnabledForMobileClient>
+  <IsAvailableForMobileOffline>0</IsAvailableForMobileOffline>
+  <DependencyXml>&lt;Dependencies&gt;&lt;Dependency componentType="WebResource"/&gt;&lt;/Dependencies&gt;</DependencyXml>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>1</CanBeDeleted>
+  <IsHidden>0</IsHidden>
+  <FileName>/WebResources/educ_translateImageBase64Encodejs85B13DB9-92EF-E911-B80E-005056833C5B</FileName>
+</WebResource>

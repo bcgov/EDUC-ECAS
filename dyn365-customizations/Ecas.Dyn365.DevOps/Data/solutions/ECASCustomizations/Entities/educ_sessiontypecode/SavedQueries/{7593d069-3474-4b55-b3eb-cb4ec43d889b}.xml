@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{7593d069-3474-4b55-b3eb-cb4ec43d889b}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="educ_name" select="1" icon="1" preview="1">
+        <row name="result" id="educ_sessiontypecodeid">
+          <cell name="educ_name" width="300" />
+          <cell name="educ_sessiontypecode" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="createdby" width="100" />
+          <cell name="createdon" width="100" />
+          <cell name="modifiedby" width="100" />
+          <cell name="modifiedon" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="educ_sessiontypecode">
+          <attribute name="educ_name" />
+          <order attribute="educ_name" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <attribute name="educ_sessiontypecode" />
+          <attribute name="modifiedon" />
+          <attribute name="modifiedby" />
+          <attribute name="createdby" />
+          <attribute name="createdon" />
+          <attribute name="educ_sessiontypecodeid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.1</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Active Session Type Codes" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

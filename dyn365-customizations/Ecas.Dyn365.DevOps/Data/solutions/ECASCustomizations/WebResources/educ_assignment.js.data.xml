@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WebResource>
+  <WebResourceId>{e513fe67-cb76-e911-b80a-005056833c5b}</WebResourceId>
+  <Name>educ_assignment.js</Name>
+  <DisplayName>educ_assignment.js</DisplayName>
+  <WebResourceType>3</WebResourceType>
+  <IntroducedVersion>0.0.0.7</IntroducedVersion>
+  <IsEnabledForMobileClient>0</IsEnabledForMobileClient>
+  <IsAvailableForMobileOffline>0</IsAvailableForMobileOffline>
+  <DependencyXml>&lt;Dependencies&gt;&lt;Dependency componentType="WebResource"/&gt;&lt;/Dependencies&gt;</DependencyXml>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>1</CanBeDeleted>
+  <IsHidden>0</IsHidden>
+  <FileName>/WebResources/educ_assignmentjsE513FE67-CB76-E911-B80A-005056833C5B</FileName>
+</WebResource>

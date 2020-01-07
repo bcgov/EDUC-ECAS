@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Workflow WorkflowId="{d1830461-0ed2-4dbc-9701-01d0628dacca}" Name="CAS AP : Verify Payment Status">
+  <XamlFileName>/Workflows/CASAPVerifyPaymentStatus-D1830461-0ED2-4DBC-9701-01D0628DACCA.xaml</XamlFileName>
+  <Type>1</Type>
+  <Subprocess>0</Subprocess>
+  <Category>3</Category>
+  <Mode>0</Mode>
+  <Scope>4</Scope>
+  <OnDemand>0</OnDemand>
+  <TriggerOnCreate>0</TriggerOnCreate>
+  <TriggerOnDelete>0</TriggerOnDelete>
+  <AsyncAutodelete>0</AsyncAutodelete>
+  <SyncWorkflowLogOnFailure>1</SyncWorkflowLogOnFailure>
+  <StateCode>1</StateCode>
+  <StatusCode>2</StatusCode>
+  <CreateStage>40</CreateStage>
+  <RunAs>1</RunAs>
+  <SdkMessageId>{0c0bd85c-c4f9-e911-b80e-005056833c5b}</SdkMessageId>
+  <UniqueName>CASAPVerifyPaymentStatus</UniqueName>
+  <IsTransacted>1</IsTransacted>
+  <IntroducedVersion>0.0.0.2</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <FormId>{00000000-0000-0000-0000-000000000000}</FormId>
+  <PrimaryEntity>educ_payment</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName languagecode="1033" description="CAS AP : Verify Payment Status" />
+  </LocalizedNames>
+</Workflow>

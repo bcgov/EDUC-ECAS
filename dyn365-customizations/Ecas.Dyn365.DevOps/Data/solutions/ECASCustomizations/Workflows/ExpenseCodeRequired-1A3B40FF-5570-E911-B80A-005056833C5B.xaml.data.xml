@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Workflow WorkflowId="{1a3b40ff-5570-e911-b80a-005056833c5b}" Name="Expense Code Required" Description="If name field &lt;&gt; Fee then Expense Code is required">
+  <XamlFileName>/Workflows/ExpenseCodeRequired-1A3B40FF-5570-E911-B80A-005056833C5B.xaml</XamlFileName>
+  <Type>1</Type>
+  <Subprocess>0</Subprocess>
+  <Category>2</Category>
+  <Mode>1</Mode>
+  <Scope>4</Scope>
+  <OnDemand>0</OnDemand>
+  <TriggerOnCreate>0</TriggerOnCreate>
+  <TriggerOnDelete>0</TriggerOnDelete>
+  <AsyncAutodelete>0</AsyncAutodelete>
+  <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+  <StateCode>1</StateCode>
+  <StatusCode>2</StatusCode>
+  <RunAs>1</RunAs>
+  <IsTransacted>1</IsTransacted>
+  <IntroducedVersion>0.0.0.7</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <BusinessProcessType>0</BusinessProcessType>
+  <PrimaryEntity>educ_exoense</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName languagecode="1033" description="Expense Code Required" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description languagecode="1033" description="If name field &lt;&gt; Fee then Expense Code is required" />
+  </Descriptions>
+  <ProcessTriggers>
+    <ProcessTrigger processtriggerid="{bbe0ff31-4aa4-e911-b80c-005056833c5b}">
+      <controltype>1</controltype>
+      <scope>2</scope>
+      <controlname>educ_name</controlname>
+      <event>change</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_exoense</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{bce0ff31-4aa4-e911-b80c-005056833c5b}">
+      <scope>2</scope>
+      <event>load</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_exoense</primaryentitytypecode>
+    </ProcessTrigger>
+  </ProcessTriggers>
+</Workflow>

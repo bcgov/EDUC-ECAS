@@ -1,0 +1,11 @@
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Plugin\bin\Debug\Microsoft.Crm.Sdk.Proxy.dll
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Plugin\bin\Debug\Microsoft.Xrm.Sdk.dll
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Plugin\bin\Debug\Microsoft.Crm.Sdk.Proxy.xml
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Plugin\bin\Debug\Microsoft.Xrm.Sdk.xml
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Plugin\obj\Debug\Ecas.Dyn365.CASIntegration.Plugin.csprojAssemblyReference.cache
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Plugin\obj\Debug\Ecas.Dyn365.CASIntegration.Plugin.csproj.CoreCompileInputs.cache
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Plugin\obj\Debug\Ecas.Dyn365.CASIntegration.Plugin.csproj.CopyComplete
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Plugin\bin\Debug\Ecas.Dyn365.CASIntegration.Plugin.dll
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Plugin\bin\Debug\Ecas.Dyn365.CASIntegration.Plugin.pdb
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Plugin\obj\Debug\Ecas.Dyn365.CASIntegration.Plugin.dll
+D:\_Personal\Business\Eyedeas Inc\TFS\Quartech\Ecas\dyn365-customizations\Ecas.Dyn365.CASIntegration\Ecas.Dyn365.CASIntegration.Plugin\obj\Debug\Ecas.Dyn365.CASIntegration.Plugin.pdb

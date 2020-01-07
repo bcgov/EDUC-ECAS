@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{857a36b8-014e-e911-a980-000d3af475a9}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="fullname" select="1" icon="1" preview="1">
+        <row name="result" id="contactid">
+          <cell name="lastname" width="100" />
+          <cell name="firstname" width="100" />
+          <cell name="educ_preferredfirstname" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="emailaddress1" width="100" />
+          <cell name="address1_line1" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="address1_line2" width="100" />
+          <cell name="address1_city" width="100" />
+          <cell name="address1_postalcode" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical">
+        <entity name="contact">
+          <order attribute="lastname" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <attribute name="lastname" />
+          <attribute name="educ_preferredfirstname" />
+          <attribute name="address1_line2" />
+          <attribute name="address1_line1" />
+          <attribute name="firstname" />
+          <attribute name="address1_city" />
+          <attribute name="address1_postalcode" />
+          <attribute name="emailaddress1" />
+          <attribute name="contactid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.1</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="ECAS Active Contacts" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

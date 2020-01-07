@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{4f13117b-e130-44fe-9f0c-da32e3de27b5}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="educ_name" select="1" icon="1" preview="1">
+        <row name="result" id="educ_usersignatureid">
+          <cell name="educ_userid" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="createdon" width="125" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="educ_usersignature">
+          <attribute name="createdon" />
+          <order attribute="createdon" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <attribute name="educ_userid" />
+          <attribute name="educ_usersignatureid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.2.1</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Active User Signatures" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

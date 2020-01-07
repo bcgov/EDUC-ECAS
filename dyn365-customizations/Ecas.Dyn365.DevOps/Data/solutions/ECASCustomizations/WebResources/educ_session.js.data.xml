@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WebResource>
+  <WebResourceId>{73f8ad01-656d-e911-b80a-005056833c5b}</WebResourceId>
+  <Name>educ_session.js</Name>
+  <DisplayName>educ_session.js</DisplayName>
+  <WebResourceType>3</WebResourceType>
+  <IntroducedVersion>0.0.0.7</IntroducedVersion>
+  <IsEnabledForMobileClient>0</IsEnabledForMobileClient>
+  <IsAvailableForMobileOffline>0</IsAvailableForMobileOffline>
+  <DependencyXml>&lt;Dependencies&gt;&lt;Dependency componentType="WebResource"/&gt;&lt;/Dependencies&gt;</DependencyXml>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>1</CanBeDeleted>
+  <IsHidden>0</IsHidden>
+  <FileName>/WebResources/educ_sessionjs73F8AD01-656D-E911-B80A-005056833C5B</FileName>
+</WebResource>

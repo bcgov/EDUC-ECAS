@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{b8df27b6-f4a2-4821-b028-42375b48ffc8}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="educ_name" select="1" icon="1" preview="1">
+        <row name="result" id="educ_exoenseid">
+          <cell name="educ_assignment" width="100" />
+          <cell name="educ_name" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="educ_quantity" width="100" />
+          <cell name="a_b043cd6b4e70e911b80a005056833c5b.educ_rate" width="100" disableSorting="1" />
+          <cell name="educ_amount" width="100" />
+          <cell name="statuscode" width="100" />
+          <cell name="educ_description" width="100" />
+          <cell name="educ_payment" width="100" />
+          <cell name="a_36af046a8972e911b80a005056833c5b.educ_expenseauthorityid" width="100" disableSorting="1" />
+          <cell name="educ_supplementalexpense" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="educ_exoense">
+          <attribute name="educ_name" />
+          <order attribute="educ_assignment" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <attribute name="statuscode" />
+          <attribute name="educ_quantity" />
+          <attribute name="educ_payment" />
+          <attribute name="educ_description" />
+          <attribute name="educ_amount" />
+          <attribute name="educ_assignment" />
+          <link-entity alias="a_b043cd6b4e70e911b80a005056833c5b" name="educ_expensecode" from="educ_expensecodeid" to="educ_expensecode" link-type="outer" visible="false">
+            <attribute name="educ_rate" />
+          </link-entity>
+          <attribute name="educ_supplementalexpense" />
+          <link-entity alias="a_36af046a8972e911b80a005056833c5b" name="educ_assignment" from="educ_assignmentid" to="educ_assignment" link-type="outer" visible="false">
+            <attribute name="educ_expenseauthorityid" />
+          </link-entity>
+          <attribute name="educ_exoenseid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.7</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Active Expenses" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

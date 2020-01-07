@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms>
+  <systemform>
+    <formid>{4718540f-608d-4336-95c1-37fbea6c053f}</formid>
+    <IntroducedVersion>0.0.0.1</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab id="{0a1806e0-5f69-4239-9f21-6e0916fbf3d3}" IsUserDefined="1" verticallayout="true">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="{05ca2f51-1353-4115-84ee-9a542397c623}" IsUserDefined="0" showbar="false" showlabel="false">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{86d64522-ab75-ba0d-53b5-569c1848018e}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="educ_contact" datafieldname="educ_contact" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{58ecadac-2093-0894-5b7c-7d693a45938e}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="educ_credential" datafieldname="educ_credential" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" uniqueid="{58987cc7-a04d-d5c1-497c-aaaea8856ed4}">
+                          <parameters>
+                            <AutoResolve>true</AutoResolve>
+                            <DisableMru>false</DisableMru>
+                            <DisableQuickFind>false</DisableQuickFind>
+                            <DisableViewPicker>true</DisableViewPicker>
+                            <DefaultViewId>{BDC8413E-E2C2-4693-8C6C-177E024682E5}</DefaultViewId>
+                            <AllowFilterOff>false</AllowFilterOff>
+                            <AvailableViewIds>{50C27DDB-DB99-46F9-A9A1-EE00352CE62E}</AvailableViewIds>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{5536104e-0a4e-109e-b789-6341052e3594}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="educ_verifiedcredential" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" datafieldname="educ_verifiedcredential" disabled="false" uniqueid="{39b6086c-3d17-a31c-555c-4642926bbd12}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{06496ba1-7183-55cb-6452-8079d1b16616}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="educ_credentialsyear" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_credentialsyear" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{9fd31273-9628-4f19-87a7-779cdd4194f4}" showlabel="true" locklevel="0" visible="false">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="educ_name" datafieldname="educ_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" uniqueid="{33676a45-6ad4-b60d-5dc4-9caa73c1e2a5}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{3a4f3ef8-8d92-4d0e-b610-6acaadf42d14}" showlabel="true" locklevel="1" visible="false">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="ownerid" datafieldname="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" uniqueid="{45baa1d2-836b-92b1-4b7a-c504bc24241d}">
+                          <parameters>
+                            <AutoResolve>true</AutoResolve>
+                            <DisableMru>false</DisableMru>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{c12eff90-2938-44fe-a26a-1aa3c831690e}" columns="11" celllabelposition="Left" celllabelalignment="Left" labelwidth="130">
+        <rows>
+          <row>
+            <cell id="{67e4e34b-5b2c-4d1e-bd59-03c86b32284d}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+              <control disabled="false" id="header_statecode" datafieldname="statecode" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" />
+            </cell>
+            <cell id="{15d8d25a-0629-7138-0eb0-372e86803438}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+              <control disabled="false" id="header_ownerid" datafieldname="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" />
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <footer id="{5e581c0d-126d-4fcf-a2a6-83c131696605}" columns="111">
+        <rows>
+          <row>
+            <cell id="{772624c5-2be2-07db-a649-c456c3969a62}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+              <control disabled="true" id="footer_createdon" datafieldname="createdon" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" />
+            </cell>
+            <cell id="{d5cd3a3c-dd0a-8c75-ed69-26953a3a1b21}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+              <control disabled="true" id="footer_modifiedon" datafieldname="modifiedon" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" />
+            </cell>
+            <cell id="{689243de-b285-c6d7-8659-e957884bdee2}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+              <control disabled="true" id="footer_modifiedby" datafieldname="modifiedby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" />
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <Navigation>
+        <NavBar></NavBar>
+        <NavBarAreas>
+          <NavBarArea Id="Info">
+            <Titles>
+              <Title Text="Common" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Sales">
+            <Titles>
+              <Title Text="Sales" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Service">
+            <Titles>
+              <Title Text="Service" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Marketing">
+            <Titles>
+              <Title Text="Marketing" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="ProcessCenter">
+            <Titles>
+              <Title Text="Process Sessions" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+        </NavBarAreas>
+      </Navigation>
+      <controlDescriptions>
+        <controlDescription forControl="{39b6086c-3d17-a31c-555c-4642926bbd12}">
+          <customControl id="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}">
+            <parameters>
+              <datafieldname>educ_verifiedcredential</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="0" name="MscrmControls.OptionSet.OptionSetControl">
+            <parameters>
+              <value>educ_verifiedcredential</value>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="MscrmControls.OptionSet.OptionSetControl">
+            <parameters>
+              <value>educ_verifiedcredential</value>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="MscrmControls.OptionSet.OptionSetControl">
+            <parameters>
+              <value>educ_verifiedcredential</value>
+            </parameters>
+          </customControl>
+        </controlDescription>
+      </controlDescriptions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Information" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="A form for this entity." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

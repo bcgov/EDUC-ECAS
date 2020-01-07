@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <LocalizedNames>
+    <LocalizedName description="Active Sessions - List Dashboard" languagecode="1033" />
+  </LocalizedNames>
+  <FormId>{b8653bc5-ce7c-e911-b80a-005056833c5b}</FormId>
+  <IsCustomizable>1</IsCustomizable>
+  <IsDefault>0</IsDefault>
+  <FormXml>
+    <forms type="dashboard">
+      <form>
+        <tabs>
+          <tab showlabel="false" verticallayout="true" id="{122d1551-c7df-4ca8-8a27-c854b3601613}">
+            <labels>
+              <label description="Tab" languagecode="1033" />
+            </labels>
+            <columns>
+              <column width="100%">
+                <sections>
+                  <section showlabel="false" showbar="false" columns="111" id="{6575f43a-f1d2-4eff-9e13-fc257524f904}">
+                    <labels>
+                      <label description="Section" languagecode="1033" />
+                    </labels>
+                    <rows>
+                      <row>
+                        <cell id="{0618ad17-4a2b-ee7a-4a6c-3ec174beb34d}" showlabel="false" colspan="1" auto="false" rowspan="12">
+                          <labels>
+                            <label description="Assignment" languagecode="1033" />
+                          </labels>
+                          <control id="Component3116439" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                            <parameters>
+                              <ViewId>{0280E5C5-9457-48D0-B005-0818E08E6A0D}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <RelationshipName />
+                              <TargetEntityType>educ_assignment</TargetEntityType>
+                              <AutoExpand>Fixed</AutoExpand>
+                              <EnableQuickFind>false</EnableQuickFind>
+                              <EnableViewPicker>false</EnableViewPicker>
+                              <ViewIds />
+                              <EnableJumpBar>false</EnableJumpBar>
+                              <ChartGridMode>Chart</ChartGridMode>
+                              <VisualizationId>{5A531EF1-8A97-E911-B80C-005056833C5B}</VisualizationId>
+                              <IsUserChart>false</IsUserChart>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RecordsPerPage>8</RecordsPerPage>
+                              <HeaderColorCode />
+                            </parameters>
+                          </control>
+                        </cell>
+                        <cell colspan="2" rowspan="24" showlabel="false" id="{d0b31426-bccd-4c70-a346-8a835e3dbb21}" auto="false">
+                          <labels>
+                            <label description="Assignments For Active Sessions" languagecode="1033" />
+                          </labels>
+                          <control id="Component31bd3be" uniqueid="{d24078cc-54c3-3444-2e5d-c3a4ca605907}" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                            <parameters>
+                              <TargetEntityType>educ_assignment</TargetEntityType>
+                              <ChartGridMode>Grid</ChartGridMode>
+                              <EnableQuickFind>false</EnableQuickFind>
+                              <EnableViewPicker>true</EnableViewPicker>
+                              <EnableJumpBar>false</EnableJumpBar>
+                              <RecordsPerPage>21</RecordsPerPage>
+                              <HeaderColorCode>#F5F6F9</HeaderColorCode>
+                              <ViewId>{52DE08DD-CD7C-E911-B80A-005056833C5B}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds>{52DE08DD-CD7C-E911-B80A-005056833C5B}</ViewIds>
+                              <AutoExpand>Fixed</AutoExpand>
+                              <VisualizationId>{8A2A7D79-5B7B-E911-B80A-005056833C5B}</VisualizationId>
+                              <IsUserChart>false</IsUserChart>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RelationshipName />
+                            </parameters>
+                          </control>
+                        </cell>
+                      </row>
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row>
+                        <cell colspan="1" rowspan="12" showlabel="false" id="{a69ce266-ce3c-415f-9fdc-a8dfaeb693d7}" auto="false">
+                          <labels>
+                            <label description="Assignment" languagecode="1033" />
+                          </labels>
+                          <control id="Component2b626d3" uniqueid="{16a1b88c-96b9-a7cd-6cb3-bb10e338a649}" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                            <parameters>
+                              <TargetEntityType>educ_assignment</TargetEntityType>
+                              <ChartGridMode>Chart</ChartGridMode>
+                              <EnableQuickFind>false</EnableQuickFind>
+                              <EnableViewPicker>false</EnableViewPicker>
+                              <EnableJumpBar>false</EnableJumpBar>
+                              <RecordsPerPage>12</RecordsPerPage>
+                              <HeaderColorCode>#F5F6F9</HeaderColorCode>
+                              <ViewId>{52DE08DD-CD7C-E911-B80A-005056833C5B}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds>{0280E5C5-9457-48D0-B005-0818E08E6A0D}</ViewIds>
+                              <AutoExpand>Fixed</AutoExpand>
+                              <VisualizationId>{D63BB879-D07C-E911-B80A-005056833C5B}</VisualizationId>
+                              <IsUserChart>false</IsUserChart>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RelationshipName />
+                            </parameters>
+                          </control>
+                        </cell>
+                      </row>
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                    </rows>
+                  </section>
+                </sections>
+              </column>
+            </columns>
+          </tab>
+        </tabs>
+        <controlDescriptions />
+        <DisplayConditions FallbackForm="true">
+          <Everyone />
+        </DisplayConditions>
+      </form>
+    </forms>
+  </FormXml>
+  <IntroducedVersion>0.0.1.0</IntroducedVersion>
+  <IsTabletEnabled>0</IsTabletEnabled>
+</Dashboard>

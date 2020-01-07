@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{535e5e17-8705-43df-b784-eeac46ac5605}</savedqueryid>
+    <layoutxml>
+      <grid name="" jump="educ_name" select="1" icon="1" preview="0">
+        <row name="educ_schoollist" id="educ_schoollistid">
+          <cell name="educ_name" width="300" />
+          <cell name="educ_schoolcode" width="100" />
+          <cell name="educ_schoolcity" width="100" />
+          <cell name="createdby" width="100" />
+          <cell name="modifiedby" width="100" />
+          <cell name="modifiedon" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>64</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="educ_schoollist">
+          <attribute name="educ_schoollistid" />
+          <attribute name="educ_name" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <order attribute="educ_name" descending="false" />
+          <attribute name="educ_schoolcode" />
+          <attribute name="educ_schoolcity" />
+          <attribute name="modifiedon" />
+          <attribute name="modifiedby" />
+          <attribute name="createdby" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.1</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="School List Lookup View" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

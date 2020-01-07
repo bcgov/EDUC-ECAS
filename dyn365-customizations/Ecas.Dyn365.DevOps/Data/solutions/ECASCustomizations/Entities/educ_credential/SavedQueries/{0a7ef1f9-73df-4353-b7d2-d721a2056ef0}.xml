@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{0a7ef1f9-73df-4353-b7d2-d721a2056ef0}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" preview="1" icon="1" select="1" jump="educ_name">
+        <row id="educ_credentialid" name="result">
+          <cell name="educ_contact" imageproviderwebresource="$webresource:" imageproviderfunctionname="" width="200" />
+          <cell name="a_5486de549f62e911b80a005056833c5b.address1_composite" width="100" disableSorting="1" />
+          <cell name="a_5486de549f62e911b80a005056833c5b.address1_city" width="100" disableSorting="1" />
+          <cell name="a_5486de549f62e911b80a005056833c5b.emailaddress1" width="100" disableSorting="1" />
+          <cell name="educ_credential" imageproviderwebresource="$webresource:" imageproviderfunctionname="" width="200" />
+          <cell name="educ_verifiedcredential" width="100" />
+          <cell name="educ_credentialsyear" width="100" />
+          <cell name="createdby" width="100" />
+          <cell name="modifiedby" width="100" />
+          <cell name="modifiedon" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch mapping="logical" version="1.0">
+        <entity name="educ_credential">
+          <order descending="false" attribute="educ_contact" />
+          <filter type="and">
+            <condition value="1" attribute="statecode" operator="eq" />
+          </filter>
+          <attribute name="modifiedon" />
+          <attribute name="modifiedby" />
+          <attribute name="educ_credential" />
+          <attribute name="createdby" />
+          <attribute name="educ_contact" />
+          <link-entity alias="a_5486de549f62e911b80a005056833c5b" name="contact" from="contactid" to="educ_contact" link-type="outer" visible="false">
+            <attribute name="emailaddress1" />
+            <attribute name="address1_city" />
+            <attribute name="address1_composite" />
+          </link-entity>
+          <attribute name="educ_verifiedcredential" />
+          <attribute name="educ_credentialsyear" />
+          <attribute name="educ_credentialid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.1</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Inactive Credentials" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

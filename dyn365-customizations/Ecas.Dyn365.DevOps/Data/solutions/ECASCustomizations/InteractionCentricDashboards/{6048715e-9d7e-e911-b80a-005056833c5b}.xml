@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<InteractionCentricDashboard>
+  <LocalizedNames>
+    <LocalizedName description="Active Sessions and their Assignments" languagecode="1033" />
+  </LocalizedNames>
+  <FormId>{6048715e-9d7e-e911-b80a-005056833c5b}</FormId>
+  <IsCustomizable>1</IsCustomizable>
+  <IsDefault>0</IsDefault>
+  <FormXml>
+    <forms type="interactioncentricdashboard">
+      <form>
+        <tabs filterby="createdon" timeframe="7" primaryentitylogicalname="educ_assignment" entityview="{52DE08DD-CD7C-E911-B80A-005056833C5B}" dashboardCategory="1_0" tilespresent="false">
+          <tab showlabel="true" verticallayout="true" collapsible="true" id="{81d01567-f964-4841-a06d-c3cc2e2e06c6}">
+            <labels>
+              <label description="Visual Filters" languagecode="1033" />
+            </labels>
+            <columns>
+              <column width="100%">
+                <sections>
+                  <section name="VisualFilters" showlabel="false" showbar="false" columns="111" id="{87d1ec44-9f23-4af5-b27e-f4ece33812a6}">
+                    <labels>
+                      <label description="Section" languagecode="1033" />
+                    </labels>
+                    <rows>
+                      <row>
+                        <cell colspan="1" rowspan="12" showlabel="false" ischartcell="true" id="{df3108d1-9e46-428f-9c3a-68db9dcab679}" auto="false">
+                          <labels>
+                            <label description="Assignment" languagecode="1033" />
+                          </labels>
+                          <control id="Component8c6f91b" uniqueid="{6dcaa8dd-e761-836c-e144-383885e04177}" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                            <parameters>
+                              <TargetEntityType>educ_assignment</TargetEntityType>
+                              <ChartGridMode>Chart</ChartGridMode>
+                              <EnableQuickFind>false</EnableQuickFind>
+                              <EnableViewPicker>false</EnableViewPicker>
+                              <EnableJumpBar>false</EnableJumpBar>
+                              <RecordsPerPage>10</RecordsPerPage>
+                              <HeaderColorCode />
+                              <ViewId>{52DE08DD-CD7C-E911-B80A-005056833C5B}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds />
+                              <AutoExpand>Fixed</AutoExpand>
+                              <VisualizationId>{D63BB879-D07C-E911-B80A-005056833C5B}</VisualizationId>
+                              <IsUserChart>false</IsUserChart>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RelationshipName />
+                            </parameters>
+                          </control>
+                        </cell>
+                        <cell colspan="1" rowspan="12" showlabel="false" ischartcell="true" id="{4a48c742-38f1-44a6-bd23-669a0e9497fa}" auto="false">
+                          <labels>
+                            <label description="Assignment" languagecode="1033" />
+                          </labels>
+                          <control id="Componentce3027c" uniqueid="{70a5a780-4a51-e14c-b460-20241b656d10}" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                            <parameters>
+                              <TargetEntityType>educ_assignment</TargetEntityType>
+                              <ChartGridMode>Chart</ChartGridMode>
+                              <EnableQuickFind>false</EnableQuickFind>
+                              <EnableViewPicker>false</EnableViewPicker>
+                              <EnableJumpBar>false</EnableJumpBar>
+                              <RecordsPerPage>10</RecordsPerPage>
+                              <HeaderColorCode />
+                              <ViewId>{52DE08DD-CD7C-E911-B80A-005056833C5B}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds />
+                              <AutoExpand>Fixed</AutoExpand>
+                              <VisualizationId>{8A2A7D79-5B7B-E911-B80A-005056833C5B}</VisualizationId>
+                              <IsUserChart>false</IsUserChart>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RelationshipName />
+                            </parameters>
+                          </control>
+                        </cell>
+                        <cell colspan="1" rowspan="12" showlabel="false" ischartcell="true" id="{e74081ce-5490-431f-97be-6cebc93e66df}" auto="false">
+                          <labels>
+                            <label description="Assignments" languagecode="1033" />
+                          </labels>
+                          <control id="Component9aa5a55" uniqueid="{5635ea59-583c-47a6-c190-2ad01a97e10a}" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                            <parameters>
+                              <TargetEntityType>educ_assignment</TargetEntityType>
+                              <ChartGridMode>Chart</ChartGridMode>
+                              <EnableQuickFind>false</EnableQuickFind>
+                              <EnableViewPicker>false</EnableViewPicker>
+                              <EnableJumpBar>false</EnableJumpBar>
+                              <RecordsPerPage>10</RecordsPerPage>
+                              <HeaderColorCode />
+                              <ViewId>{52DE08DD-CD7C-E911-B80A-005056833C5B}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds />
+                              <AutoExpand>Fixed</AutoExpand>
+                              <VisualizationId>{5A531EF1-8A97-E911-B80C-005056833C5B}</VisualizationId>
+                              <IsUserChart>false</IsUserChart>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RelationshipName />
+                            </parameters>
+                          </control>
+                        </cell>
+                      </row>
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                    </rows>
+                  </section>
+                </sections>
+              </column>
+            </columns>
+          </tab>
+          <tab name="StreamsContainer" showlabel="true" verticallayout="true" collapsible="false" id="{836af9e5-9e55-4078-ba2b-fbc89077e882}">
+            <labels>
+              <label description="Streams" languagecode="1033" />
+            </labels>
+            <columns>
+              <column width="100%">
+                <sections>
+                  <section name="Streams" showlabel="false" showbar="false" columns="1111" id="{d5a41ab9-6dc5-491e-93a4-655515f02e5a}">
+                    <labels>
+                      <label description="Section" languagecode="1033" />
+                    </labels>
+                    <rows>
+                      <row>
+                        <cell colspan="4" rowspan="12" showlabel="false" isstreamcell="true" id="{0b7adcea-3e63-481f-83d3-1b32ea49b3b1}">
+                          <labels>
+                            <label description="" languagecode="1033" />
+                          </labels>
+                          <control id="Component{769b393c-7a25-3a5d-2222-c299de586e81}" classid="{EE9078C8-6946-4E2C-B8F8-35E65F4BE6A8}">
+                            <parameters>
+                              <StreamObjects>
+                                <ShowAsTiles>false</ShowAsTiles>
+                                <StreamObject id="{b094075b-6668-1da3-ac4a-c7191a33362a}" type="1">
+                                  <LogicalEntityName>educ_assignment</LogicalEntityName>
+                                  <EntityViewId>{52de08dd-cd7c-e911-b80a-005056833c5b}</EntityViewId>
+                                </StreamObject>
+                                <StreamObject id="{c64ea69b-ea28-24a5-93c7-396d8de9c0a5}" type="1">
+                                  <LogicalEntityName>educ_assignment</LogicalEntityName>
+                                  <EntityViewId>{A6571D9A-D45C-E911-A980-000D3AF475A9}</EntityViewId>
+                                </StreamObject>
+                                <StreamObject id="{56198425-9be1-b94d-7d22-7b26150c7dae}" type="1">
+                                  <LogicalEntityName>educ_assignment</LogicalEntityName>
+                                  <EntityViewId>{ADA19DCA-5723-4A0A-B299-E8E2FB6A354F}</EntityViewId>
+                                </StreamObject>
+                              </StreamObjects>
+                            </parameters>
+                          </control>
+                        </cell>
+                      </row>
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                    </rows>
+                  </section>
+                </sections>
+              </column>
+            </columns>
+          </tab>
+        </tabs>
+        <DisplayConditions FallbackForm="true">
+          <Everyone />
+        </DisplayConditions>
+      </form>
+    </forms>
+  </FormXml>
+  <IntroducedVersion>0.0.1.5</IntroducedVersion>
+  <IsTabletEnabled>0</IsTabletEnabled>
+</InteractionCentricDashboard>

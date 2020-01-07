@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WebResource>
+  <WebResourceId>{abddfe66-4fa0-e911-b80c-005056833c5b}</WebResourceId>
+  <Name>educ_expense.js</Name>
+  <DisplayName>educ_expense.js</DisplayName>
+  <WebResourceType>3</WebResourceType>
+  <IntroducedVersion>0.0.1.6</IntroducedVersion>
+  <IsEnabledForMobileClient>0</IsEnabledForMobileClient>
+  <IsAvailableForMobileOffline>0</IsAvailableForMobileOffline>
+  <DependencyXml>&lt;Dependencies&gt;&lt;Dependency componentType="WebResource"/&gt;&lt;/Dependencies&gt;</DependencyXml>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>1</CanBeDeleted>
+  <IsHidden>0</IsHidden>
+  <FileName>/WebResources/educ_expensejsABDDFE66-4FA0-E911-B80C-005056833C5B</FileName>
+</WebResource>

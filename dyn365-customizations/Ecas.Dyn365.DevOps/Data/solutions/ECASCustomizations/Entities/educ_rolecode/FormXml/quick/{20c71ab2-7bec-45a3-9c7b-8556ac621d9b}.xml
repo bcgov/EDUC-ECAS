@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms>
+  <systemform>
+    <formid>{20c71ab2-7bec-45a3-9c7b-8556ac621d9b}</formid>
+    <IntroducedVersion>0.0.2.1</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form maxWidth="400">
+      <tabs>
+        <tab id="{eb7d1fe4-8970-4635-96c0-1b54bc7fe402}" name="tab_1" showlabel="false">
+          <labels>
+            <label description="Tab" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="{3272252a-f78f-4831-b009-b4421d74b3cc}" name="tab_1_column_1_section_1" columns="1" showlabel="false" showbar="false" IsUserDefined="0">
+                  <labels>
+                    <label description="section" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{9e92d5cd-b2dd-328c-74ed-01e85eb1600b}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Rate" languagecode="1033" />
+                        </labels>
+                        <control id="educ_rolerate" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="educ_rolerate" disabled="false" uniqueid="{617a8cc7-0bcb-e8eb-1907-767db93bbdd4}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <DisplayConditions Order="1">
+        <Role Id="{627090ff-40a3-4053-8790-584edc5be201}" />
+        <Role Id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />
+      </DisplayConditions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Role Rate View" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Displays the Rate for the selected role in the Assignment View" languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

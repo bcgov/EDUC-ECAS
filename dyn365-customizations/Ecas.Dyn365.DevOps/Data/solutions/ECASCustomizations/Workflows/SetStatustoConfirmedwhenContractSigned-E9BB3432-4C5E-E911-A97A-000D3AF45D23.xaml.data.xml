@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Workflow WorkflowId="{e9bb3432-4c5e-e911-a97a-000d3af45d23}" Name="Set Status to Confirmed when Contract Signed" Description="If Contract Stage is updated to Signed AND Contract Approved By has a value then update the record status.">
+  <XamlFileName>/Workflows/SetStatustoConfirmedwhenContractSigned-E9BB3432-4C5E-E911-A97A-000D3AF45D23.xaml</XamlFileName>
+  <Type>1</Type>
+  <Subprocess>0</Subprocess>
+  <Category>2</Category>
+  <Mode>1</Mode>
+  <Scope>4</Scope>
+  <OnDemand>0</OnDemand>
+  <TriggerOnCreate>0</TriggerOnCreate>
+  <TriggerOnDelete>0</TriggerOnDelete>
+  <AsyncAutodelete>0</AsyncAutodelete>
+  <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+  <StateCode>1</StateCode>
+  <StatusCode>2</StatusCode>
+  <RunAs>1</RunAs>
+  <IsTransacted>1</IsTransacted>
+  <IntroducedVersion>0.0.0.7</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <BusinessProcessType>0</BusinessProcessType>
+  <PrimaryEntity>educ_assignment</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName languagecode="1033" description="Set Status to Confirmed when Contract Signed" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description languagecode="1033" description="If Contract Stage is updated to Signed AND Contract Approved By has a value then update the record status." />
+  </Descriptions>
+  <ProcessTriggers>
+    <ProcessTrigger processtriggerid="{177c4128-eedf-e911-b80e-005056833c5b}">
+      <controltype>1</controltype>
+      <scope>2</scope>
+      <controlname>educ_contractstage</controlname>
+      <event>change</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_assignment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{187c4128-eedf-e911-b80e-005056833c5b}">
+      <scope>2</scope>
+      <event>load</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_assignment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{197c4128-eedf-e911-b80e-005056833c5b}">
+      <controltype>1</controltype>
+      <scope>2</scope>
+      <controlname>statuscode</controlname>
+      <event>change</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_assignment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{1a7c4128-eedf-e911-b80e-005056833c5b}">
+      <scope>2</scope>
+      <event>load</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>educ_assignment</primaryentitytypecode>
+    </ProcessTrigger>
+  </ProcessTriggers>
+</Workflow>

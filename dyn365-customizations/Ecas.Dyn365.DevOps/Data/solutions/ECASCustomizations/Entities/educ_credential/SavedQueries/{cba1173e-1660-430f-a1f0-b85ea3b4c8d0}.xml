@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{cba1173e-1660-430f-a1f0-b85ea3b4c8d0}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" preview="1" icon="1" select="1" jump="educ_name">
+        <row id="educ_credentialid" name="result">
+          <cell name="educ_contact" imageproviderwebresource="$webresource:" imageproviderfunctionname="" width="200" />
+          <cell name="educ_credential" imageproviderwebresource="$webresource:" imageproviderfunctionname="" width="200" />
+          <cell name="educ_verifiedcredential" width="100" />
+          <cell name="educ_credentialsyear" width="100" />
+          <cell name="createdby" width="100" />
+          <cell name="modifiedby" width="100" />
+          <cell name="modifiedon" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>1</querytype>
+    <fetchxml>
+      <fetch mapping="logical" version="1.0">
+        <entity name="educ_credential">
+          <order descending="false" attribute="educ_contact" />
+          <attribute name="modifiedon" />
+          <attribute name="modifiedby" />
+          <attribute name="educ_credential" />
+          <attribute name="createdby" />
+          <attribute name="educ_contact" />
+          <attribute name="educ_verifiedcredential" />
+          <attribute name="educ_credentialsyear" />
+          <attribute name="educ_credentialid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.1</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Credential Advanced Find View" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

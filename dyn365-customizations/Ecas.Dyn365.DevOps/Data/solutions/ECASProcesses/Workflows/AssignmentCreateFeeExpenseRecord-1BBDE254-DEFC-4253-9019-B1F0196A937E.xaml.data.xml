@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Workflow WorkflowId="{1bbde254-defc-4253-9019-b1f0196a937e}" Name="Assignment: Create Fee Expense Record">
+  <XamlFileName>/Workflows/AssignmentCreateFeeExpenseRecord-1BBDE254-DEFC-4253-9019-B1F0196A937E.xaml</XamlFileName>
+  <Type>1</Type>
+  <Subprocess>0</Subprocess>
+  <Category>0</Category>
+  <Mode>1</Mode>
+  <Scope>4</Scope>
+  <OnDemand>0</OnDemand>
+  <TriggerOnUpdateAttributeList>statuscode</TriggerOnUpdateAttributeList>
+  <TriggerOnCreate>0</TriggerOnCreate>
+  <TriggerOnDelete>0</TriggerOnDelete>
+  <AsyncAutodelete>1</AsyncAutodelete>
+  <SyncWorkflowLogOnFailure>1</SyncWorkflowLogOnFailure>
+  <StateCode>1</StateCode>
+  <StatusCode>2</StatusCode>
+  <UpdateStage>40</UpdateStage>
+  <RunAs>1</RunAs>
+  <IsTransacted>1</IsTransacted>
+  <IntroducedVersion>0.0.0.1</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <PrimaryEntity>educ_assignment</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName languagecode="1033" description="Assignment: Create Fee Expense Record" />
+  </LocalizedNames>
+  <labels>
+    <steplabels id="{723f0385-de19-427c-bfe9-9ce74096d61d}">
+      <label languagecode="1033" description="Fee record already created" />
+    </steplabels>
+    <steplabels id="{fe7fbe35-36bc-42a7-9554-e70eb218cbc2}">
+      <label languagecode="1033" description="Fee Expense Created" />
+    </steplabels>
+    <steplabels id="{56addbfe-6f0d-492d-8b6f-bdb07f0e67bb}">
+      <label languagecode="1033" description="No Fee record created" />
+    </steplabels>
+  </labels>
+</Workflow>

@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms>
+  <systemform>
+    <formid>{184f46be-510b-4cae-b102-01dc69b648f9}</formid>
+    <IntroducedVersion>0.0.0.7</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form maxWidth="400">
+      <tabs>
+        <tab id="{73a5266f-ae74-443c-8f79-9c61e0d7a666}" name="tab_1" showlabel="false">
+          <labels>
+            <label description="Tab" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="{3c951927-99fa-4348-a52b-02ef2c290e31}" name="tab_1_column_1_section_1" showlabel="false" IsUserDefined="0" showbar="true" columns="1" locklevel="0" labelwidth="130" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="section" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{d2d19bee-6246-95ae-2a69-e387a5b7bc3a}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Professional Certificate (BC)" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="educ_professionalcertificatebc" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_professionalcertificatebc" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{de570ca7-77a5-93dc-dcd2-7a51aebd149b}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Professional Certificate (BC) Verified" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="educ_professionalcertificatebcverified" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="educ_professionalcertificatebcverified" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+                <section id="{e2a15210-6db0-62c2-054d-c7b1e6123e9a}" name="tab_1_section_2" showlabel="false" IsUserDefined="0" showbar="true" columns="1" locklevel="0" labelwidth="115" celllabelalignment="Left" celllabelposition="Left" layout="varwidth">
+                  <labels>
+                    <label description="Section" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{9443642d-21b0-dba3-a3e4-add59b9c2581}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Professional Certificate (YK)" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="educ_professionalcertificateyk" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_professionalcertificateyk" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{5ec9cb0b-36a3-a172-d335-1093d5706de4}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Professional Certificate (YK) Verified" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="educ_professionalcertificateykverified" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="educ_professionalcertificateykverified" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <DisplayConditions Order="4">
+        <Role Id="{627090ff-40a3-4053-8790-584edc5be201}" />
+        <Role Id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />
+      </DisplayConditions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="ECAS Contact Certifications" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Shows the Contractors certifications and verfifications" languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

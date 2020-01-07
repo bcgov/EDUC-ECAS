@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{eff928ab-3c08-4cf0-9eff-a80962b0e60b}</savedqueryid>
+    <layoutxml>
+      <grid name="" jump="educ_name" select="1" icon="1" preview="0">
+        <row name="educ_rolecode" id="educ_rolecodeid">
+          <cell name="educ_name" width="300" />
+          <cell name="educ_rolecode" width="100" />
+          <cell name="educ_rolerate" width="100" />
+          <cell name="createdby" width="100" />
+          <cell name="createdon" width="125" />
+          <cell name="modifiedby" width="100" />
+          <cell name="modifiedon" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>64</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="educ_rolecode">
+          <attribute name="educ_rolecodeid" />
+          <attribute name="educ_name" />
+          <attribute name="createdon" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <order attribute="educ_name" descending="false" />
+          <attribute name="educ_rolerate" />
+          <attribute name="educ_rolecode" />
+          <attribute name="createdby" />
+          <attribute name="modifiedon" />
+          <attribute name="modifiedby" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.3</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Role Code Lookup View" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

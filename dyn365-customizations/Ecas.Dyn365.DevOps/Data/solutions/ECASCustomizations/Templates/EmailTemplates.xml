@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EmailTemplates>
+  <emailtemplate>
+    <IsCustomizable>1</IsCustomizable>
+    <templateid>{0d3eb7cb-095e-e911-a97a-000d3af45d23}</templateid>
+    <subject></subject>
+    <subjectpresentationxml></subjectpresentationxml>
+    <templatetypecode>8</templatetypecode>
+    <body></body>
+    <title>Assignment: Invite Contact to Session</title>
+    <presentationxml></presentationxml>
+    <languagecode>1033</languagecode>
+    <generationtypecode>0</generationtypecode>
+    <IntroducedVersion>0.0.0.7</IntroducedVersion>
+  </emailtemplate>
+</EmailTemplates>

@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>1</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{38ab7396-4614-408e-a801-49f5b98e1c93}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="educ_name" select="1" icon="1" preview="1">
+        <row name="result" id="educ_rolecodeid">
+          <cell name="educ_name" width="300" />
+          <cell name="educ_rolecode" width="100" />
+          <cell name="educ_rolerate" width="100" />
+          <cell name="createdby" width="100" />
+          <cell name="createdon" width="125" />
+          <cell name="modifiedby" width="100" />
+          <cell name="modifiedon" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>4</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="educ_rolecode">
+          <attribute name="educ_name" />
+          <attribute name="createdon" />
+          <order attribute="educ_name" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <filter type="or" isquickfindfields="1">
+            <condition attribute="educ_name" operator="like" value="{0}" />
+            <condition attribute="educ_rolecode" operator="like" value="{0}" />
+          </filter>
+          <attribute name="educ_rolerate" />
+          <attribute name="educ_rolecode" />
+          <attribute name="createdby" />
+          <attribute name="modifiedon" />
+          <attribute name="modifiedby" />
+          <attribute name="educ_rolecodeid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.3</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Quick Find Active Role Codes" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

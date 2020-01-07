@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>1</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{7b14430b-698b-4d61-91e6-421ea6f8f97d}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="educ_name" select="1" icon="1" preview="1">
+        <row name="result" id="educ_expensecodeid">
+          <cell name="educ_name" width="300" />
+          <cell name="educ_expensecode" width="100" />
+          <cell name="educ_receiptrequired" width="100" />
+          <cell name="educ_receiptlimit" width="100" />
+          <cell name="educ_rate" width="100" />
+          <cell name="statecode" width="100" />
+          <cell name="createdby" width="100" />
+          <cell name="modifiedby" width="100" />
+          <cell name="modifiedon" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>4</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="educ_expensecode">
+          <attribute name="educ_name" />
+          <order attribute="educ_name" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <filter type="or" isquickfindfields="1">
+            <condition attribute="educ_name" operator="like" value="{0}" />
+            <condition attribute="educ_expensecode" operator="like" value="{0}" />
+          </filter>
+          <attribute name="statecode" />
+          <attribute name="educ_receiptrequired" />
+          <attribute name="educ_receiptlimit" />
+          <attribute name="educ_rate" />
+          <attribute name="educ_expensecode" />
+          <attribute name="createdby" />
+          <attribute name="modifiedon" />
+          <attribute name="modifiedby" />
+          <attribute name="educ_expensecodeid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.7</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Quick Find Active Expense Codes" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

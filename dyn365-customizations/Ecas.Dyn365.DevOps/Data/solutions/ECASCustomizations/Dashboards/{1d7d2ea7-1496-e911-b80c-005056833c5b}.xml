@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <LocalizedNames>
+    <LocalizedName description="Credential Dashboard" languagecode="1033" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description description="Filter and search contacts credentials" languagecode="1033" />
+  </Descriptions>
+  <FormId>{1d7d2ea7-1496-e911-b80c-005056833c5b}</FormId>
+  <IsCustomizable>1</IsCustomizable>
+  <IsDefault>0</IsDefault>
+  <FormXml>
+    <forms type="dashboard">
+      <form>
+        <tabs>
+          <tab showlabel="false" verticallayout="true" id="{a80f8e65-fd02-4ee2-9302-eead3e62524d}">
+            <labels>
+              <label description="Tab" languagecode="1033" />
+            </labels>
+            <columns>
+              <column width="100%">
+                <sections>
+                  <section showlabel="false" showbar="false" columns="1111" id="{86ef8c7b-9871-48ba-868d-3dd01079ad32}">
+                    <labels>
+                      <label description="Section" languagecode="1033" />
+                    </labels>
+                    <rows>
+                      <row>
+                        <cell colspan="1" rowspan="21" showlabel="false" id="{fe810735-cb74-4b60-a123-96854bf7946d}" auto="false">
+                          <labels>
+                            <label description="Credential" languagecode="1033" />
+                          </labels>
+                          <control id="Component338c31b" uniqueid="{2aa154bb-665b-c2c8-e179-245a668475cd}" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                            <parameters>
+                              <TargetEntityType>educ_credential</TargetEntityType>
+                              <ChartGridMode>Chart</ChartGridMode>
+                              <EnableQuickFind>false</EnableQuickFind>
+                              <EnableViewPicker>true</EnableViewPicker>
+                              <EnableJumpBar>false</EnableJumpBar>
+                              <RecordsPerPage>19</RecordsPerPage>
+                              <HeaderColorCode>#F5F6F9</HeaderColorCode>
+                              <ViewId>{DAF31B64-CA7B-4563-ADD3-641546AF0701}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds>{DAF31B64-CA7B-4563-ADD3-641546AF0701},{0A7EF1F9-73DF-4353-B7D2-D721A2056EF0}</ViewIds>
+                              <AutoExpand>Fixed</AutoExpand>
+                              <VisualizationId>{D9BAD351-1396-E911-B80C-005056833C5B}</VisualizationId>
+                              <IsUserChart>false</IsUserChart>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RelationshipName />
+                            </parameters>
+                          </control>
+                        </cell>
+                        <cell colspan="3" rowspan="24" showlabel="false" id="{1d16a22d-542d-4823-91df-719b2bc1ad54}" auto="false">
+                          <labels>
+                            <label description="Credentials" languagecode="1033" />
+                          </labels>
+                          <control id="Component7185075" uniqueid="{b1cd0d0c-5bb5-2132-dee4-3dc71794dd41}" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                            <parameters>
+                              <TargetEntityType>educ_credential</TargetEntityType>
+                              <ChartGridMode>Grid</ChartGridMode>
+                              <EnableQuickFind>true</EnableQuickFind>
+                              <EnableViewPicker>true</EnableViewPicker>
+                              <EnableJumpBar>true</EnableJumpBar>
+                              <RecordsPerPage>20</RecordsPerPage>
+                              <HeaderColorCode>#F5F6F9</HeaderColorCode>
+                              <ViewId>{DAF31B64-CA7B-4563-ADD3-641546AF0701}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds>{DAF31B64-CA7B-4563-ADD3-641546AF0701},{0A7EF1F9-73DF-4353-B7D2-D721A2056EF0}</ViewIds>
+                              <AutoExpand>Fixed</AutoExpand>
+                              <VisualizationId>{D9BAD351-1396-E911-B80C-005056833C5B}</VisualizationId>
+                              <IsUserChart>false</IsUserChart>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RelationshipName />
+                            </parameters>
+                          </control>
+                        </cell>
+                      </row>
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row>
+                        <cell id="{55a8b726-7e42-57a8-e722-5531b654b15b}" showlabel="false">
+                          <labels>
+                            <label description="" languagecode="1033" />
+                          </labels>
+                        </cell>
+                      </row>
+                      <row>
+                        <cell id="{359edb03-d13b-e115-b911-8139a02859c3}" showlabel="false">
+                          <labels>
+                            <label description="" languagecode="1033" />
+                          </labels>
+                        </cell>
+                      </row>
+                      <row>
+                        <cell id="{ab7e5c00-8dc0-576d-5039-dc65128857e2}" showlabel="false">
+                          <labels>
+                            <label description="" languagecode="1033" />
+                          </labels>
+                        </cell>
+                      </row>
+                    </rows>
+                  </section>
+                </sections>
+              </column>
+            </columns>
+          </tab>
+        </tabs>
+        <controlDescriptions />
+      </form>
+    </forms>
+  </FormXml>
+  <IntroducedVersion>0.0.1.5</IntroducedVersion>
+  <IsTabletEnabled>0</IsTabletEnabled>
+</Dashboard>

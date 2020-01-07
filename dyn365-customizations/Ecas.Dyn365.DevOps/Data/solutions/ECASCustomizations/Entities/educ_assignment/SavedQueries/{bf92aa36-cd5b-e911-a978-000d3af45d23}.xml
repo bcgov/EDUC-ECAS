@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{bf92aa36-cd5b-e911-a978-000d3af45d23}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="educ_name" select="1" preview="1" icon="1">
+        <row id="educ_assignmentid" name="result">
+          <cell name="educ_name" width="100" />
+          <cell name="educ_session" imageproviderwebresource="$webresource:" imageproviderfunctionname="" width="125" />
+          <cell name="educ_attendancedays" width="100" />
+          <cell name="educ_role" width="100" />
+          <cell name="statuscode" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical">
+        <entity name="educ_assignment">
+          <order attribute="educ_attendancedays" descending="false" />
+          <attribute name="statuscode" />
+          <attribute name="educ_session" />
+          <attribute name="educ_role" />
+          <attribute name="educ_attendancedays" />
+          <attribute name="educ_name" />
+          <attribute name="educ_assignmentid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.7</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="All Related Assignments" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

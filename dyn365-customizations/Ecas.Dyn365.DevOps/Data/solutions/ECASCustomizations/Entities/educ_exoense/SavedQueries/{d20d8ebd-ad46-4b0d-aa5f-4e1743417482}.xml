@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{d20d8ebd-ad46-4b0d-aa5f-4e1743417482}</savedqueryid>
+    <layoutxml>
+      <grid name="" jump="educ_name" select="1" icon="1" preview="0">
+        <row name="educ_exoense" id="educ_exoenseid">
+          <cell name="educ_name" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="educ_assignment" width="100" />
+          <cell name="educ_quantity" width="100" />
+          <cell name="educ_amount" width="100" />
+          <cell name="statuscode" width="100" />
+          <cell name="educ_description" width="100" />
+          <cell name="educ_payment" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>64</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="educ_exoense">
+          <attribute name="educ_exoenseid" />
+          <attribute name="educ_name" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <order attribute="educ_assignment" descending="false" />
+          <attribute name="statuscode" />
+          <attribute name="educ_quantity" />
+          <attribute name="educ_payment" />
+          <attribute name="educ_description" />
+          <attribute name="educ_amount" />
+          <attribute name="educ_assignment" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.7</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Expense Lookup View" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

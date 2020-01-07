@@ -1,0 +1,853 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ImportExportXml version="9.0.2.3034" SolutionPackageVersion="9.0" languagecode="1033" generatedBy="OnPremise" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SolutionManifest>
+    <UniqueName>ECASProcesses</UniqueName>
+    <LocalizedNames>
+      <LocalizedName description="ECAS Processes" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions />
+    <Version>0.0.1.5</Version>
+    <Managed>2</Managed>
+    <Publisher>
+      <UniqueName>quartech</UniqueName>
+      <LocalizedNames>
+        <LocalizedName description="Quartech Systems" languagecode="1033" />
+      </LocalizedNames>
+      <Descriptions />
+      <EMailAddress xsi:nil="true"></EMailAddress>
+      <SupportingWebsiteUrl xsi:nil="true"></SupportingWebsiteUrl>
+      <CustomizationPrefix>educ</CustomizationPrefix>
+      <CustomizationOptionValuePrefix>61041</CustomizationOptionValuePrefix>
+      <Addresses>
+        <Address>
+          <AddressNumber>1</AddressNumber>
+          <AddressTypeCode>1</AddressTypeCode>
+          <City xsi:nil="true"></City>
+          <County xsi:nil="true"></County>
+          <Country xsi:nil="true"></Country>
+          <Fax xsi:nil="true"></Fax>
+          <FreightTermsCode xsi:nil="true"></FreightTermsCode>
+          <ImportSequenceNumber xsi:nil="true"></ImportSequenceNumber>
+          <Latitude xsi:nil="true"></Latitude>
+          <Line1 xsi:nil="true"></Line1>
+          <Line2 xsi:nil="true"></Line2>
+          <Line3 xsi:nil="true"></Line3>
+          <Longitude xsi:nil="true"></Longitude>
+          <Name xsi:nil="true"></Name>
+          <PostalCode xsi:nil="true"></PostalCode>
+          <PostOfficeBox xsi:nil="true"></PostOfficeBox>
+          <PrimaryContactName xsi:nil="true"></PrimaryContactName>
+          <ShippingMethodCode>1</ShippingMethodCode>
+          <StateOrProvince xsi:nil="true"></StateOrProvince>
+          <Telephone1 xsi:nil="true"></Telephone1>
+          <Telephone2 xsi:nil="true"></Telephone2>
+          <Telephone3 xsi:nil="true"></Telephone3>
+          <TimeZoneRuleVersionNumber xsi:nil="true"></TimeZoneRuleVersionNumber>
+          <UPSZone xsi:nil="true"></UPSZone>
+          <UTCOffset xsi:nil="true"></UTCOffset>
+          <UTCConversionTimeZoneCode xsi:nil="true"></UTCConversionTimeZoneCode>
+        </Address>
+        <Address>
+          <AddressNumber>2</AddressNumber>
+          <AddressTypeCode>1</AddressTypeCode>
+          <City xsi:nil="true"></City>
+          <County xsi:nil="true"></County>
+          <Country xsi:nil="true"></Country>
+          <Fax xsi:nil="true"></Fax>
+          <FreightTermsCode xsi:nil="true"></FreightTermsCode>
+          <ImportSequenceNumber xsi:nil="true"></ImportSequenceNumber>
+          <Latitude xsi:nil="true"></Latitude>
+          <Line1 xsi:nil="true"></Line1>
+          <Line2 xsi:nil="true"></Line2>
+          <Line3 xsi:nil="true"></Line3>
+          <Longitude xsi:nil="true"></Longitude>
+          <Name xsi:nil="true"></Name>
+          <PostalCode xsi:nil="true"></PostalCode>
+          <PostOfficeBox xsi:nil="true"></PostOfficeBox>
+          <PrimaryContactName xsi:nil="true"></PrimaryContactName>
+          <ShippingMethodCode>1</ShippingMethodCode>
+          <StateOrProvince xsi:nil="true"></StateOrProvince>
+          <Telephone1 xsi:nil="true"></Telephone1>
+          <Telephone2 xsi:nil="true"></Telephone2>
+          <Telephone3 xsi:nil="true"></Telephone3>
+          <TimeZoneRuleVersionNumber xsi:nil="true"></TimeZoneRuleVersionNumber>
+          <UPSZone xsi:nil="true"></UPSZone>
+          <UTCOffset xsi:nil="true"></UTCOffset>
+          <UTCConversionTimeZoneCode xsi:nil="true"></UTCConversionTimeZoneCode>
+        </Address>
+      </Addresses>
+    </Publisher>
+    <RootComponents>
+      <RootComponent type="29" id="{00c79ecb-54e7-4b71-8dc4-619c23c17cb2}" behavior="0" />
+      <RootComponent type="29" id="{17cc58d8-e8a6-4a7e-b457-9758c3eb0b8a}" behavior="0" />
+      <RootComponent type="29" id="{1b1b012a-8039-434e-80fe-bdbf9e5e1ad6}" behavior="0" />
+      <RootComponent type="29" id="{1bbde254-defc-4253-9019-b1f0196a937e}" behavior="0" />
+      <RootComponent type="29" id="{27da29de-989e-4fd5-95fd-f46b900fcfac}" behavior="0" />
+      <RootComponent type="29" id="{2e12d76e-cbc5-43a3-9f2b-0f2ce0218a3b}" behavior="0" />
+      <RootComponent type="29" id="{32534e0e-7482-4f42-9bd8-56c6d75f5951}" behavior="0" />
+      <RootComponent type="29" id="{456adf5f-27ac-4fd5-aa12-e372612dbfa5}" behavior="0" />
+      <RootComponent type="29" id="{46b8211f-7609-4635-b538-284703ca53f9}" behavior="0" />
+      <RootComponent type="29" id="{50dbde9c-1543-4b24-9050-cd74c35c8e57}" behavior="0" />
+      <RootComponent type="29" id="{774310a0-d55f-44b5-8fba-55aebd1487ff}" behavior="0" />
+      <RootComponent type="29" id="{844b3f06-f3d5-4dbc-b1aa-62d0bb7c34ea}" behavior="0" />
+      <RootComponent type="29" id="{89fbdcd1-06de-4660-aa80-b6ca8529bdfc}" behavior="0" />
+      <RootComponent type="29" id="{8ba37c24-e493-e911-b80c-005056833c5b}" behavior="0" />
+      <RootComponent type="29" id="{9533e646-9ec7-4e66-bfc5-0613db18f9d1}" behavior="0" />
+      <RootComponent type="29" id="{9a45ea49-720c-4cd6-95eb-e151124f4fc1}" behavior="0" />
+      <RootComponent type="29" id="{a22ca42f-ba0a-4017-ba6b-cbf608cad958}" behavior="0" />
+      <RootComponent type="29" id="{a32cc484-e493-e911-b80c-005056833c5b}" behavior="0" />
+      <RootComponent type="29" id="{ad94f56a-4e70-4ee0-8a84-10ecd3b2d57e}" behavior="0" />
+      <RootComponent type="29" id="{b4decb20-6e33-41f2-8704-b837067e5f1b}" behavior="0" />
+      <RootComponent type="29" id="{c9c25f7d-b8f9-48fb-a1c2-cedc38654568}" behavior="0" />
+      <RootComponent type="29" id="{ce7c4bbf-5b61-4577-ae92-3e5d63fcd158}" behavior="0" />
+      <RootComponent type="29" id="{d1eb58f0-9262-4cf5-9e17-7c4763d40d40}" behavior="0" />
+      <RootComponent type="29" id="{d3cd3bb0-dff9-4d01-8789-6cfd0cc2777e}" behavior="0" />
+      <RootComponent type="29" id="{eb3e8bc4-6fd2-48c2-8bf6-146b51970a6b}" behavior="0" />
+      <RootComponent type="29" id="{f9a383d5-435e-4a65-a736-8a83e31e57c7}" behavior="0" />
+      <RootComponent type="29" id="{fe9faa54-0328-44cc-bca7-96f908a35c5a}" behavior="0" />
+      <RootComponent type="91" id="{a950d9c2-f3a6-44fd-86a6-680fe55cef7c}" schemaName="Ecas.Dyn365.Workflows, Version=1.3.0.0, Culture=neutral, PublicKeyToken=2b7093f785a9afd3" behavior="0" />
+    </RootComponents>
+    <MissingDependencies>
+      <MissingDependency>
+        <Required key="0" type="1" schemaName="educ_rolecode" displayName="Role Code" solution="Active" />
+        <Dependent key="1" type="29" displayName="DELETE - Assignment: Copy Rate from Role" id="{2e12d76e-cbc5-43a3-9f2b-0f2ce0218a3b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="2" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
+        <Dependent key="1" type="29" displayName="DELETE - Assignment: Copy Rate from Role" id="{2e12d76e-cbc5-43a3-9f2b-0f2ce0218a3b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="2" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
+        <Dependent key="3" type="29" displayName="Payment : Copy Session and Contact When record created" id="{46b8211f-7609-4635-b538-284703ca53f9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="4" type="1" schemaName="educ_payment" displayName="Payment" solution="Active" />
+        <Dependent key="3" type="29" displayName="Payment : Copy Session and Contact When record created" id="{46b8211f-7609-4635-b538-284703ca53f9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="5" type="1" schemaName="educ_exoense" displayName="Expense" solution="Active" />
+        <Dependent key="6" type="29" displayName="Payment: QR cannot be EA" id="{fe9faa54-0328-44cc-bca7-96f908a35c5a}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="2" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
+        <Dependent key="7" type="29" displayName="Assignement: Approval Reminder Email - Child" id="{00c79ecb-54e7-4b71-8dc4-619c23c17cb2}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="2" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
+        <Dependent key="8" type="29" displayName="Assignment - Validate Expense Authority before Contract processing" id="{17cc58d8-e8a6-4a7e-b457-9758c3eb0b8a}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="2" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
+        <Dependent key="9" type="29" displayName="Assignment: Invite Email - Child" id="{89fbdcd1-06de-4660-aa80-b6ca8529bdfc}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="2" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
+        <Dependent key="10" type="29" displayName="Assignment: Contract Approval Required reminder email" id="{9533e646-9ec7-4e66-bfc5-0613db18f9d1}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="2" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
+        <Dependent key="11" type="29" displayName="Expense: Validate and set QR User" id="{ce7c4bbf-5b61-4577-ae92-3e5d63fcd158}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="5" type="1" schemaName="educ_exoense" displayName="Expense" solution="Active" />
+        <Dependent key="11" type="29" displayName="Expense: Validate and set QR User" id="{ce7c4bbf-5b61-4577-ae92-3e5d63fcd158}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="5" type="1" schemaName="educ_exoense" displayName="Expense" solution="Active" />
+        <Dependent key="12" type="29" displayName="Assignment: Create Fee Expense Record" id="{1bbde254-defc-4253-9019-b1f0196a937e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="2" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
+        <Dependent key="12" type="29" displayName="Assignment: Create Fee Expense Record" id="{1bbde254-defc-4253-9019-b1f0196a937e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="2" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
+        <Dependent key="13" type="29" displayName="Assignment: Send Email to invited Contact" id="{d1eb58f0-9262-4cf5-9e17-7c4763d40d40}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="14" type="1" schemaName="educ_session" displayName="Session" solution="Active" />
+        <Dependent key="15" type="29" displayName="DELETE Session: Expense Authority Signature Captured" id="{1b1b012a-8039-434e-80fe-bdbf9e5e1ad6}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="14" type="1" schemaName="educ_session" displayName="Session" solution="Active" />
+        <Dependent key="16" type="29" displayName="Assisgnment: Populate Name Field" id="{844b3f06-f3d5-4dbc-b1aa-62d0bb7c34ea}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="5" type="1" schemaName="educ_exoense" displayName="Expense" solution="Active" />
+        <Dependent key="17" type="29" displayName="Expense: Expense Code added or changed" id="{eb3e8bc4-6fd2-48c2-8bf6-146b51970a6b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="2" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
+        <Dependent key="16" type="29" displayName="Assisgnment: Populate Name Field" id="{844b3f06-f3d5-4dbc-b1aa-62d0bb7c34ea}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="2" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
+        <Dependent key="18" type="29" displayName="Assignment: Validate Max Fee" id="{c9c25f7d-b8f9-48fb-a1c2-cedc38654568}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="2" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
+        <Dependent key="19" type="29" displayName="Assignment : Generate Payment Records" id="{d3cd3bb0-dff9-4d01-8789-6cfd0cc2777e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="5" type="1" schemaName="educ_exoense" displayName="Expense" solution="Active" />
+        <Dependent key="20" type="29" displayName="DELETE Expense: Set Session when record created" id="{9a45ea49-720c-4cd6-95eb-e151124f4fc1}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="2" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
+        <Dependent key="20" type="29" displayName="DELETE Expense: Set Session when record created" id="{9a45ea49-720c-4cd6-95eb-e151124f4fc1}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="2" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
+        <Dependent key="21" type="29" displayName="Assignment: Populate Expense Authority Name and Date" id="{50dbde9c-1543-4b24-9050-cd74c35c8e57}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="2" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
+        <Dependent key="22" type="29" displayName="Assignment : Generate payment Records - TEST" id="{32534e0e-7482-4f42-9bd8-56c6d75f5951}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="2" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
+        <Dependent key="23" type="29" displayName="Payment: Update Payment Name to unique value" id="{27da29de-989e-4fd5-95fd-f46b900fcfac}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="2" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
+        <Dependent key="24" type="29" displayName="Assignment: Generate Contract Number" id="{456adf5f-27ac-4fd5-aa12-e372612dbfa5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="4" type="1" schemaName="educ_payment" displayName="Payment" solution="Active" />
+        <Dependent key="23" type="29" displayName="Payment: Update Payment Name to unique value" id="{27da29de-989e-4fd5-95fd-f46b900fcfac}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="25" type="1" schemaName="educ_credential" displayName="Credential" solution="Active" />
+        <Dependent key="26" type="29" displayName="Credential : Populate Name Field" id="{f9a383d5-435e-4a65-a736-8a83e31e57c7}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="2" type="1" schemaName="educ_assignment" displayName="Assignment" solution="Active" />
+        <Dependent key="27" type="29" displayName="DELETE: Assignment: Populate Expense Authority Name and Date" id="{b4decb20-6e33-41f2-8704-b837067e5f1b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="28" type="1" schemaName="educ_usersignature" displayName="User Signature" solution="Active" />
+        <Dependent key="29" type="29" displayName="User Signature: Copy image and text to User record" id="{774310a0-d55f-44b5-8fba-55aebd1487ff}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="30" type="2" schemaName="educ_signaturetext" displayName="Signature Text" parentSchemaName="systemuser" parentDisplayName="User" solution="Active" />
+        <Dependent key="29" type="29" displayName="User Signature: Copy image and text to User record" id="{774310a0-d55f-44b5-8fba-55aebd1487ff}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="31" type="2" schemaName="educ_signature" displayName="Signature" parentSchemaName="systemuser" parentDisplayName="User" solution="Active" />
+        <Dependent key="29" type="29" displayName="User Signature: Copy image and text to User record" id="{774310a0-d55f-44b5-8fba-55aebd1487ff}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="32" type="2" schemaName="educ_usersignaturetext" displayName="User Signature Text" parentSchemaName="educ_usersignature" parentDisplayName="User Signature" solution="Active" />
+        <Dependent key="29" type="29" displayName="User Signature: Copy image and text to User record" id="{774310a0-d55f-44b5-8fba-55aebd1487ff}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="33" type="2" schemaName="educ_usersignature" displayName="User Signature" parentSchemaName="educ_usersignature" parentDisplayName="User Signature" solution="Active" />
+        <Dependent key="29" type="29" displayName="User Signature: Copy image and text to User record" id="{774310a0-d55f-44b5-8fba-55aebd1487ff}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="34" type="2" schemaName="educ_userid" displayName="User" parentSchemaName="educ_usersignature" parentDisplayName="User Signature" solution="Active" />
+        <Dependent key="29" type="29" displayName="User Signature: Copy image and text to User record" id="{774310a0-d55f-44b5-8fba-55aebd1487ff}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="35" type="2" schemaName="educ_name" displayName="Name" parentSchemaName="educ_usersignature" parentDisplayName="User Signature" solution="Active" />
+        <Dependent key="29" type="29" displayName="User Signature: Copy image and text to User record" id="{774310a0-d55f-44b5-8fba-55aebd1487ff}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="36" type="2" schemaName="educ_name" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="27" type="29" displayName="DELETE: Assignment: Populate Expense Authority Name and Date" id="{b4decb20-6e33-41f2-8704-b837067e5f1b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="37" type="2" schemaName="educ_expenseauthorityapprovaldate" displayName="Expense Authority Approval Date" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="27" type="29" displayName="DELETE: Assignment: Populate Expense Authority Name and Date" id="{b4decb20-6e33-41f2-8704-b837067e5f1b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="38" type="2" schemaName="educ_assignmentid" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="27" type="29" displayName="DELETE: Assignment: Populate Expense Authority Name and Date" id="{b4decb20-6e33-41f2-8704-b837067e5f1b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="39" type="2" schemaName="modifiedon" displayName="Modified On" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="27" type="29" displayName="DELETE: Assignment: Populate Expense Authority Name and Date" id="{b4decb20-6e33-41f2-8704-b837067e5f1b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="40" type="2" schemaName="educ_expenseauthorityid" displayName="Expense Authority" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="27" type="29" displayName="DELETE: Assignment: Populate Expense Authority Name and Date" id="{b4decb20-6e33-41f2-8704-b837067e5f1b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="41" type="2" schemaName="educ_usersignatureid" displayName="User Signature" parentSchemaName="educ_usersignature" parentDisplayName="User Signature" solution="Active" />
+        <Dependent key="29" type="29" displayName="User Signature: Copy image and text to User record" id="{774310a0-d55f-44b5-8fba-55aebd1487ff}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="42" type="2" schemaName="educ_credentialid" displayName="Credential" parentSchemaName="educ_credential" parentDisplayName="Credential" solution="Active" />
+        <Dependent key="26" type="29" displayName="Credential : Populate Name Field" id="{f9a383d5-435e-4a65-a736-8a83e31e57c7}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="43" type="2" schemaName="educ_contact" displayName="Contact" parentSchemaName="educ_credential" parentDisplayName="Credential" solution="Active" />
+        <Dependent key="26" type="29" displayName="Credential : Populate Name Field" id="{f9a383d5-435e-4a65-a736-8a83e31e57c7}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="44" type="2" schemaName="educ_credential" displayName="Credential Code" parentSchemaName="educ_credential" parentDisplayName="Credential" solution="Active" />
+        <Dependent key="26" type="29" displayName="Credential : Populate Name Field" id="{f9a383d5-435e-4a65-a736-8a83e31e57c7}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="45" type="2" schemaName="modifiedby" displayName="Modified By" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="27" type="29" displayName="DELETE: Assignment: Populate Expense Authority Name and Date" id="{b4decb20-6e33-41f2-8704-b837067e5f1b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="46" type="2" schemaName="educ_name" displayName="Payment" parentSchemaName="educ_payment" parentDisplayName="Payment" solution="Active" />
+        <Dependent key="23" type="29" displayName="Payment: Update Payment Name to unique value" id="{27da29de-989e-4fd5-95fd-f46b900fcfac}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="47" type="2" schemaName="educ_name" displayName="Name" parentSchemaName="educ_credential" parentDisplayName="Credential" solution="Active" />
+        <Dependent key="26" type="29" displayName="Credential : Populate Name Field" id="{f9a383d5-435e-4a65-a736-8a83e31e57c7}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="48" type="2" schemaName="educ_contractnumber" displayName="Contract Number" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="24" type="29" displayName="Assignment: Generate Contract Number" id="{456adf5f-27ac-4fd5-aa12-e372612dbfa5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="38" type="2" schemaName="educ_assignmentid" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="24" type="29" displayName="Assignment: Generate Contract Number" id="{456adf5f-27ac-4fd5-aa12-e372612dbfa5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="49" type="2" schemaName="educ_paymentautonumber" displayName="Payment Auto Number" parentSchemaName="educ_payment" parentDisplayName="Payment" solution="Active" />
+        <Dependent key="23" type="29" displayName="Payment: Update Payment Name to unique value" id="{27da29de-989e-4fd5-95fd-f46b900fcfac}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="48" type="2" schemaName="educ_contractnumber" displayName="Contract Number" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="23" type="29" displayName="Payment: Update Payment Name to unique value" id="{27da29de-989e-4fd5-95fd-f46b900fcfac}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="50" type="2" schemaName="educ_assignment" displayName="Assignment" parentSchemaName="educ_payment" parentDisplayName="Payment" solution="Active" />
+        <Dependent key="23" type="29" displayName="Payment: Update Payment Name to unique value" id="{27da29de-989e-4fd5-95fd-f46b900fcfac}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="38" type="2" schemaName="educ_assignmentid" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="23" type="29" displayName="Payment: Update Payment Name to unique value" id="{27da29de-989e-4fd5-95fd-f46b900fcfac}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="51" type="2" schemaName="educ_paymentid" displayName="Payment" parentSchemaName="educ_payment" parentDisplayName="Payment" solution="Active" />
+        <Dependent key="23" type="29" displayName="Payment: Update Payment Name to unique value" id="{27da29de-989e-4fd5-95fd-f46b900fcfac}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="36" type="2" schemaName="educ_name" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="23" type="29" displayName="Payment: Update Payment Name to unique value" id="{27da29de-989e-4fd5-95fd-f46b900fcfac}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="52" type="2" schemaName="statuscode" displayName="Status Reason" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="24" type="29" displayName="Assignment: Generate Contract Number" id="{456adf5f-27ac-4fd5-aa12-e372612dbfa5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="53" type="2" schemaName="educ_contractsequence" displayName="ContractSequence" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="24" type="29" displayName="Assignment: Generate Contract Number" id="{456adf5f-27ac-4fd5-aa12-e372612dbfa5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="36" type="2" schemaName="educ_name" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="24" type="29" displayName="Assignment: Generate Contract Number" id="{456adf5f-27ac-4fd5-aa12-e372612dbfa5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="36" type="2" schemaName="educ_name" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="22" type="29" displayName="Assignment : Generate payment Records - TEST" id="{32534e0e-7482-4f42-9bd8-56c6d75f5951}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="38" type="2" schemaName="educ_assignmentid" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="22" type="29" displayName="Assignment : Generate payment Records - TEST" id="{32534e0e-7482-4f42-9bd8-56c6d75f5951}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="54" type="2" schemaName="educ_exoenseid" displayName="Expense" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="20" type="29" displayName="DELETE Expense: Set Session when record created" id="{9a45ea49-720c-4cd6-95eb-e151124f4fc1}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="55" type="2" schemaName="educ_assignment" displayName="Assignment" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="20" type="29" displayName="DELETE Expense: Set Session when record created" id="{9a45ea49-720c-4cd6-95eb-e151124f4fc1}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="56" type="2" schemaName="educ_session" displayName="Session" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="20" type="29" displayName="DELETE Expense: Set Session when record created" id="{9a45ea49-720c-4cd6-95eb-e151124f4fc1}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="57" type="2" schemaName="educ_session" displayName="Session" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="20" type="29" displayName="DELETE Expense: Set Session when record created" id="{9a45ea49-720c-4cd6-95eb-e151124f4fc1}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="58" type="2" schemaName="educ_name" displayName="Expense" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="20" type="29" displayName="DELETE Expense: Set Session when record created" id="{9a45ea49-720c-4cd6-95eb-e151124f4fc1}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="38" type="2" schemaName="educ_assignmentid" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="20" type="29" displayName="DELETE Expense: Set Session when record created" id="{9a45ea49-720c-4cd6-95eb-e151124f4fc1}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="38" type="2" schemaName="educ_assignmentid" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="19" type="29" displayName="Assignment : Generate Payment Records" id="{d3cd3bb0-dff9-4d01-8789-6cfd0cc2777e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="36" type="2" schemaName="educ_name" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="19" type="29" displayName="Assignment : Generate Payment Records" id="{d3cd3bb0-dff9-4d01-8789-6cfd0cc2777e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="52" type="2" schemaName="statuscode" displayName="Status Reason" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="19" type="29" displayName="Assignment : Generate Payment Records" id="{d3cd3bb0-dff9-4d01-8789-6cfd0cc2777e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="40" type="2" schemaName="educ_expenseauthorityid" displayName="Expense Authority" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="21" type="29" displayName="Assignment: Populate Expense Authority Name and Date" id="{50dbde9c-1543-4b24-9050-cd74c35c8e57}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="38" type="2" schemaName="educ_assignmentid" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="21" type="29" displayName="Assignment: Populate Expense Authority Name and Date" id="{50dbde9c-1543-4b24-9050-cd74c35c8e57}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="36" type="2" schemaName="educ_name" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="21" type="29" displayName="Assignment: Populate Expense Authority Name and Date" id="{50dbde9c-1543-4b24-9050-cd74c35c8e57}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="45" type="2" schemaName="modifiedby" displayName="Modified By" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="21" type="29" displayName="Assignment: Populate Expense Authority Name and Date" id="{50dbde9c-1543-4b24-9050-cd74c35c8e57}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="37" type="2" schemaName="educ_expenseauthorityapprovaldate" displayName="Expense Authority Approval Date" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="21" type="29" displayName="Assignment: Populate Expense Authority Name and Date" id="{50dbde9c-1543-4b24-9050-cd74c35c8e57}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="39" type="2" schemaName="modifiedon" displayName="Modified On" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="21" type="29" displayName="Assignment: Populate Expense Authority Name and Date" id="{50dbde9c-1543-4b24-9050-cd74c35c8e57}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="59" type="2" schemaName="educ_role" displayName="Role" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="18" type="29" displayName="Assignment: Validate Max Fee" id="{c9c25f7d-b8f9-48fb-a1c2-cedc38654568}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="60" type="2" schemaName="educ_tocduration" displayName="ToC Duration" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="18" type="29" displayName="Assignment: Validate Max Fee" id="{c9c25f7d-b8f9-48fb-a1c2-cedc38654568}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="36" type="2" schemaName="educ_name" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="20" type="29" displayName="DELETE Expense: Set Session when record created" id="{9a45ea49-720c-4cd6-95eb-e151124f4fc1}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="61" type="2" schemaName="educ_sessionid" displayName="Session" parentSchemaName="educ_session" parentDisplayName="Session" solution="Active" />
+        <Dependent key="16" type="29" displayName="Assisgnment: Populate Name Field" id="{844b3f06-f3d5-4dbc-b1aa-62d0bb7c34ea}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="36" type="2" schemaName="educ_name" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="16" type="29" displayName="Assisgnment: Populate Name Field" id="{844b3f06-f3d5-4dbc-b1aa-62d0bb7c34ea}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="62" type="2" schemaName="educ_name" displayName="Name" parentSchemaName="educ_session" parentDisplayName="Session" solution="Active" />
+        <Dependent key="16" type="29" displayName="Assisgnment: Populate Name Field" id="{844b3f06-f3d5-4dbc-b1aa-62d0bb7c34ea}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="63" type="2" schemaName="educ_expensecode" displayName="Expense Code" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="17" type="29" displayName="Expense: Expense Code added or changed" id="{eb3e8bc4-6fd2-48c2-8bf6-146b51970a6b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="58" type="2" schemaName="educ_name" displayName="Expense" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="17" type="29" displayName="Expense: Expense Code added or changed" id="{eb3e8bc4-6fd2-48c2-8bf6-146b51970a6b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="54" type="2" schemaName="educ_exoenseid" displayName="Expense" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="17" type="29" displayName="Expense: Expense Code added or changed" id="{eb3e8bc4-6fd2-48c2-8bf6-146b51970a6b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="64" type="2" schemaName="createdon" displayName="Created On" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="18" type="29" displayName="Assignment: Validate Max Fee" id="{c9c25f7d-b8f9-48fb-a1c2-cedc38654568}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="65" type="2" schemaName="educ_calculatedfee" displayName="Calculated Fee" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="18" type="29" displayName="Assignment: Validate Max Fee" id="{c9c25f7d-b8f9-48fb-a1c2-cedc38654568}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="38" type="2" schemaName="educ_assignmentid" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="18" type="29" displayName="Assignment: Validate Max Fee" id="{c9c25f7d-b8f9-48fb-a1c2-cedc38654568}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="66" type="2" schemaName="educ_attendancedays" displayName="Attendance Days" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="18" type="29" displayName="Assignment: Validate Max Fee" id="{c9c25f7d-b8f9-48fb-a1c2-cedc38654568}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="36" type="2" schemaName="educ_name" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="18" type="29" displayName="Assignment: Validate Max Fee" id="{c9c25f7d-b8f9-48fb-a1c2-cedc38654568}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="64" type="2" schemaName="createdon" displayName="Created On" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="16" type="29" displayName="Assisgnment: Populate Name Field" id="{844b3f06-f3d5-4dbc-b1aa-62d0bb7c34ea}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="57" type="2" schemaName="educ_session" displayName="Session" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="16" type="29" displayName="Assisgnment: Populate Name Field" id="{844b3f06-f3d5-4dbc-b1aa-62d0bb7c34ea}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="67" type="2" schemaName="educ_contact" displayName="Contact" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="16" type="29" displayName="Assisgnment: Populate Name Field" id="{844b3f06-f3d5-4dbc-b1aa-62d0bb7c34ea}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="38" type="2" schemaName="educ_assignmentid" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="16" type="29" displayName="Assisgnment: Populate Name Field" id="{844b3f06-f3d5-4dbc-b1aa-62d0bb7c34ea}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="61" type="2" schemaName="educ_sessionid" displayName="Session" parentSchemaName="educ_session" parentDisplayName="Session" solution="Active" />
+        <Dependent key="15" type="29" displayName="DELETE Session: Expense Authority Signature Captured" id="{1b1b012a-8039-434e-80fe-bdbf9e5e1ad6}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="68" type="2" schemaName="educ_approvalsignature" displayName="zz_Approval Signature" parentSchemaName="educ_session" parentDisplayName="Session" solution="Active" />
+        <Dependent key="15" type="29" displayName="DELETE Session: Expense Authority Signature Captured" id="{1b1b012a-8039-434e-80fe-bdbf9e5e1ad6}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="62" type="2" schemaName="educ_name" displayName="Name" parentSchemaName="educ_session" parentDisplayName="Session" solution="Active" />
+        <Dependent key="15" type="29" displayName="DELETE Session: Expense Authority Signature Captured" id="{1b1b012a-8039-434e-80fe-bdbf9e5e1ad6}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="69" type="2" schemaName="modifiedby" displayName="Modified By" parentSchemaName="educ_session" parentDisplayName="Session" solution="Active" />
+        <Dependent key="15" type="29" displayName="DELETE Session: Expense Authority Signature Captured" id="{1b1b012a-8039-434e-80fe-bdbf9e5e1ad6}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="70" type="2" schemaName="modifiedon" displayName="Modified On" parentSchemaName="educ_session" parentDisplayName="Session" solution="Active" />
+        <Dependent key="15" type="29" displayName="DELETE Session: Expense Authority Signature Captured" id="{1b1b012a-8039-434e-80fe-bdbf9e5e1ad6}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="71" type="2" schemaName="createdby" displayName="Created By" parentSchemaName="educ_session" parentDisplayName="Session" solution="Active" />
+        <Dependent key="15" type="29" displayName="DELETE Session: Expense Authority Signature Captured" id="{1b1b012a-8039-434e-80fe-bdbf9e5e1ad6}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="72" type="2" schemaName="educ_expenseauthorityname" displayName="zz_Expense Authority Name" parentSchemaName="educ_session" parentDisplayName="Session" solution="Active" />
+        <Dependent key="15" type="29" displayName="DELETE Session: Expense Authority Signature Captured" id="{1b1b012a-8039-434e-80fe-bdbf9e5e1ad6}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="73" type="2" schemaName="educ_expenseauthorityapprovaldate" displayName="zz_Expense Authority Approval Date" parentSchemaName="educ_session" parentDisplayName="Session" solution="Active" />
+        <Dependent key="15" type="29" displayName="DELETE Session: Expense Authority Signature Captured" id="{1b1b012a-8039-434e-80fe-bdbf9e5e1ad6}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="74" type="2" schemaName="educ_professionalcertificateykverified" displayName="Professional Certificate (YK) Verified" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" />
+        <Dependent key="75" type="29" displayName="Contact : Reset Professional Certificate YK Verification Flag" id="{8ba37c24-e493-e911-b80c-005056833c5b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="76" type="2" schemaName="educ_professionalcertificatebc" displayName="Professional Certificate (BC)" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" />
+        <Dependent key="75" type="29" displayName="Contact : Reset Professional Certificate YK Verification Flag" id="{8ba37c24-e493-e911-b80c-005056833c5b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="77" type="2" schemaName="educ_socialinsurancenumber" displayName="Social Insurance Number" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" />
+        <Dependent key="78" type="29" displayName="Contact: Populate Supplier Information from SIN" id="{a22ca42f-ba0a-4017-ba6b-cbf608cad958}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="79" type="2" schemaName="educ_methodofpayment" displayName="Method of Payment" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" />
+        <Dependent key="78" type="29" displayName="Contact: Populate Supplier Information from SIN" id="{a22ca42f-ba0a-4017-ba6b-cbf608cad958}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="80" type="2" schemaName="educ_supplierissue" displayName="Supplier Issue" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" />
+        <Dependent key="78" type="29" displayName="Contact: Populate Supplier Information from SIN" id="{a22ca42f-ba0a-4017-ba6b-cbf608cad958}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="81" type="2" schemaName="educ_suppliernumber" displayName="Supplier Number" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" />
+        <Dependent key="78" type="29" displayName="Contact: Populate Supplier Information from SIN" id="{a22ca42f-ba0a-4017-ba6b-cbf608cad958}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="82" type="2" schemaName="educ_suppliersitenumber" displayName="Supplier Site Number" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" />
+        <Dependent key="78" type="29" displayName="Contact: Populate Supplier Information from SIN" id="{a22ca42f-ba0a-4017-ba6b-cbf608cad958}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="83" type="2" schemaName="educ_cassupplierlastname" displayName="CAS Supplier Last Name" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" />
+        <Dependent key="78" type="29" displayName="Contact: Populate Supplier Information from SIN" id="{a22ca42f-ba0a-4017-ba6b-cbf608cad958}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="38" type="2" schemaName="educ_assignmentid" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="13" type="29" displayName="Assignment: Send Email to invited Contact" id="{d1eb58f0-9262-4cf5-9e17-7c4763d40d40}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="36" type="2" schemaName="educ_name" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="13" type="29" displayName="Assignment: Send Email to invited Contact" id="{d1eb58f0-9262-4cf5-9e17-7c4763d40d40}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="52" type="2" schemaName="statuscode" displayName="Status Reason" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="13" type="29" displayName="Assignment: Send Email to invited Contact" id="{d1eb58f0-9262-4cf5-9e17-7c4763d40d40}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="45" type="2" schemaName="modifiedby" displayName="Modified By" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="12" type="29" displayName="Assignment: Create Fee Expense Record" id="{1bbde254-defc-4253-9019-b1f0196a937e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="84" type="2" schemaName="educ_quantity" displayName="Quantity" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="12" type="29" displayName="Assignment: Create Fee Expense Record" id="{1bbde254-defc-4253-9019-b1f0196a937e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="52" type="2" schemaName="statuscode" displayName="Status Reason" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="12" type="29" displayName="Assignment: Create Fee Expense Record" id="{1bbde254-defc-4253-9019-b1f0196a937e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="85" type="2" schemaName="educ_inclusivefee" displayName="Inclusive Fee" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="12" type="29" displayName="Assignment: Create Fee Expense Record" id="{1bbde254-defc-4253-9019-b1f0196a937e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="36" type="2" schemaName="educ_name" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="12" type="29" displayName="Assignment: Create Fee Expense Record" id="{1bbde254-defc-4253-9019-b1f0196a937e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="65" type="2" schemaName="educ_calculatedfee" displayName="Calculated Fee" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="12" type="29" displayName="Assignment: Create Fee Expense Record" id="{1bbde254-defc-4253-9019-b1f0196a937e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="86" type="2" schemaName="educ_amount" displayName="Amount" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="12" type="29" displayName="Assignment: Create Fee Expense Record" id="{1bbde254-defc-4253-9019-b1f0196a937e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="87" type="2" schemaName="transactioncurrencyid" displayName="Currency" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="12" type="29" displayName="Assignment: Create Fee Expense Record" id="{1bbde254-defc-4253-9019-b1f0196a937e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="88" type="2" schemaName="ownerid" displayName="Owner" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="12" type="29" displayName="Assignment: Create Fee Expense Record" id="{1bbde254-defc-4253-9019-b1f0196a937e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="36" type="2" schemaName="educ_name" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="11" type="29" displayName="Expense: Validate and set QR User" id="{ce7c4bbf-5b61-4577-ae92-3e5d63fcd158}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="89" type="2" schemaName="educ_expenseapprovedby" displayName="Qualified Receiver" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="11" type="29" displayName="Expense: Validate and set QR User" id="{ce7c4bbf-5b61-4577-ae92-3e5d63fcd158}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="40" type="2" schemaName="educ_expenseauthorityid" displayName="Expense Authority" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="11" type="29" displayName="Expense: Validate and set QR User" id="{ce7c4bbf-5b61-4577-ae92-3e5d63fcd158}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="38" type="2" schemaName="educ_assignmentid" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="11" type="29" displayName="Expense: Validate and set QR User" id="{ce7c4bbf-5b61-4577-ae92-3e5d63fcd158}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="90" type="2" schemaName="modifiedby" displayName="Modified By" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="11" type="29" displayName="Expense: Validate and set QR User" id="{ce7c4bbf-5b61-4577-ae92-3e5d63fcd158}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="54" type="2" schemaName="educ_exoenseid" displayName="Expense" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="12" type="29" displayName="Assignment: Create Fee Expense Record" id="{1bbde254-defc-4253-9019-b1f0196a937e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="58" type="2" schemaName="educ_name" displayName="Expense" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="12" type="29" displayName="Assignment: Create Fee Expense Record" id="{1bbde254-defc-4253-9019-b1f0196a937e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="91" type="2" schemaName="educ_expensefeecreated" displayName="Expense Fee Created" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="12" type="29" displayName="Assignment: Create Fee Expense Record" id="{1bbde254-defc-4253-9019-b1f0196a937e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="55" type="2" schemaName="educ_assignment" displayName="Assignment" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="12" type="29" displayName="Assignment: Create Fee Expense Record" id="{1bbde254-defc-4253-9019-b1f0196a937e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="92" type="2" schemaName="educ_description" displayName="Description" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="12" type="29" displayName="Assignment: Create Fee Expense Record" id="{1bbde254-defc-4253-9019-b1f0196a937e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="38" type="2" schemaName="educ_assignmentid" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="12" type="29" displayName="Assignment: Create Fee Expense Record" id="{1bbde254-defc-4253-9019-b1f0196a937e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="93" type="2" schemaName="educ_contractstage" displayName="Contract Stage" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="10" type="29" displayName="Assignment: Contract Approval Required reminder email" id="{9533e646-9ec7-4e66-bfc5-0613db18f9d1}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="94" type="2" schemaName="educ_approvalmodifiedupdate" displayName="Approval Modified Update" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="11" type="29" displayName="Expense: Validate and set QR User" id="{ce7c4bbf-5b61-4577-ae92-3e5d63fcd158}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="54" type="2" schemaName="educ_exoenseid" displayName="Expense" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="11" type="29" displayName="Expense: Validate and set QR User" id="{ce7c4bbf-5b61-4577-ae92-3e5d63fcd158}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="95" type="2" schemaName="statuscode" displayName="Status Reason" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="11" type="29" displayName="Expense: Validate and set QR User" id="{ce7c4bbf-5b61-4577-ae92-3e5d63fcd158}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="58" type="2" schemaName="educ_name" displayName="Expense" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="11" type="29" displayName="Expense: Validate and set QR User" id="{ce7c4bbf-5b61-4577-ae92-3e5d63fcd158}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="55" type="2" schemaName="educ_assignment" displayName="Assignment" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="11" type="29" displayName="Expense: Validate and set QR User" id="{ce7c4bbf-5b61-4577-ae92-3e5d63fcd158}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="38" type="2" schemaName="educ_assignmentid" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="10" type="29" displayName="Assignment: Contract Approval Required reminder email" id="{9533e646-9ec7-4e66-bfc5-0613db18f9d1}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="36" type="2" schemaName="educ_name" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="10" type="29" displayName="Assignment: Contract Approval Required reminder email" id="{9533e646-9ec7-4e66-bfc5-0613db18f9d1}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="76" type="2" schemaName="educ_professionalcertificatebc" displayName="Professional Certificate (BC)" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" />
+        <Dependent key="96" type="29" displayName="Contact : Reset Professional Certificate BC Verification Flag" id="{ad94f56a-4e70-4ee0-8a84-10ecd3b2d57e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="97" type="2" schemaName="educ_professionalcertificatebcverified" displayName="Professional Certificate (BC) Verified" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" />
+        <Dependent key="96" type="29" displayName="Contact : Reset Professional Certificate BC Verification Flag" id="{ad94f56a-4e70-4ee0-8a84-10ecd3b2d57e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="36" type="2" schemaName="educ_name" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="9" type="29" displayName="Assignment: Invite Email - Child" id="{89fbdcd1-06de-4660-aa80-b6ca8529bdfc}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="38" type="2" schemaName="educ_assignmentid" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="9" type="29" displayName="Assignment: Invite Email - Child" id="{89fbdcd1-06de-4660-aa80-b6ca8529bdfc}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="93" type="2" schemaName="educ_contractstage" displayName="Contract Stage" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="8" type="29" displayName="Assignment - Validate Expense Authority before Contract processing" id="{17cc58d8-e8a6-4a7e-b457-9758c3eb0b8a}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="40" type="2" schemaName="educ_expenseauthorityid" displayName="Expense Authority" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="8" type="29" displayName="Assignment - Validate Expense Authority before Contract processing" id="{17cc58d8-e8a6-4a7e-b457-9758c3eb0b8a}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="67" type="2" schemaName="educ_contact" displayName="Contact" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="9" type="29" displayName="Assignment: Invite Email - Child" id="{89fbdcd1-06de-4660-aa80-b6ca8529bdfc}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="36" type="2" schemaName="educ_name" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="7" type="29" displayName="Assignement: Approval Reminder Email - Child" id="{00c79ecb-54e7-4b71-8dc4-619c23c17cb2}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="38" type="2" schemaName="educ_assignmentid" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="7" type="29" displayName="Assignement: Approval Reminder Email - Child" id="{00c79ecb-54e7-4b71-8dc4-619c23c17cb2}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="36" type="2" schemaName="educ_name" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="8" type="29" displayName="Assignment - Validate Expense Authority before Contract processing" id="{17cc58d8-e8a6-4a7e-b457-9758c3eb0b8a}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="64" type="2" schemaName="createdon" displayName="Created On" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="8" type="29" displayName="Assignment - Validate Expense Authority before Contract processing" id="{17cc58d8-e8a6-4a7e-b457-9758c3eb0b8a}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="38" type="2" schemaName="educ_assignmentid" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="8" type="29" displayName="Assignment - Validate Expense Authority before Contract processing" id="{17cc58d8-e8a6-4a7e-b457-9758c3eb0b8a}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="64" type="2" schemaName="createdon" displayName="Created On" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="1" type="29" displayName="DELETE - Assignment: Copy Rate from Role" id="{2e12d76e-cbc5-43a3-9f2b-0f2ce0218a3b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="58" type="2" schemaName="educ_name" displayName="Expense" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="6" type="29" displayName="Payment: QR cannot be EA" id="{fe9faa54-0328-44cc-bca7-96f908a35c5a}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="54" type="2" schemaName="educ_exoenseid" displayName="Expense" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="6" type="29" displayName="Payment: QR cannot be EA" id="{fe9faa54-0328-44cc-bca7-96f908a35c5a}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="95" type="2" schemaName="statuscode" displayName="Status Reason" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="6" type="29" displayName="Payment: QR cannot be EA" id="{fe9faa54-0328-44cc-bca7-96f908a35c5a}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="98" type="2" schemaName="statecode" displayName="Status" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="6" type="29" displayName="Payment: QR cannot be EA" id="{fe9faa54-0328-44cc-bca7-96f908a35c5a}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="99" type="2" schemaName="educ_session" displayName="Session" parentSchemaName="educ_payment" parentDisplayName="Payment" solution="Active" />
+        <Dependent key="3" type="29" displayName="Payment : Copy Session and Contact When record created" id="{46b8211f-7609-4635-b538-284703ca53f9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="36" type="2" schemaName="educ_name" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="3" type="29" displayName="Payment : Copy Session and Contact When record created" id="{46b8211f-7609-4635-b538-284703ca53f9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="50" type="2" schemaName="educ_assignment" displayName="Assignment" parentSchemaName="educ_payment" parentDisplayName="Payment" solution="Active" />
+        <Dependent key="3" type="29" displayName="Payment : Copy Session and Contact When record created" id="{46b8211f-7609-4635-b538-284703ca53f9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="100" type="2" schemaName="educ_payee" displayName="Payee" parentSchemaName="educ_payment" parentDisplayName="Payment" solution="Active" />
+        <Dependent key="3" type="29" displayName="Payment : Copy Session and Contact When record created" id="{46b8211f-7609-4635-b538-284703ca53f9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="46" type="2" schemaName="educ_name" displayName="Payment" parentSchemaName="educ_payment" parentDisplayName="Payment" solution="Active" />
+        <Dependent key="3" type="29" displayName="Payment : Copy Session and Contact When record created" id="{46b8211f-7609-4635-b538-284703ca53f9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="38" type="2" schemaName="educ_assignmentid" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="3" type="29" displayName="Payment : Copy Session and Contact When record created" id="{46b8211f-7609-4635-b538-284703ca53f9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="67" type="2" schemaName="educ_contact" displayName="Contact" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="3" type="29" displayName="Payment : Copy Session and Contact When record created" id="{46b8211f-7609-4635-b538-284703ca53f9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="36" type="2" schemaName="educ_name" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="1" type="29" displayName="DELETE - Assignment: Copy Rate from Role" id="{2e12d76e-cbc5-43a3-9f2b-0f2ce0218a3b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="101" type="2" schemaName="educ_rate" displayName="Rate" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="1" type="29" displayName="DELETE - Assignment: Copy Rate from Role" id="{2e12d76e-cbc5-43a3-9f2b-0f2ce0218a3b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="57" type="2" schemaName="educ_session" displayName="Session" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="3" type="29" displayName="Payment : Copy Session and Contact When record created" id="{46b8211f-7609-4635-b538-284703ca53f9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="51" type="2" schemaName="educ_paymentid" displayName="Payment" parentSchemaName="educ_payment" parentDisplayName="Payment" solution="Active" />
+        <Dependent key="3" type="29" displayName="Payment : Copy Session and Contact When record created" id="{46b8211f-7609-4635-b538-284703ca53f9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="59" type="2" schemaName="educ_role" displayName="Role" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="1" type="29" displayName="DELETE - Assignment: Copy Rate from Role" id="{2e12d76e-cbc5-43a3-9f2b-0f2ce0218a3b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="102" type="2" schemaName="educ_name" displayName="Role Name" parentSchemaName="educ_rolecode" parentDisplayName="Role Code" solution="Active" />
+        <Dependent key="1" type="29" displayName="DELETE - Assignment: Copy Rate from Role" id="{2e12d76e-cbc5-43a3-9f2b-0f2ce0218a3b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="38" type="2" schemaName="educ_assignmentid" displayName="Assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="1" type="29" displayName="DELETE - Assignment: Copy Rate from Role" id="{2e12d76e-cbc5-43a3-9f2b-0f2ce0218a3b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="103" type="2" schemaName="educ_rolerate" displayName="Role Rate" parentSchemaName="educ_rolecode" parentDisplayName="Role Code" solution="Active" />
+        <Dependent key="1" type="29" displayName="DELETE - Assignment: Copy Rate from Role" id="{2e12d76e-cbc5-43a3-9f2b-0f2ce0218a3b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="104" type="2" schemaName="educ_rolecodeid" displayName="Role Code" parentSchemaName="educ_rolecode" parentDisplayName="Role Code" solution="Active" />
+        <Dependent key="1" type="29" displayName="DELETE - Assignment: Copy Rate from Role" id="{2e12d76e-cbc5-43a3-9f2b-0f2ce0218a3b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="105" type="2" schemaName="educ_professionalcertificateother" displayName="zz_Professional Certificate Other" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" />
+        <Dependent key="106" type="29" displayName="Contact : Reset Professional Certificate Other Verification Flag" id="{a32cc484-e493-e911-b80c-005056833c5b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="107" type="2" schemaName="educ_professionalcertificateotherverified" displayName="zz_Professional Certificate Other Verified" parentSchemaName="contact" parentDisplayName="Contact" solution="Active" />
+        <Dependent key="106" type="29" displayName="Contact : Reset Professional Certificate Other Verification Flag" id="{a32cc484-e493-e911-b80c-005056833c5b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="108" type="10" schemaName="educ_rolecode_educ_assignment" displayName="educ_rolecode_educ_assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="1" type="29" displayName="DELETE - Assignment: Copy Rate from Role" id="{2e12d76e-cbc5-43a3-9f2b-0f2ce0218a3b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="109" type="10" schemaName="educ_educ_assignment_educ_payment_Assignment" displayName="educ_educ_assignment_educ_payment_Assignment" parentSchemaName="educ_payment" parentDisplayName="Payment" solution="Active" />
+        <Dependent key="3" type="29" displayName="Payment : Copy Session and Contact When record created" id="{46b8211f-7609-4635-b538-284703ca53f9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="110" type="10" schemaName="educ_educ_assignment_educ_exoense_Assignment" displayName="educ_educ_assignment_educ_exoense_Assignment" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="11" type="29" displayName="Expense: Validate and set QR User" id="{ce7c4bbf-5b61-4577-ae92-3e5d63fcd158}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="111" type="10" schemaName="educ_session_educ_assignment" displayName="educ_session_educ_assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="16" type="29" displayName="Assisgnment: Populate Name Field" id="{844b3f06-f3d5-4dbc-b1aa-62d0bb7c34ea}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="112" type="10" schemaName="educ_contact_educ_assignment" displayName="educ_contact_educ_assignment" parentSchemaName="educ_assignment" parentDisplayName="Assignment" solution="Active" />
+        <Dependent key="16" type="29" displayName="Assisgnment: Populate Name Field" id="{844b3f06-f3d5-4dbc-b1aa-62d0bb7c34ea}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="110" type="10" schemaName="educ_educ_assignment_educ_exoense_Assignment" displayName="educ_educ_assignment_educ_exoense_Assignment" parentSchemaName="educ_exoense" parentDisplayName="Expense" solution="Active" />
+        <Dependent key="20" type="29" displayName="DELETE Expense: Set Session when record created" id="{9a45ea49-720c-4cd6-95eb-e151124f4fc1}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="109" type="10" schemaName="educ_educ_assignment_educ_payment_Assignment" displayName="educ_educ_assignment_educ_payment_Assignment" parentSchemaName="educ_payment" parentDisplayName="Payment" solution="Active" />
+        <Dependent key="23" type="29" displayName="Payment: Update Payment Name to unique value" id="{27da29de-989e-4fd5-95fd-f46b900fcfac}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="113" type="10" schemaName="educ_systemuser_educ_usersignature_Userid" displayName="educ_systemuser_educ_usersignature_Userid" parentSchemaName="educ_usersignature" parentDisplayName="User Signature" solution="Active" />
+        <Dependent key="29" type="29" displayName="User Signature: Copy image and text to User record" id="{774310a0-d55f-44b5-8fba-55aebd1487ff}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="114" type="36" displayName="Assignment: Invite Contact to Session" solution="Active" id="{0d3eb7cb-095e-e911-a97a-000d3af45d23}" />
+        <Dependent key="9" type="29" displayName="Assignment: Invite Email - Child" id="{89fbdcd1-06de-4660-aa80-b6ca8529bdfc}" />
+      </MissingDependency>
+    </MissingDependencies>
+  </SolutionManifest>
+</ImportExportXml>

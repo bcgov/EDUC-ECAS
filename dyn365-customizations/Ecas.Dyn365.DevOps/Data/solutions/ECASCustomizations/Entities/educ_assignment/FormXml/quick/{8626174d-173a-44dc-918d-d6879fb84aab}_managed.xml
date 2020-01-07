@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms>
+  <systemform>
+    <formid>{8626174d-173a-44dc-918d-d6879fb84aab}</formid>
+    <IntroducedVersion>0.0.2.1</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form maxWidth="400">
+      <tabs>
+        <tab id="{8d3728e6-c421-4af5-98a9-0bac5e6a4d7b}" name="ExpenseAuthority_tab" showlabel="false" locklevel="0" expanded="true">
+          <labels>
+            <label description="Expense Authority" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="{34f6ed66-47ed-47a6-b48a-a0427a4ea881}" name="tab_1_column_1_section_1" columns="1" showlabel="false" showbar="false" IsUserDefined="0">
+                  <labels>
+                    <label description="section" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{3111ee72-20d8-95c9-404b-a67bbd51450a}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="educ_expenseauthorityid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="educ_expenseauthorityid" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{e8ead731-551a-a405-b714-3250d8d93b88}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="educ_expenseauthorityapprovaldate" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="educ_expenseauthorityapprovaldate" disabled="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <DisplayConditions Order="1">
+        <Role Id="{627090ff-40a3-4053-8790-584edc5be201}" />
+        <Role Id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />
+      </DisplayConditions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Expense Authority Fields" languagecode="1033" />
+    </LocalizedNames>
+  </systemform>
+</forms>

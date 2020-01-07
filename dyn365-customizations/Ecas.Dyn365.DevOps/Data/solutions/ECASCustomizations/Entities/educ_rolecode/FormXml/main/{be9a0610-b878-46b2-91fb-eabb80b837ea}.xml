@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms>
+  <systemform>
+    <formid>{be9a0610-b878-46b2-91fb-eabb80b837ea}</formid>
+    <IntroducedVersion>0.0.0.3</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab verticallayout="true" id="{327ab785-eab8-4631-8733-aef87f3376b1}" IsUserDefined="1">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section showlabel="false" showbar="false" IsUserDefined="0" id="{f8cbca44-dfd9-48c6-b774-2748aadbbc03}" name="{f8cbca44-dfd9-48c6-b774-2748aadbbc03}" columns="11" locklevel="0" labelwidth="130" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{70f119fb-d07a-443a-b1f6-91c9b39a34ff}">
+                        <labels>
+                          <label description="Role Name" languagecode="1033" />
+                        </labels>
+                        <control id="educ_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_name" />
+                      </cell>
+                      <cell id="{2723c498-e3d1-3acc-3829-6d5c63d0d141}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Role Code" languagecode="1033" />
+                        </labels>
+                        <control id="educ_rolecode" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_rolecode" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{a37bb508-b201-3303-5d5d-0962c4327425}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Role Rate" languagecode="1033" />
+                        </labels>
+                        <control id="educ_rolerate" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="educ_rolerate" disabled="false" />
+                      </cell>
+                      <cell id="{e00cb12c-4c92-6ce4-0254-c4641912097d}" showlabel="false">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{a72c1c64-9b64-4433-8c25-a98c3206ec24}">
+                        <labels>
+                          <label description="Owner" languagecode="1033" />
+                        </labels>
+                        <control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
+                      </cell>
+                      <cell id="{536cb01c-85bb-be3a-22ed-c42e26426ded}" showlabel="false">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <Navigation>
+        <NavBar></NavBar>
+        <NavBarAreas>
+          <NavBarArea Id="Info">
+            <Titles>
+              <Title LCID="1033" Text="Common" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Sales">
+            <Titles>
+              <Title LCID="1033" Text="Sales" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Service">
+            <Titles>
+              <Title LCID="1033" Text="Service" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Marketing">
+            <Titles>
+              <Title LCID="1033" Text="Marketing" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="ProcessCenter">
+            <Titles>
+              <Title LCID="1033" Text="Process Sessions" />
+            </Titles>
+          </NavBarArea>
+        </NavBarAreas>
+      </Navigation>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Information" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="A form for this entity." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

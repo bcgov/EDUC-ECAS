@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{a0af204c-983e-4a92-9c22-ffa8d8a1eb03}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="educ_key" select="1" icon="1" preview="1">
+        <row name="result" id="educ_configid">
+          <cell name="educ_group" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="educ_key" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="educ_value" width="300" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="educ_config">
+          <attribute name="educ_key" />
+          <order attribute="educ_group" descending="false" />
+          <order attribute="educ_key" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <attribute name="educ_value" />
+          <attribute name="educ_group" />
+          <attribute name="educ_configid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.1</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Active Configs" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

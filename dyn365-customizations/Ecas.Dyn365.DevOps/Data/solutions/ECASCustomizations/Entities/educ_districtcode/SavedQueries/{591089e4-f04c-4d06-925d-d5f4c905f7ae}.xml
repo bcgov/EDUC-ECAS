@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{591089e4-f04c-4d06-925d-d5f4c905f7ae}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="educ_name" select="1" icon="1" preview="1">
+        <row name="result" id="educ_districtcodeid">
+          <cell name="educ_districtnumber" width="100" />
+          <cell name="educ_name" width="300" />
+          <cell name="educ_districtnamenumber" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="createdby" width="100" />
+          <cell name="createdon" width="125" />
+          <cell name="modifiedby" width="100" />
+          <cell name="modifiedon" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>1</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="educ_districtcode">
+          <attribute name="educ_name" />
+          <attribute name="createdon" />
+          <order attribute="educ_name" descending="false" />
+          <attribute name="educ_districtnumber" />
+          <attribute name="educ_districtnamenumber" />
+          <attribute name="modifiedon" />
+          <attribute name="modifiedby" />
+          <attribute name="createdby" />
+          <attribute name="educ_districtcodeid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.1</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="District Code Advanced Find View" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

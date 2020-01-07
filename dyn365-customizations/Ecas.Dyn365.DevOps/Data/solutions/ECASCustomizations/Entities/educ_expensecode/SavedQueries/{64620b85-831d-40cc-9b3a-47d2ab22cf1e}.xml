@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{64620b85-831d-40cc-9b3a-47d2ab22cf1e}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="educ_name" select="1" icon="1" preview="1">
+        <row name="result" id="educ_expensecodeid">
+          <cell name="educ_name" width="300" />
+          <cell name="educ_expensecode" width="100" />
+          <cell name="educ_receiptrequired" width="100" />
+          <cell name="educ_rate" width="100" />
+          <cell name="educ_receiptlimit" width="100" />
+          <cell name="statecode" width="100" />
+          <cell name="modifiedby" width="100" />
+          <cell name="modifiedon" width="100" />
+          <cell name="createdby" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>1</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="educ_expensecode">
+          <attribute name="educ_name" />
+          <order attribute="educ_name" descending="false" />
+          <attribute name="statecode" />
+          <attribute name="educ_receiptrequired" />
+          <attribute name="educ_receiptlimit" />
+          <attribute name="educ_rate" />
+          <attribute name="modifiedon" />
+          <attribute name="modifiedby" />
+          <attribute name="educ_expensecode" />
+          <attribute name="createdby" />
+          <attribute name="educ_expensecodeid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>0.0.0.7</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Expense Code Advanced Find View" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

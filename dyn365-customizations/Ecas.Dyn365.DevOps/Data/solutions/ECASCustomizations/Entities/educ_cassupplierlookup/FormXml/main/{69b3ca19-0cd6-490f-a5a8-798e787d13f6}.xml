@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms>
+  <systemform>
+    <formid>{69b3ca19-0cd6-490f-a5a8-798e787d13f6}</formid>
+    <IntroducedVersion>0.0.2.1</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab verticallayout="true" id="{44ac4a31-c8d9-4748-8246-1f3991de4339}" IsUserDefined="1">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section showlabel="false" showbar="false" IsUserDefined="0" id="{32bd36cf-9ff2-4b72-9fa5-75a568179318}" name="{32bd36cf-9ff2-4b72-9fa5-75a568179318}" columns="1" locklevel="0" labelwidth="130" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{420049e7-36cb-c3b9-a4b5-33d7c6995599}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Social Insurance Number" languagecode="1033" />
+                        </labels>
+                        <control id="educ_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_name" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{03ad8ec2-db12-0996-8d9a-13b6a982d1b5}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Supplier Number" languagecode="1033" />
+                        </labels>
+                        <control id="educ_suppliernumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_suppliernumber" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{5a39c49b-8688-19a3-a6e3-6d812c147748}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Supplier Site Number" languagecode="1033" />
+                        </labels>
+                        <control id="educ_suppliersitenumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_suppliersitenumber" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{6acb1037-6773-a189-1cb9-b852820b5916}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Method of Payment" languagecode="1033" />
+                        </labels>
+                        <control id="educ_methodofpayment" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_methodofpayment" disabled="false" uniqueid="{215136ee-dc09-6099-6682-e881637b4b59}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{2ae25534-4185-3175-968c-608c3c1a0b01}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Last Name" languagecode="1033" />
+                        </labels>
+                        <control id="educ_lastname" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="educ_lastname" disabled="false" uniqueid="{e899b10d-098d-79e4-a1d4-edbad2155111}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{48b4723b-2d7d-45b7-b1e9-b8d7da99d10b}" columns="111">
+        <rows>
+          <row>
+            <cell id="{6de898c9-143b-4ce3-b44a-a8a706484fa7}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{8e4977c6-6d68-6538-7ec8-618de4852725}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{4be4b623-b456-c89e-9658-e575e2ddd513}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="Owner" languagecode="1033" />
+              </labels>
+              <control id="header_ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" disabled="false" />
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <footer id="{1b60ddad-9d27-40ff-ad44-6a247711b89a}" columns="111">
+        <rows>
+          <row>
+            <cell id="{a5b316e7-27da-2b9a-4974-81d7c9392833}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="Created On" languagecode="1033" />
+              </labels>
+              <control id="footer_createdon" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="createdon" disabled="true" />
+            </cell>
+            <cell id="{84928756-20c2-bc00-d94d-4c90e0d953c6}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="Modified On" languagecode="1033" />
+              </labels>
+              <control id="footer_modifiedon" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="modifiedon" disabled="true" />
+            </cell>
+            <cell id="{5d169b45-2cb2-8ba4-b0ac-502c9435d408}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="Modified By" languagecode="1033" />
+              </labels>
+              <control id="footer_modifiedby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="modifiedby" disabled="true" />
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <Navigation>
+        <NavBar></NavBar>
+        <NavBarAreas>
+          <NavBarArea Id="Info">
+            <Titles>
+              <Title LCID="1033" Text="Common" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Sales">
+            <Titles>
+              <Title LCID="1033" Text="Sales" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Service">
+            <Titles>
+              <Title LCID="1033" Text="Service" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Marketing">
+            <Titles>
+              <Title LCID="1033" Text="Marketing" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="ProcessCenter">
+            <Titles>
+              <Title LCID="1033" Text="Process Sessions" />
+            </Titles>
+          </NavBarArea>
+        </NavBarAreas>
+      </Navigation>
+      <controlDescriptions />
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Information" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="A form for this entity." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>
