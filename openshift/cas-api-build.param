@@ -4,7 +4,7 @@
 # Template File: templates/cas-api/cas-api-build.json
 #=========================================================
 NAME=cas-api
-GIT_REPO_URL=https://github.com/JonTaylorBCGov/CASInterfaceService.git
+GIT_REPO_URL=https://github.com/bcgov/EDUC-HUB.git
 GIT_REF=master
 SOURCE_CONTEXT_DIR=
 SOURCE_IMAGE_KIND=DockerImage
