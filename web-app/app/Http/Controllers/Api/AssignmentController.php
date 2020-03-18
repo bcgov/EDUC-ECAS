@@ -10,7 +10,6 @@ use App\Dynamics\Interfaces\iContractStage;
 use App\Dynamics\Interfaces\iProfile;
 use App\Dynamics\Interfaces\iRole;
 use App\Dynamics\Interfaces\iSession;
-use App\Dynamics\Session;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AssignmentUpdateRequest;
 use App\Http\Resources\AssignmentResource;
@@ -90,18 +89,6 @@ class AssignmentController extends Controller
             'session_id' => ['required', 'string', 'max:50' ]
         ]);
 
-        // check that the session is Open and Published
-        $session = $this->session->get($validatedData['session_id']);
-        if( ! ($session['is_published'] && $session['status'] == Session::$status['Open'])) {
-            abort(401, 'unauthorized');
-        }
-
-        // check that user has no current assignments
-        $check_no_assignments = $this->assignment->filter(['contact_id' => $profile_id]);
-        if( count($check_no_assignments) > 0 ) {
-            abort(401, 'unauthorized');
-        }
-
         $validatedData['contact_id'] = $profile_id;
 
         $new_record_id = $this->assignment->create($validatedData);
@@ -176,7 +163,7 @@ class AssignmentController extends Controller
               $current_status['name'] == Assignment::ACCEPTED_STATUS ||
                 $current_status['name'] == Assignment::INVITED_STATUS)   {
 
-            if ($action == Assignment::DECLINED_STATUS) {
+            if ( $action == Assignment::DECLINED_STATUS || $action == Assignment::WITHDREW_STATUS ) {
 
                 $data['status_id']  = $assignment_statuses->firstWhere('name' , Assignment::DECLINED_STATUS)['id'];
                 $data['state']      = Assignment::INACTIVE_STATE;

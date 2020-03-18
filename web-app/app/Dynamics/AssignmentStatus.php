@@ -22,5 +22,6 @@ class AssignmentStatus extends DynamicsMetaRepository implements iModelRepositor
         'id'   => 'Id',
         'name' => 'Label'
     ];
+    
 
 }
