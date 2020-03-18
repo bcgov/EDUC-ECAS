@@ -12,4 +12,9 @@ RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
 	Header always append X-Frame-Options SAMEORIGIN
 	Header set X-XSS-Protection "1; mode=block"
     Header set X-Content-Type-Options nosniff
+
+    <filesMatch "\\.(css|txt|svg|jpg|png)$">
+        Header set Cache-Control "max-age=604800, public"
+    </filesMatch>
+
 </IfModule>
