@@ -6,7 +6,7 @@
 NAME=ecas-frontend
 APP_NAME=ecas
 GIT_REPO_URL=https://github.com/bcgov/ECAS.git
-GIT_REF=dev
+GIT_REF=master
 SOURCE_CONTEXT_DIR=web-app
 SOURCE_IMAGE_KIND=DockerImage
 SOURCE_IMAGE_NAME=registry.access.redhat.com/rhscl/php-71-rhel7
