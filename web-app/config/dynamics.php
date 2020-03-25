@@ -13,7 +13,7 @@ return [
     ],
 
     'cache' => [
-        'seconds' => env('CACHE_DURATION_SECONDS', 28800)
+        'seconds' => env('CACHE_DURATION_SECONDS', 120)
     ]
 
 
