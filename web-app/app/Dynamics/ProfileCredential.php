@@ -20,7 +20,8 @@ class ProfileCredential extends DynamicsRepository implements iModelRepository
         'id'            => 'educ_credentialid',
         'contact_id'    => '_educ_contact_value',
         'credential_id' => '_educ_credential_value',
-        'verified'      => 'educ_verifiedcredential'
+        'verified'      => 'educ_verifiedcredential',
+        'year'          => 'educ_credentialsyear'
     ];
 
     public static $links = [
