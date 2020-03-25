@@ -55,7 +55,7 @@
                                                            alt="delete" style="color: red;"/>
                                     </div>
                                     <div class="col-11">{{ credential.credential.name }}
-                                        <span v-if="credential.year" class="col">Expiry: {{ credential.year }}</span>
+                                        <span v-if="credential.year" class="col">Year: {{ credential.year }}</span>
                                     </div>
                                 </div>
                                 <div class="row pt-3 pl-4">
@@ -70,7 +70,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group col-sm-4">
-                                            <label for="new_credential_year">Expiry year</label>
+                                            <label for="new_credential_year">Year certified</label>
                                             <input v-model="new_credential.year" type="text" class="form-control form-control-sm" name="new_credential_year"
                                                    id="new_credential_year" placeholder="YYYY">
 
