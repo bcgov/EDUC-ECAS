@@ -54,25 +54,34 @@
                                         <font-awesome-icon v-else icon="trash" @click="deleteCredential(credential)"
                                                            alt="delete" style="color: red;"/>
                                     </div>
-                                    <div class="col">{{ credential.credential.name }}</div>
-                                </div>
-                                <div class="row pt-3">
-                                    <div class="form-group col">
-                                        <select v-model="new_credential" class="form-control">
-                                            <option value="0">Select New Credential</option>
-                                            <option v-for="credential in credentialsAvailable" :value="credential">
-                                                {{ credential.name }}
-                                            </option>
-                                        </select>
+                                    <div class="col-11">{{ credential.credential.name }}
+                                        <span v-if="credential.year" class="col">Expiry: {{ credential.year }}</span>
                                     </div>
-                                    <div class="col">
-                                        <button :class="credentialButtonClass" @click="addCredential(new_credential)"
-                                                :disabled="disableAddCredentialButton">
+                                </div>
+                                <div class="row pt-3 pl-4">
+                                    <div class="form-row">
+                                        <div class="form-group col-sm-5">
+                                            <label for="new_credential_year">Credential</label>
+                                            <select v-model="new_credential.credential" class="form-control form-control-sm">
+                                                <option value="0">Select New Credential</option>
+                                                <option v-for="credential in credentialsAvailable" :value="credential">
+                                                    {{ credential.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <label for="new_credential_year">Expiry year</label>
+                                            <input v-model="new_credential.year" type="text" class="form-control form-control-sm" name="new_credential_year"
+                                                   id="new_credential_year" placeholder="YYYY">
+
+                                        </div>
+                                        <button class="btn btn-primary btn-sm mt-4 mb-3" @click="addCredential()">
                                             <span>
                                                 <div class="loader text-center" v-show="working"></div>
                                             </span>
                                             <div v-show="!working">Add</div>
                                         </button>
+
                                     </div>
                                 </div>
                             </div>
@@ -80,9 +89,6 @@
                     </div>
                 </div>
                 <marking-sessions :sessions="this.getSessions"></marking-sessions>
-
-
-
 
             </div>
         </div>
@@ -121,12 +127,18 @@
         data() {
             return {
                 credentials_applied: [...this.user_credentials],
-                new_credential: 0,
                 filter: '',
                 current_session: {},
                 new_user: false,
                 working: false,
-                mounted: false
+                mounted: false,
+                blank_credential: {
+                    credential: 0,
+                    year: null
+                },
+                new_credential: {
+                    credential: 0
+                },
             }
         },
         mounted() {
@@ -168,37 +180,27 @@
                 // subtract applied_credentials from credentials
                 return this.credentials.filter(x => ! this.credentialsIdsInUse.includes(x.id));
 
-            },
-
-            disableAddCredentialButton() {
-                return this.new_credential === "0" || this.new_credential === 0;
-            },
-
-            credentialButtonClass() {
-                if (this.disableAddCredentialButton) {
-                    return 'd-none';
-                }
-
-                else return 'btn btn-primary btn-sm';
-
             }
 
         },
         methods: {
-            addCredential(selection) {
-                console.log('adding credential', selection);
+            addCredential() {
+                console.log('adding credential', this.new_credential);
 
                 this.working = true;
 
                 var form = this;
 
+                console.log('form', form );
+
                 axios.post('/api/' + form.getUser.id + '/profile-credentials', {
-                    credential_id: form.new_credential.id
+                    credential_id: this.new_credential.credential.id,
+                    year: this.new_credential.year
                 })
                     .then(function (response) {
                         form.working = false;
                         Event.fire('credential-added', response.data);
-                        console.log('Create Success!', response.data)
+                        console.log('Create Success!', response.data);
                     })
                     .catch(function (error) {
                         form.working = false;
@@ -231,7 +233,10 @@
                 // Add to the applied list
                 this.credentials_applied.push(profile_credential.data);
 
-                this.new_credential = 0;
+                this.new_credential = {
+                    credential: 0,
+                    year: null
+                }
             },
             removeCredential(profile_credential) {
                 console.log('removeCredential', profile_credential);
@@ -247,7 +252,7 @@
                 this.credentials_applied.splice(index, 1);
 
 
-                this.new_credential = 0;
+                //this.new_credential = this.blank_credential;
             },
 
 

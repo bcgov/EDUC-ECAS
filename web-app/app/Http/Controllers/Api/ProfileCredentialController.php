@@ -85,13 +85,15 @@ class ProfileCredentialController extends Controller
 
         $this->validate($request, [
             'credential_id' => [ 'required','string','max:50', new ValidProfileCredential($this->credential) ],
+            'year' => [ 'integer','min:2019','max:2050','nullable' ]
         ]);
 
 
         $profile_credential_id = $this->profile_credential->create([
             'contact_id'    => $profile['id'],
             'credential_id' => $request['credential_id'],
-            'verified'      => ProfileCredential::$status['Unverified']  // all new profile credentials are 'Unverified'
+            'verified'      => ProfileCredential::$status['Unverified'],  // all new profile credentials are 'Unverified'
+            'year'          => $request['year']
         ]);
 
         $new_record = $this->profile_credential->get($profile_credential_id);

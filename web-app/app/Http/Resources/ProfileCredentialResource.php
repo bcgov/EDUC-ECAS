@@ -27,6 +27,7 @@ class ProfileCredentialResource extends JsonResource
             'id'            => $this['id'],
             'contact_id'    => $this['contact_id'],
             'credential'    => new SimpleResource($this['credential']),
+            'year'          => $this['year'],
             'verified'      => $this['verified'] == ProfileCredential::$status['Yes'] ? TRUE : FALSE,
         ];
     }
