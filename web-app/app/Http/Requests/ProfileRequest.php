@@ -113,8 +113,8 @@ class ProfileRequest extends FormRequest
             'district_id'                   => 'nullable|string|max:50',
             'postal_code'                   => [ 'required' , 'string' , 'max:20' , new PostalCodeRule($input['country']['name']) ],
             'social_insurance_number'       => [ 'nullable', 'numeric' , 'digits:9' , new SocialInsuranceNumberRule() ],
-            'professional_certificate_bc'   => 'nullable|in:Yes,No',
-            'professional_certificate_yk'   => 'nullable|in:Yes,No'
+            'professional_certificate_bc'   => 'nullable|string|max:50',
+            'professional_certificate_yk'   => 'nullable|string|max:50'
         ];
     }
     

@@ -129,30 +129,14 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col">
-                        <label class="control-label">BC Certificate</label>
-                        <div class="pl-3">
-                            <label class="radio-inline control-label" for="certificate_bc_yes">
-                                <input type="radio" name="professional_certificate_bc"
-                                       v-model="user_local.professional_certificate_bc" id="certificate_bc_yes" value="Yes"> Yes
-                            </label>
-                            <label class="radio-inline control-label pl-3" for="certificate_bc_no">
-                                <input type="radio" name="professional_certificate_bc"
-                                       v-model="user_local.professional_certificate_bc" id="certificate_bc_no" value="No"> No
-                            </label>
-                        </div>
+                        <label for="professional_certificate_bc">BC Certificate Number</label>
+                        <input type="text" class="form-control" name="professional_certificate_bc"
+                               v-model="user_local.professional_certificate_bc" id="professional_certificate_bc">
                     </div>
                     <div class="form-group col">
-                        <label class="control-label">Yukon Certificate</label>
-                        <div class="pl-3">
-                            <label class="radio-inline control-label" for="certificate_yk_yes">
-                                <input type="radio" name="professional_certificate_yk"
-                                       v-model="user_local.professional_certificate_yk" id="certificate_yk_yes" value="Yes"> Yes
-                            </label>
-                            <label class="radio-inline control-label pl-3" for="certificate_yk_no">
-                                <input type="radio" name="professional_certificate_yk"
-                                       v-model="user_local.professional_certificate_yk" id="certificate_yk_no" value="No"> No
-                            </label>
-                        </div>
+                        <label for="professional_certificate_yk">YK Certificate Number</label>
+                        <input type="text" class="form-control" name="professional_certificate_yk"
+                               v-model="user_local.professional_certificate_yk" id="professional_certificate_yk">
                     </div>
                 </div>
                 <div class="form-group row">
