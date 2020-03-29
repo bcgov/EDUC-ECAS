@@ -35,12 +35,15 @@ class ProfileCredentialTest extends BaseMigrations
                     '_educ_contact_value'       => 'ea186595-8ebc-e911-b80d-005056833c5b',
                     '_educ_credential_value'    => 'aff23b01-b06a-e911-b80a-005056833c5b',
                     'educ_verifiedcredential'   => 610410000,
+                    'educ_credentialsyear'      => 2020,
+
                 ],
                 (object) [
                     'educ_credentialid'         => '4aa6aa7b-91bc-e911-b80d-005056833c5b',
                     '_educ_contact_value'       => 'va186595-8ebc-e911-b80d-005056833c5b',
                     '_educ_credential_value'    => 'fff23b01-b06a-e911-b80a-005056833c5b',
                     'educ_verifiedcredential'   => 610410000,
+                    'educ_credentialsyear'      => 2020
                 ]
             ]
             ])),
@@ -77,12 +80,14 @@ class ProfileCredentialTest extends BaseMigrations
                     '_educ_contact_value'       => $record_under_test,
                     '_educ_credential_value'    => 'aff23b01-b06a-e911-b80a-005056833c5b',
                     'educ_verifiedcredential'   => 610410000,
+                    'educ_credentialsyear'      => 2019
                 ],
                 (object) [
                     'educ_credentialid'         => '4aa6aa7b-91bc-e911-b80d-005056833c5b',
                     '_educ_contact_value'       => $record_under_test,
                     '_educ_credential_value'    => 'fff23b01-b06a-e911-b80a-005056833c5b',
                     'educ_verifiedcredential'   => 610410000,
+                    'educ_credentialsyear'      => 2019
                 ]
             ]
             ])),
@@ -164,6 +169,7 @@ class ProfileCredentialTest extends BaseMigrations
         $this->assertArrayHasKey('contact_id', $result);
         $this->assertArrayHasKey('credential_id', $result);
         $this->assertArrayHasKey('verified', $result);
+        $this->assertArrayHasKey('year', $result);
 
 
     }
