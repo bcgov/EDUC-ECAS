@@ -93,7 +93,12 @@ class AssignmentTest extends BaseMigrations
         $assignment_status          = 'hijk';
         $state                      = 'lmno';
 
-        $new_assignment             = [
+        $create_data             = [
+            'contact_id'            =>  $mock_profile_id,
+            'session_id'            =>  'new_session_id',
+        ];
+
+        $return_data            = [
             'contact_id'            =>  $mock_profile_id,
             'session_id'            =>  'new_session_id',
             'role_id'               =>  $role_id,
@@ -109,15 +114,15 @@ class AssignmentTest extends BaseMigrations
             'federated_id'          => $mock_federated_id
         ]));
 
-        $this->mockCreateAssignment('new_assignment_id', $new_assignment);
+        $this->mockCreateAssignment('new_assignment_id', $create_data, $return_data);
         $this->mockAllAssignmentStatus();
 
 
-        $response = $this->post( '/api/' . $mock_profile_id .'/assignments' , $new_assignment);
+        $response = $this->post( '/api/' . $mock_profile_id .'/assignments' , $create_data);
 
         $response
             ->assertJsonFragment(['contact_id'   => (string) $mock_profile_id ])
-            ->assertJsonFragment(['session_id'   => $new_assignment['session_id']]);
+            ->assertJsonFragment(['session_id'   => $return_data['session_id']]);
     }
 
     protected function mockFilterAssignments($profile_id, Array $data = [] )
@@ -138,16 +143,15 @@ class AssignmentTest extends BaseMigrations
     }
 
 
-    protected function mockCreateAssignment($new_assignment_id, Array $data = [] )
+    protected function mockCreateAssignment($new_assignment_id, Array $create_date, Array $return_data )
     {
-        $new_assignment             = $data;
-        $new_assignment['id']       = $new_assignment_id;
+        $return_data['id']       = $new_assignment_id;
 
         // mock the Profile
         $repository = \Mockery::mock(Assignment::class);
 
         $repository->shouldReceive('create')
-            ->with($data)
+            ->with($create_date)
             ->once()
             ->andReturn($new_assignment_id)
             ->ordered();
@@ -155,7 +159,7 @@ class AssignmentTest extends BaseMigrations
         $repository->shouldReceive('get')
             ->with($new_assignment_id)
             ->once()
-            ->andReturn($new_assignment)
+            ->andReturn($return_data)
             ->ordered();
 
         // load the mock into the IoC container

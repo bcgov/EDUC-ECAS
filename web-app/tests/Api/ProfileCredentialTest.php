@@ -5,6 +5,7 @@ namespace Tests\Api;
 
 use App\Dynamics\Credential;
 use App\Dynamics\ProfileCredential;
+use Illuminate\Support\Collection;
 use Tests\BaseMigrations;
 
 
@@ -152,7 +153,8 @@ class ProfileCredentialTest extends BaseMigrations
         $new_profile_credential     = [
             'contact_id'    => $mock_profile_id,
             'credential_id' => $mock_credential_id,
-            'verified'      =>  610410002 // all new records are assigned an 'unverified' status
+            'verified'      => 610410002, // all new records are assigned an 'unverified' status
+            'year'          => null
         ];
         $new_profile_credential_id  = 'new_id';
 
@@ -165,10 +167,11 @@ class ProfileCredentialTest extends BaseMigrations
 
         $this->mockCreateProfileCredential($new_profile_credential_id, $new_profile_credential);
 
-        $this->mockGetCredential($mock_credential_id, [
-           'id'         => $mock_credential_id,
-           'name'       => 'Name of Credential'
-        ]);
+        $this->mockCreateCredential($mock_credential_id, [
+            [ "id" => $mock_credential_id, 'name' => 'Credential One' ],
+            [ "id"    => "aft", "name"  => "Some name" ]
+        ],
+        [ 'id'         => $mock_credential_id, 'name'       => 'Name of Credential'  ]);
 
         $response = $this->post('/api/' . $mock_profile_id . '/profile-credentials', $new_profile_credential );
 
@@ -187,13 +190,16 @@ class ProfileCredentialTest extends BaseMigrations
     public function a_user_cannot_create_a_profile_credential_with_a_verified_status()
     {
 
+        $this->withoutMiddleware();
+
         $mock_profile_id            = 'abc';
         $mock_federated_id          = '123';
-        $mock_credential_id         = 'efg';
+        $mock_credential_id         = 'b5f23b01-b06a-e911-b80a-005056833c5b';
         $new_profile_credential     = [
             'contact_id'    => $mock_profile_id,
             'credential_id' => $mock_credential_id,
-            'verified'      =>  610410002 // all new records are assigned an 'unverified' status
+            'verified'      =>  610410002, // all new records are assigned an 'unverified' status
+            'year'          => null
         ];
         $new_profile_credential_id  = 'new_id';
 
@@ -206,10 +212,11 @@ class ProfileCredentialTest extends BaseMigrations
 
         $this->mockCreateProfileCredential($new_profile_credential_id, $new_profile_credential);
 
-        $this->mockGetCredential($mock_credential_id, [
-            'id'         => $mock_credential_id,
-            'name'       => 'Name of Credential'
-        ]);
+        $this->mockCreateCredential($mock_credential_id, [
+            [ "id" => $mock_credential_id, 'name' => 'Credential One' ],
+            [ "id"    => "aft", "name"  => "Some name" ]
+        ],
+            [ 'id'         => $mock_credential_id, 'name'       => 'Name of Credential'  ]);
 
         // Attempt to submit a `verified` credential
         $modified_profile_credential = $new_profile_credential;
@@ -330,15 +337,36 @@ class ProfileCredentialTest extends BaseMigrations
     }
 
 
-    private function mockGetCredential($credential_id, Array $data = [] )
+    private function mockCreateCredential($credential_id, Array $all_data, Array $get_data )
     {
 
         // mock the Credential
         $repository = \Mockery::mock(Credential::class);
+        $repository->shouldReceive('all')
+            ->withNoArgs()
+            ->once()
+            ->andReturn(collect($all_data));
+
         $repository->shouldReceive('get')
             ->with($credential_id)
             ->once()
-            ->andReturn($data);
+            ->andReturn($get_data);
+
+        // load the mock into the IoC container
+        $this->app->instance(Credential::class, $repository);
+
+    }
+
+
+    private function mockGetAllCredentials($return_data)
+    {
+
+        // mock the Credential
+        $repository = \Mockery::mock(Credential::class);
+        $repository->shouldReceive('all')
+            ->once()
+            ->andReturn($return_data);
+
 
         // load the mock into the IoC container
         $this->app->instance(Credential::class, $repository);
