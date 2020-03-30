@@ -1,14 +1,19 @@
 ﻿<template>
-    <div v-if="isLoaded">
-        <dashboard-component
-                :user="dashboard.user"
-                :user_credentials="dashboard.user_credentials"
-                :sessions="dashboard.sessions"
-                :subjects="dashboard.subjects"
-                :regions="dashboard.regions"
-                :countries="dashboard.countries"
-                :credentials="dashboard.credentials" >
-        </dashboard-component>
+    <div>
+
+        <div class="loader text-center" v-if="! isLoaded"></div>
+
+        <div v-if="isLoaded">
+            <dashboard-component
+                    :user="dashboard.user"
+                    :user_credentials="dashboard.user_credentials"
+                    :sessions="dashboard.sessions"
+                    :subjects="dashboard.subjects"
+                    :regions="dashboard.regions"
+                    :countries="dashboard.countries"
+                    :credentials="dashboard.credentials" >
+            </dashboard-component>
+        </div>
     </div>
 </template>
 
@@ -46,3 +51,27 @@
         }
     }
 </script>
+
+<style>
+    .nav-tabs {
+        border-bottom: none;
+    }
+    .loader {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 5em;
+        height: 5em;
+        margin: 5em auto auto auto;
+        animation: spin 2s linear infinite;
+    }
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
