@@ -53,18 +53,10 @@ class ProfileController extends Controller
     public function show($profile_id)
     {
 
-        $user_id = $this->authentication->id();
-
-        if( ! $user_id ) {
-            abort(401, 'unauthorized');
-        }
-
-        $profile = $this->profile->get($profile_id);
-
-
-        if( $profile['id'] <> $profile_id ) {
-            abort(401, 'unauthorized');
-        }
+        $keycloak_user = $this->authentication->user();
+        $unverified_profile = $this->profile->get($profile_id);
+        
+        $profile = parent::checkUserIsAuthorized($keycloak_user, $unverified_profile);
 
 
         return new ProfileResource($profile, $this->school, $this->district, $this->region, $this->country);
@@ -94,22 +86,18 @@ class ProfileController extends Controller
     /*
      * Update an existing user Profile (Contact in Dynamics)
      */
-    public function update($id, ProfileRequest $request)
+    public function update(ProfileRequest $request, $profile_id)
     {
 
-        $user = $this->authentication->user();
+        $keycloak_user = $this->authentication->user();
+        $unverified_profile = $this->profile->get($profile_id);
 
-        // check user is updating their own profile
-        $profile = $this->profile->get($id);
+        $profile = parent::checkUserIsAuthorized($keycloak_user, $unverified_profile);
 
-        if($user['sub'] <> $profile['federated_id'])
-        {
-            abort(401, 'unauthorized');
-        }
 
         $data                   = $request->validated();
         $data['federated_id']   = $profile['federated_id'];
-        $data['username']       = $this->removeSuffix($user['preferred_username']);
+        $data['username']       = self::removeSuffix($keycloak_user['preferred_username']);
 
 
         $profile = $this->profile->update($profile['id'], $data);
@@ -124,19 +112,12 @@ class ProfileController extends Controller
 
     }
 
-    private function removeSuffix($username)
+    private static function removeSuffix($username)
     {
         // remove `@bceid` from user names
         return explode('@bceid', $username)[0];
 
     }
-
-
-
-
-
-
-
-
+    
 
 }

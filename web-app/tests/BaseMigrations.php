@@ -15,20 +15,6 @@ abstract class BaseMigrations extends TestCase
     use DatabaseMigrations;
 
 
-    protected function mockUserId($user_id)
-    {
-
-        // mock the Keycloak Guard
-        $guard = \Mockery::mock(KeycloakGuard::class);
-        $guard->shouldReceive('id')
-            ->once()
-            ->andReturn($user_id);
-
-        // load the mock into the IoC container
-        $this->app->instance(KeycloakGuard::class, $guard);
-
-    }
-
 
     protected function mockUser($user_id)
     {
@@ -46,6 +32,22 @@ abstract class BaseMigrations extends TestCase
         $this->app->instance(KeycloakGuard::class, $guard);
 
     }
+
+
+    protected function mockUnauthenticatedUser()
+    {
+
+        // mock the Keycloak Guard
+        $guard = \Mockery::mock(KeycloakGuard::class);
+        $guard->shouldReceive('user')
+            ->once()
+            ->andReturnNull();
+
+        // load the mock into the IoC container
+        $this->app->instance(KeycloakGuard::class, $guard);
+
+    }
+
 
 
     protected function mockGetProfile($profile_id, Array $data = [] )

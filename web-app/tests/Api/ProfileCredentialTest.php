@@ -19,7 +19,7 @@ class ProfileCredentialTest extends BaseMigrations
         $mock_profile_id    = 'abc';
         $mock_federated_id  = '123';
 
-        $this->mockUserId($mock_federated_id);
+        $this->mockUser($mock_federated_id);
 
         $this->mockGetProfile($mock_profile_id, $this->validProfileData([
             'id'                    => $mock_profile_id,
@@ -52,7 +52,7 @@ class ProfileCredentialTest extends BaseMigrations
         $mock_profile_id    = 'abc';
         $mock_federated_id  = '123';
 
-        $this->mockUserId($mock_federated_id);
+        $this->mockUser($mock_federated_id);
 
         $this->mockGetProfile($mock_profile_id, $this->validProfileData([
             'id'                    => $mock_profile_id,
@@ -83,10 +83,16 @@ class ProfileCredentialTest extends BaseMigrations
     public function an_unauthenticated_user_cannot_get_any_profile_credentials()
     {
         $this->withExceptionHandling();
+        $mock_profile_id    = 'abc';
 
-        $this->mockUserId(null);
+        $this->mockUser(null);
 
-        $response = $this->get('/api/' . 'an_unknown_profile_id' . '/profile-credentials' );
+        $this->mockGetProfile($mock_profile_id, $this->validProfileData([
+            'id'                    => $mock_profile_id,
+            'federated_id'          => 'some_user_guid'
+        ]));
+
+        $response = $this->get('/api/' . $mock_profile_id . '/profile-credentials' );
         $response->assertStatus(401); // unauthorised
     }
 
@@ -97,7 +103,7 @@ class ProfileCredentialTest extends BaseMigrations
         $mock_federated_id  = '123';
         $record_id_to_be_deleted = 'efg';
 
-        $this->mockUserId($mock_federated_id);
+        $this->mockUser($mock_federated_id);
 
         $this->mockGetProfile($mock_profile_id, $this->validProfileData([
             'id'                    => $mock_profile_id,
@@ -124,7 +130,7 @@ class ProfileCredentialTest extends BaseMigrations
         $mock_federated_id  = '123';
         $record_id_to_be_deleted = 'efg';
 
-        $this->mockUserId($mock_federated_id);
+        $this->mockUser($mock_federated_id);
 
         $this->mockGetProfile($mock_profile_id, $this->validProfileData([
             'federated_id'          => $mock_federated_id
@@ -158,7 +164,7 @@ class ProfileCredentialTest extends BaseMigrations
         ];
         $new_profile_credential_id  = 'new_id';
 
-        $this->mockUserId($mock_federated_id);
+        $this->mockUser($mock_federated_id);
 
         $this->mockGetProfile($mock_profile_id, $this->validProfileData([
             'id'                    => $mock_profile_id,
@@ -203,7 +209,7 @@ class ProfileCredentialTest extends BaseMigrations
         ];
         $new_profile_credential_id  = 'new_id';
 
-        $this->mockUserId($mock_federated_id);
+        $this->mockUser($mock_federated_id);
 
         $this->mockGetProfile($mock_profile_id, $this->validProfileData([
             'id'                    => $mock_profile_id,

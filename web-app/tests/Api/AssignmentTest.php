@@ -19,7 +19,7 @@ class AssignmentTest extends BaseMigrations
         $mock_profile_id    = 'abc';
         $mock_federated_id  = '123';
 
-        $this->mockUserId($mock_federated_id);
+        $this->mockUser($mock_federated_id);
 
         $this->mockGetProfile($mock_profile_id, $this->validProfileData([
             'id'                    => $mock_profile_id,
@@ -62,7 +62,12 @@ class AssignmentTest extends BaseMigrations
         $this->withExceptionHandling();
         $mock_profile_id    = 'abc';
 
-        $this->mockUserId(null);
+        $this->mockUnauthenticatedUser();
+
+        $this->mockGetProfile($mock_profile_id, $this->validProfileData([
+            'id'                    => $mock_profile_id,
+            'federated_id'          => 'some_user_guid'
+        ]));
 
         $response = $this->get('/api/'. $mock_profile_id .'/assignments' );
         $response->assertStatus(401); // unauthorized
@@ -107,7 +112,7 @@ class AssignmentTest extends BaseMigrations
             'contract_stage'        =>  $contract_stage
         ];
 
-        $this->mockUserId($mock_federated_id);
+        $this->mockUser($mock_federated_id);
 
         $this->mockGetProfile($mock_profile_id, $this->validProfileData([
             'id'                    => $mock_profile_id,

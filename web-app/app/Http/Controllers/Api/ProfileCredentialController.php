@@ -36,16 +36,10 @@ class ProfileCredentialController extends Controller
     public function index($profile_id)
     {
 
-        // check user is updating their own profile
+        $keycloak_user = $this->authentication->user();
+        $unverified_profile = $this->profile->get($profile_id);
 
-        $user_id = $this->authentication->id();
-
-        if( ! $user_id ) {
-            abort(401, 'unauthorized');
-        }
-
-        $profile = $this->profile->get($profile_id);
-
+        $profile = parent::checkUserIsAuthorized($keycloak_user, $unverified_profile);
 
         $credentials =  $this->profile_credential->filter(['contact_id' => $profile['id']]);
 
@@ -62,7 +56,7 @@ class ProfileCredentialController extends Controller
         abort(405, 'method not allowed');
     }
 
-    public function update(Request $request, $id)
+    public function update($id)
     {
         abort(405, 'method not allowed');
     }
@@ -70,18 +64,13 @@ class ProfileCredentialController extends Controller
     /*
  * Attach a credential to a User
  */
-    public function store($profile_id , Request $request)
+    public function store(Request $request, $profile_id)
     {
 
-        $user_id = $this->authentication->id();
+        $keycloak_user = $this->authentication->user();
+        $unverified_profile = $this->profile->get($profile_id);
 
-        if( ! $user_id ) {
-            abort(401, 'unauthorized');
-        }
-
-        // check user is updating their own profile
-        $profile = $this->profile->get($profile_id);
-
+        $profile = parent::checkUserIsAuthorized($keycloak_user, $unverified_profile);
 
         $this->validate($request, [
             'credential_id' => [ 'required','string','max:50', new ValidProfileCredential($this->credential) ],
@@ -103,25 +92,21 @@ class ProfileCredentialController extends Controller
         return new ProfileCredentialResource($new_record);
     }
 
-    public function destroy($profile_id, $id)
+    public function destroy($profile_id, $credential_id)
     {
 
-        $user_id = $this->authentication->id();
+        $keycloak_user = $this->authentication->user();
+        $unverified_profile = $this->profile->get($profile_id);
 
-        if( ! $user_id ) {
-            abort(401, 'unauthorized');
-        }
+        $profile = parent::checkUserIsAuthorized($keycloak_user, $unverified_profile);
 
-        // check user is deleting their own profile credential record
-        $profile = $this->profile->get($profile_id);
-
-        $record_for_deletion = $this->profile_credential->get($id);
+        $record_for_deletion = $this->profile_credential->get($credential_id);
 
         if( $record_for_deletion['contact_id'] <> $profile['id'] ) {
             abort(401, 'unauthorized');
         }
 
-        $this->profile_credential->delete($id);
+        $this->profile_credential->delete($credential_id);
 
         return Response::json(['message' => 'success'], 204);
     }
