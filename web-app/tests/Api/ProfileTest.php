@@ -25,7 +25,7 @@ class ProfileTest extends BaseMigrations
         $mock_federated_id  = '123';
         $mock_country       = 'some_id';
 
-        $this->mockUserId($mock_federated_id);
+        $this->mockUser($mock_federated_id);
         $this->mockGetProfile($mock_profile_id, $this->validProfileData([
             'district_id'       => $mock_district_id,
             'school_id'         => $mock_school_id,
@@ -50,14 +50,41 @@ class ProfileTest extends BaseMigrations
     public function an_unauthenticated_user_cannot_get_a_profile()
     {
         $this->withExceptionHandling();
+        $mock_profile_id = 'guid-abc';
 
-        $this->mockUserId(null);
+        $this->mockUser(null);
 
-        $response = $this->get('/api/profiles/' . 'does_not_matter' );
+        $this->mockGetProfile($mock_profile_id, $this->validProfileData([
+            'id'                    => $mock_profile_id,
+            'federated_id'          => 'some_user_guid'
+        ]));
+
+        $response = $this->get('/api/profiles/' . $mock_profile_id );
 
         $response->assertStatus(401); // unauthorized
 
     }
+
+
+    /** @test */
+    public function an_authenticated_user_cannot_see_another_users_profile()
+    {
+        $this->withExceptionHandling();
+        $mock_profile_id = 'some-user-guid';
+
+        $this->mockUser($mock_profile_id);
+
+        $this->mockGetProfile($mock_profile_id, $this->validProfileData([
+            'id'                    => $mock_profile_id,
+            'federated_id'          => 'some_user_guid'
+        ]));
+
+        $response = $this->get('/api/profiles/' . $mock_profile_id );
+
+        $response->assertStatus(401); // unauthorized
+
+    }
+
 
 
     /** @test */
@@ -72,7 +99,7 @@ class ProfileTest extends BaseMigrations
         $mock_federated_id  = '123';
         $mock_country       = 'some_id';
 
-        $this->mockUserId($mock_federated_id);
+        $this->mockUser($mock_federated_id);
         $this->mockGetProfile($mock_profile_id, $this->validProfileData([
             'district_id'       => $mock_district_id,
             'school_id'         => $mock_school_id,
@@ -101,7 +128,7 @@ class ProfileTest extends BaseMigrations
         $mock_federated_id  = '123';
         $mock_country       = 'some_id';
 
-        $this->mockUserId($mock_federated_id);
+        $this->mockUser($mock_federated_id);
         $this->mockGetProfile($mock_profile_id, $this->validProfileData([
             'district_id'               => $mock_district_id,
             'school_id'                 => $mock_school_id,
@@ -133,7 +160,7 @@ class ProfileTest extends BaseMigrations
         $mock_federated_id  = '123';
         $mock_country       = 'some_id';
 
-        $this->mockUserId($mock_federated_id);
+        $this->mockUser($mock_federated_id);
         $this->mockGetProfile($mock_profile_id, $this->validProfileData([
             'district_id'       => $mock_district_id,
             'school_id'         => $mock_school_id,

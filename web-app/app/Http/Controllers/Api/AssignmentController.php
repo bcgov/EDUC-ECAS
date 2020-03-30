@@ -51,45 +51,29 @@ class AssignmentController extends Controller
 
     public function index($profile_id)
     {
-        $user_id = $this->authentication->id();
+        $keycloak_user = $this->authentication->user();
+        $unverified_profile = $this->profile->get($profile_id);
 
-        if( ! $user_id ) {
-            abort(401, 'unauthorized');
-        }
-
-        $profile = $this->profile->get($profile_id);
-
-
-        if( $profile['id'] <> $profile_id ) {
-            abort(401, 'unauthorized');
-        }
-
+        $profile = parent::checkUserIsAuthorized($keycloak_user, $unverified_profile);
 
         return $this->assignment->filter(['contact_id' => $profile['id']]);
     }
 
 
 
-    public function store( $profile_id, Request $request)
+    public function store(Request $request, $profile_id)
     {
 
-        $user_id = $this->authentication->id();
+        $keycloak_user = $this->authentication->user();
+        $unverified_profile = $this->profile->get($profile_id);
 
-        if( ! $user_id ) {
-            abort(401, 'unauthorized');
-        }
-
-        // check that the user is attempting to create records under their profile
-        $profile = $this->profile->get($profile_id);
-        if( $profile['id'] <> $profile_id ) {
-            abort(401, 'unauthorized');
-        }
+        $profile = parent::checkUserIsAuthorized($keycloak_user, $unverified_profile);
 
         $validatedData = $request->validate([
             'session_id' => ['required', 'string', 'max:50' ]
         ]);
 
-        $validatedData['contact_id'] = $profile_id;
+        $validatedData['contact_id'] = $profile['id'];
 
         $new_record_id = $this->assignment->create($validatedData);
 
@@ -99,18 +83,13 @@ class AssignmentController extends Controller
 
 
 
-    public function update( $profile_id, $assignment_id, AssignmentUpdateRequest $request )
+    public function update(AssignmentUpdateRequest $request, $profile_id, $assignment_id )
     {
 
-        $federated_id = $this->authentication->id();
+        $keycloak_user = $this->authentication->user();
+        $unverified_profile = $this->profile->get($profile_id);
 
-        // check user is updating their own profile
-        $profile = $this->profile->get($profile_id);
-
-        if($federated_id <> $profile['federated_id'])
-        {
-            abort(401, 'unauthorized');
-        }
+        $profile = parent::checkUserIsAuthorized($keycloak_user, $unverified_profile);
 
         $assignment = $this->assignment->get($assignment_id);
 
