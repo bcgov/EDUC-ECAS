@@ -1,7 +1,7 @@
 ﻿<template>
     <div>
 
-        <div class="loader text-center" v-if="! isLoaded"></div>
+        <div class="dashboard-spinner text-center" v-if="! isLoaded"></div>
 
         <div v-if="isLoaded">
             <dashboard-component
@@ -56,7 +56,7 @@
     .nav-tabs {
         border-bottom: none;
     }
-    .loader {
+    .dashboard-spinner {
         border: 4px solid #f3f3f3; /* Light grey */
         border-top: 4px solid #3498db; /* Blue */
         border-radius: 50%;
