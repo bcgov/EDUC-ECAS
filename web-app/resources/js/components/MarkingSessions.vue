@@ -99,8 +99,12 @@
         computed: {
 
             publicSessions() {
+
+                // The Ministry business rules require that Sessions on the portal be shown only if the
+                // session is published and "Open" OR the user has been assignment related to the session.
+
                 return this.sessions.filter( function (session) {
-                    return session.is_published || ( (! session.is_published) && session.assignment.id != '0' );
+                    return (session.is_published && session.session_status === "Open") || session.assignment.id !== 0;
 
                 })
             },
