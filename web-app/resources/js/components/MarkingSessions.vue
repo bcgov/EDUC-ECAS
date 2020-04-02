@@ -142,9 +142,15 @@
                 });
             },
 
+            sortSessionByEndDate() {
+                return this.dateFilteredSessions.sort(function (a, b) {
+                    return parseInt(a.diff_in_days) - parseInt(b.diff_in_days);
+                })
+            },
+
             filteredSessions() {
                 var dashboard = this;
-                return this.dateFilteredSessions.filter(function (session) {
+                return this.sortSessionByEndDate.filter(function (session) {
                     if (dashboard.filter.length === 0) {
                         return true
                     }

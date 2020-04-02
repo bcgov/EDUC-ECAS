@@ -38,13 +38,15 @@ class SessionResource extends JsonResource
             $date_string .= $end_carbon->format('M j');
         }
 
+        $diff_in_days = $now->diffInDays($end_carbon, false);
 
 
         return [
                 'id'                => $this['id'],
                 'activity'          => $this['activity'],
                 'type'              => $this['type'],
-                'isPast'            => (boolean) ($now->diffInDays($end_carbon, false) < 0),
+                'diff_in_days'      => $diff_in_days,
+                'isPast'            => (boolean) ($diff_in_days < 0),
                 'date'              => $date_string,
                 'location'          => $this['location'],
                 'address'           => $this['address'],
