@@ -74,7 +74,7 @@ class ProfileCredentialController extends Controller
 
         $this->validate($request, [
             'credential_id' => [ 'required','string','max:50', new ValidProfileCredential($this->credential) ],
-            'year' => [ 'integer','min:2019','max:2050','nullable' ]
+            'year' => [ 'integer','min:1940','max:2050','nullable' ]
         ]);
 
 
