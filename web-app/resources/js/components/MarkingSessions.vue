@@ -143,8 +143,11 @@
             },
 
             sortSessionByEndDate() {
+
+                // Sessions sorted so that the oldest sessions are at the bottom
+
                 return this.dateFilteredSessions.sort(function (a, b) {
-                    return parseInt(a.diff_in_days) - parseInt(b.diff_in_days);
+                    return parseInt(b.diff_in_days) - parseInt(a.diff_in_days);
                 })
             },
 
