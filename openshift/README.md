@@ -1,6 +1,7 @@
 # Instructions to install SSL certificate
 1. Create Secret
-Run the following OC command:
+
+* Run the following OC command:
 
 oc -n pvpywj-prod create secret generic workwitheducation.gov.bc.ca-ssl.2020 \
  --from-file=private-key=workwitheducation-gov-bc-ca.key \
@@ -10,6 +11,7 @@ oc -n pvpywj-prod create secret generic workwitheducation.gov.bc.ca-ssl.2020 \
  --from-file=ca-root-certifcate=L1K-root-for-certs.txt
  
 2. Create Front-End Route - External Traffic
+
 Use the following settings:
 
 * TLS Termination: Edge
