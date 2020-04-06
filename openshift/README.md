@@ -1,12 +1,22 @@
 # Instructions to install SSL certificate
-//TODO
 1. Create Secret
+Please run the following OC command:
+
+oc -n pvpywj-prod create secret generic workwitheducation.gov.bc.ca-ssl.2020 \
+ --from-file=private-key=workwitheducation-gov-bc-ca.key \
+ --from-file=certificate=workwitheducation.gov.bc.ca.txt \
+ --from-file=csr=workwitheducation-gov-bc-ca.csr \
+ --from-file=ca-chain-certificate=L1K-for-certs.txt \
+ --from-file=ca-root-certifcate=L1K-root-for-certs.txt
+ 
 2. Create Front-End Route - External Traffic
+Please use the following settings:
 TLS Termination - Edge
 Insecure Traffic - Redirect
-Certificate - file - Secret mapping 
-Private key - file - Secret mapping 
-CA Certificate - File L1KChain - Secret mapping
+Route field Certificate -> cworkwitheducation-gov-bc-ca.txt -> Copy / Paste certificate text from the created secret
+Route field Private key -> workwitheducation-gov-bc-ca.key -> Copy / Paste private-key text from the created secret
+Route field CA Certificate -> L1K-for-certs.txt -> Copy / Paste ca-chain-certificate text from the created secret 
+
 3. Verify SSO (KeyCloak) settings - https://sso-dev.pathfinder.gov.bc.ca/
 
 # OpenShift Scripts
