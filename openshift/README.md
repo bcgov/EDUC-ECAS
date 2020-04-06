@@ -12,8 +12,8 @@ oc -n pvpywj-prod create secret generic workwitheducation.gov.bc.ca-ssl.2020 \
 2. Create Front-End Route - External Traffic
 Use the following settings:
 
--TLS Termination -> Edge
--Insecure Traffic -> Redirect
+-TLS Termination: Edge
+-Insecure Traffic: Redirect
 
 | Route field    | Created secret          | Source file                      |
 | -------------- | ----------------------- |--------------------------------- |
