@@ -19,8 +19,8 @@ using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Activities;
 using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Workflow;
 using System.Runtime.Serialization;
+using Microsoft.Xrm.Sdk.Workflow;
 
 namespace Ecas.Dyn365.Workflows
 {

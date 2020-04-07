@@ -30,6 +30,8 @@ namespace Ecas.Dyn365.Workflows.Utils
 
         public void GeneratedPaymentRecords()
         {
+
+
             var approvedPayments = GetNonSupplementalExpenseRecords();
             tracingService.Trace("Fetched Expense Records");
 

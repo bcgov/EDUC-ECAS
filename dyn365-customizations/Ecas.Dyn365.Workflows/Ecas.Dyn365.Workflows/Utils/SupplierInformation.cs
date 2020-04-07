@@ -36,10 +36,12 @@ namespace Ecas.Dyn365.Workflows.Utils
 
             foreach (var supplierNumber in results.Entities)
             {
+                supplierInformation.ID = supplierNumber.Id; //Always set the ID in the model as the best practice
                 supplierInformation.LastName = supplierNumber.GetAttributeValue<string>("educ_lastname");
                 supplierInformation.SupplierNumber = supplierNumber.GetAttributeValue<string>("educ_suppliernumber");
                 supplierInformation.SupplierSiteNumber = supplierNumber.GetAttributeValue<string>("educ_suppliersitenumber");
                 supplierInformation.MethodOfPayment = supplierNumber.GetAttributeValue<string>("educ_methodofpayment");
+                supplierInformation.PartyID = supplierNumber.GetAttributeValue<int>("educ_ecaspartyid");
             }
 
             return supplierInformation;
