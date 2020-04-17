@@ -24,9 +24,13 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
 
+        if(preg_match('~MSIE|Internet Explorer|Trident~i', $_SERVER['HTTP_USER_AGENT']))
+        {
+            // Do not display site to all versions of Internet Explorer
+            return view('internet-explorer');
+        }
 
         return view('dashboard');
-
 
 
     }
