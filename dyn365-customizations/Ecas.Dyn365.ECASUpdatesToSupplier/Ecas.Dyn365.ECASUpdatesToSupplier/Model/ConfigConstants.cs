@@ -31,7 +31,7 @@ namespace Ecas.Dyn365.ECASUpdatesToSupplier.Model
             public static string CONNECTION = "ConnectionString";
         }
 
-        public static string ORACLE_COMMAND_TEXT = "ECAS.DYN_T4A"; // name of the stored procedure to fetch supplier information
+        public static string ORACLE_COMMAND_TEXT = "ECAS_APP.DYN_T4A"; // name of the stored procedure to fetch supplier information
 
         internal class StoredProcedureParams
         {
