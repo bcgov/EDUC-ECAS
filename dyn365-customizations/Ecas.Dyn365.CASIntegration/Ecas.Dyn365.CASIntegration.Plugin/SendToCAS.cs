@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -204,6 +204,7 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
             string province = string.Empty;
             string country = string.Empty;
             string postalCode = string.Empty;
+            string methodOfPayment = "GEN CHQ"; //Defaulting the value to GEN CHQ
 
             EntityReference assignmentLookup = paymentEntity["educ_assignment"] as EntityReference;
             var assignmentEntity = service.Retrieve(assignmentLookup.LogicalName.ToLowerInvariant(), assignmentLookup.Id,
@@ -250,7 +251,7 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
             {
                 var contactEntity = service.Retrieve(payeeLookup.LogicalName.ToLowerInvariant(), payeeLookup.Id,
                     new ColumnSet("educ_suppliernumber", "educ_suppliersitenumber", "firstname", "lastname", "address3_line1", "address3_line2", "address3_line3",
-                    "address3_city", "address3_stateorprovince", "address3_country", "address3_postalcode"));
+                    "address3_city", "address3_stateorprovince", "address3_country", "address3_postalcode","educ_methodofpayment"));
 
                 if (!contactEntity.Contains("educ_suppliernumber"))
                     throw new InvalidPluginExecutionException("Supplier Number on contact is empty..");
@@ -260,6 +261,8 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
                     throw new InvalidPluginExecutionException("First Name on contact is empty..");
                 if (!contactEntity.Contains("lastname"))
                     throw new InvalidPluginExecutionException("Last Name on contact is empty..");
+                if (!contactEntity.Contains("educ_methodofpayment"))
+                    throw new InvalidPluginExecutionException("Cannot find method of payment..");
 
                 supplierNumber = (string)contactEntity["educ_suppliernumber"];
                 siteNumber = Convert.ToInt32(contactEntity.GetAttributeValue<string>("educ_suppliersitenumber"));
@@ -280,6 +283,15 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
                     country = (string)contactEntity["address1_country"];
                 if (contactEntity.Contains("address1_postalcode"))
                     postalCode = (string)contactEntity["address1_postalcode"];
+                 
+                if (contactEntity.Contains("educ_methodofpayment"))
+                    {
+                        var mopValue = (string)contactEntity.FormattedValues["educ_methodofpayment"]; //If field exists, assign it to the variable
+
+                    if(mopValue == "Electronic Transfer")
+                        methodOfPayment = "GEN EFT"; //Set the methodOfPayment to GEN EFT if Contact's method of payment is "Electronic Transfer"
+                    }
+
             }
 
             traceService.Trace("Loaded Payee Information");
@@ -313,14 +325,12 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
             DateTime? invoiceDate = DateTime.MinValue;
        
             //TODO: ETL on Method of payment. 
-            string methodOfPayment = "GEN CHQ";
+       
             //methodOfPayment = "GEN EFT";
 
-            //if (!paymentEntity.Contains("educ_paymentnumber"))
-            //    throw new InvalidPluginExecutionException("Payment Number is empty..");
 
             invoiceDate = DateTime.Now;
-            //invoiceNumber = (string)paymentEntity["educ_paymentautonumber"];
+ 
 
             #endregion
 
