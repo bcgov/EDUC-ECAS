@@ -4,7 +4,7 @@
                 <div class="row ml-1">
                     <div><h1>Teacher Profile</h1></div>
                     <div class="ml-auto mr-3">
-                        <div>* Required</div>
+                        <div>* Required Fields</div>
                     </div>
                 </div>
         </div>

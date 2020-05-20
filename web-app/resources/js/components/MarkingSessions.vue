@@ -204,6 +204,8 @@
                         return 'Declined'
                     case 'Withdrew':
                         return 'Withdrew'
+                    case 'Attendance Recorded':
+                        return 'Attended'
                     case 'Completed':
                         return 'Closed'
                 }
