@@ -1,4 +1,4 @@
-﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk;
 using System;
 using System.ServiceModel;
 using System.Collections.Generic;
@@ -157,7 +157,20 @@ namespace Ecas.Dyn365.ECASUpdatesToSupplier
                 contact[Contact.ID] = oracleResponse.ContactId;
                 contact[Contact.SUPPLIER_NUMBER] = oracleResponse.SupplierNumber;
                 contact[Contact.SUPPLIER_SITE_NUMBER] = oracleResponse.SiteNumber;
-                contact[Contact.SUPPLIER_STATUS] = new OptionSetValue( Contact.SUPPLIER_STATUSES.SUPPLIER_VERIFIED);
+                contact[Contact.SUPPLIER_STATUS] = new OptionSetValue(Contact.SUPPLIER_STATUSES.SUPPLIER_VERIFIED);
+                tracingService.Trace("Contact populated");
+                return contact;
+            }
+            else if (oracleResponse.StatusT4A == OracleResponse.T4A_STATUS.UPD)
+            {
+                tracingService.Trace(string.Format("oracleResponse.ContactId = {0}", oracleResponse.ContactId));
+                tracingService.Trace(string.Format("oracleResponse.SiteNumber = {0}", oracleResponse.SupplierNumber));
+                tracingService.Trace(string.Format("oracleResponse.SiteNumber = {0}", oracleResponse.SiteNumber));
+
+                contact[Contact.ID] = oracleResponse.ContactId;
+                contact[Contact.SUPPLIER_NUMBER] = oracleResponse.SupplierNumber;
+                contact[Contact.SUPPLIER_SITE_NUMBER] = oracleResponse.SiteNumber;
+                contact[Contact.SUPPLIER_STATUS] = new OptionSetValue(Contact.SUPPLIER_STATUSES.SUPPLIER_VERIFIED);
                 tracingService.Trace("Contact populated");
                 return contact;
             }
@@ -173,7 +186,7 @@ namespace Ecas.Dyn365.ECASUpdatesToSupplier
                 contact[Contact.ID] = oracleResponse.ContactId;
                 contact[Contact.SUPPLIER_STATUS] = new OptionSetValue(Contact.SUPPLIER_STATUSES.T4A_ERROR_OCCURRED);
                 service.Update(contact);
-         
+
                 return null;
 
             }
