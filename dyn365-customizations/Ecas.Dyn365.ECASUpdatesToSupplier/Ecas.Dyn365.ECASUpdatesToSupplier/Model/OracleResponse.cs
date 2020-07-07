@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,6 +32,7 @@ namespace Ecas.Dyn365.ECASUpdatesToSupplier.Model
         {
             public static string ERROR = "FER";
             public static string OK = "FOK";
+            public static string UPD = "UPD";
         }
 
         public override string ToString()
