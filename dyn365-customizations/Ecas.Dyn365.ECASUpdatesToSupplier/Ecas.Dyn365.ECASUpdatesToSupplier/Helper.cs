@@ -97,7 +97,7 @@ namespace Ecas.Dyn365.ECASUpdatesToSupplier
                 if (coll != null && coll.Entities != null && coll.Entities.Count > 0)
                     result = coll.Entities.ToList();
                 //LogIntegrationError(service, "Testging GetAllContactsForCASUpdates ", "Result Counts = " + result.Count.ToString());
-                tracing.Trace(string.Format("Fetched {0} Contact records",result.Count));
+                tracing.Trace(string.Format("Fetched {0} Contact records", result.Count));
 
                 if (result.Count < 1)
                 {
@@ -109,7 +109,7 @@ namespace Ecas.Dyn365.ECASUpdatesToSupplier
             {
                 tracing.Trace("The error from the GetAllContactsForCASUpdates: " + ex.Message);
             }
-          
+
             return result;
         }
 
@@ -159,8 +159,8 @@ namespace Ecas.Dyn365.ECASUpdatesToSupplier
             objCmd.Parameters.Add(ConfigEntity.StoredProcedureParams.SITE_NO, OracleDbType.Char, 3).Direction = ParameterDirection.Output;
             objCmd.Parameters.Add(ConfigEntity.StoredProcedureParams.STATUS_CODE, OracleDbType.Varchar2, 100).Direction = ParameterDirection.Output;
             objCmd.Parameters.Add(ConfigEntity.StoredProcedureParams.STATUS_T4A, OracleDbType.Varchar2, 100).Direction = ParameterDirection.Output;
-            objCmd.Parameters.Add(ConfigEntity.StoredProcedureParams.TRANSACTION_CODE, OracleDbType.Varchar2, 100).Direction = ParameterDirection.Output;
             objCmd.Parameters.Add(ConfigEntity.StoredProcedureParams.TRANSACTION_MESSAGE, OracleDbType.Varchar2, 2000).Direction = ParameterDirection.Output;
+            objCmd.Parameters.Add(ConfigEntity.StoredProcedureParams.TRANSACTION_CODE, OracleDbType.Varchar2, 100).Direction = ParameterDirection.Output;
 
             try
             {
@@ -184,7 +184,7 @@ namespace Ecas.Dyn365.ECASUpdatesToSupplier
             catch (Exception ex)
             {
                 throw new InvalidPluginExecutionException(OperationStatus.Failed, new StringBuilder().Append(Strings.STORED_PROCEDURE_EXCEPTION)
-                    .Append(ConfigEntity.ORACLE_COMMAND_TEXT) .AppendLine(" Exception:\n").AppendLine(ex.Message).ToString());
+                    .Append(ConfigEntity.ORACLE_COMMAND_TEXT).AppendLine(" Exception:\n").AppendLine(ex.Message).ToString());
             }
             finally
             {
@@ -414,7 +414,7 @@ namespace Ecas.Dyn365.ECASUpdatesToSupplier
         /// </summary>
         /// <param name="cronJobEntityName"></param>
         /// <param name="service"></param>
-        public static void CreateCronJobSingletonRecord( IOrganizationService service, string entityName, string namefield, string nameValue)
+        public static void CreateCronJobSingletonRecord(IOrganizationService service, string entityName, string namefield, string nameValue)
         {
             Entity newCronJob = new Entity(entityName);
             newCronJob[namefield] = nameValue;
@@ -427,7 +427,7 @@ namespace Ecas.Dyn365.ECASUpdatesToSupplier
         /// </summary>
         /// <param name="cronJobEntityName"></param>
         /// <param name="service"></param>
-        public static void LogIntegrationError(IOrganizationService service, string title, string description, int errorCode, EntityReference relatedRecord )
+        public static void LogIntegrationError(IOrganizationService service, string title, string description, int errorCode, EntityReference relatedRecord)
         {
             Entity errorLog = new Entity(IntegrationError.ENTITY_NAME);
             errorLog[IntegrationError.TITLE] = title;
@@ -466,10 +466,10 @@ namespace Ecas.Dyn365.ECASUpdatesToSupplier
             errorLog[IntegrationError.DESCRIPTION] = description;
             errorLog[IntegrationError.CALL_TYPE] = new OptionSetValue(errorCode);
 
-            if(type == ErrorType.PAYMENT_ERROR)
+            if (type == ErrorType.PAYMENT_ERROR)
                 errorLog[IntegrationError.RELATED_PAYMENT] = relatedRecord;
 
-            else if(type == ErrorType.CONTACT_ERROR)
+            else if (type == ErrorType.CONTACT_ERROR)
                 errorLog[IntegrationError.RELATED_CONTACT] = relatedRecord;
 
             service.Create(errorLog);
@@ -521,7 +521,7 @@ namespace Ecas.Dyn365.ECASUpdatesToSupplier
         /// </summary>
         /// <param name="updatedPayments"></param>
         /// <returns></returns>
-        public static ExecuteMultipleResponse BatchUpdateRecords(IOrganizationService service,  List<Entity> entityList)
+        public static ExecuteMultipleResponse BatchUpdateRecords(IOrganizationService service, List<Entity> entityList)
         {
 
             // Create an ExecuteMultipleRequest object.

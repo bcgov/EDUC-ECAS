@@ -36,7 +36,7 @@ namespace Ecas.Dyn365.ECASUpdatesToSupplier
                     return;
                 }
 
-             
+
                 //Fetch all contact records that have Supplier Status (OptionSet) = "New CAS User" OR "Update Requested"          
                 List<Entity> contactsToFetch = Helper.GetAllContactsForCASUpdates(service, tracingService);
                 tracingService.Trace("Fetched the contacts");
@@ -145,9 +145,9 @@ namespace Ecas.Dyn365.ECASUpdatesToSupplier
         {
             Entity contact = new Entity(Contact.ENTITY_NAME);
 
-            tracingService.Trace(string.Format("Hi! ORACLEResponse.StatusT4A = {0}", oracleResponse.StatusT4A));
+            tracingService.Trace(string.Format("Hi! ORACLEResponse.TransactionMessage = {0}", oracleResponse.TransactionMessage));
 
-            if (oracleResponse.StatusT4A == OracleResponse.T4A_STATUS.OK)
+            if (oracleResponse.TranactionCode == OracleResponse.TRANSACTION_CODE.OK)
             {
 
                 tracingService.Trace(string.Format("oracleResponse.ContactId = {0}", oracleResponse.ContactId));
@@ -161,28 +161,21 @@ namespace Ecas.Dyn365.ECASUpdatesToSupplier
                 tracingService.Trace("Contact populated");
                 return contact;
             }
-            else if (oracleResponse.StatusT4A == OracleResponse.T4A_STATUS.UPD)
+            else if (oracleResponse.TranactionCode == OracleResponse.TRANSACTION_CODE.UPD)
             {
-                tracingService.Trace(string.Format("oracleResponse.ContactId = {0}", oracleResponse.ContactId));
-                tracingService.Trace(string.Format("oracleResponse.SiteNumber = {0}", oracleResponse.SupplierNumber));
-                tracingService.Trace(string.Format("oracleResponse.SiteNumber = {0}", oracleResponse.SiteNumber));
-
-                contact[Contact.ID] = oracleResponse.ContactId;
-                contact[Contact.SUPPLIER_NUMBER] = oracleResponse.SupplierNumber;
-                contact[Contact.SUPPLIER_SITE_NUMBER] = oracleResponse.SiteNumber;
-                contact[Contact.SUPPLIER_STATUS] = new OptionSetValue(Contact.SUPPLIER_STATUSES.SUPPLIER_VERIFIED);
-                tracingService.Trace("Contact populated");
-                return contact;
+                Helper.LogIntegrationError(service, "T4A Update Pending", oracleResponse.TransactionMessage, IntegrationErrorCodes.FETCH_SUPPLIER.GetIntValue(), new EntityReference(Contact.ENTITY_NAME, oracleResponse.ContactId));
+                return null;
             }
             else
             {
+
                 //TODO: 
                 //Log Error. Handle the bad request here
                 tracingService.Trace("Going to Log the Integration error now");
                 //Helper.LogIntegrationError(service, Strings.T4A_FER_ERROR, Helper.GetFormatedDescription(contact, ErrorType.CONTACT_ERROR, IntegrationErrorCodes.FETCH_SUPPLIER, Strings.PARTY_ID_MISSING_DESCRIPTION),
                 //               IntegrationErrorCodes.FETCH_SUPPLIER.GetIntValue(), new EntityReference(Contact.ENTITY_NAME, contact.Id));
 
-                Helper.LogIntegrationError(service, "T4A returned FER", "FER Description", IntegrationErrorCodes.FETCH_SUPPLIER.GetIntValue(), new EntityReference(Contact.ENTITY_NAME, oracleResponse.ContactId));
+                Helper.LogIntegrationError(service, "T4A returned FER", oracleResponse.TransactionMessage, IntegrationErrorCodes.FETCH_SUPPLIER.GetIntValue(), new EntityReference(Contact.ENTITY_NAME, oracleResponse.ContactId));
                 contact[Contact.ID] = oracleResponse.ContactId;
                 contact[Contact.SUPPLIER_STATUS] = new OptionSetValue(Contact.SUPPLIER_STATUSES.T4A_ERROR_OCCURRED);
                 service.Update(contact);

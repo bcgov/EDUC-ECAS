@@ -28,12 +28,15 @@ namespace Ecas.Dyn365.ECASUpdatesToSupplier.Model
         public Guid ContactId { get => contactId; set => contactId = value; }
         public string TranactionCode { get => tranactionCode; set => tranactionCode = value; }
 
-        internal class T4A_STATUS
+
+
+        internal class TRANSACTION_CODE
         {
             public static string ERROR = "FER";
             public static string OK = "FOK";
             public static string UPD = "UPD";
         }
+
 
         public override string ToString()
         {
