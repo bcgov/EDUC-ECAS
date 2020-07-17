@@ -10,6 +10,7 @@ namespace Ecas.Dyn365.CASIntegrations.PaymentsStatus.StringConstants
     {
         public static string INOVICE_NOT_FOUND_TITLE = "The invoice number is missing for the payment record";
         public static string FINISHED_PAYMENTS_FETCH_PROCESSING = "Finished processing the payments record";
+        public static string NO_MATCHING_PAYMENTS_FOR_PROCESSING = "No matching paymens for processing, skipping";
         public static string LOADED_CAS_PAYMENT_RESULTS_PLUGIN = "Loaded CASPaymentResultPlugin";
         public static string PLUGIN_DEPTH = "Plugin Depth:";
         public static string LOADED_TARGET_ENTITY = "Loaded Target Entity";

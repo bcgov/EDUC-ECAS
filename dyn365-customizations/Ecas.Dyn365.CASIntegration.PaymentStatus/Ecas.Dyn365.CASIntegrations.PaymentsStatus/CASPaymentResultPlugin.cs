@@ -41,66 +41,68 @@ namespace Ecas.Dyn365.CASIntegrations.PaymentsStatus
             // Get the Pending Payment records with the status "Sent To CAS" 
             List<Entity> pendingPayments = Helper.GetPaymentRecordsForProcessing(service);
 
-                //Get the response for each payment in the fetched payment records
-            foreach (Entity payment in pendingPayments)
-            {
-                string invoiceNumber = String.Empty;
-
-                if (payment.Attributes.Keys.Contains(Payment.INVOICE_NUMBER))
+            if (pendingPayments.Count>=1)
+            { 
+                    //Get the response for each payment in the fetched payment records
+                foreach (Entity payment in pendingPayments)
                 {
-                    invoiceNumber = payment[Payment.INVOICE_NUMBER].ToString();
+                    string invoiceNumber = String.Empty;
 
-                    EntityReference assignment = (EntityReference)payment[Payment.Assignment.ENTITY_NAME]; //Get the EntityReference of the related assignment of the payment record
-
-                    //Fetch the Related Assignment Entity fields from Dynamics
-                    Entity relatedAssignment = service.Retrieve(Payment.Assignment.ENTITY_NAME, assignment.Id, new ColumnSet(new string[] { Payment.Assignment.RELATED_CONTACT }));
-
-                    EntityReference contactReference = (EntityReference)relatedAssignment[Payment.Assignment.RELATED_CONTACT];//Fetch the related contact entity reference from the assignment record
-
-                    //Fetch the Related Contact Entity fields from Dynamics 
-                    Entity relatedContact = service.Retrieve(Contact.ENTITY_NAME, contactReference.Id, new ColumnSet(new string[] { Contact.SITE_NUMBER, Contact.SUPPLIER_NUMBER }));
-
-                    //Prepare Invoice object for Serialization 
-                    Invoice invoice = new Invoice
+                    if (payment.Attributes.Keys.Contains(Payment.INVOICE_NUMBER))
                     {
-                        InvoiceNumber = invoiceNumber,
-                        SupplierNumber = relatedContact[Contact.SUPPLIER_NUMBER].ToString(),
-                        SupplierSiteNumber = relatedContact[Contact.SITE_NUMBER].ToString(),
-                        PaymentID = payment.Id
-                    };
+                        invoiceNumber = payment[Payment.INVOICE_NUMBER].ToString();
 
-                    //Get Json from Invoice Object
-                    string jsonRequest = JsonConvert.SerializeObject(invoice);
+                        EntityReference assignment = (EntityReference)payment[Payment.Assignment.ENTITY_NAME]; //Get the EntityReference of the related assignment of the payment record
 
-                    //Call the API and deserialize the response to PaymentResponse object 
-                    PaymentResponse response = JsonConvert.DeserializeObject<PaymentResponse>(Helper.GetAPIResponse(clientKey, clientId, url, endPoint, jsonRequest));
+                        //Fetch the Related Assignment Entity fields from Dynamics
+                        Entity relatedAssignment = service.Retrieve(Payment.Assignment.ENTITY_NAME, assignment.Id, new ColumnSet(new string[] { Payment.Assignment.RELATED_CONTACT }));
 
-                    if (response.invoice_status == CASResponseStatus.InvoiceStatus.VALIDATED)
-                    {
+                        EntityReference contactReference = (EntityReference)relatedAssignment[Payment.Assignment.RELATED_CONTACT];//Fetch the related contact entity reference from the assignment record
 
-                        Entity updatedPayment = new Entity(Payment.ENTITY_NAME);
-                        updatedPayment[Payment.INVOICE_STATUS] = response.invoice_status;
-                        updatedPayment[Payment.PAYMENT_STATUS] = response.payment_status;
-                        updatedPayment[Payment.PAYMENT_DATE] = DateTime.Parse(response.payment_date);
-                        updatedPayment[Payment.PAYMENT_NUMBER] = response.payment_number;
-                        updatedPayment[Payment.PAYMENT_ID] = payment.Id;
+                        //Fetch the Related Contact Entity fields from Dynamics 
+                        Entity relatedContact = service.Retrieve(Contact.ENTITY_NAME, contactReference.Id, new ColumnSet(new string[] { Contact.SITE_NUMBER, Contact.SUPPLIER_NUMBER }));
 
-                        service.Update(updatedPayment);
-                        SetState(service, new EntityReference(Payment.ENTITY_NAME, payment.Id), Payment.InActiveStatus.STATE_CODE, Payment.InActiveStatus.PAYMENT_PROCESSED_STATUS_REASON);
-
-                        //Update Expenses for this payment to PAID
-                        //Get related expenses
-                        List<Entity> expenses = Helper.GetRelatedChildRecords(service, payment.Id, Expense.RELATED_PAYMENT, Expense.ENTITY_NAME, false);
-
-                        if (expenses.Count > 0)
+                        //Prepare Invoice object for Serialization 
+                        Invoice invoice = new Invoice
                         {
-                            //Update the status to Inactive -- Paid for all related expenses
-                            foreach (Entity expense in expenses)
-                            {
-                                SetState(service, new EntityReference(Expense.ENTITY_NAME, expense.Id), Expense.InActiveStatus.STATE_CODE, Expense.InActiveStatus.PAID_STATUS_REASON);
+                            InvoiceNumber = invoiceNumber,
+                            SupplierNumber = relatedContact[Contact.SUPPLIER_NUMBER].ToString(),
+                            SupplierSiteNumber = relatedContact[Contact.SITE_NUMBER].ToString(),
+                            PaymentID = payment.Id
+                        };
 
+                        //Get Json from Invoice Object
+                        string jsonRequest = JsonConvert.SerializeObject(invoice);
+
+                        //Call the API and deserialize the response to PaymentResponse object 
+                        PaymentResponse response = JsonConvert.DeserializeObject<PaymentResponse>(Helper.GetAPIResponse(clientKey, clientId, url, endPoint, jsonRequest));
+
+                        if (response.invoice_status == CASResponseStatus.InvoiceStatus.VALIDATED)
+                        {
+
+                            Entity updatedPayment = new Entity(Payment.ENTITY_NAME);
+                            updatedPayment[Payment.INVOICE_STATUS] = response.invoice_status;
+                            updatedPayment[Payment.PAYMENT_STATUS] = response.payment_status;
+                            updatedPayment[Payment.PAYMENT_DATE] = DateTime.Parse(response.payment_date);
+                            updatedPayment[Payment.PAYMENT_NUMBER] = response.payment_number;
+                            updatedPayment[Payment.PAYMENT_ID] = payment.Id;
+
+                            service.Update(updatedPayment);
+                            SetState(service, new EntityReference(Payment.ENTITY_NAME, payment.Id), Payment.InActiveStatus.STATE_CODE, Payment.InActiveStatus.PAYMENT_PROCESSED_STATUS_REASON);
+
+                            //Update Expenses for this payment to PAID
+                            //Get related expenses
+                            List<Entity> expenses = Helper.GetRelatedChildRecords(service, payment.Id, Expense.RELATED_PAYMENT, Expense.ENTITY_NAME, false);
+
+                            if (expenses.Count > 0)
+                            {
+                                //Update the status to Inactive -- Paid for all related expenses
+                                foreach (Entity expense in expenses)
+                                {
+                                    SetState(service, new EntityReference(Expense.ENTITY_NAME, expense.Id), Expense.InActiveStatus.STATE_CODE, Expense.InActiveStatus.PAID_STATUS_REASON);
+
+                                }
                             }
-                        }
                         else
                         {
                             //Unhandled case as Payment is not supposed to have Sent To CAS status without a expense associted
@@ -154,6 +156,15 @@ namespace Ecas.Dyn365.CASIntegrations.PaymentsStatus
             Helper.CreateCronJobSingletonRecord(Payment.CAS_AP_CRON_JOB_PROXY.ENTITY_NAME, service);
 
             traceService.Trace(Strings.CREATED_SINGLETON_CAS_AP_CRON_JOB);
+            }
+
+            // If there is no matching payments, log error message 
+            else
+            {
+                //do nothing if no payments matching the criteria
+                traceService.Trace(Strings.NO_MATCHING_PAYMENTS_FOR_PROCESSING);
+
+            }
         }
 
 

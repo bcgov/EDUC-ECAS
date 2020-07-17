@@ -60,9 +60,10 @@ namespace Ecas.Dyn365.CASIntegration.Plugin
             if (coll != null && coll.Entities != null && coll.Entities.Count > 0)
                 result = coll.Entities.ToList();
 
-            if (result.Count < 1)
-                throw new InvalidPluginExecutionException(string.Format("Unable to fetch payment records.  "));
-
+            //commented out below lines to handle no matching payments situation on plugin 
+            //if (result.Count < 1)
+            //    throw new InvalidPluginExecutionException(string.Format("Unable to fetch payment records.  "));
+            
             return result;
         }
 
