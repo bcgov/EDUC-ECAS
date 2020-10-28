@@ -161,7 +161,7 @@ namespace Ecas.Dyn365.CASIntegrations.PaymentsStatus
             // If there is no matching payments, log error message 
             else
             {
-                //do nothing if no payments matching the criteria
+                //Create a singleton record if no payments matching the criteria then exit:
                 traceService.Trace(Strings.NO_MATCHING_PAYMENTS_FOR_PROCESSING);
                 Helper.CreateCronJobSingletonRecord(Payment.CAS_AP_CRON_JOB_PROXY.ENTITY_NAME, service);
                 traceService.Trace(Strings.CREATED_SINGLETON_CAS_AP_CRON_JOB);
@@ -186,9 +186,6 @@ namespace Ecas.Dyn365.CASIntegrations.PaymentsStatus
             };
 
             service.Execute(req);
-        }
-
-
+        }      
     }//End of CASPaymentResultPlugin
-
 }// End of Namespace
