@@ -1,4 +1,4 @@
-﻿using Ecas.Dyn365.CASIntegration.Plugin;
+using Ecas.Dyn365.CASIntegration.Plugin;
 using Ecas.Dyn365.CASIntegrations.PaymentsStatus.Models;
 using Ecas.Dyn365.CASIntegrations.PaymentsStatus.StringConstants;
 using Microsoft.Crm.Sdk.Messages;
@@ -192,4 +192,3 @@ namespace Ecas.Dyn365.CASIntegrations.PaymentsStatus
     }//End of CASPaymentResultPlugin
 
 }// End of Namespace
-
