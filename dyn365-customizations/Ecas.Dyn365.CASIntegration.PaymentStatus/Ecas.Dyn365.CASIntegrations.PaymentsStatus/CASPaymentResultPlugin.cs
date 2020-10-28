@@ -1,4 +1,4 @@
-﻿using Ecas.Dyn365.CASIntegration.Plugin;
+using Ecas.Dyn365.CASIntegration.Plugin;
 using Ecas.Dyn365.CASIntegrations.PaymentsStatus.Models;
 using Ecas.Dyn365.CASIntegrations.PaymentsStatus.StringConstants;
 using Microsoft.Crm.Sdk.Messages;
@@ -163,7 +163,8 @@ namespace Ecas.Dyn365.CASIntegrations.PaymentsStatus
             {
                 //do nothing if no payments matching the criteria
                 traceService.Trace(Strings.NO_MATCHING_PAYMENTS_FOR_PROCESSING);
-
+                Helper.CreateCronJobSingletonRecord(Payment.CAS_AP_CRON_JOB_PROXY.ENTITY_NAME, service);
+                traceService.Trace(Strings.CREATED_SINGLETON_CAS_AP_CRON_JOB);
             }
         }
 
@@ -191,4 +192,3 @@ namespace Ecas.Dyn365.CASIntegrations.PaymentsStatus
     }//End of CASPaymentResultPlugin
 
 }// End of Namespace
-
