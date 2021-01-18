@@ -29,7 +29,7 @@ Repository Map
 
 ## Project Status
 
-The project is in development. It has been deployed in a DEV environment but has not moved to TEST or PRODUCTION.
+The project is in Production. I
 
 The Front End provides a public facing user interface that communicates with a Dynamics instance within the Ministry. The interface is built with Vue.js (V 2.5), it is driven by the Laravel Framework (V 5.8) written in PHP (V 7.1). The Laravel/PHP interface communicates with Dynamics through a ASP.NET WebAPI application running in  .NET (Core V 2.1) (the “Middle Layer”). The Front End and Middle Layer infrastructure operate on the OpenShift cluster administered by the “CSI Lab”.
 
@@ -47,10 +47,6 @@ Testing scripts are in place to run both phpunit test and browser based test via
 The Laravel application is set-up to log various actions and code steps, these logs will be helpful for ongoing development and debugging. Laravel creates log files in /web-app/storage/logs
 
 ### To Do
-
-At the time of this writing the Team is experiencing connection issues between the .NET API running in OpenShift and the On Premise Dynamics instance running within the Ministry. These issues are firewall / security settings within the Ministry.
-
-**SiteMinder** - Authentication of users to the web portal will be handled by the SiteMinder Web Application. This element has not yet been implemented.
 
 **Slow Loading** - The demo and testing environments experienced significant delays in communicating with Dynamics. Due to the firewall issues mentioned previously communication with the OnPrem instance has yet to be completed. Once that link in the chain is active a more thorough assessment of connection speed between the web portal and Dynamics should be undertaken. If slow response time continues to be an issue the developers may explore several solutions to the issue:
 * Caching - simple caching of static data has already been deployed
