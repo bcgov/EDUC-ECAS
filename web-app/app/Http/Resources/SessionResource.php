@@ -22,20 +22,28 @@ class SessionResource extends JsonResource
      */
     public function toArray($request)
     {
+		$now = Carbon::now();
 
-        $now = Carbon::now();
-
-        // Display a nicely formatted date string
+        // Display a nicely formatted date string with year values
         $start_carbon = Carbon::create($this['start_date']);
         $end_carbon = Carbon::create($this['end_date']);
-        $date_string = $start_carbon->format('M j') . ' - ';
+
+        if ($start_carbon->format('Y') == $end_carbon->format('Y'))
+        {
+			$date_string = $start_carbon->format('M j') . ' - ';
+		}
+        else
+        {
+			$date_string = $start_carbon->format('M j, Y') . ' - ';
+		}
+		
         if ($start_carbon->format('M') == $end_carbon->format('M'))
         {
-            $date_string .= $end_carbon->format('j');
+            $date_string .= $end_carbon->format('j, Y');
         }
         else
         {
-            $date_string .= $end_carbon->format('M j');
+            $date_string .= $end_carbon->format('M j, Y');
         }
 
         $diff_in_days = $now->diffInDays($end_carbon, false);
