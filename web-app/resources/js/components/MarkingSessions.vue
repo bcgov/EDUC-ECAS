@@ -190,25 +190,22 @@
             sessionStatus(assignment) {
                 switch (assignment.status.name) {
                     case 'Applied':
-                        return "You've Applied"
+                        return 'Applied'
                     case 'Invited':
-                        return 'Accept Invitation!'
+                        return 'Accept Invitation'
                     case 'Accepted':
-                        return 'Contract Pending'
+                        return 'Accepted'
                     case 'Contract':
                         return 'Contract Pending'
                     case 'Confirmed':
-                        return "You're Going!"
+                        return 'Contract Received'
                     case 'Declined':
                         return 'Declined'
-                    case 'Withdrew':
-                        return 'Withdrew'
                     case 'Attendance Recorded':
                         return 'Attended'
                     case 'Completed':
                         return 'Closed'
                 }
-
                 return 'Open'
             },
             viewSession(session) {
