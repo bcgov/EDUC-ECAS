@@ -22,10 +22,9 @@ class SessionResource extends JsonResource
      */
     public function toArray($request)
     {
+		$now = Carbon::now();
 
-        $now = Carbon::now();
-
-        // Display a nicely formatted date string
+        // Display a nicely formatted date string with year values
         $start_carbon = Carbon::create($this['start_date']);
         $end_carbon = Carbon::create($this['end_date']);
 
