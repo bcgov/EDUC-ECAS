@@ -93,15 +93,15 @@
                     </div>
                 </template>
                 <template v-else-if="isStatus(session, 'Invited')">
-                    <div class="col">
-                        <button class="btn btn-danger btn-block" v-on:click="acceptInvitation(session, false)">
-                            Decline</button>
-                    </div>
-                    <div class="col">
+					<div class="col">
                         <button v-if="hasSIN" class="btn btn-primary btn-block" v-on:click="acceptInvitation(session, true )">
                             Accept</button>
                         <button v-else class="btn btn-primary btn-block" v-on:click="editProfile">
                             Add SIN</button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-danger btn-block" v-on:click="acceptInvitation(session, false)">
+                            Decline</button>
                     </div>
                 </template>
                 <template v-else-if="isStatus(session, 'Accepted') || isStatus(session, 'Contract')">
