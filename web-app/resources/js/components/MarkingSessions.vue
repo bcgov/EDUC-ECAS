@@ -142,13 +142,12 @@
                 });
             },
 
-            sortSessionByEndDate() {
+			sortSessionByEndDate() {
 
-                // Sessions sorted so that the oldest sessions are at the bottom
-
-                return this.dateFilteredSessions.sort(function (a, b) {
-                    return parseInt(b.diff_in_days) - parseInt(a.diff_in_days);
-                })
+                // Sessions sorted so that the newest sessions are at the bottom
+                return this.dateFilteredSessions.sort(function (b, a) {
+					return parseInt(b.diff_in_days) - parseInt(a.diff_in_days);
+				})
             },
 
             filteredSessions() {
