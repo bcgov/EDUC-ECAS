@@ -615,7 +615,7 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.0.0",
+            "version": "v5.2.*",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
@@ -761,7 +761,7 @@
         },
         {
             "name": "laravel/socialite",
-            "version": "v5.1.2",
+            "version": "v4.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/socialite.git",
@@ -1898,7 +1898,7 @@
         },
         {
             "name": "socialiteproviders/manager",
-            "version": "v4.0.1",
+            "version": "v3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SocialiteProviders/Manager.git",
