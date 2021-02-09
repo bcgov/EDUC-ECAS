@@ -79,7 +79,7 @@ build-ecas-frontend() {
   #
   # ecas-frontend
   #
-  BASE_IMAGE="registry.access.redhat.com/rhscl/php-73-rhel7"
+  BASE_IMAGE="registry.access.redhat.com/rhscl/php-71-rhel7"
   echo -e "\nBuilding ecas-frontend image from ${BASE_IMAGE}..."
 
   ${S2I_EXE} build \
