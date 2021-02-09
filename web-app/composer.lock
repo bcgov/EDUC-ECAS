@@ -761,7 +761,7 @@
         },
         {
             "name": "laravel/socialite",
-            "version": "v4.3.2",
+            "version": "v5.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/socialite.git",
@@ -1898,7 +1898,7 @@
         },
         {
             "name": "socialiteproviders/manager",
-            "version": "v3.5",
+            "version": "v4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SocialiteProviders/Manager.git",
