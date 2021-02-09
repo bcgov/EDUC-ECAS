@@ -34,7 +34,7 @@ node {
           openshift.withProject() {
 
             // Find the build configuration associated to the application ...
-            def buildconfigs = openshift.selector("bc", "https://raw.githubusercontent.com/bcgov/EDUC-ECAS/master/openshift/templates/ecas-frontend/ecas-frontend-build.json")
+            def buildconfigs = openshift.selector("bc", "${item}")
             echo "Found ${buildconfigs.count()} buildconfigs: ${buildconfigs.names()}"
             
             // Kick off any builds in parallel ...
