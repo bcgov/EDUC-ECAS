@@ -39,7 +39,7 @@ class SessionResource extends JsonResource
 		
         if ($start_carbon->format('M') == $end_carbon->format('M'))
         {
-            $date_string .= $end_carbon->format('j, Y');
+            $date_string .= $end_carbon->format('M j, Y');
         }
         else
         {
