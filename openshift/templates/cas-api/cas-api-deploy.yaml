@@ -182,7 +182,7 @@ parameters:
   displayName: Image Namespace
   description: The namespace of the OpenShift project containing the imagestream for the application.
   required: true
-  value: pvpywj-tools
+  value: 7d321c-tools
 - name: TAG_NAME
   displayName: Environment TAG name
   description: The TAG name for this environment, e.g., dev, test, prod
@@ -196,11 +196,11 @@ parameters:
 - name: SITEMINDER_APPLICATION_DOMAIN
   description: The endpoint used for SiteMinder routed access to the application.
   displayName: SiteMinder Application Domain
-  value: cas-api-pvpywj-dev.pathfinder.bcgov
+  value: cas-api-7d321c-dev.pathfinder.bcgov
 - name: APPLICATION_DOMAIN
   description: The exposed hostname that will route to the service, e.g., myappname.pathfinder.gov.bc.ca, if left blank a value will be defaulted.
   displayName: Application Domain
-  value: cas-api-pvpywj-dev.pathfinder.gov.bc.ca
+  value: cas-api-7d321c-dev.pathfinder.gov.bc.ca
 # - name: SHOW_LOGIN
 #   displayName: Show login
 #   description: Boolean that shows login, e.g., true, if left blank a value will be defaulted.
