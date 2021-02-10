@@ -12,7 +12,7 @@ def TAG_NAMES = ['dev', 'test', 'prod']
 def DEP_ENV_NAMES = ['dev', 'test', 'prod']
 
 // The base namespace of you environments.
-def NAME_SPACE = 'pvpywj'
+def NAME_SPACE = '7d321c'
 
 // Get an image's hash tag
 String getImageTagHash(String imageName, String tag = "") {
