@@ -12,9 +12,8 @@
         "ext-json": "*",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.5",
-        "laravel/framework": "5.8",
+        "laravel/framework": "^6.0",
         "laravel/tinker": "^2.0",
-        "illuminate/console": "^6.0|^7.0|^8.0",
         "socialiteproviders/manager": "^3.5"
     },
     "require-dev": {
