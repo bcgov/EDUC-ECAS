@@ -196,7 +196,7 @@ parameters:
 - name: SITEMINDER_APPLICATION_DOMAIN
   description: The endpoint used for SiteMinder routed access to the application.
   displayName: SiteMinder Application Domain
-  value: cas-api-7d321c-dev.apps.silver.devops.gov.bc.ca.bcgov
+  value: cas-api-7d321c-dev.pathfinder.bcgov
 - name: APPLICATION_DOMAIN
   description: The exposed hostname that will route to the service, e.g., myappname.pathfinder.gov.bc.ca, if left blank a value will be defaulted.
   displayName: Application Domain
