@@ -9,6 +9,6 @@ GIT_REPO_URL=https://github.com/bcgov/ECAS.git
 GIT_REF=master
 SOURCE_CONTEXT_DIR=web-app
 SOURCE_IMAGE_KIND=DockerImage
-SOURCE_IMAGE_NAME=registry.access.redhat.com/rhscl/php-73-rhel7
+SOURCE_IMAGE_NAME=registry.access.redhat.com/rhscl/php-72-rhel7
 SOURCE_IMAGE_TAG=latest
 OUTPUT_IMAGE_TAG=latest
