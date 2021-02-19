@@ -29,7 +29,7 @@ def SONAR_SOURCES = './zap/wrk'
 def TARGET_ROUTE = 'ecas-frontend'
 
 // The namespace in which the target route can be found.  This will be used to dynamically get the URL.
-def TARGET_PROJECT_NAMESPACE = 'pvpywj-dev'
+def TARGET_PROJECT_NAMESPACE = '7d321c-dev'
 
 // The path to the API.
 def API_PATH='/api'
