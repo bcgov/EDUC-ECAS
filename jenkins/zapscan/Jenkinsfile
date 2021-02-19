@@ -83,7 +83,7 @@ podTemplate(
   containers: [
     containerTemplate(
       name: 'jnlp',
-      image: '172.50.0.2:5000/openshift/jenkins-slave-zap',
+      image: 'https://github.com/redhat-cop/containers-quickstarts/tree/master/jenkins-agents/jenkins-agent-zap',
       resourceRequestCpu: '500m',
       resourceLimitCpu: '1000m',
       resourceRequestMemory: '3Gi',
