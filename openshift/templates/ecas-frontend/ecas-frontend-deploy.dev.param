@@ -5,7 +5,7 @@
 #=========================================================
 # NAME=ecas-frontend
 # APP_GROUP=ecas
-APPLICATION_DOMAIN=ecas-frontend-7d321c-prod.apps.silver.devops.gov.bc.ca
+APPLICATION_DOMAIN=ecas-frontend-7d321c-dev.apps.silver.devops.gov.bc.ca
 # IMAGE_NAMESPACE=7d321c-tools
 TAG_NAME=dev
 # APP_KEY=[a-zA-Z0-9]{32}
