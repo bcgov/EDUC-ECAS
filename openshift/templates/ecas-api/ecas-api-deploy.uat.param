@@ -5,7 +5,7 @@
 #=========================================================
 # NAME=ecas-api
 # APP_GROUP=ecas
-APPLICATION_DOMAIN=ecas-api-7d321c-test.apps.silver.devops.gov.bc.ca
+APPLICATION_DOMAIN=ecas-api-7d321c-uat.apps.silver.devops.gov.bc.ca
 # IMAGE_NAMESPACE=7d321c-tools
 TAG_NAME=uat
 # PORT=8080
