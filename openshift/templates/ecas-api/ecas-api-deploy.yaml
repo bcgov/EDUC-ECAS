@@ -155,7 +155,7 @@ parameters:
   displayName: Image Name
   description: The image name assigned to all the objects defined in this template.
   required: true
-  value: ecas-frontend
+  value: ecas-api
 - name: APP_GROUP
   displayName: App Group
   description: Used to group components together.
