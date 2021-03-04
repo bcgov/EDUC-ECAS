@@ -76,7 +76,7 @@
                 <template v-if="isStatus(session, 'Open')">
                     <div class="col">
                         <button class="btn btn-danger btn-block" v-on:click="closeModal()">
-                            No thank you</button>
+                           No thank you</button>
                     </div>
                     <div class="col">
                         <button v-show=" ! working" class="btn btn-primary btn-block" v-on:click="applyToSession(session, true)">
@@ -157,8 +157,8 @@
 
                 let action = accept ? 'Accepted' : 'Declined';
 
-                this.updateAssignment(session, action)
-            },
+                this.updateAssignment(session, action);
+				},
 
             applyToSession (session, attend) {
 
@@ -167,9 +167,8 @@
                 }
 
                 if(! attend) {
-                    this.updateAssignment(session, 'Declined')
+                    this.updateAssignment(session, 'Withdrew')
                 }
-
             },
 
 
@@ -191,13 +190,15 @@
                         session.status = response.data.data.status;
                         form.closeModal();
                         form.working = false;
-                        console.log('assignment created' )
+						Event.fire('refresh-data' );
+						console.log('assignment created')
+						
                     })
                     .catch(function (error) {
                         console.log('Failure!', error);
                         form.working = false;
                     });
-
+					location.reload();
             },
 
             updateAssignment(session, action) {
@@ -224,7 +225,8 @@
                             session.status = response.data.data.status;
                             form.closeModal();
                             form.working = false;
-                            console.log('assignment update success')
+							Event.fire('refresh-data' );
+							console.log('assignment update success')
                         })
                         .catch(function (error) {
                             console.log('Update Session Failure!', error);

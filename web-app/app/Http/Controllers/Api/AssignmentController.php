@@ -142,7 +142,7 @@ class AssignmentController extends Controller
               $current_status['name'] == Assignment::ACCEPTED_STATUS ||
                 $current_status['name'] == Assignment::INVITED_STATUS)   {
 
-            if ( $action == Assignment::DECLINED_STATUS || $action == Assignment::WITHDREW_STATUS ) {
+            if ( $action == Assignment::DECLINED_STATUS  ) {
 
                 $data['status_id']  = $assignment_statuses->firstWhere('name' , Assignment::DECLINED_STATUS)['id'];
                 $data['state']      = Assignment::INACTIVE_STATE;
@@ -150,6 +150,23 @@ class AssignmentController extends Controller
             }
 
         }
+
+        // Teachers can Decline only if the current assignment status is Applied, Selected, Invited or Accepted
+        if($current_status['name'] == Assignment::APPLIED_STATUS ||
+            $current_status['name'] == Assignment::SELECTED_STATUS ||
+              $current_status['name'] == Assignment::ACCEPTED_STATUS ||
+                $current_status['name'] == Assignment::INVITED_STATUS)   {
+
+            if (   $action == Assignment::WITHDREW_STATUS ) {
+
+                $data['status_id']  = $assignment_statuses->firstWhere('name' , Assignment::WITHDREW_STATUS )['id'];
+                $data['state']      = Assignment::INACTIVE_STATE;
+
+            }
+
+        }
+
+
 
 
         // Teachers can only Accept if the assignment status is Invited
