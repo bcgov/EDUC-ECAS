@@ -142,7 +142,7 @@
                 });
             },
 
-			sortSessionByEndDate() {
+            sortSessionByEndDate() {
 
                 // Sessions sorted so that the newest sessions are at the bottom
                 return this.dateFilteredSessions.sort(function (b, a) {
@@ -191,7 +191,9 @@
                 switch (assignment.status.name) {
                     case 'Applied':
                         return 'Applied'
-                    case 'Invited':
+                   case 'Withdrew':
+                        return 'Withdrew'
+                     case 'Invited':
                         return 'Accept Invitation'
                     case 'Accepted':
                         return 'Accepted'
