@@ -43,8 +43,11 @@
                 <li><a href="https://www2.gov.bc.ca/gov/content/home/privacy">Privacy</a></li>
                 <li><a href="https://www2.gov.bc.ca/gov/content/home/accessibility">Accessibility</a></li>
                 <li><a href="https://www2.gov.bc.ca/gov/content/home/copyright">Copyright</a></li>
-                <li><a href="https://www2.gov.bc.ca/gov/content/home/contact-us">Contact Us</a></li>
-            </ul>
+                <li><a href="https://www2.gov.bc.ca/gov/content/home/contact-us">Contact Us</a></li>   
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;<font size=2><i>OCP Build #222</i></font></li>      
+   
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;<font size=2><i>OCP Build #222</i></font></li>      
+           </ul>
         </div>
     </footer>
 
