@@ -191,8 +191,6 @@
                 switch (assignment.status.name) {
                     case 'Applied':
                         return 'Applied'
-                   case 'Withdrew':
-                        return 'Withdrew'
                      case 'Invited':
                         return 'Accept Invitation'
                     case 'Accepted':
@@ -203,7 +201,9 @@
                         return 'Contract Received'
                     case 'Declined':
                         return 'Declined'
-                    case 'Attendance Recorded':
+                   case 'Withdrew':
+                        return 'Withdrew'
+		case 'Attendance Recorded':
                         return 'Attended'
                     case 'Completed':
                         return 'Closed'
