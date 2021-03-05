@@ -17,7 +17,7 @@ use App\Keycloak\KeycloakGuard;
 use Illuminate\Http\Request;
 
 
-class AsignmentController extends Controller
+class AssignmentController extends Controller
 {
 
     private $profile;
