@@ -171,8 +171,7 @@
                 }
             },
 
-
-            createAssignment(session) {
+          createAssignment(session) {
 
                 var form = this;
 
@@ -191,16 +190,19 @@
                         form.closeModal();
                         form.working = false;
 						Event.fire('refresh-data' );
-						console.log('assignment created')
-						
+						console.log('assignment created');
+						console.log('sleep!')
+					setTimeout(() => {
+					console.log('reload!');
+							location.reload();
+					}, 2000);
+ 
                     })
                     .catch(function (error) {
                         console.log('Failure!', error);
                         form.working = false;
                     });
-					location.reload();
-            },
-
+           },
             updateAssignment(session, action) {
 
                 var form = this;
