@@ -76,7 +76,7 @@
                 <template v-if="isStatus(session, 'Open')">
                     <div class="col">
                         <button class="btn btn-danger btn-block" v-on:click="closeModal()">
-                            No thank you</button>
+                           No thank you</button>
                     </div>
                     <div class="col">
                         <button v-show=" ! working" class="btn btn-primary btn-block" v-on:click="applyToSession(session, true)">
@@ -157,8 +157,8 @@
 
                 let action = accept ? 'Accepted' : 'Declined';
 
-                this.updateAssignment(session, action)
-            },
+                this.updateAssignment(session, action);
+				},
 
             applyToSession (session, attend) {
 
@@ -167,13 +167,11 @@
                 }
 
                 if(! attend) {
-                    this.updateAssignment(session, 'Declined')
+                    this.updateAssignment(session, 'Withdrew')
                 }
-
             },
 
-
-            createAssignment(session) {
+          createAssignment(session) {
 
                 var form = this;
 
@@ -191,15 +189,20 @@
                         session.status = response.data.data.status;
                         form.closeModal();
                         form.working = false;
-                        console.log('assignment created' )
+						Event.fire('refresh-data' );
+						console.log('assignment created');
+						console.log('sleep!')
+					setTimeout(() => {
+					console.log('reload!');
+							location.reload();
+					}, 2000);
+ 
                     })
                     .catch(function (error) {
                         console.log('Failure!', error);
                         form.working = false;
                     });
-
-            },
-
+           },
             updateAssignment(session, action) {
 
                 var form = this;
@@ -224,7 +227,8 @@
                             session.status = response.data.data.status;
                             form.closeModal();
                             form.working = false;
-                            console.log('assignment update success')
+							Event.fire('refresh-data' );
+							console.log('assignment update success')
                         })
                         .catch(function (error) {
                             console.log('Update Session Failure!', error);
