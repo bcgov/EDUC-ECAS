@@ -44,7 +44,7 @@
                 <li><a href="https://www2.gov.bc.ca/gov/content/home/accessibility">Accessibility</a></li>
                 <li><a href="https://www2.gov.bc.ca/gov/content/home/copyright">Copyright</a></li>
                 <li><a href="https://www2.gov.bc.ca/gov/content/home/contact-us">Contact Us</a></li>
-            </ul>
+           </ul>
         </div>
     </footer>
 
