@@ -1,0 +1,127 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Mime;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Ecas.Dyn365Service.Utils;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+
+namespace Ecas.Dyn365Service.Controllers
+{
+    [Route("api/[controller]/[action]")]
+    [Authorize]
+    [ApiController]
+    public class ContractFilesController : ControllerBase
+    {
+        [HttpGet]
+        [ActionName("GetFile")]
+         public ActionResult<string> GetFile(string annotationId)
+        {
+            if (string.IsNullOrEmpty(annotationId)) return string.Empty;
+            //c611cef2-24b5-e911-b80d-005056833c5b
+            string fetchXML = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='annotation' >
+                                    <attribute name='documentbody' />
+                                    <filter>
+                                      <condition attribute='annotationid' operator='eq' value= '{" + annotationId + @"}' />
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+
+            var statement = $"annotations?fetchXml=" + WebUtility.UrlEncode(fetchXML);
+            var response = new Dyn365WebAPI().SendRetrieveRequestAsync(statement, true);
+            if (response.IsSuccessStatusCode)
+            {
+                return Ok(response.Content.ReadAsStringAsync().Result);
+            }
+            else
+                return StatusCode((int)response.StatusCode,
+                    $"Failed to Retrieve records: {response.ReasonPhrase}");
+        }
+
+        [HttpGet]
+        [ActionName("ListFiles")]
+        public ActionResult<string> ListFiles(string assignmentId)
+        {
+            if (string.IsNullOrEmpty(assignmentId)) return string.Empty;
+           string fetchXML = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='annotation' >
+                                    <attribute name='filename' />
+                                    <attribute name='filesize' />
+                                    <attribute name='notetext' />
+                                    <filter>
+                                      <condition attribute='objecttypecode' operator='eq' value='10038' />
+                                      <condition attribute='objectid' operator='eq' value= '{" + assignmentId + @"}' />
+                                    </filter>
+                                  <link-entity name='educ_assignment' from='educ_assignmentid' to='objectid'>
+                                      <filter>
+                                        <condition attribute='educ_contractstage' operator='eq' value='610410003' />
+                                      </filter>
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
+
+            var statement = $"annotations?fetchXml=" + WebUtility.UrlEncode(fetchXML);
+            var response = new Dyn365WebAPI().SendRetrieveRequestAsync(statement, true);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return Ok(response.Content.ReadAsStringAsync().Result);
+            }
+            else
+                return StatusCode((int)response.StatusCode,
+                    $"Failed to Retrieve records: {response.ReasonPhrase}");
+        }
+
+        [HttpPost]
+        [ActionName("UploadFile")]
+         public ActionResult<string> UploadFile([FromBody]dynamic value)
+        {
+            var p = value.ToString();
+
+            // stop, if the file size exceeds 1.5mb 
+            if (p.Length > 2207018) { return StatusCode((int)HttpStatusCode.InternalServerError, "The file size exceeds the limit allowed (<1.5Mb)."); };
+            JObject obj = JObject.Parse(p);
+            string filename = (string)obj["filename"];
+            string[] partialfilename = filename.Split('.');
+            string fileextension = partialfilename[partialfilename.Count()-1];
+            
+            // stop, if the file format whether is not DOC or DOCX 
+            switch (fileextension.ToLower())
+            { 
+                case "docx":
+                    break;
+
+                case "doc":
+                    break;
+
+                default:
+                    return StatusCode((int)HttpStatusCode.InternalServerError, "Sorry, only DOC and DOCX file formats are supported.");
+           }
+
+            var response = new Dyn365WebAPI().SendCreateRequestAsync("annotations", p);
+
+            //TODO: Improve Exception handling
+                if (response.IsSuccessStatusCode)
+                {
+                    var entityUri = response.Headers.GetValues("OData-EntityId")[0];
+                    string pattern = @"(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}";
+                    Match m = Regex.Match(entityUri, pattern, RegexOptions.IgnoreCase);
+                    var newRecordId = string.Empty;
+                    if (m.Success) { newRecordId = m.Value; return Ok($"{newRecordId}"); }
+                    else return StatusCode((int)HttpStatusCode.InternalServerError,
+                        "Unable to create record at this time");
+                }
+
+                else
+                    return StatusCode((int)response.StatusCode,
+                        $"Failed to Create record: {response.ReasonPhrase}");
+         }
+    }
+}
