@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -85,26 +85,22 @@ namespace Ecas.Dyn365Service.Controllers
         {
             var p = value.ToString();
 
-            // stop, if the file size exceeds 1.5mb 
-            if (p.Length > 2207018) { return StatusCode((int)HttpStatusCode.InternalServerError, "The file size exceeds the limit allowed (<1.5Mb)."); };
+            // stop, if the file size exceeds 3mb 
+            if (p.Length > 3999999) { return StatusCode((int)HttpStatusCode.InternalServerError, "The file size exceeds the limit allowed (<3Mb)."); };
             JObject obj = JObject.Parse(p);
             string filename = (string)obj["filename"];
             string[] partialfilename = filename.Split('.');
-            string fileextension = partialfilename[partialfilename.Count()-1];
-            
-            // stop, if the file format whether is not DOC or DOCX 
-            switch (fileextension.ToLower())
-            { 
-                case "docx":
-                    break;
+            string fileextension = partialfilename[partialfilename.Count()-1].ToLower();
 
-                case "doc":
-                    break;
+            // stop, if the file format whether is not JPG, PDF or PNG
 
-                default:
-                    return StatusCode((int)HttpStatusCode.InternalServerError, "Sorry, only DOC and DOCX file formats are supported.");
-           }
-
+            string[] acceptedFileFormats = { "jpg", "jpeg", "pdf", "png" };
+ 
+            if (Array.IndexOf(acceptedFileFormats, fileextension) == -1)
+            {
+                      return StatusCode((int)HttpStatusCode.InternalServerError, "Sorry, only PDF, JPG and PNG file formats are supported.");
+            }
+     
             var response = new Dyn365WebAPI().SendCreateRequestAsync("annotations", p);
 
             //TODO: Improve Exception handling
