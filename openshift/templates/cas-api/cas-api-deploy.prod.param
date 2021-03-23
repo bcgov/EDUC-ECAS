@@ -6,11 +6,11 @@
 # NAME=cas-api
 # APP_GROUP=ecas
 # SOURCE_IMAGE_NAME=cas-api
-# IMAGE_NAMESPACE=pvpywj-tools
+# IMAGE_NAMESPACE=7d321c-tools
 TAG_NAME=prod
 # ASPNETCORE_ENVIRONMENT=Production
-SITEMINDER_APPLICATION_DOMAIN=cas-api-pvpywj-prod.pathfinder.bcgov
-APPLICATION_DOMAIN=cas-api-pvpywj-prod.pathfinder.gov.bc.ca
+SITEMINDER_APPLICATION_DOMAIN=cas-api-7d321c-prod.pathfinder.bcgov
+APPLICATION_DOMAIN=cas-api-7d321c-prod.apps.silver.devops.gov.bc.ca
 # CPU_REQUEST=10m
 # CPU_LIMIT=500m
 # MEMORY_REQUEST=10Mi

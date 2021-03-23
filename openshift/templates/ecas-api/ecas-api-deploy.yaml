@@ -142,13 +142,18 @@ objects:
         - ${NAME}
         from:
           kind: ImageStreamTag
-          name: ${NAME}:${TAG_NAME}
+          name: ${IMAGE_NAME}:${TAG_NAME}
           namespace: ${IMAGE_NAMESPACE}
 
 parameters:
 - name: NAME
   displayName: Name
   description: The name assigned to all the objects defined in this template.
+  required: true
+  value: ecas-api
+- name: IMAGE_NAME
+  displayName: Image Name
+  description: The image name assigned to all the objects defined in this template.
   required: true
   value: ecas-api
 - name: APP_GROUP
@@ -164,7 +169,7 @@ parameters:
 - name: IMAGE_NAMESPACE
   displayName: Namespace containing application images.
   required: true
-  value: pvpywj-tools
+  value: 7d321c-tools
 - name: TAG_NAME
   displayName: Environment TAG name
   description: The TAG name for this environment, e.g., dev, test, prod.
