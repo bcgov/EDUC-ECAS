@@ -1,4 +1,4 @@
-#=========================================================
+z#=========================================================
 # OpenShift template parameters for:
 # Component: .
 # Template File: templates/cas-api/cas-api-deploy.yaml
@@ -6,11 +6,10 @@
 NAME=cas-api
 APP_GROUP=ecas
 SOURCE_IMAGE_NAME=cas-api
-IMAGE_NAMESPACE=pvpywj-tools
+IMAGE_NAMESPACE=7d321c-tools
 TAG_NAME=dev
 ASPNETCORE_ENVIRONMENT=Production
-SITEMINDER_APPLICATION_DOMAIN=cas-api-pvpywj-dev.pathfinder.bcgov
-APPLICATION_DOMAIN=cas-api-pvpywj-dev.pathfinder.gov.bc.ca
+APPLICATION_DOMAIN=cas-api-7d321c-dev.apps.silver.devops.gov.bc.ca
 CPU_REQUEST=10m
 CPU_LIMIT=500m
 MEMORY_REQUEST=10Mi
