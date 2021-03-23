@@ -5,8 +5,7 @@
 #=========================================================
 # NAME=ecas-frontend
 # APP_GROUP=ecas
-APPLICATION_DOMAIN=ecas-frontend-pvpywj-test.pathfinder.gov.bc.ca
-# IMAGE_NAMESPACE=pvpywj-tools
+APPLICATION_DOMAIN=ecas-frontend-7d321c-test.apps.silver.devops.gov.bc.ca
 TAG_NAME=test
 # APP_KEY=[a-zA-Z0-9]{32}
 # API_KEY=[a-zA-Z0-9]{32}

@@ -29,7 +29,7 @@ def SONAR_SOURCES = './zap/wrk'
 def TARGET_ROUTE = 'ecas-frontend'
 
 // The namespace in which the target route can be found.  This will be used to dynamically get the URL.
-def TARGET_PROJECT_NAMESPACE = 'pvpywj-dev'
+def TARGET_PROJECT_NAMESPACE = '7d321c-dev'
 
 // The path to the API.
 def API_PATH='/api'
@@ -83,7 +83,7 @@ podTemplate(
   containers: [
     containerTemplate(
       name: 'jnlp',
-      image: '172.50.0.2:5000/openshift/jenkins-slave-zap',
+      image: 'image-registry.openshift-image-registry.svc:5000/5c0dde-tools/jenkins-agent-zap:latest',
       resourceRequestCpu: '500m',
       resourceLimitCpu: '1000m',
       resourceRequestMemory: '3Gi',

@@ -5,8 +5,8 @@
 #=========================================================
 # NAME=ecas-api
 # APP_GROUP=ecas
-APPLICATION_DOMAIN=ecas-api-pvpywj-test.pathfinder.gov.bc.ca
-# IMAGE_NAMESPACE=pvpywj-tools
+APPLICATION_DOMAIN=ecas-api-7d321c-test.apps.silver.devops.gov.bc.ca
+# IMAGE_NAMESPACE=7d321c-tools
 TAG_NAME=test
 # PORT=8080
 ASPNETCORE_ENVIRONMENT=Staging
