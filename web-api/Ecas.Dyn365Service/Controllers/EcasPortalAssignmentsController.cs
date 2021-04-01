@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -26,10 +26,11 @@ namespace Ecas.Dyn365Service.Controllers
                                     <attribute name='statuscode' />
                                     <attribute name='educ_contact' />
                                     <attribute name='educ_assignmentid' />
+                                    <attribute name='educ_contractstage' />
                                     <order descending='false' attribute='educ_contact' />
                                     <filter type='and'>
                                       <condition attribute='statecode' operator='eq' value='0' />
-                                      <condition attribute='educ_contact' operator='eq' value='{"+ contactId + @"}' />
+                                      <condition attribute='educ_contact' operator='eq' value='{" + contactId + @"}' />
                                     </filter>
                                     <link-entity name='educ_session' from='educ_sessionid' to='educ_session' visible='false' link-type='outer' alias='a_ee8da643bc5be911a978000d3af45d23'>
                                       <attribute name='educ_startdate' />
