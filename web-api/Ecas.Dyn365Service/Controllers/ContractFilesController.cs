@@ -1,14 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Mime;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Ecas.Dyn365Service.Utils;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 
@@ -24,7 +19,6 @@ namespace Ecas.Dyn365Service.Controllers
          public ActionResult<string> GetFile(string annotationId)
         {
             if (string.IsNullOrEmpty(annotationId)) return string.Empty;
-            //c611cef2-24b5-e911-b80d-005056833c5b
             string fetchXML = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='annotation' >
                                     <attribute name='documentbody' />
@@ -45,9 +39,48 @@ namespace Ecas.Dyn365Service.Controllers
                     $"Failed to Retrieve records: {response.ReasonPhrase}");
         }
 
+
         [HttpGet]
-        [ActionName("ListFiles")]
-        public ActionResult<string> ListFiles(string assignmentId)
+        [ActionName("ContractFile")]
+        public ActionResult<string> ContractFile(string assignmentId)
+        {
+            if (string.IsNullOrEmpty(assignmentId)) return string.Empty;
+            string fetchXML = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' top='1'>
+                                  <entity name='annotation' >
+                                    <attribute name='filename' />
+                                    <attribute name='filesize' />
+                                    <attribute name='notetext' />
+                                    <filter>
+                                      <condition attribute='filename' operator='ends-with' value='.pdf' />
+                                      <condition attribute='objecttypecode' operator='eq' value='10038' />
+                                      <condition attribute='notetext' operator='neq' value='Uploaded Document' />
+                                      <condition attribute='objectid' operator='eq' value= '{" + assignmentId + @"}' />
+                                    </filter>
+                                  <order attribute='createdon' descending='true' />
+                                  <link-entity name='educ_assignment' from='educ_assignmentid' to='objectid'>
+                                      <filter>
+                                        <condition attribute='educ_contractstage' operator='eq' value='610410003' />
+                                      </filter>
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
+
+            var statement = $"annotations?fetchXml=" + WebUtility.UrlEncode(fetchXML);
+            var response = new Dyn365WebAPI().SendRetrieveRequestAsync(statement, true);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return Ok(response.Content.ReadAsStringAsync().Result);
+            }
+            else
+                return StatusCode((int)response.StatusCode,
+                    $"Failed to Retrieve records: {response.ReasonPhrase}");
+        }
+
+
+        [HttpGet]
+        [ActionName("ListUploadedFiles")]
+        public ActionResult<string> ListUploadedFiles(string assignmentId)
         {
             if (string.IsNullOrEmpty(assignmentId)) return string.Empty;
            string fetchXML = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
@@ -57,6 +90,7 @@ namespace Ecas.Dyn365Service.Controllers
                                     <attribute name='notetext' />
                                     <filter>
                                       <condition attribute='objecttypecode' operator='eq' value='10038' />
+                                      <condition attribute='notetext' operator='eq' value='Uploaded Document' />
                                       <condition attribute='objectid' operator='eq' value= '{" + assignmentId + @"}' />
                                     </filter>
                                   <link-entity name='educ_assignment' from='educ_assignmentid' to='objectid'>
@@ -83,11 +117,15 @@ namespace Ecas.Dyn365Service.Controllers
         [ActionName("UploadFile")]
          public ActionResult<string> UploadFile([FromBody]dynamic value)
         {
-            var p = value.ToString();
+            var rawJsonData = value.ToString();
 
             // stop, if the file size exceeds 3mb 
-            if (p.Length > 3999999) { return StatusCode((int)HttpStatusCode.InternalServerError, "The file size exceeds the limit allowed (<3Mb)."); };
-            JObject obj = JObject.Parse(p);
+            if (rawJsonData.Length > 3999999) { return StatusCode((int)HttpStatusCode.InternalServerError, "The file size exceeds the limit allowed (<3Mb)."); };
+            JObject obj = JObject.Parse(rawJsonData);
+            obj.Add("notetext", JToken.FromObject(new string("Uploaded Document")));
+            rawJsonData = obj.ToString();
+
+
             string filename = (string)obj["filename"];
             string[] partialfilename = filename.Split('.');
             string fileextension = partialfilename[partialfilename.Count()-1].ToLower();
@@ -100,8 +138,7 @@ namespace Ecas.Dyn365Service.Controllers
             {
                       return StatusCode((int)HttpStatusCode.InternalServerError, "Sorry, only PDF, JPG and PNG file formats are supported.");
             }
-     
-            var response = new Dyn365WebAPI().SendCreateRequestAsync("annotations", p);
+            var response = new Dyn365WebAPI().SendCreateRequestAsync("annotations", rawJsonData);
 
             //TODO: Improve Exception handling
                 if (response.IsSuccessStatusCode)
@@ -119,5 +156,24 @@ namespace Ecas.Dyn365Service.Controllers
                     return StatusCode((int)response.StatusCode,
                         $"Failed to Create record: {response.ReasonPhrase}");
          }
+
+
+
+
+        [HttpDelete]
+        [ActionName("RemoveFile")]
+        public ActionResult<string> RemoveFile(string statement)
+        {
+            statement = "annotations(" + statement + ")";
+            var response = new Dyn365WebAPI().SendDeleteRequestAsync(statement);
+            if (response.IsSuccessStatusCode)
+            {
+                return Ok("The contract has been removed");
+            }
+            else
+                return StatusCode((int)response.StatusCode,
+                    $"Failed to remove the contract: {response.ReasonPhrase}");
+        }
+
     }
 }
