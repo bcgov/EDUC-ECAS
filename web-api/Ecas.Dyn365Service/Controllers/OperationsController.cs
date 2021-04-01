@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -106,13 +106,13 @@ namespace Ecas.Dyn365Service.Controllers
         /// <returns></returns>
         // DELETE: api/ApiWithActions/5
         [HttpDelete]
-        public ActionResult<string> Delete(string statement)
+        public ActionResult<string> Delete(string annotationId)
         {
-            var response = new Dyn365WebAPI().SendDeleteRequestAsync(statement);
+            var response = new Dyn365WebAPI().SendDeleteRequestAsync(annotationId);
 
             //TODO: Improve Exception handling
             if (response.IsSuccessStatusCode)
-                return Ok($"{statement} removed");
+                return Ok($"{annotationId} removed");
             else
                 return StatusCode((int)response.StatusCode,
                     response.Content.ToString());
