@@ -31,6 +31,8 @@ Vue.use(VModal, { dynamic: true, injectModalsContainer: true });
 Vue.component('DashboardLauncher'       , require('./components/DashboardLauncher.vue').default);
 Vue.component('session'                 , require('./components/SessionModal.vue').default);
 Vue.component('profile'                 , require('./components/Profile.vue').default);
+Vue.component('credentials'             , require('./components/Credentials.vue').default);
+Vue.component('contracts'             , require('./components/Contracts.vue').default);
 
 // A global event handler, just a convenient wrapper for Vue's event system
 window.Event = new class {

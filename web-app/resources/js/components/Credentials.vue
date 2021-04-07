@@ -46,18 +46,28 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+ import axios from 'axios';
 
 export default {
     name: "Credentials",
 
     props: {
-        credentials: {},
-        user_credentials: {},
+        user: {
+            type: Object,
+            required: true
+        },
+        credentials: {
+            type: Array,
+            required: true
+        },
+        user_credentials: {
+            type: Array,
+            required: true
+        },
     },
     data() {
         return {
-            credentials_applied: [...this.user_credentials],
+            credentials_applied: [],
             blank_credential: {
                 credential: 0,
                 year: null
@@ -65,15 +75,21 @@ export default {
             new_credential: {
                 credential: 0
             },
+            working: false,
         }
     },
     mounted() {
-        Event.listen('credential-added', this.pushCredential);
-        Event.listen('credential-deleted', this.removeCredential);
-        Event.listen('profile-updated', this.updateProfile);
-        Event.listen('launch-profile-modal', this.showProfile);
+        this.credentials_applied = this.user_credentials;
+    },
+    watch: {
+        user_credentials(newValue) {
+            this.credentials_applied = newValue;
+        },
     },
     computed: {
+        
+    },
+    methods: {
         credentialsIdsInUse() {
             var arrayOfCredentialIds = [];
 
@@ -88,11 +104,9 @@ export default {
             // subtract applied_credentials from credentials
             return this.credentials.filter(x => ! this.credentialsIdsInUse.includes(x.id));
 
-        }
-    },
-    methods: {
+        },
         addCredential() {
-            console.log('adding credential', this.new_credential);
+            console.log('adding credential' + JSON.stringify(axios.defaults));
 
             this.working = true;
 
@@ -100,13 +114,14 @@ export default {
 
             console.log('form', form );
 
-            axios.post('/api/' + form.getUser.id + '/profile-credentials', {
+            axios.post('/api/' + this.user.id + '/profile-credentials', {
                 credential_id: this.new_credential.credential.id,
                 year: this.new_credential.year
             })
                 .then(function (response) {
                     form.working = false;
-                    Event.fire('credential-added', response.data);
+                    this.pushCredential(response.data);
+                    Event.fire('user-credentials-updated', this.credentials_applied);
                     console.log('Create Success!', response.data);
                 })
                 .catch(function (error) {
@@ -115,16 +130,17 @@ export default {
                 });
         },
         deleteCredential(profile_credential) {
-            console.log('removing credential');
+            console.log('removing credential' + JSON.stringify(axios.defaults));
 
             this.working = true;
 
             var form = this;
 
-            axios.delete('/api/' + form.getUser.id + '/profile-credentials/' + profile_credential.id )
+            axios.delete('/api/' + this.user.id + '/profile-credentials/' + profile_credential.id )
                 .then(function (response) {
                     form.working = false;
-                    Event.fire('credential-deleted', profile_credential.credential.id);
+                    this.removeCredential(profile_credential.credential.id);
+                    Event.fire('user-credentials-updated', this.credentials_applied);
                     console.log('Delete Success!', profile_credential.credential.id )
                 })
                 .catch(function (error) {
@@ -132,7 +148,7 @@ export default {
                     console.log('Failure!')
                 });
         },
-         pushCredential(profile_credential) {
+        pushCredential(profile_credential) {
             console.log('pushing credential', profile_credential.data.credential.id );
 
             // Add to the applied list

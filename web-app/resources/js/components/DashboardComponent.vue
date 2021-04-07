@@ -53,9 +53,7 @@
                         </div>
                     </div>
                     <div class="col pb-3">
-                        <div class="card">
-                            
-                        </div>
+                        <contracts dusk="contracts-component"></contracts>
                     </div>
                 </div>
                 <marking-sessions :sessions="this.getSessions"></marking-sessions>
@@ -73,6 +71,7 @@
         </modal>
         <modal name="credentials_form" height="auto" :scrollable="true" :clickToClose="true">
             <credentials
+                    :user="getUser"
                     :user_credentials="user_credentials"
                     :credentials="credentials"
                     dusk="credentials-component"
@@ -85,6 +84,7 @@
     import {mapGetters} from 'vuex'
     import Profile from './Profile.vue';
     import Credentials from './Credentials.vue';
+    import Contracts from './Contracts.vue';
     import MarkingSessions from './MarkingSessions.vue';
 
     export default {
@@ -93,6 +93,7 @@
         components: {
             Profile,
             Credentials,
+            Contracts,
             MarkingSessions,
         },
 
@@ -110,13 +111,16 @@
                 filter: '',
                 current_session: {},
                 new_user: false,
-                working: false,
                 mounted: false,
                 menuVisible: false,
             }
         },
         mounted() {
             console.log('Dashboard Mounted')
+
+            Event.listen('launch-profile-modal', this.showProfile);
+            Event.listen('profile-updated', this.updateProfile);
+            Event.listen('user-credentials-updated', this.updateUserCredentials);
 
             this.$store.commit('SET_USER', this.user);
             this.$store.commit('SET_SESSIONS', this.sessions);
@@ -149,6 +153,10 @@
                 console.log('updateProfile event', user.data.data);
                 this.new_user = false;
                 this.$store.commit('SET_USER', user.data.data)
+            },
+            updateUserCredentials(credentials) {
+                console.log('updateUserCredentials event', credentials);
+                this.user_credentials = credentials;
             },
         }
 
