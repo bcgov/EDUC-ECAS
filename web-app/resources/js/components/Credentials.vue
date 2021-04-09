@@ -40,6 +40,17 @@
                         </button>
                     </div>
                 </div>
+                <div class="form-group row pt-3">
+                    <div class="col"/>
+                    <div class="col">
+                        <button class="btn btn-primary btn-block" v-on:click.prevent="closeModal" dusk="save">
+                            <span>
+                                <div class="loader text-center" v-show="working"></div>
+                            </span>
+                            <div v-show="!working">Ok</div>
+                        </button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -90,6 +101,12 @@ export default {
         
     },
     methods: {
+        closeModal() {
+            this.$modal.hide('credentials_form');
+        },
+        cancelCredential() {
+            this.closeModal()
+        },
         credentialsIdsInUse() {
             var arrayOfCredentialIds = [];
 

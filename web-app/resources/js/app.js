@@ -79,12 +79,18 @@ const store = new Vuex.Store({
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faFile } from '@fortawesome/free-regular-svg-icons';
+import { faFileDownload } from '@fortawesome/free-solid-svg-icons';
+import { faFileUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import VueKeyCloak from '@dsb-norge/vue-keycloak-js';
 
 
 library.add(faCheck)
 library.add(faTrash)
+library.add(faFile)
+library.add(faFileDownload)
+library.add(faFileUpload)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

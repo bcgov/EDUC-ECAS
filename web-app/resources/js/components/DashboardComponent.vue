@@ -4,12 +4,15 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col">
+                        <button type="button" class="btn btn-outline-primary" @click="hideContracts" v-if="displayContracts">Dashboard</button>
+                    </div>
+                    <div class="col">
                         <div id="logout">
                             <button type="button" class="btn btn-primary" @click="$keycloak.logoutFn" v-if="$keycloak.authenticated">Log out</button>
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" v-if="!displayContracts">
                     <div class="col pb-3">
                         <div class="card">
                             <div class="card-header">
@@ -53,11 +56,30 @@
                         </div>
                     </div>
                     <div class="col pb-3">
-                        <contracts dusk="contracts-component"></contracts>
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>My Contracts</h2>
+                            </div>
+                            <div class="card-body">
+                                <p>Download and submit your signed contracts for the current session.</p>
+                                <div class="my-contracts-box mt-n3">
+                                    <button class="btn btn-primary" @click="showContracts">
+                                        <span>
+                                            <div class="text-center">Manage my contracts</div>
+                                        </span>
+                                    </button>
+                                    <div class="status-box text-center mt-1">Action required</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <marking-sessions :sessions="this.getSessions"></marking-sessions>
-
+                <marking-sessions v-if="!displayContracts" :sessions="this.getSessions"></marking-sessions>
+            </div>
+            <div class="row" v-if="displayContracts">
+                <div class="col">
+                    <contracts dusk="contracts-component"></contracts>
+                </div>
             </div>
         </div>
         <modal name="profile_form" height="auto" :scrollable="true" :clickToClose="false">
@@ -69,7 +91,7 @@
                     dusk="profile-component"
             ></profile>
         </modal>
-        <modal name="credentials_form" height="auto" :scrollable="true" :clickToClose="true">
+        <modal name="credentials_form" height="auto" :scrollable="true" :clickToClose="false">
             <credentials
                     :user="getUser"
                     :user_credentials="user_credentials"
@@ -113,6 +135,7 @@
                 new_user: false,
                 mounted: false,
                 menuVisible: false,
+                displayContracts: false,
             }
         },
         mounted() {
@@ -141,6 +164,12 @@
         methods: {
             toggleMenu() {
                 this.menuVisible = !this.menuVisible;
+            },
+            showContracts() {
+                this.displayContracts = true;
+            },
+            hideContracts() {
+                this.displayContracts = false;
             },
             showProfile() {
                 this.$modal.show('profile_form');
@@ -193,3 +222,18 @@
     }
 </style>
 
+<style scoped>
+.my-contracts-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.status-box {
+    background-color: red;
+    color: white;
+    width: 150px;
+    padding: 2px 4px;
+}
+</style>
