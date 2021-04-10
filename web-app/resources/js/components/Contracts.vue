@@ -41,12 +41,13 @@
                       <td>Foundation Skills Assessment Reading English, Grade 4</td>
                       <td>
                         <div class="icon-box">
-                          <font-awesome-icon icon="file-download" alt="Download file" style="font-size: 32px; color: #003366;"  />
+                          <font-awesome-icon icon="file-download" alt="Download file" style="font-size: 32px; color: #003366;" />
                         </div>
                       </td>
                       <td>
                         <div class="icon-box">
-                          <font-awesome-icon icon="file-upload" alt="Upload file" style="font-size: 32px; color: #f5a742;" />
+                          <font-awesome-icon icon="file-upload" alt="Upload file" style="font-size: 32px; color: #f5a742;" 
+                            @click="showFileUpload()" />
                         </div>
                       </td>
                       <td>
@@ -55,9 +56,11 @@
                         </div>
                       </td>
                       <td>
-                        <button class="btn btn-block btn-primary" @click="collapseAll()">
-                          Submit for review
-                        </button>
+                        <div class="button-box">
+                          <button class="btn btn-block btn-primary" @click="collapseAll()">
+                            Submit for review
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   </tbody>
@@ -138,14 +141,21 @@
            
         </div> 
       </modal>
+      <modal name="file_upload_form" height="auto" :scrollable="false" :clickToClose="true">
+         <file-uploader/>
+      </modal>
     </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
+import FileUploader from './FileUploader.vue';
 
 export default {
     name: "Contracts",
+    components: {
+        FileUploader,
+    },
     computed: {
         ...mapGetters([
             'getUser',
@@ -188,6 +198,9 @@ export default {
       },
       showHelp() {
          this.$modal.show('help_form');
+      },
+      showFileUpload() {
+         this.$modal.show('file_upload_form');
       },
     }
 }
@@ -243,6 +256,10 @@ export default {
   padding-right: 4px;
   text-align: center;
   /* height: 45px; */
+}
+
+.button-box {
+  width: 156px;
 }
 
 

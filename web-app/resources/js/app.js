@@ -28,6 +28,9 @@ import VModal from 'vue-js-modal'
 Vue.use(Vuex);
 Vue.use(VModal, { dynamic: true, injectModalsContainer: true });
 
+const VueUploadComponent = require('vue-upload-component');
+Vue.component('file-upload', VueUploadComponent);
+
 Vue.component('DashboardLauncher'       , require('./components/DashboardLauncher.vue').default);
 Vue.component('session'                 , require('./components/SessionModal.vue').default);
 Vue.component('profile'                 , require('./components/Profile.vue').default);
