@@ -1,64 +1,69 @@
 <template>
-  <div class="file-upload-div">
-    <div class="upload-header">
-      <h4 class="ml-3">Submit your contract</h4>
+  <div class="card">
+    <div class="card-header">
+        <button class="btn btn-primary btn-sm float-right" v-on:click="closeModal">X</button>
+        <h2>Submit your contract</h2>
     </div>
-    <div class="upload">
-      <ul v-if="files.length">
-        <li v-for="file in files" :key="file.id">
-          <span>{{file.name}}</span> -
-          <span>{{file.size}}</span> -
-          <span v-if="file.error">{{file.error}}</span>
-          <span v-else-if="file.success">success</span>
-          <span v-else-if="file.active">active</span>
-          <span v-else></span>
-        </li>
-      </ul>
-      <ul v-else>
-        <td colspan="7">
-          <div class="text-center p-5 drop-area">
-            <h4>Drag and drop here<br/>or</h4>
-            <label for="file" class="btn btn-primary">Browse</label>
-          </div>
-        </td>
-        <td>
-          <div class="mt-n4 pt-2 pl-5">
-            Accepted file formats: <br/>
-            <ul>
-              <li>pdf</li>
-              <li>jpeg</li>
-              <li>png</li>
-            </ul>
-          </div>
-        </td>
-      </ul>
+    <div class="card-body">
+      <div class="file-upload-div">
+        <div class="upload">
+          <ul v-if="files.length">
+            <li v-for="file in files" :key="file.id">
+              <span>{{file.name}}</span> -
+              <span>{{file.size}}</span> -
+              <span v-if="file.error">{{file.error}}</span>
+              <span v-else-if="file.success">success</span>
+              <span v-else-if="file.active">active</span>
+              <span v-else></span>
+            </li>
+          </ul>
+          <ul v-else>
+            <td colspan="7">
+              <div class="text-center p-5 drop-area">
+                <h4>Drag and drop here<br/>or</h4>
+                <label for="file" class="btn btn-primary">Browse</label>
+              </div>
+            </td>
+            <td>
+              <div class="mt-n4 pt-2 pl-5">
+                Accepted file formats: <br/>
+                <ul>
+                  <li>pdf</li>
+                  <li>jpeg</li>
+                  <li>png</li>
+                </ul>
+              </div>
+            </td>
+          </ul>
 
-      <div v-show="$refs.upload && $refs.upload.dropActive" class="drop-active">
-    		<h3>Drop files to upload</h3>
-      </div>
+          <div v-show="$refs.upload && $refs.upload.dropActive" class="drop-active">
+            <h3>Drop files to upload</h3>
+          </div>
 
-      <div class="file-upload-btn-group">
-        <file-upload
-          v-show="false"
-          class="btn btn-primary"
-          post-action="/upload/post"
-          :multiple="false"
-          :drop="true"
-          :drop-directory="false"
-          accept="application/pdf,image/png,image/jpeg"
-          v-model="files"
-          ref="upload">
-          <i class="fa fa-plus"></i>
-          Select files
-        </file-upload>
-        <button type="button" class="btn btn-success mr-4" v-if="!$refs.upload || !$refs.upload.active" @click.prevent="$refs.upload.active = true">
-          <i class="fa fa-arrow-up" aria-hidden="true"></i>
-          Upload
-        </button>
-        <button type="button" class="btn btn-danger mr-4"  v-else @click.prevent="$refs.upload.active = false">
-          <i class="fa fa-stop" aria-hidden="true"></i>
-          Upload...
-        </button>
+          <div class="file-upload-btn-group">
+            <file-upload
+              v-show="false"
+              class="btn btn-primary"
+              post-action="/api/files/post/{assignmentID}"
+              :multiple="false"
+              :drop="true"
+              :drop-directory="false"
+              accept="application/pdf,image/png,image/jpeg"
+              v-model="files"
+              ref="upload">
+              <i class="fa fa-plus"></i>
+              Select files
+            </file-upload>
+            <button type="button" class="btn btn-success mr-4" v-if="!$refs.upload || !$refs.upload.active" @click.prevent="$refs.upload.active = true">
+              <i class="fa fa-arrow-up" aria-hidden="true"></i>
+              Upload
+            </button>
+            <button type="button" class="btn btn-danger mr-4"  v-else @click.prevent="$refs.upload.active = false">
+              <i class="fa fa-stop" aria-hidden="true"></i>
+              Upload...
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -75,6 +80,11 @@ export default {
     return {
       files: [],
     }
+  },
+  methods: {
+    closeModal() {
+        this.$modal.hide('file_upload_form');
+    },
   }
 }
 </script>
@@ -111,12 +121,6 @@ export default {
   font-size: 40px;
   color: #fff;
   padding: 0;
-}
-
-.upload-header {
-  margin-top: 8px;
-  margin-left: 12px;
-  padding-top: 10px;
 }
 
 .upload {

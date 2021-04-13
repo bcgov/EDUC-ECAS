@@ -1,6 +1,7 @@
 <template>
     <div class="card">
         <div class="card-header">
+            <button class="btn btn-primary btn-sm float-right" v-on:click="closeModal">X</button>
             <h2>Credentials</h2>
         </div>
         <div class="card-body">
@@ -37,17 +38,6 @@
                                 <div class="loader text-center" v-show="working"></div>
                             </span>
                             <div v-show="!working">Add</div>
-                        </button>
-                    </div>
-                </div>
-                <div class="form-group row pt-3">
-                    <div class="col"/>
-                    <div class="col">
-                        <button class="btn btn-primary btn-block" v-on:click.prevent="closeModal" dusk="save">
-                            <span>
-                                <div class="loader text-center" v-show="working"></div>
-                            </span>
-                            <div v-show="!working">Ok</div>
                         </button>
                     </div>
                 </div>

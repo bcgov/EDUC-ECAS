@@ -16,10 +16,12 @@
         <div id="accordion" class="ml-2">
           <div class="card">
             <div class="card-header" id="actionRequiredSectionHeader" @click="toggleActionRequired()">
+              <font-awesome-icon v-if="!actionRequiredDisplayed" class="float-right" icon="angle-right" alt="Show contents" style="margin-top: 12px; font-size: 32px; color: #003366;"  />
+              <font-awesome-icon v-if="actionRequiredDisplayed" class="float-right" icon="angle-down" alt="Hide contents" style="margin-top: 12px; font-size: 32px; color: #003366;"  />
               <h5 class="pt-1">
                   Action Required
               </h5>
-              <p class="pt-3 mb-0">Download, sign, and upload your contract(s) for the following sessions</p>
+              <p class="pt-1 mb-0">Download, sign, and upload your contract(s) for the following sessions</p>
             </div>
 
             <div id="actionRequiredSectionBody" v-show="actionRequiredDisplayed">
@@ -29,9 +31,9 @@
                     <tr>
                       <th scope="col">Dates</th>
                       <th scope="col">Type</th>
-                      <th scope="col">Download Contract</th>
-                      <th scope="col">Upload Contract</th>
-                      <th scope="col">Uploaded Files</th>
+                      <th scope="col">Download</th>
+                      <th scope="col">Upload</th>
+                      <th scope="col">View</th>
                       <th scope="col">&nbsp;</th>
                     </tr>
                   </thead>
@@ -41,7 +43,37 @@
                       <td>Foundation Skills Assessment Reading English, Grade 4</td>
                       <td>
                         <div class="icon-box">
-                          <font-awesome-icon icon="file-download" alt="Download file" style="font-size: 32px; color: #003366;" />
+                          <font-awesome-icon icon="file-download" alt="Download file" style="font-size: 32px; color: #003366;" 
+                            @click="showFileDownload()" />
+                        </div>
+                      </td>
+                      <td>
+                        <div class="icon-box">
+                          <font-awesome-icon icon="file-upload" alt="Upload file" style="font-size: 32px; color: #f5a742;" 
+                            @click="showFileUpload()" />
+                        </div>
+                      </td>
+                      <td>
+                        <div class="icon-box">
+                          <font-awesome-icon :icon="['far','file']" alt="List of uploaded files" style="font-size: 32px;"
+                            @click="showFileUploadedList()" />
+                        </div>
+                      </td>
+                      <td>
+                        <div class="button-box">
+                          <button class="btn btn-block btn-primary" @click="collapseAll()">
+                            Submit for review
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr v-for="item in getActionRequiredList()" :key="item.id" >
+                      <td>May 3 ~ May 5, 2021</td>
+                      <td>Foundation Skills Assessment Reading English, Grade 4</td>
+                      <td>
+                        <div class="icon-box">
+                          <font-awesome-icon icon="file-download" alt="Download file" style="font-size: 32px; color: #003366;"
+                            @click="showFileDownload()" />
                         </div>
                       </td>
                       <td>
@@ -70,10 +102,12 @@
           </div>
           <div class="card mt-2">
             <div class="card-header" id="pendingReviewedSectionHeader" @click="togglePendingReview()">
+              <font-awesome-icon v-if="!pendingReviewDisplayed" class="float-right" icon="angle-right" alt="Show contents" style="margin-top: 12px; font-size: 32px; color: #003366;"  />
+              <font-awesome-icon v-if="pendingReviewDisplayed" class="float-right" icon="angle-down" alt="Hide contents" style="margin-top: 12px; font-size: 32px; color: #003366;"  />
               <h5 class="pt-1">
-                  Pending Reviewed
+                  Pending Review
               </h5>
-              <p class="pt-3 mb-0">Your uploaded contract(s) are being reviewed and you will be notified by email if any follow-up is required.</p>
+              <p class="pt-1 mb-0">Your uploaded contract(s) are being reviewed and you will be notified by email if any follow-up is required.</p>
             </div>
             <div id="pendingReviewedSectionBody" v-show="pendingReviewDisplayed">
               <div class="card-body">
@@ -100,10 +134,12 @@
           </div>
           <div class="card mt-2">
             <div class="card-header" id="finalizedSectionHeader" @click="toggleFinalized()">
+              <font-awesome-icon v-if="!finalizedDisplayed" class="float-right" icon="angle-right" alt="Show contents" style="margin-top: 12px; font-size: 32px; color: #003366;"  />
+              <font-awesome-icon v-if="finalizedDisplayed" class="float-right" icon="angle-down" alt="Hide contents" style="margin-top: 12px; font-size: 32px; color: #003366;"  />
               <h5 class="pt-1">
                   Finalized
               </h5>
-              <p class="pt-3 mb-0">Your uploaded contract(s) are finalized.</p>
+              <p class="pt-1 mb-0">Your uploaded contract(s) are finalized.</p>
             </div>
             <div id="finalizedSectionBody" v-show="finalizedDisplayed">
               <div class="card-body">
@@ -130,19 +166,25 @@
           </div>
         </div>
       </div>
-      <modal name="help_form" height="auto" :scrollable="false" :clickToClose="true">
-         <div class="help-div">
-          <div class="help-header">
-            Please contact us at:
+      <modal name="help_form" height="auto" :scrollable="false" :clickToClose="false">
+         <div class="card">
+          <div class="card-header">
+            <button class="btn btn-primary btn-sm float-right" v-on:click="closeHelp">X</button>
+            <h2>Help</h2>
           </div>
-          <div class="help-body">
-            Please email questions or concerns to exams@gov.bc.ca
+          <div class="card-body">
+            <p>For assistance, please email questions or concerns to exams@gov.bc.ca</p>
           </div>
-           
         </div> 
       </modal>
-      <modal name="file_upload_form" height="auto" :scrollable="false" :clickToClose="true">
+      <modal name="file_upload_form" height="auto" :scrollable="false" :clickToClose="false">
          <file-uploader/>
+      </modal>
+       <modal name="file_uploaded_list" height="auto" :scrollable="false" :clickToClose="false">
+         <file-uploaded-list/>
+      </modal>
+      <modal name="file_download_form" height="auto" :scrollable="false" :clickToClose="false">
+         <file-downloader/>
       </modal>
     </div>
 </template>
@@ -150,21 +192,27 @@
 <script>
 import {mapGetters} from 'vuex'
 import FileUploader from './FileUploader.vue';
+import FileUploadedList from './FileUploadedList.vue'
+import FileDownloader from './FileDownloader.vue'
 
 export default {
     name: "Contracts",
     components: {
         FileUploader,
+        FileUploadedList,
+        FileDownloader
     },
     computed: {
         ...mapGetters([
             'getUser',
-            'getSessions'
+            'getSessions',
+            'getAssignments',
         ]),
     },
     data() {
       return {
         contracts: [],
+        selectedAssignment: null,
         actionRequiredDisplayed: true,
         pendingReviewDisplayed: false,
         finalizedDisplayed: false,
@@ -197,11 +245,38 @@ export default {
         this.finalizedDisplayed = false;
       },
       showHelp() {
-         this.$modal.show('help_form');
+        this.$modal.show('help_form');
+      },
+      closeHelp() {
+        this.$modal.hide('help_form');
       },
       showFileUpload() {
-         this.$modal.show('file_upload_form');
+        this.$modal.show('file_upload_form');
       },
+      showFileUploadedList() {
+        this.$modal.show('file_uploaded_list');
+      },
+      showFileDownload() {
+        this.$modal.show('file_download_form');
+      },
+      getActionRequiredList() {
+        if (this.getAssignments && this.getAssignments.length > 0) {
+         return this.getAssignments.filter(c => c.statusCode === 'Sent')
+        }
+        return [];
+      },
+      getPendingReviewedList() {
+        if (this.getAssignments && this.getAssignments.length > 0) {
+          return this.getAssignments.filter(c => c.statusCode === 'Contract Submitted')
+        }
+        return [];
+      },
+      getFinalizedList() {
+        if (this.getAssignments && this.getAssignments.length > 0) {
+          return this.getAssignments.filter(c => c.statusCode === 'Signed')
+        }
+        return [];
+      }
     }
 }
 </script>
@@ -228,27 +303,6 @@ export default {
 #accordion .card-header:hover {
   background-color: #d1d0d0;
   cursor: pointer;
-}
-
-.help-div {
-  width: 100%;
-}
-
-.help-header {
-  height: 75px;
-  font-size: 1.35rem;
-  font-weight: bold;
-  color: red;
-  background-color: lightgray;
-  padding-top: 16px;
-  padding-left: 12px;
-}
-
-.help-body {
-  height: 125px;
-  font-size: 1.25rem;
-  padding-top: 30px;
-  padding-left: 12px;
 }
 
 .icon-box {

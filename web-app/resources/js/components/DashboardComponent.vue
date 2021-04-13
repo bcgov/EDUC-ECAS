@@ -68,7 +68,7 @@
                                             <div class="text-center">Manage my contracts</div>
                                         </span>
                                     </button>
-                                    <div class="status-box text-center mt-1">Action required</div>
+                                    <div v-if="checkAssignmentsStatus()" class="status-box text-center mt-1">Action required</div>
                                 </div>
                             </div>
                         </div>
@@ -151,6 +151,8 @@
             if ( ! this.user.id) {
                 this.new_user = true;
                 this.showProfile()
+            } else {
+                this.loadAssignments();
             }
 
             this.mounted = true;
@@ -158,7 +160,8 @@
         computed: {
             ...mapGetters([
                 'getUser',
-                'getSessions'
+                'getSessions',
+                'getAssignments',
             ]),
         },
         methods: {
@@ -187,6 +190,24 @@
                 console.log('updateUserCredentials event', credentials);
                 this.user_credentials = credentials;
             },
+            checkAssignmentsStatus() {
+                if (this.getAssignments && this.getAssignments.length > 0) {
+                    return this.getAssignments.filter(c => c.statusCode === 'Sent').length > 0
+                }
+                //return false;
+                return true;
+            },
+            loadAssignments() {
+                 axios.get('/api/' + this.user.id + '/assignments')
+                .then( response => {
+                    console.log('assignments api returned:  ', response.data  );
+                    this.$store.commit('SET_ASSIGNMENTS', response.data);
+                    this.isAssignmentsLoaded = true;
+                })
+                .catch( error => {
+                    console.log('Fail!', error);
+                });
+            }
         }
 
     }
