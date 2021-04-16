@@ -2,12 +2,27 @@
     <div>
         <div class="card">
             <div class="card-body">
-                <div class="row">
-                    <div class="col">
-                        <button type="button" class="btn btn-outline-primary" @click="hideContracts" v-if="displayContracts">Dashboard</button>
+                <div class="row d-flex justify-content-between">
+                    <div class="col" v-if="!displayContracts">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                            </ol>
+                        </nav>
                     </div>
-                    <div class="col">
-                        <div id="logout">
+                    <div class="col" v-if="displayContracts">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a @click="hideContracts()">Dashboard</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Contracts</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="d-flex justify-content-between mr-3">
+                        <div id="dashboard" class="mr-2">
+                            <button type="button" class="btn btn-outline-primary" @click="hideContracts" v-if="displayContracts">Dashboard</button>
+                        </div>
+                        <div id="logout" class="ml-2">
                             <button type="button" class="btn btn-primary" @click="$keycloak.logoutFn" v-if="$keycloak.authenticated">Log out</button>
                         </div>
                     </div>
@@ -26,12 +41,16 @@
                             <div class="card-body">
                                 <ul v-show="menuVisible" class="list-group mt-n3 float-right">
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
-                                        @click="showProfile">
+                                        @click="showProfile()">
                                         Profile
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
-                                        @click="showCredentials">
+                                        @click="showCredentials()">
                                         Credentials
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center"
+                                        @click="showContracts()">
+                                        Contracts
                                     </li>
                                 </ul>
                                 <p v-show="!new_user">
@@ -56,19 +75,29 @@
                         </div>
                     </div>
                     <div class="col pb-3">
-                        <div class="card">
+                        <div class="dashboard-spinner text-center" v-if="!isContractsLoaded"></div>
+                        <div class="card" v-else>
                             <div class="card-header">
                                 <h2>My Contracts</h2>
                             </div>
                             <div class="card-body">
-                                <p>Download and submit your signed contracts for the current session.</p>
-                                <div class="my-contracts-box mt-n3">
-                                    <button class="btn btn-primary" @click="showContracts">
+                                <div class="contacts-stats-summary-box mt-n2">
+                                    <div v-if="checkAssignmentsStatus()" class="alert-notice">
+                                        <a @click="showContracts()" data-toggle="tooltip" data-placement="top" title="Manage my contracts">Action Required</a> <span class="badge badge-pill badge-danger">{{sent_count}}</span>
+                                    </div>
+                                    <div v-else>Action Required <span class="badge badge-pill badge-info">{{sent_count}}</span></div>
+                                    <div>Pending Review <span class="badge badge-pill badge-info">{{review_count}}</span></div>
+                                    <div>Finalized <span class="badge badge-pill badge-info">{{final_count}}</span></div>
+                                </div>
+                                <div class="my-contracts-box mt-2">
+                                    <p>Download and submit your signed contracts for the current session.</p>
+                                </div>
+                                <div class="btn-group-box mt-n3">
+                                    <button class="btn btn-primary" @click="showContracts()">
                                         <span>
                                             <div class="text-center">Manage my contracts</div>
                                         </span>
                                     </button>
-                                    <div v-if="checkAssignmentsStatus()" class="status-box text-center mt-1">Action required</div>
                                 </div>
                             </div>
                         </div>
@@ -76,7 +105,7 @@
                 </div>
                 <marking-sessions v-if="!displayContracts" :sessions="this.getSessions"></marking-sessions>
             </div>
-            <div class="row" v-if="displayContracts">
+            <div class="row mt-n3" v-if="displayContracts">
                 <div class="col">
                     <contracts dusk="contracts-component"></contracts>
                 </div>
@@ -130,8 +159,12 @@
         },
         data() {
             return {
+                isContractsLoaded: false,
                 filter: '',
                 current_session: {},
+                sent_count: 0,
+                review_count: 0,
+                final_count: 0,
                 new_user: false,
                 mounted: false,
                 menuVisible: false,
@@ -144,6 +177,7 @@
             Event.listen('launch-profile-modal', this.showProfile);
             Event.listen('profile-updated', this.updateProfile);
             Event.listen('user-credentials-updated', this.updateUserCredentials);
+            Event.listen('user-assignments-updated', this.assignmentsUpdated);
 
             this.$store.commit('SET_USER', this.user);
             this.$store.commit('SET_SESSIONS', this.sessions);
@@ -152,7 +186,7 @@
                 this.new_user = true;
                 this.showProfile()
             } else {
-                this.loadAssignments();
+                this.assignmentsUpdated();
             }
 
             this.mounted = true;
@@ -191,22 +225,42 @@
                 this.user_credentials = credentials;
             },
             checkAssignmentsStatus() {
-                if (this.getAssignments && this.getAssignments.length > 0) {
-                    return this.getAssignments.filter(c => c.statusCode === 'Sent').length > 0
+                return this.sent_count > 0;
+            },
+            getAssignmentsStats() {
+                let sents = 0;
+                let reviews = 0;
+                let finals = 0;
+                if (this.getAssignments.length > 0) {
+                    this.getAssignments.forEach(a => {
+                        if (a.EducContractStage === 'Contract Sent') {
+                            sents += 1;
+                        } else if (a.EducContractStage === 'Contract Submitted') {
+                            reviews += 1;
+                        } else if (a.EducContractStage === 'Signed') {
+                            finals += 1;
+                        }
+                    });
+                    this.sent_count = sents;
+                    this.review_count = reviews;
+                    this.final_count = finals;
                 }
-                //return false;
-                return true;
             },
             loadAssignments() {
-                 axios.get('/api/' + this.user.id + '/assignments')
+                return axios.get(`/api/${this.user.id}/portalassignment`)
                 .then( response => {
-                    console.log('assignments api returned:  ', response.data  );
-                    this.$store.commit('SET_ASSIGNMENTS', response.data);
-                    this.isAssignmentsLoaded = true;
+                    console.log('portal assignments api returned:  ', response.data  );
+                    this.$store.commit('SET_ASSIGNMENTS', response.data.PortalAssignment);
                 })
                 .catch( error => {
                     console.log('Fail!', error);
                 });
+            },
+            async assignmentsUpdated() {
+                 this.isContractsLoaded = false;
+                await this.loadAssignments();
+                this.getAssignmentsStats();
+                this.isContractsLoaded = true;
             }
         }
 
@@ -245,6 +299,10 @@
 
 <style scoped>
 .my-contracts-box {
+    border-top: 1px #cccbcb solid;
+}
+
+.btn-group-box {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -252,9 +310,39 @@
 }
 
 .status-box {
-    background-color: red;
-    color: white;
-    width: 150px;
+    color: red;
+    font-size: 1.15rem;
+    font-weight: bold;
     padding: 2px 4px;
+}
+
+.contacts-stats-summary-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 1.06rem;
+}
+
+.alert-notice a {
+    font-size: 1.07rem;
+    font-weight: bold;
+    color: red;
+}
+
+.alert-notice a:hover {
+    text-decoration: underline;
+    font-weight: bolder;
+    color: #cf0404;
+    cursor: pointer;
+}
+
+.breadcrumb {
+    padding: 0px 2px;
+    background-color: white;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+    cursor: pointer; 
 }
 </style>

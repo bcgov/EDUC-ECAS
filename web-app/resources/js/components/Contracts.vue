@@ -2,9 +2,15 @@
     <div class="card contracts-div">
       <div class="card-header contracts-header">
         <h2 class="mt-1 ml-2">My Contracts</h2>
-        <button type="button" class="btn btn-outline-primary" @click="showHelp()">
+        <!-- <button type="button" class="btn btn-outline-primary" @click="showHelp()">
           Help
-        </button>
+        </button> -->
+        <div class="icon-box">
+          <a data-toggle="tooltip" data-placement="top" title="Help!">
+          <font-awesome-icon :icon="['far','question-circle']" alt="Help inquiry" style="margin-top: 4px; font-size: 32px; color: #f5a742;"
+            @click="showHelp()" />
+          </a>
+        </div>
       </div>
       <div class="card-body contracts-body">
         <button class="btn btn-link" @click="expandAll()">
@@ -13,15 +19,15 @@
         <button class="btn btn-link" @click="collapseAll()">
           Collapse all
         </button>
-        <div id="accordion" class="ml-2">
+        <div id="accordion" class="mx-1">
           <div class="card">
             <div class="card-header" id="actionRequiredSectionHeader" @click="toggleActionRequired()">
               <font-awesome-icon v-if="!actionRequiredDisplayed" class="float-right" icon="angle-right" alt="Show contents" style="margin-top: 12px; font-size: 32px; color: #003366;"  />
-              <font-awesome-icon v-if="actionRequiredDisplayed" class="float-right" icon="angle-down" alt="Hide contents" style="margin-top: 12px; font-size: 32px; color: #003366;"  />
+              <font-awesome-icon v-else class="float-right" icon="angle-down" alt="Hide contents" style="margin-top: 12px; font-size: 32px; color: #003366;"  />
               <h5 class="pt-1">
                   Action Required
               </h5>
-              <p class="pt-1 mb-0">Download, sign, and upload your contract(s) for the following sessions</p>
+              <p class="pt-1 mb-0">Step 1: Download, sign, and upload your contract(s) for the following sessions. Step 2: Submit.</p>
             </div>
 
             <div id="actionRequiredSectionBody" v-show="actionRequiredDisplayed">
@@ -33,64 +39,46 @@
                       <th scope="col">Type</th>
                       <th scope="col">Download</th>
                       <th scope="col">Upload</th>
-                      <th scope="col">View</th>
+                      <th scope="col">Review</th>
                       <th scope="col">&nbsp;</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>May 3 ~ May 5, 2021</td>
-                      <td>Foundation Skills Assessment Reading English, Grade 4</td>
+                    <tr v-for="item in getActionRequiredList()" :key="item.EducAssignmentId" >
+                      <td>{{item.Date}}</td>
+                      <td>{{item.SessionType}}</td>
                       <td>
-                        <div class="icon-box">
-                          <font-awesome-icon icon="file-download" alt="Download file" style="font-size: 32px; color: #003366;" 
-                            @click="showFileDownload()" />
+                        <div class="icon-spinner text-center mt-n2" v-if="isDownloadFileInProgress"></div>
+                        <div class="icon-box" v-else>
+                          <a data-toggle="tooltip" data-placement="top" title="Download your contract file">
+                            <font-awesome-icon icon="file-download" alt="Download file" style="font-size: 32px; color: #003366;"
+                              @click="showFileDownload(item.EducAssignmentId)" />
+                          </a>
                         </div>
                       </td>
                       <td>
                         <div class="icon-box">
-                          <font-awesome-icon icon="file-upload" alt="Upload file" style="font-size: 32px; color: #f5a742;" 
-                            @click="showFileUpload()" />
+                          <a data-toggle="tooltip" data-placement="top" title="Upload your signed contract file">
+                            <font-awesome-icon icon="file-upload" alt="Upload file" style="font-size: 32px; color: #f5a742;" 
+                              @click="showFileUpload(item.EducAssignmentId)" />
+                          </a>
                         </div>
                       </td>
                       <td>
-                        <div class="icon-box">
-                          <font-awesome-icon :icon="['far','file']" alt="List of uploaded files" style="font-size: 32px;"
-                            @click="showFileUploadedList()" />
+                        <div class="icon-spinner text-center mt-n2" v-if="isUploadedFilesInProgress"></div>
+                        <div class="icon-box" v-else>
+                          <a data-toggle="tooltip" data-placement="top" title="Review the uploaded files">
+                            <font-awesome-icon :icon="['far','file']" alt="List of uploaded files" style="font-size: 32px;"
+                              @click="showFileUploadedList(item.EducAssignmentId)" />
+                          </a>
                         </div>
                       </td>
                       <td>
-                        <div class="button-box">
-                          <button class="btn btn-block btn-primary" @click="collapseAll()">
-                            Submit for review
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr v-for="item in getActionRequiredList()" :key="item.id" >
-                      <td>May 3 ~ May 5, 2021</td>
-                      <td>Foundation Skills Assessment Reading English, Grade 4</td>
-                      <td>
-                        <div class="icon-box">
-                          <font-awesome-icon icon="file-download" alt="Download file" style="font-size: 32px; color: #003366;"
-                            @click="showFileDownload()" />
-                        </div>
-                      </td>
-                      <td>
-                        <div class="icon-box">
-                          <font-awesome-icon icon="file-upload" alt="Upload file" style="font-size: 32px; color: #f5a742;" 
-                            @click="showFileUpload()" />
-                        </div>
-                      </td>
-                      <td>
-                        <div class="icon-box">
-                          <font-awesome-icon :icon="['far','file']" alt="List of uploaded files" style="font-size: 32px;" />
-                        </div>
-                      </td>
-                      <td>
-                        <div class="button-box">
-                          <button class="btn btn-block btn-primary" @click="collapseAll()">
-                            Submit for review
+                        <div class="icon-spinner text-center mt-n2" v-if="isSubmitInProgress"></div>
+                        <div class="button-box float-right" v-else>
+                          <button class="btn btn-block btn-primary" data-toggle="tooltip" data-placement="top" title="Submit for review"
+                            @click="performSubmit(item.EducAssignmentId)">
+                            Submit
                           </button>
                         </div>
                       </td>
@@ -103,7 +91,7 @@
           <div class="card mt-2">
             <div class="card-header" id="pendingReviewedSectionHeader" @click="togglePendingReview()">
               <font-awesome-icon v-if="!pendingReviewDisplayed" class="float-right" icon="angle-right" alt="Show contents" style="margin-top: 12px; font-size: 32px; color: #003366;"  />
-              <font-awesome-icon v-if="pendingReviewDisplayed" class="float-right" icon="angle-down" alt="Hide contents" style="margin-top: 12px; font-size: 32px; color: #003366;"  />
+              <font-awesome-icon v-else class="float-right" icon="angle-down" alt="Hide contents" style="margin-top: 12px; font-size: 32px; color: #003366;"  />
               <h5 class="pt-1">
                   Pending Review
               </h5>
@@ -123,9 +111,9 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>May 3 ~ May 5, 2021</td>
-                      <td colspan="5">Foundation Skills Assessment Reading English, Grade 4</td>
+                    <tr v-for="item in getPendingReviewedList()" :key="item.EducAssignmentId" >
+                      <td>{{item.Date}}</td>
+                      <td>{{item.SessionType}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -135,11 +123,11 @@
           <div class="card mt-2">
             <div class="card-header" id="finalizedSectionHeader" @click="toggleFinalized()">
               <font-awesome-icon v-if="!finalizedDisplayed" class="float-right" icon="angle-right" alt="Show contents" style="margin-top: 12px; font-size: 32px; color: #003366;"  />
-              <font-awesome-icon v-if="finalizedDisplayed" class="float-right" icon="angle-down" alt="Hide contents" style="margin-top: 12px; font-size: 32px; color: #003366;"  />
+              <font-awesome-icon v-else class="float-right" icon="angle-down" alt="Hide contents" style="margin-top: 12px; font-size: 32px; color: #003366;"  />
               <h5 class="pt-1">
                   Finalized
               </h5>
-              <p class="pt-1 mb-0">Your uploaded contract(s) are finalized.</p>
+              <p class="pt-1 mb-0">Your finalized contract(s) for upcoming session(s).</p>
             </div>
             <div id="finalizedSectionBody" v-show="finalizedDisplayed">
               <div class="card-body">
@@ -155,9 +143,9 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>May 3 ~ May 5, 2021</td>
-                      <td colspan="5">Foundation Skills Assessment Reading English, Grade 4</td>
+                    <tr v-for="item in getFinalizedList()" :key="item.EducAssignmentId">
+                      <td>{{item.Date}}</td>
+                      <td>{{item.SessionType}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -175,16 +163,18 @@
           <div class="card-body">
             <p>For assistance, please email questions or concerns to exams@gov.bc.ca</p>
           </div>
+          <div class="card-footer">
+          </div>
         </div> 
       </modal>
       <modal name="file_upload_form" height="auto" :scrollable="false" :clickToClose="false">
-         <file-uploader/>
+         <file-uploader :assignmentID="selectedAssignmentID"/>
       </modal>
        <modal name="file_uploaded_list" height="auto" :scrollable="false" :clickToClose="false">
-         <file-uploaded-list/>
+         <file-uploaded-list :files="uploaded_files"/>
       </modal>
       <modal name="file_download_form" height="auto" :scrollable="false" :clickToClose="false">
-         <file-downloader/>
+         <file-downloader :contract="contract"/>
       </modal>
     </div>
 </template>
@@ -211,18 +201,23 @@ export default {
     },
     data() {
       return {
-        contracts: [],
-        selectedAssignment: null,
+        // assignments: [],
+        uploaded_files: [], // for uploaded files
+        contract: null, // for file download
+        selectedAssignmentID: null, // for file upload
         actionRequiredDisplayed: true,
         pendingReviewDisplayed: false,
         finalizedDisplayed: false,
+        isDownloadFileInProgress: false,
+        isUploadedFilesInProgress: false,
+        isSubmitInProgress: false,
       }
     },
     mounted() {
       console.log('My Contracts Mounted')
 
-      this.contracts = this.getSessions.map(s => s.assignment.contract_stage).filter(item => !!item);
-      console.log(`${this.contracts.length} loaded for contracts.`);
+      // this.assignments = this.getAssignments.map(a => a.contract_stage).filter(item => !!item);
+      // console.log(`${this.assignments.length} assignment(s) loaded.`);
     },
     methods: {
       toggleActionRequired() {
@@ -250,33 +245,88 @@ export default {
       closeHelp() {
         this.$modal.hide('help_form');
       },
-      showFileUpload() {
+      showFileUpload(assignmentID) {
         this.$modal.show('file_upload_form');
       },
-      showFileUploadedList() {
+      async showFileUploadedList(assignmentID) {
+        this.isUploadedFilesInProgress = true;
+        this.uploaded_files = !!assignmentID? await this.loadUploadedFiles(assignmentID) : [];
+        console.log('uploaded files: ' + this.uploaded_files.length);
+        this.isUploadedFilesInProgress = false;
         this.$modal.show('file_uploaded_list');
       },
-      showFileDownload() {
+      async showFileDownload(assignmentID) {
+        this.isDownloadFileInProgress = true;
+        this.contract = !!assignmentID? await this.getContract(assignmentID) : null;
+        console.log('get contract: ' + JSON.stringify(this.contract));
+        this.isDownloadFileInProgress = false;
         this.$modal.show('file_download_form');
       },
       getActionRequiredList() {
         if (this.getAssignments && this.getAssignments.length > 0) {
-         return this.getAssignments.filter(c => c.statusCode === 'Sent')
+         return this.getAssignments.filter(c => c.EducContractStage  === 'Contract Sent')
         }
         return [];
       },
       getPendingReviewedList() {
         if (this.getAssignments && this.getAssignments.length > 0) {
-          return this.getAssignments.filter(c => c.statusCode === 'Contract Submitted')
+          return this.getAssignments.filter(c => c.EducContractStage  === 'Contract Submitted')
         }
         return [];
       },
       getFinalizedList() {
         if (this.getAssignments && this.getAssignments.length > 0) {
-          return this.getAssignments.filter(c => c.statusCode === 'Signed')
+          return this.getAssignments.filter(c => c.EducContractStage  === 'Signed')
         }
         return [];
-      }
+      },
+      loadUploadedFiles(assignmentID) {
+        return axios.get(`/api/${assignmentID}/listuploadedfiles`)
+          .then( response => {
+              console.log('list uploaded files api returned:  ', response.data  );
+              return response.data.ListUploadedFiles;
+          })
+          .catch( error => {
+              console.log('Fail to load uploaded files!', error);
+              this.isUploadedFilesInProgress = false;
+              return [];
+          });
+      },
+      getContract(assignmentID) {
+        return axios.get(`/api/${assignmentID}/contractfile`)
+          .then( response => {
+              console.log('list uploaded files api returned:  ', response.data  );
+              return response.data.ContractFile;
+          })
+          .catch( error => {
+              console.log('Fail to load uploaded files!', error);
+              this.isDownloadFileInProgress = false;
+              return null;
+          });
+      },
+      submitForReview(assignmentID) {
+        return axios.post(`/api/${assignmentID}/filesubmit`)
+          .then( response => {
+              console.log('file submit api returned:  ', response.data  );
+              return response.data;
+          })
+          .catch( error => {
+              console.log('Fail to submit file for review!', error);
+              this.isSubmitInProgress = false;
+              return null;
+          });
+      },
+      async performSubmit(assignmentID) {
+        this.isSubmitInProgress = true;
+        const res = await this.submitForReview(assignmentID);
+        if (res && res.status === 200) {
+          Event.fire('user-assignments-updated', res );
+        } else {
+          // show error message to user
+        }
+        this.isSubmitInProgress = false;
+      },
+
     }
 }
 </script>
@@ -309,11 +359,14 @@ export default {
   padding-top: 4px;
   padding-right: 4px;
   text-align: center;
-  /* height: 45px; */
+}
+
+.icon-box:hover {
+  cursor: pointer;
 }
 
 .button-box {
-  width: 156px;
+  /* width: 156px; */
 }
 
 

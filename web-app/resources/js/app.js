@@ -91,7 +91,11 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearchLocation } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { faFile } from '@fortawesome/free-regular-svg-icons';
+import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 import { faFileDownload } from '@fortawesome/free-solid-svg-icons';
 import { faFileUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -101,6 +105,10 @@ library.add(faCheck)
 library.add(faTrash)
 library.add(faAngleRight)
 library.add(faAngleDown)
+library.add(faQuestionCircle)
+library.add(faSearch)
+library.add(faSearchLocation)
+library.add(faExclamationTriangle)
 library.add(faFile)
 library.add(faFileDownload)
 library.add(faFileUpload)

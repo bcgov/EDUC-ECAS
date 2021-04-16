@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-header">
         <button class="btn btn-primary btn-sm float-right" v-on:click="closeModal">X</button>
-        <h2>Submit your contract</h2>
+        <h2>Upload your signed contract</h2>
     </div>
     <div class="card-body">
       <div class="file-upload-div">
@@ -32,6 +32,8 @@
                   <li>jpeg</li>
                   <li>png</li>
                 </ul>
+                <br/>
+                Max file size: 3MB
               </div>
             </td>
           </ul>
@@ -44,7 +46,7 @@
             <file-upload
               v-show="false"
               class="btn btn-primary"
-              post-action="/api/files/post/{assignmentID}"
+              post-action="`/api/assignmentID/fileupload`"
               :multiple="false"
               :drop="true"
               :drop-directory="false"
@@ -66,6 +68,8 @@
         </div>
       </div>
     </div>
+    <div class="card-footer">
+    </div>
   </div>
 </template>
 
@@ -76,6 +80,12 @@ export default {
   components: {
     FileUpload,
   },
+  props: {
+    assignmentID: {
+      type: String,
+      required: true
+    },
+  },
   data() {
     return {
       files: [],
@@ -85,14 +95,20 @@ export default {
     closeModal() {
         this.$modal.hide('file_upload_form');
     },
+    // uploadFile() {
+    //   axios.post(`/api/${this.assignmentID}/fileupload`)
+    //     .then( response => {
+    //         console.log('file upload api returned:  ', response.data  );
+    //     })
+    //     .catch( error => {
+    //         console.log('Fail!', error);
+    //     });
+    // }
   }
 }
 </script>
 
 <style scoped>
-.file-upload-div {
-  height: 320px;
-}
 
 .file-upload-div label.btn {
   margin-bottom: 0;
