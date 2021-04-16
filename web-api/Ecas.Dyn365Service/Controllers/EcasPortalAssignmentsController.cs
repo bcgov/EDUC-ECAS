@@ -23,21 +23,19 @@ namespace Ecas.Dyn365Service.Controllers
 
             string fetchXML = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='educ_assignment'>
-                                    <attribute name='statuscode' />
-                                    <attribute name='educ_contact' />
                                     <attribute name='educ_assignmentid' />
                                     <attribute name='educ_contractstage' />
                                     <order descending='false' attribute='educ_contact' />
                                     <filter type='and'>
+                                      <condition attribute='statuscode' operator='eq' value='610410002' />
                                       <condition attribute='statecode' operator='eq' value='0' />
                                       <condition attribute='educ_contact' operator='eq' value='{" + contactId + @"}' />
                                     </filter>
-                                    <link-entity name='educ_session' from='educ_sessionid' to='educ_session' visible='false' link-type='outer' alias='a_ee8da643bc5be911a978000d3af45d23'>
-                                      <attribute name='educ_startdate' />
-                                      <attribute name='educ_sessiontype' />
-                                      <attribute name='educ_sessionactivity' />
-                                      <attribute name='educ_locationcity' />
-                                      <attribute name='educ_enddate' />
+                                    <link-entity name='educ_session' from='educ_sessionid' to='educ_session' visible='false' link-type='outer' alias='session'>
+                                      <attribute name='educ_startdate' alias='startDate' />
+                                      <attribute name='educ_enddate' alias='endDate'/>
+                                      <attribute name='educ_sessiontype' alias='sessionType' />
+                                      <attribute name='educ_locationcity' alias='locationCity'/>
                                     </link-entity>
                                   </entity>
                                 </fetch>";
