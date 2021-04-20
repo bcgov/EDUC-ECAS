@@ -7,7 +7,8 @@
         <div class="card-body">
             <div class="file-download-div">
                 <div class="mx-2 my-2">
-                    <span class="pl-2"><a @click="downloadFile(current_contract.AnnotationId)">{{current_contract.FileName}}</a></span>
+                    <span class="pl-2"><a data-toggle="tooltip" data-placement="bottom" title="Click to download the contract file"
+                     @click="downloadFile(current_contract.AnnotationId)">{{current_contract.FileName}}</a></span>
                 </div>
             </div>
         </div>

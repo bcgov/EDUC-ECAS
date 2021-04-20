@@ -15,7 +15,7 @@
                 <tbody>
                     <tr v-for="item in uploaded_files" :key="item.AnnotationId">
                         <td>{{item.FileName}}</td>
-                        <td>{{item.FileSize}}</td>
+                        <td>{{item.FileSizeVal}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -41,7 +41,10 @@
 export default {
   name: "SubmitForReview",
   props: {
-    files: [],
+    files: {
+        type: Array,
+        required: true
+    },
     assignmentID: {
         type: String,
         required: true

@@ -12,8 +12,8 @@
               <span>{{file.name}}</span> -
               <span>{{file.size}}</span> -
               <span v-if="file.error">{{file.error}}</span>
-              <span v-else-if="file.success">success</span>
-              <span v-else-if="file.active">active</span>
+              <span v-else-if="file.success" class="text-primary">success</span>
+              <span v-else-if="file.active" class="text-danger">active</span>
               <span v-else></span>
             </li>
           </ul>
@@ -57,14 +57,22 @@
               <i class="fa fa-plus"></i>
               Select files
             </file-upload>
-            <button type="button" class="btn btn-success mr-4" v-if="!$refs.upload || !$refs.upload.active" @click.prevent="$refs.upload.active = true">
-              <i class="fa fa-arrow-up" aria-hidden="true"></i>
-              Upload
-            </button>
-            <button type="button" class="btn btn-danger mr-4"  v-else @click.prevent="$refs.upload.active = false">
-              <i class="fa fa-stop" aria-hidden="true"></i>
-              Upload...
-            </button>
+            <div class="btn-group-box" v-if="$refs.upload && $refs.upload.uploaded && uploadCompleted()">
+              <span class="text-success">All file(s) have been uploaded.</span>
+              <button type="button" class="btn btn-danger ml-4 mr-3" v-on:click="closeModal">
+                Close
+              </button>
+            </div>
+            <div class="btn-group-box" v-else>
+              <button type="button" class="btn btn-success mr-3" v-if="!$refs.upload || !$refs.upload.active" @click.prevent="$refs.upload.active = true">
+                <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                Upload
+              </button>
+              <button type="button" class="btn btn-danger mr-3"  v-else>
+                <i class="fa fa-stop" aria-hidden="true"></i>
+                Uploading...
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -101,15 +109,12 @@ export default {
     closeModal() {
         this.$modal.hide('file_upload_form');
     },
-    // uploadFile() {
-    //   axios.post(`/api/${this.assignmentID}/fileupload`)
-    //     .then( response => {
-    //         console.log('file upload api returned:  ', response.data  );
-    //     })
-    //     .catch( error => {
-    //         console.log('Fail!', error);
-    //     });
-    // }
+    uploadCompleted() {
+      if (this.files.length === 0) {
+        return false;
+      }
+      return this.files.filter(f => !f.success).length === 0;
+    }
   }
 }
 </script>

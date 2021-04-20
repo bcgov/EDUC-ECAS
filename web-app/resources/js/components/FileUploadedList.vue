@@ -17,7 +17,7 @@
                 <tbody>
                     <tr v-for="item in uploaded_files" :key="item.AnnotationId">
                         <td>{{item.FileName}}</td>
-                        <td>{{item.FileSize}}</td>
+                        <td>{{item.FileSizeVal}}</td>
                         <td>&nbsp;</td>
                         <td>
                             <button class="btn btn-sm btn-outline-danger" @click="deleteFile(item.AnnotationId)">
@@ -37,7 +37,10 @@
 export default {
   name: "FileUploadedList",
   props: {
-      files: [],
+      files: {
+          type: Array,
+          required: true
+      },
   },
   mounted() {
       if (this.files && this.files.length > 0) {
