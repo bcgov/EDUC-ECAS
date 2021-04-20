@@ -47,7 +47,7 @@
               v-show="false"
               class="btn btn-primary"
               :post-action="getUploadPostUrl"
-              :multiple="false"
+              :multiple="true"
               :drop="true"
               :drop-directory="false"
               accept="application/pdf,image/png,image/jpeg"

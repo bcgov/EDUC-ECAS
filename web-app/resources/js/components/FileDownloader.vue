@@ -57,7 +57,7 @@ export default {
 </script>
 
 <style scoped>
-.file-download-div a {
+.file-download-div a:hover {
    text-decoration: underline;
    font-weight: bold;
 }
