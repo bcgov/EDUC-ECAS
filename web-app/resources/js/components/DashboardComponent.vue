@@ -83,16 +83,16 @@
                             <div class="card-body">
                                 <div class="contacts-stats-summary-box mt-n2">
                                     <div v-if="checkAssignmentsStatus()" class="alert-notice">
-                                        <a @click="showContracts()" data-toggle="tooltip" data-placement="top" title="Manage my contracts">Action Required</a> <span class="badge badge-pill badge-danger">{{sent_count}}</span>
+                                        <a @click="showContracts()" data-toggle="tooltip" data-placement="top" title="Manage my contracts">Action Required</a> <span class="badge badge-pill badge-warning ml-n1">{{sent_count}}</span>
                                     </div>
-                                    <div v-else>Action Required <span class="badge badge-pill badge-info">{{sent_count}}</span></div>
-                                    <div>Pending Review <span class="badge badge-pill badge-info">{{review_count}}</span></div>
-                                    <div>Finalized <span class="badge badge-pill badge-info">{{final_count}}</span></div>
+                                    <div v-else>Action Required <span class="badge badge-pill badge-info mt-n3 ml-n1">{{sent_count}}</span></div>
+                                    <div>Pending Review <span class="badge badge-pill badge-info mt-n3 ml-n1">{{review_count}}</span></div>
+                                    <div>Finalized <span class="badge badge-pill badge-info mt-n3 ml-n1">{{final_count}}</span></div>
                                 </div>
                                 <div class="my-contracts-box mt-2">
-                                    <p>Download and submit your signed contracts for the current session.</p>
+                                    <p class="mt-1">Download and submit your signed contracts for the current session.</p>
                                 </div>
-                                <div class="btn-group-box mt-n3">
+                                <div class="btn-group-box mt-n4">
                                     <button class="btn btn-primary" @click="showContracts()">
                                         <span>
                                             <div class="text-center">Manage my contracts</div>
@@ -345,4 +345,5 @@
     text-decoration: underline;
     cursor: pointer; 
 }
+
 </style>

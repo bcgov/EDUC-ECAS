@@ -7,7 +7,7 @@
         <div class="card-body">
             <div class="file-download-div">
                 <div class="mx-2 my-2">
-                    <span class="pl-2"><a href="#">Jenni McConnell - E21-12345</a></span>
+                    <span class="pl-2"><a @click="downloadFile(current_contract.AnnotationId)">{{current_contract.FileName}}</a></span>
                 </div>
             </div>
         </div>
@@ -20,14 +20,22 @@
 export default {
   name: "FileDownloader",
   props: {
-    contract: null
+    contract: {
+      type: Object,
+      required: true
+    },
   },
   mounted() {
     this.current_contract = this.contract;
   },
+  watch: {
+    contract(newValue) {
+      this.current_contract = newValue;
+    },
+  },
   data() {
     return {
-      current_contract: null
+      current_contract: {}
     }
   },
   methods: {
@@ -35,6 +43,7 @@ export default {
       this.$modal.hide('file_download_form');
     },
     downloadFile(annotationID) {
+      console.log('file download :  ', `/api/${annotationID}/filedownload`);
       axios.get(`/api/${annotationID}/filedownload`)
         .then( response => {
             console.log('file download api returned:  ', response.data  );
@@ -46,3 +55,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.file-download-div a {
+   text-decoration: underline;
+   font-weight: bold;
+}
+</style>

@@ -69,7 +69,7 @@
         border-radius: 50%;
         width: 3em;
         height: 3em;
-        margin: 3em auto auto auto;
+        margin: 5em auto auto auto;
         animation: spin 2s linear infinite;
     }
     @keyframes spin {

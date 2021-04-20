@@ -77,7 +77,7 @@
                         <div class="icon-spinner text-center mt-n2" v-if="isSubmitInProgress"></div>
                         <div class="button-box float-right" v-else>
                           <button class="btn btn-block btn-primary" data-toggle="tooltip" data-placement="top" title="Submit for review"
-                            @click="performSubmit(item.EducAssignmentId)">
+                            @click="showSubmitForReview(item.EducAssignmentId)">
                             Submit
                           </button>
                         </div>
@@ -176,6 +176,9 @@
       <modal name="file_download_form" height="auto" :scrollable="false" :clickToClose="false">
          <file-downloader :contract="contract"/>
       </modal>
+      <modal name="submit_for_review_form" height="auto" :scrollable="false" :clickToClose="false">
+         <submit-for-review :files="uploaded_files" :assignmentID="selectedAssignmentID"/>
+      </modal>
     </div>
 </template>
 
@@ -184,13 +187,15 @@ import {mapGetters} from 'vuex'
 import FileUploader from './FileUploader.vue';
 import FileUploadedList from './FileUploadedList.vue'
 import FileDownloader from './FileDownloader.vue'
+import SubmitForReview from './SubmitForReview.vue'
 
 export default {
     name: "Contracts",
     components: {
         FileUploader,
         FileUploadedList,
-        FileDownloader
+        FileDownloader,
+        SubmitForReview
     },
     computed: {
         ...mapGetters([
@@ -203,8 +208,8 @@ export default {
       return {
         // assignments: [],
         uploaded_files: [], // for uploaded files
-        contract: null, // for file download
-        selectedAssignmentID: null, // for file upload
+        contract: {}, // for file download
+        selectedAssignmentID: null, // for file upload & submit for review
         actionRequiredDisplayed: true,
         pendingReviewDisplayed: false,
         finalizedDisplayed: false,
@@ -246,7 +251,16 @@ export default {
         this.$modal.hide('help_form');
       },
       showFileUpload(assignmentID) {
+        this.selectedAssignmentID = assignmentID;
         this.$modal.show('file_upload_form');
+      },
+      async showSubmitForReview(assignmentID) {
+        this.isSubmitInProgress = true;
+        this.uploaded_files = !!assignmentID? await this.loadUploadedFiles(assignmentID) : [];
+        console.log('uploaded files: ' + this.uploaded_files.length);
+        this.selectedAssignmentID = assignmentID;
+        this.isSubmitInProgress = false;
+        this.$modal.show('submit_for_review_form');
       },
       async showFileUploadedList(assignmentID) {
         this.isUploadedFilesInProgress = true;
@@ -257,9 +271,10 @@ export default {
       },
       async showFileDownload(assignmentID) {
         this.isDownloadFileInProgress = true;
-        this.contract = !!assignmentID? await this.getContract(assignmentID) : null;
-        console.log('get contract: ' + JSON.stringify(this.contract));
+        const res = !!assignmentID? await this.getContract(assignmentID) : null;
+        console.log('get contract: ' + JSON.stringify(res));
         this.isDownloadFileInProgress = false;
+        this.contract = res && res.length > 0? res[0] : {};
         this.$modal.show('file_download_form');
       },
       getActionRequiredList() {

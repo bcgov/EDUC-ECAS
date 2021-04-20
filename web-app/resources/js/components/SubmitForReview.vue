@@ -1,0 +1,101 @@
+<template>
+    <div class="card">
+        <div class="card-header">
+            <button class="btn btn-primary btn-sm float-right" v-on:click="closeModal">X</button>
+            <h2>Confirmation to submit</h2>
+        </div>
+        <div class="card-body">
+            <div>
+                <ul>
+                    <li>
+                        Untitled.pdf - 205 KB
+                    </li>
+                    <li>
+                        Untitled2.pdf - 312 KB
+                    </li>
+                    <li v-for="item in uploaded_files" :key="item.annotationID">
+                        {{item.filename}} - {{item.filesize}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="btn-group-box">
+                <div class="col">
+                    <div class="icon-spinner text-center mt-n2" v-if="isSubmitInProgress"></div>
+                    <button class="btn btn-danger btn-block" v-else v-on:click.prevent="closeModal()">Cancel</button>
+                </div>
+                <div class="col">
+                    <div class="icon-spinner text-center mt-n2" v-if="isSubmitInProgress"></div>
+                    <button class="btn btn-primary btn-block" v-else v-on:click.prevent="performSubmit()" dusk="save">
+                        Proceed
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+  name: "SubmitForReview",
+  props: {
+    files: [],
+    assignmentID: {
+        type: String,
+        required: true
+    },
+  },
+  mounted() {
+      if (this.files && this.files.length > 0) {
+          this.uploaded_files = this.files;
+      }
+  },
+  data() {
+    return {
+      uploaded_files: [],
+      isSubmitInProgress: false,
+    }
+  },
+  computed: {
+      getSubmitUrl() {
+        return 'api/' + this.assignmentID + '/filesubmit';
+      }
+  },
+  methods: {
+    closeModal() {
+        this.$modal.hide('submit_for_review_form');
+    },
+    submitForReview() {
+        return axios.post(this.getSubmitUrl)
+            .then( response => {
+                console.log('file submit api returned:  ', response.data  );
+                return response.data;
+            })
+            .catch( error => {
+                console.log('Fail to submit file for review!', error);
+                this.isSubmitInProgress = false;
+                return null;
+            });
+    },
+    async performSubmit() {
+        this.isSubmitInProgress = true;
+        const res = await this.submitForReview(assignmentID);
+        if (res && res.status === 200) {
+            Event.fire('user-assignments-updated', res );
+        } else {
+            // show error message to user
+        }
+        this.isSubmitInProgress = false;
+    },
+  },
+}
+</script>
+
+<style scoped>
+.btn-group-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+</style>

@@ -46,11 +46,12 @@
             <file-upload
               v-show="false"
               class="btn btn-primary"
-              post-action="`/api/assignmentID/fileupload`"
+              :post-action="getUploadPostUrl"
               :multiple="false"
               :drop="true"
               :drop-directory="false"
               accept="application/pdf,image/png,image/jpeg"
+              :size="1024*1024*3"
               v-model="files"
               ref="upload">
               <i class="fa fa-plus"></i>
@@ -89,6 +90,11 @@ export default {
   data() {
     return {
       files: [],
+    }
+  },
+  computed: {
+    getUploadPostUrl() {
+      return 'api/' + this.assignmentID + '/fileupload';
     }
   },
   methods: {
