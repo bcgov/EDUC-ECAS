@@ -5,6 +5,10 @@
             <h2>Confirmation to submit</h2>
         </div>
         <div class="card-body">
+            <div class="text-primary mx-2 mb-2">
+                <p>Once you've submitted your contract, you will no longer be able to view it.  Please save a copy for your records.</p>
+            </div>
+            <hr/>
             <table class="table table-sm table-borderless my-2">
                 <thead>
                     <tr>
