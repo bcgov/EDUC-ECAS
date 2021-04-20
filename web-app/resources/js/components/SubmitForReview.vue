@@ -5,19 +5,20 @@
             <h2>Confirmation to submit</h2>
         </div>
         <div class="card-body">
-            <div>
-                <ul>
-                    <li>
-                        Untitled.pdf - 205 KB
-                    </li>
-                    <li>
-                        Untitled2.pdf - 312 KB
-                    </li>
-                    <li v-for="item in uploaded_files" :key="item.annotationID">
-                        {{item.filename}} - {{item.filesize}}
-                    </li>
-                </ul>
-            </div>
+            <table class="table table-sm table-borderless my-2">
+                <thead>
+                    <tr>
+                        <th scope="col">File name</th>
+                        <th scope="col">Size</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in uploaded_files" :key="item.AnnotationId">
+                        <td>{{item.FileName}}</td>
+                        <td>{{item.FileSize}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div class="card-footer">
             <div class="btn-group-box">

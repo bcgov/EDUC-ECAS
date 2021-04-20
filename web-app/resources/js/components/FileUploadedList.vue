@@ -15,32 +15,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Untitled.pdf</td>
-                        <td>205 KB</td>
+                    <tr v-for="item in uploaded_files" :key="item.AnnotationId">
+                        <td>{{item.FileName}}</td>
+                        <td>{{item.FileSize}}</td>
                         <td>&nbsp;</td>
                         <td>
-                            <button class="btn btn-sm btn-outline-danger">
-                                Delete
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Untitled2.pdf</td>
-                        <td>312 KB</td>
-                        <td>&nbsp;</td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-danger">
-                                Delete
-                            </button>
-                        </td>
-                    </tr>
-                    <tr v-for="item in uploaded_files" :key="item.annotationID">
-                        <td>{{item.filename}}</td>
-                        <td>{{item.filesize}}</td>
-                        <td>&nbsp;</td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-danger" @click="deleteFile(item.annotationID)">
+                            <button class="btn btn-sm btn-outline-danger" @click="deleteFile(item.AnnotationId)">
                                 Delete
                             </button>
                         </td>
