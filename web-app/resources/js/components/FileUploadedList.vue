@@ -46,7 +46,7 @@
                 </div>
                 <div class="col">
                     <button v-if="!this.isInProgress" type="button" class="btn btn-primary btn-block" @click="deleteFile()">Proceed</button>
-                    <button v-else type="button" class="btn btn-primary btn-block">Deleting...</button>
+                    <button v-else type="button" class="btn btn-warning btn-block">Deleting...</button>
                 </div>
             </div>
         </div>

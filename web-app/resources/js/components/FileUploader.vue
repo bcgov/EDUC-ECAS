@@ -59,7 +59,7 @@
             </file-upload>
             <div class="btn-group-box" v-if="$refs.upload && $refs.upload.uploaded && uploadCompleted()">
               <span class="text-success">All file(s) have been uploaded.</span>
-              <button type="button" class="btn btn-danger ml-4 mr-3" v-on:click="closeModal">
+              <button type="button" class="btn btn-outline-primary ml-4 mr-3" v-on:click="closeModal">
                 Close
               </button>
             </div>
@@ -68,7 +68,7 @@
                 <i class="fa fa-arrow-up" aria-hidden="true"></i>
                 Upload
               </button>
-              <button type="button" class="btn btn-danger mr-3"  v-else>
+              <button type="button" class="btn btn-warning mr-3"  v-else>
                 <i class="fa fa-stop" aria-hidden="true"></i>
                 Uploading...
               </button>
