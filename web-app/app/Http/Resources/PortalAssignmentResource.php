@@ -6,7 +6,7 @@ use App\Dynamics\AssignmentStatus;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 
-class AssignmentResource extends JsonResource
+class PortalAssignmentResource extends JsonResource
 {
 
     /**

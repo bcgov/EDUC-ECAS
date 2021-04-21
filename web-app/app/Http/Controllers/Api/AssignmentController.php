@@ -7,6 +7,7 @@ use App\Dynamics\Assignment;
 use App\Dynamics\Interfaces\iAssignment;
 use App\Dynamics\Interfaces\iAssignmentStatus;
 use App\Dynamics\Interfaces\iContractStage;
+use App\Dynamics\Interfaces\iContract;
 use App\Dynamics\Interfaces\iProfile;
 use App\Dynamics\Interfaces\iRole;
 use App\Dynamics\Interfaces\iSession;
@@ -23,6 +24,7 @@ class AssignmentController extends Controller
     private $profile;
     private $assignment_status;
     private $contract_stage;
+    private $contract;
     private $role;
     private $assignment;
     private $session;
@@ -34,6 +36,7 @@ class AssignmentController extends Controller
                                 iAssignmentStatus $assignment_status,
                                 iRole $role,
                                 iContractStage $stage,
+                                iContract $contract,
                                 iSession $session,
                                 KeycloakGuard $auth)
     {
@@ -42,6 +45,7 @@ class AssignmentController extends Controller
         $this->assignment           = $assignment;
         $this->assignment_status    = $assignment_status;
         $this->contract_stage       = $stage;
+        $this->contract             = $contract;
         $this->role                 = $role;
         $this->session              = $session;
         $this->authentication       = $auth;

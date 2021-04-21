@@ -10,7 +10,7 @@ namespace App\Dynamics;
 
 use App\Dynamics\Interfaces\iModelRepository;
 
-class Assignment extends DynamicsRepository implements iModelRepository
+class PortalAssignment extends DynamicsRepository implements iModelRepository
 {
     public static $table = 'educ_assignments';
 

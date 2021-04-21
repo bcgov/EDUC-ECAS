@@ -17,6 +17,13 @@ Route::middleware(['cache.headers:private;max_age=300;etag'])->group(function ()
     Route::resource('/profiles'                               , 'Api\ProfileController', ['except' => ['index']]);
     Route::resource('/{profile_id}/profile-credentials'       , 'Api\ProfileCredentialController' );
     Route::resource('/{profile_id}/assignments'               , 'Api\AssignmentController');
+    Route::resource('/{profile_id}/portalassignment'               , 'Api\PortalAssignmentController');
+    Route::resource('/{profile_id}/listuploadedfiles'               , 'Api\ListUploadedFilesController');   
+    Route::resource('/{profile_id}/contractfile'               , 'Api\ContractFileController'); 
+    Route::resource('/{profile_id}/fileupload'               , 'Api\FileUploadController');   
+    Route::resource('/{profile_id}/filedownload'               , 'Api\FileDownloadController');        
+    Route::delete('/{profile_id}/filedelete'               , 'Api\FileDeleteController@delete');        
+    Route::patch('/{profile_id}/filesubmit'               , 'Api\FileSubmitController@update');        
     Route::get('/dashboard'                                   , 'Api\DashboardSetupController@index');
 
 });
