@@ -95,14 +95,23 @@ export default {
       required: true
     },
   },
+  mounted() {
+    this.selectedAssignmentId = this.assignmentID;
+  },
+  watch: {
+    assignmentID(newValue) {
+        this.selectedAssignmentId = newValue;
+    },
+  },
   data() {
     return {
       files: [],
+      selectedAssignmentId: null,
     }
   },
   computed: {
     getUploadPostUrl() {
-      return 'api/' + this.assignmentID + '/fileupload';
+      return 'api/' + this.selectedAssignmentId + '/fileupload';
     }
   },
   methods: {

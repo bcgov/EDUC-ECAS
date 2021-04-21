@@ -7,8 +7,9 @@
         <div class="card-body">
             <div class="file-download-div">
                 <div class="mx-2 my-2">
-                    <span class="pl-2"><a data-toggle="tooltip" data-placement="bottom" title="Click to download the contract file"
-                     @click="downloadFile(current_contract.AnnotationId)">{{current_contract.FileName}}</a></span>
+                    <span class="pl-2"><a 
+                      data-toggle="tooltip" data-placement="bottom" title="Click to download the contract file"
+                      :href="`/api/${current_contract.AnnotationId}/filedownload`">{{current_contract.FileName}}</a></span>
                 </div>
             </div>
         </div>
@@ -43,23 +44,18 @@ export default {
     closeModal() {
       this.$modal.hide('file_download_form');
     },
-    downloadFile(annotationID) {
-      console.log('file download :  ', `/api/${annotationID}/filedownload`);
-      axios.get(`/api/${annotationID}/filedownload`)
-        .then( response => {
-            console.log('file download api returned:  ', response.data  );
-        })
-        .catch( error => {
-            console.log('Fail!', error);
-        });
-    }
   }
 }
 </script>
 
 <style scoped>
+.file-download-div a {
+   color: blue;
+}
+
 .file-download-div a:hover {
    text-decoration: underline;
    font-weight: bold;
+   color: blue;
 }
 </style>

@@ -45,7 +45,8 @@
                     <button type="button" class="btn btn-danger btn-block" @click="hideConfirmationModal">Cancel</button>
                 </div>
                 <div class="col">
-                    <button type="button" class="btn btn-primary btn-block" @click="deleteFile()">Proceed</button>
+                    <button v-if="!this.isInProgress" type="button" class="btn btn-primary btn-block" @click="deleteFile()">Proceed</button>
+                    <button v-else type="button" class="btn btn-primary btn-block">Deleting...</button>
                 </div>
             </div>
         </div>
@@ -66,11 +67,17 @@ export default {
           this.uploaded_files = this.files;
       }
   },
+  watch: {
+      files(newValue) {
+          this.uploaded_files = newValue;
+      },
+  },
   data() {
     return {
       uploaded_files: [],
       confirmationMode: false,
       selectedAnnotationId: null,
+      isInProgress: false,
     }
   },
   methods: {
@@ -92,13 +99,16 @@ export default {
         return '';
     },
     deleteFile() {
+        this.isInProgress = true;
         axios.delete(`/api/${this.selectedAnnotationId}/filedelete`)
-        .then( response => {
+        .then(() => {
             //
             this.uploaded_files = this.uploaded_files.filter(f => f.AnnotationId !== this.selectedAnnotationId);
             this.hideConfirmationModal();
+            this.isInProgress = false;
         })
         .catch( error => {
+            this.isInProgress = false;
             console.log('Fail to delete file!', error);
         })
     }

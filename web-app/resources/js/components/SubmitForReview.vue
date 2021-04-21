@@ -58,16 +58,26 @@ export default {
       if (this.files && this.files.length > 0) {
           this.uploaded_files = this.files;
       }
+      this.selectedAssignmentId = this.assignmentID;
+  },
+  watch: {
+      files(newValue) {
+          this.uploaded_files = newValue;
+      },
+      assignmentID(newValue) {
+          this.selectedAssignmentId = newValue;
+      },
   },
   data() {
     return {
       uploaded_files: [],
+      selectedAssignmentId: null,
       isSubmitInProgress: false,
     }
   },
   computed: {
       getSubmitUrl() {
-        return 'api/' + this.assignmentID + '/filesubmit';
+        return 'api/' + this.selectedAssignmentId + '/filesubmit';
       }
   },
   methods: {
@@ -88,7 +98,7 @@ export default {
     },
     async performSubmit() {
         this.isSubmitInProgress = true;
-        const res = await this.submitForReview(assignmentID);
+        const res = await this.submitForReview(this.selectedAssignmentId);
         if (res && res.status === 200) {
             Event.fire('user-assignments-updated', res );
         } else {
