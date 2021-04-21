@@ -21,6 +21,9 @@ namespace Ecas.Dyn365Service.Controllers
             if (string.IsNullOrEmpty(annotationId)) return string.Empty;
             string fetchXML = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='annotation' >
+                                    <attribute name='filename' />
+                                    <attribute name='filesize' />
+                                    <attribute name='notetext' />
                                     <attribute name='documentbody' />
                                     <filter>
                                       <condition attribute='annotationid' operator='eq' value= '{" + annotationId + @"}' />
