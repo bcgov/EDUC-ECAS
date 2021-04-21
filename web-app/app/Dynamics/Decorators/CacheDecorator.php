@@ -5,7 +5,6 @@ namespace App\Dynamics\Decorators;
 
 
 use App\Dynamics\Interfaces\iAssignment;
-use App\Dynamics\Interfaces\iPortalAssignment;
 use App\Dynamics\Interfaces\iAssignmentStatus;
 use App\Dynamics\Interfaces\iContractStage;
 use App\Dynamics\Interfaces\iContract;
@@ -27,7 +26,6 @@ use Illuminate\Support\Facades\Cache;
 
 class CacheDecorator implements
                                 iAssignment,
-                                iPortalAssignment,
                                 iAssignmentStatus,
                                 iContractStage,
                                 iContract,

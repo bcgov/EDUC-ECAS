@@ -21,13 +21,17 @@ Route::middleware(['cache.headers:private;max_age=300;etag'])->group(function ()
     Route::resource('/{profile_id}/listuploadedfiles'               , 'Api\ListUploadedFilesController');   
     Route::resource('/{profile_id}/contractfile'               , 'Api\ContractFileController'); 
     Route::resource('/{profile_id}/fileupload'               , 'Api\FileUploadController');   
-    Route::resource('/{profile_id}/filedownload'               , 'Api\FileDownloadController');        
-    Route::delete('/{profile_id}/filedelete'               , 'Api\FileDeleteController@delete');        
-    Route::patch('/{profile_id}/filesubmit'               , 'Api\FileSubmitController@update');        
+    Route::resource('/{profile_id}/filedownload'               , 'Api\FileDownloadController');               
     Route::get('/dashboard'                                   , 'Api\DashboardSetupController@index');
 
 });
 
+Route::middleware(['cache.headers:private;max_age=0'])->group(function () {
+    Route::resource('/{profile_id}/portalassignment'               , 'Api\PortalAssignmentController');
+    Route::resource('/{profile_id}/listuploadedfiles'               , 'Api\ListUploadedFilesController');  
+    Route::delete('/{profile_id}/filedelete'               , 'Api\FileDeleteController@delete');        
+    Route::patch('/{profile_id}/filesubmit'               , 'Api\FileSubmitController@update');      
+});
 
 Route::middleware(['cache.headers:public;max_age=172800'])->group(function () {
     Route::get('/districts'                                   , 'Api\DistrictSearchController@index');

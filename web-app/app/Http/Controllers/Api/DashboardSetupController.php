@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Dynamics\Interfaces\iAssignment;
-use App\Dynamics\Interfaces\iPortalAssignment;
 use App\Dynamics\Interfaces\iAssignmentStatus;
 use App\Dynamics\Interfaces\iCountry;
 use App\Dynamics\Interfaces\iCredential;
@@ -18,7 +17,6 @@ use App\Dynamics\Interfaces\iSessionType;
 use App\Dynamics\Interfaces\iSubject;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AssignmentResource;
-use App\Http\Resources\PortalAssignmentResource;
 use App\Http\Resources\ProfileCredentialResource;
 use App\Http\Resources\ProfileNewResource;
 use App\Http\Resources\ProfileResource;
@@ -42,7 +40,6 @@ class DashboardSetupController extends Controller
     private $profile;
     private $profile_credential;
     private $assignment;
-    private $portalassignment;
     private $assignment_status;
     private $session;
     private $session_activity;
@@ -62,7 +59,6 @@ class DashboardSetupController extends Controller
      * @param iProfile $profile   
      * @param iProfileCredential $profile_credential
      * @param iAssignment $assignment
-     * @param iPortalAssignment $portalassignment
      * @param iAssignmentStatus $assignment_status
      * @param iSession $session
      * @param iSessionActivity $session_activity
@@ -79,7 +75,6 @@ class DashboardSetupController extends Controller
                                 iProfile $profile,
                                 iProfileCredential $profile_credential,
                                 iAssignment $assignment,
-                                iPortalAssignment $portalassignment,
                                 iAssignmentStatus $assignment_status,
                                 iSession $session,
                                 iSessionActivity $session_activity,
@@ -95,7 +90,6 @@ class DashboardSetupController extends Controller
         $this->profile              = $profile;
         $this->profile_credential   = $profile_credential;
         $this->assignment           = $assignment;
-        $this->portalassignment           = $portalassignment;
         $this->assignment_status    = $assignment_status;
         $this->session              = $session;
         $this->session_activity     = $session_activity;
@@ -127,11 +121,9 @@ class DashboardSetupController extends Controller
         if($profile['id']) {
             $profile_credentials    = $this->profile_credential->filter(['contact_id'=> $profile['id']]);
             $assignments            = $this->assignment->filter(['contact_id'=> $profile['id']]);
-            $portalassignments            = $this->portalassignment->filter(['contact_id'=> $profile['id']]);
         } else {
             $profile_credentials    = collect([]);
             $assignments            = collect([]);
-            $portalassignments            = collect([]);
         }
 
 

@@ -70,7 +70,7 @@ class FileUploadController extends Controller
                         $apipwd
                     ],
                     'json' => [
-                        "subject"   => "Test From Web API by Martin 5",
+                        "subject"   => "Upload to API",
                         "filename"  => $fileName,
                         "objectid_educ_assignment@odata.bind"   => "/educ_assignments(".$assignment_id.")",
                         "documentbody"   => $data

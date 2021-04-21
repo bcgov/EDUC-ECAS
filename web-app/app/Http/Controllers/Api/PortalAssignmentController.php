@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Dynamics\Assignment;
 use App\Dynamics\Interfaces\iAssignment;
-use App\Dynamics\PortalAssignment;
-use App\Dynamics\Interfaces\iPortalAssignment;
 use App\Dynamics\Interfaces\iAssignmentStatus;
 use App\Dynamics\Interfaces\iContractStage;
 use App\Dynamics\Interfaces\iContract;
@@ -15,7 +13,6 @@ use App\Dynamics\Interfaces\iSession;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AssignmentUpdateRequest;
 use App\Http\Resources\AssignmentResource;
-use App\Http\Resources\PortalAssignmentResource;
 use App\Keycloak\KeycloakGuard;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -30,13 +27,11 @@ class PortalAssignmentController extends Controller
     private $contract;
     private $role;
     private $assignment;
-    private $portalassignment;
     private $session;
     private $authentication;
 
 
     public function __construct(iAssignment $assignment,
-                                iPortalAssignment $portalassignment,
                                 iProfile $profile,
                                 iAssignmentStatus $assignment_status,
                                 iRole $role,
@@ -47,7 +42,6 @@ class PortalAssignmentController extends Controller
     {
         $this->profile              = $profile;
         $this->assignment           = $assignment;
-        $this->portalassignment     = $portalassignment;
         $this->assignment_status    = $assignment_status;
         $this->contract_stage       = $stage;
         $this->contract             = $contract;

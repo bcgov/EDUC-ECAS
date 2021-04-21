@@ -27,3 +27,5 @@ Route::middleware(['cache.headers:private;max_age=300;etag'])->group(function ()
     Route::delete('/{annotation_id}/filedelete'         , 'FileDeleteController@delete');
     Route::post('/{annotation_id}/filesubmit'         , 'FileSubmitController@update');
 });
+
+
