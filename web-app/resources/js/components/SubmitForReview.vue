@@ -85,7 +85,7 @@ export default {
         this.$modal.hide('submit_for_review_form');
     },
     submitForReview() {
-        return axios.post(this.getSubmitUrl)
+        return axios.patch(this.getSubmitUrl)
             .then( response => {
                 console.log('file submit api returned:  ', response.data  );
                 return response.data;
