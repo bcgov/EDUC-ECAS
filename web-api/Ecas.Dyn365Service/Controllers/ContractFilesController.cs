@@ -165,10 +165,10 @@ namespace Ecas.Dyn365Service.Controllers
 
         [HttpDelete]
         [ActionName("RemoveFile")]
-        public ActionResult<string> RemoveFile(string statement)
+        public ActionResult<string> RemoveFile(string annotationid)
         {
-            statement = "annotations(" + statement + ")";
-            var response = new Dyn365WebAPI().SendDeleteRequestAsync(statement);
+            annotationid = "annotations(" + annotationid + ")";
+            var response = new Dyn365WebAPI().SendDeleteRequestAsync(annotationid);
             if (response.IsSuccessStatusCode)
             {
                 return Ok("The contract has been removed");
