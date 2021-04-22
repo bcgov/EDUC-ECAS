@@ -25,7 +25,13 @@
             </table>
         </div>
         <div class="card-footer">
-            <div class="btn-group-box">
+            <div class="btn-group-box" v-if="isComplete">
+              <span class="text-success">Submit process has been done successfully.</span>
+              <button type="button" class="btn btn-outline-primary ml-4 mr-1" v-on:click="closeModal">
+                Close
+              </button>
+            </div>
+            <div class="btn-group-box" v-else>
                 <div class="col">
                     <div class="icon-spinner text-center mt-n2" v-if="isSubmitInProgress"></div>
                     <button class="btn btn-danger btn-block" v-else v-on:click.prevent="closeModal()">Cancel</button>
@@ -73,6 +79,7 @@ export default {
       uploaded_files: [],
       selectedAssignmentId: null,
       isSubmitInProgress: false,
+      isComplete: false,
     }
   },
   computed: {
@@ -87,6 +94,7 @@ export default {
     submitForReview() {
         return axios.patch(this.getSubmitUrl)
             .then( response => {
+                this.isComplete = true;
                 console.log('file submit api returned:  ', response.data  );
                 return response.data;
             })

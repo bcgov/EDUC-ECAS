@@ -44,15 +44,15 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="item in getActionRequiredList()" :key="item.EducAssignmentId" >
+                    <tr v-for="item in getActionRequiredList()" v-bind:key="item.EducAssignmentId" >
                       <td>{{item.Date}}</td>
                       <td>{{item.SessionType}}</td>
                       <td>
-                        <div class="icon-spinner text-center mt-n2" v-if="isDownloadFileInProgress"></div>
+                        <div class="icon-spinner text-center mt-n2" v-if="item.isDownloadFileInProgress"></div>
                         <div class="icon-box" v-else>
                           <a data-toggle="tooltip" data-placement="top" title="Download your contract file">
                             <font-awesome-icon icon="file-download" alt="Download file" style="font-size: 32px; color: #003366;"
-                              @click="showFileDownload(item.EducAssignmentId)" />
+                              @click="showFileDownload(item)" />
                           </a>
                         </div>
                       </td>
@@ -65,19 +65,19 @@
                         </div>
                       </td>
                       <td>
-                        <div class="icon-spinner text-center mt-n2" v-if="isUploadedFilesInProgress"></div>
+                        <div class="icon-spinner text-center mt-n2" v-if="item.isUploadedFilesInProgress"></div>
                         <div class="icon-box" v-else>
                           <a data-toggle="tooltip" data-placement="top" title="Review the uploaded files">
                             <font-awesome-icon :icon="['far','file']" alt="List of uploaded files" style="font-size: 32px;"
-                              @click="showFileUploadedList(item.EducAssignmentId)" />
+                              @click="showFileUploadedList(item)" />
                           </a>
                         </div>
                       </td>
                       <td>
-                        <div class="icon-spinner text-center mt-n2" v-if="isSubmitInProgress"></div>
+                        <div class="icon-spinner text-center mt-n2" v-if="item.isSubmitInProgress"></div>
                         <div class="button-box float-right" v-else>
                           <button class="btn btn-block btn-primary" data-toggle="tooltip" data-placement="top" title="Submit for review"
-                            @click="showSubmitForReview(item.EducAssignmentId)">
+                            @click="showSubmitForReview(item)">
                             Submit
                           </button>
                         </div>
@@ -213,9 +213,6 @@ export default {
         actionRequiredDisplayed: true,
         pendingReviewDisplayed: false,
         finalizedDisplayed: false,
-        isDownloadFileInProgress: false,
-        isUploadedFilesInProgress: false,
-        isSubmitInProgress: false,
       }
     },
     mounted() {
@@ -254,26 +251,26 @@ export default {
         this.selectedAssignmentID = assignmentID;
         this.$modal.show('file_upload_form');
       },
-      async showSubmitForReview(assignmentID) {
-        this.isSubmitInProgress = true;
-        this.uploaded_files = !!assignmentID? await this.loadUploadedFiles(assignmentID) : [];
+      async showSubmitForReview(item) {
+        item.isSubmitInProgress = true;
+        this.uploaded_files = !!item.EducAssignmentId? await this.loadUploadedFiles(item.EducAssignmentId) : [];
         console.log('uploaded files: ' + this.uploaded_files.length);
-        this.selectedAssignmentID = assignmentID;
-        this.isSubmitInProgress = false;
+        this.selectedAssignmentID = item.EducAssignmentId;
+        item.isSubmitInProgress = false;
         this.$modal.show('submit_for_review_form');
       },
-      async showFileUploadedList(assignmentID) {
-        this.isUploadedFilesInProgress = true;
-        this.uploaded_files = !!assignmentID? await this.loadUploadedFiles(assignmentID) : [];
+      async showFileUploadedList(item) {
+        item.isUploadedFilesInProgress = true;
+        this.uploaded_files = !!item.EducAssignmentId? await this.loadUploadedFiles(item.EducAssignmentId) : [];
         console.log('uploaded files: ' + this.uploaded_files.length);
-        this.isUploadedFilesInProgress = false;
+        item.isUploadedFilesInProgress = false;
         this.$modal.show('file_uploaded_list');
       },
-      async showFileDownload(assignmentID) {
-        this.isDownloadFileInProgress = true;
-        const res = !!assignmentID? await this.getContract(assignmentID) : null;
+      async showFileDownload(item) {
+        item.isDownloadFileInProgress = true;
+        const res = !!item.EducAssignmentId? await this.getContract(item.EducAssignmentId) : null;
         console.log('get contract: ' + JSON.stringify(res));
-        this.isDownloadFileInProgress = false;
+        item.isDownloadFileInProgress = false;
         this.contract = res && res.length > 0? res[0] : {};
         this.$modal.show('file_download_form');
       },
@@ -303,7 +300,7 @@ export default {
           })
           .catch( error => {
               console.log('Fail to load uploaded files!', error);
-              this.isUploadedFilesInProgress = false;
+              //this.isUploadedFilesInProgress = false;
               return [];
           });
       },
@@ -315,33 +312,10 @@ export default {
           })
           .catch( error => {
               console.log('Fail to load uploaded files!', error);
-              this.isDownloadFileInProgress = false;
+              //this.isDownloadFileInProgress = false;
               return null;
           });
       },
-      submitForReview(assignmentID) {
-        return axios.post(`/api/${assignmentID}/filesubmit`)
-          .then( response => {
-              console.log('file submit api returned:  ', response.data  );
-              return response.data;
-          })
-          .catch( error => {
-              console.log('Fail to submit file for review!', error);
-              this.isSubmitInProgress = false;
-              return null;
-          });
-      },
-      async performSubmit(assignmentID) {
-        this.isSubmitInProgress = true;
-        const res = await this.submitForReview(assignmentID);
-        if (res && res.status === 200) {
-          Event.fire('user-assignments-updated', res );
-        } else {
-          // show error message to user
-        }
-        this.isSubmitInProgress = false;
-      },
-
     }
 }
 </script>
