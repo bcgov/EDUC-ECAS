@@ -78,7 +78,7 @@ class FileUploadController extends Controller
                 ]);               
 
         return [
-            'UploadFile'    => $temp_file
+            //'UploadFile'    => $temp_file
         ];        
     }   
 
