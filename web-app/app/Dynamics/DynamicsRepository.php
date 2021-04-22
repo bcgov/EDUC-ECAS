@@ -82,7 +82,7 @@ abstract class DynamicsRepository
     {
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table . '(' . $id . ')';
 
-        $response = $this->guzzle_client->request('DELETE', $query,['verify' => false]);
+        $response = $this->guzzle_client->request('DELETE', $query);
 
 
         // Assuming the delete worked!
@@ -174,7 +174,7 @@ abstract class DynamicsRepository
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?statement=' . static::$table;
 
         $response = $this->guzzle_client->request('POST', $query, [
-            'json' => self::mapToDynamics($data),'verify' => false]);
+            'json' => self::mapToDynamics($data)]);
 
         // Returns the id of the created record
         return $response->getBody()->getContents();
@@ -188,7 +188,7 @@ abstract class DynamicsRepository
         Log::debug('Update ' . static::$table . ' query: ' . $query);
 
         $response = $this->guzzle_client->request('PATCH', $query, [
-            'json' => self::mapToDynamics($data),'verify' => false]);
+            'json' => self::mapToDynamics($data)]);
 
         // Returns an array of the returned data
         $data_returned = json_decode($response->getBody()->getContents());
@@ -203,7 +203,7 @@ abstract class DynamicsRepository
 
     protected function retrieveData(String $query){
 
-        $response = $this->guzzle_client->request('GET', $query,['verify' => false]);
+        $response = $this->guzzle_client->request('GET', $query);
 
         $data = json_decode($response->getBody()->getContents())->value;
 
