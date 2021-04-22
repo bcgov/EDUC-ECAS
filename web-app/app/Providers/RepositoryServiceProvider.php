@@ -3,15 +3,19 @@
 namespace App\Providers;
 
 use App\Dynamics\Assignment;
+use App\Dynamics\PortalAssignment;
 use App\Dynamics\AssignmentStatus;
 use App\Dynamics\ContractStage;
+use App\Dynamics\Contract;
 use App\Dynamics\Country;
 use App\Dynamics\Credential;
 use App\Dynamics\Decorators\CacheDecorator;
 use App\Dynamics\District;
 use App\Dynamics\Interfaces\iAssignment;
+use App\Dynamics\Interfaces\iPortalAssignment;
 use App\Dynamics\Interfaces\iAssignmentStatus;
 use App\Dynamics\Interfaces\iContractStage;
+use App\Dynamics\Interfaces\iContract;
 use App\Dynamics\Interfaces\iCountry;
 use App\Dynamics\Interfaces\iCredential;
 use App\Dynamics\Interfaces\iDistrict;
@@ -57,6 +61,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(iAssignment::class, function ($app) {
             return new CacheDecorator($app->make(Assignment::class));
         });
+
+        $this->app->bind(iPortalAssignment::class, function ($app) {
+            return new CacheDecorator($app->make(PortalAssignment::class));
+        });        
 
         $this->app->bind(iSession::class, function ($app) {
             return new CacheDecorator($app->make(Session::class));
@@ -105,6 +113,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(iContractStage::class, function ($app) {
             return new CacheDecorator($app->make(ContractStage::class));
         });
+
+        $this->app->bind(iContract::class, function ($app) {
+            return new CacheDecorator($app->make(Contract::class));
+        });        
 
         $this->app->bind(ClientInterface::class, function () {
             return new Client( config('dynamics.connection'));

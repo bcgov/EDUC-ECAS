@@ -7,6 +7,7 @@ namespace App\Dynamics\Decorators;
 use App\Dynamics\Interfaces\iAssignment;
 use App\Dynamics\Interfaces\iAssignmentStatus;
 use App\Dynamics\Interfaces\iContractStage;
+use App\Dynamics\Interfaces\iContract;
 use App\Dynamics\Interfaces\iCountry;
 use App\Dynamics\Interfaces\iCredential;
 use App\Dynamics\Interfaces\iDistrict;
@@ -27,6 +28,7 @@ class CacheDecorator implements
                                 iAssignment,
                                 iAssignmentStatus,
                                 iContractStage,
+                                iContract,
                                 iCredential,
                                 iDistrict,
                                 iPayment,
@@ -76,6 +78,13 @@ class CacheDecorator implements
         return $this->model->firstOrCreate($id, $data);
 
     }
+
+    public function list($id)
+    {
+
+        return $this->model->list($id);
+
+    }    
 
 
     public function filter(array $filter)

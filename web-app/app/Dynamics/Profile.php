@@ -85,7 +85,5 @@ class Profile extends DynamicsRepository implements iModelRepository
 
         return current($collection)[0];
 
-    }
-
-
+    } 
 }

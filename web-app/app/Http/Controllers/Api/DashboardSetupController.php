@@ -56,7 +56,7 @@ class DashboardSetupController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param iProfile $profile
+     * @param iProfile $profile   
      * @param iProfileCredential $profile_credential
      * @param iAssignment $assignment
      * @param iAssignmentStatus $assignment_status
@@ -68,8 +68,8 @@ class DashboardSetupController extends Controller
      * @param iCountry $country
      * @param iSubject $subject
      * @param iSchool $school
-     * @param iDistrict $district
-     * @param KeycloakGuard $authentication
+     * @param iDistrict $district   
+     * @param KeycloakGuard $authentication     
      */
     public function __construct(
                                 iProfile $profile,
@@ -84,7 +84,7 @@ class DashboardSetupController extends Controller
                                 iCountry $country,
                                 iSubject $subject,
                                 iSchool $school,
-                                iDistrict $district,
+                                iDistrict $district,                                
                                 KeycloakGuard $authentication)
     {
         $this->profile              = $profile;
@@ -100,7 +100,7 @@ class DashboardSetupController extends Controller
         $this->subject              = $subject;
         $this->school               = $school;
         $this->district             = $district;
-        $this->authentication       = $authentication;
+        $this->authentication       = $authentication;       
     }
 
 
@@ -117,7 +117,6 @@ class DashboardSetupController extends Controller
             'last_name'   => $user['family_name'],
             'email'       => $user['email']
         ]);
-
 
         if($profile['id']) {
             $profile_credentials    = $this->profile_credential->filter(['contact_id'=> $profile['id']]);
@@ -156,7 +155,7 @@ class DashboardSetupController extends Controller
         $modified_profile_credentials = $profile_credentials->map( function ($credential) use($credentials) {
             $credential['credential'] = $credentials->firstWhere('id', $credential['credential_id']);
             return $credential;
-        });
+        });  
 
         return [
             'user'                  => $profile['id'] ? new ProfileResource($profile, $this->school, $this->district, $this->region, $this->country ) :
