@@ -40,7 +40,7 @@
                         <div class="filter-box">
                             <div class="filter-col-1">
                                 <div class="filter-input-box col-sm-4">
-                                    <font-awesome-icon icon="check" alt="Filter by Type" style="margin-top: 7px; margin-right: 5px;"/>
+                                    <font-awesome-icon icon="search" alt="Filter by Type" style="margin-top: 7px; margin-right: 5px; font-size: 18px;"/>
                                     <input v-model="typeInputText" v-on:keyup.enter="handleTypeInputText" v-on:blur="handleTypeInputText"
                                         type="text" class="form-control form-control-sm" name="filter-type-input"
                                         id="filter-type-input" placeholder="Filter by Type" size="80">
@@ -57,7 +57,7 @@
                             </div>
                             <div class="filter-col-2">
                                 <div class="filter-input-box col-sm-6">
-                                    <font-awesome-icon icon="check" alt="Filter by Location" style="margin-top: 7px; margin-right: 5px;"/>
+                                    <font-awesome-icon icon="search-location" alt="Filter by Location" style="margin-top: 7px; margin-right: 5px; font-size: 22px;"/>
                                     <input v-model="locationInputText" v-on:keyup.enter="handleLocationInputText" v-on:blur="handleLocationInputText"
                                         type="text" class="form-control form-control-sm" name="location-type-input"
                                         id="location-type-input" placeholder="Filter by Location" size="80">

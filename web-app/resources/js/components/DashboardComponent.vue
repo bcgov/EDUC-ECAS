@@ -2,18 +2,36 @@
     <div>
         <div class="card">
             <div class="card-body">
-                <div class="row">
-                    <div class="col">
-                        <div id="logout">
+                <div class="row d-flex justify-content-between">
+                    <div class="col" v-if="!displayContracts">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col" v-if="displayContracts">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a @click="hideContracts()">Dashboard</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Contracts</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="d-flex justify-content-between mr-3">
+                        <div id="dashboard" class="mr-2">
+                            <button type="button" class="btn btn-outline-primary" @click="hideContracts" v-if="displayContracts">Dashboard</button>
+                        </div>
+                        <div id="logout" class="ml-2">
                             <button type="button" class="btn btn-primary" @click="$keycloak.logoutFn" v-if="$keycloak.authenticated">Log out</button>
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" v-if="!displayContracts">
                     <div class="col pb-3">
                         <div class="card">
                             <div class="card-header">
-                                <button @click="showProfile" class="float-right btn btn-primary">Edit</button>
+                                <button @click="toggleMenu" :class="[menuVisible? 'btn-secondary' : 'btn-primary', 'float-right', 'btn']">Menu</button>
                                 <h2>
                                     <span v-if="getUser.preferred_first_name">{{ getUser.preferred_first_name }}</span>
                                     <span v-else>{{ getUser.first_name }}</span>
@@ -21,6 +39,20 @@
                                 </h2>
                             </div>
                             <div class="card-body">
+                                <ul v-show="menuVisible" class="list-group mt-n3 float-right">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center"
+                                        @click="showProfile()">
+                                        Profile
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center"
+                                        @click="showCredentials()">
+                                        Credentials
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center"
+                                        @click="showContracts()">
+                                        Contracts
+                                    </li>
+                                </ul>
                                 <p v-show="!new_user">
                                     {{ getUser.email }}<br/>
                                     {{ getUser.address_1 }}<br/>
@@ -43,53 +75,40 @@
                         </div>
                     </div>
                     <div class="col pb-3">
-                        <div class="card">
+                        <div class="dashboard-spinner text-center" v-if="!isContractsLoaded"></div>
+                        <div class="card" v-else>
                             <div class="card-header">
-                                <h2>Credentials</h2>
+                                <h2>My Contracts</h2>
                             </div>
                             <div class="card-body">
-                                <div class="row" v-for="credential in credentials_applied">
-                                    <div class="col-1 text-center">
-                                        <font-awesome-icon v-if="credential.verified" icon="check" alt="verified"/>
-                                        <font-awesome-icon v-else icon="trash" @click="deleteCredential(credential)"
-                                                           alt="delete" style="color: red;"/>
+                                <div class="contacts-stats-summary-box mt-n2">
+                                    <div v-if="checkAssignmentsStatus()" class="alert-notice">
+                                        <a @click="showContracts()" data-toggle="tooltip" data-placement="top" title="Manage my contracts">Action Required</a> <span class="badge badge-pill badge-warning ml-n1">{{sent_count}}</span>
                                     </div>
-                                    <div class="col-11">{{ credential.credential.name }}
-                                        <span v-if="credential.year" class="col">Year: {{ credential.year }}</span>
-                                    </div>
+                                    <div v-else>Action Required <span class="badge badge-pill badge-info mt-n3 ml-n1">{{sent_count}}</span></div>
+                                    <div>Pending Review <span class="badge badge-pill badge-info mt-n3 ml-n1">{{review_count}}</span></div>
+                                    <div>Finalized <span class="badge badge-pill badge-info mt-n3 ml-n1">{{final_count}}</span></div>
                                 </div>
-                                <div class="row pt-3 pl-4">
-                                    <div class="form-row">
-                                        <div class="form-group col-sm-5">
-                                            <label for="new_credential_year">Credential</label>
-                                            <select v-model="new_credential.credential" class="form-control form-control-sm">
-                                                <option value="0">Select New Credential</option>
-                                                <option v-for="credential in credentialsAvailable" :value="credential">
-                                                    {{ credential.name }}
-                                                </option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-sm-4">
-                                            <label for="new_credential_year">Year certified</label>
-                                            <input v-model="new_credential.year" type="text" class="form-control form-control-sm" name="new_credential_year"
-                                                   id="new_credential_year" placeholder="YYYY">
-
-                                        </div>
-                                        <button class="btn btn-primary btn-sm mt-4 mb-3" @click="addCredential()">
-                                            <span>
-                                                <div class="loader text-center" v-show="working"></div>
-                                            </span>
-                                            <div v-show="!working">Add</div>
-                                        </button>
-
-                                    </div>
+                                <div class="my-contracts-box mt-2">
+                                    <p class="mt-1">Download and submit your signed contracts for the current session.</p>
+                                </div>
+                                <div class="btn-group-box mt-n4">
+                                    <button class="btn btn-primary" @click="showContracts()">
+                                        <span>
+                                            <div class="text-center">Manage my contracts</div>
+                                        </span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <marking-sessions :sessions="this.getSessions"></marking-sessions>
-
+                <marking-sessions v-if="!displayContracts" :sessions="this.getSessions"></marking-sessions>
+            </div>
+            <div class="row mt-n3" v-if="displayContracts">
+                <div class="col">
+                    <contracts dusk="contracts-component"></contracts>
+                </div>
             </div>
         </div>
         <modal name="profile_form" height="auto" :scrollable="true" :clickToClose="false">
@@ -101,18 +120,32 @@
                     dusk="profile-component"
             ></profile>
         </modal>
+        <modal name="credentials_form" height="auto" :scrollable="true" :clickToClose="false">
+            <credentials
+                    :user="getUser"
+                    :user_credentials="user_credentials"
+                    :credentials="credentials"
+                    dusk="credentials-component"
+            ></credentials>
+        </modal>
     </div>
 </template>
 
 <script>
     import {mapGetters} from 'vuex'
+    import Profile from './Profile.vue';
+    import Credentials from './Credentials.vue';
+    import Contracts from './Contracts.vue';
     import MarkingSessions from './MarkingSessions.vue';
 
     export default {
         name: "DashboardComponent",
 
         components: {
-            MarkingSessions
+            Profile,
+            Credentials,
+            Contracts,
+            MarkingSessions,
         },
 
         props: {
@@ -126,35 +159,34 @@
         },
         data() {
             return {
-                credentials_applied: [...this.user_credentials],
+                isContractsLoaded: false,
                 filter: '',
                 current_session: {},
+                sent_count: 0,
+                review_count: 0,
+                final_count: 0,
                 new_user: false,
-                working: false,
                 mounted: false,
-                blank_credential: {
-                    credential: 0,
-                    year: null
-                },
-                new_credential: {
-                    credential: 0
-                },
+                menuVisible: false,
+                displayContracts: false,
             }
         },
         mounted() {
             console.log('Dashboard Mounted')
 
+            Event.listen('launch-profile-modal', this.showProfile);
+            Event.listen('profile-updated', this.updateProfile);
+            Event.listen('user-credentials-updated', this.updateUserCredentials);
+            Event.listen('user-assignments-updated', this.assignmentsUpdated);
+
             this.$store.commit('SET_USER', this.user);
             this.$store.commit('SET_SESSIONS', this.sessions);
-
-            Event.listen('credential-added', this.pushCredential);
-            Event.listen('credential-deleted', this.removeCredential);
-            Event.listen('profile-updated', this.updateProfile);
-            Event.listen('launch-profile-modal', this.showProfile);
 
             if ( ! this.user.id) {
                 this.new_user = true;
                 this.showProfile()
+            } else {
+                this.assignmentsUpdated();
             }
 
             this.mounted = true;
@@ -162,103 +194,25 @@
         computed: {
             ...mapGetters([
                 'getUser',
-                'getSessions'
+                'getSessions',
+                'getAssignments',
             ]),
-
-            credentialsIdsInUse() {
-
-                var arrayOfCredentialIds = [];
-
-                this.credentials_applied.forEach( function (applied) {
-                    arrayOfCredentialIds.push(applied.credential.id);
-                });
-
-                return arrayOfCredentialIds;
-            },
-
-            credentialsAvailable() {
-                // subtract applied_credentials from credentials
-                return this.credentials.filter(x => ! this.credentialsIdsInUse.includes(x.id));
-
-            }
-
         },
         methods: {
-            addCredential() {
-                console.log('adding credential', this.new_credential);
-
-                this.working = true;
-
-                var form = this;
-
-                console.log('form', form );
-
-                axios.post('/api/' + form.getUser.id + '/profile-credentials', {
-                    credential_id: this.new_credential.credential.id,
-                    year: this.new_credential.year
-                })
-                    .then(function (response) {
-                        form.working = false;
-                        Event.fire('credential-added', response.data);
-                        console.log('Create Success!', response.data);
-                    })
-                    .catch(function (error) {
-                        form.working = false;
-                        console.log('Failure!', error)
-                    });
+            toggleMenu() {
+                this.menuVisible = !this.menuVisible;
             },
-            deleteCredential(profile_credential) {
-                console.log('removing credential');
-
-                this.working = true;
-
-                var form = this;
-
-                axios.delete('/api/' + form.getUser.id + '/profile-credentials/' + profile_credential.id )
-                    .then(function (response) {
-                        form.working = false;
-                        Event.fire('credential-deleted', profile_credential.credential.id);
-                        console.log('Delete Success!', profile_credential.credential.id )
-                    })
-                    .catch(function (error) {
-                        form.working = false;
-                        console.log('Failure!')
-                    });
+            showContracts() {
+                this.displayContracts = true;
             },
-
-
-            pushCredential(profile_credential) {
-                console.log('pushing credential', profile_credential.data.credential.id );
-
-                // Add to the applied list
-                this.credentials_applied.push(profile_credential.data);
-
-                this.new_credential = {
-                    credential: 0,
-                    year: null
-                }
+            hideContracts() {
+                this.displayContracts = false;
             },
-            removeCredential(profile_credential) {
-                console.log('removeCredential', profile_credential);
-
-                // Get the credential
-                let index = this.credentials_applied.findIndex(credential => credential.credential.id === profile_credential);
-
-                console.log('get the credential', index);
-
-                let credential = this.credentials_applied[index].credential;
-
-                // Remove the credential from the applied list
-                this.credentials_applied.splice(index, 1);
-
-
-                //this.new_credential = this.blank_credential;
-            },
-
-
-
             showProfile() {
                 this.$modal.show('profile_form');
+            },
+            showCredentials() {
+                this.$modal.show('credentials_form');
             },
             updateProfile(user) {
                 // We must have a valid user now
@@ -266,7 +220,48 @@
                 this.new_user = false;
                 this.$store.commit('SET_USER', user.data.data)
             },
-
+            updateUserCredentials(credentials) {
+                console.log('updateUserCredentials event', credentials);
+                this.user_credentials = credentials;
+            },
+            checkAssignmentsStatus() {
+                return this.sent_count > 0;
+            },
+            getAssignmentsStats() {
+                let sents = 0;
+                let reviews = 0;
+                let finals = 0;
+                if (this.getAssignments.length > 0) {
+                    this.getAssignments.forEach(a => {
+                        if (a.EducContractStage === 'Contract Sent') {
+                            sents += 1;
+                        } else if (a.EducContractStage === 'Contract Submitted') {
+                            reviews += 1;
+                        } else if (a.EducContractStage === 'Signed') {
+                            finals += 1;
+                        }
+                    });
+                    this.sent_count = sents;
+                    this.review_count = reviews;
+                    this.final_count = finals;
+                }
+            },
+            loadAssignments() {
+                return axios.get(`/api/${this.user.id}/portalassignment`)
+                .then( response => {
+                    console.log('portal assignments api returned:  ', response.data  );
+                    this.$store.commit('SET_ASSIGNMENTS', response.data.PortalAssignment);
+                })
+                .catch( error => {
+                    console.log('Fail!', error);
+                });
+            },
+            async assignmentsUpdated() {
+                 this.isContractsLoaded = false;
+                await this.loadAssignments();
+                this.getAssignmentsStats();
+                this.isContractsLoaded = true;
+            }
         }
 
     }
@@ -285,6 +280,13 @@
         margin: auto;
         animation: spin 2s linear infinite;
     }
+    .list-group-item {
+        padding: 0.35rem 0.65rem;
+    }
+    .list-group-item:hover {
+        color: #003366;
+        background-color: lightgray;
+    }
     @keyframes spin {
         0% {
             transform: rotate(0deg);
@@ -293,4 +295,55 @@
             transform: rotate(360deg);
         }
     }
+</style>
+
+<style scoped>
+.my-contracts-box {
+    border-top: 1px #cccbcb solid;
+}
+
+.btn-group-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.status-box {
+    color: red;
+    font-size: 1.15rem;
+    font-weight: bold;
+    padding: 2px 4px;
+}
+
+.contacts-stats-summary-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 1.06rem;
+}
+
+.alert-notice a {
+    font-size: 1.07rem;
+    font-weight: bold;
+    color: red;
+}
+
+.alert-notice a:hover {
+    text-decoration: underline;
+    font-weight: bolder;
+    color: #cf0404;
+    cursor: pointer;
+}
+
+.breadcrumb {
+    padding: 0px 2px;
+    background-color: white;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+    cursor: pointer; 
+}
+
 </style>

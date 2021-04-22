@@ -28,9 +28,14 @@ import VModal from 'vue-js-modal'
 Vue.use(Vuex);
 Vue.use(VModal, { dynamic: true, injectModalsContainer: true });
 
+const VueUploadComponent = require('vue-upload-component');
+Vue.component('file-upload', VueUploadComponent);
+
 Vue.component('DashboardLauncher'       , require('./components/DashboardLauncher.vue').default);
 Vue.component('session'                 , require('./components/SessionModal.vue').default);
 Vue.component('profile'                 , require('./components/Profile.vue').default);
+Vue.component('credentials'             , require('./components/Credentials.vue').default);
+Vue.component('contracts'             , require('./components/Contracts.vue').default);
 
 // A global event handler, just a convenient wrapper for Vue's event system
 window.Event = new class {
@@ -48,7 +53,8 @@ window.Event = new class {
 const store = new Vuex.Store({
     state: {
         user: {},
-        sessions: []
+        sessions: [],
+        assignments: [],
     },
     mutations: {
         'SET_USER' (state, user) {
@@ -62,7 +68,10 @@ const store = new Vuex.Store({
             let session = state.sessions[index];
             session.assignment.status = response.status;
             Vue.set(state.sessions, index, session)
-        }
+        },
+        'SET_ASSIGNMENTS' (state, assignments) {
+            state.assignments = assignments;
+        },
     },
     getters: {
         getUser: (state) => {
@@ -70,6 +79,9 @@ const store = new Vuex.Store({
         },
         getSessions: (state) => {
             return state.sessions
+        },
+        getAssignments: (state) => {
+            return state.assignments
         }
     }
 });
@@ -77,12 +89,29 @@ const store = new Vuex.Store({
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearchLocation } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faFile } from '@fortawesome/free-regular-svg-icons';
+import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
+import { faFileDownload } from '@fortawesome/free-solid-svg-icons';
+import { faFileUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import VueKeyCloak from '@dsb-norge/vue-keycloak-js';
 
-
 library.add(faCheck)
 library.add(faTrash)
+library.add(faAngleRight)
+library.add(faAngleDown)
+library.add(faQuestionCircle)
+library.add(faSearch)
+library.add(faSearchLocation)
+library.add(faExclamationTriangle)
+library.add(faFile)
+library.add(faFileDownload)
+library.add(faFileUpload)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

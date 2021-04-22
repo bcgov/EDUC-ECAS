@@ -1,7 +1,7 @@
 ﻿<template>
     <div>
 
-        <div class="dashboard-spinner text-center" v-if="! isLoaded"></div>
+        <div class="dashboard-spinner text-center" v-if="!isLoaded"></div>
 
         <div v-if="isLoaded">
             <dashboard-component
@@ -25,7 +25,7 @@
         data() {
             return {
                 dashboard: null,
-                isLoaded: false
+                isLoaded: false,
             }
         },
 
@@ -35,15 +35,13 @@
 
             axios.get('/api/dashboard')
                 .then( response => {
-                    console.log('api returned:  ', response.data  );
+                    console.log('dashboard api returned:  ', response.data  );
                     this.dashboard = response.data;
                     this.isLoaded = true;
-
                 })
                 .catch( error => {
                     console.log('Fail!', error);
                 });
-
         },
 
         components: {
@@ -62,6 +60,15 @@
         border-radius: 50%;
         width: 5em;
         height: 5em;
+        margin: 5em auto auto auto;
+        animation: spin 2s linear infinite;
+    }
+    .icon-spinner {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 3em;
+        height: 3em;
         margin: 5em auto auto auto;
         animation: spin 2s linear infinite;
     }
