@@ -69,7 +69,7 @@ class FileSubmitController extends Controller
         $apiusr = \Config::get('env.DYNAMICS_USERNAME');
         $apipwd = \Config::get('env.DYNAMICS_PASSWORD');
         $client = new \GuzzleHttp\Client();
-        $url = $apiurl.'/Operations?statement=educ_assignment('.$annotation_id.')';
+        $url = $apiurl.'/Operations?statement=educ_assignments('.$annotation_id.')';
                 $res = $client->patch($url, [
                     'headers' => ['Content-type' => 'application/json'],
                     'auth' => [
