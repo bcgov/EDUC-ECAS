@@ -77,8 +77,10 @@ class FileUploadController extends Controller
                     ], 
                 ]);               
 
+        $fileupload = json_decode($res->getBody()->getContents());
+
         return [
-            //'UploadFile'    => $temp_file
+            'UploadFile'    => $fileupload
         ];        
     }   
 
