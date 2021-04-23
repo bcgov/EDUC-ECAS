@@ -250,7 +250,10 @@
                 return axios.get(`/api/${this.user.id}/portalassignment`)
                 .then( response => {
                     console.log('portal assignments api returned:  ', response.data  );
-                    this.$store.commit('SET_ASSIGNMENTS', response.data.PortalAssignment);
+                    this.$store.commit('SET_ASSIGNMENTS', response.data.PortalAssignment.map(a => ({...a, 
+                            isDownloadFileInProgress: false, isUploadedFilesInProgress: false, isSubmitInProgress: false
+                        }))
+                    );
                 })
                 .catch( error => {
                     console.log('Fail!', error);
