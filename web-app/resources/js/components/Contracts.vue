@@ -288,7 +288,7 @@ export default {
       },
       getFinalizedList() {
         if (this.getAssignments && this.getAssignments.length > 0) {
-          return this.getAssignments.filter(c => c.EducContractStage  === 'Signed')
+          return this.getAssignments.filter(c => c.EducContractStage  === 'Contract Signed')
         }
         return [];
       },
