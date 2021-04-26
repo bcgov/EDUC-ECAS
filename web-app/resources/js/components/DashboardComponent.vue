@@ -237,7 +237,7 @@
                             sents += 1;
                         } else if (a.EducContractStage === 'Contract Submitted') {
                             reviews += 1;
-                        } else if (a.EducContractStage === 'Signed') {
+                        } else if (a.EducContractStage === 'Contract Signed') {
                             finals += 1;
                         }
                     });
