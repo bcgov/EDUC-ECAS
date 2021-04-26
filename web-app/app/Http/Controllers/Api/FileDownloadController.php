@@ -68,7 +68,7 @@ class FileDownloadController extends Controller
         $tmpName = tempnam(sys_get_temp_dir(), 'data');
         $file = fopen($tmpName, 'w');
 
-        fwrite($file, $content);
+        fwrite($file, base64_decode($content);
         fclose($file);
 
         header('Content-Description: File Transfer');
