@@ -35,7 +35,7 @@ abstract class DynamicsMetaRepository extends DynamicsRepository
     {
         $query = env('DYNAMICSBASEURL') . '/' . static::$api_verb . '?entityName=' . static::$table . '&optionSetName=' . static::$primary_key;
  
-		 $response = $this->guzzle_client->request('GET', $query,['verify' => false]);
+		 $response = $this->guzzle_client->request('GET', $query);
 
         $data = json_decode($response->getBody()->getContents())->Options;
 

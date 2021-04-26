@@ -55,7 +55,7 @@ namespace Ecas.Dyn365Service.Controllers
                                     <attribute name='notetext' />
                                     <filter>
                                       <condition attribute='filename' operator='ends-with' value='.pdf' />
-                                      <condition attribute='objecttypecode' operator='eq' value='10038' />
+                                      <condition attribute='objecttypecodename' operator='eq' value='assignment' />
                                       <condition attribute='notetext' operator='neq' value='Uploaded Document' />
                                       <condition attribute='objectid' operator='eq' value= '{" + assignmentId + @"}' />
                                     </filter>
@@ -92,7 +92,7 @@ namespace Ecas.Dyn365Service.Controllers
                                     <attribute name='filesize' />
                                     <attribute name='notetext' />
                                     <filter>
-                                      <condition attribute='objecttypecode' operator='eq' value='10038' />
+                                      <condition attribute='objecttypecodename' operator='eq' value='assignment' />
                                       <condition attribute='notetext' operator='eq' value='Uploaded Document' />
                                       <condition attribute='objectid' operator='eq' value= '{" + assignmentId + @"}' />
                                     </filter>

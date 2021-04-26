@@ -259,7 +259,7 @@
             },
             saveProfile() {
 
-                console.log('saving profile: ');
+                console.log('saving profile: ' + + JSON.stringify(axios.defaults));
 
                 if (this.working) {
                     return

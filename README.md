@@ -52,7 +52,7 @@ The Laravel application is set-up to log various actions and code steps, these l
 * Caching - simple caching of static data has already been deployed
 * Refresh Cache Automatically - A cron routine running on the Server to refresh the cache daily is an approach that would be effective
 * Async loading of App - The web portal loads all of it’s data during page load. An A-sync method of data loading is possible reducing page load times
-* “Processing” Spinners - No user feedback is provided by the app while it is waiting for data operations to complete, this should be improved
+* “Processing” Spinners - No user feedback is provided by the app while it is waiting for data operations to complete, this should be improved.
 
 **SonarQube** - As requested by the Ministry, SonarQube testing has been implemented in the deployment pipeline. However, the default test settings are mostly reporting on code that is part of the core frameworks being used on this project (Laravel and Vue). In other words, code that has not been written as part of this project and cannot be altered by this project team. The settings need to be altered to have SonarQube check on only the code that has been written specifically for this project.
 

@@ -81,10 +81,11 @@ class FileSubmitController extends Controller
                     ], 
                 ]);          
 
+
         $filesubmit = json_decode($res->getBody()->getContents());
 
         return [
-            'FileSubmit'    => $filesubmit
+
         ];          
     }   
 
