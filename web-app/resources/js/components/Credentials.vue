@@ -88,15 +88,6 @@ export default {
         },
     },
     computed: {
-        
-    },
-    methods: {
-        closeModal() {
-            this.$modal.hide('credentials_form');
-        },
-        cancelCredential() {
-            this.closeModal()
-        },
         credentialsIdsInUse() {
             var arrayOfCredentialIds = [];
 
@@ -111,6 +102,14 @@ export default {
             // subtract applied_credentials from credentials
             return this.credentials.filter(x => ! this.credentialsIdsInUse.includes(x.id));
 
+        },
+    },
+    methods: {
+        closeModal() {
+            this.$modal.hide('credentials_form');
+        },
+        cancelCredential() {
+            this.closeModal()
         },
         addCredential() {
             console.log('adding credential' + JSON.stringify(axios.defaults));
