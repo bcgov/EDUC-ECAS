@@ -74,6 +74,7 @@ class FileDownloadController extends Controller
         header('Content-Description: File Transfer');
         header('Content-Disposition: attachment; filename='.$filename);
         header('Content-Transfer-Encoding: binary');
+        header('Content-Type: application/pdf');
         header('Expires: 0');
         header('Cache-Control: must-revalidate');
         header('Pragma: public');
@@ -84,16 +85,6 @@ class FileDownloadController extends Controller
         readfile($tmpName);
 
         unlink($tmpName);
-
-        /*$resource = fopen('/path/to/file', 'w');
-        $stream = GuzzleHttp\Psr7\stream_for($resource);
-        $client->request('GET', '/stream/20', ['save_to' => $stream]);        
-
-        $temp_file = tempnam(sys_get_temp_dir(), $filename);*/
-
-       /*return [
-            base64_encode('UEsDBBQABgAIAAAAIQDfpNJsWgEAACAFAAATAAgCW0NvbnRlbnRfVHlwZXNdLnh...')
-        ];  */
     }   
 
 }
