@@ -10,7 +10,7 @@
           <ul v-if="files.length">
             <li v-for="file in files" :key="file.id">
               <span>{{file.name}}</span> -
-              <span>{{file.size}}</span> -
+              <span>{{formatBytes(file.size)}}</span> -
               <span v-if="file.error">{{file.error}}</span>
               <span v-else-if="file.success" class="text-primary">success</span>
               <span v-else-if="file.active" class="text-danger">active</span>
@@ -84,6 +84,7 @@
 
 <script>
 import FileUpload from 'vue-upload-component'
+import { formatBytes } from '../util'
 export default {
   name: "FileUploader",
   components: {
@@ -115,6 +116,7 @@ export default {
     }
   },
   methods: {
+    formatBytes,
     closeModal() {
         this.$modal.hide('file_upload_form');
     },

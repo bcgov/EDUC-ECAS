@@ -19,7 +19,7 @@
                 <tbody>
                     <tr v-for="item in uploaded_files" :key="item.AnnotationId">
                         <td>{{item.FileName}}</td>
-                        <td>{{item.FileSizeVal}}</td>
+                        <td>{{formatBytes(item.FileSize)}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import { formatBytes } from '../util'
 export default {
   name: "SubmitForReview",
   props: {
@@ -88,6 +89,7 @@ export default {
       }
   },
   methods: {
+    formatBytes,
     closeModal() {
         this.$modal.hide('submit_for_review_form');
     },
