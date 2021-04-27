@@ -27,7 +27,10 @@ namespace Ecas.Dyn365Service.Controllers
                                     <attribute name='educ_contractstage' />
                                     <order descending='false' attribute='educ_contact' />
                                     <filter type='and'>
-                                      <condition attribute='statuscode' operator='eq' value='610410002' />
+                                        <filter type='or'>
+                                          <condition attribute='statuscode' operator='eq' value='610410002' />
+                                          <condition attribute='statuscode' operator='eq' value='610410003' />
+                                        </filter>
                                       <condition attribute='statecode' operator='eq' value='0' />
                                       <condition attribute='educ_contact' operator='eq' value='{" + contactId + @"}' />
                                     </filter>
