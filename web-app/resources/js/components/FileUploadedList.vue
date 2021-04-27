@@ -17,7 +17,7 @@
                 <tbody>
                     <tr v-for="item in uploaded_files" :key="item.AnnotationId">
                         <td>{{item.FileName}}</td>
-                        <td>{{item.FileSizeVal}}</td>
+                        <td>{{formatBytes(item.FileSize)}}</td>
                         <td>&nbsp;</td>
                         <td>
                             <button class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#confirmDeleteModal" @click="showConfirmationModal(item.AnnotationId)">
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import { formatBytes } from '../util'
 export default {
   name: "FileUploadedList",
   props: {
@@ -81,6 +82,7 @@ export default {
     }
   },
   methods: {
+    formatBytes,
     closeModal() {
         this.$modal.hide('file_uploaded_list');
     },
