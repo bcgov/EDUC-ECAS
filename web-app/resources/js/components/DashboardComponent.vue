@@ -77,8 +77,14 @@
                     <div class="col pb-3">
                         <div class="dashboard-spinner text-center" v-if="!isContractsLoaded"></div>
                         <div class="card" v-else>
-                            <div class="card-header">
+                            <div class="card-header contracts-header">
                                 <h2>My Contracts</h2>
+                                <div class="icon-box">
+                                    <a data-toggle="tooltip" data-placement="top" title="Help!">
+                                    <font-awesome-icon :icon="['far','question-circle']" alt="Help inquiry" style="margin-top: 4px; font-size: 32px; color: #f5a742;"
+                                        @click="showHelp()" />
+                                    </a>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <div class="contacts-stats-summary-box mt-n2">
@@ -128,6 +134,9 @@
                     dusk="credentials-component"
             ></credentials>
         </modal>
+        <modal name="help_form1" height="auto" :scrollable="false" :clickToClose="false">
+            <help formName="help_form1"/>
+        </modal>
     </div>
 </template>
 
@@ -137,6 +146,7 @@
     import Credentials from './Credentials.vue';
     import Contracts from './Contracts.vue';
     import MarkingSessions from './MarkingSessions.vue';
+    import Help from './Help.vue';
 
     export default {
         name: "DashboardComponent",
@@ -146,6 +156,7 @@
             Credentials,
             Contracts,
             MarkingSessions,
+            Help
         },
 
         props: {
@@ -213,6 +224,9 @@
             },
             showCredentials() {
                 this.$modal.show('credentials_form');
+            },
+            showHelp() {
+                this.$modal.show('help_form1');
             },
             updateProfile(user) {
                 // We must have a valid user now
@@ -301,6 +315,15 @@
 </style>
 
 <style scoped>
+.contracts-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: ceter;
+  /* height: 75px;
+  padding: 16px 12px; */
+}
+
 .my-contracts-box {
     border-top: 1px #cccbcb solid;
 }
@@ -347,6 +370,15 @@
 .breadcrumb a:hover {
     text-decoration: underline;
     cursor: pointer; 
+}
+
+.icon-box {
+  padding-top: 2px;
+  text-align: center;
+}
+
+.icon-box:hover {
+  cursor: pointer;
 }
 
 </style>
