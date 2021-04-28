@@ -75,7 +75,7 @@
                       </td>
                       <td>
                         <div class="icon-spinner text-center mt-n2" v-if="item.isSubmitInProgress"></div>
-                        <div class="button-box float-right" v-else>
+                        <div class="float-right" v-else>
                           <button class="btn btn-block btn-primary" data-toggle="tooltip" data-placement="top" title="Submit for review"
                             @click="showSubmitForReview(item)">
                             Submit
@@ -154,18 +154,8 @@
           </div>
         </div>
       </div>
-      <modal name="help_form" height="auto" :scrollable="false" :clickToClose="false">
-         <div class="card">
-          <div class="card-header">
-            <button class="btn btn-primary btn-sm float-right" v-on:click="closeHelp">X</button>
-            <h2>Help</h2>
-          </div>
-          <div class="card-body">
-            <p>For assistance, please email questions or concerns to exams@gov.bc.ca</p>
-          </div>
-          <div class="card-footer">
-          </div>
-        </div> 
+      <modal name="help_form2" height="auto" :scrollable="false" :clickToClose="false">
+         <help formName="help_form2"/>
       </modal>
       <modal name="file_upload_form" height="auto" :scrollable="false" :clickToClose="false">
          <file-uploader :assignmentID="selectedAssignmentID"/>
@@ -188,6 +178,7 @@ import FileUploader from './FileUploader.vue';
 import FileUploadedList from './FileUploadedList.vue'
 import FileDownloader from './FileDownloader.vue'
 import SubmitForReview from './SubmitForReview.vue'
+import Help from './Help.vue'
 
 export default {
     name: "Contracts",
@@ -195,7 +186,8 @@ export default {
         FileUploader,
         FileUploadedList,
         FileDownloader,
-        SubmitForReview
+        SubmitForReview,
+        Help
     },
     computed: {
         ...mapGetters([
@@ -242,10 +234,7 @@ export default {
         this.finalizedDisplayed = false;
       },
       showHelp() {
-        this.$modal.show('help_form');
-      },
-      closeHelp() {
-        this.$modal.hide('help_form');
+        this.$modal.show('help_form2');
       },
       showFileUpload(assignmentID) {
         this.selectedAssignmentID = assignmentID;
@@ -345,17 +334,13 @@ export default {
 }
 
 .icon-box {
-  padding-top: 4px;
+  padding-top: 2px;
   padding-right: 4px;
   text-align: center;
 }
 
 .icon-box:hover {
   cursor: pointer;
-}
-
-.button-box {
-  /* width: 156px; */
 }
 
 
