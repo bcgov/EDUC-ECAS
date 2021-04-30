@@ -97,7 +97,8 @@ export default {
         return axios.patch(this.getSubmitUrl)
             .then( response => {
                 this.isComplete = true;
-                console.log('file submit api returned:  ', response.data  );
+                console.log('Event: user-assignments-updated is fired!!!');
+                Event.fire('user-assignments-updated', response );
                 return response.data;
             })
             .catch( error => {
@@ -108,12 +109,7 @@ export default {
     },
     async performSubmit() {
         this.isSubmitInProgress = true;
-        const res = await this.submitForReview(this.selectedAssignmentId);
-        if (res && res.status === 200) {
-            Event.fire('user-assignments-updated', res );
-        } else {
-            // show error message to user
-        }
+        await this.submitForReview(this.selectedAssignmentId);
         this.isSubmitInProgress = false;
     },
   },

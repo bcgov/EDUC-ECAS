@@ -196,9 +196,18 @@ export default {
             'getAssignments',
         ]),
     },
+    watch: {
+      getAssignments: {
+        deep: true,
+        handler() {
+          this.assignments = this.getAssignments.filter(item => !!item);
+          console.log(`${this.assignments.length} assignment(s) re-loaded.`);
+        }
+      }
+    },
     data() {
       return {
-        // assignments: [],
+        assignments: [],
         uploaded_files: [], // for uploaded files
         contract: {}, // for file download
         selectedAssignmentID: null, // for file upload & submit for review
@@ -210,8 +219,8 @@ export default {
     mounted() {
       console.log('My Contracts Mounted')
 
-      // this.assignments = this.getAssignments.map(a => a.contract_stage).filter(item => !!item);
-      // console.log(`${this.assignments.length} assignment(s) loaded.`);
+      this.assignments = this.getAssignments.filter(item => !!item);
+      console.log(`${this.assignments.length} assignment(s) loaded.`);
     },
     methods: {
       toggleActionRequired() {
@@ -264,20 +273,20 @@ export default {
         this.$modal.show('file_download_form');
       },
       getActionRequiredList() {
-        if (this.getAssignments && this.getAssignments.length > 0) {
-         return this.getAssignments.filter(c => c.EducContractStage  === 'Contract Sent')
+        if (this.assignments && this.assignments.length > 0) {
+         return this.assignments.filter(c => c.EducContractStage  === 'Contract Sent')
         }
         return [];
       },
       getPendingReviewedList() {
-        if (this.getAssignments && this.getAssignments.length > 0) {
-          return this.getAssignments.filter(c => c.EducContractStage  === 'Contract Submitted')
+        if (this.assignments && this.assignments.length > 0) {
+          return this.assignments.filter(c => c.EducContractStage  === 'Contract Submitted')
         }
         return [];
       },
       getFinalizedList() {
-        if (this.getAssignments && this.getAssignments.length > 0) {
-          return this.getAssignments.filter(c => c.EducContractStage  === 'Contract Signed')
+        if (this.assignments && this.assignments.length > 0) {
+          return this.assignments.filter(c => c.EducContractStage  === 'Contract Signed')
         }
         return [];
       },

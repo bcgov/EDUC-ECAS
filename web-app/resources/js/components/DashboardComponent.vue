@@ -274,10 +274,12 @@
                 });
             },
             async assignmentsUpdated() {
-                 this.isContractsLoaded = false;
+                console.log('assignments updated: load data & calculate stats - start');
+                this.isContractsLoaded = false;
                 await this.loadAssignments();
                 this.getAssignmentsStats();
                 this.isContractsLoaded = true;
+                console.log('assignments updated: load data & calculate stats - end');
             }
         }
 
