@@ -1,113 +1,107 @@
 ﻿<template>
-    <div>
-        <div class="row">
-            <div class="col">
-                <div class="card">
-                    <div class="card-header pb-0">
-                        <div class="row">
-                            <div class="col-6">
-                                <h2>Marking Sessions</h2>
-                            </div>
-                            <div class="col-6 text-right">
-                                <button class="btn btn-link btn-sm " v-text="showPastSessionText" @click="showPastSessions = ! showPastSessions"></button>
-                            </div>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <div class="row">
+                        <div class="col-6">
+                            <h2>Marking Sessions</h2>
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-                                Click on a session below to apply, accept or decline
-                            </div>
-                            <div class="col-6">
-
-                                <ul class="nav nav-tabs justify-content-end pt-2">
-                                    <li class="nav-item mb-0">
-                                        <a @click="filter = ''"
-                                           class="nav-link"
-                                           :class="{ 'active': filter === '' }">All
-                                            <span class="badge badge-pill badge-primary">{{ dateFilteredSessions.length }}</span></a>
-                                    </li>
-                                    <li v-for="status in uniqueSessionStatus" class="nav-item mb-0">
-                                        <a @click="filter = status"
-                                           class="nav-link"
-                                           :class="{ 'active': filter === status }">{{ status }}
-                                            <span class="badge badge-pill badge-primary">{{ countStatus(status) }}</span></a>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div class="col-6 text-right">
+                            <button class="btn btn-link btn-sm " v-text="showPastSessionText" @click="showPastSessions = ! showPastSessions"></button>
                         </div>
-
                     </div>
-                    <div class="card-body">
-                        <div class="filter-box">
-                            <div class="filter-col-1">
-                                <div class="filter-input-box col-sm-4">
-                                    <font-awesome-icon icon="search" alt="Filter by Type" style="margin-top: 7px; margin-right: 5px; font-size: 18px;"/>
-                                    <input v-model="typeInputText" v-on:keyup.enter="handleTypeInputText" v-on:blur="handleTypeInputText"
-                                        type="text" class="form-control form-control-sm" name="filter-type-input"
-                                        id="filter-type-input" placeholder="Filter by Type" size="80">
-                                </div>
-                                <div class="chips-box col-sm-8">
-                                    <div v-for="(filteredText, index) in typeFilteredTexts" :key="index" class="chip">
-                                        <!-- <div class="chip-head">{{filteredText.charAt(0).toUpperCase()}}</div> -->
-                                        <div class="chip-content">{{filteredText}}</div>
-                                        <div class="chip-close" @click="deleteTypeChip(filteredText)">
-                                            <svg class="chip-svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"></path></svg>
-                                        </div>
-                                    </div>
-                                </div>  
+                    <div class="row">
+                        <div class="col-6">
+                            Click on a session below to apply, accept or decline
+                        </div>
+                        <div class="col-6">
+
+                            <ul class="nav nav-tabs justify-content-end pt-2">
+                                <li class="nav-item mb-0">
+                                    <a @click="filter = ''"
+                                        class="nav-link"
+                                        :class="{ 'active': filter === '' }">All
+                                        <span class="badge badge-pill badge-primary">{{ dateFilteredSessions.length }}</span></a>
+                                </li>
+                                <li v-for="status in uniqueSessionStatus" class="nav-item mb-0">
+                                    <a @click="filter = status"
+                                        class="nav-link"
+                                        :class="{ 'active': filter === status }">{{ status }}
+                                        <span class="badge badge-pill badge-primary">{{ countStatus(status) }}</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <div class="filter-box">
+                        <div class="filter-col-1">
+                            <div class="filter-input-box col-sm-4">
+                                <font-awesome-icon icon="search" alt="Filter by Type" style="margin-top: 7px; margin-right: 5px; font-size: 18px;"/>
+                                <input v-model="typeInputText" v-on:keyup.enter="handleTypeInputText" v-on:blur="handleTypeInputText"
+                                    type="text" class="form-control form-control-sm" name="filter-type-input"
+                                    id="filter-type-input" placeholder="Filter by Type" size="80">
                             </div>
-                            <div class="filter-col-2">
-                                <div class="filter-input-box col-sm-6">
-                                    <font-awesome-icon icon="search-location" alt="Filter by Location" style="margin-top: 7px; margin-right: 5px; font-size: 22px;"/>
-                                    <input v-model="locationInputText" v-on:keyup.enter="handleLocationInputText" v-on:blur="handleLocationInputText"
-                                        type="text" class="form-control form-control-sm" name="location-type-input"
-                                        id="location-type-input" placeholder="Filter by Location" size="80">
+                            <div class="chips-box col-sm-8">
+                                <div v-for="(filteredText, index) in typeFilteredTexts" :key="index" class="chip">
+                                    <!-- <div class="chip-head">{{filteredText.charAt(0).toUpperCase()}}</div> -->
+                                    <div class="chip-content">{{filteredText}}</div>
+                                    <div class="chip-close" @click="deleteTypeChip(filteredText)">
+                                        <svg class="chip-svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"></path></svg>
+                                    </div>
                                 </div>
-                                <div class="chips-box col-sm-6">
-                                    <div v-for="(filteredText, index) in locationFilteredTexts" :key="index" class="chip">
-                                        <!-- <div class="chip-head">{{filteredText.charAt(0).toUpperCase()}}</div> -->
-                                        <div class="chip-content">{{filteredText}}</div>
-                                        <div class="chip-close" @click="deleteLocationChip(filteredText)">
-                                            <svg class="chip-svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"></path></svg>
-                                        </div>
+                            </div>  
+                        </div>
+                        <div class="filter-col-2">
+                            <div class="filter-input-box col-sm-6">
+                                <font-awesome-icon icon="search-location" alt="Filter by Location" style="margin-top: 7px; margin-right: 5px; font-size: 22px;"/>
+                                <input v-model="locationInputText" v-on:keyup.enter="handleLocationInputText" v-on:blur="handleLocationInputText"
+                                    type="text" class="form-control form-control-sm" name="location-type-input"
+                                    id="location-type-input" placeholder="Filter by Location" size="80">
+                            </div>
+                            <div class="chips-box col-sm-6">
+                                <div v-for="(filteredText, index) in locationFilteredTexts" :key="index" class="chip">
+                                    <!-- <div class="chip-head">{{filteredText.charAt(0).toUpperCase()}}</div> -->
+                                    <div class="chip-content">{{filteredText}}</div>
+                                    <div class="chip-close" @click="deleteLocationChip(filteredText)">
+                                        <svg class="chip-svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"></path></svg>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <table class="table table-hover">
-                            <tr>
-                                <th :class="[ sortValue('Type')? 'headerSortUp' : 'headerSortDown']" @click="handleSort('Type')">Type</th>
-                                <th :class="[ sortValue('Activity')? 'headerSortUp' : 'headerSortDown']" @click="handleSort('Activity')">Activity</th>
-                                <th :class="[ sortValue('Dates')? 'headerSortUp' : 'headerSortDown']" @click="handleSort('Dates')">Dates</th>
-                                <th :class="[ sortValue('Location')? 'headerSortUp' : 'headerSortDown']" @click="handleSort('Location')">Location</th>
-                                <th :class="[ sortValue('Status')? 'headerSortUp' : 'headerSortDown']" @click="handleSort('Status')">Status</th>
-                            </tr>
-                            <tbody>
-                            <tr @click="viewSession(session)"
-                                v-for="session in sessionsByFilterAndSort()">
-                                <td>{{ session.type.name }}</td>
-                                <td>{{ session.activity.name }}</td>
-                                <td nowrap>{{ session.date }}</td>
-                                <td>{{ session.location }}</td>
-                                <td>{{ sessionStatus(session.assignment) }}</td>
-                            </tr>
-                            </tbody>
-                        </table>
                     </div>
+                    <table class="table table-hover" :key="sessionsUpdatedCount">
+                        <tr>
+                            <th :class="[ sortValue('Type')? 'headerSortUp' : 'headerSortDown']" @click="handleSort('Type')">Type</th>
+                            <th :class="[ sortValue('Activity')? 'headerSortUp' : 'headerSortDown']" @click="handleSort('Activity')">Activity</th>
+                            <th :class="[ sortValue('Dates')? 'headerSortUp' : 'headerSortDown']" @click="handleSort('Dates')">Dates</th>
+                            <th :class="[ sortValue('Location')? 'headerSortUp' : 'headerSortDown']" @click="handleSort('Location')">Location</th>
+                            <th :class="[ sortValue('Status')? 'headerSortUp' : 'headerSortDown']" @click="handleSort('Status')">Status</th>
+                        </tr>
+                        <tbody>
+                        <tr @click="viewSession(session)"
+                            v-for="session in sessionsByFilterAndSort()">
+                            <td>{{ session.type.name }}</td>
+                            <td>{{ session.activity.name }}</td>
+                            <td nowrap>{{ session.date }}</td>
+                            <td>{{ session.location }}</td>
+                            <td>{{ sessionStatus(session.assignment) }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-
-
-
         <modal name="session_form" height="auto">
             <session :session="current_session"></session>
         </modal>
     </div>
+
 </template>
 
 <script>
-
-
     export default {
         name: "MarkingSessions",
         props: {
@@ -115,7 +109,7 @@
         },
         data() {
             return {
-
+                initialSessions: [],
                 showPastSessions: false,
 
                 filter: '',
@@ -135,57 +129,36 @@
                     { column: 'Dates', ascending: true, active: false },
                     { column: 'Location', ascending: true, active: false },
                     { column: 'Status', ascending: true, active: false },
-                ]
+                ],
+
+                sessionsUpdatedCount: 0,
 
             }
         },
+        created() {
+            this.initialSessions = this.sessions;
+            this.loadSessionsData();
+        },
         mounted() {
             console.log('MarkingSessions Mounted');
-
             Event.listen('session_status_updated', this.updateSessionStatus);
-
         },
-
+        watch: {
+            sessions(newValue) {
+                console.log('new sessions as props - reload sessions for marking table');
+                this.initialSessions = newValue;
+                this.loadSessionsData();
+            }
+        },
         computed: {
-
-            publicSessions() {
-
-                // The Ministry business rules require that Sessions on the portal be shown only if the
-                // session is published and "Open" OR the user has been assignment related to the session.
-
-                return this.sessions.filter( function (session) {
-                    return (session.is_published && session.session_status === "Open") || session.assignment.id !== 0;
-
-                })
-            },
-
-            replaceSelected() {
-
-                // The Ministry business rules require that 'Selected" assignments are
-                // displayed as 'Applied'
-
-                let sanitized = [];
-
-                this.publicSessions.forEach( function (session) {
-                     if(session.assignment.status.name === 'Selected') {
-                        session.assignment.status.name = "Applied"
-                     }
-
-                     sanitized.push(session);
-                });
-
-                return sanitized;
-            },
-
-
             dateFilteredSessions() {
 
                 if(this.showPastSessions) {
                     // display all sessions
-                    return this.replaceSelected;
+                    return this.initialSessions;
                 }
 
-                return this.replaceSelected.filter( function (session) {
+                return this.initialSessions.filter( function (session) {
 
                     return ! session.isPast;
 
@@ -224,10 +197,20 @@
 
                 return 'Show current and past sessions';
             }
-
-
         },
         methods: {
+            loadSessionsData() {
+                // The Ministry business rules require that Sessions on the portal be shown only if the
+                // session is published and "Open" OR the user has been assignment related to the session.
+                this.initialSessions = this.initialSessions.filter( function (session) {
+                     if(session.assignment.status.name === 'Selected') {
+                        session.assignment.status.name = "Applied"
+                     }
+                    return (session.is_published && session.session_status === "Open") || session.assignment.id !== 0;
+                });
+
+                this.sessionsUpdatedCount += 1;
+            },
 
             countStatus(status) {
                 // var status
@@ -235,7 +218,6 @@
                     return session.assignment.status.name === status
                 }).length
             },
-
 
             sessionStatus(assignment) {
                 switch (assignment.status.name) {
@@ -260,6 +242,7 @@
                 }
                 return 'Open'
             },
+
             viewSession(session) {
                 console.log('View Session');
                 this.current_session = session;

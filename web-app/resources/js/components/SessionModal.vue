@@ -185,18 +185,13 @@
                     session_id:     session.id
                 })
                     .then(function (response) {
+                        console.log('assignment created: ', response.data.data);
                         Event.fire('session_status_updated', response.data.data );
                         session.status = response.data.data.status;
                         form.closeModal();
                         form.working = false;
-						Event.fire('refresh-data' );
-						console.log('assignment created');
-						console.log('sleep!')
-					setTimeout(() => {
-					console.log('reload!');
-							location.reload();
-					}, 2000);
- 
+                        console.log('Event: refresh-sessions-data is fired!!!');
+						Event.fire('refresh-sessions-data');
                     })
                     .catch(function (error) {
                         console.log('Failure!', error);
@@ -223,11 +218,11 @@
                         action:         action
                     })
                         .then(function (response) {
+                            console.log('assignment updated: ', response.data.data);
                             Event.fire('session_status_updated', response.data.data );
                             session.status = response.data.data.status;
                             form.closeModal();
                             form.working = false;
-							Event.fire('refresh-data' );
 							console.log('assignment update success')
                         })
                         .catch(function (error) {

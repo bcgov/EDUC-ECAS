@@ -97,8 +97,8 @@ export default {
         return axios.patch(this.getSubmitUrl)
             .then( response => {
                 this.isComplete = true;
-                console.log('Event: user-assignments-updated is fired!!!');
-                Event.fire('user-assignments-updated', response );
+                console.log('Event: refresh-contracts-data is fired!!!');
+                Event.fire('refresh-contracts-data', response);
                 return response.data;
             })
             .catch( error => {
