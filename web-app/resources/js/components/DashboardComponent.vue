@@ -109,7 +109,12 @@
                         </div>
                     </div>
                 </div>
-                <marking-sessions v-if="!displayContracts" :sessions="this.getSessions"></marking-sessions>
+                <div v-if="!displayContracts">
+                    <div class="row"  v-if="!isSessionsLoaded">
+                        <div class="dashboard-spinner text-center"></div>
+                    </div>
+                    <marking-sessions v-else :sessions="sessions"></marking-sessions>
+                </div>
             </div>
             <div class="row mt-n3" v-if="displayContracts">
                 <div class="col">
@@ -163,14 +168,15 @@
             user: {},
             credentials: {},
             user_credentials: {},
-            sessions: {},
             subjects: {},
             regions: {},
-            countries: {},
+            countries: {}
         },
         data() {
             return {
+                sessions: [],
                 isContractsLoaded: false,
+                isSessionsLoaded: true,
                 filter: '',
                 current_session: {},
                 sent_count: 0,
@@ -182,16 +188,19 @@
                 displayContracts: false,
             }
         },
+        created() {
+            this.sessions = this.getSessions.filter(item => !!item);
+        },
         mounted() {
             console.log('Dashboard Mounted')
 
             Event.listen('launch-profile-modal', this.showProfile);
             Event.listen('profile-updated', this.updateProfile);
             Event.listen('user-credentials-updated', this.updateUserCredentials);
-            Event.listen('user-assignments-updated', this.assignmentsUpdated);
+            Event.listen('refresh-sessions-data', this.refreshSessionsData);
+            Event.listen('refresh-contracts-data', this.refreshContractsData);
 
             this.$store.commit('SET_USER', this.user);
-            this.$store.commit('SET_SESSIONS', this.sessions);
 
             if ( ! this.user.id) {
                 this.new_user = true;
@@ -209,6 +218,15 @@
                 'getAssignments',
             ]),
         },
+        watch: {
+            getSessions: {
+                deep: true,
+                handler() {
+                    this.sessions = this.getSessions.filter(item => !!item);
+                    console.log(`${this.sessions.length} session(s) re-loaded.`);
+                }
+            }
+        }, 
         methods: {
             toggleMenu() {
                 this.menuVisible = !this.menuVisible;
@@ -263,7 +281,7 @@
             loadAssignments() {
                 return axios.get(`/api/${this.user.id}/portalassignment`)
                 .then( response => {
-                    console.log('portal assignments api returned:  ', response.data  );
+                    //console.log('portal assignments api returned:  ', response.data  );
                     this.$store.commit('SET_ASSIGNMENTS', response.data.PortalAssignment.map(a => ({...a, 
                             isDownloadFileInProgress: false, isUploadedFilesInProgress: false, isSubmitInProgress: false
                         }))
@@ -274,11 +292,40 @@
                 });
             },
             async assignmentsUpdated() {
-                 this.isContractsLoaded = false;
+                console.log('assignments updated: load data & calculate stats - start');
+                this.isContractsLoaded = false;
                 await this.loadAssignments();
                 this.getAssignmentsStats();
                 this.isContractsLoaded = true;
-            }
+                console.log('assignments updated: load data & calculate stats - end');
+            },
+            reloadSessionsData() {
+                return axios.get('/api/dashboard')
+                .then( response => {
+                    //console.log('dashboard api: session(s) returned:  ', response.data.sessions);
+                    this.$store.commit('SET_SESSIONS', response.data.sessions);
+                })
+                .catch( error => {
+                    console.log('Fail!', error);
+                });
+            },
+            async sessionsUpdated() {
+                console.log('sessions updated: load data - start');
+                this.isSessionsLoaded = false;
+                await this.reloadSessionsData();
+                this.isSessionsLoaded = true;
+                console.log('sessions updated: load data - end');
+            },
+            refreshSessionsData() {
+                setTimeout(async () => {
+					console.log('refreshing sessions data...');
+                    await this.sessionsUpdated();
+				}, 2000);
+            },
+            async refreshContractsData() {
+                console.log('refreshing contracts data...');
+                await this.assignmentsUpdated();
+            },
         }
 
     }

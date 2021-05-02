@@ -7,7 +7,6 @@
             <dashboard-component
                     :user="dashboard.user"
                     :user_credentials="dashboard.user_credentials"
-                    :sessions="dashboard.sessions"
                     :subjects="dashboard.subjects"
                     :regions="dashboard.regions"
                     :countries="dashboard.countries"
@@ -30,22 +29,33 @@
         },
 
         mounted() {
-
             console.log('Component mounted.');
-
-            axios.get('/api/dashboard')
-                .then( response => {
-                    console.log('dashboard api returned:  ', response.data  );
-                    this.dashboard = response.data;
-                    this.isLoaded = true;
-                })
-                .catch( error => {
-                    console.log('Fail!', error);
-                });
+            this.performLoadDashboardData();
         },
 
         components: {
             DashboardComponent
+        },
+
+        methods: {
+            loadDashboardData() {
+                return axios.get('/api/dashboard')
+                    .then( response => {
+                        console.log('dashboard api returned:  ', response.data  );
+                        this.dashboard = response.data;
+                    })
+                    .catch( error => {
+                        console.log('Fail!', error);
+                    });
+            },
+            async performLoadDashboardData() {
+                console.log('dashboard updated: load data - start');
+                this.isLoaded = false;
+                await this.loadDashboardData();
+                this.$store.commit('SET_SESSIONS', this.dashboard.sessions);
+                this.isLoaded = true;
+                console.log('dashboard updated: load data - end');
+            }  
         }
     }
 </script>
