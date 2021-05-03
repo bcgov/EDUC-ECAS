@@ -169,6 +169,20 @@
       <modal name="submit_for_review_form" height="auto" :scrollable="false" :clickToClose="false">
          <submit-for-review :files="uploaded_files" :assignmentID="selectedAssignmentID"/>
       </modal>
+      <modal name="warning_form1" height="auto" :scrollable="false" :clickToClose="false">
+        <div class="card">
+          <div class="card-header">
+              <button class="btn btn-danger btn-sm float-right" v-on:click="closeWarning">X</button>
+              <font-awesome-icon class="float-left" icon="exclamation-triangle" alt="Hide warning" style="margin-top: 4px; font-size: 24px; color: #f5a742;"  />
+              <h4 class="ml-2 pl-4">Warning</h4>
+          </div>
+          <div class="card-body">
+              <h5>There is no uploaded file to review.</h5>
+          </div>
+          <div class="card-footer">
+          </div>
+        </div> 
+      </modal>
     </div>
 </template>
 
@@ -249,13 +263,21 @@ export default {
         this.selectedAssignmentID = assignmentID;
         this.$modal.show('file_upload_form');
       },
+      closeWarning() {
+        this.$modal.hide('warning_form1');
+      },
       async showSubmitForReview(item) {
         item.isSubmitInProgress = true;
         this.uploaded_files = !!item.EducAssignmentId? await this.loadUploadedFiles(item.EducAssignmentId) : [];
         console.log('uploaded files: ' + this.uploaded_files.length);
-        this.selectedAssignmentID = item.EducAssignmentId;
         item.isSubmitInProgress = false;
-        this.$modal.show('submit_for_review_form');
+
+        if (this.uploaded_files.length === 0) {
+          this.$modal.show('warning_form1');
+        } else {
+          this.selectedAssignmentID = item.EducAssignmentId;
+          this.$modal.show('submit_for_review_form');
+        }
       },
       async showFileUploadedList(item) {
         item.isUploadedFilesInProgress = true;

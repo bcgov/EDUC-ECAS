@@ -26,7 +26,7 @@
         </div>
         <div class="card-footer">
             <div class="btn-group-box" v-if="isComplete">
-              <span class="text-success">Submit process has been done successfully.</span>
+              <span class="text-success">Your file has been successfully submitted for review.</span>
               <button type="button" class="btn btn-outline-primary ml-4 mr-1" v-on:click="closeModal">
                 Close
               </button>
