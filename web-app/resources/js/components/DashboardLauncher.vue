@@ -6,7 +6,6 @@
         <div v-if="isLoaded">
             <dashboard-component
                     :user="dashboard.user"
-                    :user_credentials="dashboard.user_credentials"
                     :subjects="dashboard.subjects"
                     :regions="dashboard.regions"
                     :countries="dashboard.countries"
@@ -53,6 +52,7 @@
                 this.isLoaded = false;
                 await this.loadDashboardData();
                 this.$store.commit('SET_SESSIONS', this.dashboard.sessions);
+                this.$store.commit('SET_CREDENTIALS', this.dashboard.user_credentials);
                 this.isLoaded = true;
                 console.log('dashboard updated: load data - end');
             }  

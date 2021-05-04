@@ -55,6 +55,7 @@ const store = new Vuex.Store({
         user: {},
         sessions: [],
         assignments: [],
+        credentials: [],
     },
     mutations: {
         'SET_USER' (state, user) {
@@ -62,6 +63,9 @@ const store = new Vuex.Store({
         },
         'SET_SESSIONS' (state, sessions) {
             state.sessions = sessions;
+        },
+        'SET_CREDENTIALS' (state, credentials) {
+            state.credentials = credentials;
         },
         'UPDATE_SESSION_STATUS' (state, response) {
             const index = state.sessions.findIndex(session => session.id === response.session_id);
@@ -82,6 +86,9 @@ const store = new Vuex.Store({
         },
         getAssignments: (state) => {
             return state.assignments
+        },
+        getCredentials: (state) => {
+            return state.credentials
         }
     }
 });

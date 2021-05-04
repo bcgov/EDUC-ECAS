@@ -108,7 +108,7 @@ class ProfileCredentialController extends Controller
 
         $this->profile_credential->delete($credential_id);
 
-        return Response::json(['message' => 'success'], 204);
+        return Response::json(['message' => 'success'], 200);
     }
 
 

@@ -9,7 +9,7 @@
                 <div class="row" v-for="credential in credentials_applied">
                     <div class="col-1 text-center">
                         <font-awesome-icon v-if="credential.verified" icon="check" alt="verified"/>
-                        <font-awesome-icon v-else icon="trash" @click="deleteCredential(credential)"
+                        <font-awesome-icon v-else icon="trash" @click="removeCredential(credential)"
                                             alt="delete" style="color: red;"/>
                     </div>
                     <div class="col-11">{{ credential.credential.name }}
@@ -47,7 +47,8 @@
 </template>
 
 <script>
- import axios from 'axios';
+import {mapGetters} from 'vuex'
+import axios from 'axios';
 
 export default {
     name: "Credentials",
@@ -58,10 +59,6 @@ export default {
             required: true
         },
         credentials: {
-            type: Array,
-            required: true
-        },
-        user_credentials: {
             type: Array,
             required: true
         },
@@ -80,14 +77,13 @@ export default {
         }
     },
     mounted() {
-        this.credentials_applied = this.user_credentials;
-    },
-    watch: {
-        user_credentials(newValue) {
-            this.credentials_applied = newValue;
-        },
+        this.credentials_applied = this.getCredentials;
     },
     computed: {
+         ...mapGetters([
+            'getCredentials'
+        ]),
+
         credentialsIdsInUse() {
             var arrayOfCredentialIds = [];
 
@@ -111,48 +107,15 @@ export default {
         cancelCredential() {
             this.closeModal()
         },
-        addCredential() {
-            console.log('adding credential' + JSON.stringify(axios.defaults));
-
-            this.working = true;
-
-            var form = this;
-
-            console.log('form', form );
-
-            axios.post('/api/' + this.user.id + '/profile-credentials', {
-                credential_id: this.new_credential.credential.id,
-                year: this.new_credential.year
-            })
-                .then(function (response) {
-                    form.working = false;
-                    this.pushCredential(response.data);
-                    Event.fire('user-credentials-updated', this.credentials_applied);
-                    console.log('Create Success!', response.data);
-                })
-                .catch(function (error) {
-                    form.working = false;
-                    console.log('Failure!', error)
-                });
+        updateUserCredentialsInStore() {
+            console.log('updateUserCredentials in store', this.credentials_applied);
+            this.$store.commit('SET_CREDENTIALS', this.credentials_applied);
         },
-        deleteCredential(profile_credential) {
-            console.log('removing credential' + JSON.stringify(axios.defaults));
+        filterCredential(credential_id) {
+            console.log('removeCredential', credential_id);
 
-            this.working = true;
-
-            var form = this;
-
-            axios.delete('/api/' + this.user.id + '/profile-credentials/' + profile_credential.id )
-                .then(function (response) {
-                    form.working = false;
-                    this.removeCredential(profile_credential.credential.id);
-                    Event.fire('user-credentials-updated', this.credentials_applied);
-                    console.log('Delete Success!', profile_credential.credential.id )
-                })
-                .catch(function (error) {
-                    form.working = false;
-                    console.log('Failure!')
-                });
+            // Get the credential
+            this.credentials_applied = this.credentials_applied.filter(item => item.credential.id !== credential_id);
         },
         pushCredential(profile_credential) {
             console.log('pushing credential', profile_credential.data.credential.id );
@@ -165,22 +128,57 @@ export default {
                 year: null
             }
         },
-        removeCredential(profile_credential) {
-            console.log('removeCredential', profile_credential);
+        async addCredential() {
+            console.log('adding credential' + JSON.stringify(axios.defaults));
 
-            // Get the credential
-            let index = this.credentials_applied.findIndex(credential => credential.credential.id === profile_credential);
-
-            console.log('get the credential', index);
-
-            let credential = this.credentials_applied[index].credential;
-
-            // Remove the credential from the applied list
-            this.credentials_applied.splice(index, 1);
-
-
-            //this.new_credential = this.blank_credential;
+            this.working = true;
+            const profile_credential = await this.postCredential();
+            this.working = false;
+            if (!!profile_credential) {
+                this.pushCredential(profile_credential);
+                this.updateUserCredentialsInStore();
+                console.log('Refresh credentials added!', profile_credential);
+            }
         },
+        postCredential() {
+            return axios.post('/api/'+this.user.id+'/profile-credentials', {
+              credential_id: this.new_credential.credential.id,
+              year: this.new_credential.year
+            })
+            .then(response => {
+                console.log('Create Success!', response.data);
+                return response.data;
+            })
+            .catch(error => {
+                console.log('Failure!', error);
+                return {};
+            });
+        },
+        async removeCredential(profile_credential) {
+            console.log('removing credential' + JSON.stringify(axios.defaults));
+
+            this.working = true;
+            const response_id = await this.deleteCredential(profile_credential);
+            this.working = false;
+            if (!!response_id) {
+                this.filterCredential(profile_credential.credential.id);
+                this.updateUserCredentialsInStore();
+                console.log('Refresh credentials removed!', profile_credential);
+            }
+           
+        },
+        deleteCredential(profile_credential) {
+            return axios.delete('/api/'+this.user.id+'/profile-credentials/'+profile_credential.id)
+            .then(response => {
+                console.log('Delete Success!', profile_credential.credential.id);
+                return profile_credential.id;
+            })
+            .catch(error => {
+                console.log('Failure!', error);
+                return '';
+            });
+        }
+
     }
 }
 </script>
