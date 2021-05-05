@@ -134,7 +134,6 @@
         <modal name="credentials_form" height="auto" :scrollable="true" :clickToClose="false">
             <credentials
                     :user="getUser"
-                    :user_credentials="user_credentials"
                     :credentials="credentials"
                     dusk="credentials-component"
             ></credentials>
@@ -167,7 +166,6 @@
         props: {
             user: {},
             credentials: {},
-            user_credentials: {},
             subjects: {},
             regions: {},
             countries: {}
@@ -196,7 +194,6 @@
 
             Event.listen('launch-profile-modal', this.showProfile);
             Event.listen('profile-updated', this.updateProfile);
-            Event.listen('user-credentials-updated', this.updateUserCredentials);
             Event.listen('refresh-sessions-data', this.refreshSessionsData);
             Event.listen('refresh-contracts-data', this.refreshContractsData);
 
@@ -251,10 +248,6 @@
                 console.log('updateProfile event', user.data.data);
                 this.new_user = false;
                 this.$store.commit('SET_USER', user.data.data)
-            },
-            updateUserCredentials(credentials) {
-                console.log('updateUserCredentials event', credentials);
-                this.user_credentials = credentials;
             },
             checkAssignmentsStatus() {
                 return this.sent_count > 0;
