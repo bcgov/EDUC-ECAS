@@ -177,7 +177,7 @@
               <h4 class="ml-2 pl-4">Warning</h4>
           </div>
           <div class="card-body">
-              <h5>There is no uploaded file to review.</h5>
+              <h5>There is no uploaded file to submit.</h5>
           </div>
           <div class="card-footer">
           </div>
