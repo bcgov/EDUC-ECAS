@@ -9,7 +9,7 @@
                 <div class="row" v-for="credential in credentials_applied">
                     <div class="col-1 text-center">
                         <font-awesome-icon v-if="credential.verified" icon="check" alt="verified"/>
-                        <font-awesome-icon v-else icon="trash" @click="removeCredential(credential)"
+                        <font-awesome-icon v-else icon="trash" @click.prevent="removeCredential(credential)"
                                             alt="delete" style="color: red;"/>
                     </div>
                     <div class="col-11">{{ credential.credential.name }}
@@ -33,7 +33,7 @@
                                     id="new_credential_year" placeholder="YYYY">
 
                         </div>
-                        <button class="btn btn-primary btn-sm mt-4 mb-3" @click="addCredential()">
+                        <button class="btn btn-primary btn-sm mt-4 mb-3" @click.prevent="addCredential()">
                             <span>
                                 <div class="loader text-center" v-show="working"></div>
                             </span>
@@ -71,7 +71,8 @@ export default {
                 year: null
             },
             new_credential: {
-                credential: 0
+                credential: 0,
+                year: null
             },
             working: false,
         }
@@ -129,7 +130,7 @@ export default {
             }
         },
         async addCredential() {
-            console.log('adding credential' + JSON.stringify(axios.defaults));
+            console.log('adding credential');
 
             this.working = true;
             const profile_credential = await this.postCredential();
@@ -140,7 +141,7 @@ export default {
                 console.log('Refresh credentials added!', profile_credential);
             }
         },
-        postCredential() {
+        async postCredential() {
             return axios.post('/api/'+this.user.id+'/profile-credentials', {
               credential_id: this.new_credential.credential.id,
               year: this.new_credential.year
@@ -155,7 +156,7 @@ export default {
             });
         },
         async removeCredential(profile_credential) {
-            console.log('removing credential' + JSON.stringify(axios.defaults));
+            console.log('removing credential');
 
             this.working = true;
             const response_id = await this.deleteCredential(profile_credential);
@@ -167,7 +168,7 @@ export default {
             }
            
         },
-        deleteCredential(profile_credential) {
+        async deleteCredential(profile_credential) {
             return axios.delete('/api/'+this.user.id+'/profile-credentials/'+profile_credential.id)
             .then(response => {
                 console.log('Delete Success!', profile_credential.credential.id);
