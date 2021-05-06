@@ -1,4 +1,4 @@
-﻿using Microsoft.Crm.Sdk.Messages;
+using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Sdk.Workflow;
@@ -16,6 +16,7 @@ namespace Ecas.Dyn365.Workflows
 
         public enum InactiveAssignmentStatus
         {
+            None,
             Declined 	= 2,
             Withdrew	= 610410004,
             Applied		= 610410010,
@@ -115,22 +116,25 @@ namespace Ecas.Dyn365.Workflows
                             break;
 
                         default:
-                            setInactiveStatus = InactiveAssignmentStatus.Selected;
+                            //set as none if it's a deactivated assignment
+                            setInactiveStatus = InactiveAssignmentStatus.None;
                             break;
                     }
  
-                    SetStateRequest setStateRequest = new SetStateRequest()
+                    if (setInactiveStatus != InactiveAssignmentStatus.None)
                     {
-                        EntityMoniker = new EntityReference
+                        SetStateRequest setStateRequest = new SetStateRequest()
                         {
-                            Id = (Guid)assignment.GetAttributeValue<AliasedValue>("educ_assignment1.educ_assignmentid").Value,
-                            LogicalName = "educ_assignment",
-                        },
-                        State = new OptionSetValue((int)State.Inactive),
-                        Status = new OptionSetValue((int)setInactiveStatus)
-                    };
-
-                    crmWorkflowContext.OrganizationService.Execute(setStateRequest);
+                            EntityMoniker = new EntityReference
+                            {
+                                Id = (Guid)assignment.GetAttributeValue<AliasedValue>("educ_assignment1.educ_assignmentid").Value,
+                                LogicalName = "educ_assignment",
+                            },
+                            State = new OptionSetValue((int)State.Inactive),
+                            Status = new OptionSetValue((int)setInactiveStatus)
+                        };
+                        crmWorkflowContext.OrganizationService.Execute(setStateRequest);
+                    }
                 }
 
             }
