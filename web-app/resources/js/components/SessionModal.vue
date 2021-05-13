@@ -12,9 +12,8 @@
             </template>
             <template v-else-if="isStatus(session, 'Applied')">
                 <p>
-                    Thank you for your application for this session. The Ministry is reviewing all applications for
-                    eligibility and will notify you one way or the other. If you need to un-apply please check the box
-                    below.
+                    Thank you for your application for this session. You will be contacted by email if you are
+		    selected to participate. If you need to un-apply please click the box below.
                 </p>
             </template>
             <template v-else-if="isStatus(session, 'Invited')">
@@ -46,9 +45,9 @@
             </template>
             <template v-else-if="isStatus(session, 'Confirmed')">
                 <p>
-                    Thank you for returning your signed contract. At this point the Ministry is relying on you to
-                    participate in the session. In an unexpected situation comes up and you need to withdraw, please
-                    contact exams@gov.bc.ca
+                    Thank you for returning your signed contract. At this point the Ministry is relying on you to 
+		    participate in the session. In an unexpected situation comes up and  If you need to withdraw, 
+		    please contact exams@gov.bc.ca
                 </p>
             </template>
             <template v-else-if="isStatus(session, 'Completed')">
