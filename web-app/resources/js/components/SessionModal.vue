@@ -45,9 +45,7 @@
             </template>
             <template v-else-if="isStatus(session, 'Confirmed')">
                 <p>
-                    Thank you for returning your signed contract. At this point the Ministry is relying on you to 
-		    participate in the session. In an unexpected situation comes up and  If you need to withdraw, 
-		    please contact exams@gov.bc.ca
+                    Thank you for returning your signed contract. If you need to withdraw, please contact exams@gov.bc.ca
                 </p>
             </template>
             <template v-else-if="isStatus(session, 'Completed')">
