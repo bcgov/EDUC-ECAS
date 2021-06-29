@@ -3,7 +3,7 @@ def WAIT_TIMEOUT = 10
 
 // Assumes Builds, Images, and Deployments have the same name(s)
 // If necessary place in the order they need to be deployed.
-def COMPONENTS = ['ecas-api']
+def COMPONENTS = ['ecas-api-test']
 
 // Edit your environment TAG names below
 def TAG_NAMES = ['dev', 'test', 'prod']
