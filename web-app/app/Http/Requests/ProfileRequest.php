@@ -76,7 +76,7 @@ class ProfileRequest extends FormRequest
 
         // We'll sanitize all strings
 
-        $input['first_name']                = filter_var($input['first_name'],          FILTER_SANITIZE_STRING);
+        //$input['first_name']                = filter_var($input['first_name'],          FILTER_SANITIZE_STRING);
         $input['last_name']                 = filter_var($input['last_name'],           FILTER_SANITIZE_STRING);
         $input['preferred_first_name']      = filter_var($input['preferred_first_name'],FILTER_SANITIZE_STRING);
         $input['email']                     = filter_var($input['email'],               FILTER_SANITIZE_STRING);
