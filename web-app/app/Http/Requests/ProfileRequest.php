@@ -51,10 +51,37 @@ class ProfileRequest extends FormRequest
             $input['first_name'] = $this->removeSpecialChars($input['first_name']);
         }
 
+        if (isset($input['last_name'])) {
+            $input['last_name'] = $this->removeSpecialChars($input['last_name']);
+        }
+
+        if (isset($input['preferred_first_name'])) {
+            $input['preferred_first_name'] = $this->removeSpecialChars($input['preferred_first_name']);
+        }
+
+        if (isset($input['address_1'])) {
+            $input['address_1'] = $this->removeSpecialChars($input['address_1']);
+        }
+
+        if (isset($input['address_2'])) {
+            $input['address_2'] = $this->removeSpecialChars($input['address_2']);
+        }
+
+        if (isset($input['city'])) {
+            $input['city'] = $this->removeSpecialChars($input['city']);
+        }
+
+        if (isset($input['professional_certificate_bc'])) {
+            $input['professional_certificate_bc'] = $this->removeSpecialChars($input['professional_certificate_bc']);
+        }
+
+        if (isset($input['professional_certificate_yk'])) {
+            $input['professional_certificate_yk'] = $this->removeSpecialChars($input['professional_certificate_yk']);
+        }
+
         if (isset($input['social_insurance_number'])) {
             $input['social_insurance_number'] = preg_replace('/[^0-9.]/', '', $input['social_insurance_number']);
         }
-
 
         // Sanitize phone number, remove everything that isn't a number
         $input['phone'] = preg_replace('/[^0-9.]/', '', $input['phone']);
@@ -79,15 +106,8 @@ class ProfileRequest extends FormRequest
         }
 
         // We'll sanitize all strings
-
-        //$input['first_name']                = filter_var($input['first_name'],          FILTER_SANITIZE_STRING);
-        $input['last_name']                 = filter_var($input['last_name'],           FILTER_SANITIZE_STRING);
-        $input['preferred_first_name']      = filter_var($input['preferred_first_name'],FILTER_SANITIZE_STRING);
         $input['email']                     = filter_var($input['email'],               FILTER_SANITIZE_STRING);
         $input['phone']                     = filter_var($input['phone'],               FILTER_SANITIZE_STRING);
-        $input['address_1']                 = filter_var($input['address_1'],           FILTER_SANITIZE_STRING);
-        $input['address_2']                 = filter_var($input['address_2'],           FILTER_SANITIZE_STRING);
-        $input['city']                      = filter_var($input['city'],                FILTER_SANITIZE_STRING);
         $input['postal_code']               = filter_var($input['postal_code'],         FILTER_SANITIZE_STRING);
 
 
