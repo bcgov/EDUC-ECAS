@@ -79,7 +79,7 @@ build-ecas-frontend() {
   #
   # ecas-frontend
   #
-  BASE_IMAGE="registry.access.redhat.com/rhscl/php-73-rhel7"
+  BASE_IMAGE="registry.redhat.io/rhscl/php-73-rhel7"
   echo -e "\nBuilding ecas-frontend image from ${BASE_IMAGE}..."
 
   ${S2I_EXE} build \
@@ -92,7 +92,7 @@ build-ecas-api() {
   #
   # ecas-api
   #
-  BASE_IMAGE="registry.access.redhat.com/dotnet/dotnet-21-rhel7"
+  BASE_IMAGE="registry.redhat.io/dotnet/dotnet-21-rhel7"
   echo -e "\nBuilding ecas-api image from ${BASE_IMAGE}..."
 
   ${S2I_EXE} build \
@@ -107,7 +107,7 @@ build-ecas-cas-api() {
   #
   SOURCE_REPOSITORY=https://github.com/bcgov/EDUC-HUB.git
   DOTNET_STARTUP_PROJECT=CASInterfaceService/cas-interface-service.csproj
-  BASE_IMAGE="registry.access.redhat.com/dotnet/dotnet-21-rhel7"
+  BASE_IMAGE="registry.redhat.io/dotnet/dotnet-21-rhel7"
   echo -e "\nBuilding cas-api image from ${BASE_IMAGE}..."
 
   ${S2I_EXE} build \

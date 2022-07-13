@@ -43,6 +43,9 @@ class ProfileRequest extends FormRequest
             'professional_certificate_yk'
         ]);
 
+        if (isset($input['first_name'])) {
+            $input['first_name'] = preg_replace('/[^A-Za-z0-9\-]/', '', $input['first_name']);
+        }
 
         if (isset($input['social_insurance_number'])) {
             $input['social_insurance_number'] = preg_replace('/[^0-9.]/', '', $input['social_insurance_number']);
