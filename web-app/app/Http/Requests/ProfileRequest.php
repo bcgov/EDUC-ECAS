@@ -18,6 +18,10 @@ class ProfileRequest extends FormRequest
         return true;
     }
 
+    protected function removeSpecialChars($string) {
+        return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+    }
+
 
     /**
      * Sanitize request data before validation.
@@ -44,7 +48,7 @@ class ProfileRequest extends FormRequest
         ]);
 
         if (isset($input['first_name'])) {
-            $input['first_name'] = preg_replace('/[^A-Za-z0-9\-]/', '', $input['first_name']);
+            $input['first_name'] = $this->removeSpecialChars($input['first_name']);
         }
 
         if (isset($input['social_insurance_number'])) {
