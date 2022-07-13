@@ -19,7 +19,7 @@ class ProfileRequest extends FormRequest
     }
 
     protected function removeSpecialChars($string) {
-        return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+        return preg_replace('/[^A-Za-z0-9|\-|\s]/', '', $string); // Removes special chars.
     }
 
 
