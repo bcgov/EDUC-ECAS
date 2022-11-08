@@ -111,10 +111,10 @@ class DashboardSetupController extends Controller
     {
 
         $user   = $this->authentication->user();
-
         $profile    = $this->profile->firstOrCreate($user['sub'], [
-            'first_name'  => $user['given_name'],
-            'last_name'   => $user['family_name'],
+            //'first_name'  => $user['given_name'],
+            //'last_name'   => $user['family_name'],
+            'username'    => $user['username'],
             'email'       => $user['email']
         ]);
 

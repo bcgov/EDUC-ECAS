@@ -72,7 +72,7 @@ class ProfileController extends Controller
 
         $data                   = $request->validated();
         $data['federated_id']   = $user['sub'];
-        $data['username']       = $this->removeSuffix($user['preferred_username']);
+        $data['username']       = $this->removeSuffix($user['username']);
 
         $new_model_id = $this->profile->create($data);
 
@@ -97,8 +97,7 @@ class ProfileController extends Controller
 
         $data                   = $request->validated();
         $data['federated_id']   = $profile['federated_id'];
-        $data['username']       = self::removeSuffix($keycloak_user['preferred_username']);
-
+        $data['username']       = self::removeSuffix($keycloak_user['username']);
 
         $profile = $this->profile->update($profile['id'], $data);
 
