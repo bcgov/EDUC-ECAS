@@ -60,8 +60,8 @@ class Profile extends DynamicsRepository implements iModelRepository
             return [
                 'id'                             => null,
                 'federated_id'                   => $federated_id,
-                'first_name'                     => $data['first_name'],
-                'last_name'                      => $data['last_name'],
+                'first_name'                     => null,
+                'last_name'                      => null,
                 'email'                          => $data['email'],
             ];
 
