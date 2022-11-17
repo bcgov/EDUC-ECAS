@@ -114,10 +114,9 @@ class DashboardSetupController extends Controller
         $profile    = $this->profile->firstOrCreate($user['federated_id'], [
             //'first_name'  => $user['given_name'],
             //'last_name'   => $user['family_name'],
-            'username'    => $user['username'],
-            'email'       => $user['email']
+            'email'       => $user['email'],
         ]);
-error_log(print_r($user, TRUE));
+//error_log(print_r($user, TRUE));
         if($profile['id']) {
             $profile_credentials    = $this->profile_credential->filter(['contact_id'=> $profile['id']]);
             $assignments            = $this->assignment->filter(['contact_id'=> $profile['id']]);
