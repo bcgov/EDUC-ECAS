@@ -20,7 +20,7 @@ class Controller extends BaseController
             abort(401, 'unauthorized');
         }
 
-        if($keycloak_user['sub'] <> $profile['federated_id'])
+        if($keycloak_user['federated_id'] <> $profile['federated_id'])
         {
             abort(401, 'unauthorized');
         }

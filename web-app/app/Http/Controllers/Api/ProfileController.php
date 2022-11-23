@@ -57,7 +57,8 @@ class ProfileController extends Controller
         $unverified_profile = $this->profile->get($profile_id);
         
         $profile = parent::checkUserIsAuthorized($keycloak_user, $unverified_profile);
-
+error_log(print_r($profile, TRUE));
+error_log(print_r($keycloak_user, TRUE));
 
         return new ProfileResource($profile, $this->school, $this->district, $this->region, $this->country);
     }
@@ -71,9 +72,9 @@ class ProfileController extends Controller
         $user = $this->authentication->user();
 
         $data                   = $request->validated();
-        $data['federated_id']   = $user['sub'];
-        $data['username']       = $this->removeSuffix($user['preferred_username']);
-//error_log(print_r($data, TRUE));
+        $data['federated_id']   = $user['federated_id'];
+        $data['username']       = $this->removeSuffix($user['username']);
+        //error_log(print_r($data, TRUE));
         $new_model_id = $this->profile->create($data);
 
         $profile = $this->profile->get($new_model_id);
@@ -97,8 +98,7 @@ class ProfileController extends Controller
 
         $data                   = $request->validated();
         $data['federated_id']   = $profile['federated_id'];
-        $data['username']       = self::removeSuffix($keycloak_user['preferred_username']);
-//error_log(print_r($profile, TRUE));
+        $data['username']       = self::removeSuffix($keycloak_user['username']);
 
         $profile = $this->profile->update($profile['id'], $data);
 
