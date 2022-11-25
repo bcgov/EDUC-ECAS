@@ -36,7 +36,7 @@ class KeycloakProvider extends AbstractProvider
      */
     protected function getAuthUrl($state)
     {
-        return $this->buildAuthUrlFromBase(self::getBaseUrlWithRealm() . '/auth&kc_idp_hint=basic-bceid', $state);
+        return $this->buildAuthUrlFromBase(self::getBaseUrlWithRealm() . '/auth', $state);
 
     }
 
