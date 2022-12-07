@@ -38,21 +38,21 @@
             </template>
             <template v-else-if="isStatus(session, 'Contract')">
                 <p>
-                    Your contract is ready for signature. Please download, sign, date, and scan back to exams@gov.bc.ca
+                    Your contract is ready for signature. Please download, sign, date, and scan back to assessments@gov.bc.ca
                     as soon as possible. If you are no longer able to participate in this session, please Decline
                     below.
                 </p>
             </template>
             <template v-else-if="isStatus(session, 'Confirmed')">
                 <p>
-                    Thank you for returning your signed contract. If you need to withdraw, please contact exams@gov.bc.ca
+                    Thank you for returning your signed contract. If you need to withdraw, please contact assessments@gov.bc.ca
                 </p>
             </template>
             <template v-else-if="isStatus(session, 'Completed')">
                 <p>
                     This session is now complete. If there are fees or expenses attached to the session please submit
                     receipts if required. Payments can be expected within 4-6 weeks. If you have any questions, please
-                    contact exams@gov.bc.ca
+                    contact assessments@gov.bc.ca
                 </p>
             </template>
             <template v-else-if="isStatus(session, 'Withdrew')">
