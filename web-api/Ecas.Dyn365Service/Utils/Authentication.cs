@@ -95,7 +95,7 @@ namespace Ecas.Dyn365Service.Utils
             var clientCredential = new ClientCredential(clientId, clientSecret);
             AuthenticationContext authContext =
                 new Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext(authority, false);
-            AuthenticationResult result = authContext.AcquireTokenAsync(resourceURI, clientCredential).Result;
+            AuthenticationResult result = await authContext.AcquireTokenAsync(resourceURI, clientCredential).Result;
 
             return result.AccessToken;
         }
