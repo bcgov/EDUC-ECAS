@@ -80,17 +80,18 @@ namespace Ecas.Dyn365Service.Utils
         private HttpClient getOnlineHttpClient(string resourceURI, string authority, string clientId, string clientSecret,
             string redirectUrl, string userName, string webApiUrl)
         {
+           var accessToken = await GetAccessToken(resourceURI, authority, clientId, clientSecret, redirectUrl, userName);
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(webApiUrl);
             httpClient.Timeout = new TimeSpan(0, 2, 0);  // 2 minutes  
             httpClient.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Bearer", AcquireToken(resourceURI, authority, clientId, clientSecret, redirectUrl, userName));
+                new AuthenticationHeaderValue("Bearer", accessToken);
 
             return httpClient;
 
         }
 
-        private string AcquireToken(string resourceURI, string authority, string clientId, string clientSecret, string redirectUrl, string userName)
+        private static async Task<string> GetAccessToken(string resourceURI, string authority, string clientId, string clientSecret, string redirectUrl, string userName)
         {
             var clientCredential = new ClientCredential(clientId, clientSecret);
             AuthenticationContext authContext =
