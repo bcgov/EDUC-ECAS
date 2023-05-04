@@ -77,26 +77,25 @@ namespace Ecas.Dyn365Service.Utils
             return client;
         }
 
-         public async Task<HttpClient> getOnlineHttpClient(string resourceURI, string authority, string clientId, string clientSecret,
+        private HttpClient getOnlineHttpClient(string resourceURI, string authority, string clientId, string clientSecret,
             string redirectUrl, string userName, string webApiUrl)
         {
-           var accessToken = await GetAccessToken(resourceURI, authority, clientId, clientSecret, redirectUrl, userName);
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(webApiUrl);
-            httpClient.Timeout = new TimeSpan(0, 2, 0);  // 2 minutes  
+            httpClient.Timeout = new TimeSpan(0, 2, 0);  // 2 minutes
             httpClient.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Bearer", accessToken);
+                new AuthenticationHeaderValue("Bearer", AcquireToken(resourceURI, authority, clientId, clientSecret, redirectUrl, userName));
 
             return httpClient;
 
         }
 
-        private static async Task<string> GetAccessToken(string resourceURI, string authority, string clientId, string clientSecret, string redirectUrl, string userName)
+        private string AcquireToken(string resourceURI, string authority, string clientId, string clientSecret, string redirectUrl, string userName)
         {
             var clientCredential = new ClientCredential(clientId, clientSecret);
             AuthenticationContext authContext =
                 new Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext(authority, false);
-            AuthenticationResult result = await authContext.AcquireTokenAsync(resourceURI, clientCredential).Result;
+            AuthenticationResult result = authContext.AcquireTokenAsync(resourceURI, clientCredential).Result;
 
             return result.AccessToken;
         }
