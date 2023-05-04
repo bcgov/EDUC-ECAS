@@ -77,7 +77,7 @@ namespace Ecas.Dyn365Service.Utils
             return client;
         }
 
-        private HttpClient getOnlineHttpClient(string resourceURI, string authority, string clientId, string clientSecret,
+         public async Task<HttpClient> getOnlineHttpClient(string resourceURI, string authority, string clientId, string clientSecret,
             string redirectUrl, string userName, string webApiUrl)
         {
            var accessToken = await GetAccessToken(resourceURI, authority, clientId, clientSecret, redirectUrl, userName);
