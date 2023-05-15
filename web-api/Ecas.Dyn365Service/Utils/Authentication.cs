@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,8 @@ namespace Ecas.Dyn365Service.Utils
 
                 return getOnlineHttpClient(resourceUrl, authorityUrl, _dynamicsAuthenticationSettings.CloudClientId,
                     _dynamicsAuthenticationSettings.CloudClientSecret, _dynamicsAuthenticationSettings.CloudResourceUrl,
-                    _dynamicsAuthenticationSettings.CloudUserName, _dynamicsAuthenticationSettings.CloudWebApiUrl);
+                    _dynamicsAuthenticationSettings.CloudUserName, _dynamicsAuthenticationSettings.CloudWebApiUrl, _dynamicsAuthenticationSettings.TenantId).Result;
+                                
             }
         }
 
@@ -77,27 +79,66 @@ namespace Ecas.Dyn365Service.Utils
             return client;
         }
 
-        private HttpClient getOnlineHttpClient(string resourceURI, string authority, string clientId, string clientSecret,
-            string redirectUrl, string userName, string webApiUrl)
+
+        //private HttpClient getOnlineHttpClient(string resourceURI, string authority, string clientId, string clientSecret,
+        //   string redirectUrl, string userName, string webApiUrl, string tenantId)
+        //{
+
+        //    var accessToken = GetAccessToken(resourceURI, clientId, clientSecret, tenantId);
+
+        //    HttpClient httpClient = new HttpClient();
+        //    httpClient.BaseAddress = new Uri(webApiUrl);
+        //    httpClient.Timeout = new TimeSpan(0, 2, 0);  // 2 minutes
+        //    httpClient.DefaultRequestHeaders.Authorization =
+        //    new AuthenticationHeaderValue("Bearer", accessToken);
+
+        //    // new AuthenticationHeaderValue("Bearer", AcquireToken(resourceURI, authority, clientId, clientSecret, redirectUrl, userName));
+
+        //    return httpClient;
+
+        //}
+
+        //private string AcquireToken(string resourceURI, string authority, string clientId, string clientSecret, string redirectUrl, string userName)
+        //{
+        //    var clientCredential = new ClientCredential(clientId, clientSecret);
+        //    AuthenticationContext authContext =
+        //        new Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext(authority, false);
+        //    AuthenticationResult result = authContext.AcquireTokenAsync(resourceURI, clientCredential).Result;
+
+        //    return result.AccessToken;
+        //}
+
+        public async Task<HttpClient> getOnlineHttpClient(string resourceURI, string authority, string clientId, string clientSecret,
+          string redirectUrl, string userName, string webApiUrl, string tenantId)
         {
+            // Get the access token that is required for authentication.
+            var accessToken = await GetAccessToken(resourceURI, clientId, clientSecret, tenantId);
+            
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(webApiUrl);
             httpClient.Timeout = new TimeSpan(0, 2, 0);  // 2 minutes
             httpClient.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Bearer", AcquireToken(resourceURI, authority, clientId, clientSecret, redirectUrl, userName));
+            new AuthenticationHeaderValue("Bearer", accessToken);
 
             return httpClient;
 
         }
 
-        private string AcquireToken(string resourceURI, string authority, string clientId, string clientSecret, string redirectUrl, string userName)
+        private static async Task<string> GetAccessToken(string baseUrl, string clientId, string clientSecret, string tenantId)
         {
-            var clientCredential = new ClientCredential(clientId, clientSecret);
-            AuthenticationContext authContext =
-                new Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext(authority, false);
-            AuthenticationResult result = authContext.AcquireTokenAsync(resourceURI, clientCredential).Result;
+            string[] scopes = { baseUrl + "/.default" };
+            string authority = $"https://login.microsoftonline.com/{tenantId}";
+
+            var clientApp = ConfidentialClientApplicationBuilder.Create(clientId: clientId)
+                                                      .WithClientSecret(clientSecret: clientSecret)
+                                                      .WithAuthority(new Uri(authority))
+                                                      .Build();
+
+            var builder = clientApp.AcquireTokenForClient(scopes);
+            var result = await builder.ExecuteAsync();
 
             return result.AccessToken;
         }
+
     }
 }

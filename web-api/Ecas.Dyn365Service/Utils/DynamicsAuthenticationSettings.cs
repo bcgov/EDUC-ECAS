@@ -18,5 +18,6 @@ namespace Ecas.Dyn365Service.Utils
         public string OnPremPassword { get; set; }
         public string OnPremDomain { get; set; }
         public string ActiveEnvironment { get; set; }
+        public string TenantId { get; set; }
     }
 }
