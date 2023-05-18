@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Identity.Client;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -11,10 +10,12 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
+
 namespace Ecas.Dyn365Service.Utils
 {
     public class Authentication
     {
+        
         public HttpClient GetHttpClient()
         {
             var builder = new ConfigurationBuilder()
@@ -33,16 +34,19 @@ namespace Ecas.Dyn365Service.Utils
             }
             else
             {
-                AuthenticationParameters ap = AuthenticationParameters.CreateFromResourceUrlAsync(
-                    new Uri(_dynamicsAuthenticationSettings.CloudResourceUrl)).Result;
+                //AuthenticationParameters ap = AuthenticationParameters.CreateFromResourceUrlAsync(
+                //    new Uri(_dynamicsAuthenticationSettings.CloudResourceUrl)).Result;
 
-                String authorityUrl = ap.Authority;
-                String resourceUrl = ap.Resource;
+                //String authorityUrl = ap.Authority;
+                //String resourceUrl = ap.Resource;
 
-                return getOnlineHttpClient(resourceUrl, authorityUrl, _dynamicsAuthenticationSettings.CloudClientId,
-                    _dynamicsAuthenticationSettings.CloudClientSecret, _dynamicsAuthenticationSettings.CloudResourceUrl,
-                    _dynamicsAuthenticationSettings.CloudUserName, _dynamicsAuthenticationSettings.CloudWebApiUrl, _dynamicsAuthenticationSettings.TenantId).Result;
-                                
+                //return getOnlineHttpClient(resourceUrl, authorityUrl, _dynamicsAuthenticationSettings.CloudClientId,
+                //    _dynamicsAuthenticationSettings.CloudClientSecret, _dynamicsAuthenticationSettings.CloudResourceUrl,
+                //    _dynamicsAuthenticationSettings.CloudUserName, _dynamicsAuthenticationSettings.CloudWebApiUrl, _dynamicsAuthenticationSettings.TenantId).Result;
+
+                return getOnlineHttpClient(_dynamicsAuthenticationSettings.CloudWebApiUrl, _dynamicsAuthenticationSettings.CloudClientId, _dynamicsAuthenticationSettings.CloudClientSecret,
+                    _dynamicsAuthenticationSettings.CloudWebApiUrl, _dynamicsAuthenticationSettings.TenantId).Result;
+
             }
         }
 
@@ -108,11 +112,11 @@ namespace Ecas.Dyn365Service.Utils
         //    return result.AccessToken;
         //}
 
-        public async Task<HttpClient> getOnlineHttpClient(string resourceURI, string authority, string clientId, string clientSecret,
-          string redirectUrl, string userName, string webApiUrl, string tenantId)
+        public async Task<HttpClient> getOnlineHttpClient(string baseUrl,  string clientId, string clientSecret,
+            string webApiUrl, string tenantId)
         {
             // Get the access token that is required for authentication.
-            var accessToken = await GetAccessToken(resourceURI, clientId, clientSecret, tenantId);
+            var accessToken = await GetAccessToken(baseUrl, clientId, clientSecret, tenantId);
             
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(webApiUrl);
