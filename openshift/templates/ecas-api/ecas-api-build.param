@@ -9,6 +9,6 @@ GIT_REPO_URL=https://github.com/bcgov/ECAS.git
 GIT_REF=master
 SOURCE_CONTEXT_DIR=web-api/Ecas.Dyn365Service
 SOURCE_IMAGE_KIND=DockerImage
-SOURCE_IMAGE_NAME=registry.access.redhat.com/dotnet/dotnet-60-rhel7
+SOURCE_IMAGE_NAME=mcr.microsoft.com/dotnet/aspnet:6.0
 SOURCE_IMAGE_TAG=latest
 OUTPUT_IMAGE_TAG=latest
