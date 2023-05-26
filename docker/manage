@@ -92,7 +92,7 @@ build-ecas-api() {
   #
   # ecas-api
   #
-  BASE_IMAGE="registry.redhat.io/dotnet/dotnet-60-rhel7"
+  BASE_IMAGE="mcr.microsoft.com/dotnet/aspnet:6.0"
   echo -e "\nBuilding ecas-api image from ${BASE_IMAGE}..."
 
   ${S2I_EXE} build \
