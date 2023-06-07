@@ -48,6 +48,9 @@ class SessionResource extends JsonResource
 
         $diff_in_days = $now->diffInDays($end_carbon, false);
 
+        Log::info('Session::$status: ' . Session::$status);
+        Log::info('$this[status]: ' . $this['status']);
+        Log::info('array_keys(Session::$status,$this[status]): ' . array_keys(Session::$status,$this['status']));
 
         return [
                 'id'                => $this['id'],

@@ -67,7 +67,7 @@ class Session extends DynamicsRepository implements iModelRepository
             ' statuscode ne ' . self::$status['Cancelled']  .
             '&$orderby=educ_startdate desc';
 
-        Log::debug('Session filter query: ' . $query);
+        Log::info('Session filter query: ' . $query);
 
         return $this->retrieveData($query);
 
