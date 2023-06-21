@@ -13,8 +13,7 @@ namespace Ecas.Dyn365Service.Controllers
     /// <summary>
     /// Wrapper that executes GET (Read) on Dynamics 365 Metadata. This is to be used for querying entity attribute definition such as OptionSets or StatusReason fields.
     /// </summary>
-    [Route("api/[controller]")]
-    [Authorize]
+    [Route("api/[controller]")]  
     [ApiController]
     public class MetadataController : ControllerBase
     {

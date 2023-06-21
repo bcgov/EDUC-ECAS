@@ -19,8 +19,7 @@ namespace Ecas.Dyn365Service.Controllers
     /// <summary>
     /// Wrapper that executes GET (Read), POST (Create), PATCH (Updates), DELETE operations agains the Dyn365 WebApi. View https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/use-microsoft-dynamics-365-web-api
     /// </summary>
-    [Route("api/[controller]")]
-    [Authorize]
+    [Route("api/[controller]")] 
     [ApiController]
     public class OperationsController : ControllerBase
     {
