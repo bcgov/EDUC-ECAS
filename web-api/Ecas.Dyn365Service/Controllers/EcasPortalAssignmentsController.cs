@@ -10,7 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Ecas.Dyn365Service.Controllers
 {
-    [Route("api/[controller]")]   
+    [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class EcasPortalAssignmentsController : ControllerBase
     {

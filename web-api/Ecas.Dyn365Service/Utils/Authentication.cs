@@ -44,7 +44,7 @@ namespace Ecas.Dyn365Service.Utils
                 //    _dynamicsAuthenticationSettings.CloudClientSecret, _dynamicsAuthenticationSettings.CloudResourceUrl,
                 //    _dynamicsAuthenticationSettings.CloudUserName, _dynamicsAuthenticationSettings.CloudWebApiUrl, _dynamicsAuthenticationSettings.TenantId).Result;
 
-                return getOnlineHttpClient(_dynamicsAuthenticationSettings.CloudBaseUrl, _dynamicsAuthenticationSettings.CloudClientId, _dynamicsAuthenticationSettings.CloudClientSecret,
+                return getOnlineHttpClient(_dynamicsAuthenticationSettings.CloudWebApiUrl, _dynamicsAuthenticationSettings.CloudClientId, _dynamicsAuthenticationSettings.CloudClientSecret,
                     _dynamicsAuthenticationSettings.CloudWebApiUrl, _dynamicsAuthenticationSettings.TenantId).Result;
 
             }

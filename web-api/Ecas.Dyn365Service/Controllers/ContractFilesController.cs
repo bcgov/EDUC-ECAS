@@ -9,7 +9,8 @@ using Newtonsoft.Json.Linq;
 
 namespace Ecas.Dyn365Service.Controllers
 {
-    [Route("api/[controller]/[action]")]  
+    [Route("api/[controller]/[action]")]
+    [Authorize]
     [ApiController]
     public class ContractFilesController : ControllerBase
     {

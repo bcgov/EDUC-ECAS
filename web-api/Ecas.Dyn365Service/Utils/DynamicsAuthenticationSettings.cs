@@ -8,7 +8,6 @@ namespace Ecas.Dyn365Service.Utils
     public class DynamicsAuthenticationSettings
     {
         public string CloudWebApiUrl { get; set; }
-        public string CloudBaseUrl { get; set; }
         public string CloudResourceUrl { get; set; }
         public string CloudClientId { get; set; }
         public string CloudClientSecret { get; set; }

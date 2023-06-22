@@ -43,12 +43,12 @@ namespace Ecas.Dyn365Service
             var configuration = builder.Build();
             var ecasAPISecuritySettingsSection = configuration.GetSection("ECasAPISecuritySettings");
             var ecasAPISecuritySettingsSettings = ecasAPISecuritySettingsSection.Get<ECasAPISecuritySettings>();
-
-            services.AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme);
-                //.AddBasicAuthentication(credentials =>
-                //    Task.FromResult(
-                //        credentials.username == ecasAPISecuritySettingsSettings.UserName &&
-                //        credentials.password == ecasAPISecuritySettingsSettings.Password));
+            
+            //services.AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme)
+            //    .AddBasicAuthentication(credentials =>
+            //        Task.FromResult(
+            //            credentials.username == ecasAPISecuritySettingsSettings.UserName && 
+            //            credentials.password == ecasAPISecuritySettingsSettings.Password));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
