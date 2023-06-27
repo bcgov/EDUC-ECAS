@@ -43,8 +43,8 @@ namespace Ecas.Dyn365Service
             var configuration = builder.Build();
             var ecasAPISecuritySettingsSection = configuration.GetSection("ECasAPISecuritySettings");
             var ecasAPISecuritySettingsSettings = ecasAPISecuritySettingsSection.Get<ECasAPISecuritySettings>();
-            
-            //services.AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme)
+
+            services.AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme);
             //    .AddBasicAuthentication(credentials =>
             //        Task.FromResult(
             //            credentials.username == ecasAPISecuritySettingsSettings.UserName && 
