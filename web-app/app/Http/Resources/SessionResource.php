@@ -48,7 +48,6 @@ class SessionResource extends JsonResource
 
         $diff_in_days = $now->diffInDays($end_carbon, false);
 
-
         return [
                 'id'                => $this['id'],
                 'activity'          => $this['activity'],
