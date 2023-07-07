@@ -74,3 +74,29 @@ div#logout {
   float: right;
   padding-bottom: 10px;
 }
+
+.header-logo {
+  float: left;
+  width: unset;
+  flex-basis: unset;
+  flex-grow: unset;
+}
+
+.header-title {
+  float: left;
+  width: unset;
+  flex-basis: unset;
+  flex-grow: unset;
+  margin-left: 33%;
+  position: absolute;
+}
+.header-title h3 {
+  line-height: 120px;
+}
+.collection-notice {
+  display: block !important;
+}
+.collection-notice div {
+  text-align: justify;
+  font-size: 0.7em;
+}

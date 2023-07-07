@@ -18,12 +18,11 @@
 <body class="d-flex flex-column h-100">
     <main class="flex-shrink-0">
         <div class="row bg-primary pt-2">
-            <div class="col offset-1">
-                <img src="/logo-banner.svg" height="80px">
+            <div class="col offset-1 header-logo">
+                <img src="/logo-banner.png" height="120px">
             </div>
-            <div class="col text-right text-light">
-                <h1>Ministry of Education</h1>
-                <p>Electronic Contract Administration System (ECAS)</p>
+            <div class="col text-center text-light header-title">
+                <h3>Electronic Contract Administration System (ECAS)</h3>
             </div>
             <div class="col-1"></div>
         </div>
