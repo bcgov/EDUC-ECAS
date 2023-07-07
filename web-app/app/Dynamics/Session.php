@@ -16,7 +16,6 @@ class Session extends DynamicsRepository implements iModelRepository
     public static $status          = [
         'Draft'         =>     1,
         'Cancelled'     =>     610410005,
-        'Cancelled & Active'     =>     610410006,
         'Completed'     =>     2,
         'Open'          =>     610410000
         ];
