@@ -121,6 +121,7 @@ jobs:
           IMAGE_NAME='${{ env.APP_NAME_FRONTEND }}' 
           TAG='${{ env.TAG }}'
           IMAGE_HASH='${{ env.IMAGE_HASH }}' 
+          echo "${IMAGE_HASH}"
           oc tag "${IMAGE_NAME}@${IMAGE_HASH}" "${IMAGE_NAME}:${TAG}" || echo "failed to tag the image" 
           TAGGED_IMAGE="${IMAGE_NAME}:${TAG}"
           echo "TAGGED_IMAGE=${TAGGED_IMAGE}" >> $GITHUB_ENV
