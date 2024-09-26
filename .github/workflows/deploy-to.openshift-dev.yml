@@ -104,6 +104,7 @@ jobs:
           
           TAG='${{ env.TAG }}'
           echo 'test3'
+          oc get istag ${IMAGE_NAME}:${TAG}  -o yaml
           oc get istag ${IMAGE_NAME}:${TAG} -o template --template = {{.image.dockerImageREference}} 
            echo 'test33'
        
