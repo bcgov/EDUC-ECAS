@@ -113,37 +113,9 @@ jobs:
           path_context: ./web-app
           builder_image: registry.redhat.io/rhscl/php-73-rhel7
           image: '${{env.IMAGE_NAME }}'
-      - name: Get Image Tag
-        id: get-image-hash
-        run:  >
-          set -eux
-          # Login to OpenShift and select project
-
-          oc login --token=${{ env.OPENSHIFT_TOKEN }} --server=${{
-          env.OPENSHIFT_SERVER }}
-
-          #oc project ${{ env.OPENSHIFT_NAMESPACE_DEV }}
-         
-          IMAGE_NAME='${{ env.APP_NAME_FRONTEND }}'
-          TAG='${{ env.TAG }}'
-          IMAGE_HASH=$(oc get istag ${IMAGE_NAME}:${TAG})
+     
          
         
-         
-        
-        
-      - name: TAG Image
-        id: tag_image
-        run: >
-         
-          IMAGE_NAME='${{ env.APP_NAME_FRONTEND }}' 
-          TAG='${{ env.TAG }}'
-          IMAGE_HASH='${{ env.IMAGE_HASH }}' 
-          echo "${IMAGE_HASH}"
-          oc tag "${IMAGE_NAME}@${IMAGE_HASH}" "${IMAGE_NAME}:${TAG}" || echo "failed to tag the image" 
-          TAGGED_IMAGE="${IMAGE_NAME}:${TAG}"
-          echo "TAGGED_IMAGE=${TAGGED_IMAGE}" >> $GITHUB_ENV
-
     
       - name: Push frontend to registry
         id: push-image-frontend
