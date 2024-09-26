@@ -46,6 +46,7 @@ Testing scripts are in place to run both phpunit test and browser based test via
 
 The Laravel application is set-up to log various actions and code steps, these logs will be helpful for ongoing development and debugging. Laravel creates log files in /web-app/storage/logs
 
+
 ### To Do
 
 **Slow Loading** - The demo and testing environments experienced significant delays in communicating with Dynamics. Due to the firewall issues mentioned previously communication with the OnPrem instance has yet to be completed. Once that link in the chain is active a more thorough assessment of connection speed between the web portal and Dynamics should be undertaken. If slow response time continues to be an issue the developers may explore several solutions to the issue:
