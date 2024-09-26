@@ -3,6 +3,8 @@ env:
   OPENSHIFT_SERVER: '${{ secrets.OPENSHIFT_SERVER }}'
   OPENSHIFT_TOKEN: '${{ secrets.OPENSHIFT_TOKEN }}'
   OPENSHIFT_NAMESPACE_DEV: '${{ secrets.ECAS_NAMESPACE_NO_ENV }}-dev'
+  REDHAT_REGISTRY_USERNAME: '${{ secrets.REDHAT_REGISTRY_USERNAME }}'
+  REDHAT_REGISTRY_PASSWORD: '${{ secrets.REDHAT_REGISTRY_PASSWORD }}'
   CA_CERT: '${{ secrets.CA_CERT }}'
   CERTIFICATE: '${{ secrets.CERT }}'
   PRIVATE_KEY: '${{ secrets.PRIV_KEY }}'
@@ -10,6 +12,7 @@ env:
   IMAGE_REGISTRY_USER: '${{ github.actor }}'
   IMAGE_REGISTRY_PASSWORD: '${{ github.token }}'
   IMAGE_NAME: ecas-frontend
+  REDHAT_REGISTRY: https://registry.redhat.io
   DOCKER_ARTIFACTORY_REPO: artifacts.developer.gov.bc.ca/docker-remote
   ARTIFACTORY_REPO: artifacts.developer.gov.bc.ca
   APP_NAME: ecas
@@ -97,6 +100,12 @@ jobs:
           registry: '${{ env.DOCKER_ARTIFACTORY_REPO }}'
           username: '${{ secrets.DOCKER_HUB_USERNAME }}'
           password: '${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}'
+      - name: Login to REDHAT
+        uses: docker/login-action@v1
+        with:
+          registry: '${{ env.REDHAT_REGISTRY }}'
+          username: '${{ secrets.REDHAT_REGISTRY_USERNAME }}'
+          password: '${{ secrets.REDHAT_REGISTRY_PASSWORD }}'
       - name: Setup and Build
         id: build-image-frontend
         uses: redhat-actions/s2i-build@v2
