@@ -97,7 +97,7 @@ jobs:
           set -eux
           IMAGE_NAME='${{ env.APP_NAME_FRONTEND }}'
           TAG='${{ env.TAG }}'
-          echo "$(oc get istag ecas-frontend:latest)"
+          oc get istag ecas-frontend:latest
         
         
       - name: TAG Image
