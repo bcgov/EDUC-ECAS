@@ -90,7 +90,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Get Image Tag
         id: get-image-hash
-        run: |
+        run: >
           IMAGE_NAME ='${{ env.APP_NAME_FRONTEND }}'
           TAG= '${{ env.TAG }}'
           IMAGE_HASH = $(oc get istag "${IMAGE_NAME}:${TAG}" -o template --template = '{{.image.dockerImageREference}}' | awk -F'@' '{print $2}')
@@ -99,7 +99,7 @@ jobs:
 		  
       - name: TAG Image
         id: tag_image
-        run: |
+        run: >
           IMAGE_NAME ='${{ env.APP_NAME_FRONTEND }}'
           TAG= '${{ env.TAG }}'
           IMAGE_HASH='${{ env.IMAGE_HASH }}'
