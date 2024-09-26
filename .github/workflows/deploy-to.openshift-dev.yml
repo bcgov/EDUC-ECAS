@@ -103,21 +103,16 @@ jobs:
           registry: ${{ env.DOCKER_ARTIFACTORY_REPO }}
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-
-    
-		  
-	 # Setup S2i and Build container image
-	  - name: Setup and Build
-		id: build-image-frontend
-		uses: redhat-actions/s2i-build@v2
-		with:
-		  path_context: './web-app'
-		  # Builder image 
-		  builder_image: 'registry.redhat.io/rhscl/php-73-rhel7'
-		  image: ${{ env.APP_NAME_FRONTEND_INITIAL }}
-		  tags: "latest"
-
-        # https://github.com/redhat-actions/push-to-registry#readme
+	  
+      - name: Setup and Build
+        id: build-image-frontend
+        uses: redhat-actions/s2i-build@v2
+        with:
+          path_context: './web-app'
+          builder_image: 'registry.redhat.io/rhscl/php-73-rhel7'
+          image: ${{ env.APP_NAME_FRONTEND_INITIAL }}"
+          tags: 'latest'
+   
       - name: Push frontend to registry
         id: push-image-frontend
         uses: redhat-actions/push-to-registry@v2
