@@ -110,7 +110,7 @@ jobs:
   
           
           echo 'test4'
-          echo "raw output: ${IMAGE_HASH}"
+          echo ${IMAGE_HASH}
          
           echo 'test44'
           echo "IMAGE_HASH=${IMAGE_HASH}" >> $GITHUB_ENV
