@@ -92,7 +92,6 @@ jobs:
 		
       - name: Get Image Tag
         id: get-image-hash
-        uses: actions/checkout@v3
         run: |
           IMAGE_NAME ='${{ env.APP_NAME_FRONTEND }}'
           TAG= '${{ env.TAG }}'
@@ -102,7 +101,6 @@ jobs:
 		  
       - name: TAG Image
         id: tag_image
-        uses: actions/checkout@v3
         run: |
           IMAGE_NAME ='${{ env.APP_NAME_FRONTEND }}'
           TAG= '${{ env.TAG }}'
