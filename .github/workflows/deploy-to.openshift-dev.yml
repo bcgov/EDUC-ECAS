@@ -103,6 +103,7 @@ jobs:
           
           
           TAG='${{ env.TAG }}'
+          echo "$(oc get istag ${IMAGE_NAME}:${TAG})"
           echo 'test3'
           IMAGE_HASH=$(oc get istag ${IMAGE_NAME}:${TAG})
     
