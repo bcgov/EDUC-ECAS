@@ -40,7 +40,7 @@ env:
 on:
   push:
     branches:
-      -test_github_actions
+      - test_github_actions
 
 jobs:
   build-and-deploy-dev:
