@@ -92,19 +92,24 @@ jobs:
         run:  >
         
           
+          
+          echo 'test1'
           IMAGE_NAME='${{ env.APP_NAME_FRONTEND }}'
+          echo 'test2'
           
           
           TAG='${{ env.TAG }}'
+          echo 'test3'
           
           IMAGE_HASH=$(oc get istag "${IMAGE_NAME}:${TAG}" -o template --template = '{{.image.dockerImageREference}}' | awk -F'@' '{print $2}') 
-          
+          echo 'test4'
           echo "IMAGE_HASH=${IMAGE_HASH}" >> $GITHUB_ENV
-         
+          echo 'test5'
           echo "Image hash retrieved:${IMAGE_HASH}"
       - name: TAG Image
         id: tag_image
         run: >
+         
           IMAGE_NAME='${{ env.APP_NAME_FRONTEND }}' 
           TAG='${{ env.TAG }}'
           IMAGE_HASH='${{ env.IMAGE_HASH }}' 
