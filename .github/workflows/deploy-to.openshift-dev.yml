@@ -100,6 +100,7 @@ jobs:
           
           TAG='${{ env.TAG }}'
           echo 'test3'
+          echo {{.image.dockerImageREference}}
           
           IMAGE_HASH=$(oc get istag ${IMAGE_NAME}:${TAG} -o template --template = {{.image.dockerImageREference}} | awk -F'@' '{print $2}') 
           echo 'test4'
