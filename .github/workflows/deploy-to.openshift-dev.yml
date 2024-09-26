@@ -96,7 +96,7 @@ jobs:
         run:  >
         
           
-          
+          oc get istag ${IMAGE_NAME}:${TAG}
           echo 'test1'
           IMAGE_NAME='${{ env.APP_NAME_FRONTEND }}'
           echo 'test2'
