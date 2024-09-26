@@ -98,6 +98,7 @@ jobs:
       - name: TAG Image
         id: tag_image
         run: >
+          TEST ="test"
           IMAGE_NAME ='${{ env.APP_NAME_FRONTEND }}' 
           TAG= '${{ env.TAG }}'
           IMAGE_HASH='${{ env.IMAGE_HASH }}' 
