@@ -15,7 +15,7 @@ env:
   APP_NAME: ecas
   REPO_NAME: educ-ecas
   BRANCH: test_github_actions
-  APP_NAME_FRONTEND_INITIAL: ecas-frontend-initial
+ 
   APP_NAME_FRONTEND: ecas-frontend
   NAMESPACE: '${{ secrets.ECAS_NAMESPACE_NO_ENV }}'
   NAMESPACE_TOOLS: '${{ secrets.ECAS_NAMESPACE_NO_ENV }}-tools'
@@ -100,7 +100,7 @@ jobs:
         with:
           path_context: ./web-app
           builder_image: registry.redhat.io/rhscl/php-73-rhel7
-          image: '${{ env.APP_NAME_FRONTEND_INITIAL }}"'
+          image: '${{ env.APP_NAME_FRONTEND }}"'
           tags: latest
       - name: Push frontend to registry
         id: push-image-frontend
