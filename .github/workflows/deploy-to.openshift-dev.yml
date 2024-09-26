@@ -95,6 +95,8 @@ jobs:
         id: get-image-hash
         run:  >
           set -eux
+          IMAGE_NAME='${{ env.APP_NAME_FRONTEND }}'
+          TAG='${{ env.TAG }}'
           echo "$(oc get istag ${IMAGE_NAME}:${TAG})"
         
         
