@@ -90,19 +90,18 @@ jobs:
       - name: Get Image Tag
         id: get-image-hash
         run: >
-          IMAGE_NAME ='${{ env.APP_NAME_FRONTEND }}' TAG= '${{ env.TAG }}'
-          IMAGE_HASH = $(oc get istag "${IMAGE_NAME}:${TAG}" -o template
-          --template = '{{.image.dockerImageREference}}' | awk -F'@' '{print
-          $2}') echo "IMAGE_HASH=${IMAGE_HASH}" >> $GITHUB_ENV echo "Image hash
-          retrieved: ${IMAGE_HASH}"
+          IMAGE_NAME ='${{ env.APP_NAME_FRONTEND }}'
+          TAG= '${{ env.TAG }}'
+          IMAGE_HASH = $(oc get istag "${IMAGE_NAME}:${TAG}" -o template --template = '{{.image.dockerImageREference}}' | awk -F'@' '{print $2}') 
+          echo "IMAGE_HASH=${IMAGE_HASH}" >> $GITHUB_ENV
+          echo "Image hash retrieved: ${IMAGE_HASH}"
       - name: TAG Image
         id: tag_image
         run: >
           IMAGE_NAME ='${{ env.APP_NAME_FRONTEND }}' TAG= '${{ env.TAG }}'
-          IMAGE_HASH='${{ env.IMAGE_HASH }}' oc tag
-          "${IMAGE_NAME}@${IMAGE_HASH}" "${IMAGE_NAME}:${TAG}" || echo "failed
-          to tag the image" TAGGED_IMAGE= "${IMAGE_NAME}:${TAG}" echo
-          "TAGGED_IMAGE=${TAGGED_IMAGE}" >> $GITHUB_ENV
+          IMAGE_HASH='${{ env.IMAGE_HASH }}' 
+          oc tag "${IMAGE_NAME}@${IMAGE_HASH}" "${IMAGE_NAME}:${TAG}" || echo "failed to tag the image" TAGGED_IMAGE= "${IMAGE_NAME}:${TAG}"
+          echo "TAGGED_IMAGE=${TAGGED_IMAGE}" >> $GITHUB_ENV
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
