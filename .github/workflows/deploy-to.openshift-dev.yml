@@ -109,7 +109,7 @@ jobs:
            echo 'test33'
        
           
-          IMAGE_HASH=$(oc get istag ${IMAGE_NAME}:${TAG} -o template --template = {{.image.dockerImageREference}} 2>&1) 
+          IMAGE_HASH=$(oc get istag ${IMAGE_NAME}:${TAG}  2>&1) 
           echo 'test4'
           echo "raw output: ${IMAGE_HASH}"
           IMAGE_HASH=$(echo "$IMAGE_HASH" | awk -F '@' '{print $2}')
