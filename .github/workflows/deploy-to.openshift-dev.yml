@@ -100,7 +100,7 @@ jobs:
           oc login --token=${{ env.OPENSHIFT_TOKEN }} --server=${{
           env.OPENSHIFT_SERVER }}
 
-          #oc project ${{ env.OPENSHIFT_NAMESPACE_DEV }}
+          oc project ${{ env.OPENSHIFT_NAMESPACE_DEV }}
           echo 'test'
            IMAGE_NAME='${{ env.APP_NAME_FRONTEND }}'
           TAG='${{ env.TAG }}'
