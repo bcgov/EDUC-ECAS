@@ -97,8 +97,11 @@ jobs:
           set -eux
           IMAGE_NAME='${{ env.APP_NAME_FRONTEND }}'
           TAG='${{ env.TAG }}'
-          oc get istag ${IMAGE_NAME}:${TAG}
-          echo 'test1'
+          IMAGE_HASH='$(oc get istag ${IMAGE_NAME}:${TAG})'
+          echo "raw output: ${IMAGE_HASH}"
+          IMAGE_HASH=$(echo "$IMAGE_HASH" | awk -F '@' '{print $2}')
+          echo "IMAGE_HASH=${IMAGE_HASH}" >> $GITHUB_ENV
+          echo "Image hash retrieved:${IMAGE_HASH}"
         
       - name: TAG Image
         id: tag_image
