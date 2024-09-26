@@ -94,15 +94,16 @@ jobs:
       - name: Get Image Tag
         id: get-image-hash
         run:  >
-        
+          IMAGE_NAME='${{ env.APP_NAME_FRONTEND }}'
+          TAG='${{ env.TAG }}'
           
           oc get istag ${IMAGE_NAME}:${TAG}
           echo 'test1'
-          IMAGE_NAME='${{ env.APP_NAME_FRONTEND }}'
+          
           echo 'test2'
           
           
-          TAG='${{ env.TAG }}'
+          
           echo "$(oc get istag ${IMAGE_NAME}:${TAG})"
           echo 'test3'
           IMAGE_HASH=$(oc get istag ${IMAGE_NAME}:${TAG})
