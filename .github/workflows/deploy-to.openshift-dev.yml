@@ -90,8 +90,12 @@ jobs:
       - name: Get Image Tag
         id: get-image-hash
         run:  >
-        
+          echo "Get Image tag"
+
+          echo "test"
+          
           IMAGE_NAME ='${{ env.APP_NAME_FRONTEND }}'
+          
           
           TAG= '${{ env.TAG }}'
           
