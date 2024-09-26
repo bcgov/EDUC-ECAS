@@ -102,7 +102,7 @@ jobs:
           echo 'test3'
           echo '{{.image.dockerImageREference}}'
           
-          IMAGE_HASH=$(oc get istag ${IMAGE_NAME}:${TAG} -o template --template = '{{.image.dockerImageREference}} ' | awk -F'@' '{print $2}') 
+          IMAGE_HASH=$(oc get istag ${IMAGE_NAME}:${TAG} -o template --template = '{{.image.dockerImageREference}}' ) 
           echo 'test4'
           echo "IMAGE_HASH=${IMAGE_HASH}" >> $GITHUB_ENV
           echo 'test5'
