@@ -101,16 +101,7 @@ jobs:
           env.OPENSHIFT_SERVER }}
 
           oc project ${{ env.OPENSHIFT_NAMESPACE_DEV }}
-          IMAGE_NAME='${{ env.APP_NAME_FRONTEND }}'
-          TAG='${{ env.TAG }}'
-           IMAGE_HASH=$(oc get istag ${IMAGE_NAME}:${TAG})
-          echo 'test2'
-          echo "raw output: ${IMAGE_HASH}"
-          echo 'test3'
-          IMAGE_HASH=$(echo "$IMAGE_HASH" | awk -F '@' '{print $2}')
-          echo 'test4'
-          echo "IMAGE_HASH=${IMAGE_HASH}" >> $GITHUB_ENV
-          echo "Image hash retrieved:${IMAGE_HASH}"
+         
         
         
       - name: TAG Image
