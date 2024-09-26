@@ -99,25 +99,7 @@ jobs:
           
           oc get istag ${IMAGE_NAME}:${TAG}
           echo 'test1'
-          
-          echo 'test2'
-          
-          
-          
-          echo "$(oc get istag ${IMAGE_NAME}:${TAG})"
-          echo 'test3'
-          IMAGE_HASH=$(oc get istag ${IMAGE_NAME}:${TAG})
-    
-       
-  
-          
-          echo 'test4'
-          echo ${IMAGE_HASH}
-         
-          echo 'test44'
-          echo "IMAGE_HASH=${IMAGE_HASH}" >> $GITHUB_ENV
-          echo 'test5'
-          echo "Image hash retrieved:${IMAGE_HASH}"
+        
       - name: TAG Image
         id: tag_image
         run: >
