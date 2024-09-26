@@ -91,6 +91,13 @@ jobs:
         uses: redhat-actions/openshift-tools-installer@v1
         with:
           oc: 4
+      - name: Setup and Build
+        id: build-image-frontend
+        uses: redhat-actions/s2i-build@v2
+        with:
+          path_context: ./web-app
+          builder_image: registry.redhat.io/rhscl/php-73-rhel7
+          image: '${{env.IMAGE_NAME }}'
       - name: Get Image Tag
         id: get-image-hash
         run:  >
@@ -127,13 +134,7 @@ jobs:
           registry: '${{ env.DOCKER_ARTIFACTORY_REPO }}'
           username: '${{ secrets.DOCKER_HUB_USERNAME }}'
           password: '${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}'
-      - name: Setup and Build
-        id: build-image-frontend
-        uses: redhat-actions/s2i-build@v2
-        with:
-          path_context: ./web-app
-          builder_image: registry.redhat.io/rhscl/php-73-rhel7
-          image: '${{env.TAGGED_IMAGE }}'
+    
       - name: Push frontend to registry
         id: push-image-frontend
         uses: redhat-actions/push-to-registry@v2
