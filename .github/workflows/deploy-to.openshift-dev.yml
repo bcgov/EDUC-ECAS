@@ -100,10 +100,10 @@ jobs:
           
           TAG='${{ env.TAG }}'
           echo 'test3'
-          echo '{{.image.dockerImageREference}}'
-          
+                  
           IMAGE_HASH=$(oc get istag ${IMAGE_NAME}:${TAG} -o template --template = '{{.image.dockerImageREference}}' ) 
           echo 'test4'
+          echo "${IMAGE_HASH}"
           echo "IMAGE_HASH=${IMAGE_HASH}" >> $GITHUB_ENV
           echo 'test5'
           echo "Image hash retrieved:${IMAGE_HASH}"
