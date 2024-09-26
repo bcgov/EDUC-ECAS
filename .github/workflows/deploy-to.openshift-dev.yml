@@ -90,16 +90,14 @@ jobs:
       - name: Get Image Tag
         id: get-image-hash
         run:  >
-          echo "Get Image tag"
-
-          echo "test"
+        
           
-          IMAGE_NAME ='${{ env.APP_NAME_FRONTEND }}'
+          IMAGE_NAME='${{ env.APP_NAME_FRONTEND }}'
           
           
-          TAG= '${{ env.TAG }}'
+          TAG='${{ env.TAG }}'
           
-          IMAGE_HASH = $(oc get istag "${IMAGE_NAME}:${TAG}" -o template --template = '{{.image.dockerImageREference}}' | awk -F'@' '{print $2}') 
+          IMAGE_HASH=$(oc get istag "${IMAGE_NAME}:${TAG}" -o template --template = '{{.image.dockerImageREference}}' | awk -F'@' '{print $2}') 
           
           echo "IMAGE_HASH=${IMAGE_HASH}" >> $GITHUB_ENV
          
