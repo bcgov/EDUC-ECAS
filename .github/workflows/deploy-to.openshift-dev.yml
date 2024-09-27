@@ -124,9 +124,9 @@ jobs:
         with:
           image: '${{ steps.build-image-frontend.outputs.image }}'
           tags: '${{ steps.build-image-frontend.outputs.tags }}'
-          registry: '${{ env.IMAGE_REGISTRY }}'
-          username: '${{ env.IMAGE_REGISTRY_USER }}'
-          password: '${{ env.IMAGE_REGISTRY_PASSWORD }}'
+          registry: '${{ env.REDHAT_REGISTRY }}'
+          username: '${{ secrets.REDHAT_REGISTRY_USERNAME }}'
+          password: '${{ secrets.REDHAT_REGISTRY_PASSWORD }}'
     
       - uses: actions/checkout@v3
       - name: Deploy
