@@ -147,14 +147,14 @@ jobs:
 
 
 
-          #oc tag ${{ steps.build-image-frontend.outputs.image }} ${{env.REPO_NAME }}-frontend:${{ env.TAG }}
+          oc tag ${{ steps.build-image-frontend.outputs.image }} ${{env.REPO_NAME }}-frontend:${{ env.TAG }}
           
            echo "Tag success"
 
 
           # Process and apply deployment template
-          oc process -f tools/openshift/frontend.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }} -p BRANCH=${{ env.BRANCH }} -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS_DEV }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS_DEV }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }} -p CA_CERT="${{ env.CA_CERT }}" -p CERTIFICATE="${{ env.CERTIFICATE }}" -p PRIVATE_KEY="${{ env.PRIVATE_KEY }}"\
-          | oc apply -f -
+          #oc process -f tools/openshift/frontend.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }} -p BRANCH=${{ env.BRANCH }} -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS_DEV }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS_DEV }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }} -p CA_CERT="${{ env.CA_CERT }}" -p CERTIFICATE="${{ env.CERTIFICATE }}" -p PRIVATE_KEY="${{ env.PRIVATE_KEY }}"\
+          #| oc apply -f -
           echo "Processes and applied deployment template with success"
 
 
