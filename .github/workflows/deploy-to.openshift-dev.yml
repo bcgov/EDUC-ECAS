@@ -150,15 +150,7 @@ jobs:
           oc tag ${{ steps.build-image-frontend.outputs.image }} ${{env.REPO_NAME }}-frontend:${{ env.TAG }}
           
           echo "Tag success"
-          echo "Processes and apply deployment template"
-          #Process and apply deployment template
-    
-
-          echo "Processed and applied deployment template with success"
-          
-          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME}}/master/tools/config/update-configmap.sh | bash /dev/stdin dev ${{ env.APP_NAME }} ${{ env.NAMESPACE }}  
-
-           echo "start rollout"
+         
 
 
           # Start rollout (if necessary) and follow it
