@@ -156,10 +156,7 @@ jobs:
 
           echo "Processed and applied deployment template with success"
           
-          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME
-          }}/master/tools/config/update-configmap.sh | bash /dev/stdin dev ${{
-          env.APP_NAME }} ${{ env.NAMESPACE }} ${{ env.COMMON_NAMESPACE }} ${{
-          env.PEN_NAMESPACE_DEV }} ${{ env.SPLUNK_TOKEN }}
+          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME}}/master/tools/config/update-configmap.sh | bash /dev/stdin dev ${{ env.APP_NAME }} ${{ env.NAMESPACE }} ${{ env.COMMON_NAMESPACE }} ${{env.PEN_NAMESPACE_DEV }} ${{ env.SPLUNK_TOKEN }}
 
            echo "start rollout"
 
