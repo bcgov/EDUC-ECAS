@@ -149,6 +149,8 @@ jobs:
 
           oc tag ${{ steps.build-image-frontend.outputs.image }} ${{
           env.REPO_NAME }}-frontend:${{ env.TAG }}
+          
+           echo "Tag success"
 
            # oc tag ${{ steps.push-image-frontend.outputs.registry-path }} ${{ env.REPO_NAME }}-frontend-static:${{ env.TAG }}
 
