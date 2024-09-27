@@ -157,24 +157,13 @@ jobs:
           # Process and apply deployment template
           oc process -f tools/openshift/frontend.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }} -p BRANCH=${{ env.BRANCH }} -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS_DEV }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS_DEV }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }} -p CA_CERT="${{ env.CA_CERT }}" -p CERTIFICATE="${{ env.CERTIFICATE }}" -p PRIVATE_KEY="${{ env.PRIVATE_KEY }}"\
           | oc apply -f -
+          echo "Processes and applied deployment template with success"
 
 
   
 
 
-          # Process and apply deployment template
-
-          oc process -f tools/openshift/frontend.dc.yaml -p APP_NAME=${{
-          env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }} -p BRANCH=${{
-          env.BRANCH }} -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p
-          TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS_DEV }} -p
-          MAX_REPLICAS=${{ env.MAX_REPLICAS_DEV }} -p MIN_CPU=${{ env.MIN_CPU }}
-          -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p
-          MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }} -p
-          CA_CERT="${{ env.CA_CERT }}" -p CERTIFICATE="${{ env.CERTIFICATE }}"
-          -p PRIVATE_KEY="${{ env.PRIVATE_KEY }}"\
-
-          | oc apply -f -
+     
 
 
           curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME
@@ -182,12 +171,12 @@ jobs:
           env.APP_NAME }} ${{ env.NAMESPACE }} ${{ env.COMMON_NAMESPACE }} ${{
           env.PEN_NAMESPACE_DEV }} ${{ env.SPLUNK_TOKEN }}
 
+           echo "start rollout"
+
 
           # Start rollout (if necessary) and follow it
 
-          oc rollout latest dc/${{ env.IMAGE_NAME }} 2> /dev/null \
-
-          || true && echo "Rollout in progress"
+          
 
 
           oc rollout latest dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null \
