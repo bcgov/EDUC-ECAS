@@ -151,22 +151,12 @@ jobs:
           env.REPO_NAME }}-frontendc:${{ env.TAG }}
 
 
-          # Process and apply deployment template
-
-          oc process -f tools/openshift/backend.dc.yaml -p APP_NAME=${{
-          env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }} -p BRANCH=${{
-          env.BRANCH }} -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p
-          TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS_DEV }} -p
-          MAX_REPLICAS=${{ env.MAX_REPLICAS_DEV }} -p MIN_CPU=${{ env.MIN_CPU }}
-          -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p
-          MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }}\
-
-          | oc apply -f -
+  
 
 
           # Process and apply deployment template
 
-          oc process -f tools/openshift/frontend-static.dc.yaml -p APP_NAME=${{
+          oc process -f tools/openshift/frontend.dc.yaml -p APP_NAME=${{
           env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }} -p BRANCH=${{
           env.BRANCH }} -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p
           TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS_DEV }} -p
