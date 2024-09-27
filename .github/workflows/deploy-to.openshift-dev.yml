@@ -118,16 +118,7 @@ jobs:
          
         
     
-      - name: Push frontend to registry
-        id: push-image-frontend
-        uses: redhat-actions/push-to-registry@v2
-        with:
-          image: '${{ steps.build-image-frontend.outputs.image }}'
-          tags: '${{ steps.build-image-frontend.outputs.tags }}'
-          registry: '${{ env.REDHAT_REGISTRY }}'
-          username: '${{ secrets.REDHAT_REGISTRY_USERNAME }}'
-          password: '${{ secrets.REDHAT_REGISTRY_PASSWORD }}'
-    
+   
       - uses: actions/checkout@v3
       - name: Deploy
         run: >
@@ -149,18 +140,15 @@ jobs:
 
           # Create the image stream if it doesn't exist
 
-          oc create imagestream ${{ env.REPO_NAME }}-backend-${{ env.BRANCH }}
-          2> /dev/null || true && echo "Backend image stream in place"
+     
 
-          oc create imagestream ${{ env.REPO_NAME }}-frontend-static 2>
+          oc create imagestream ${{ env.REPO_NAME }}-frontend>
           /dev/null || true && echo "Frontend image stream in place"
 
 
-          oc tag ${{ steps.push-image-backend.outputs.registry-path }} ${{
-          env.REPO_NAME }}-backend-${{ env.BRANCH }}:${{ env.TAG }}
 
-          oc tag ${{ steps.push-image-frontend.outputs.registry-path }} ${{
-          env.REPO_NAME }}-frontend-static:${{ env.TAG }}
+          oc tag ${{ steps.build-image-frontend.outputs.image }} ${{
+          env.REPO_NAME }}-frontendc:${{ env.TAG }}
 
 
           # Process and apply deployment template
