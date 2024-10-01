@@ -133,6 +133,7 @@ jobs:
           builder_image: registry.redhat.io/rhel8/dotnet-60
           image: '${{env.IMAGE_NAME_API }}'
           tags: "latest"
+          
       - name: Setup and Build frontend
         id: build-image-frontend
         uses: redhat-actions/s2i-build@v2
