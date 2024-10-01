@@ -120,7 +120,7 @@ jobs:
         with:
           path_context: ./EDUC_HUB
           builder_image: '${{env.BASE_IMAGE }}'
-          image: '${{env.IMAGE_CAS }}'
+          image: '${{env.IMAGE_NAME_CAS }}'
           tags: "latest"
           env_vars: |
             DOTNET_STARTUP_PROJECT=${{env.DOTNET_STARTUP_PROJECT}}
