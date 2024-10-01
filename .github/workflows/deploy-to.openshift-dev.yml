@@ -122,7 +122,7 @@ jobs:
           builder_image: '${{env.BASE_IMAGE }}'
           image: '${{env.IMAGE_CAS }}'
           tags: "latest"
-          env: |
+          env_vars: |
             DOTNET_STARTUP_PROJECT=${{env.DOTNET_STARTUP_PROJECT}}
       - name: Setup and Build ecas api
         id: build-image-api
