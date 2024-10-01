@@ -118,7 +118,7 @@ jobs:
         id: build-image-cas
         uses: redhat-actions/s2i-build@v2
         with:
-          path_context: ./EDUC_HUB
+          
           builder_image: '${{env.BASE_IMAGE }}'
           image: '${{env.IMAGE_NAME_CAS }}'
           tags: "latest"
