@@ -11,11 +11,7 @@ env:
   IMAGE_REGISTRY: 'ghcr.io/${{ github.repository_owner }}'
   IMAGE_REGISTRY_USER: '${{ github.actor }}'
   IMAGE_REGISTRY_PASSWORD: '${{ github.token }}'
-  SOURCE_REPOSITORY: 'https://github.com/bcgov/EDUC-HUB.git'
-  DOTNET_STARTUP_PROJECT: 'CASInterfaceService/cas-interface-service.csproj'
-  IMAGE_NAME_FRONTEND: ecas-frontend
-  IMAGE_NAME_API: ecas-api
-  IMAGE_NAME_CAS: cas-api
+  IMAGE_NAME: ecas-frontend
   REDHAT_REGISTRY: https://registry.redhat.io
   DOCKER_ARTIFACTORY_REPO: artifacts.developer.gov.bc.ca/docker-remote
   ARTIFACTORY_REPO: artifacts.developer.gov.bc.ca
@@ -23,8 +19,6 @@ env:
   REPO_NAME: educ-ecas
   BRANCH: test_github_actions
   APP_NAME_FRONTEND: ecas-frontend
-  APP_NAME_API: ecas-apiF
-  APP_NAME_CAS: cas-api
   NAMESPACE: '${{ secrets.ECAS_NAMESPACE_NO_ENV }}'
   NAMESPACE_TOOLS: '${{ secrets.ECAS_NAMESPACE_NO_ENV }}-tools'
   TAG: latest
@@ -112,21 +106,19 @@ jobs:
           registry: '${{ env.REDHAT_REGISTRY }}'
           username: '${{ secrets.REDHAT_REGISTRY_USERNAME }}'
           password: '${{ secrets.REDHAT_REGISTRY_PASSWORD }}'
-      - name: Check out repository
-        run: git clone '${{ env.SOURCE_REPOSITORY }}'
-   
-      - name: Setup and Build cas api
-        id: build-image-cas
+      - name: Setup and Build
+        id: build-image-frontend
         uses: redhat-actions/s2i-build@v2
         with:
-          path_context: ./EDUC-HUB
-          builder_image: registry.redhat.io/dotnet/dotnet-21-rhel7
-          image: '${{env.IMAGE_NAME_CAS }}'
-          tags: "latest-${{github.run_number}}"
-          env_vars: |
-            DOTNET_STARTUP_PROJECT=${{env.DOTNET_STARTUP_PROJECT}}
+          path_context: ./web-app
+          builder_image: registry.redhat.io/rhscl/php-73-rhel7
+          image: '${{env.IMAGE_NAME }}'
+          tags: "latest"
+     
+         
+        
     
-    
+   
       - uses: actions/checkout@v3
       - name: Deploy
         run: >
@@ -141,41 +133,40 @@ jobs:
 
           # Cancel any rollouts in progress
 
-          #oc rollout cancel dc/${{ env.IMAGE_NAME_FRONTEND }} 2> /dev/null || true && echo "No rollout in progress"
-          #oc rollout cancel dc/${{ env.IMAGE_NAME_API }} 2> /dev/null || true && echo "No rollout in progress"
-          oc rollout cancel dc/${{ env.IMAGE_NAME_CAS }} 2> /dev/null || true && echo "No rollout in progress"
+          oc rollout cancel dc/${{ env.IMAGE_NAME }} 2> /dev/null \
+
+          || true && echo "No rollout in progress"
+
 
           # Create the image stream if it doesn't exist
 
-           #oc create imagestream ${{ env.REPO_NAME }}-frontend> /dev/null || true && echo "Frontend image stream in place"
-          
-           #oc tag ${{ steps.build-image-frontend.outputs.image }} ${{env.REPO_NAME }}-frontend:${{ env.TAG }}
+     
 
-          #oc create imagestream ${{ env.REPO_NAME }}-api> /dev/null || true && echo "ECAS API image stream in place"
-          
-          #oc tag ${{ steps.build-image-api.outputs.image }} ${{env.REPO_NAME }}-api:${{ env.TAG }}
+          oc create imagestream ${{ env.REPO_NAME }}-frontend>
+          /dev/null || true && echo "Frontend image stream in place"
 
-          oc create imagestream cas-api> /dev/null || true && echo "CAS API image stream in place"
-          
-          oc tag ${{ steps.build-image-cas.outputs.image }} cas-api:latest-${{github.run_number}}
 
+
+          oc tag ${{ steps.build-image-frontend.outputs.image }} ${{env.REPO_NAME }}-frontend:${{ env.TAG }}
           
+          echo "Tag success"
+         
+
+
           # Start rollout (if necessary) and follow it
-          #oc rollout latest dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null || true && echo "Rollout frontend  in progress"
-          #oc rollout latest dc/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "Rollout ecas api in progress"
-          oc rollout latest dc/${{ env.APP_NAME_CAS }} 2> /dev/null || true && echo "Rollout cas api  in progress"
 
-          oc logs  dc/${{ env.IMAGE_NAME_CAS }}
+          
+
+
+          oc rollout latest dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null \
+
+          || true && echo "Rollout in progress"
+
+          oc logs -f dc/${{ env.IMAGE_NAME }}
 
           # Get status, returns 0 if rollout is successful
 
-          #oc rollout status dc/${{ env.IMAGE_NAME_FRONTEND }}  2> /dev/null || true && echo "Rollout status frontend  in progress"
-          
-          #oc rollout status dc/${{ env.IMAGE_NAME_API }} 2> /dev/null || true && echo "Rollout status ecas api in progress"
-          
-         
-          oc rollout status dc/${{ env.IMAGE_NAME_CAS }} 2> /dev/null || true && echo "Rollout status cas api in progress"
-     
+          oc rollout status dc/${{ env.IMAGE_NAME }}
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.7.0
         with:
