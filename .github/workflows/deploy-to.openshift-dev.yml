@@ -23,6 +23,8 @@ env:
   REPO_NAME: educ-ecas
   BRANCH: test_github_actions
   APP_NAME_FRONTEND: ecas-frontend
+  APP_NAME_API: ecas-api
+  APP_NAME_CAS: cas-api
   NAMESPACE: '${{ secrets.ECAS_NAMESPACE_NO_ENV }}'
   NAMESPACE_TOOLS: '${{ secrets.ECAS_NAMESPACE_NO_ENV }}-tools'
   TAG: latest
@@ -131,7 +133,7 @@ jobs:
           builder_image: registry.redhat.io/rhel8/dotnet-60
           image: '${{env.IMAGE_NAME_API }}'
           tags: "latest"
-      - name: Setup and Build
+      - name: Setup and Build Frontend
         id: build-image-frontend
         uses: redhat-actions/s2i-build@v2
         with:
@@ -157,6 +159,14 @@ jobs:
           oc rollout cancel dc/${{ env.IMAGE_NAME_FRONTEND }} 2> /dev/null \
 
           || true && echo "No rollout in progress"
+
+           oc rollout cancel dc/${{ env.IMAGE_NAME_API }} 2> /dev/null \
+
+          || true && echo "No ecas api rollout in progress"
+
+          oc rollout cancel dc/${{ env.IMAGE_NAME_CAS }} 2> /dev/null \
+
+          || true && echo "No cas api rollout in progress"
 
 
           # Create the image stream if it doesn't exist
