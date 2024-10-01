@@ -147,17 +147,17 @@ jobs:
 
           # Create the image stream if it doesn't exist
 
-          oc create imagestream ${{ env.REPO_NAME }}-frontend> /dev/null || true && echo "Frontend image stream in place"
+           #oc create imagestream ${{ env.REPO_NAME }}-frontend> /dev/null || true && echo "Frontend image stream in place"
           
-          oc tag ${{ steps.build-image-frontend.outputs.image }} ${{env.REPO_NAME }}-frontend:${{ env.TAG }}
+           #oc tag ${{ steps.build-image-frontend.outputs.image }} ${{env.REPO_NAME }}-frontend:${{ env.TAG }}
 
           #oc create imagestream ${{ env.REPO_NAME }}-api> /dev/null || true && echo "ECAS API image stream in place"
           
           #oc tag ${{ steps.build-image-api.outputs.image }} ${{env.REPO_NAME }}-api:${{ env.TAG }}
 
-          #oc create imagestream cas-api> /dev/null || true && echo "CAS API image stream in place"
+          oc create imagestream cas-api> /dev/null || true && echo "CAS API image stream in place"
           
-          #oc tag ${{ steps.build-image-cas.outputs.image }} cas-api:${{ env.TAG }}
+          oc tag ${{ steps.build-image-cas.outputs.image }} cas-api:${{ env.TAG }}
 
           
           # Start rollout (if necessary) and follow it
