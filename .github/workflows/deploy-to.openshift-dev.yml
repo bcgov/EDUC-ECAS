@@ -13,7 +13,6 @@ env:
   IMAGE_REGISTRY_PASSWORD: '${{ github.token }}'
   SOURCE_REPOSITORY: 'https://github.com/bcgov/EDUC-HUB.git'
   DOTNET_STARTUP_PROJECT: 'CASInterfaceService/cas-interface-service.csproj'
-  BASE_IMAGE: 'registry.redhat.io/dotnet/dotnet-21-rhel7'
   IMAGE_NAME_FRONTEND: ecas-frontend
   IMAGE_NAME_API: ecas-api
   IMAGE_NAME_CAS: cas-api
@@ -121,7 +120,7 @@ jobs:
         uses: redhat-actions/s2i-build@v2
         with:
           path_context: ./EDUC-HUB
-          builder_image: '${{env.BASE_IMAGE }}'
+          builder_image: registry.redhat.io/dotnet/dotnet-21-rhel7
           image: '${{env.IMAGE_NAME_CAS }}'
           tags: "latest"
           env_vars: |
@@ -131,7 +130,7 @@ jobs:
         uses: redhat-actions/s2i-build@v2
         with:
           path_context: ./web-api/Ecas.Dyn365Service
-          builder_image: '${{env.BASE_IMAGE }}'
+          builder_image: registry.redhat.io/rhel8/dotnet-60
           image: '${{env.IMAGE_NAME_API }}'
           tags: "latest"
       - name: Setup and Build frontend
