@@ -173,7 +173,6 @@ jobs:
           oc tag ${{ steps.build-image-cas.outputs.image }} cas-api:${{ env.TAG }}
 
           
-                  
           # Start rollout (if necessary) and follow it
           oc rollout latest dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null || true && echo "Rollout frontend  in progress"
           oc rollout latest dc/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "Rollout ecas api in progress"
