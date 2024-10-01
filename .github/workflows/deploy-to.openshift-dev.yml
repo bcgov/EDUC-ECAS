@@ -113,23 +113,14 @@ jobs:
           registry: '${{ env.REDHAT_REGISTRY }}'
           username: '${{ secrets.REDHAT_REGISTRY_USERNAME }}'
           password: '${{ secrets.REDHAT_REGISTRY_PASSWORD }}'
-      - name: Setup and Build frontend
-        id: build-image-frontend
-        uses: redhat-actions/s2i-build@v2
-        with:
-          path_context: ./web-app
-          builder_image: registry.redhat.io/rhscl/php-73-rhel7
-          image: '${{env.IMAGE_NAME_FRONTEND }}'
-          tags: "latest"
       - name: Setup and Build ecas api
         id: build-image-api
         uses: redhat-actions/s2i-build@v2
         with:
           path_context: ./web-api/Ecas.Dyn365Service
-          builder_image: mcr.microsoft.com/dotnet/aspnet:6.0
+          builder_image: '${{env.BASE_IMAGE }}'
           image: '${{env.IMAGE_NAME_API }}'
           tags: "latest"
-
       - name: Setup and Build cas api
         id: build-image-cas
         uses: redhat-actions/s2i-build@v2
@@ -140,7 +131,15 @@ jobs:
           tags: "latest"
           env: |
             DOTNET_STARTUP_PROJECT=${{env.DOTNET_STARTUP_PROJECT}}
-     
+      - name: Setup and Build frontend
+        id: build-image-frontend
+        uses: redhat-actions/s2i-build@v2
+        with:
+          path_context: ./web-app
+          builder_image: registry.redhat.io/rhscl/php-73-rhel7
+          image: '${{env.IMAGE_NAME_FRONTEND }}'
+          tags: "latest"
+    
       - uses: actions/checkout@v3
       - name: Deploy
         run: >
