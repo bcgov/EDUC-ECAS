@@ -168,9 +168,7 @@ jobs:
           oc tag ${{ steps.build-image-frontend.outputs.image }} ${{env.REPO_NAME }}-frontend:${{ env.TAG }}
                   
           # Start rollout (if necessary) and follow it
-          oc rollout latest dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null \
-
-          || true && echo "Rollout in progress"
+          oc rollout latest dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null || true && echo "Rollout in progress"
 
           oc logs -f dc/${{ env.IMAGE_NAME }}
 
