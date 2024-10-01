@@ -121,7 +121,7 @@ jobs:
         with:
           path_context: ./EDUC-HUB
           builder_image: registry.redhat.io/dotnet/dotnet-21-rhel7
-          image: '${{env.IMAGE_NAME_CAS }}'
+          image: '${{env.IMAGE_NAME_CAS}}'
           tags: "latest"
           env_vars: |
             DOTNET_STARTUP_PROJECT=${{env.DOTNET_STARTUP_PROJECT}}
@@ -171,8 +171,16 @@ jobs:
 
 
           oc tag ${{ steps.build-image-frontend.outputs.image }} ${{env.REPO_NAME }}-frontend:${{ env.TAG }}
+
+          echo "Frontend tag success"
+          
           oc tag ${{ steps.build-image-api.outputs.image }} ${{env.REPO_NAME }}-api:${{ env.TAG }}
+
+          echo "Ecas API tag success"
+          
           oc tag ${{ steps.build-image-cas.outputs.image }} ${{env.REPO_NAME }}-cas-api:${{ env.TAG }}
+
+          echo "CAS API tag success"
           
 
           # Start rollout (if necessary) and follow it
