@@ -125,23 +125,7 @@ jobs:
           tags: "latest"
           env_vars: |
             DOTNET_STARTUP_PROJECT=${{env.DOTNET_STARTUP_PROJECT}}
-      - name: Setup and Build ecas api
-        id: build-image-api
-        uses: redhat-actions/s2i-build@v2
-        with:
-          path_context: ./web-api/Ecas.Dyn365Service
-          builder_image: registry.redhat.io/rhel8/dotnet-60
-          image: '${{env.IMAGE_NAME_API }}'
-          tags: "latest"
-          
-      - name: Setup and Build frontend
-        id: build-image-frontend
-        uses: redhat-actions/s2i-build@v2
-        with:
-          path_context: ./web-app
-          builder_image: registry.redhat.io/rhscl/php-73-rhel7
-          image: '${{env.IMAGE_NAME_FRONTEND }}'
-          tags: "latest"
+    
     
       - uses: actions/checkout@v3
       - name: Deploy
