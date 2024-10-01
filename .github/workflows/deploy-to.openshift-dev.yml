@@ -198,11 +198,20 @@ jobs:
 
           || true && echo "Rollout CAS API in progress"
 
-          oc logs -f dc/${{ env.IMAGE_NAME_FRONTEND }}
+          oc logs  dc/${{ env.IMAGE_NAME_FRONTEND }}
+          
+          oc logs  dc/${{ env.IMAGE_NAME_API }} 
+          
+          oc logs  dc/${{ env.IMAGE_NAME_CAS }} 
 
           # Get status, returns 0 if rollout is successful
 
           oc rollout status dc/${{ env.IMAGE_NAME_FRONTEND }}
+
+          oc rollout status dc/${{ env.IMAGE_NAME_API }}
+
+          oc rollout status dc/${{ env.IMAGE_NAME_CAS }}
+          
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.7.0
         with:
