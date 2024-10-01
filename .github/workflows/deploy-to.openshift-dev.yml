@@ -171,6 +171,8 @@ jobs:
 
 
           oc tag ${{ steps.build-image-frontend.outputs.image }} ${{env.REPO_NAME }}-frontend:${{ env.TAG }}
+          oc tag ${{ steps.build-image-api.outputs.image }} ${{env.REPO_NAME }}-api:${{ env.TAG }}
+          oc tag ${{ steps.build-image-cas.outputs.image }} cas-api:${{ env.TAG }}
           
 
           # Start rollout (if necessary) and follow it
