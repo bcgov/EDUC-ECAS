@@ -113,12 +113,14 @@ jobs:
           registry: '${{ env.REDHAT_REGISTRY }}'
           username: '${{ secrets.REDHAT_REGISTRY_USERNAME }}'
           password: '${{ secrets.REDHAT_REGISTRY_PASSWORD }}'
+      - name: Check out repository
+        run: git clone '${{ env.SOURCE_REPOSITORY }}'
    
       - name: Setup and Build cas api
         id: build-image-cas
         uses: redhat-actions/s2i-build@v2
         with:
-          
+          path_context: ./EDUC-HUB
           builder_image: '${{env.BASE_IMAGE }}'
           image: '${{env.IMAGE_NAME_CAS }}'
           tags: "latest"
