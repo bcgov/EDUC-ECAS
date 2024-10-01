@@ -8,10 +8,14 @@ env:
   CA_CERT: '${{ secrets.CA_CERT }}'
   CERTIFICATE: '${{ secrets.CERT }}'
   PRIVATE_KEY: '${{ secrets.PRIV_KEY }}'
+  SOURCE_REPOSITORY: 'https://github.com/bcgov/EDUC-HUB.git'
+  DOTNET_STARTUP_PROJECT: 'CASInterfaceService/cas-interface-service.csproj'
   IMAGE_REGISTRY: 'ghcr.io/${{ github.repository_owner }}'
   IMAGE_REGISTRY_USER: '${{ github.actor }}'
   IMAGE_REGISTRY_PASSWORD: '${{ github.token }}'
   IMAGE_NAME_FRONTEND: ecas-frontend
+  IMAGE_NAME_API: ecas-api
+  IMAGE_NAME_CAS: cas-api
   REDHAT_REGISTRY: https://registry.redhat.io
   DOCKER_ARTIFACTORY_REPO: artifacts.developer.gov.bc.ca/docker-remote
   ARTIFACTORY_REPO: artifacts.developer.gov.bc.ca
@@ -106,6 +110,27 @@ jobs:
           registry: '${{ env.REDHAT_REGISTRY }}'
           username: '${{ secrets.REDHAT_REGISTRY_USERNAME }}'
           password: '${{ secrets.REDHAT_REGISTRY_PASSWORD }}'
+      - name: Check out repository
+        run: git clone '${{ env.SOURCE_REPOSITORY }}'
+   
+      - name: Setup and Build cas api
+        id: build-image-cas
+        uses: redhat-actions/s2i-build@v2
+        with:
+          path_context: ./EDUC-HUB
+          builder_image: registry.redhat.io/dotnet/dotnet-21-rhel7
+          image: '${{env.IMAGE_NAME_CAS }}'
+          tags: "latest"
+          env_vars: |
+            DOTNET_STARTUP_PROJECT=${{env.DOTNET_STARTUP_PROJECT}}
+      - name: Setup and Build ecas api
+        id: build-image-api
+        uses: redhat-actions/s2i-build@v2
+        with:
+          path_context: ./web-api/Ecas.Dyn365Service
+          builder_image: registry.redhat.io/rhel8/dotnet-60
+          image: '${{env.IMAGE_NAME_API }}'
+          tags: "latest"
       - name: Setup and Build
         id: build-image-frontend
         uses: redhat-actions/s2i-build@v2
