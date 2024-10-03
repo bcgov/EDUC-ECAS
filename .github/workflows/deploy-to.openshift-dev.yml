@@ -321,4 +321,33 @@ jobs:
           oc tag ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-cas-api:${{ env.TAG_DEV }} ${{ env.NAMESPACE }}-test/${{ env.REPO_NAME }}-cas-api:${{ env.TAG_TEST }}
 
           echo "CAS API tag success"
+
+          # Start rollout (if necessary) and follow it
+
+
+          oc rollout latest dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null \
+
+          || true && echo "Rollout Front End in progress"
+
+          oc rollout latest dc/${{ env.APP_NAME_API }} 2> /dev/null \
+
+          || true && echo "Rollout ECAS API  in progress"
+
+          oc rollout latest dc/${{ env.APP_NAME_CAS }} 2> /dev/null \
+
+          || true && echo "Rollout CAS API in progress"
+
+          oc logs  dc/${{ env.IMAGE_NAME_FRONTEND }}
+          
+          oc logs  dc/${{ env.IMAGE_NAME_API }} 
+          
+          oc logs  dc/${{ env.IMAGE_NAME_CAS }} 
+
+          # Get status, returns 0 if rollout is successful
+
+          oc rollout status dc/${{ env.IMAGE_NAME_FRONTEND }}
+
+          oc rollout status dc/${{ env.IMAGE_NAME_API }}
+
+          oc rollout status dc/${{ env.IMAGE_NAME_CAS }}
            
