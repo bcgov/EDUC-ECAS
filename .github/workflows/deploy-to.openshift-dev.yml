@@ -26,7 +26,7 @@ env:
   APP_NAME_API: ecas-api
   APP_NAME_CAS: cas-api
   NAMESPACE: '${{ secrets.ECAS_NAMESPACE_NO_ENV }}'
-  TAG: dev
+  TAG_DEV: dev
   MIN_REPLICAS_DEV: '1'
   MAX_REPLICAS_DEV: '2'
   MIN_CPU: 300m
@@ -121,7 +121,7 @@ jobs:
           path_context: ./EDUC-HUB
           builder_image: registry.redhat.io/dotnet/dotnet-21-rhel7
           image: '${{env.IMAGE_NAME_CAS}}'
-          tags: ${{ env.TAG }}
+          s: ${{ env._DEV }}
           env_vars: |
             DOTNET_STARTUP_PROJECT=${{env.DOTNET_STARTUP_PROJECT}}
       - name: Setup and Build ecas api
@@ -131,7 +131,7 @@ jobs:
           path_context: ./web-api/Ecas.Dyn365Service
           builder_image: registry.redhat.io/rhel8/dotnet-60
           image: '${{env.IMAGE_NAME_API }}'
-          tags: ${{ env.TAG }}
+          tags: ${{ env.TAG_DEV }}
       - name: Setup and Build Frontend
         id: build-image-frontend
         uses: redhat-actions/s2i-build@v2
@@ -139,7 +139,7 @@ jobs:
           path_context: ./web-app
           builder_image: registry.redhat.io/rhscl/php-73-rhel7
           image: '${{env.IMAGE_NAME_FRONTEND }}'
-          tags: ${{ env.TAG }}
+          tags: ${{ env.TAG_DEV }}
      
       - uses: actions/checkout@v3
       - name: Deploy
@@ -169,15 +169,15 @@ jobs:
           oc create imagestream cas-api> /dev/null || true && echo "CAS API  image stream in place"
 
 
-          oc tag ${{ steps.build-image-frontend.outputs.image }} ${{env.REPO_NAME }}-frontend:${{ env.TAG }}
+          oc tag ${{ steps.build-image-frontend.outputs.image }} ${{env.REPO_NAME }}-frontend:${{ env.TAG_DEV }}
 
           echo "Frontend tag success"
           
-          oc tag ${{ steps.build-image-api.outputs.image }} ${{env.REPO_NAME }}-api:${{ env.TAG }}
+          oc tag ${{ steps.build-image-api.outputs.image }} ${{env.REPO_NAME }}-api:${{ env.TAG_DEV }}
 
           echo "Ecas API tag success"
           
-          oc tag ${{ steps.build-image-cas.outputs.image }} ${{env.REPO_NAME }}-cas-api:${{ env.TAG }}
+          oc tag ${{ steps.build-image-cas.outputs.image }} ${{env.REPO_NAME }}-cas-api:${{ env.TAG_DEV }}
 
           echo "CAS API tag success"
           
