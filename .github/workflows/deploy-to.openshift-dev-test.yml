@@ -309,7 +309,7 @@ jobs:
           oc create imagestream ${{ env.REPO_NAME }}-api> /dev/null || true && echo "Ecas API image stream in place"
           
           
-          oc create imagestream cas-api> /dev/null || true && echo "CAS API  image stream in place
+          oc create imagestream cas-api> /dev/null || true && echo "CAS API  image stream in place"
           
 
           oc tag ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-frontend:${{ env.TAG_DEV }} ${{ env.NAMESPACE }}-test/${{ env.REPO_NAME }}-frontend:${{ env.TAG_TEST }}
