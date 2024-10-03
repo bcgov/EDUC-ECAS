@@ -50,6 +50,9 @@ jobs:
     outputs:
       ROUTE: '${{ steps.deploy-and-expose.outputs.route }}'
       SELECTOR: '${{ steps.deploy-and-expose.outputs.selector }}'
+      frontend_image: '${{ steps.build-image-frontend.outputs.image }}'
+      api_image: '${{ steps.build-image-api.outputs.image }}'
+      cas_image: '${{ steps.build-image-api.outputs.image }}'
     steps:
       - name: Check for required secrets
         uses: actions/github-script@v6
@@ -312,15 +315,15 @@ jobs:
           oc create imagestream ${{ env.REPO_NAME }}-cas-api> /dev/null || true && echo "CAS API  image stream in place"
           
 
-          oc tag ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-frontend:${{ env.TAG_DEV }} ${{ env.NAMESPACE }}-test/${{ env.REPO_NAME }}-frontend:${{ env.TAG_TEST }}
+          oc tag ${{ needs.build-and-deploy-dev.outputs.frontend_image }} ${{env.REPO_NAME }}-frontend:${{ env.TAG_TEST }}
 
           echo "Frontend tag success"
 
-          oc tag ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-api:${{ env.TAG_DEV }} ${{ env.NAMESPACE }}-test/${{ env.REPO_NAME }}-api:${{ env.TAG_TEST }}
+          oc tag ${{ needs.build-and-deploy-dev.outputs.api_image }} ${{env.REPO_NAME }}-api:${{ env.TAG_TEST }}
 
           echo "Ecas API tag success"
 
-          oc tag ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-cas-api:${{ env.TAG_DEV }} ${{ env.NAMESPACE }}-test/${{ env.REPO_NAME }}-cas-api:${{ env.TAG_TEST }}
+          oc tag  ${{ needs.build-and-deploy-dev.outputs.cas_image}} ${{env.REPO_NAME }}-cas-api:${{ env.TAG_TEST }}
 
           echo "CAS API tag success"
 
