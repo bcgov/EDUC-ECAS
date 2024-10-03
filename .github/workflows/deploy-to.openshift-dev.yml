@@ -284,7 +284,7 @@ deploy-to-test:
       - uses: actions/checkout@v3
       - name: Deploy
         run: >
-          set -eux
+	  set -eux
 
           # Login to OpenShift and select project
           
