@@ -143,7 +143,7 @@ jobs:
           
 
        
-          oc tag ${{ env.NAMESPACE }}-test/${{ env.REPO_NAME }}-frontend:${{ steps.get-latest-tag.outputs.tag }} ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-frontend:${{ env.TAG_DEV }}
+          oc tag ${{ env.NAMESPACE }}-test/${{ env.REPO_NAME }}-frontend:${{ env.TAG_TEST }} ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-frontend:${{ env.TAG_DEV }}
 
           echo "Frontend tag success"
 
