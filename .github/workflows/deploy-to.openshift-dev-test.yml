@@ -174,7 +174,7 @@ jobs:
           oc create imagestream ${{ env.REPO_NAME }}-cas-api> /dev/null || true && echo "CAS API  image stream in place"
 
 
-          oc tag ${{ steps.build-image-frontend.outputs.image }} educ-ecas-frontend:${{ env.TAG_DEV }}
+          oc tag ${{ steps.build-image-frontend.outputs.image }}  ${{ env.REPO_NAME }}-frontend:${{ env.TAG_DEV }}
 
           echo "Frontend tag success"
           
