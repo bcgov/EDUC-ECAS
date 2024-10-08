@@ -39,8 +39,10 @@ env:
   MAX_REPLICAS_TEST: '3'
   HOST_ROUTE: '${{ secrets.SITE_URL }}'
   
-on:
-  workflow_dispatch:
+'on':
+  push:
+    branches:
+      - test_github_actions
   
 
 jobs:
