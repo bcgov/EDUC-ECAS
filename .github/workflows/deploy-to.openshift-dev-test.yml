@@ -22,7 +22,7 @@ env:
   ARTIFACTORY_REPO: artifacts.developer.gov.bc.ca
   APP_NAME: ecas
   REPO_NAME: educ-ecas
-  BRANCH: test_github_actions
+  BRANCH: master
   APP_NAME_FRONTEND: ecas-frontend
   APP_NAME_API: ecas-api
   APP_NAME_CAS: cas-api
@@ -41,7 +41,7 @@ env:
 'on':
   push:
     branches:
-      - test_github_actions
+      - master
 jobs:
   build-and-deploy-dev:
     name: Build and deploy to DEV
