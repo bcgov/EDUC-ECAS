@@ -37,11 +37,9 @@ env:
   MAX_MEM: 500Mi
   MIN_REPLICAS_TEST: '2'
   MAX_REPLICAS_TEST: '3'
-  HOST_ROUTE: '${{ secrets.SITE_URL }}
-
+  HOST_ROUTE: '${{ secrets.SITE_URL }}'
 on:
-  # https://docs.github.com/en/actions/reference/events-that-trigger-workflows
-  workflow_dispatch:
+   workflow_dispatch:
 
 jobs:
   openshift-ci-cd:
