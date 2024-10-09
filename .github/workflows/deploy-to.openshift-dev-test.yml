@@ -37,7 +37,7 @@ env:
   MAX_MEM: 500Mi
   MIN_REPLICAS_TEST: '2'
   MAX_REPLICAS_TEST: '3'
-  DOCKER_API_VERSION: 1.24
+ 
   HOST_ROUTE: '${{ secrets.SITE_URL }}'
 'on':
   push:
@@ -153,8 +153,8 @@ jobs:
           registry: ${{ env.DOCKER_ARTIFACTORY_REPO }}
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: Docker service restart
-        run: sudo service docker restart
+      - name: Docker upgrade
+        run:  docker-machine upgrade default
       - name: Push frontend to registry
         id: push-image-frontend
         uses: redhat-actions/push-to-registry@v2
