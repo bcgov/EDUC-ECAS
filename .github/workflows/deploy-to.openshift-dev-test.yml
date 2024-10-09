@@ -57,7 +57,7 @@ jobs:
     services:
       docker:
        image: docker:latest
-       options: --priviliged
+       options: --privileged
     
     steps:
       - name: Check for required secrets
