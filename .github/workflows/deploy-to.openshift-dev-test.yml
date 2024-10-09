@@ -37,7 +37,7 @@ env:
   MAX_MEM: 500Mi
   MIN_REPLICAS_TEST: '2'
   MAX_REPLICAS_TEST: '3'
-  DOCKER_API_VERSION: 1.41
+  DOCKER_API_VERSION: 1.19
   HOST_ROUTE: '${{ secrets.SITE_URL }}'
 'on':
   push:
