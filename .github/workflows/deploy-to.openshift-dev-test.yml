@@ -130,7 +130,7 @@ jobs:
           path_context: ./EDUC-HUB
           builder_image: registry.redhat.io/dotnet/dotnet-21-rhel7
           image: '${{env.IMAGE_NAME_CAS}}'
-          tags: ${{ env.TAG_DEV }
+          tags: ${{ env.TAG_DEV }}
           env_vars: |
             DOTNET_STARTUP_PROJECT=${{env.DOTNET_STARTUP_PROJECT}}
       - name: Setup and Build ecas api
