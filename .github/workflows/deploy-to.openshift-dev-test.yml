@@ -161,8 +161,8 @@ jobs:
           registry: ${{ env.DOCKER_ARTIFACTORY_REPO }}
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: List docker images
-        run: docker images
+      - name: Docker service restart
+        run: sudo service docker restart
       - name: Push frontend to registry
         id: push-image-frontend
         uses: redhat-actions/push-to-registry@v2
