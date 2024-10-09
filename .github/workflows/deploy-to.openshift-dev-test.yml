@@ -103,20 +103,8 @@ jobs:
             }
       - name: Check out repository
         uses: actions/checkout@v3
-      - name: Check Docker Version
-        run: docker --version
-      - name: Install  Docker
-        run: |
-          curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add - 
-          sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs)  stable"
-          sudo apt-get update
-          apt-cache madison docker-ce
-          sudo apt-get install -y --allow-downgrades docker-ce=1.13.1-0~ubuntu
-          sudo apt-mark hold docker-ce
-      - name: Check Docker Version
-        run: docker --version
-
-      - name: Install oc
+   
+           - name: Install oc
         uses: redhat-actions/openshift-tools-installer@v1
         with:
           oc: 4
@@ -167,6 +155,8 @@ jobs:
           registry: ${{ env.DOCKER_ARTIFACTORY_REPO }}
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+       - name: Update Docker API version
+         run: echo "DOCKER_API_VERSION=1.39" >> $GITHUB_ENV
     
       - name: Push frontend to registry
         id: push-image-frontend
