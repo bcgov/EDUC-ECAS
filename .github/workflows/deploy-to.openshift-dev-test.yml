@@ -46,7 +46,7 @@ env:
 jobs:
   build-and-deploy-dev:
     name: Build and deploy to DEV
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: dev
     outputs:
       ROUTE: '${{ steps.deploy-and-expose.outputs.route }}'
