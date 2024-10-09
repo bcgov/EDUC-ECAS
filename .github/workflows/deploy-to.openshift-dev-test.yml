@@ -155,8 +155,14 @@ jobs:
           registry: ${{ env.DOCKER_ARTIFACTORY_REPO }}
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: Docker info
-        run: docker info
+      - name: Install Podman
+        run: |
+         sudo apt-get update
+         sudo apt-get install -y podman
+      - name: Check Podman version
+        run: podman version
+         
+         
     
       - name: Push frontend to registry
         id: push-image-frontend
