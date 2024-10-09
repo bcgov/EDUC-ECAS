@@ -105,7 +105,9 @@ jobs:
       - name: Install Docker
         run: |
           sudo apt-get update
-          sudo apt-get install -y docker-ce=5:20.10.8~3-0~ubuntu-focal
+          sudo apt-get install -y docker.io
+      - name: Check docker version
+        run: docker --version
       - name: Install oc
         uses: redhat-actions/openshift-tools-installer@v1
         with:
