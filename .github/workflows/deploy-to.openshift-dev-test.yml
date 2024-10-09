@@ -51,9 +51,9 @@ jobs:
     outputs:
       ROUTE: '${{ steps.deploy-and-expose.outputs.route }}'
       SELECTOR: '${{ steps.deploy-and-expose.outputs.selector }}'
-      frontend_image: '${{ steps.push-image-frontend.outputs.image }}'
-      api_image: '${{ steps.push-image-api.outputs.image }}'
-      cas_image: '${{ steps.push-image-api.outputs.image }}'
+      frontend_image: '${{ steps.push-image-frontend.outputs.registry-path }}'
+      api_image: '${{ steps.push-image-api.outputs.registry-path }}'
+      cas_image: '${{ steps.push-image-api.outputs.registry-path }}'
   
     
     steps:
@@ -224,11 +224,11 @@ jobs:
 
           echo "Frontend tag success"
           
-          oc tag ${{ steps.push-image-api.outputs.image }} ${{env.REPO_NAME }}-api:${{ env.TAG_DEV }}
+          oc tag ${{ steps.push-image-api.outputs.registry-path }} ${{env.REPO_NAME }}-api:${{ env.TAG_DEV }}
 
           echo "Ecas API tag success"
           
-          oc tag ${{ steps.push-image-cas.outputs.image }} ${{env.REPO_NAME }}-cas-api:${{ env.TAG_DEV }}
+          oc tag ${{ steps.push-image-cas.outputs.registry-path }} ${{env.REPO_NAME }}-cas-api:${{ env.TAG_DEV }}
 
           echo "CAS API tag success"
           
