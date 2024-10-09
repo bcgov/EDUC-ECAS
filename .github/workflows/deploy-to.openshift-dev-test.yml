@@ -156,7 +156,7 @@ jobs:
     
       - name: Push frontend to registry
         id: push-image-frontend
-        uses: redhat-actions/push-to-registry@v1
+        uses: redhat-actions/push-to-registry@v2.8
         with:
           image: ${{ steps.build-image-frontend.outputs.image }}
           tags: ${{ env.TAG_DEV }}
