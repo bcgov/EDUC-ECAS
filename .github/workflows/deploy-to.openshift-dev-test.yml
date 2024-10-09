@@ -109,7 +109,7 @@ jobs:
          sudo apt-get update
          sudo apt-get install docker-ce
       - name: Check docker version
-        run: docker --version
+        run: docker-compose  --version
       - name: Install oc
         uses: redhat-actions/openshift-tools-installer@v1
         with:
