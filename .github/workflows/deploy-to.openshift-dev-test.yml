@@ -51,9 +51,9 @@ jobs:
     outputs:
       ROUTE: '${{ steps.deploy-and-expose.outputs.route }}'
       SELECTOR: '${{ steps.deploy-and-expose.outputs.selector }}'
-      frontend_image: '${{ steps.build-image-frontend.outputs.image }}'
-      api_image: '${{ steps.build-image-api.outputs.image }}'
-      cas_image: '${{ steps.build-image-api.outputs.image }}'
+      frontend_image: '${{ steps.push-image-frontend.outputs.image }}'
+      api_image: '${{ steps.push-image-api.outputs.image }}'
+      cas_image: '${{ steps.push-image-api.outputs.image }}'
   
     
     steps:
@@ -130,7 +130,7 @@ jobs:
           path_context: ./EDUC-HUB
           builder_image: registry.redhat.io/dotnet/dotnet-21-rhel7
           image: '${{env.IMAGE_NAME_CAS}}'
-          s: ${{ env._DEV }}
+          tags: ${{ env.TAG_DEV }
           env_vars: |
             DOTNET_STARTUP_PROJECT=${{env.DOTNET_STARTUP_PROJECT}}
       - name: Setup and Build ecas api
@@ -173,6 +173,24 @@ jobs:
           registry: ${{ env.IMAGE_REGISTRY }}
           username: ${{ env.IMAGE_REGISTRY_USER }}
           password: ${{ env.IMAGE_REGISTRY_PASSWORD }}
+      - name: Push api to registry
+        id: push-image-api
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: ${{ steps.build-image-api.outputs.image }}
+          tags: ${{ env.TAG_DEV }}
+          registry: ${{ env.IMAGE_REGISTRY }}
+          username: ${{ env.IMAGE_REGISTRY_USER }}
+          password: ${{ env.IMAGE_REGISTRY_PASSWORD }}
+      - name: Push cas to registry
+        id: push-image-cas
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: ${{ steps.build-image-cas.outputs.image }}
+          tags: ${{ env.TAG_DEV }}
+          registry: ${{ env.IMAGE_REGISTRY }}
+          username: ${{ env.IMAGE_REGISTRY_USER }}
+          password: ${{ env.IMAGE_REGISTRY_PASSWORD }}
      
       - uses: actions/checkout@v3
       - name: Deploy
@@ -206,11 +224,11 @@ jobs:
 
           echo "Frontend tag success"
           
-          oc tag ${{ steps.build-image-api.outputs.image }} ${{env.REPO_NAME }}-api:${{ env.TAG_DEV }}
+          oc tag ${{ steps.push-image-api.outputs.image }} ${{env.REPO_NAME }}-api:${{ env.TAG_DEV }}
 
           echo "Ecas API tag success"
           
-          oc tag ${{ steps.build-image-cas.outputs.image }} ${{env.REPO_NAME }}-cas-api:${{ env.TAG_DEV }}
+          oc tag ${{ steps.push-image-cas.outputs.image }} ${{env.REPO_NAME }}-cas-api:${{ env.TAG_DEV }}
 
           echo "CAS API tag success"
           
