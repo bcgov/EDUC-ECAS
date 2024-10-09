@@ -155,8 +155,8 @@ jobs:
           registry: ${{ env.DOCKER_ARTIFACTORY_REPO }}
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: Update Docker API version
-        run: echo "DOCKER_API_VERSION=1.39" >> $GITHUB_ENV
+      - name: Docker info
+        run: docker info
     
       - name: Push frontend to registry
         id: push-image-frontend
