@@ -7,6 +7,7 @@ env:
   OPENSHIFT_SERVER: '${{ secrets.OPENSHIFT_SERVER }}'
   OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
   OPENSHIFT_NAMESPACE_TEST: '${{ secrets.ECAS_NAMESPACE_NO_ENV }}-test'
+  OPENSHIFT_NAMESPACE_DEV: '${{ secrets.ECAS_NAMESPACE_NO_ENV }}-dev'
   REPO_NAME: educ-ecas
   APP_NAME_FRONTEND: ecas-frontend
   APP_NAME_API: ecas-api
@@ -69,13 +70,13 @@ jobs:
 
           oc rollout cancel dc/${{ env.IMAGE_NAME_CAS }} 2> /dev/null  || true && echo "No cas api rollout in progress"
           
-          oc tag ${{ env.OPENSHIFT_NAMESPACE_TEST }}/${{ env.REPO_NAME }}-frontend:${{ steps.get-latest-tag.outputs.tag }} \
+          oc tag ${{ env.OPENSHIFT_NAMESPACE_DEV }}/${{ env.REPO_NAME }}-frontend:${{ steps.get-latest-tag.outputs.tag }} \
           ${{ env.OPENSHIFT_NAMESPACE_TEST }}/${{ env.REPO_NAME }}-frontend:${{ steps.get-latest-tag.outputs.tag }}
 
-          oc tag ${{ env.OPENSHIFT_NAMESPACE_TEST }}/${{ env.REPO_NAME }}-api:${{ steps.get-latest-tag.outputs.tag }} \
+          oc tag ${{ env.OPENSHIFT_NAMESPACE_DEV }}/${{ env.REPO_NAME }}-api:${{ steps.get-latest-tag.outputs.tag }} \
           ${{ env.OPENSHIFT_NAMESPACE_TEST }}/${{ env.REPO_NAME }}-api:${{ steps.get-latest-tag.outputs.tag }}
 
-          oc tag ${{ env.OPENSHIFT_NAMESPACE_TEST }}/${{ env.REPO_NAME }}-cas-api:${{ steps.get-latest-tag.outputs.tag }} \
+          oc tag ${{ env.OPENSHIFT_NAMESPACE_DEV }}/${{ env.REPO_NAME }}-cas-api:${{ steps.get-latest-tag.outputs.tag }} \
           ${{ env.OPENSHIFT_NAMESPACE_TEST }}/${{ env.REPO_NAME }}-cas-api:${{ steps.get-latest-tag.outputs.tag }}
           
          
