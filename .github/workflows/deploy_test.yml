@@ -84,17 +84,11 @@ jobs:
           # Start rollout (if necessary) and follow it
 
 
-          oc rollout latest dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null \
+          oc rollout latest dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null || true && echo "Rollout Front End in progress"
 
-          || true && echo "Rollout Front End in progress"
+          oc rollout latest dc/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "Rollout ECAS API  in progress"
 
-          oc rollout latest dc/${{ env.APP_NAME_API }} 2> /dev/null \
-
-          || true && echo "Rollout ECAS API  in progress"
-
-          oc rollout latest dc/${{ env.APP_NAME_CAS }} 2> /dev/null \
-
-          || true && echo "Rollout CAS API in progress"
+          oc rollout latest dc/${{ env.APP_NAME_CAS }} 2> /dev/null || true && echo "Rollout CAS API in progress"
 
           oc logs  dc/${{ env.IMAGE_NAME_FRONTEND }}
           
