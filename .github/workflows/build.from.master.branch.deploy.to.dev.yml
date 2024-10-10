@@ -183,7 +183,7 @@ jobs:
         uses: redhat-actions/push-to-registry@v2
         with:
           image: ${{ steps.build-image-api.outputs.image }}
-          tags: ${{ env.steps.build-image-api.outputs.tags }
+          tags: ${{ env.steps.build-image-api.outputs.tags }}
           registry: ${{ env.IMAGE_REGISTRY }}
           username: ${{ env.IMAGE_REGISTRY_USER }}
           password: ${{ env.IMAGE_REGISTRY_PASSWORD }}
