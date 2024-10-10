@@ -79,9 +79,7 @@ jobs:
           oc tag ${{ env.OPENSHIFT_NAMESPACE_DEV }}/${{ env.REPO_NAME }}-cas-api:${{ steps.get-latest-tag.outputs.tag }} \
           ${{ env.OPENSHIFT_NAMESPACE_TEST }}/${{ env.REPO_NAME }}-cas-api:${{ steps.get-latest-tag.outputs.tag }}
           
-         
-              echo "CAS API tag success"
-          
+                   
 
           # Start rollout (if necessary) and follow it
 
