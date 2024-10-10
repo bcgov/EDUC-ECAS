@@ -21,6 +21,9 @@ on:
       version:
         description: 'Version Number'
         required: true
+  push:
+    branches:
+      - test_github_actions
 
 jobs:
   tag_image:
