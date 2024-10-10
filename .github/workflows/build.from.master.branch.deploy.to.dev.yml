@@ -28,8 +28,8 @@ env:
   APP_NAME_CAS: cas-api
   NAMESPACE: '${{ secrets.ECAS_NAMESPACE_NO_ENV }}'
   TAG: "latest"
-  MIN_REPLICAS_DEV: '1'
-  MAX_REPLICAS_DEV: '2'
+  MIN_REPLICAS: '1'
+  MAX_REPLICAS: '2'
   MIN_CPU: 300m
   MAX_CPU: 600m
   MIN_MEM: 250Mi
@@ -160,15 +160,9 @@ jobs:
           registry: ${{ env.DOCKER_ARTIFACTORY_REPO }}
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: Install Podman
-        run: |
-         sudo apt-get update
-         sudo apt-get install -y podman
-      - name: Check Podman version
-        run: podman version
-         
-         
     
+         
+          
       - name: Push frontend to registry
         id: push-image-frontend
         uses: redhat-actions/push-to-registry@v2
@@ -208,7 +202,7 @@ jobs:
           oc login --token=${{ env.OPENSHIFT_TOKEN }} --server=${{
           env.OPENSHIFT_SERVER }}
 
-          oc project ${{ env.OPENSHIFT_NAMESPACE_DEV }}
+          oc project ${{ env.OPENSHIFT_NAMESPACE }}
 
           # Cancel any rollouts in progress
 
