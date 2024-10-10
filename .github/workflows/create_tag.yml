@@ -39,7 +39,7 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
-
+      # When merging to master replace with ref: 'refs/tags/${{ github.event.inputs.version }}',
       - name: Create tag
         uses: actions/github-script@v5
         with:
@@ -47,10 +47,10 @@ jobs:
             github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              #ref: 'refs/tags/${{ github.event.inputs.version }}',
               ref: 'refs/tags/1.0,
               sha: context.sha
             })
+        
 
       - name: Install oc
         uses: redhat-actions/openshift-tools-installer@v1
