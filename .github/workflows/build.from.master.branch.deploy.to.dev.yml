@@ -230,12 +230,11 @@ jobs:
 
           echo "Frontend tag success"
 
-          oc -n ${{ env.OPENSHIFT_NAMESPACE }} tag ${{ steps.push-image-api.outputs.registry-path } }}   ${{env.REPO_NAME }}-api:${{ env.TAG }}
+          oc -n ${{ env.OPENSHIFT_NAMESPACE }} tag ${{ steps.push-image-api.outputs.registry-path }}   ${{env.REPO_NAME }}-api:${{ env.TAG }}
 
           echo "Ecas API tag success"
           
-          #oc tag ${{ steps.push-image-cas.outputs.registry-path }} ${{env.REPO_NAME }}-cas-api:${{ env.TAG_DEV }}
-          oc -n ${{ env.OPENSHIFT_NAMESPACE }} tag ${{ steps.push-image-cas.outputs.registry-path } }}   ${{env.REPO_NAME }}-cas-api:${{ env.TAG }}
+          oc -n ${{ env.OPENSHIFT_NAMESPACE }} tag ${{ steps.push-image-cas.outputs.registry-path }}   ${{env.REPO_NAME }}-cas-api:${{ env.TAG }}
 
 
           echo "CAS API tag success"
