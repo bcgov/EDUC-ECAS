@@ -204,7 +204,7 @@ jobs:
           oc login --token=${{ env.OPENSHIFT_TOKEN }} --server=${{
           env.OPENSHIFT_SERVER }}
 
-          oc project ${{ env.OPENSHIFT_NAMESPACE }}
+          oc project ${{ env.OPENSHIFT_NAMESPACE_DEV  }}
 
           # Cancel any rollouts in progress
 
@@ -222,15 +222,15 @@ jobs:
           oc create imagestream ${{ env.REPO_NAME }}-cas-api> /dev/null || true && echo "CAS API  image stream in place"
 
 
-          oc tag -n ${{ env.OPENSHIFT_NAMESPACE }}   ${{ steps.push-image-frontend.outputs.registry-path }}  ${{ env.REPO_NAME }}-frontend:${{ env.TAG }}
+          oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-frontend.outputs.registry-path }}  ${{ env.REPO_NAME }}-frontend:${{ env.TAG }}
 
           echo "Frontend tag success"
 
-          oc tag -n ${{ env.OPENSHIFT_NAMESPACE }}   ${{ steps.push-image-api.outputs.registry-path }}   ${{env.REPO_NAME }}-api:${{ env.TAG }}
+          oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-api.outputs.registry-path }}   ${{env.REPO_NAME }}-api:${{ env.TAG }}
 
           echo "Ecas API tag success"
           
-          oc tag -n ${{ env.OPENSHIFT_NAMESPACE }}   ${{ steps.push-image-cas.outputs.registry-path }}   ${{env.REPO_NAME }}-cas-api:${{ env.TAG }}
+          oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-cas.outputs.registry-path }}   ${{env.REPO_NAME }}-cas-api:${{ env.TAG }}
 
 
           echo "CAS API tag success"
