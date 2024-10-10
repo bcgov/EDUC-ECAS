@@ -222,7 +222,7 @@ jobs:
           oc create imagestream ${{ env.REPO_NAME }}-cas-api> /dev/null || true && echo "CAS API  image stream in place"
 
 
-          oc tag -n ${{ env.OPENSHIFT_NAMESPACE }}$  {{ steps.push-image-frontend.outputs.registry-path }}  ${{ env.REPO_NAME }}-frontend:${{ env.TAG }}
+          oc tag -n ${{ env.OPENSHIFT_NAMESPACE }}   ${{ steps.push-image-frontend.outputs.registry-path }}  ${{ env.REPO_NAME }}-frontend:${{ env.TAG }}
 
           echo "Frontend tag success"
 
