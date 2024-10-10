@@ -39,7 +39,7 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
-      # When merging to master replace with ref: 'refs/tags/${{ github.event.inputs.version }}',
+    
       - name: Create tag
         uses: actions/github-script@v5
         with:
