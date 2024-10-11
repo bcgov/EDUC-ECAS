@@ -34,7 +34,7 @@
             deploymentconfig: "${APP_NAME}-frontend-${BRANCH}"
         spec:
           containers:
-          - image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${REPO_NAME}-frontend-static:${TAG}
+          - image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${REPO_NAME}-frontend:${TAG}
             imagePullPolicy: Always
             volumeMounts:
             - name: tls-certs
@@ -74,10 +74,10 @@
           volumes:
           - name: tls-certs
             secret:
-              secretName: edx-frontend-cert
+              secretName: ecas-frontend-cert
           - name: config-env
             configMap:
-              name: edx-frontend-config-map
+              name: ecas-frontend-config-map
       test: false
       triggers:
       - type: ConfigChange
@@ -85,7 +85,7 @@
     kind: Service
     metadata:
       annotations:
-        service.alpha.openshift.io/serving-cert-secret-name: "edx-frontend-cert"
+        service.alpha.openshift.io/serving-cert-secret-name: "ecas-frontend-cert"
         openshift.io/generated-by: OpenShiftNewApp
       creationTimestamp:
       labels:
