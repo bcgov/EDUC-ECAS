@@ -47,7 +47,7 @@ jobs:
             github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: 'refs/tags/1.0.2',
+              ref: 'refs/tags/1.0.3',
               sha: context.sha
             })
         
@@ -71,6 +71,6 @@ jobs:
           oc project ${{ env.OPENSHIFT_NAMESPACE_DEV  }}
 
           # when merging to master replace with ${{ github.event.inputs.version }}      
-          oc tag ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-frontend:latest ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-frontend:1.0.2
-          oc tag ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-api:latest ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-api:1.0.2
-          oc tag ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-cas-api:latest ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-cas-api:1.0.2
+          oc tag ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-frontend:latest ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-frontend:1.0.3
+          oc tag ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-api:latest ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-api:1.0.3
+          oc tag ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-cas-api:latest ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-cas-api:1.0.3
