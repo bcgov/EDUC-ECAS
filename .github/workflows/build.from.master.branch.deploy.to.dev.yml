@@ -92,9 +92,6 @@ jobs:
             }
       - name: Check out repository
         uses: actions/checkout@v3
-
-      - name: List files
-        run: ls -R
       
       - name: Determine image tags
         if: env.TAG == ''
