@@ -6,7 +6,9 @@ env:
   REDHAT_REGISTRY_USERNAME: '${{ secrets.REDHAT_REGISTRY_USERNAME }}'
   REDHAT_REGISTRY_PASSWORD: '${{ secrets.REDHAT_REGISTRY_PASSWORD }}'
  
-  PRIVATE_KEY: '${{ secrets.PRIV_KEY }}'
+  APP_KEY: '${{ secrets.APP_KEY}}'
+  API_KEY: '${{ secrets.API_KEY}}'
+  
   SOURCE_REPOSITORY: 'https://github.com/bcgov/EDUC-HUB.git'
   DOTNET_STARTUP_PROJECT: 'CASInterfaceService/cas-interface-service.csproj'
   IMAGE_REGISTRY: 'ghcr.io/${{ github.repository_owner }}'
@@ -16,6 +18,7 @@ env:
   APP_NAME_API: ecas-api
   APP_NAME_CAS: cas-api
   REDHAT_REGISTRY: https://registry.redhat.io
+  DYNAMICSBASEURL: http://ecas-api:8080/api
   DOCKER_ARTIFACTORY_REPO: artifacts.developer.gov.bc.ca/docker-remote
   ARTIFACTORY_REPO: artifacts.developer.gov.bc.ca
   APP_NAME: ecas
