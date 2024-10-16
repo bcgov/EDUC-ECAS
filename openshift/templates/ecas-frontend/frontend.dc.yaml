@@ -82,13 +82,7 @@
                 path: "/"
                 port: ${PORT}
                 scheme: HTTP
-            livenessProbe:
-              timeoutSeconds: 30
-              initialDelaySeconds: 300
-              httpGet:
-                path: "/"
-                port: ${PORT}
-                scheme: HTTP
+          
               
             resources:
               requests:
