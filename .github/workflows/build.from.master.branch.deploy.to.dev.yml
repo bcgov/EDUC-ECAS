@@ -13,18 +13,15 @@ env:
   IMAGE_REGISTRY: 'ghcr.io/${{ github.repository_owner }}'
   IMAGE_REGISTRY_USER: '${{ github.actor }}'
   IMAGE_REGISTRY_PASSWORD: '${{ github.token }}'
-  IMAGE_NAME_FRONTEND: ecas-frontend
-  IMAGE_NAME_API: ecas-api
-  IMAGE_NAME_CAS: cas-api
+  APP_NAME_FRONTEND: ecas-frontend
+  APP_NAME_API: ecas-api
+  APP_NAME_CAS: cas-api
   REDHAT_REGISTRY: https://registry.redhat.io
   DOCKER_ARTIFACTORY_REPO: artifacts.developer.gov.bc.ca/docker-remote
   ARTIFACTORY_REPO: artifacts.developer.gov.bc.ca
   APP_NAME: ecas
   REPO_NAME: educ-ecas
   BRANCH: master
-  APP_NAME_FRONTEND: ecas-frontend
-  APP_NAME_API: ecas-api
-  APP_NAME_CAS: cas-api
   NAMESPACE: '${{ secrets.ECAS_NAMESPACE_NO_ENV }}'
   TAG: "latest"
   MIN_REPLICAS: '1'
@@ -135,7 +132,7 @@ jobs:
         with:
           path_context: ./EDUC-HUB
           builder_image: registry.redhat.io/dotnet/dotnet-21-rhel7
-          image: '${{env.IMAGE_NAME_CAS}}'
+          image: '${{env.APP_NAME_CAS}}'
           tags: ${{ env.TAG }}
           env_vars: |
             DOTNET_STARTUP_PROJECT=${{env.DOTNET_STARTUP_PROJECT}}
@@ -145,7 +142,7 @@ jobs:
         with:
           path_context: ./web-api/Ecas.Dyn365Service
           builder_image: registry.redhat.io/rhel8/dotnet-60
-          image: '${{env.IMAGE_NAME_API }}'
+          image: '${{env.APP_NAME_API }}'
           tags: ${{ env.TAG }}
       - name: Setup and Build Frontend
         id: build-image-frontend
@@ -153,7 +150,7 @@ jobs:
         with:
           path_context: ./web-app
           builder_image: registry.redhat.io/rhscl/php-73-rhel7
-          image: '${{env.IMAGE_NAME_FRONTEND }}'
+          image: '${{env.APP_NAME_FRONTEND }}'
           tags: ${{ env.TAG }}
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -210,11 +207,11 @@ jobs:
 
           # Cancel any rollouts in progress
 
-          oc rollout cancel dc/${{ env.IMAGE_NAME_FRONTEND }} 2> /dev/null || true && echo "No rollout in progress"
+          oc rollout cancel dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null || true && echo "No rollout in progress"
 
-          oc rollout cancel dc/${{ env.IMAGE_NAME_API }} 2> /dev/null || true && echo "No ecas api rollout in progress"
+          oc rollout cancel dc/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "No ecas api rollout in progress"
 
-          oc rollout cancel dc/${{ env.IMAGE_NAME_CAS }} 2> /dev/null  || true && echo "No cas api rollout in progress"
+          oc rollout cancel dc/${{ env.APP_NAME_CAS }} 2> /dev/null  || true && echo "No cas api rollout in progress"
 
 
           # Create the image stream if it doesn't exist
@@ -270,19 +267,19 @@ jobs:
 
           || true && echo "Rollout CAS API in progress"
 
-          oc logs  dc/${{ env.IMAGE_NAME_FRONTEND }}
+          oc logs  dc/${{ env.APP_NAME_FRONTEND }}
           
-          oc logs  dc/${{ env.IMAGE_NAME_API }} 
+          oc logs  dc/${{ env.APP_NAME_API }} 
           
-          oc logs  dc/${{ env.IMAGE_NAME_CAS }} 
+          oc logs  dc/${{ env.APP_NAME_CAS }} 
 
           # Get status, returns 0 if rollout is successful
 
-          oc rollout status dc/${{ env.IMAGE_NAME_FRONTEND }}
+          oc rollout status dc/${{ env.APP_NAME_FRONTEND }}
 
-          oc rollout status dc/${{ env.IMAGE_NAME_API }}
+          oc rollout status dc/${{ env.APP_NAME_API }}
 
-          oc rollout status dc/${{ env.IMAGE_NAME_CAS }}
+          oc rollout status dc/${{ env.APP_NAME_CAS }}
           
           
       - name: ZAP Scan
