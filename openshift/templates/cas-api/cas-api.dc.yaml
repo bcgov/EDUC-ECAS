@@ -158,12 +158,4 @@
   - name: MAX_MEM
     description: The maximum amount of memory
     required: true
-  - name: CA_CERT
-    description: The CA Certificate
-    required: true
-  - name: CERTIFICATE
-    description: The Certificate
-    required: true
-  - name: PRIVATE_KEY
-    description: The private key
-    required: true
+
