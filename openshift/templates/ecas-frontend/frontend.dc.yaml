@@ -47,19 +47,19 @@
               initialDelaySeconds: 300
               httpGet:
                 path: "/"
-                port: 2015
+                port: ${PORT}
                 scheme: HTTP
        
             name: "${APP_NAME}-frontend-${BRANCH}"
             ports:
-            - containerPort: 2015
+            - containerPort: ${PORT}
               protocol: TCP
             readinessProbe:
               timeoutSeconds: 30
               initialDelaySeconds: 3
               httpGet:
                 path: "/"
-                port: 2015
+                port: ${PORT}
                 scheme: HTTP
               
             resources:
@@ -157,4 +157,30 @@
   - name: MAX_MEM
     description: The maximum amount of memory
     required: true
+  - name: APP_KEY
+  displayName: Application Unique KEY
+  from: "[a-zA-Z0-9]{32}"
+  generate: expression
+- name: API_KEY
+  displayName: Unique API KEY
+  from: "[a-zA-Z0-9]{32}"
+  generate: expression
+- name: APP_DEBUG
+  displayName: Application Debug
+  required: true
+  value: "false"
+- name: DOCUMENTROOT
+  displayName: Document Root
+  required: true
+  value: "/public"
+- name: PORT
+  displayName: Port
+  description: The port on which the service will listen.
+  required: true
+  value: "8080"
+- name: DYNAMICSBASEURL
+  displayName: Dynamics API
+  description: The endpoint for the internal Dynamics API component.
+  required: true
+  value: "http://ecas-api:8080/api"
  
