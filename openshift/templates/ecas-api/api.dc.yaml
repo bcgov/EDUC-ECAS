@@ -45,7 +45,7 @@
             livenessProbe:
               failureThreshold: 3
               httpGet:
-                path: "/"
+                path: "/api/environmentinformation"
                 port: 2015
                 scheme: HTTP
               periodSeconds: 10
@@ -58,7 +58,7 @@
             readinessProbe:
               failureThreshold: 3
               httpGet:
-                path: "/"
+                path: "/api/environmentinformation"
                 port: 2015
                 scheme: HTTP
               periodSeconds: 10
