@@ -43,13 +43,7 @@ jobs:
     name: Build and deploy to DEV
     runs-on: ubuntu-24.04
     environment: dev
-    outputs:
-      ROUTE: '${{ steps.deploy-and-expose.outputs.route }}'
-      SELECTOR: '${{ steps.deploy-and-expose.outputs.selector }}'
-      frontend_image: '${{ steps.push-image-frontend.outputs.registry-path }}'
-      api_image: '${{ steps.push-image-api.outputs.registry-path }}'
-      cas_image: '${{ steps.push-image-api.outputs.registry-path }}'
-  
+     
     
     steps:
       - name: Check for required secrets
