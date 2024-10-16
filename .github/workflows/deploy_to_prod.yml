@@ -43,9 +43,6 @@ jobs:
     runs-on: ubuntu-24.04
     environment: prod
 
-    outputs:
-      ROUTE: ${{ steps.deploy-and-expose.outputs.route }}
-      SELECTOR: ${{ steps.deploy-and-expose.outputs.selector }}
 
     steps:
       - name: Check out repository
