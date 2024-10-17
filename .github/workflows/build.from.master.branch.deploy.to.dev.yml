@@ -12,7 +12,7 @@ env:
   DYNAMICS_PASSWORD: '${{ secrets.DYNAMICS_PASSWORD}}' 
   KEYCLOAK_AUTHSERVERURL: '${{ secrets.KEYCLOAK_AUTHSERVERURL}}' 
   KEYCLOAK_REALM: '${{ secrets.KEYCLOAK_REALM}}' 
-  KEYCLOAK_CLIENTID: '${{ secrets.DYNAMICS_USERNAME}}-dev'  
+  KEYCLOAK_CLIENTID: '${{ secrets.KEYCLOAK_CLIENTID}}-dev'  
   
   SOURCE_REPOSITORY: 'https://github.com/bcgov/EDUC-HUB.git'
   DOTNET_STARTUP_PROJECT: 'CASInterfaceService/cas-interface-service.csproj'
