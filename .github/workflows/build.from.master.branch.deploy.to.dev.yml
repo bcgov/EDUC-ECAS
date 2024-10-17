@@ -176,6 +176,7 @@ jobs:
           
       - name: Push frontend to registry
         id: push-image-frontend
+        if: false
         uses: redhat-actions/push-to-registry@v2
         with:
           image: ${{ steps.build-image-frontend.outputs.image }}
