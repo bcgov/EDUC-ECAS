@@ -137,7 +137,6 @@ jobs:
    
       - name: Setup and Build cas api
         id: build-image-cas
-        if: false
         uses: redhat-actions/s2i-build@v2
         with:
           path_context: ./EDUC-HUB
@@ -156,6 +155,7 @@ jobs:
           tags: ${{ env.TAG }}
       - name: Setup and Build Frontend
         id: build-image-frontend
+        if: false
         uses: redhat-actions/s2i-build@v2
         with:
           path_context: ./web-app
