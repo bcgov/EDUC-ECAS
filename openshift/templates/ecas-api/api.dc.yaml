@@ -10,8 +10,7 @@
   - apiVersion: v1
     kind: DeploymentConfig
     metadata:
-      annotations:
-        openshift.io/generated-by: OpenShiftNewApp
+    
       creationTimestamp:
       labels:
         app: "${APP_NAME}-${BRANCH}"
@@ -26,8 +25,7 @@
         type: Rolling
       template:
         metadata:
-          annotations:
-            openshift.io/generated-by: OpenShiftNewApp
+       
           creationTimestamp:
           labels:
             app: "${APP_NAME}-${BRANCH}"
@@ -36,32 +34,56 @@
           containers:
           - image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${REPO_NAME}-api:${TAG}
             imagePullPolicy: Always
-            volumeMounts:
-            - name: tls-certs
-              mountPath: "/etc/tls-certs"
-              readOnly: true
-            - name: config-env
-              mountPath: "/srv/js/config"
-            livenessProbe:
-              timeoutSeconds: 30
-              initialDelaySeconds: 300
-              httpGet:
-                path: "/api/environmentinformation"
-                port: 2015
-                scheme: HTTP
-             
-              
+           
+   
+       
             name: "${APP_NAME}-api-${BRANCH}"
+            env:
+              - name: ASPNETCORE_ENVIRONMENT
+                value: ${ASPNETCORE_ENVIRONMENT}
+              - name: DynamicsAuthenticationSettings__ActiveEnvironment
+                value: ${DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT}
+              - name: DynamicsAuthenticationSettings__CloudWebApiUrl
+                value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL}
+              - name: ECasAPISecuritySettings__UserName
+                value: ${ECASAPISECURITYSETTINGS__USERNAME}
+              - name: ECasAPISecuritySettings__Password
+                value: ${ECASAPISECURITYSETTINGS__PASSWORD}
+              - name: DynamicsAuthenticationSettings__CloudRedirectUrl
+                value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL}
+              - name: DynamicsAuthenticationSettings__CloudResourceUrl
+                value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL}
+              - name: DynamicsAuthenticationSettings__CloudClientId
+                value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDCLIENTID}
+              - name: DynamicsAuthenticationSettings__CloudClientSecret
+                value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDCLIENTSECRET}
+              - name: DynamicsAuthenticationSettings__CloudUserName
+                value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDUSERNAME}
+              - name: TenantId
+                value: ${TENANTID}
+              - name:  DynamicsAuthenticationSettings__CloudBaseUrl
+                value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL}
+              
+            
+         
             ports:
-            - containerPort: 2015
+            - containerPort: 8080
               protocol: TCP
             readinessProbe:
               timeoutSeconds: 30
               initialDelaySeconds: 3
               httpGet:
                 path: "/api/environmentinformation"
-                port: 2015
+                port: 8080
                 scheme: HTTP
+            livenessProbe:
+              timeoutSeconds: 30
+              initialDelaySeconds: 300
+              httpGet:
+                path: "/api/environmentinformation"
+                port: 8080
+                scheme: HTTP
+          
               
             resources:
               requests:
@@ -70,36 +92,31 @@
               limits:
                 cpu: "${MAX_CPU}"
                 memory: "${MAX_MEM}"
-          volumes:
-          - name: tls-certs
-            secret:
-              secretName: ecas-api-cert
-          - name: config-env
-            configMap:
-              name: ecas-api-config-map
+         
       test: false
       triggers:
       - type: ConfigChange
   - apiVersion: v1
     kind: Service
     metadata:
-      annotations:
-        service.alpha.openshift.io/serving-cert-secret-name: "ecas-api-cert"
-        openshift.io/generated-by: OpenShiftNewApp
-      creationTimestamp:
+    
       labels:
         app: "${APP_NAME}-${BRANCH}"
       name: "${APP_NAME}-api-${BRANCH}"
     spec:
       ports:
-      - name: 2015-tcp
-        port: 2015
+      - name: 8080-tcp
+        port: 8080
         protocol: TCP
-        targetPort: 2015
+        targetPort: 8080
       selector:
         app: "${APP_NAME}-${BRANCH}"
         deploymentconfig: "${APP_NAME}-api-${BRANCH}"
- 
+
+
+
+
+   
 
   - apiVersion: autoscaling/v2
     kind: HorizontalPodAutoscaler
@@ -157,4 +174,47 @@
   - name: MAX_MEM
     description: The maximum amount of memory
     required: true
-
+  - name: ASPNETCORE_ENVIRONMENT
+    displayName: ASPNETCORE_ENVIRONMENT
+    required: true
+  - name: DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT
+    displayName: DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT
+    required: true
+    value: Cloud
+  - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL
+    displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL
+    required: true
+    value: https://ecasdev.api.crm3.dynamics.com/api/data/v9.2/
+  - name: ECASAPISECURITYSETTINGS__USERNAME
+    displayName: ECASAPISECURITYSETTINGS__USERNAME
+    required: true
+ 
+  - name: ECASAPISECURITYSETTINGS__PASSWORD
+    displayName: ECASAPISECURITYSETTINGS__PASSWORD
+    required: true
+  - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL
+    displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL
+    required: true
+    value: https://localhost
+  - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL
+    displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL
+    required: true
+    value: https://ecasdev.crm3.dynamics.com/api/data/
+  - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDCLIENTID
+    displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDCLIENTID
+    required: true
+  - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDCLIENTSECRET
+    displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDCLIENTSECRET
+    required: true
+  - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDUSERNAME
+    displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDUSERNAME
+    required: true
+  - name: TENANTID
+    displayName: TENANTID
+    required: true
+  - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL
+    displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL
+    required: true
+    value: https://ecasdev.api.crm3.dynamics.com
+ 
+ 
