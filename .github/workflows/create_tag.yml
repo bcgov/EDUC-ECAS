@@ -1,0 +1,71 @@
+name: Create Tag
+
+env:
+
+
+  OPENSHIFT_SERVER: '${{ secrets.OPENSHIFT_SERVER }}'
+  OPENSHIFT_TOKEN: '${{ secrets.OPENSHIFT_TOKEN }}'
+  OPENSHIFT_NAMESPACE_DEV: '${{ secrets.ECAS_NAMESPACE_NO_ENV }}-dev'
+
+  # 🖊️ EDIT to specify custom tags for the container image, or default tags will be generated below.
+  IMAGE_TAGS: ""
+
+  REPO_NAME: educ-ecas
+  BRANCH: test_github_actions
+  NAMESPACE: '${{ secrets.ECAS_NAMESPACE_NO_ENV }}'
+
+on:
+  # https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version Number'
+        required: true
+
+
+
+jobs:
+  tag_image:
+    name: Tag Image
+    runs-on: ubuntu-24.04
+    environment: dev
+
+  
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+       # When merging to master replace with ref: 'refs/tags/${{ github.event.inputs.version }}',
+      - name: Create tag
+        uses: actions/github-script@v5
+        with:
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/${{ github.event.inputs.version }}',
+              sha: context.sha
+            })
+        
+
+      - name: Install oc
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          oc: 4
+
+        # https://github.com/redhat-actions/oc-login#readme
+      - uses: actions/checkout@v2
+      - name: Tag in OpenShift
+        run: |
+          set -eux
+   
+          # Login to OpenShift and select project
+          
+          oc login --token=${{ env.OPENSHIFT_TOKEN }} --server=${{
+          env.OPENSHIFT_SERVER }}
+
+          oc project ${{ env.OPENSHIFT_NAMESPACE_DEV  }}
+
+          # when merging to master replace with ${{ github.event.inputs.version }}      
+          oc tag ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-frontend:latest ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-frontend:${{ github.event.inputs.version }}
+          oc tag ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-api:latest ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-api:${{ github.event.inputs.version }}
+          oc tag ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-cas-api:latest ${{ env.NAMESPACE }}-dev/${{ env.REPO_NAME }}-cas-api:${{ github.event.inputs.version }}
