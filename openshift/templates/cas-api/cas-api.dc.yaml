@@ -1,8 +1,7 @@
 
   apiVersion: template.openshift.io/v1
   kind: Template
-  labels:
-    template: "${REPO_NAME}-template"
+ 
   metadata:
     name: "${REPO_NAME}-cas-api-dc"
     creationTimestamp:
@@ -10,8 +9,7 @@
   - apiVersion: v1
     kind: DeploymentConfig
     metadata:
-      annotations:
-        openshift.io/generated-by: OpenShiftNewApp
+    
       creationTimestamp:
       labels:
         app: "${APP_NAME}-${BRANCH}"
@@ -26,8 +24,7 @@
         type: Rolling
       template:
         metadata:
-          annotations:
-            openshift.io/generated-by: OpenShiftNewApp
+       
           creationTimestamp:
           labels:
             app: "${APP_NAME}-${BRANCH}"
@@ -36,32 +33,51 @@
           containers:
           - image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${REPO_NAME}-cas-api:${TAG}
             imagePullPolicy: Always
-            volumeMounts:
-            - name: tls-certs
-              mountPath: "/etc/tls-certs"
-              readOnly: true
-            - name: config-env
-              mountPath: "/srv/js/config"
-            livenessProbe:
-              
-              timeoutSeconds: 30
-              initialDelaySeconds: 300
-              httpGet:
-                path: "/"
-                port: 2015
-                scheme: HTTP
-             
+           
+   
+       
             name: "${APP_NAME}-cas-api-${BRANCH}"
+            env:
+              - name: APP_KEY
+                value: ${APP_KEY}
+              - name: API_KEY
+                value: ${API_KEY}
+              - name: APP_DEBUG
+                value: ${APP_DEBUG}
+              - name: DOCUMENTROOT
+                value: ${DOCUMENTROOT}
+              - name: DYNAMICSBASEURL
+                value: ${DYNAMICSBASEURL}
+              - name: DYNAMICS_USERNAME
+                value: ${DYNAMICS_USERNAME}
+              - name: DYNAMICS_PASSWORD
+                value: ${DYNAMICS_PASSWORD}
+              - name: KEYCLOAK_AUTHSERVERURL
+                value: ${KEYCLOAK_AUTHSERVERURL}
+              - name: KEYCLOAK_REALM
+                value: ${KEYCLOAK_REALM}
+              - name: KEYCLOAK_CLIENTID
+                value: ${KEYCLOAK_CLIENTID}
+            
+         
             ports:
-            - containerPort: 2015
+            - containerPort: 8080
               protocol: TCP
             readinessProbe:
               timeoutSeconds: 30
               initialDelaySeconds: 3
               httpGet:
                 path: "/"
-                port: 2015
+                port: 8080
                 scheme: HTTP
+            livenessProbe:
+              timeoutSeconds: 30
+              initialDelaySeconds: 300
+              httpGet:
+                path: "/"
+                port: 8080
+                scheme: HTTP
+          
               
             resources:
               requests:
@@ -70,37 +86,32 @@
               limits:
                 cpu: "${MAX_CPU}"
                 memory: "${MAX_MEM}"
-          volumes:
-          - name: tls-certs
-            secret:
-              secretName: ecas-cas-api-cert
-          - name: config-env
-            configMap:
-              name: ecas-cas-api-config-map
+         
       test: false
       triggers:
       - type: ConfigChange
   - apiVersion: v1
     kind: Service
     metadata:
-      annotations:
-        service.alpha.openshift.io/serving-cert-secret-name: "ecas-cas-api-cert"
-        openshift.io/generated-by: OpenShiftNewApp
-      creationTimestamp:
+    
       labels:
         app: "${APP_NAME}-${BRANCH}"
       name: "${APP_NAME}-cas-api-${BRANCH}"
     spec:
       ports:
-      - name: 2015-tcp
-        port: 2015
+      - name: 8080-tcp
+        port: 8080
         protocol: TCP
-        targetPort: 2015
+        targetPort: 8080
       selector:
         app: "${APP_NAME}-${BRANCH}"
         deploymentconfig: "${APP_NAME}-cas-api-${BRANCH}"
 
- 
+
+
+
+   
+
   - apiVersion: autoscaling/v2
     kind: HorizontalPodAutoscaler
     metadata:
@@ -157,4 +168,23 @@
   - name: MAX_MEM
     description: The maximum amount of memory
     required: true
-
+  
+  - name: ASPNETCORE_ENVIRONMENT
+    displayName: ASPNETCORE_ENVIRONMENT
+    required: true
+    value: "Production"
+  - name: CAS_API_SERVER
+    displayName: CAS_API_SERVER
+    required: true
+    value: "https://cfs-systws.cas.gov.bc.ca:7026"
+  - name: CAS_TOKEN_URI
+    displayName: CAS_TOKEN_URI
+    required: true
+    value: "/ords/cas/oauth/token"
+  - name: CAS_INVOICE_URI
+    displayName: CAS_INVOICE_URI
+    required: true
+    value: "/ords/cas/cfs/apinvoice/"
+    
+    
+ 
