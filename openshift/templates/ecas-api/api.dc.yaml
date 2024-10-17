@@ -175,7 +175,7 @@
     required: true
   - name: ASPNETCORE_ENVIRONMENT
     displayName: ASPNETCORE_ENVIRONMENT
-    #required: true
+    required: true
   - name: DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT
     displayName: DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT
     required: true
@@ -186,11 +186,11 @@
     value: https://ecasdev.api.crm3.dynamics.com/api/data/v9.2/
   - name: ECASAPISECURITYSETTINGS__USERNAME
     displayName: ECASAPISECURITYSETTINGS__USERNAME
-    #required: true
+    required: true
  
   - name: ECASAPISECURITYSETTINGS__PASSWORD
     displayName: ECASAPISECURITYSETTINGS__PASSWORD
-    #required: true
+    required: true
   - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL
     displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL
     required: true
@@ -201,16 +201,16 @@
     value: https://ecasdev.crm3.dynamics.com/api/data/
   - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDCLIENTID
     displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDCLIENTID
-    #required: true
+    required: true
   - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDCLIENTSECRET
     displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDCLIENTSECRET
-    #required: true
+    required: true
   - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDUSERNAME
     displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDUSERNAME
-    #required: true
+    required: true
   - name: TENANTID
     displayName: TENANTID
-    #required: true
+    required: true
   - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL
     displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL
     required: true
