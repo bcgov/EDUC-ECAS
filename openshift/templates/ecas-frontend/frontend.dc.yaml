@@ -69,21 +69,21 @@
             
          
             ports:
-            - containerPort: ${{PORT}}
+            - containerPort: 8080
               protocol: TCP
             readinessProbe:
               timeoutSeconds: 30
               initialDelaySeconds: 3
               httpGet:
                 path: "/"
-                port: ${{PORT}}
+                port: 8080
                 scheme: HTTP
             livenessProbe:
               timeoutSeconds: 30
               initialDelaySeconds: 300
               httpGet:
                 path: "/"
-                port: ${{PORT}}
+                port: 8080
                 scheme: HTTP
           
               
@@ -113,10 +113,10 @@
       name: "${APP_NAME}-frontend-${BRANCH}"
     spec:
       ports:
-      - name: ${{PORT}}-tcp
-        port: ${{PORT}}
+      - name: 8080-tcp
+        port: 8080
         protocol: TCP
-        targetPort: ${{PORT}}
+        targetPort: 8080
       selector:
         app: "${APP_NAME}-${BRANCH}"
         deploymentconfig: "${APP_NAME}-frontend-${BRANCH}"
@@ -198,11 +198,7 @@
     displayName: Document Root
     required: true
     value: "/public"
-  - name: PORT
-    displayName: Port
-    description: The port on which the service will listen.
-    required: true
-    value: "8080"
+ 
   - name: DYNAMICSBASEURL
     displayName: Dynamics API
     description: The endpoint for the internal Dynamics API component.
