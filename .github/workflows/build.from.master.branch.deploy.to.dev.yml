@@ -55,7 +55,7 @@ env:
   push:
     branches:
       - master
-      - test_github_actions
+      
 jobs:
   build-and-deploy-dev:
     name: Build and deploy to DEV
