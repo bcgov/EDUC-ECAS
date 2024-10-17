@@ -10,8 +10,7 @@
   - apiVersion: v1
     kind: DeploymentConfig
     metadata:
-      annotations:
-        openshift.io/generated-by: OpenShiftNewApp
+    
       creationTimestamp:
       labels:
         app: "${APP_NAME}-${BRANCH}"
@@ -26,8 +25,7 @@
         type: Rolling
       template:
         metadata:
-          annotations:
-            openshift.io/generated-by: OpenShiftNewApp
+       
           creationTimestamp:
           labels:
             app: "${APP_NAME}-${BRANCH}"
@@ -36,12 +34,7 @@
           containers:
           - image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${REPO_NAME}-frontend:${TAG}
             imagePullPolicy: Always
-            volumeMounts:
-            - name: tls-certs
-              mountPath: "/etc/tls-certs"
-              readOnly: true
-            - name: config-env
-              mountPath: "/srv/js/config"
+           
    
        
             name: "${APP_NAME}-frontend-${BRANCH}"
@@ -94,13 +87,7 @@
               limits:
                 cpu: "${MAX_CPU}"
                 memory: "${MAX_MEM}"
-          volumes:
-          - name: tls-certs
-            secret:
-              secretName: ecas-frontend-cert
-          - name: config-env
-            configMap:
-              name: ecas-frontend-config-map
+         
       test: false
       triggers:
       - type: ConfigChange
