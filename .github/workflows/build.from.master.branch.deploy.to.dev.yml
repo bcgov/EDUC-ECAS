@@ -155,7 +155,6 @@ jobs:
           tags: ${{ env.TAG }}
       - name: Setup and Build Frontend
         id: build-image-frontend
-        if: false
         uses: redhat-actions/s2i-build@v2
         with:
           path_context: ./web-app
@@ -176,7 +175,6 @@ jobs:
           
       - name: Push frontend to registry
         id: push-image-frontend
-        if: false
         uses: redhat-actions/push-to-registry@v2
         with:
           image: ${{ steps.build-image-frontend.outputs.image }}
@@ -232,7 +230,7 @@ jobs:
           oc create imagestream ${{ env.REPO_NAME }}-cas-api> /dev/null || true && echo "CAS API  image stream in place"
 
 
-          #oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-frontend.outputs.registry-path }}  ${{ env.REPO_NAME }}-frontend:${{ env.TAG }}
+          oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-frontend.outputs.registry-path }}  ${{ env.REPO_NAME }}-frontend:${{ env.TAG }}
 
           echo "Frontend tag success"
 
@@ -247,8 +245,8 @@ jobs:
           
           # Process and apply deployment template
           
-          #oc process -f ./openshift/templates/ecas-frontend/frontend.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }} -p BRANCH=${{ env.BRANCH }} -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE}} -p APP_KEY=${{env.APP_KEY}} -p API_KEY=${{env.API_KEY}} -p DYNAMICS_USERNAME=${{env.DYNAMICS_USERNAME}} -p DYNAMICS_PASSWORD=${{env.DYNAMICS_PASSWORD}} -p KEYCLOAK_AUTHSERVERURL=${{env.KEYCLOAK_AUTHSERVERURL}} -p KEYCLOAK_REALM=${{env.KEYCLOAK_REALM}} -p KEYCLOAK_CLIENTID=${{env.KEYCLOAK_CLIENTID}}\
-          #| oc apply -f -
+          oc process -f ./openshift/templates/ecas-frontend/frontend.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }} -p BRANCH=${{ env.BRANCH }} -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE}} -p APP_KEY=${{env.APP_KEY}} -p API_KEY=${{env.API_KEY}} -p DYNAMICS_USERNAME=${{env.DYNAMICS_USERNAME}} -p DYNAMICS_PASSWORD=${{env.DYNAMICS_PASSWORD}} -p KEYCLOAK_AUTHSERVERURL=${{env.KEYCLOAK_AUTHSERVERURL}} -p KEYCLOAK_REALM=${{env.KEYCLOAK_REALM}} -p KEYCLOAK_CLIENTID=${{env.KEYCLOAK_CLIENTID}}\
+          | oc apply -f -
 
 
 
