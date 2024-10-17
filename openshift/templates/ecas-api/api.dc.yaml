@@ -1,8 +1,7 @@
 
   apiVersion: template.openshift.io/v1
   kind: Template
-  labels:
-    template: "${REPO_NAME}-template"
+ 
   metadata:
     name: "${REPO_NAME}-api-dc"
     creationTimestamp:
