@@ -51,6 +51,8 @@
                     key: API_KEY
               - name: APP_DEBUG
                 value: ${APP_DEBUG}
+              - name: DYNAMICSBASEURL
+                value: ${DYNAMICSBASEURL}
               - name: DOCUMENTROOT
                 value: ${DOCUMENTROOT}
               - name: DYNAMICS_USERNAME
