@@ -3,7 +3,7 @@
   kind: Template
  
   metadata:
-    name: "${REPO_NAME}-cas-api-dc"
+    name: "cas-api-dc"
     creationTimestamp:
   objects:
   - apiVersion: v1
@@ -12,13 +12,13 @@
     
       creationTimestamp:
       labels:
-        app: "${APP_NAME}-${BRANCH}"
-      name: "${APP_NAME}-cas-api-${BRANCH}"
+        app: "${APP_NAME}"
+      name: "cas-api"
     spec:
       replicas: ${{MIN_REPLICAS}}
       selector:
-        app: "${APP_NAME}-${BRANCH}"
-        deploymentconfig: "${APP_NAME}-cas-api-${BRANCH}"
+        app: "${APP_NAME}"
+        deploymentconfig: "cas-api"
       strategy:
         resources: {}
         type: Rolling
@@ -27,8 +27,8 @@
        
           creationTimestamp:
           labels:
-            app: "${APP_NAME}-${BRANCH}"
-            deploymentconfig: "${APP_NAME}-cas-api-${BRANCH}"
+            app: "${APP_NAME}"
+            deploymentconfig: "cas-api"
         spec:
           containers:
           - image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${REPO_NAME}-cas-api:${TAG}
@@ -36,7 +36,7 @@
            
    
        
-            name: "${APP_NAME}-cas-api-${BRANCH}"
+            name: "cas-api"
             env:
               - name: ASPNETCORE_ENVIRONMENT
                 value: ${ASPNETCORE_ENVIRONMENT}
@@ -84,8 +84,8 @@
     metadata:
     
       labels:
-        app: "${APP_NAME}-${BRANCH}"
-      name: "${APP_NAME}-cas-api-${BRANCH}"
+        app: "${APP_NAME}"
+      name: "cas-api"
     spec:
       ports:
       - name: 8080-tcp
@@ -93,8 +93,8 @@
         protocol: TCP
         targetPort: 8080
       selector:
-        app: "${APP_NAME}-${BRANCH}"
-        deploymentconfig: "${APP_NAME}-cas-api-${BRANCH}"
+        app: "${APP_NAME}"
+        deploymentconfig: "cas-api"
 
 
 
@@ -104,12 +104,12 @@
   - apiVersion: autoscaling/v2
     kind: HorizontalPodAutoscaler
     metadata:
-      name: "${APP_NAME}-cas-api-${BRANCH}-cpu-autoscaler"
+      name: "cas-api-cpu-autoscaler"
     spec:
       scaleTargetRef:
         apiVersion: apps.openshift.io/v1
         kind: DeploymentConfig
-        name: "${APP_NAME}-cas-api-${BRANCH}"
+        name: "cas-api"
         subresource: scale
       minReplicas: ${{MIN_REPLICAS}}
       maxReplicas: ${{MAX_REPLICAS}}
@@ -124,9 +124,7 @@
   - name: REPO_NAME
     description: Application repository name
     required: true
-  - name: BRANCH
-    description: Job identifier (i.e. 'pr-5' OR 'master')
-    required: true
+
   - name: NAMESPACE
     description: Target namespace reference (i.e. 'k8vopl-dev')
     required: true
