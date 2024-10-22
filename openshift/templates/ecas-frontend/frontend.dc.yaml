@@ -42,12 +42,12 @@
               - name: APP_KEY
                 valueFrom:
                   secretKeyRef:
-                    name: ecas_frontend
+                    name: ecas-frontend
                     key: APP_KEY
               - name: API_KEY
                 valueFrom:
                   secretKeyRef:
-                    name: ecas_frontend
+                    name: ecas-frontend
                     key: API_KEY
               - name: APP_DEBUG
                 value: ${APP_DEBUG}
@@ -66,17 +66,17 @@
               - name: KEYCLOAK_AUTHSERVERURL
                 valueFrom:
                   secretKeyRef:
-                    name: ecas_frontend
+                    name: ecas-frontend
                     key: keycloak-url
               - name: KEYCLOAK_REALM
                 valueFrom:
                   secretKeyRef:
-                    name: ecas_frontend
+                    name: ecas-frontend
                     key: keycloak-realm
               - name: KEYCLOAK_CLIENTID                
                 valueFrom:
                   secretKeyRef:
-                    name: ecas_frontend
+                    name: ecas-frontend
                     key: keycloak-clientId
            
             
