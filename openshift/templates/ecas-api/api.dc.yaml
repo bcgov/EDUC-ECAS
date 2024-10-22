@@ -45,21 +45,36 @@
               - name: DynamicsAuthenticationSettings__CloudWebApiUrl
                 value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL}
               - name: ECasAPISecuritySettings__UserName
-                value: ${ECASAPISECURITYSETTINGS__USERNAME}
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas-api-credentials
+                    key: username
               - name: ECasAPISecuritySettings__Password
-                value: ${ECASAPISECURITYSETTINGS__PASSWORD}
+                 valueFrom:
+                  secretKeyRef:
+                    name: ecas-api-credentials
+                    key: password
               - name: DynamicsAuthenticationSettings__CloudRedirectUrl
                 value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL}
               - name: DynamicsAuthenticationSettings__CloudResourceUrl
                 value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL}
               - name: DynamicsAuthenticationSettings__CloudClientId
-                value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDCLIENTID}
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas-api-credentials
+                    key: DynamicsAuthenticationSettings__CloudClientId
               - name: DynamicsAuthenticationSettings__CloudClientSecret
-                value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDCLIENTSECRET}
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas-api-credentials
+                    key: DynamicsAuthenticationSettings__CloudClientSecret 
               - name: DynamicsAuthenticationSettings__CloudUserName
                 value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDUSERNAME}
               - name: TenantId
-                value: ${TENANTID}
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas-api-credentials
+                    key: TenantId  
               - name:  DynamicsAuthenticationSettings__CloudBaseUrl
                 value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL}
               
@@ -184,13 +199,6 @@
     displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL
     required: true
     value: https://ecasdev.api.crm3.dynamics.com/api/data/v9.2/
-  - name: ECASAPISECURITYSETTINGS__USERNAME
-    displayName: ECASAPISECURITYSETTINGS__USERNAME
-    required: true
- 
-  - name: ECASAPISECURITYSETTINGS__PASSWORD
-    displayName: ECASAPISECURITYSETTINGS__PASSWORD
-    required: true
   - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL
     displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL
     required: true
@@ -199,16 +207,7 @@
     displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL
     required: true
     value: https://ecasdev.crm3.dynamics.com/api/data/
-  - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDCLIENTID
-    displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDCLIENTID
-    required: true
-  - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDCLIENTSECRET
-    displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDCLIENTSECRET
-    required: true
-  - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDUSERNAME
-    displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDUSERNAME
-    required: true
-  - name: TENANTID
+    - name: TENANTID
     displayName: TENANTID
     required: true
   - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL
