@@ -13,13 +13,13 @@
     
       creationTimestamp:
       labels:
-        app: "${APP_NAME}-${BRANCH}"
-      name: "${APP_NAME}-frontend-${BRANCH}"
+        app: "${APP_NAME}"
+      name: "${APP_NAME}-frontend"
     spec:
       replicas: ${{MIN_REPLICAS}}
       selector:
-        app: "${APP_NAME}-${BRANCH}"
-        deploymentconfig: "${APP_NAME}-frontend-${BRANCH}"
+        app: "${APP_NAME}"
+        deploymentconfig: "${APP_NAME}-frontend"
       strategy:
         resources: {}
         type: Rolling
@@ -28,8 +28,8 @@
        
           creationTimestamp:
           labels:
-            app: "${APP_NAME}-${BRANCH}"
-            deploymentconfig: "${APP_NAME}-frontend-${BRANCH}"
+            app: "${APP_NAME}"
+            deploymentconfig: "${APP_NAME}-frontend"
         spec:
           containers:
           - image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${REPO_NAME}-frontend:${TAG}
@@ -37,7 +37,7 @@
            
    
        
-            name: "${APP_NAME}-frontend-${BRANCH}"
+            name: "${APP_NAME}-frontend"
             env:
               - name: APP_KEY
                 valueFrom:
@@ -118,8 +118,8 @@
     metadata:
     
       labels:
-        app: "${APP_NAME}-${BRANCH}"
-      name: "${APP_NAME}-frontend-${BRANCH}"
+        app: "${APP_NAME}"
+      name: "${APP_NAME}-frontend"
     spec:
       ports:
       - name: 8080-tcp
@@ -127,8 +127,8 @@
         protocol: TCP
         targetPort: 8080
       selector:
-        app: "${APP_NAME}-${BRANCH}"
-        deploymentconfig: "${APP_NAME}-frontend-${BRANCH}"
+        app: "${APP_NAME}"
+        deploymentconfig: "${APP_NAME}-frontend"
 
 
 
@@ -138,12 +138,12 @@
   - apiVersion: autoscaling/v2
     kind: HorizontalPodAutoscaler
     metadata:
-      name: "${APP_NAME}-frontend-${BRANCH}-cpu-autoscaler"
+      name: "${APP_NAME}-frontend-cpu-autoscaler"
     spec:
       scaleTargetRef:
         apiVersion: apps.openshift.io/v1
         kind: DeploymentConfig
-        name: "${APP_NAME}-frontend-${BRANCH}"
+        name: "${APP_NAME}-frontend"
         subresource: scale
       minReplicas: ${{MIN_REPLICAS}}
       maxReplicas: ${{MAX_REPLICAS}}
@@ -158,9 +158,7 @@
   - name: REPO_NAME
     description: Application repository name
     required: true
-  - name: BRANCH
-    description: Job identifier (i.e. 'pr-5' OR 'master')
-    required: true
+  
   - name: NAMESPACE
     description: Target namespace reference (i.e. 'k8vopl-dev')
     required: true
