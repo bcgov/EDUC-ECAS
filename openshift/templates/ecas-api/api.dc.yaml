@@ -207,7 +207,7 @@
     displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL
     required: true
     value: https://ecasdev.crm3.dynamics.com/api/data/
-    - name: TENANTID
+  - name: TENANTID
     displayName: TENANTID
     required: true
   - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL
