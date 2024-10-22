@@ -50,7 +50,7 @@
                     name: ecas-api-credentials
                     key: username
               - name: ECasAPISecuritySettings__Password
-                 valueFrom:
+                valueFrom:
                   secretKeyRef:
                     name: ecas-api-credentials
                     key: password
