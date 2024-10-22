@@ -69,7 +69,10 @@
                     name: ecas-api-credentials
                     key: DynamicsAuthenticationSettings__CloudClientSecret 
               - name: DynamicsAuthenticationSettings__CloudUserName
-                value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDUSERNAME}
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas-api-credentials
+                    key: DynamicsAuthenticationSettings__CloudUserName
               - name: TenantId
                 valueFrom:
                   secretKeyRef:
