@@ -55,6 +55,7 @@ env:
   push:
     branches:
       - master
+      - test_github_actions
      
       
 jobs:
