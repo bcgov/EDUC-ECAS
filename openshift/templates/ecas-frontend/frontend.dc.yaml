@@ -40,25 +40,45 @@
             name: "${APP_NAME}-frontend-${BRANCH}"
             env:
               - name: APP_KEY
-                value: ${APP_KEY}
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas_frontend
+                    key: APP_KEY
               - name: API_KEY
-                value: ${API_KEY}
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas_frontend
+                    key: API_KEY
               - name: APP_DEBUG
                 value: ${APP_DEBUG}
               - name: DOCUMENTROOT
                 value: ${DOCUMENTROOT}
-              - name: DYNAMICSBASEURL
-                value: ${DYNAMICSBASEURL}
               - name: DYNAMICS_USERNAME
-                value: ${DYNAMICS_USERNAME}
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas-api-credentials
+                    key:  username
               - name: DYNAMICS_PASSWORD
-                value: ${DYNAMICS_PASSWORD}
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas-api-credentials
+                    key: password
               - name: KEYCLOAK_AUTHSERVERURL
-                value: ${KEYCLOAK_AUTHSERVERURL}
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas_frontend
+                    key: keycloak-url
               - name: KEYCLOAK_REALM
-                value: ${KEYCLOAK_REALM}
-              - name: KEYCLOAK_CLIENTID
-                value: ${KEYCLOAK_CLIENTID}
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas_frontend
+                    key: keycloak-realm
+              - name: KEYCLOAK_CLIENTID                
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas_frontend
+                    key: keycloak-clientId
+           
             
          
             ports:
@@ -191,24 +211,5 @@
     description: The endpoint for the internal Dynamics API component.
     required: true
     value: "http://ecas-api:8080/api"  
-  - name: DYNAMICS_USERNAME
-    displayName: DYNAMICS_USERNAME
-    description: DYNAMICS_USERNAME
-    required: true
-  - name: DYNAMICS_PASSWORD
-    displayName: DYNAMICS_PASSWORD
-    description: DYNAMICS_PASSWORD
-    required: true
-  - name: KEYCLOAK_AUTHSERVERURL
-    displayName: KEYCLOAK_AUTHSERVERURL
-    description: KEYCLOAK_AUTHSERVERURL
-    required: true
-  - name: KEYCLOAK_REALM
-    displayName: KEYCLOAK_REALM
-    description: KEYCLOAK_REALM
-    required: true
-  - name: KEYCLOAK_CLIENTID
-    displayName: KEYCLOAK_CLIENTID
-    description: KEYCLOAK_CLIENTID
-    required: true
+  
  
