@@ -1,0 +1,216 @@
+
+  apiVersion: template.openshift.io/v1
+  kind: Template
+ 
+  metadata:
+    name: "${REPO_NAME}-api-dc"
+    creationTimestamp:
+  objects:
+  - apiVersion: v1
+    kind: DeploymentConfig
+    metadata:
+    
+      creationTimestamp:
+      labels:
+        app: "${APP_NAME}"
+      name: "${APP_NAME}-api"
+    spec:
+      replicas: ${{MIN_REPLICAS}}
+      selector:
+        app: "${APP_NAME}"
+        deploymentconfig: "${APP_NAME}-api"
+      strategy:
+        resources: {}
+        type: Rolling
+      template:
+        metadata:
+       
+          creationTimestamp:
+          labels:
+            app: "${APP_NAME}"
+            deploymentconfig: "${APP_NAME}-api"
+        spec:
+          containers:
+          - image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${REPO_NAME}-api:${TAG}
+            imagePullPolicy: Always
+           
+   
+       
+            name: "${APP_NAME}-api"
+            env:
+              - name: ASPNETCORE_ENVIRONMENT
+                value: ${ASPNETCORE_ENVIRONMENT}
+              - name: DynamicsAuthenticationSettings__ActiveEnvironment
+                value: ${DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT}
+              - name: DynamicsAuthenticationSettings__CloudWebApiUrl
+                value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL}
+              - name: ECasAPISecuritySettings__UserName
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas-api-credentials
+                    key: username
+              - name: ECasAPISecuritySettings__Password
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas-api-credentials
+                    key: password
+              - name: DynamicsAuthenticationSettings__CloudRedirectUrl
+                value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL}
+              - name: DynamicsAuthenticationSettings__CloudResourceUrl
+                value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL}
+              - name: DynamicsAuthenticationSettings__CloudClientId
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas-api-credentials
+                    key: DynamicsAuthenticationSettings__CloudClientId
+              - name: DynamicsAuthenticationSettings__CloudClientSecret
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas-api-credentials
+                    key: DynamicsAuthenticationSettings__CloudClientSecret 
+              - name: DynamicsAuthenticationSettings__CloudUserName
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas-api-credentials
+                    key: DynamicsAuthenticationSettings__CloudUserName
+              - name: TenantId
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas-api-credentials
+                    key: TenantId  
+              - name:  DynamicsAuthenticationSettings__CloudBaseUrl
+                value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL}
+              
+            
+         
+            ports:
+            - containerPort: 8080
+              protocol: TCP
+            readinessProbe:
+              timeoutSeconds: 30
+              initialDelaySeconds: 3
+              httpGet:
+                path: "/api/environmentinformation"
+                port: 8080
+                scheme: HTTP
+            livenessProbe:
+              timeoutSeconds: 30
+              initialDelaySeconds: 300
+              httpGet:
+                path: "/api/environmentinformation"
+                port: 8080
+                scheme: HTTP
+          
+              
+            resources:
+              requests:
+                cpu: "${MIN_CPU}"
+                memory: "${MIN_MEM}"
+              limits:
+                cpu: "${MAX_CPU}"
+                memory: "${MAX_MEM}"
+         
+      test: false
+      triggers:
+      - type: ConfigChange
+  - apiVersion: v1
+    kind: Service
+    metadata:
+    
+      labels:
+        app: "${APP_NAME}"
+      name: "${APP_NAME}-api"
+    spec:
+      ports:
+      - name: 8080-tcp
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+      selector:
+        app: "${APP_NAME}"
+        deploymentconfig: "${APP_NAME}-api"
+
+
+
+
+   
+
+  - apiVersion: autoscaling/v2
+    kind: HorizontalPodAutoscaler
+    metadata:
+      name: "${APP_NAME}-api-cpu-autoscaler"
+    spec:
+      scaleTargetRef:
+        apiVersion: apps.openshift.io/v1
+        kind: DeploymentConfig
+        name: "${APP_NAME}-api"
+        subresource: scale
+      minReplicas: ${{MIN_REPLICAS}}
+      maxReplicas: ${{MAX_REPLICAS}}
+      metrics:
+        - type: Resource
+          resource:
+            name: cpu
+            target:
+              type: Utilization
+              averageUtilization: 90
+  parameters:
+  - name: REPO_NAME
+    description: Application repository name
+    required: true
+  
+  - name: NAMESPACE
+    description: Target namespace reference (i.e. 'k8vopl-dev')
+    required: true
+  - name: APP_NAME
+    description: Application name
+    required: true
+  - name: HOST_ROUTE
+    description: The host the route will use to expose service outside cluster
+    required: true
+  - name: TAG
+    description: The identifying tag for this specific deployment
+    required: true
+  - name: MIN_REPLICAS
+    description: The minimum amount of replicas
+    required: true
+  - name: MAX_REPLICAS
+    description: The maximum amount of replicas
+    required: true
+  - name: MIN_CPU
+    description: The minimum amount of cpu
+    required: true
+  - name: MAX_CPU
+    description: The maximum amount of cpu
+    required: true
+  - name: MIN_MEM
+    description: The minimum amount of memory
+    required: true
+  - name: MAX_MEM
+    description: The maximum amount of memory
+    required: true
+  - name: ASPNETCORE_ENVIRONMENT
+    displayName: ASPNETCORE_ENVIRONMENT
+    required: true
+  - name: DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT
+    displayName: DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT
+    required: true
+    value: Cloud
+  - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL
+    displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL
+    required: true
+    value: https://ecasdev.api.crm3.dynamics.com/api/data/v9.2/
+  - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL
+    displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL
+    required: true
+    value: https://localhost
+  - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL
+    displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL
+    required: true
+    value: https://ecasdev.crm3.dynamics.com/api/data/
+  - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL
+    displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL
+    required: true
+    value: https://ecasdev.api.crm3.dynamics.com
+ 
+ 

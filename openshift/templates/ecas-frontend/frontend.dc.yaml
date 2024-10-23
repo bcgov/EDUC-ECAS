@@ -1,0 +1,209 @@
+
+  apiVersion: template.openshift.io/v1
+  kind: Template
+  labels:
+    template: "${REPO_NAME}-template"
+  metadata:
+    name: "${REPO_NAME}-frontend-dc"
+    creationTimestamp:
+  objects:
+  - apiVersion: v1
+    kind: DeploymentConfig
+    metadata:
+    
+      creationTimestamp:
+      labels:
+        app: "${APP_NAME}"
+      name: "${APP_NAME}-frontend"
+    spec:
+      replicas: ${{MIN_REPLICAS}}
+      selector:
+        app: "${APP_NAME}"
+        deploymentconfig: "${APP_NAME}-frontend"
+      strategy:
+        resources: {}
+        type: Rolling
+      template:
+        metadata:
+       
+          creationTimestamp:
+          labels:
+            app: "${APP_NAME}"
+            deploymentconfig: "${APP_NAME}-frontend"
+        spec:
+          containers:
+          - image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${REPO_NAME}-frontend:${TAG}
+            imagePullPolicy: Always
+           
+   
+       
+            name: "${APP_NAME}-frontend"
+            env:
+              - name: APP_DEBUG
+                value: ${APP_DEBUG}
+              - name: DYNAMICSBASEURL
+                value: ${DYNAMICSBASEURL}
+              - name: DOCUMENTROOT
+                value: ${DOCUMENTROOT}
+              - name: DYNAMICS_USERNAME
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas-api-credentials
+                    key:  username
+              - name: DYNAMICS_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas-api-credentials
+                    key: password
+              - name: KEYCLOAK_AUTHSERVERURL
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas-frontend
+                    key: keycloak-url
+              - name: KEYCLOAK_REALM
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas-frontend
+                    key: keycloak-realm
+              - name: KEYCLOAK_CLIENTID                
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas-frontend
+                    key: keycloak-clientId 
+              - name: APP_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas-frontend
+                    key: APP_KEY
+              - name: API_KEY            
+                valueFrom:
+                  secretKeyRef:
+                    name: ecas-frontend
+                    key: API_KEY 
+              
+           
+            
+         
+            ports:
+            - containerPort: 8080
+              protocol: TCP
+            readinessProbe:
+              timeoutSeconds: 30
+              initialDelaySeconds: 3
+              httpGet:
+                path: "/"
+                port: 8080
+                scheme: HTTP
+            livenessProbe:
+              timeoutSeconds: 30
+              initialDelaySeconds: 300
+              httpGet:
+                path: "/"
+                port: 8080
+                scheme: HTTP
+          
+              
+            resources:
+              requests:
+                cpu: "${MIN_CPU}"
+                memory: "${MIN_MEM}"
+              limits:
+                cpu: "${MAX_CPU}"
+                memory: "${MAX_MEM}"
+         
+      test: false
+      triggers:
+      - type: ConfigChange
+  - apiVersion: v1
+    kind: Service
+    metadata:
+    
+      labels:
+        app: "${APP_NAME}"
+      name: "${APP_NAME}-frontend"
+    spec:
+      ports:
+      - name: ecas-frontend
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+      selector:
+        app: "${APP_NAME}"
+        deploymentconfig: "${APP_NAME}-frontend"
+
+
+
+
+   
+
+  - apiVersion: autoscaling/v2
+    kind: HorizontalPodAutoscaler
+    metadata:
+      name: "${APP_NAME}-frontend-cpu-autoscaler"
+    spec:
+      scaleTargetRef:
+        apiVersion: apps.openshift.io/v1
+        kind: DeploymentConfig
+        name: "${APP_NAME}-frontend"
+        subresource: scale
+      minReplicas: ${{MIN_REPLICAS}}
+      maxReplicas: ${{MAX_REPLICAS}}
+      metrics:
+        - type: Resource
+          resource:
+            name: cpu
+            target:
+              type: Utilization
+              averageUtilization: 90
+  parameters:
+  - name: REPO_NAME
+    description: Application repository name
+    required: true
+  
+  - name: NAMESPACE
+    description: Target namespace reference (i.e. 'k8vopl-dev')
+    required: true
+  - name: APP_NAME
+    description: Application name
+    required: true
+  - name: HOST_ROUTE
+    description: The host the route will use to expose service outside cluster
+    required: true
+  - name: TAG
+    description: The identifying tag for this specific deployment
+    required: true
+  - name: MIN_REPLICAS
+    description: The minimum amount of replicas
+    required: true
+  - name: MAX_REPLICAS
+    description: The maximum amount of replicas
+    required: true
+  - name: MIN_CPU
+    description: The minimum amount of cpu
+    required: true
+  - name: MAX_CPU
+    description: The maximum amount of cpu
+    required: true
+  - name: MIN_MEM
+    description: The minimum amount of memory
+    required: true
+  - name: MAX_MEM
+    description: The maximum amount of memory
+    required: true
+  
+  - name: APP_DEBUG
+    displayName: Application Debug
+    required: true
+    value: "false"
+  - name: DOCUMENTROOT
+    displayName: Document Root
+    required: true
+    value: "/public"
+ 
+  - name: DYNAMICSBASEURL
+    displayName: Dynamics API
+    description: The endpoint for the internal Dynamics API component.
+    required: true
+    value: "http://ecas-api:8080/api"  
+  
+ 

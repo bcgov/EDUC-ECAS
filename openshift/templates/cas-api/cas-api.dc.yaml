@@ -1,0 +1,177 @@
+
+  apiVersion: template.openshift.io/v1
+  kind: Template
+ 
+  metadata:
+    name: "cas-api-dc"
+    creationTimestamp:
+  objects:
+  - apiVersion: v1
+    kind: DeploymentConfig
+    metadata:
+    
+      creationTimestamp:
+      labels:
+        app: "${APP_NAME}"
+      name: "cas-api"
+    spec:
+      replicas: ${{MIN_REPLICAS}}
+      selector:
+        app: "${APP_NAME}"
+        deploymentconfig: "cas-api"
+      strategy:
+        resources: {}
+        type: Rolling
+      template:
+        metadata:
+       
+          creationTimestamp:
+          labels:
+            app: "${APP_NAME}"
+            deploymentconfig: "cas-api"
+        spec:
+          containers:
+          - image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${REPO_NAME}-cas-api:${TAG}
+            imagePullPolicy: Always
+           
+   
+       
+            name: "cas-api"
+            env:
+              - name: ASPNETCORE_ENVIRONMENT
+                value: ${ASPNETCORE_ENVIRONMENT}
+              - name: CAS_API_SERVER
+                value: ${CAS_API_SERVER}
+              - name: CAS_TOKEN_URI
+                value: ${CAS_TOKEN_URI}              
+              - name: CAS_INVOICE_URI
+                value: ${CAS_INVOICE_URI}
+            
+            
+         
+            ports:
+            - containerPort: 8080
+              protocol: TCP
+            readinessProbe:
+              timeoutSeconds: 30
+              initialDelaySeconds: 3
+              httpGet:
+                path: "/"
+                port: 8080
+                scheme: HTTP
+            livenessProbe:
+              timeoutSeconds: 30
+              initialDelaySeconds: 300
+              httpGet:
+                path: "/"
+                port: 8080
+                scheme: HTTP
+          
+              
+            resources:
+              requests:
+                cpu: "${MIN_CPU}"
+                memory: "${MIN_MEM}"
+              limits:
+                cpu: "${MAX_CPU}"
+                memory: "${MAX_MEM}"
+         
+      test: false
+      triggers:
+      - type: ConfigChange
+  - apiVersion: v1
+    kind: Service
+    metadata:
+    
+      labels:
+        app: "${APP_NAME}"
+      name: "cas-api"
+    spec:
+      ports:
+      - name: 8080-tcp
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+      selector:
+        app: "${APP_NAME}"
+        deploymentconfig: "cas-api"
+
+
+
+
+   
+
+  - apiVersion: autoscaling/v2
+    kind: HorizontalPodAutoscaler
+    metadata:
+      name: "cas-api-cpu-autoscaler"
+    spec:
+      scaleTargetRef:
+        apiVersion: apps.openshift.io/v1
+        kind: DeploymentConfig
+        name: "cas-api"
+        subresource: scale
+      minReplicas: ${{MIN_REPLICAS}}
+      maxReplicas: ${{MAX_REPLICAS}}
+      metrics:
+        - type: Resource
+          resource:
+            name: cpu
+            target:
+              type: Utilization
+              averageUtilization: 90
+  parameters:
+  - name: REPO_NAME
+    description: Application repository name
+    required: true
+
+  - name: NAMESPACE
+    description: Target namespace reference (i.e. 'k8vopl-dev')
+    required: true
+  - name: APP_NAME
+    description: Application name
+    required: true
+  - name: HOST_ROUTE
+    description: The host the route will use to expose service outside cluster
+    required: true
+  - name: TAG
+    description: The identifying tag for this specific deployment
+    required: true
+  - name: MIN_REPLICAS
+    description: The minimum amount of replicas
+    required: true
+  - name: MAX_REPLICAS
+    description: The maximum amount of replicas
+    required: true
+  - name: MIN_CPU
+    description: The minimum amount of cpu
+    required: true
+  - name: MAX_CPU
+    description: The maximum amount of cpu
+    required: true
+  - name: MIN_MEM
+    description: The minimum amount of memory
+    required: true
+  - name: MAX_MEM
+    description: The maximum amount of memory
+    required: true
+  
+  - name: ASPNETCORE_ENVIRONMENT
+    displayName: ASPNETCORE_ENVIRONMENT
+    required: true
+    value: "Production"
+  - name: CAS_API_SERVER
+    displayName: CAS_API_SERVER
+    required: true
+    value: "https://cfs-systws.cas.gov.bc.ca:7026"
+  - name: CAS_TOKEN_URI
+    displayName: CAS_TOKEN_URI
+    required: true
+    value: "/ords/cas/oauth/token"
+  - name: CAS_INVOICE_URI
+    displayName: CAS_INVOICE_URI
+    required: true
+    value: "/ords/cas/cfs/apinvoice/"
+    
+    
+ 
