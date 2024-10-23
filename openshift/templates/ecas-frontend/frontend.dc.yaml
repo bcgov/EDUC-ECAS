@@ -189,14 +189,7 @@
   - name: MAX_MEM
     description: The maximum amount of memory
     required: true
-  - name: APP_KEY
-    displayName: Application Unique KEY
-    from: "[a-zA-Z0-9]{32}"
-    generate: expression
-  - name: API_KEY
-    displayName: Unique API KEY
-    from: "[a-zA-Z0-9]{32}"
-    generate: expression
+  
   - name: APP_DEBUG
     displayName: Application Debug
     required: true
