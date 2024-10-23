@@ -75,11 +75,11 @@
                   secretKeyRef:
                     name: ecas-frontend
                     key: APP_KEY
-              - name: API_KEY
+              - name: API_KEY            
                 valueFrom:
                   secretKeyRef:
                     name: ecas-frontend
-                    key: API_KEY
+                    key: API_KEY 
               
            
             
