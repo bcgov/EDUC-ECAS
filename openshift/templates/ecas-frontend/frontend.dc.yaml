@@ -123,7 +123,7 @@
       name: "${APP_NAME}-frontend"
     spec:
       ports:
-      - name: 8080-tcp
+      - name: ecas-frontend
         port: 8080
         protocol: TCP
         targetPort: 8080
