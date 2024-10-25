@@ -69,10 +69,16 @@ footer ul li a {
     transform: rotate(360deg);
   }
 }
-
 div#logout {
   float: right;
   padding-bottom: 10px;
+}
+@media (max-width: 1024px){
+  div#logout {
+    float: right;
+    padding-bottom: 10px;
+    padding-right: 4px;
+  }
 }
 
 .header-logo {
@@ -90,6 +96,18 @@ div#logout {
   margin-left: 33%;
   position: absolute;
 }
+
+@media (max-width: 1024px){
+  .header-title {
+  float:right;
+  width: unset;
+  flex-basis: unset;
+  flex-grow: unset;
+  margin-left: 75%;
+  position: absolute;
+
+ }
+}
 .header-title h3 {
   line-height: 120px;
 }
@@ -99,4 +117,41 @@ div#logout {
 .collection-notice div {
   text-align: justify;
   font-size: 0.7em;
+}
+@media (max-width: 1024px){
+  .mobile-offset {
+  float:left;
+  margin-left: 0%;
+  
+ }
+}
+@media (max-width: 1024px){
+  .h2-mobile {
+    font-size: 1.4rem !important;
+ }
+}
+@media (max-width: 1024px){
+  .card-body-mobile {
+   flex: 1 1 auto;
+   padding: 0.75rem;  
+ }    
+}
+.mt-n4-custom {
+    margin-top: -1.5rem;
+  }
+  
+@media (max-width: 1024px){
+.mt-n4-mobile {
+  margin-top: 1.5rem;
+}
+}
+.justify-content-end-custom {
+    justify-content: flex-end;
+  }
+  
+@media (max-width: 1024px){
+.justify-content-start-mobile {
+  justify-content: flex-start;
+  padding-right: 40px;
+}
 }

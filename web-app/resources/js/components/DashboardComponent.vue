@@ -1,7 +1,7 @@
 ﻿<template>
     <div>
         <div class="card">
-            <div class="card-body">
+            <div class="card-body card-body-mobile">
                 <div class="row d-flex justify-content-between">
                     <div class="col" v-if="!displayContracts">
                         <nav aria-label="breadcrumb">
@@ -32,7 +32,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <button @click="toggleMenu" :class="[menuVisible? 'btn-secondary' : 'btn-primary', 'float-right', 'btn']">Menu</button>
-                                <h2>
+                                <h2 class ="h2-mobile">
                                     <span v-if="getUser.preferred_first_name">{{ getUser.preferred_first_name }}</span>
                                     <span v-else>{{ getUser.first_name }}</span>
                                     {{ getUser.last_name }}
@@ -78,7 +78,7 @@
                         <div class="dashboard-spinner text-center" v-if="!isContractsLoaded"></div>
                         <div class="card" v-else>
                             <div class="card-header contracts-header">
-                                <h2>My Contracts</h2>
+                                <h2 class ="h2-mobile">My Contracts</h2>
                                 <div class="icon-box">
                                     <a data-toggle="tooltip" data-placement="top" title="Help!">
                                     <font-awesome-icon :icon="['far','question-circle']" alt="Help inquiry" style="margin-top: 4px; font-size: 32px; color: #f5a742;"
@@ -93,12 +93,12 @@
                                     </div>
                                     <div v-else>Action Required <span class="badge badge-pill badge-info mt-n3 ml-n1">{{sent_count}}</span></div>
                                     <div>Pending Review <span class="badge badge-pill badge-info mt-n3 ml-n1">{{review_count}}</span></div>
-                                    <div>Finalized <span class="badge badge-pill badge-info mt-n3 ml-n1">{{final_count}}</span></div>
+                                    <div >Finalized <span class="badge badge-pill badge-info mt-n3 ml-n1">{{final_count}}</span></div>
                                 </div>
                                 <div class="my-contracts-box mt-2">
                                     <p class="mt-1">Download and submit your signed contracts for the current session.</p>
                                 </div>
-                                <div class="btn-group-box mt-n4">
+                                <div class="btn-group-box mt-n4-custom mt-n4-mobile">
                                     <button class="btn btn-primary" @click="showContracts()">
                                         <span>
                                             <div class="text-center">Manage my contracts</div>
@@ -388,11 +388,26 @@
     justify-content: space-between;
     font-size: 1.06rem;
 }
+@media (max-width: 1024px){
+    .contacts-stats-summary-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 1.0rem;
+}
+}
 
 .alert-notice a {
     font-size: 1.07rem;
     font-weight: bold;
     color: red;
+}
+@media (max-width: 1024px){
+    .alert-notice a {
+    font-size: 1.0rem;
+    font-weight: bold;
+    color: red;
+}
 }
 
 .alert-notice a:hover {
