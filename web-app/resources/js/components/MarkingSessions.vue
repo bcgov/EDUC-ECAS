@@ -73,6 +73,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="scroll-container">
                     <table class="table table-hover" :key="sessionsUpdatedCount">
                         <tr>
                             <th :class="[ sortValue('Type')? 'headerSortUp' : 'headerSortDown']" @click="handleSort('Type')">Type</th>
@@ -92,6 +93,7 @@
                         </tr>
                         </tbody>
                     </table>
+                </div>
                 </div>
             </div>
         </div>

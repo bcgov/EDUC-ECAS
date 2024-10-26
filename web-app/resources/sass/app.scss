@@ -155,3 +155,16 @@ div#logout {
   padding-right: 40px;
 }
 }
+
+@media (max-width: 1024px){
+  .scroll-container {
+    overflow: scroll;
+    
+    position: relative;
+    
+    
+  }
+}
+
+
+    
