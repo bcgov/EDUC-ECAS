@@ -18,11 +18,12 @@
 <body class="d-flex flex-column h-100">
     <main class="flex-shrink-0">
         <div class="row bg-primary pt-2">
-            <div class="col offset-1 header-logo">
+            <div class="col offset-1 header-logo mobile-offset">
                 <img src="/logo-banner.png" height="120px">
             </div>
             <div class="col text-center text-light header-title">
-                <h3>Electronic Contract Administration System (ECAS)</h3>
+                <h3 class="d-none d-md-block" >Electronic Contract Administration System (ECAS)</h3>
+				<h3 class="d-block d-md-none" >ECAS</h3>
             </div>
             <div class="col-1"></div>
         </div>

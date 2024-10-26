@@ -5,19 +5,19 @@
                 <div class="card-header pb-0">
                     <div class="row">
                         <div class="col-6">
-                            <h2>Marking Sessions</h2>
+                            <h2 class ="h2-mobile">Marking Sessions</h2>
                         </div>
                         <div class="col-6 text-right">
                             <button class="btn btn-link btn-sm " v-text="showPastSessionText" @click="showPastSessions = ! showPastSessions"></button>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="row-6">
                             Click on a session below to apply, accept or decline
                         </div>
-                        <div class="col-6">
+                        <div class="row-6">
 
-                            <ul class="nav nav-tabs justify-content-end pt-2">
+                            <ul class="nav nav-tabs justify-content-end-custom justify-content-start-mobile pt-2">
                                 <li class="nav-item mb-0">
                                     <a @click="filter = ''"
                                         class="nav-link"
@@ -35,10 +35,11 @@
                     </div>
 
                 </div>
+                
                 <div class="card-body">
                     <div class="filter-box">
                         <div class="filter-col-1">
-                            <div class="filter-input-box col-sm-4">
+                            <div class="filter-input-box filter-input-box-left col-sm-4">
                                 <font-awesome-icon icon="search" alt="Filter by Type" style="margin-top: 7px; margin-right: 5px; font-size: 18px;"/>
                                 <input v-model="typeInputText" v-on:keyup.enter="handleTypeInputText" v-on:blur="handleTypeInputText"
                                     type="text" class="form-control form-control-sm" name="filter-type-input"
@@ -55,7 +56,7 @@
                             </div>  
                         </div>
                         <div class="filter-col-2">
-                            <div class="filter-input-box col-sm-6">
+                            <div class="filter-input-box filter-input-box-right col-sm-6">
                                 <font-awesome-icon icon="search-location" alt="Filter by Location" style="margin-top: 7px; margin-right: 5px; font-size: 22px;"/>
                                 <input v-model="locationInputText" v-on:keyup.enter="handleLocationInputText" v-on:blur="handleLocationInputText"
                                     type="text" class="form-control form-control-sm" name="location-type-input"
@@ -419,16 +420,46 @@
     justify-content: space-between;
     width: 60%;
 }
+@media (max-width: 1024px){
+    .filter-col-1 {
+    display: block;
+    width: 45%;
+}
+}
+
 .filter-col-2 {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 40%;
 }
+@media (max-width: 1024px){
+    .filter-col-2 {
+    display: block;
+    width: 55%;
+}
+}
+
 .filter-input-box {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+}
+@media (max-width: 1024px){
+.filter-input-box-left {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-left: 0px !important;
+}
+}
+@media (max-width: 1024px){
+.filter-input-box-right {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-right: 0px !important;
+}
 }
 .chips-box {
     display: flex;
