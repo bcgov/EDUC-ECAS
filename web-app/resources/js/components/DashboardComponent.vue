@@ -131,14 +131,14 @@
                     dusk="profile-component"
             ></profile>
         </modal>
-        <modal name="credentials_form" height="auto" :scrollable="true" :clickToClose="false">
+        <modal name="credentials_form" width="380px" height="auto" :scrollable="true" :clickToClose="false">
             <credentials
                     :user="getUser"
                     :credentials="credentials"
                     dusk="credentials-component"
             ></credentials>
         </modal>
-        <modal name="help_form1" height="auto" :scrollable="false" :clickToClose="false">
+        <modal name="help_form1" width="380px" height="auto" :scrollable="false" :clickToClose="false">
             <help formName="help_form1"/>
         </modal>
     </div>
