@@ -138,7 +138,7 @@
                     dusk="credentials-component"
             ></credentials>
         </modal>
-        <modal name="help_form1" height="auto" :scrollable="false" :clickToClose="false">
+        <modal name="help_form1" width="380px" height="auto" :scrollable="false" :clickToClose="false">
             <help formName="help_form1"/>
         </modal>
     </div>
