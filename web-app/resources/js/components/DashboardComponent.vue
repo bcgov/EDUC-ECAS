@@ -131,7 +131,7 @@
                     dusk="profile-component"
             ></profile>
         </modal>
-        <modal name="credentials_form" height="auto" :scrollable="true" :clickToClose="false">
+        <modal name="credentials_form" width="380px" height="auto" :scrollable="true" :clickToClose="false">
             <credentials
                     :user="getUser"
                     :credentials="credentials"
