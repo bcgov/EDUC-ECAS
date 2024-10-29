@@ -31,7 +31,7 @@
             </div>
 
             <div id="actionRequiredSectionBody" v-show="actionRequiredDisplayed">
-              <div class="card-body">
+              <div class="card-body card-body-mobile scroll-container">
                 <table class="table table-sm table-borderless">
                   <thead>
                     <tr>
