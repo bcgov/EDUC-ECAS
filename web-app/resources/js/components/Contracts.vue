@@ -157,7 +157,7 @@
       <modal name="help_form2" height="auto" :scrollable="false" :clickToClose="false">
          <help formName="help_form2"/>
       </modal>
-      <modal name="file_upload_form" width ="375px" height="auto" :scrollable="false" :clickToClose="false">
+      <modal name="file_upload_form" width ="370px" height="auto" :scrollable="false" :clickToClose="false">
          <file-uploader :assignmentID="selectedAssignmentID"/>
       </modal>
        <modal name="file_uploaded_list"  height="auto" :scrollable="false" :clickToClose="false">
