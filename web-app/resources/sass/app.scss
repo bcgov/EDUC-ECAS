@@ -195,6 +195,18 @@ div#logout {
     max-width: 65%;
   }
 }
+.header-title-mobile {
+  display: none;
+}
+
+@media (max-width: 1024px){
+  .header-title-mobile {
+    display: block;
+  }
+  .header-title-desktop {
+    display: none;
+  }
+}
 
 
 
