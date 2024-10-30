@@ -97,7 +97,7 @@
                 </div>
             </div>
         </div>
-        <modal name="session_form" height="auto">
+        <modal name="session_form" width="370px" height="auto">
             <session :session="current_session"></session>
         </modal>
     </div>
