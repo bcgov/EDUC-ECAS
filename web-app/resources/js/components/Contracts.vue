@@ -163,7 +163,7 @@
        <modal name="file_uploaded_list" height="auto" :scrollable="false" :clickToClose="false">
          <file-uploaded-list :files="uploaded_files"/>
       </modal>
-      <modal name="file_download_form" width="380px" height="auto" :scrollable="false" :clickToClose="false">
+      <modal name="file_download_form" width="370px" height="auto" :scrollable="false" :clickToClose="false">
          <file-downloader :contract="contract"/>
       </modal>
       <modal name="submit_for_review_form" height="auto" :scrollable="false" :clickToClose="false">
