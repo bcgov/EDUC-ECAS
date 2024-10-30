@@ -18,24 +18,30 @@
             </li>
           </ul>
           <ul v-else>
-            <td colspan="7">
-              <div class="text-center p-5 drop-area">
-                <h4>Drag and drop here<br/>or</h4>
-                <label for="file" class="btn btn-primary">Browse</label>
-              </div>
-            </td>
-            <td>
-              <div class="mt-n4 pt-2 pl-5">
-                Accepted file formats: <br/>
-                <ul>
-                  <li>pdf</li>
-                  <li>jpeg</li>
-                  <li>png</li>
-                </ul>
-                <br/>
-                Max file size: 3MB
-              </div>
-            </td>
+            <table class="table-spacing">
+              <tr>
+                <td colspan="7">
+                  <div class="text-center p-5 drop-area">
+                    <h4>Drag and drop here<br/>or</h4>
+                    <label for="file" class="btn btn-primary">Browse</label>
+                  </div>
+                </td>
+                </tr>
+              <tr>
+                <td>
+                  <div class="mt-n4 pt-2 pl-5">
+                    Accepted file formats: <br/>
+                    <ul>
+                      <li>pdf</li>
+                      <li>jpeg</li>
+                      <li>png</li>
+                    </ul>
+                    <br/>
+                    Max file size: 3MB
+                  </div>
+                </td>
+              </tr>
+          </table>
           </ul>
 
           <div v-show="$refs.upload && $refs.upload.dropActive" class="drop-active">
@@ -172,5 +178,9 @@ export default {
 .file-upload-btn-group {
   display: flex;
   justify-content: flex-end;
+}
+.table-spacing {
+  border-spacing: 0 20px;
+  border-collapse: separate !important;
 }
 </style>
