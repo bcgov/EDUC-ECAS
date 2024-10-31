@@ -154,7 +154,7 @@
           </div>
         </div>
       </div>
-      <modal name="help_form2" height="auto" :scrollable="false" :clickToClose="false">
+      <modal name="help_form2" width ="370px" height="auto" :scrollable="false" :clickToClose="false">
          <help formName="help_form2"/>
       </modal>
       <modal name="file_upload_form" width ="370px" height="auto" :scrollable="false" :clickToClose="false">
