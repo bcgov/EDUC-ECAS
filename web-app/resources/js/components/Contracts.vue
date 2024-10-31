@@ -31,7 +31,7 @@
             </div>
 
             <div id="actionRequiredSectionBody" v-show="actionRequiredDisplayed">
-              <div class="card-body">
+              <div class="card-body card-body-mobile scroll-container">
                 <table class="table table-sm table-borderless">
                   <thead>
                     <tr>
@@ -157,13 +157,15 @@
       <modal name="help_form2" height="auto" :scrollable="false" :clickToClose="false">
          <help formName="help_form2"/>
       </modal>
-      <modal name="file_upload_form" height="auto" :scrollable="false" :clickToClose="false">
+      <modal name="file_upload_form" width ="370px" height="auto" :scrollable="false" :clickToClose="false">
          <file-uploader :assignmentID="selectedAssignmentID"/>
       </modal>
-       <modal name="file_uploaded_list" height="auto" :scrollable="false" :clickToClose="false">
+
+       <modal name="file_uploaded_list" width ="370px" height="auto" :scrollable="false" :clickToClose="false">
+
          <file-uploaded-list :files="uploaded_files"/>
       </modal>
-      <modal name="file_download_form" height="auto" :scrollable="false" :clickToClose="false">
+      <modal name="file_download_form" width="370px" height="auto" :scrollable="false" :clickToClose="false">
          <file-downloader :contract="contract"/>
       </modal>
       <modal name="submit_for_review_form" height="auto" :scrollable="false" :clickToClose="false">
