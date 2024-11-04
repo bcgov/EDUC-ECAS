@@ -4,7 +4,7 @@
         <button class="btn btn-primary btn-sm float-right" v-on:click="closeModal">X</button>
         <h2>Upload your signed contract</h2>
     </div>
-    <div class="card-body">
+    <div class="card-body card-body-mobile">
       <div class="file-upload-div">
         <div class="upload">
           <ul v-if="files.length">
