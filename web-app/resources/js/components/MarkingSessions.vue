@@ -97,7 +97,7 @@
                 </div>
             </div>
         </div>
-        <modal name="session_form" height="auto">
+        <modal name="session_form" width="370px" height="auto">
             <session :session="current_session"></session>
         </modal>
     </div>
@@ -424,11 +424,10 @@
 }
 @media (max-width: 1024px){
     .filter-col-1 {
-    display: block;
-    width: 45%;
+    display: inline-block;
+    width: fit-content;
 }
 }
-
 .filter-col-2 {
     display: flex;
     flex-direction: row;
@@ -437,11 +436,10 @@
 }
 @media (max-width: 1024px){
     .filter-col-2 {
-    display: block;
-    width: 55%;
+    display: inline-block;
+    width: fit-content;
 }
 }
-
 .filter-input-box {
     display: flex;
     flex-direction: row;
@@ -452,6 +450,7 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    width: 150px !important;
     padding-left: 0px !important;
 }
 }
@@ -460,8 +459,21 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    width: 175px !important;
     padding-right: 0px !important;
 }
+}
+
+@media (max-width: 1024px){
+    .col-sm-4{
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 1024px){
+    .col-sm-6{
+        max-width: 100%;
+    }
 }
 .chips-box {
     display: flex;
