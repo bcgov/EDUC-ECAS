@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <div class="card-header">
-                <div class="row ml-1">
+                <div class="row ml-1 card-header-mobile">
                     <div><h1>Teacher Profile</h1></div>
                     <div class="ml-auto mr-3">
                         <div>* Required Fields</div>

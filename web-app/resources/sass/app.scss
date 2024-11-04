@@ -207,6 +207,14 @@ div#logout {
     display: none;
   }
 }
+@media (max-width: 1024px){
+  .card-header-mobile {
+    display: flow !important;
+    flex-direction: column !important;
+  }
+}
+
+
 
 
 
