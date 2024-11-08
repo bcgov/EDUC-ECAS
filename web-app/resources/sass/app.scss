@@ -213,6 +213,13 @@ div#logout {
     flex-direction: column !important;
   }
 }
+@media (max-width: 1024px){
+  .custom-scrollable-modal {
+    overflow-x: hidden;
+    overflow-y: scroll;   
+    
+  }
+}
 
 
 

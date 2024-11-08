@@ -122,7 +122,7 @@
                 </div>
             </div>
         </div>
-        <modal name="profile_form" height="auto" :scrollable="false" :clickToClose="false">
+        <modal name="profile_form" height="auto" class="custom-scrollable-modal"  :clickToClose="false">
             <profile
                     :user="getUser"
                     :regions="regions"
