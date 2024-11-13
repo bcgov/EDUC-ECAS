@@ -5,7 +5,7 @@
             <h2>Help</h2>
         </div>
         <div class="card-body">
-            <p>For assistance, please email questions or concerns to assessments@gov.bc.ca</p>
+            <p>For assistance, please email questions or concerns to <a href="mailto:assessments@gov.bc.ca">assessments@gov.bc.ca<a> </p>
         </div>
         <div class="card-footer">
         </div>

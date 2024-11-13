@@ -172,12 +172,12 @@ div#logout {
 }
 @media (max-width: 1024px){
   .form-control-mobile {
-    width: 50%;
+    width: 65%;
   }
 }
 @media (max-width: 1024px){
   .col-mobile {
-    width: 50%;
+    width: 65%;
   }
 }
 @media (max-width: 1024px){
@@ -195,6 +195,33 @@ div#logout {
     max-width: 65%;
   }
 }
+.header-title-mobile {
+  display: none;
+}
+
+@media (max-width: 1024px){
+  .header-title-mobile {
+    display: block;
+  }
+  .header-title-desktop {
+    display: none;
+  }
+}
+@media (max-width: 1024px){
+  .card-header-mobile {
+    display: flow !important;
+    flex-direction: column !important;
+  }
+}
+@media (max-width: 1024px){
+  .custom-scrollable-modal {
+    overflow-x: hidden;
+    overflow-y: scroll;   
+    
+  }
+}
+
+
 
 
 

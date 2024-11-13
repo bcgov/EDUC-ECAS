@@ -22,8 +22,8 @@
                 <img src="/logo-banner.png" height="120px">
             </div>
             <div class="col text-center text-light header-title">
-                <h3 class="d-none d-md-block" >Electronic Contract Administration System (ECAS)</h3>
-				<h3 class="d-block d-md-none" >ECAS</h3>
+                <h3 class="header-title-desktop" >Electronic Contract Administration System (ECAS)</h3>
+				<h3 class="header-title-mobile" >ECAS</h3>
             </div>
             <div class="col-1"></div>
         </div>
