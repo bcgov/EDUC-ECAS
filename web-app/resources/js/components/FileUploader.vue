@@ -4,7 +4,7 @@
         <button class="btn btn-primary btn-sm float-right" v-on:click="closeModal">X</button>
         <h2>Upload your signed contract</h2>
     </div>
-    <div class="card-body-custom">
+    <div class="card-body card-body-custom">
       <div class="file-upload-div">
         <div class="upload">
           <ul v-if="files.length">
@@ -28,7 +28,7 @@
                 </td>
                 </tr>
               <tr>
-                <td class="upload-text">
+                <td>
                   <div class="mt-n4 pt-2 pl-2">
                     Accepted file formats: <br/>
                     <ul>
@@ -40,47 +40,45 @@
                     Max file size: 3MB
                   </div>
                 </td>
-                <td class="file-upload-btn-container">
-                  <div class="file-upload-btn-group">
-                    <file-upload
-                      v-show="false"
-                      class="btn btn-primary"
-                      :post-action="getUploadPostUrl"
-                      :multiple="true"
-                      :drop="true"
-                      :drop-directory="false"
-                      accept="application/pdf,image/png,image/jpeg"
-                      :size="1024*1024*3"
-                      v-model="files"
-                      ref="upload">
-                      <i class="fa fa-plus"></i>
-                      Select files
-                    </file-upload>
-                  <div class="btn-group-box" v-if="$refs.upload && $refs.upload.uploaded && uploadCompleted()">
-                    <span class="text-success">All file(s) have been uploaded.</span>
-                    <button type="button" class="btn btn-outline-primary ml-4 mr-3" v-on:click="closeModal">
-                      Close
-                    </button>
-                  </div>
-                  <div class="btn-group-box" v-else>
-                    <button type="button" class="btn btn-success mr-3" v-if="!$refs.upload || !$refs.upload.active" @click.prevent="$refs.upload.active = true">
-                      <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                      Upload
-                    </button>
-                    <button type="button" class="btn btn-warning mr-3"  v-else>
-                      <i class="fa fa-stop" aria-hidden="true"></i>
-                      Uploading...
-                    </button>
-                  </div>
-                 </div>
-                  
-                </td>
               </tr>
           </table>
           </ul>
 
           <div v-show="$refs.upload && $refs.upload.dropActive" class="drop-active">
             <h3>Drop files to upload</h3>
+          </div>
+
+          <div class="file-upload-btn-group">
+            <file-upload
+              v-show="false"
+              class="btn btn-primary"
+              :post-action="getUploadPostUrl"
+              :multiple="true"
+              :drop="true"
+              :drop-directory="false"
+              accept="application/pdf,image/png,image/jpeg"
+              :size="1024*1024*3"
+              v-model="files"
+              ref="upload">
+              <i class="fa fa-plus"></i>
+              Select files
+            </file-upload>
+            <div class="btn-group-box" v-if="$refs.upload && $refs.upload.uploaded && uploadCompleted()">
+              <span class="text-success">All file(s) have been uploaded.</span>
+              <button type="button" class="btn btn-outline-primary ml-4 mr-3" v-on:click="closeModal">
+                Close
+              </button>
+            </div>
+            <div class="btn-group-box" v-else>
+              <button type="button" class="btn btn-success mr-3" v-if="files.length&&(!$refs.upload || !$refs.upload.active)" @click.prevent="$refs.upload.active = true">
+                <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                Upload
+              </button>
+              <button type="button" class="btn btn-warning mr-3"  v-else-if="files.length&&$refs.upload.active" >
+                <i class="fa fa-stop" aria-hidden="true"></i>
+                Uploading...
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -178,18 +176,12 @@ export default {
 }
 
 .file-upload-btn-group {
-  position: absolute;
-  bottom: 0px;
-}
-.file-upload-btn-container {
-  position: relative;
+  display: flex;
+  justify-content: flex-end;
 }
 .table-spacing {
-  border-spacing: 0 15px;
+  border-spacing: 0 20px;
   border-collapse: separate !important;
-}
-.upload-text {
-  width: 65%;
 }
 .card-body-custom {
   flex: 1 1 auto;
