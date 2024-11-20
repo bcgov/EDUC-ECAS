@@ -18,13 +18,12 @@ env:
   IMAGE_NAME_API: ecas-api
   IMAGE_NAME_CAS: cas-api
  
-  MIN_CPU: "20m"
-  MAX_CPU: "250m"
-  MIN_MEM: "500Mi"
-  MAX_MEM: "2Gi"
-  MIN_REPLICAS: "3"
-  MAX_REPLICAS: "5"
-  MAX_REPLICAS_TEST: '3'
+  MIN_REPLICAS: '1'
+  MAX_REPLICAS: '2'
+  MIN_CPU: 300m
+  MAX_CPU: 600m
+  MIN_MEM: 250Mi
+  MAX_MEM: 500Mi
   HOST_ROUTE: '${{ secrets.SITE_URL }}'
   ASPNETCORE_ENVIRONMENT: 'Staging' 
 
