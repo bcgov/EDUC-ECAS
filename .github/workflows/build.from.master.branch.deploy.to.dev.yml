@@ -240,6 +240,18 @@ jobs:
           
           
           oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-cas.outputs.registry-path }}   ${{env.REPO_NAME }}-cas-api:${{ env.TAG }}
+
+          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/update-configmap.sh | bash /dev/stdin  ${{ env.REPO_NAME }} \
+          ${{ env.OPENSHIFT_NAMESPACE_DEV }} \
+          ${{ env.APP_DEBUG}}  ${{ env.DOCUMENTROOT }} \
+          ${{ env.DYNAMICSBASEURL}} \
+          ${{ASPNETCORE_ENVIRONMENT}}  ${{DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT}} \
+          ${{DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL}} \
+          ${{DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL}} \
+          ${{DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL}}\
+          ${{DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL}}  ${{ASPNETCORE_ENVIRONMENT_CAS}} \
+          ${{CAS_API_SERVER}}  ${{CAS_TOKEN_URI}}  ${{CAS_INVOICE_URI}}
+          
           
           
           
