@@ -30,18 +30,21 @@ env:
   MAX_CPU: 600m
   MIN_MEM: 250Mi
   MAX_MEM: 500Mi
-  
+
+  #frontend config maps vars
   APP_DEBUG: false
   DYNAMICSBASEURL: http://ecas-api:8080/api
   DOCUMENTROOT: /public
-  
+  #ecas api config maps vars
+  ASPNETCORE_ENVIRONMENT: 'Development'
   DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT: Cloud
   DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL: https://ecasdev.api.crm3.dynamics.com/api/data/v9.2/
   DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL: https://localhost
   DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL: https://ecasdev.crm3.dynamics.com/api/data/
   DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL: https://ecasdev.api.crm3.dynamics.com
-  ASPNETCORE_ENVIRONMENT_CAS: Production
-  
+
+  #cas api config maps vars
+  ASPNETCORE_ENVIRONMENT_CAS: 'Production'
   CAS_API_SERVER: https://cfs-systws.cas.gov.bc.ca:7026
   CAS_TOKEN_URI: /ords/cas/oauth/token
   CAS_INVOICE_URI: /ords/cas/cfs/apinvoice/
@@ -217,30 +220,31 @@ jobs:
 
           #oc rollout cancel dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null || true && echo "No rollout in progress"
 
-          #oc rollout cancel dc/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "No ecas api rollout in progress"
+          oc rollout cancel dc/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "No ecas api rollout in progress"
 
-          #oc rollout cancel dc/${{ env.APP_NAME_CAS }} 2> /dev/null  || true && echo "No cas api rollout in progress"
+          oc rollout cancel dc/${{ env.APP_NAME_CAS }} 2> /dev/null  || true && echo "No cas api rollout in progress"
 
 
           # Create the image stream if it doesn't exist
 
           #oc create imagestream ${{ env.REPO_NAME }}-frontend> /dev/null || true && echo "Frontend image stream in place"
-          #oc create imagestream ${{ env.REPO_NAME }}-api> /dev/null || true && echo "Ecas API image stream in place"
-          #oc create imagestream ${{ env.REPO_NAME }}-cas-api> /dev/null || true && echo "CAS API  image stream in place"
+          oc create imagestream ${{ env.REPO_NAME }}-api> /dev/null || true && echo "Ecas API image stream in place"
+          oc create imagestream ${{ env.REPO_NAME }}-cas-api> /dev/null || true && echo "CAS API  image stream in place"
 
 
           #oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-frontend.outputs.registry-path }}  ${{ env.REPO_NAME }}-frontend:${{ env.TAG }}
 
 
-          #oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-api.outputs.registry-path }}   ${{env.REPO_NAME }}-api:${{ env.TAG }}
+          oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-api.outputs.registry-path }}   ${{env.REPO_NAME }}-api:${{ env.TAG }}
           
           
           
-          #oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-cas.outputs.registry-path }}   ${{env.REPO_NAME }}-cas-api:${{ env.TAG }}
+          oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-cas.outputs.registry-path }}   ${{env.REPO_NAME }}-cas-api:${{ env.TAG }}
           
           
           
-          #curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/update-configmap.sh | bash /dev/stdin ${{ env.REPO_NAME }} ${{ env.OPENSHIFT_NAMESPACE_DEV }} ${{ env.APP_DEBUG }}  ${{ env.DOCUMENTROOT }}  ${{ env.DYNAMICSBASEURL }}  ${{DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL}} ${{DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL}} ${{DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL}} ${{DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL}} ${{ASPNETCORE_ENVIRONMENT_CAS}} ${{CAS_API_SERVER}}  ${{CAS_TOKEN_URI}}  ${{CAS_INVOICE_URI}}
+          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/update-configmap.sh | bash /dev/stdin  ${{ env.REPO_NAME }}  ${{ env.OPENSHIFT_NAMESPACE_DEV }}  ${{ env.APP_DEBUG }}  ${{ env.DOCUMENTROOT }}  ${{ env.DYNAMICSBASEURL }}  ${{ASPNETCORE_ENVIRONMENT}}  ${{DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT}}  ${{DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL}}  ${{DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL}}  ${{DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL}}  ${{DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL}}  ${{ASPNETCORE_ENVIRONMENT_CAS}}  ${{CAS_API_SERVER}}  ${{CAS_TOKEN_URI}}  ${{CAS_INVOICE_URI}}
+          
                     
           
           # Process and apply deployment template
