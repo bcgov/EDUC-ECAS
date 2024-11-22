@@ -5,7 +5,6 @@
     template: "${REPO_NAME}-template"
   metadata:
     name: "${REPO_NAME}-frontend-dc"
-    creationTimestamp:
   objects:
   - apiVersion: v1
     kind: DeploymentConfig
@@ -27,8 +26,6 @@
         type: Rolling
       template:
         metadata:
-       
-          creationTimestamp:
           labels:
             app: "${APP_NAME}"
             deploymentconfig: "${APP_NAME}-frontend"
@@ -36,9 +33,6 @@
           containers:
           - image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${REPO_NAME}-frontend:${TAG}
             imagePullPolicy: Always
-           
-   
-       
             name: "${APP_NAME}-frontend"
             env:
               - name: APP_DEBUG
@@ -90,11 +84,7 @@
                 valueFrom:
                   secretKeyRef:
                     name: ecas-frontend
-                    key: API_KEY 
-              
-           
-            
-         
+                    key: API_KEY
             ports:
             - containerPort: 8080
               protocol: TCP
@@ -112,8 +102,6 @@
                 path: "/"
                 port: 8080
                 scheme: HTTP
-          
-              
             resources:
               requests:
                 cpu: "${MIN_CPU}"
@@ -121,7 +109,6 @@
               limits:
                 cpu: "${MAX_CPU}"
                 memory: "${MAX_MEM}"
-         
       test: false
       triggers:
       - type: ConfigChange
@@ -150,7 +137,6 @@
   - apiVersion: v1
     kind: Service
     metadata:
-      
       labels:
         app: "${APP_NAME}"
         name: "${APP_NAME}-frontend"
@@ -166,11 +152,6 @@
       selector:
         app: "${APP_NAME}"
         deploymentconfig: "${APP_NAME}-frontend"
-
-
-
-
-   
 
   - apiVersion: autoscaling/v2
     kind: HorizontalPodAutoscaler
@@ -200,7 +181,6 @@
   - name: REPO_NAME
     description: Application repository name
     required: true
-  
   - name: NAMESPACE
     description: Target namespace reference (i.e. 'k8vopl-dev')
     required: true
@@ -231,7 +211,6 @@
   - name: MAX_MEM
     description: The maximum amount of memory
     required: true
-  
   - name: APP_DEBUG
     displayName: Application Debug
     required: true
@@ -240,7 +219,6 @@
     displayName: Document Root
     required: true
     value: "/public"
- 
   - name: DYNAMICSBASEURL
     displayName: Dynamics API
     description: The endpoint for the internal Dynamics API component.
@@ -251,5 +229,3 @@
     description: The exposed hostname that will route to the service, if left blank a value will be defaulted.
     required: false
     value: ""
-  
- 

@@ -33,27 +33,18 @@ env:
   APP_DEBUG: false
   DYNAMICSBASEURL: http://ecas-api:8080/api
   DOCUMENTROOT: /public
-  
-
- 
   HOST_ROUTE: '${{ secrets.SITE_URL }}'
-'on':
+  BRANCH: "Github_action_fixes"
+
+on:
   workflow_dispatch:
-  push:
-    branches:
-      - Github_action_fixes 
-     
-      
-     
-     
-      
+
 jobs:
   build-and-deploy-dev:
     name: Build and deploy to DEV
     runs-on: ubuntu-24.04
     environment: dev
-     
-    
+
     steps:
       - name: Check for required secrets
         uses: actions/github-script@v6
@@ -63,7 +54,6 @@ jobs:
               OPENSHIFT_SERVER: `${{ secrets.OPENSHIFT_SERVER }}`,
               OPENSHIFT_TOKEN: `${{ secrets.OPENSHIFT_TOKEN }}`,
             };
-
 
             const GHCR = "ghcr.io";
 
@@ -76,7 +66,6 @@ jobs:
               secrets["IMAGE_REGISTRY_PASSWORD"] = `${{ secrets.IMAGE_REGISTRY_PASSWORD }}`;
             }
 
-
             const missingSecrets = Object.entries(secrets).filter(([ name, value
             ]) => {
               if (value.length === 0) {
@@ -86,7 +75,6 @@ jobs:
               core.info(`✔️ Secret "${name}" is set`);
               return false;
             });
-
 
             if (missingSecrets.length > 0) {
               core.setFailed(`❌ At least one required secret is not set in the repository. \n` +
@@ -99,6 +87,7 @@ jobs:
             else {
               core.info(`✅ All the required secrets are set`);
             }
+
       - name: Check out repository
         uses: actions/checkout@v3
       
@@ -111,18 +100,21 @@ jobs:
         uses: redhat-actions/openshift-tools-installer@v1
         with:
           oc: 4
+
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
           registry: '${{ env.DOCKER_ARTIFACTORY_REPO }}'
           username: '${{ secrets.DOCKER_HUB_USERNAME }}'
           password: '${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}'
+
       - name: Login to REDHAT
         uses: docker/login-action@v1
         with:
           registry: '${{ env.REDHAT_REGISTRY }}'
           username: '${{ secrets.REDHAT_REGISTRY_USERNAME }}'
           password: '${{ secrets.REDHAT_REGISTRY_PASSWORD }}'
+
       - name: Check out repository
         run: git clone '${{ env.SOURCE_REPOSITORY }}'
    
@@ -137,6 +129,7 @@ jobs:
           tags: ${{ env.TAG }}
           env_vars: |
             DOTNET_STARTUP_PROJECT=${{env.DOTNET_STARTUP_PROJECT}}
+
       - name: Setup and Build ecas api
         if: false
         id: build-image-api
@@ -146,6 +139,7 @@ jobs:
           builder_image: registry.redhat.io/rhel8/dotnet-60
           image: '${{env.APP_NAME_API }}'
           tags: ${{ env.TAG }}
+
       - name: Setup and Build Frontend
         id: build-image-frontend
         uses: redhat-actions/s2i-build@v2
@@ -154,6 +148,7 @@ jobs:
           builder_image: registry.redhat.io/rhscl/php-73-rhel7
           image: '${{env.APP_NAME_FRONTEND }}'
           tags: ${{ env.TAG }}
+
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
@@ -162,10 +157,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: List docker images
         run: docker images
-      
-    
-         
-          
+
       - name: Push frontend to registry
         id: push-image-frontend
         uses: redhat-actions/push-to-registry@v2
@@ -175,6 +167,7 @@ jobs:
           registry: ${{ env.IMAGE_REGISTRY }}
           username: ${{ env.IMAGE_REGISTRY_USER }}
           password: ${{ env.IMAGE_REGISTRY_PASSWORD }}
+
       - name: Push api to registry
         if: false
         id: push-image-api
@@ -185,6 +178,7 @@ jobs:
           registry: ${{ env.IMAGE_REGISTRY }}
           username: ${{ env.IMAGE_REGISTRY_USER }}
           password: ${{ env.IMAGE_REGISTRY_PASSWORD }}
+
       - name: Push cas to registry
         if: false
         id: push-image-cas
@@ -195,78 +189,43 @@ jobs:
           registry: ${{ env.IMAGE_REGISTRY }}
           username: ${{ env.IMAGE_REGISTRY_USER }}
           password: ${{ env.IMAGE_REGISTRY_PASSWORD }}
-          
      
       - uses: actions/checkout@v3
       - name: Deploy
         run: >
           set -eux
 
-          # Login to OpenShift and select project
-          
-          oc login --token=${{ env.OPENSHIFT_TOKEN }} --server=${{
-          env.OPENSHIFT_SERVER }}
-
+          # Login to OpenShift and select project          
+          oc login --token=${{ env.OPENSHIFT_TOKEN }} --server=${{env.OPENSHIFT_SERVER }}
           oc project ${{ env.OPENSHIFT_NAMESPACE_DEV  }}
 
           # Cancel any rollouts in progress
-
           oc rollout cancel dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null || true && echo "No rollout in progress"
-
           #oc rollout cancel dc/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "No ecas api rollout in progress"
-
           #oc rollout cancel dc/${{ env.APP_NAME_CAS }} 2> /dev/null  || true && echo "No cas api rollout in progress"
 
-
           # Create the image stream if it doesn't exist
-
           oc create imagestream ${{ env.REPO_NAME }}-frontend> /dev/null || true && echo "Frontend image stream in place"
           #oc create imagestream ${{ env.REPO_NAME }}-api> /dev/null || true && echo "Ecas API image stream in place"
           #oc create imagestream ${{ env.REPO_NAME }}-cas-api> /dev/null || true && echo "CAS API  image stream in place"
 
-
+          # Tag images
           oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-frontend.outputs.registry-path }}  ${{ env.REPO_NAME }}-frontend:${{ env.TAG }}
-
-
           #oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-api.outputs.registry-path }}   ${{env.REPO_NAME }}-api:${{ env.TAG }}
-
-      
-          
           #oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-cas.outputs.registry-path }}   ${{env.REPO_NAME }}-cas-api:${{ env.TAG }}
           
-
+          # Update configmap
+          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/update-configmap.sh | bash /dev/stdin ${{ env.REPO_NAME }} ${{ env.OPENSHIFT_NAMESPACE_DEV }} ${{ env.APP_DEBUG }} ${{ env.DOCUMENTROOT }} ${{ env.DYNAMICSBASEURL }}          
           
-          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/Github_action_fixes/openshift/update-configmap.sh | bash /dev/stdin ${{ env.REPO_NAME }} ${{ env.OPENSHIFT_NAMESPACE_DEV }} ${{ env.APP_DEBUG }} ${{ env.DOCUMENTROOT }} ${{ env.DYNAMICSBASEURL }} 
-         
-          
-          
-          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/Github_action_fixes/openshift/override-configmap.sh | bash /dev/stdin ${{ env.REPO_NAME }} ${{ env.OPENSHIFT_NAMESPACE_DEV}} ${{ env.APP_DEBUG }} ${{ env.DOCUMENTROOT }} ${{ env.DYNAMICSBASEURL }}
-
-
-         
-          
-          # Process and apply deployment template
-          
+          # Process and apply deployment template  
           oc process -f ./openshift/templates/ecas-frontend/frontend.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }}  -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE}}\
           | oc apply -f -
-
-
-
           #oc process -f ./openshift/templates/ecas-api/api.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }} -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }} -p  ASPNETCORE_ENVIRONMENT=${{  env.ASPNETCORE_ENVIRONMENT }}\
           #| oc apply -f -
-          
-
           #oc process -f ./openshift/templates/cas-api/cas-api.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }}  -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }}\
           #| oc apply -f -
 
-      
-         
-          
-          
-
           # Start rollout (if necessary) and follow it
-
-
           oc rollout latest dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null \
 
           || true && echo "Rollout Front End in progress"
@@ -292,8 +251,7 @@ jobs:
           #oc rollout status dc/${{ env.APP_NAME_API }}
 
           #oc rollout status dc/${{ env.APP_NAME_CAS }}
-          
-          
+
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.7.0
         with:
