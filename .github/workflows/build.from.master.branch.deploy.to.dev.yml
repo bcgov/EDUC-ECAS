@@ -33,6 +33,7 @@ env:
   APP_DEBUG: false
   DYNAMICSBASEURL: http://ecas-api:8080/api
   DOCUMENTROOT: /public
+  BRANCH: Github_action_fixes
 
  
   HOST_ROUTE: '${{ secrets.SITE_URL }}'
@@ -40,7 +41,7 @@ env:
   workflow_dispatch:
   push:
     branches:
-      - master
+      - '${{ BRANCH }}'
      
       
      
@@ -126,6 +127,7 @@ jobs:
         run: git clone '${{ env.SOURCE_REPOSITORY }}'
    
       - name: Setup and Build cas api
+        if: false
         id: build-image-cas
         uses: redhat-actions/s2i-build@v2
         with:
@@ -136,6 +138,7 @@ jobs:
           env_vars: |
             DOTNET_STARTUP_PROJECT=${{env.DOTNET_STARTUP_PROJECT}}
       - name: Setup and Build ecas api
+        if: false
         id: build-image-api
         uses: redhat-actions/s2i-build@v2
         with:
@@ -173,6 +176,7 @@ jobs:
           username: ${{ env.IMAGE_REGISTRY_USER }}
           password: ${{ env.IMAGE_REGISTRY_PASSWORD }}
       - name: Push api to registry
+        if: false
         id: push-image-api
         uses: redhat-actions/push-to-registry@v2
         with:
@@ -182,6 +186,7 @@ jobs:
           username: ${{ env.IMAGE_REGISTRY_USER }}
           password: ${{ env.IMAGE_REGISTRY_PASSWORD }}
       - name: Push cas to registry
+        if: false
         id: push-image-cas
         uses: redhat-actions/push-to-registry@v2
         with:
@@ -208,45 +213,28 @@ jobs:
 
           oc rollout cancel dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null || true && echo "No rollout in progress"
 
-          oc rollout cancel dc/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "No ecas api rollout in progress"
+          #oc rollout cancel dc/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "No ecas api rollout in progress"
 
-          oc rollout cancel dc/${{ env.APP_NAME_CAS }} 2> /dev/null  || true && echo "No cas api rollout in progress"
+          #oc rollout cancel dc/${{ env.APP_NAME_CAS }} 2> /dev/null  || true && echo "No cas api rollout in progress"
 
 
           # Create the image stream if it doesn't exist
 
           oc create imagestream ${{ env.REPO_NAME }}-frontend> /dev/null || true && echo "Frontend image stream in place"
-          oc create imagestream ${{ env.REPO_NAME }}-api> /dev/null || true && echo "Ecas API image stream in place"
-          oc create imagestream ${{ env.REPO_NAME }}-cas-api> /dev/null || true && echo "CAS API  image stream in place"
+          #oc create imagestream ${{ env.REPO_NAME }}-api> /dev/null || true && echo "Ecas API image stream in place"
+          #oc create imagestream ${{ env.REPO_NAME }}-cas-api> /dev/null || true && echo "CAS API  image stream in place"
 
 
           oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-frontend.outputs.registry-path }}  ${{ env.REPO_NAME }}-frontend:${{ env.TAG }}
 
           echo "Frontend tag success"
 
-          oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-api.outputs.registry-path }}   ${{env.REPO_NAME }}-api:${{ env.TAG }}
+          #oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-api.outputs.registry-path }}   ${{env.REPO_NAME }}-api:${{ env.TAG }}
 
           echo "Ecas API tag success"
           
-          oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-cas.outputs.registry-path }}   ${{env.REPO_NAME }}-cas-api:${{ env.TAG }}
-
-
-          echo "CAS API tag success"
+          #oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-cas.outputs.registry-path }}   ${{env.REPO_NAME }}-cas-api:${{ env.TAG }}
           
-          # Process and apply deployment template
-          
-          oc process -f ./openshift/templates/ecas-frontend/frontend.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }}  -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE}}\
-          | oc apply -f -
-
-
-
-          oc process -f ./openshift/templates/ecas-api/api.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }} -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }} -p  ASPNETCORE_ENVIRONMENT=${{  env.ASPNETCORE_ENVIRONMENT }}\
-          | oc apply -f -
-          
-
-          oc process -f ./openshift/templates/cas-api/cas-api.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }}  -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }}\
-          | oc apply -f -
-
           # UPDATE Configmaps
           curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/tools/update-configmap.sh \
           | bash /dev/stdin \
@@ -266,6 +254,24 @@ jobs:
           ${{ env.DOCUMENTROOT }} \
           ${{ env.DYNAMICSBASEURL }} \
 
+
+          echo "CAS API tag success"
+          
+          # Process and apply deployment template
+          
+          oc process -f ./openshift/templates/ecas-frontend/frontend.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }}  -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE}}\
+          | oc apply -f -
+
+
+
+          #oc process -f ./openshift/templates/ecas-api/api.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }} -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }} -p  ASPNETCORE_ENVIRONMENT=${{  env.ASPNETCORE_ENVIRONMENT }}\
+          #| oc apply -f -
+          
+
+          #oc process -f ./openshift/templates/cas-api/cas-api.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }}  -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }}\
+          #| oc apply -f -
+
+      
          
           
           
@@ -277,27 +283,27 @@ jobs:
 
           || true && echo "Rollout Front End in progress"
 
-          oc rollout latest dc/${{ env.APP_NAME_API }} 2> /dev/null \
+          #oc rollout latest dc/${{ env.APP_NAME_API }} 2> /dev/null \
 
-          || true && echo "Rollout ECAS API  in progress"
+          #|| true && echo "Rollout ECAS API  in progress"
 
-          oc rollout latest dc/${{ env.APP_NAME_CAS }} 2> /dev/null \
+          #oc rollout latest dc/${{ env.APP_NAME_CAS }} 2> /dev/null \
 
-          || true && echo "Rollout CAS API in progress"
+          #|| true && echo "Rollout CAS API in progress"
 
           oc logs  dc/${{ env.APP_NAME_FRONTEND }}
           
-          oc logs  dc/${{ env.APP_NAME_API }} 
+          #oc logs  dc/${{ env.APP_NAME_API }} 
           
-          oc logs  dc/${{ env.APP_NAME_CAS }} 
+          #oc logs  dc/${{ env.APP_NAME_CAS }} 
 
           # Get status, returns 0 if rollout is successful
 
           oc rollout status dc/${{ env.APP_NAME_FRONTEND }}
 
-          oc rollout status dc/${{ env.APP_NAME_API }}
+          #oc rollout status dc/${{ env.APP_NAME_API }}
 
-          oc rollout status dc/${{ env.APP_NAME_CAS }}
+          #oc rollout status dc/${{ env.APP_NAME_CAS }}
           
           
       - name: ZAP Scan
