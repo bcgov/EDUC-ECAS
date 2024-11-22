@@ -90,7 +90,7 @@
       spec:
         host: ${APPLICATION_DOMAIN}
         port:
-          targetPort: "cas-api"
+          targetPort: "8080-tcp"
         tls:
           insecureEdgeTerminationPolicy: Redirect
           termination: edge
