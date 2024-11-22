@@ -41,7 +41,7 @@ env:
   workflow_dispatch:
   push:
     branches:
-      - '${{ BRANCH }}'
+      - Github_action_fixes 
      
       
      
