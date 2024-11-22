@@ -177,6 +177,9 @@
     metadata:
       labels:
         template: "educ-${APP_NAME}-template"
+        app: "${APP_NAME}"
+        name: "${APP_NAME}-frontend"
+        app-group: "${APP_NAME}"
       name: "${APP_NAME}-frontend-cpu-autoscaler"
     spec:
       scaleTargetRef:
