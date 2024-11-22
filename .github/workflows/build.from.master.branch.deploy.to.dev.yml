@@ -230,13 +230,7 @@ jobs:
           
           
           curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/update-configmap.sh | bash /dev/stdin ${{ env.REPO_NAME }} ${{ env.OPENSHIFT_NAMESPACE_DEV }} ${{ env.APP_DEBUG }} ${{ env.DOCUMENTROOT }} ${{ env.DYNAMICSBASEURL }} 
-          
-          
-          
-          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/override-configmap.sh | bash /dev/stdin ${{ env.REPO_NAME }} ${{ env.OPENSHIFT_NAMESPACE_DEV}} ${{ env.APP_DEBUG }} ${{ env.DOCUMENTROOT }} ${{ env.DYNAMICSBASEURL }}
-          
-          
-          
+                    
           
           # Process and apply deployment template
           
