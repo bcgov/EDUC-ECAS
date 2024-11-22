@@ -200,7 +200,8 @@ jobs:
           oc project ${{ env.OPENSHIFT_NAMESPACE_DEV  }}
 
           # Cancel any rollouts in progress
-          oc rollout cancel dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null || true && echo "No rollout in progress"
+          oc rollout cancel dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null \
+          || true && echo "No rollout in progress" 
           #oc rollout cancel dc/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "No ecas api rollout in progress"
           #oc rollout cancel dc/${{ env.APP_NAME_CAS }} 2> /dev/null  || true && echo "No cas api rollout in progress"
 
@@ -215,7 +216,7 @@ jobs:
           #oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-cas.outputs.registry-path }}   ${{env.REPO_NAME }}-cas-api:${{ env.TAG }}
           
           # Update configmap
-          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/update-configmap.sh | bash /dev/stdin ${{ env.REPO_NAME }} ${{ env.OPENSHIFT_NAMESPACE_DEV }} ${{ env.APP_DEBUG }} ${{ env.DOCUMENTROOT }} ${{ env.DYNAMICSBASEURL }}          
+          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/update-configmap.sh | bash /dev/stdin ${{ env.REPO_NAME }} ${{ env.OPENSHIFT_NAMESPACE_DEV }} ${{ env.APP_DEBUG }} ${{ env.DOCUMENTROOT }} ${{ env.DYNAMICSBASEURL }}\          
           
           # Process and apply deployment template  
           oc process -f ./openshift/templates/ecas-frontend/frontend.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }}  -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE}}\
@@ -238,7 +239,7 @@ jobs:
 
           #|| true && echo "Rollout CAS API in progress"
 
-          oc logs  dc/${{ env.APP_NAME_FRONTEND }}
+          oc logs  dc/${{ env.APP_NAME_FRONTEND }} \
           
           #oc logs  dc/${{ env.APP_NAME_API }} 
           
@@ -246,7 +247,7 @@ jobs:
 
           # Get status, returns 0 if rollout is successful
 
-          oc rollout status dc/${{ env.APP_NAME_FRONTEND }}
+          oc rollout status dc/${{ env.APP_NAME_FRONTEND }} \
 
           #oc rollout status dc/${{ env.APP_NAME_API }}
 
