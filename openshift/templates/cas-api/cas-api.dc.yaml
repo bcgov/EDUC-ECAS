@@ -39,13 +39,23 @@
             name: "cas-api"
             env:
               - name: ASPNETCORE_ENVIRONMENT
-                value: ${ASPNETCORE_ENVIRONMENT}
+                valueFrom:
+                 configMapKeyRef:
+                    name: ${REPO_NAME}-config-map
+                    key:  ASPNETCORE_ENVIRONMENT_CAS
               - name: CAS_API_SERVER
-                value: ${CAS_API_SERVER}
+                valueFrom:
+                 configMapKeyRef:
+                    name: ${REPO_NAME}-config-map
+                    key:  CAS_API_SERVER
               - name: CAS_TOKEN_URI
-                value: ${CAS_TOKEN_URI}              
+                configMapKeyRef:
+                    name: ${REPO_NAME}-config-map
+                    key:  CAS_TOKEN_URI            
               - name: CAS_INVOICE_URI
-                value: ${CAS_INVOICE_URI}
+                configMapKeyRef:
+                    name: ${REPO_NAME}-config-map
+                    key:  CAS_INVOICE_URI
             
             
          
@@ -156,22 +166,7 @@
     description: The maximum amount of memory
     required: true
   
-  - name: ASPNETCORE_ENVIRONMENT
-    displayName: ASPNETCORE_ENVIRONMENT
-    required: true
-    value: "Production"
-  - name: CAS_API_SERVER
-    displayName: CAS_API_SERVER
-    required: true
-    value: "https://cfs-systws.cas.gov.bc.ca:7026"
-  - name: CAS_TOKEN_URI
-    displayName: CAS_TOKEN_URI
-    required: true
-    value: "/ords/cas/oauth/token"
-  - name: CAS_INVOICE_URI
-    displayName: CAS_INVOICE_URI
-    required: true
-    value: "/ords/cas/cfs/apinvoice/"
+  
     
     
  
