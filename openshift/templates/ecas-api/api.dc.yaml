@@ -131,6 +131,27 @@
       test: false
       triggers:
       - type: ConfigChange
+
+  - apiVersion: v1
+    kind: Route
+    metadata:
+      name: "${APP_NAME}-api"
+      labels:
+        name: "${APP_NAME}-api"
+        app: ${APP_NAME}
+        app-group: ${APP_NAME}
+    spec:
+      host: ${APPLICATION_DOMAIN}
+      port:
+        targetPort: "${APP_NAME}-api"
+      tls:
+        insecureEdgeTerminationPolicy: Redirect
+        termination: edge
+      to:
+        kind: Service
+        name: "${APP_NAME}-api"
+        weight: 100
+
   - apiVersion: v1
     kind: Service
     metadata:
@@ -207,6 +228,11 @@
   - name: MAX_MEM
     description: The maximum amount of memory
     required: true
+  - name: APPLICATION_DOMAIN
+    displayName: Application Hostname
+    description: The exposed hostname that will route to the service, if left blank a value will be defaulted.
+    required: false
+    value: ""
   
  
  
