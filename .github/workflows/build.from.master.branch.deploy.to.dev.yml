@@ -39,7 +39,7 @@ env:
   
   #ecas api config maps vars
   
-  ASPNETCORE_ENVIRONMENT: 'Development'
+  ASPNETCORE_ENVIRONMENT: Development
   DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT: Cloud
   DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL: https://ecasdev.api.crm3.dynamics.com/api/data/v9.2/
   DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL: https://localhost
@@ -48,7 +48,7 @@ env:
 
   #cas api config maps vars
   
-  ASPNETCORE_ENVIRONMENT_CAS: 'Production'
+  ASPNETCORE_ENVIRONMENT_CAS: Production
   CAS_API_SERVER: https://cfs-systws.cas.gov.bc.ca:7026
   CAS_TOKEN_URI: /ords/cas/oauth/token
   CAS_INVOICE_URI: /ords/cas/cfs/apinvoice/
