@@ -40,7 +40,7 @@ env:
   DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL: https://localhost
   DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL: https://ecasdev.crm3.dynamics.com/api/data/
   DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL: https://ecasdev.api.crm3.dynamics.com
-  ASPNETCORE_ENVIRONMENT_CAS: Production
+  
   CAS_API_SERVER: https://cfs-systws.cas.gov.bc.ca:7026
   CAS_TOKEN_URI: /ords/cas/oauth/token
   CAS_INVOICE_URI: /ords/cas/cfs/apinvoice/
