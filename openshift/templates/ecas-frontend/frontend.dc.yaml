@@ -43,11 +43,20 @@
             name: "${APP_NAME}-frontend"
             env:
               - name: APP_DEBUG
-                value: ${APP_DEBUG}
+                valueFrom:
+                  secretKeyRef:
+                    name: ${REPO_NAME}-config-map
+                    key:  APP_DEBUG
               - name: DYNAMICSBASEURL
-                value: ${DYNAMICSBASEURL}
+                valueFrom:
+                  secretKeyRef:
+                    name: ${REPO_NAME}-config-map
+                    key:  DYNAMICSBASEURL
               - name: DOCUMENTROOT
-                value: ${DOCUMENTROOT}
+                valueFrom:
+                  secretKeyRef:
+                    name: ${REPO_NAME}-config-map
+                    key:  DOCUMENTROOT
               - name: DYNAMICS_USERNAME
                 valueFrom:
                   secretKeyRef:
