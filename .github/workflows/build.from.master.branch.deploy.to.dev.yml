@@ -33,7 +33,7 @@ env:
   APP_DEBUG: false
   DYNAMICSBASEURL: http://ecas-api:8080/api
   DOCUMENTROOT: /public
-  BRANCH: github_action_fixes
+  
 
  
   HOST_ROUTE: '${{ secrets.SITE_URL }}'
@@ -235,8 +235,9 @@ jobs:
           
           #oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-cas.outputs.registry-path }}   ${{env.REPO_NAME }}-cas-api:${{ env.TAG }}
           
-          # UPDATE Configmaps
-          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/tools/update-configmap.sh \
+
+        
+          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/refs/heads/github_action_fixes/tools/update-configmap.sh \
           | bash /dev/stdin \
           ${{ env.REPO_NAME }} \
           ${{ env.OPENSHIFT_NAMESPACE_DEV }} \
@@ -245,8 +246,8 @@ jobs:
           ${{ env.DYNAMICSBASEURL }} \
          
           
-          # OVERRIDE Configmaps
-          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/tools/override-configmap-dev.sh \
+          
+           curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/refs/heads/github_action_fixes/tools/update-configmap.sh \
           | bash /dev/stdin \
           ${{ env.REPO_NAME }} \
           ${{ env.OPENSHIFT_NAMESPACE_DEV}} \
