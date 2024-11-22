@@ -202,13 +202,18 @@ jobs:
           # Cancel any rollouts in progress
           oc rollout cancel dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null \
           || true && echo "No rollout in progress" 
-          #oc rollout cancel dc/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "No ecas api rollout in progress"
-          #oc rollout cancel dc/${{ env.APP_NAME_CAS }} 2> /dev/null  || true && echo "No cas api rollout in progress"
+          #oc rollout cancel dc/${{ env.APP_NAME_API }} 2> /dev/null \
+          #|| true && echo "No ecas api rollout in progress"
+          #oc rollout cancel dc/${{ env.APP_NAME_CAS }} 2> /dev/null  |
+          #|| true && echo "No cas api rollout in progress"
 
           # Create the image stream if it doesn't exist
-          oc create imagestream ${{ env.REPO_NAME }}-frontend> /dev/null || true && echo "Frontend image stream in place"
-          #oc create imagestream ${{ env.REPO_NAME }}-api> /dev/null || true && echo "Ecas API image stream in place"
-          #oc create imagestream ${{ env.REPO_NAME }}-cas-api> /dev/null || true && echo "CAS API  image stream in place"
+          oc create imagestream ${{ env.REPO_NAME }}-frontend> /dev/null \
+          || true && echo "Frontend image stream in place"
+          #oc create imagestream ${{ env.REPO_NAME }}-api> /dev/null \
+          #|| true && echo "Ecas API image stream in place"
+          #oc create imagestream ${{ env.REPO_NAME }}-cas-api> /dev/null \
+          #|| true && echo "CAS API  image stream in place"
 
           # Tag images
           oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-frontend.outputs.registry-path }}  ${{ env.REPO_NAME }}-frontend:${{ env.TAG }}
