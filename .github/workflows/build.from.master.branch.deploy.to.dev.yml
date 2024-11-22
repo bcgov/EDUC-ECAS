@@ -6,7 +6,7 @@ env:
   REDHAT_REGISTRY_USERNAME: '${{ secrets.REDHAT_REGISTRY_USERNAME }}'
   REDHAT_REGISTRY_PASSWORD: '${{ secrets.REDHAT_REGISTRY_PASSWORD }}'
  
-  ASPNETCORE_ENVIRONMENT: 'Development'  
+  
  
   SOURCE_REPOSITORY: 'https://github.com/bcgov/EDUC-HUB.git'
   DOTNET_STARTUP_PROJECT: 'CASInterfaceService/cas-interface-service.csproj'
@@ -30,9 +30,25 @@ env:
   MAX_CPU: 600m
   MIN_MEM: 250Mi
   MAX_MEM: 500Mi
+
+  #frontend config maps vars
   APP_DEBUG: false
   DYNAMICSBASEURL: http://ecas-api:8080/api
   DOCUMENTROOT: /public
+  #ecas api config maps vars
+  ASPNETCORE_ENVIRONMENT: 'Development'
+  DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT: Cloud
+  DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL: https://ecasdev.api.crm3.dynamics.com/api/data/v9.2/
+  DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL: https://localhost
+  DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL: https://ecasdev.crm3.dynamics.com/api/data/
+  DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL: https://ecasdev.api.crm3.dynamics.com
+
+  #cas api config maps vars
+  ASPNETCORE_ENVIRONMENT_CAS: 'Production'
+  CAS_API_SERVER: https://cfs-systws.cas.gov.bc.ca:7026
+  CAS_TOKEN_URI: /ords/cas/oauth/token
+  CAS_INVOICE_URI: /ords/cas/cfs/apinvoice/
+  
   HOST_ROUTE: '${{ secrets.SITE_URL }}'
   BRANCH: "Github_action_fixes"
 
@@ -229,7 +245,7 @@ jobs:
           
           
           
-          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/update-configmap-dev.sh | bash /dev/stdin ${{ env.REPO_NAME }} ${{ env.OPENSHIFT_NAMESPACE_DEV }} ${{ env.APP_DEBUG }} ${{ env.DOCUMENTROOT }} ${{ env.DYNAMICSBASEURL }} 
+          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/update-configmap.sh | bash /dev/stdin ${{ env.REPO_NAME }} ${{ env.OPENSHIFT_NAMESPACE_DEV }} ${{ env.APP_DEBUG }} ${{ env.DOCUMENTROOT }} ${{ env.DYNAMICSBASEURL }} ${{ASPNETCORE_ENVIRONMENT}} ${{DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT}} ${{DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL}} ${{DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL}} ${{DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL}} ${{DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL}} ${{ASPNETCORE_ENVIRONMENT_CAS}} ${{CAS_API_SERVER}}  ${{CAS_TOKEN_URI}}  ${{CAS_INVOICE_URI}}
                     
           
           # Process and apply deployment template
