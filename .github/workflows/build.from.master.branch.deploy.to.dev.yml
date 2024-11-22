@@ -227,36 +227,23 @@ jobs:
 
           oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-frontend.outputs.registry-path }}  ${{ env.REPO_NAME }}-frontend:${{ env.TAG }}
 
-          echo "Frontend tag success"
 
           #oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-api.outputs.registry-path }}   ${{env.REPO_NAME }}-api:${{ env.TAG }}
 
-          echo "Ecas API tag success"
+      
           
           #oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-cas.outputs.registry-path }}   ${{env.REPO_NAME }}-cas-api:${{ env.TAG }}
           
 
-        
-          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/github_action_fixes/openshift/update-configmap.sh \
-          | bash /dev/stdin \
-          ${{ env.REPO_NAME }} \
-          ${{ env.OPENSHIFT_NAMESPACE_DEV }} \
-          ${{ env.APP_DEBUG }} \
-          ${{ env.DOCUMENTROOT }} \
-          ${{ env.DYNAMICSBASEURL }} 
+          
+          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/github_action_fixes/openshift/update-configmap.sh | bash /dev/stdin ${{ env.REPO_NAME }} ${{ env.OPENSHIFT_NAMESPACE_DEV }} ${{ env.APP_DEBUG }} ${{ env.DOCUMENTROOT }} ${{ env.DYNAMICSBASEURL }} 
          
           
           
-          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/github_action_fixes/openshift/override-configmap.sh \
-          | bash /dev/stdin \
-          ${{ env.REPO_NAME }} \
-          ${{ env.OPENSHIFT_NAMESPACE_DEV}} \
-          ${{ env.APP_DEBUG }} \
-          ${{ env.DOCUMENTROOT }} \
-          ${{ env.DYNAMICSBASEURL }} 
+          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/github_action_fixes/openshift/override-configmap.sh | bash /dev/stdin ${{ env.REPO_NAME }} ${{ env.OPENSHIFT_NAMESPACE_DEV}} ${{ env.APP_DEBUG }} ${{ env.DOCUMENTROOT }} ${{ env.DYNAMICSBASEURL }}
 
 
-          echo "CAS API tag success"
+         
           
           # Process and apply deployment template
           
