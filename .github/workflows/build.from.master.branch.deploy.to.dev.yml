@@ -237,7 +237,7 @@ jobs:
           
 
         
-          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/refs/heads/github_action_fixes/openshift/update-configmap.sh \
+          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/refs/heads/github_action_fixes/openshift/update-configmap.sh\
           | bash /dev/stdin \
           ${{ env.REPO_NAME }} \
           ${{ env.OPENSHIFT_NAMESPACE_DEV }} \
@@ -247,7 +247,7 @@ jobs:
          
           
           
-           curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/refs/heads/github_action_fixes/openshift/override-configmap.sh \
+           curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/refs/heads/github_action_fixes/openshift/override-configmap.sh\
           | bash /dev/stdin \
           ${{ env.REPO_NAME }} \
           ${{ env.OPENSHIFT_NAMESPACE_DEV}} \
