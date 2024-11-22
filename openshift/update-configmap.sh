@@ -1,13 +1,11 @@
 ###########################################################
 #ENV VARS
 ###########################################################
-envValue=$1
-APP_NAME=$2
-GRAD_NAMESPACE=$3
-COMMON_NAMESPACE=$4
-BUSINESS_NAMESPACE=$5
-SPLUNK_TOKEN=$6
-APP_LOG_LEVEL=$7
+APP_NAME=$1
+NAMESPACE=$2
+APP_DEBUG=$3
+DOCUMENTROOT=$4
+DYNAMICSBASEURL=$5
 
 SPLUNK_URL="gww.splunk.educ.gov.bc.ca"
 FLB_CONFIG="[SERVICE]
@@ -51,7 +49,7 @@ PARSER_CONFIG="
 #Setup for config-maps
 ###########################################################
 echo Creating config map "$APP_NAME"-config-map
-oc create -n "$GRAD_NAMESPACE"-"$envValue" configmap "$APP_NAME"-config-map \
+oc create -n "$NAMESPACE" configmap "$APP_NAME"-config-map \
   --from-literal=APP_LOG_LEVEL="$APP_LOG_LEVEL" \
   --from-literal=EDUC_SCHOOL_API="http://school-api-master.$COMMON_NAMESPACE-$envValue.svc.cluster.local:8080/" \
   --from-literal=ENABLE_FLYWAY="true" \
