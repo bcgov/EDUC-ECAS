@@ -23,6 +23,7 @@ CAS_INVOICE_URI=$15
 #Setup for config-maps
 ###########################################################
 echo Creating config map "$APP_NAME"-config-map
+echo "$NAMESPACE"
 oc create -n "$NAMESPACE" configmap "$APP_NAME"-config-map \
   --from-literal=APP_DEBUG="$APP_DEBUG" \
   --from-literal=DOCUMENTROOT="$DOCUMENTROOT" \
