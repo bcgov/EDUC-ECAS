@@ -80,14 +80,14 @@
       triggers:
       - type: ConfigChange
   - apiVersion: v1
-      kind: Route
-      metadata:
+    kind: Route
+    metadata:
         name: "cas-api"
         labels:
           name: "cas-api"
           app: ${APP_NAME}
           app-group: ${APP_NAME}
-      spec:
+    spec:
         host: ${APPLICATION_DOMAIN}
         port:
           targetPort: "8080-tcp"
