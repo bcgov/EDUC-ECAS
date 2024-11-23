@@ -90,7 +90,7 @@
                     name: ecas-api-credentials
                     key: TenantId  
               - name:  DynamicsAuthenticationSettings__CloudBaseUrl
-                 valueFrom:
+                valueFrom:
                  configMapKeyRef:
                     name: ${REPO_NAME}-config-map
                     key:  DynamicsAuthenticationSettings__CloudBaseUrl
