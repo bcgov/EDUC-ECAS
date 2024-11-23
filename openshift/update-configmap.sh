@@ -24,7 +24,7 @@ CAS_INVOICE_URI=$15
 ###########################################################
 echo Creating config map "$APP_NAME"-config-map
 echo "$NAMESPACE"
-oc create -n "$NAMESPACE" configmap "$APP_NAME"-config-map \
+oc create -n 7d321c-dev configmap ecas-config-map \
   --from-literal=APP_DEBUG="$APP_DEBUG" \
   --from-literal=DOCUMENTROOT="$DOCUMENTROOT" \
   --from-literal=DYNAMICSBASEURL="$DYNAMICSBASEURL" \
@@ -41,7 +41,7 @@ oc create -n "$NAMESPACE" configmap "$APP_NAME"-config-map \
   --dry-run=client -o yaml | oc apply -f -
 
 echo Creating config map "$APP_NAME"-flb-sc-config-map
-oc create -n "$NAMESPACE" configmap "$APP_NAME"-flb-sc-config-map \
+oc create -n 7d321c-dev configmap ecas-flb-sc-config-map \
   --from-literal=fluent-bit.conf="$FLB_CONFIG" \
   --from-literal=parsers.conf="$PARSER_CONFIG" \
   --dry-run=client -o yaml | oc apply -f -
