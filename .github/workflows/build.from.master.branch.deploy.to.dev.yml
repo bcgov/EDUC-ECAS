@@ -218,7 +218,7 @@ jobs:
 
           # Cancel any rollouts in progress
 
-          #oc rollout cancel dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null || true && echo "No rollout in progress"
+          oc rollout cancel dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null || true && echo "No rollout in progress"
 
           oc rollout cancel dc/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "No ecas api rollout in progress"
 
