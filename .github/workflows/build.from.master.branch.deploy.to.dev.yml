@@ -34,7 +34,7 @@ env:
   DYNAMICSBASEURL: http://ecas-api:8080/api
   DOCUMENTROOT: /public
   HOST_ROUTE: '${{ secrets.SITE_URL }}'
-  BRANCH: "Github_action_fixes"
+  BRANCH: "github_action_fixes_latest_stable"
 
 on:
   workflow_dispatch:
