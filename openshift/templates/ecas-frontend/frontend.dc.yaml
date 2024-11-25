@@ -122,15 +122,12 @@
         app: ${APP_NAME}
         app-group: ${APP_NAME}
     spec:
-      host: ${HOST_ROUTE}
+      host: ${APPLICATION_DOMAIN}
       port:
         targetPort: "${APP_NAME}-frontend"
       tls:
         tls:
-        caCertificate: "${CA_CERT}"
-        certificate: "${CERTIFICATE}"
         insecureEdgeTerminationPolicy: Redirect
-        key: "${PRIVATE_KEY}"
         termination: edge
       to:
         kind: Service
@@ -146,12 +143,15 @@
         app: ${APP_NAME}
         app-group: ${APP_NAME}
     spec:
-      host: ${APPLICATION_DOMAIN}
+      host: ${HOST_ROUTE}
       port:
         targetPort: "${APP_NAME}-frontend"
       tls:
         insecureEdgeTerminationPolicy: Redirect
         termination: edge
+        caCertificate: "${CA_CERT}"
+        certificate: "${CERTIFICATE
+        key: "${PRIVATE_KEY}"
       to:
         kind: Service
         name: "${APP_NAME}-frontend"
