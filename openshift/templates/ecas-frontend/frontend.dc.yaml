@@ -122,6 +122,30 @@
         app: ${APP_NAME}
         app-group: ${APP_NAME}
     spec:
+      host: ${HOST_ROUTE}
+      port:
+        targetPort: "${APP_NAME}-frontend"
+      tls:
+        tls:
+        caCertificate: "${CA_CERT}"
+        certificate: "${CERTIFICATE}"
+        insecureEdgeTerminationPolicy: Redirect
+        key: "${PRIVATE_KEY}"
+        termination: edge
+      to:
+        kind: Service
+        name: "${APP_NAME}-frontend"
+        weight: 100
+
+  - apiVersion: v1
+    kind: Route
+    metadata:
+      name: "dev-workwitheducation"
+      labels:
+        name: "${APP_NAME}-frontend"
+        app: ${APP_NAME}
+        app-group: ${APP_NAME}
+    spec:
       host: ${APPLICATION_DOMAIN}
       port:
         targetPort: "${APP_NAME}-frontend"
