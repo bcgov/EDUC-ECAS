@@ -253,3 +253,12 @@
     description: The exposed hostname that will route to the service, if left blank a value will be defaulted.
     required: false
     value: ""
+  - name: CA_CERT
+    description: The minimum amount of replicas
+    required: true
+  - name: CERTIFICATE
+    description: The minimum amount of replicas
+    required: true
+  - name: PRIVATE_KEY
+    description: The minimum amount of replicas
+    required: true
