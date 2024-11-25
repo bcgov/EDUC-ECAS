@@ -150,7 +150,7 @@
         insecureEdgeTerminationPolicy: Redirect
         termination: edge
         caCertificate: "${CA_CERT}"
-        certificate: "${CERTIFICATE
+        certificate: "${CERTIFICATE}"
         key: "${PRIVATE_KEY}"
       to:
         kind: Service
