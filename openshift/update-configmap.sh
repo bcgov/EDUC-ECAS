@@ -23,7 +23,7 @@ CAS_INVOICE_URI=${15}
 #Setup for config-maps
 ###########################################################
 echo Creating config map "$REPO_NAME"-config-map
-oc create   configmap ecas-config-map \
+oc create   configmap "$REPO_NAME"-config-map \
   --from-literal=APP_DEBUG="$APP_DEBUG" \
   --from-literal=DOCUMENTROOT="$DOCUMENTROOT" \
   --from-literal=DYNAMICSBASEURL="$DYNAMICSBASEURL" \
@@ -40,7 +40,7 @@ oc create   configmap ecas-config-map \
   --dry-run=client -o yaml | oc apply -f -
 
 echo Creating config map "$REPO_NAME"-flb-sc-config-map
-oc create  configmap ecas-flb-sc-config-map \
+oc create  configmap "$REPO_NAME"-flb-sc-config-map \
   --from-literal=fluent-bit.conf="$FLB_CONFIG" \
   --from-literal=parsers.conf="$PARSER_CONFIG" \
   --dry-run=client -o yaml | oc apply -f -
