@@ -36,7 +36,10 @@
             name: "${APP_NAME}-frontend"
             env:
               - name: APP_DEBUG
-                value: ${APP_DEBUG}
+                valueFrom:
+                 configMapKeyRef:
+                   name: ${REPO_NAME}-config-map
+                   key: APP_DEBUG
               - name: DYNAMICSBASEURL
                 valueFrom:
                   configMapKeyRef:
