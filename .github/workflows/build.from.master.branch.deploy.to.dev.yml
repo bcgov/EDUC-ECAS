@@ -140,6 +140,7 @@ jobs:
    
       - name: Setup and Build cas api
         id: build-image-cas
+        if: false
         uses: redhat-actions/s2i-build@v2
         with:
           path_context: ./EDUC-HUB
@@ -161,7 +162,6 @@ jobs:
 
       - name: Setup and Build Frontend
         id: build-image-frontend
-        if: false
         uses: redhat-actions/s2i-build@v2
         with:
           path_context: ./web-app
@@ -180,7 +180,6 @@ jobs:
 
       - name: Push frontend to registry
         id: push-image-frontend
-        if: false
         uses: redhat-actions/push-to-registry@v2
         with:
           image: ${{ steps.build-image-frontend.outputs.image }}
@@ -202,6 +201,7 @@ jobs:
 
       - name: Push cas to registry
         id: push-image-cas
+        if: false
         uses: redhat-actions/push-to-registry@v2
         with:
           image: ${{ steps.build-image-cas.outputs.image }}
@@ -238,14 +238,14 @@ jobs:
           oc create imagestream ${{ env.REPO_NAME }}-cas-api> /dev/null || true && echo "CAS API  image stream in place"
 
 
-          #oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-frontend.outputs.registry-path }}  ${{ env.REPO_NAME }}-frontend:${{ env.TAG }}
+          oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-frontend.outputs.registry-path }}  ${{ env.REPO_NAME }}-frontend:${{ env.TAG }}
 
 
           #oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-api.outputs.registry-path }}   ${{env.REPO_NAME }}-api:${{ env.TAG }}
           
           
           
-          oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-cas.outputs.registry-path }}   ${{env.REPO_NAME }}-cas-api:${{ env.TAG }}
+          #oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-cas.outputs.registry-path }}   ${{env.REPO_NAME }}-cas-api:${{ env.TAG }}
 
           curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/update-configmap.sh | bash /dev/stdin  ${{ env.REPO_NAME }} \
           ${{ env.OPENSHIFT_NAMESPACE_DEV }} \
