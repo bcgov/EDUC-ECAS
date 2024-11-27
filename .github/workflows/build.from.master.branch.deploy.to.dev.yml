@@ -249,7 +249,7 @@ jobs:
 
           curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/update-configmap.sh | bash /dev/stdin  ${{ env.REPO_NAME }} \
           ${{ env.OPENSHIFT_NAMESPACE_DEV }} \
-          ${{env.APP_DEBUG}}  ${{env.DOCUMENTROOT}} \
+          ${{env.APP_DEBUG}} ${{env.DOCUMENTROOT}} \
           ${{ env.DYNAMICSBASEURL}} \
           ${{env.ASPNETCORE_ENVIRONMENT}}  ${{env.DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT}} \
           ${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL}} \
