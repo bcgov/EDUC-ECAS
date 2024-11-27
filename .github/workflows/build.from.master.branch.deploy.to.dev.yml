@@ -160,6 +160,7 @@ jobs:
 
       - name: Setup and Build Frontend
         id: build-image-frontend
+        if: false
         uses: redhat-actions/s2i-build@v2
         with:
           path_context: ./web-app
@@ -178,6 +179,7 @@ jobs:
 
       - name: Push frontend to registry
         id: push-image-frontend
+        if: false
         uses: redhat-actions/push-to-registry@v2
         with:
           image: ${{ steps.build-image-frontend.outputs.image }}
