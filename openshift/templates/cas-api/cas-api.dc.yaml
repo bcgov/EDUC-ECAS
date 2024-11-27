@@ -45,12 +45,12 @@
                     key: CAS_API_SERVER
               - name: CAS_TOKEN_URI
                 valueFrom:
-                configMapKeyRef:
+                 configMapKeyRef:
                     name: ${REPO_NAME}-config-map
                     key: CAS_TOKEN_URI            
               - name: CAS_INVOICE_URI
                 valueFrom:
-                configMapKeyRef:
+                 configMapKeyRef:
                     name: ${REPO_NAME}-config-map
                     key: CAS_INVOICE_URI
             ports:
