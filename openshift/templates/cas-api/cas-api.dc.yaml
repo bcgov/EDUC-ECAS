@@ -37,20 +37,20 @@
                 valueFrom:
                  configMapKeyRef:
                     name: ${REPO_NAME}-config-map
-                    key:  ASPNETCORE_ENVIRONMENT_CAS
+                    key: ASPNETCORE_ENVIRONMENT_CAS
               - name: CAS_API_SERVER
                 valueFrom:
                  configMapKeyRef:
                     name: ${REPO_NAME}-config-map
-                    key:  CAS_API_SERVER
+                    key: CAS_API_SERVER
               - name: CAS_TOKEN_URI
                 configMapKeyRef:
                     name: ${REPO_NAME}-config-map
-                    key:  CAS_TOKEN_URI            
+                    key: CAS_TOKEN_URI            
               - name: CAS_INVOICE_URI
                 configMapKeyRef:
                     name: ${REPO_NAME}-config-map
-                    key:  CAS_INVOICE_URI
+                    key: CAS_INVOICE_URI
             ports:
             - containerPort: 8080
               protocol: TCP
