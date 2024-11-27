@@ -140,7 +140,6 @@ jobs:
    
       - name: Setup and Build cas api
         id: build-image-cas
-        if: false
         uses: redhat-actions/s2i-build@v2
         with:
           path_context: ./EDUC-HUB
@@ -152,6 +151,7 @@ jobs:
 
       - name: Setup and Build ecas api
         id: build-image-api
+        if: false
         uses: redhat-actions/s2i-build@v2
         with:
           path_context: ./web-api/Ecas.Dyn365Service
