@@ -6,7 +6,7 @@ env:
   REDHAT_REGISTRY_USERNAME: '${{ secrets.REDHAT_REGISTRY_USERNAME }}'
   REDHAT_REGISTRY_PASSWORD: '${{ secrets.REDHAT_REGISTRY_PASSWORD }}'
  
-  ASPNETCORE_ENVIRONMENT: 'Development'  
+  
  
   SOURCE_REPOSITORY: 'https://github.com/bcgov/EDUC-HUB.git'
   DOTNET_STARTUP_PROJECT: 'CASInterfaceService/cas-interface-service.csproj'
@@ -30,11 +30,31 @@ env:
   MAX_CPU: 600m
   MIN_MEM: 250Mi
   MAX_MEM: 500Mi
-  APP_DEBUG: false
+
+  #frontend config maps vars
+  APP_DEBUG: 'FALSE'
   DYNAMICSBASEURL: http://ecas-api:8080/api
   DOCUMENTROOT: /public
+  #ecas api config maps vars
+  ASPNETCORE_ENVIRONMENT: 'Development'
+  DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT: Cloud
+  DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL: https://ecasdev.api.crm3.dynamics.com/api/data/v9.2/
+  DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL: https://localhost
+  DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL: https://ecasdev.crm3.dynamics.com/api/data/
+  DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL: https://ecasdev.api.crm3.dynamics.com
+
+  #cas api config maps vars
+  ASPNETCORE_ENVIRONMENT_CAS: 'Production'
+  CAS_API_SERVER: https://cfs-systws.cas.gov.bc.ca:7026
+  CAS_TOKEN_URI: /ords/cas/oauth/token
+  CAS_INVOICE_URI: /ords/cas/cfs/apinvoice/
+  
   HOST_ROUTE: '${{ secrets.SITE_URL }}'
   BRANCH: "github_action_fixes_latest_stable"
+
+  CA_CERT: ${{ secrets.CA_CERT }}
+  CERTIFICATE: ${{ secrets.CERT }}
+  PRIVATE_KEY: ${{ secrets.PRIV_KEY }}
 
 on:
   workflow_dispatch:
@@ -119,7 +139,6 @@ jobs:
         run: git clone '${{ env.SOURCE_REPOSITORY }}'
    
       - name: Setup and Build cas api
-        if: false
         id: build-image-cas
         uses: redhat-actions/s2i-build@v2
         with:
@@ -131,7 +150,6 @@ jobs:
             DOTNET_STARTUP_PROJECT=${{env.DOTNET_STARTUP_PROJECT}}
 
       - name: Setup and Build ecas api
-        if: false
         id: build-image-api
         uses: redhat-actions/s2i-build@v2
         with:
@@ -169,7 +187,6 @@ jobs:
           password: ${{ env.IMAGE_REGISTRY_PASSWORD }}
 
       - name: Push api to registry
-        if: false
         id: push-image-api
         uses: redhat-actions/push-to-registry@v2
         with:
@@ -180,7 +197,6 @@ jobs:
           password: ${{ env.IMAGE_REGISTRY_PASSWORD }}
 
       - name: Push cas to registry
-        if: false
         id: push-image-cas
         uses: redhat-actions/push-to-registry@v2
         with:
@@ -206,45 +222,43 @@ jobs:
 
           oc rollout cancel dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null || true && echo "No rollout in progress"
 
-          #oc rollout cancel dc/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "No ecas api rollout in progress"
+          oc rollout cancel dc/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "No ecas api rollout in progress"
 
-          #oc rollout cancel dc/${{ env.APP_NAME_CAS }} 2> /dev/null  || true && echo "No cas api rollout in progress"
+          oc rollout cancel dc/${{ env.APP_NAME_CAS }} 2> /dev/null  || true && echo "No cas api rollout in progress"
 
 
           # Create the image stream if it doesn't exist
 
           oc create imagestream ${{ env.REPO_NAME }}-frontend> /dev/null || true && echo "Frontend image stream in place"
-          #oc create imagestream ${{ env.REPO_NAME }}-api> /dev/null || true && echo "Ecas API image stream in place"
-          #oc create imagestream ${{ env.REPO_NAME }}-cas-api> /dev/null || true && echo "CAS API  image stream in place"
+          oc create imagestream ${{ env.REPO_NAME }}-api> /dev/null || true && echo "Ecas API image stream in place"
+          oc create imagestream ${{ env.REPO_NAME }}-cas-api> /dev/null || true && echo "CAS API  image stream in place"
 
 
           oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-frontend.outputs.registry-path }}  ${{ env.REPO_NAME }}-frontend:${{ env.TAG }}
 
 
-          #oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-api.outputs.registry-path }}   ${{env.REPO_NAME }}-api:${{ env.TAG }}
+          oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-api.outputs.registry-path }}   ${{env.REPO_NAME }}-api:${{ env.TAG }}
           
           
           
-          #oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-cas.outputs.registry-path }}   ${{env.REPO_NAME }}-cas-api:${{ env.TAG }}
+          oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-cas.outputs.registry-path }}   ${{env.REPO_NAME }}-cas-api:${{ env.TAG }}
+
+          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/update-configmap.sh | bash /dev/stdin  "${{ env.REPO_NAME }}" "${{ env.OPENSHIFT_NAMESPACE_DEV }}" "${{env.APP_DEBUG}}" "${{env.DOCUMENTROOT}}" "${{ env.DYNAMICSBASEURL}}" "${{env.ASPNETCORE_ENVIRONMENT}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL}}"  "${{env.ASPNETCORE_ENVIRONMENT_CAS}}"      "${{env.CAS_API_SERVER}}"  "${{env.CAS_TOKEN_URI}}"  "${{env.CAS_INVOICE_URI}}"
           
-          
-          
-          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/update-configmap.sh | bash /dev/stdin ${{ env.REPO_NAME }} ${{ env.OPENSHIFT_NAMESPACE_DEV }} ${{ env.APP_DEBUG }} ${{ env.DOCUMENTROOT }} ${{ env.DYNAMICSBASEURL }} 
-                    
           
           # Process and apply deployment template
           
-          oc process -f ./openshift/templates/ecas-frontend/frontend.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }}  -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE}}\
+          oc process -f ./openshift/templates/ecas-frontend/frontend.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }}  -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE}}  -p CA_CERT="${{ env.CA_CERT }}" -p CERTIFICATE="${{ env.CERTIFICATE }}" -p PRIVATE_KEY="${{ env.PRIVATE_KEY }}"\
           | oc apply -f -
 
 
 
-          #oc process -f ./openshift/templates/ecas-api/api.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }} -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }} -p  ASPNETCORE_ENVIRONMENT=${{  env.ASPNETCORE_ENVIRONMENT }}\
-          #| oc apply -f -
+          oc process -f ./openshift/templates/ecas-api/api.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }} -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }}\
+          | oc apply -f -
           
           
-          #oc process -f ./openshift/templates/cas-api/cas-api.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }}  -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }}\
-          #| oc apply -f -
+          oc process -f ./openshift/templates/cas-api/cas-api.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }}  -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }}\
+          | oc apply -f -
 
 
       - name: ZAP Scan
