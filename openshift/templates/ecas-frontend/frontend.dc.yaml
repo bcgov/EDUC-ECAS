@@ -238,7 +238,7 @@
   - name: APP_DEBUG
     displayName: Application Debug
     required: true
-    value: "false"
+    value: "FALSE"
   - name: DOCUMENTROOT
     displayName: Document Root
     required: true
