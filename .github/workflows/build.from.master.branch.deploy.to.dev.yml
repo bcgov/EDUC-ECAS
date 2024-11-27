@@ -32,7 +32,7 @@ env:
   MAX_MEM: 500Mi
 
   #frontend config maps vars
-  APP_DEBUG: 'false'
+  APP_DEBUG: 'FALSE'
   DYNAMICSBASEURL: http://ecas-api:8080/api
   DOCUMENTROOT: /public
   #ecas api config maps vars
