@@ -14,11 +14,14 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
+        \Fruitcake\Cors\HandleCors::class,
         \App\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\TrustProxies::class,
+        \App\Http\Middleware\HandleInertiaRequests::class,
+
     ];
 
     /**
@@ -35,9 +38,14 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Fruitcake\Cors\HandleCors::class,
+            \App\Http\Middleware\HandlePreflight::class,
+            \App\Http\Middleware\HandleInertiaRequests::class,
         ],
 
         'api' => [
+            \Fruitcake\Cors\HandleCors::class,
+            \App\Http\Middleware\HandlePreflight::class,
             'throttle:60,1',
             'bindings',
         ],
@@ -76,5 +84,11 @@ class Kernel extends HttpKernel
         \Illuminate\Session\Middleware\AuthenticateSession::class,
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
         \Illuminate\Auth\Middleware\Authorize::class,
+    ];
+
+    protected $middlewareAliases = [
+        'cors' => [
+            \App\Http\Middleware\HandlePreflight::class,
+        ],
     ];
 }

@@ -23,7 +23,7 @@
                             <button type="button" class="btn btn-outline-primary" @click="hideContracts" v-if="displayContracts">Dashboard</button>
                         </div>
                         <div id="logout" class="ml-2">
-                            <button type="button" class="btn btn-primary" @click="$keycloak.logoutFn" v-if="$keycloak.authenticated">Log out</button>
+                            <button type="button" class="btn btn-primary" @click="logout($keycloak)" v-if="$keycloak.authenticated">Log out</button>
                         </div>
                     </div>
                 </div>
@@ -318,6 +318,23 @@
             async refreshContractsData() {
                 console.log('refreshing contracts data...');
                 await this.assignmentsUpdated();
+            },
+             async logout(keycloak) {
+                try {
+                this.$store.commit('SET_CREDENTIALS', []);
+                this.$store.commit('SET_SESSIONS', []);
+                this.$store.commit('SET_USER', []);
+                this.$store.commit('SET_ASSIGNMENTS', []);
+                const kcLogoutUrl = keycloak.createLogoutUrl();
+                const token =keycloak.idToken;
+                const baseUrl = window.location.origin;
+                const logoutUrl=`${kcLogoutUrl}&post_logout_redirect_uri=${baseUrl}&id_token_hint=${token}`;
+                //window.location.replace(logoutUrl);
+                const response = await axios.post('/api/logout', {url: logoutUrl}, {withCredentials:true});
+                const data = response.data;
+                }  catch (error) {
+                    console.error ("logout failed:", error)
+                }
             },
         }
 
