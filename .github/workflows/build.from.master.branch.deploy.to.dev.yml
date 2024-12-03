@@ -58,6 +58,9 @@ env:
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - ${{ env.BRANCH }}
 
 jobs:
   build-and-deploy-dev:
