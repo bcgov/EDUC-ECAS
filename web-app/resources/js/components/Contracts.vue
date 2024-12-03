@@ -168,7 +168,7 @@
       <modal name="file_download_form" width="370px" height="auto" :scrollable="false" :clickToClose="false">
          <file-downloader :contract="contract"/>
       </modal>
-      <modal name="submit_for_review_form" height="auto" :scrollable="false" :clickToClose="false">
+      <modal name="submit_for_review_form" width ="370px" height="auto" :scrollable="false" :clickToClose="false">
          <submit-for-review :files="uploaded_files" :assignmentID="selectedAssignmentID"/>
       </modal>
       <modal name="warning_form1" height="auto" :scrollable="false" :clickToClose="false">
