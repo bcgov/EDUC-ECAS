@@ -50,7 +50,7 @@ env:
   CAS_INVOICE_URI: /ords/cas/cfs/apinvoice/
   
   HOST_ROUTE: '${{ secrets.SITE_URL }}'
-  BRANCH: "Github_action_fixes"
+  BRANCH: "master"
 
   CA_CERT: ${{ secrets.CA_CERT }}
   CERTIFICATE: ${{ secrets.CERT }}
