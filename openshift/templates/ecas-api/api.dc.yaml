@@ -9,10 +9,11 @@
   - apiVersion: v1
     kind: DeploymentConfig
     metadata:
-    
-      creationTimestamp:
       labels:
         app: "${APP_NAME}"
+        name: "${APP_NAME}-api"
+        app-group: "${APP_NAME}"
+        template: "educ-${APP_NAME}-template"
       name: "${APP_NAME}-api"
     spec:
       replicas: ${{MIN_REPLICAS}}
@@ -24,8 +25,6 @@
         type: Rolling
       template:
         metadata:
-       
-          creationTimestamp:
           labels:
             app: "${APP_NAME}"
             deploymentconfig: "${APP_NAME}-api"
@@ -33,17 +32,23 @@
           containers:
           - image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${REPO_NAME}-api:${TAG}
             imagePullPolicy: Always
-           
-   
-       
             name: "${APP_NAME}-api"
             env:
               - name: ASPNETCORE_ENVIRONMENT
-                value: ${ASPNETCORE_ENVIRONMENT}
+                valueFrom:
+                 configMapKeyRef:
+                    name: ${REPO_NAME}-config-map
+                    key:  ASPNETCORE_ENVIRONMENT
               - name: DynamicsAuthenticationSettings__ActiveEnvironment
-                value: ${DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT}
+                valueFrom:
+                 configMapKeyRef:
+                    name: ${REPO_NAME}-config-map
+                    key:  DynamicsAuthenticationSettings__ActiveEnvironment
               - name: DynamicsAuthenticationSettings__CloudWebApiUrl
-                value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL}
+                valueFrom:
+                 configMapKeyRef:
+                    name: ${REPO_NAME}-config-map
+                    key:  DynamicsAuthenticationSettings__CloudWebApiUrl
               - name: ECasAPISecuritySettings__UserName
                 valueFrom:
                   secretKeyRef:
@@ -55,9 +60,15 @@
                     name: ecas-api-credentials
                     key: password
               - name: DynamicsAuthenticationSettings__CloudRedirectUrl
-                value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL}
+                valueFrom:
+                 configMapKeyRef:
+                    name: ${REPO_NAME}-config-map
+                    key:  DynamicsAuthenticationSettings__CloudRedirectUrl
               - name: DynamicsAuthenticationSettings__CloudResourceUrl
-                value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL}
+                valueFrom:
+                 configMapKeyRef:
+                    name: ${REPO_NAME}-config-map
+                    key:  DynamicsAuthenticationSettings__CloudResourceUrl
               - name: DynamicsAuthenticationSettings__CloudClientId
                 valueFrom:
                   secretKeyRef:
@@ -79,10 +90,10 @@
                     name: ecas-api-credentials
                     key: TenantId  
               - name:  DynamicsAuthenticationSettings__CloudBaseUrl
-                value: ${DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL}
-              
-            
-         
+                valueFrom:
+                 configMapKeyRef:
+                    name: ${REPO_NAME}-config-map
+                    key:  DynamicsAuthenticationSettings__CloudBaseUrl
             ports:
             - containerPort: 8080
               protocol: TCP
@@ -100,8 +111,6 @@
                 path: "/api/environmentinformation"
                 port: 8080
                 scheme: HTTP
-          
-              
             resources:
               requests:
                 cpu: "${MIN_CPU}"
@@ -113,12 +122,35 @@
       test: false
       triggers:
       - type: ConfigChange
+
+  - apiVersion: v1
+    kind: Route
+    metadata:
+      name: "${APP_NAME}-api"
+      labels:
+        name: "${APP_NAME}-api"
+        app: ${APP_NAME}
+        app-group: ${APP_NAME}
+    spec:
+      host: ${APPLICATION_DOMAIN}
+      port:
+        targetPort: "${APP_NAME}-api"
+      tls:
+        insecureEdgeTerminationPolicy: Redirect
+        termination: edge
+      to:
+        kind: Service
+        name: "${APP_NAME}-api"
+        weight: 100
+
   - apiVersion: v1
     kind: Service
     metadata:
-    
       labels:
         app: "${APP_NAME}"
+        name: "${APP_NAME}-api"
+        app-group: "${APP_NAME}"
+        template: "educ-${APP_NAME}-template"
       name: "${APP_NAME}-api"
     spec:
       ports:
@@ -129,15 +161,14 @@
       selector:
         app: "${APP_NAME}"
         deploymentconfig: "${APP_NAME}-api"
-
-
-
-
-   
-
   - apiVersion: autoscaling/v2
     kind: HorizontalPodAutoscaler
     metadata:
+      labels:
+        template: "educ-${APP_NAME}-template"
+        app: "${APP_NAME}"
+        name: "${APP_NAME}-api"
+        app-group: "${APP_NAME}"
       name: "${APP_NAME}-api-cpu-autoscaler"
     spec:
       scaleTargetRef:
@@ -154,6 +185,7 @@
             target:
               type: Utilization
               averageUtilization: 90
+
   parameters:
   - name: REPO_NAME
     description: Application repository name
@@ -189,28 +221,11 @@
   - name: MAX_MEM
     description: The maximum amount of memory
     required: true
-  - name: ASPNETCORE_ENVIRONMENT
-    displayName: ASPNETCORE_ENVIRONMENT
-    required: true
-  - name: DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT
-    displayName: DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT
-    required: true
-    value: Cloud
-  - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL
-    displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL
-    required: true
-    value: https://ecasdev.api.crm3.dynamics.com/api/data/v9.2/
-  - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL
-    displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL
-    required: true
-    value: https://localhost
-  - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL
-    displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL
-    required: true
-    value: https://ecasdev.crm3.dynamics.com/api/data/
-  - name: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL
-    displayName: DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL
-    required: true
-    value: https://ecasdev.api.crm3.dynamics.com
+  - name: APPLICATION_DOMAIN
+    displayName: Application Hostname
+    description: The exposed hostname that will route to the service, if left blank a value will be defaulted.
+    required: false
+    value: ""
+  
  
  

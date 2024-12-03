@@ -6,7 +6,7 @@ env:
   REDHAT_REGISTRY_USERNAME: '${{ secrets.REDHAT_REGISTRY_USERNAME }}'
   REDHAT_REGISTRY_PASSWORD: '${{ secrets.REDHAT_REGISTRY_PASSWORD }}'
  
-  ASPNETCORE_ENVIRONMENT: 'Development'  
+  
  
   SOURCE_REPOSITORY: 'https://github.com/bcgov/EDUC-HUB.git'
   DOTNET_STARTUP_PROJECT: 'CASInterfaceService/cas-interface-service.csproj'
@@ -31,25 +31,40 @@ env:
   MIN_MEM: 250Mi
   MAX_MEM: 500Mi
 
- 
+  #frontend config maps vars
+  APP_DEBUG: 'FALSE'
+  DYNAMICSBASEURL: http://ecas-api:8080/api
+  DOCUMENTROOT: /public
+  #ecas api config maps vars
+  ASPNETCORE_ENVIRONMENT: 'Development'
+  DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT: Cloud
+  DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL: https://ecasdev.api.crm3.dynamics.com/api/data/v9.2/
+  DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL: https://localhost
+  DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL: https://ecasdev.crm3.dynamics.com/api/data/
+  DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL: https://ecasdev.api.crm3.dynamics.com
+
+  #cas api config maps vars
+  ASPNETCORE_ENVIRONMENT_CAS: 'Production'
+  CAS_API_SERVER: https://cfs-systws.cas.gov.bc.ca:7026
+  CAS_TOKEN_URI: /ords/cas/oauth/token
+  CAS_INVOICE_URI: /ords/cas/cfs/apinvoice/
+  
   HOST_ROUTE: '${{ secrets.SITE_URL }}'
-'on':
+  BRANCH: "Github_action_fixes"
+
+  CA_CERT: ${{ secrets.CA_CERT }}
+  CERTIFICATE: ${{ secrets.CERT }}
+  PRIVATE_KEY: ${{ secrets.PRIV_KEY }}
+
+on:
   workflow_dispatch:
-  push:
-    branches:
-      - master
-     
-      
-     
-     
-      
+
 jobs:
   build-and-deploy-dev:
     name: Build and deploy to DEV
     runs-on: ubuntu-24.04
     environment: dev
-     
-    
+
     steps:
       - name: Check for required secrets
         uses: actions/github-script@v6
@@ -59,7 +74,6 @@ jobs:
               OPENSHIFT_SERVER: `${{ secrets.OPENSHIFT_SERVER }}`,
               OPENSHIFT_TOKEN: `${{ secrets.OPENSHIFT_TOKEN }}`,
             };
-
 
             const GHCR = "ghcr.io";
 
@@ -72,7 +86,6 @@ jobs:
               secrets["IMAGE_REGISTRY_PASSWORD"] = `${{ secrets.IMAGE_REGISTRY_PASSWORD }}`;
             }
 
-
             const missingSecrets = Object.entries(secrets).filter(([ name, value
             ]) => {
               if (value.length === 0) {
@@ -82,7 +95,6 @@ jobs:
               core.info(`✔️ Secret "${name}" is set`);
               return false;
             });
-
 
             if (missingSecrets.length > 0) {
               core.setFailed(`❌ At least one required secret is not set in the repository. \n` +
@@ -95,6 +107,7 @@ jobs:
             else {
               core.info(`✅ All the required secrets are set`);
             }
+
       - name: Check out repository
         uses: actions/checkout@v3
       
@@ -107,18 +120,21 @@ jobs:
         uses: redhat-actions/openshift-tools-installer@v1
         with:
           oc: 4
+
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
           registry: '${{ env.DOCKER_ARTIFACTORY_REPO }}'
           username: '${{ secrets.DOCKER_HUB_USERNAME }}'
           password: '${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}'
+
       - name: Login to REDHAT
         uses: docker/login-action@v1
         with:
           registry: '${{ env.REDHAT_REGISTRY }}'
           username: '${{ secrets.REDHAT_REGISTRY_USERNAME }}'
           password: '${{ secrets.REDHAT_REGISTRY_PASSWORD }}'
+
       - name: Check out repository
         run: git clone '${{ env.SOURCE_REPOSITORY }}'
    
@@ -132,6 +148,7 @@ jobs:
           tags: ${{ env.TAG }}
           env_vars: |
             DOTNET_STARTUP_PROJECT=${{env.DOTNET_STARTUP_PROJECT}}
+
       - name: Setup and Build ecas api
         id: build-image-api
         uses: redhat-actions/s2i-build@v2
@@ -140,6 +157,7 @@ jobs:
           builder_image: registry.redhat.io/rhel8/dotnet-60
           image: '${{env.APP_NAME_API }}'
           tags: ${{ env.TAG }}
+
       - name: Setup and Build Frontend
         id: build-image-frontend
         uses: redhat-actions/s2i-build@v2
@@ -148,6 +166,7 @@ jobs:
           builder_image: registry.redhat.io/rhscl/php-73-rhel7
           image: '${{env.APP_NAME_FRONTEND }}'
           tags: ${{ env.TAG }}
+
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
@@ -156,10 +175,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: List docker images
         run: docker images
-      
-    
-         
-          
+
       - name: Push frontend to registry
         id: push-image-frontend
         uses: redhat-actions/push-to-registry@v2
@@ -169,6 +185,7 @@ jobs:
           registry: ${{ env.IMAGE_REGISTRY }}
           username: ${{ env.IMAGE_REGISTRY_USER }}
           password: ${{ env.IMAGE_REGISTRY_PASSWORD }}
+
       - name: Push api to registry
         id: push-image-api
         uses: redhat-actions/push-to-registry@v2
@@ -178,6 +195,7 @@ jobs:
           registry: ${{ env.IMAGE_REGISTRY }}
           username: ${{ env.IMAGE_REGISTRY_USER }}
           password: ${{ env.IMAGE_REGISTRY_PASSWORD }}
+
       - name: Push cas to registry
         id: push-image-cas
         uses: redhat-actions/push-to-registry@v2
@@ -187,7 +205,6 @@ jobs:
           registry: ${{ env.IMAGE_REGISTRY }}
           username: ${{ env.IMAGE_REGISTRY_USER }}
           password: ${{ env.IMAGE_REGISTRY_PASSWORD }}
-          
      
       - uses: actions/checkout@v3
       - name: Deploy
@@ -219,65 +236,31 @@ jobs:
 
           oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-frontend.outputs.registry-path }}  ${{ env.REPO_NAME }}-frontend:${{ env.TAG }}
 
-          echo "Frontend tag success"
 
           oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-api.outputs.registry-path }}   ${{env.REPO_NAME }}-api:${{ env.TAG }}
-
-          echo "Ecas API tag success"
+          
+          
           
           oc tag -n ${{ env.OPENSHIFT_NAMESPACE_DEV  }}   ${{ steps.push-image-cas.outputs.registry-path }}   ${{env.REPO_NAME }}-cas-api:${{ env.TAG }}
 
-
-          echo "CAS API tag success"
+          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/update-configmap.sh | bash /dev/stdin  "${{ env.REPO_NAME }}" "${{ env.OPENSHIFT_NAMESPACE_DEV }}" "${{env.APP_DEBUG}}" "${{env.DOCUMENTROOT}}" "${{ env.DYNAMICSBASEURL}}" "${{env.ASPNETCORE_ENVIRONMENT}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL}}"  "${{env.ASPNETCORE_ENVIRONMENT_CAS}}"      "${{env.CAS_API_SERVER}}"  "${{env.CAS_TOKEN_URI}}"  "${{env.CAS_INVOICE_URI}}"
+          
           
           # Process and apply deployment template
           
-          oc process -f ./openshift/templates/ecas-frontend/frontend.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }}  -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE}}\
+          oc process -f ./openshift/templates/ecas-frontend/frontend.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }}  -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE}}  -p CA_CERT="${{ env.CA_CERT }}" -p CERTIFICATE="${{ env.CERTIFICATE }}" -p PRIVATE_KEY="${{ env.PRIVATE_KEY }}"\
           | oc apply -f -
 
 
 
-          oc process -f ./openshift/templates/ecas-api/api.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }} -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }} -p  ASPNETCORE_ENVIRONMENT=${{  env.ASPNETCORE_ENVIRONMENT }}\
+          oc process -f ./openshift/templates/ecas-api/api.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }} -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }}\
           | oc apply -f -
           
-
+          
           oc process -f ./openshift/templates/cas-api/cas-api.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }}  -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_DEV }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }}\
           | oc apply -f -
 
-         
-          
-          
 
-          # Start rollout (if necessary) and follow it
-
-
-          oc rollout latest dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null \
-
-          || true && echo "Rollout Front End in progress"
-
-          oc rollout latest dc/${{ env.APP_NAME_API }} 2> /dev/null \
-
-          || true && echo "Rollout ECAS API  in progress"
-
-          oc rollout latest dc/${{ env.APP_NAME_CAS }} 2> /dev/null \
-
-          || true && echo "Rollout CAS API in progress"
-
-          oc logs  dc/${{ env.APP_NAME_FRONTEND }}
-          
-          oc logs  dc/${{ env.APP_NAME_API }} 
-          
-          oc logs  dc/${{ env.APP_NAME_CAS }} 
-
-          # Get status, returns 0 if rollout is successful
-
-          oc rollout status dc/${{ env.APP_NAME_FRONTEND }}
-
-          oc rollout status dc/${{ env.APP_NAME_API }}
-
-          oc rollout status dc/${{ env.APP_NAME_CAS }}
-          
-          
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.7.0
         with:

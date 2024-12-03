@@ -5,15 +5,16 @@
     template: "${REPO_NAME}-template"
   metadata:
     name: "${REPO_NAME}-frontend-dc"
-    creationTimestamp:
   objects:
   - apiVersion: v1
     kind: DeploymentConfig
     metadata:
-    
       creationTimestamp:
       labels:
         app: "${APP_NAME}"
+        name: "${APP_NAME}-frontend"
+        app-group: "${APP_NAME}"
+        template: "educ-${APP_NAME}-template"
       name: "${APP_NAME}-frontend"
     spec:
       replicas: ${{MIN_REPLICAS}}
@@ -25,8 +26,6 @@
         type: Rolling
       template:
         metadata:
-       
-          creationTimestamp:
           labels:
             app: "${APP_NAME}"
             deploymentconfig: "${APP_NAME}-frontend"
@@ -34,17 +33,23 @@
           containers:
           - image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${REPO_NAME}-frontend:${TAG}
             imagePullPolicy: Always
-           
-   
-       
             name: "${APP_NAME}-frontend"
             env:
               - name: APP_DEBUG
-                value: ${APP_DEBUG}
+                valueFrom:
+                 configMapKeyRef:
+                   name: ${REPO_NAME}-config-map
+                   key: APP_DEBUG
               - name: DYNAMICSBASEURL
-                value: ${DYNAMICSBASEURL}
+                valueFrom:
+                  configMapKeyRef:
+                    name: ${REPO_NAME}-config-map
+                    key:  DYNAMICSBASEURL
               - name: DOCUMENTROOT
-                value: ${DOCUMENTROOT}
+                valueFrom:
+                  configMapKeyRef:
+                    name: ${REPO_NAME}-config-map
+                    key:  DOCUMENTROOT
               - name: DYNAMICS_USERNAME
                 valueFrom:
                   secretKeyRef:
@@ -79,11 +84,7 @@
                 valueFrom:
                   secretKeyRef:
                     name: ecas-frontend
-                    key: API_KEY 
-              
-           
-            
-         
+                    key: API_KEY
             ports:
             - containerPort: 8080
               protocol: TCP
@@ -101,8 +102,6 @@
                 path: "/"
                 port: 8080
                 scheme: HTTP
-          
-              
             resources:
               requests:
                 cpu: "${MIN_CPU}"
@@ -110,16 +109,63 @@
               limits:
                 cpu: "${MAX_CPU}"
                 memory: "${MAX_MEM}"
-         
       test: false
       triggers:
       - type: ConfigChange
+
+  - apiVersion: v1
+    kind: Route
+    metadata:
+      name: "${APP_NAME}-frontend"
+      labels:
+        name: "${APP_NAME}-frontend"
+        app: ${APP_NAME}
+        app-group: ${APP_NAME}
+    spec:
+      host: ${APPLICATION_DOMAIN}
+      port:
+        targetPort: "${APP_NAME}-frontend"
+      tls:
+        tls:
+        insecureEdgeTerminationPolicy: Redirect
+        termination: edge
+      to:
+        kind: Service
+        name: "${APP_NAME}-frontend"
+        weight: 100
+
+  - apiVersion: v1
+    kind: Route
+    metadata:
+      name: "dev-workwitheducation"
+      labels:
+        name: "${APP_NAME}-frontend"
+        app: ${APP_NAME}
+        app-group: ${APP_NAME}
+    spec:
+      host: ${HOST_ROUTE}
+      port:
+        targetPort: "${APP_NAME}-frontend"
+      tls:
+        insecureEdgeTerminationPolicy: Redirect
+        termination: edge
+        caCertificate: "${CA_CERT}"
+        certificate: "${CERTIFICATE}"
+        key: "${PRIVATE_KEY}"
+      to:
+        kind: Service
+        name: "${APP_NAME}-frontend"
+        weight: 100
+
+      
   - apiVersion: v1
     kind: Service
     metadata:
-    
       labels:
         app: "${APP_NAME}"
+        name: "${APP_NAME}-frontend"
+        app-group: "${APP_NAME}"
+        template: "educ-${APP_NAME}-template"
       name: "${APP_NAME}-frontend"
     spec:
       ports:
@@ -131,14 +177,14 @@
         app: "${APP_NAME}"
         deploymentconfig: "${APP_NAME}-frontend"
 
-
-
-
-   
-
   - apiVersion: autoscaling/v2
     kind: HorizontalPodAutoscaler
     metadata:
+      labels:
+        template: "educ-${APP_NAME}-template"
+        app: "${APP_NAME}"
+        name: "${APP_NAME}-frontend"
+        app-group: "${APP_NAME}"
       name: "${APP_NAME}-frontend-cpu-autoscaler"
     spec:
       scaleTargetRef:
@@ -159,7 +205,6 @@
   - name: REPO_NAME
     description: Application repository name
     required: true
-  
   - name: NAMESPACE
     description: Target namespace reference (i.e. 'k8vopl-dev')
     required: true
@@ -190,20 +235,30 @@
   - name: MAX_MEM
     description: The maximum amount of memory
     required: true
-  
   - name: APP_DEBUG
     displayName: Application Debug
     required: true
-    value: "false"
+    value: "FALSE"
   - name: DOCUMENTROOT
     displayName: Document Root
     required: true
     value: "/public"
- 
   - name: DYNAMICSBASEURL
     displayName: Dynamics API
     description: The endpoint for the internal Dynamics API component.
     required: true
-    value: "http://ecas-api:8080/api"  
-  
- 
+    value: "http://ecas-api:8080/api" 
+  - name: APPLICATION_DOMAIN
+    displayName: Application Hostname
+    description: The exposed hostname that will route to the service, if left blank a value will be defaulted.
+    required: false
+    value: ""
+  - name: CA_CERT
+    description: The minimum amount of replicas
+    required: true
+  - name: CERTIFICATE
+    description: The minimum amount of replicas
+    required: true
+  - name: PRIVATE_KEY
+    description: The minimum amount of replicas
+    required: true
