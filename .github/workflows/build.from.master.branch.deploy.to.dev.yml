@@ -61,7 +61,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - ${{ env.BRANCH }}
+      - master
 
 jobs:
   build-and-deploy-dev:
