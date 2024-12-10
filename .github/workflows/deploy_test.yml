@@ -24,8 +24,33 @@ env:
   MAX_CPU: 600m
   MIN_MEM: 250Mi
   MAX_MEM: 500Mi
+
+  #frontend config maps vars
+  APP_DEBUG: 'FALSE'
+  DYNAMICSBASEURL: http://ecas-api:8080/api
+  DOCUMENTROOT: /public
+  #ecas api config maps vars
+  ASPNETCORE_ENVIRONMENT: 'Staging'
+  DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT: Cloud
+  DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL: https://ecastest.api.crm3.dynamics.com/api/data/v9.2/
+  DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL: https://localhost
+  DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL: https://ecastest.crm3.dynamics.com/api/data/
+  DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL: https://ecastest.api.crm3.dynamics.com
+
+  #cas api config maps vars
+  ASPNETCORE_ENVIRONMENT_CAS: 'Production'
+  CAS_API_SERVER: https://cfs-systws.cas.gov.bc.ca:7026
+  CAS_TOKEN_URI: /ords/cas/oauth/token
+  CAS_INVOICE_URI: /ords/cas/cfs/apinvoice/
+  
   HOST_ROUTE: '${{ secrets.SITE_URL }}'
-  ASPNETCORE_ENVIRONMENT: 'Staging' 
+  BRANCH: "master"
+
+  CA_CERT: ${{ secrets.CA_CERT }}
+  CERTIFICATE: ${{ secrets.CERT }}
+  PRIVATE_KEY: ${{ secrets.PRIV_KEY }}
+  
+  
 
 
 on:
@@ -79,16 +104,17 @@ jobs:
           oc tag ${{ env.OPENSHIFT_NAMESPACE_DEV }}/${{ env.REPO_NAME }}-cas-api:${{ steps.get-latest-tag.outputs.tag }} \
           ${{ env.OPENSHIFT_NAMESPACE_TEST }}/${{ env.REPO_NAME }}-cas-api:${{ steps.get-latest-tag.outputs.tag }}
 
+          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/update-configmap.sh | bash /dev/stdin  "${{ env.REPO_NAME }}" "${{ env.OPENSHIFT_NAMESPACE_DEV }}" "${{env.APP_DEBUG}}" "${{env.DOCUMENTROOT}}" "${{ env.DYNAMICSBASEURL}}" "${{env.ASPNETCORE_ENVIRONMENT}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL}}"  "${{env.ASPNETCORE_ENVIRONMENT_CAS}}"      "${{env.CAS_API_SERVER}}"  "${{env.CAS_TOKEN_URI}}"  "${{env.CAS_INVOICE_URI}}"
 
 
            # Process and apply deployment template
           
-          oc process -f ./openshift/templates/ecas-frontend/frontend.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }}  -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_TEST }} -p TAG=${{ steps.get-latest-tag.outputs.tag}} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE}}\
+          oc process -f ./openshift/templates/ecas-frontend/frontend.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }}  -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_TEST }} -p TAG=${{ steps.get-latest-tag.outputs.tag}} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE}}  -p CA_CERT="${{ env.CA_CERT }}" -p CERTIFICATE="${{ env.CERTIFICATE }}" -p PRIVATE_KEY="${{ env.PRIVATE_KEY }}"\
           | oc apply -f -
 
 
 
-          oc process -f ./openshift/templates/ecas-api/api.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }}  -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_TEST }} -p TAG=${{ steps.get-latest-tag.outputs.tag}}  -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }} -p  ASPNETCORE_ENVIRONMENT=${{  env.ASPNETCORE_ENVIRONMENT }}\
+          oc process -f ./openshift/templates/ecas-api/api.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }}  -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_TEST }} -p TAG=${{ steps.get-latest-tag.outputs.tag}}  -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }} \
           | oc apply -f -
           
 
