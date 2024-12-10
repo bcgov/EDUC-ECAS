@@ -137,7 +137,7 @@
   - apiVersion: v1
     kind: Route
     metadata:
-      name: "dev-workwitheducation"
+      name: "${ENV}-workwitheducation"
       labels:
         name: "${APP_NAME}-frontend"
         app: ${APP_NAME}
@@ -261,4 +261,7 @@
     required: true
   - name: PRIVATE_KEY
     description: The minimum amount of replicas
+    required: true
+  - name: ENV
+    description: Environement
     required: true
