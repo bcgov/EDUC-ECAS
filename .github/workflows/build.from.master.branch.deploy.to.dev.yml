@@ -211,7 +211,6 @@ jobs:
           username: ${{ env.IMAGE_REGISTRY_USER }}
           password: ${{ env.IMAGE_REGISTRY_PASSWORD }}
      
-      - uses: actions/checkout@v3
       - name: Deploy
         run: >
           set -eux
