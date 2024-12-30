@@ -128,11 +128,11 @@ jobs:
 
           oc rollout latest dc/${{ env.APP_NAME_CAS }} 2> /dev/null || true && echo "Rollout CAS API in progress"
 
-          oc logs  dc/${{ env.APP_NAME_FRONTEND }}
+          oc logs -f dc/${{ env.APP_NAME_FRONTEND }}
           
-          oc logs  dc/${{ env.APP_NAME_API }} 
+          oc logs -f dc/${{ env.APP_NAME_API }} 
           
-          oc logs  dc/${{ env.APP_NAME_CAS }} 
+          oc logs -f dc/${{ env.APP_NAME_CAS }} 
 
           # Get status, returns 0 if rollout is successful
 
