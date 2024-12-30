@@ -14,10 +14,7 @@ env:
   APP_NAME_API: ecas-api
   APP_NAME_CAS: cas-api
   NAMESPACE: '${{ secrets.ECAS_NAMESPACE_NO_ENV }}'
-  IMAGE_NAME_FRONTEND: ecas-frontend
-  IMAGE_NAME_API: ecas-api
-  IMAGE_NAME_CAS: cas-api
- 
+  
   MIN_REPLICAS: '1'
   MAX_REPLICAS: '2'
   MIN_CPU: 300m
@@ -69,7 +66,7 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get latest tag
         uses: actions-ecosystem/action-get-latest-tag@v1
@@ -81,7 +78,6 @@ jobs:
           oc: 4
 
         # https://github.com/redhat-actions/oc-login#readme
-      - uses: actions/checkout@v2
       - name: Deploy
         run: |
           set -eux
@@ -90,11 +86,11 @@ jobs:
           oc project ${{ env.OPENSHIFT_NAMESPACE_TEST }}
            # Cancel any rollouts in progress
 
-          oc rollout cancel dc/${{ env.IMAGE_NAME_FRONTEND }} 2> /dev/null || true && echo "No rollout in progress"
+          oc rollout cancel dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null || true && echo "No rollout in progress"
 
-          oc rollout cancel dc/${{ env.IMAGE_NAME_API }} 2> /dev/null || true && echo "No ecas api rollout in progress"
+          oc rollout cancel dc/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "No ecas api rollout in progress"
 
-          oc rollout cancel dc/${{ env.IMAGE_NAME_CAS }} 2> /dev/null  || true && echo "No cas api rollout in progress"
+          oc rollout cancel dc/${{ env.APP_NAME_CAS }} 2> /dev/null  || true && echo "No cas api rollout in progress"
           
           oc tag ${{ env.OPENSHIFT_NAMESPACE_DEV }}/${{ env.REPO_NAME }}-frontend:${{ steps.get-latest-tag.outputs.tag }} \
           ${{ env.OPENSHIFT_NAMESPACE_TEST }}/${{ env.REPO_NAME }}-frontend:${{ steps.get-latest-tag.outputs.tag }}
@@ -105,7 +101,7 @@ jobs:
           oc tag ${{ env.OPENSHIFT_NAMESPACE_DEV }}/${{ env.REPO_NAME }}-cas-api:${{ steps.get-latest-tag.outputs.tag }} \
           ${{ env.OPENSHIFT_NAMESPACE_TEST }}/${{ env.REPO_NAME }}-cas-api:${{ steps.get-latest-tag.outputs.tag }}
 
-          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/update-configmap.sh | bash /dev/stdin  "${{ env.REPO_NAME }}" "${{ env.OPENSHIFT_NAMESPACE_DEV }}" "${{env.APP_DEBUG}}" "${{env.DOCUMENTROOT}}" "${{ env.DYNAMICSBASEURL}}" "${{env.ASPNETCORE_ENVIRONMENT}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL}}"  "${{env.ASPNETCORE_ENVIRONMENT_CAS}}"      "${{env.CAS_API_SERVER}}"  "${{env.CAS_TOKEN_URI}}"  "${{env.CAS_INVOICE_URI}}"
+          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/update-configmap.sh | bash /dev/stdin  "${{ env.REPO_NAME }}" "${{env.APP_DEBUG}}" "${{env.DOCUMENTROOT}}" "${{ env.DYNAMICSBASEURL}}" "${{env.ASPNETCORE_ENVIRONMENT}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL}}"  "${{env.ASPNETCORE_ENVIRONMENT_CAS}}"      "${{env.CAS_API_SERVER}}"  "${{env.CAS_TOKEN_URI}}"  "${{env.CAS_INVOICE_URI}}"
 
 
            # Process and apply deployment template
@@ -132,17 +128,17 @@ jobs:
 
           oc rollout latest dc/${{ env.APP_NAME_CAS }} 2> /dev/null || true && echo "Rollout CAS API in progress"
 
-          oc logs  dc/${{ env.IMAGE_NAME_FRONTEND }}
+          oc logs  dc/${{ env.APP_NAME_FRONTEND }}
           
-          oc logs  dc/${{ env.IMAGE_NAME_API }} 
+          oc logs  dc/${{ env.APP_NAME_API }} 
           
-          oc logs  dc/${{ env.IMAGE_NAME_CAS }} 
+          oc logs  dc/${{ env.APP_NAME_CAS }} 
 
           # Get status, returns 0 if rollout is successful
 
-          oc rollout status dc/${{ env.IMAGE_NAME_FRONTEND }}
+          oc rollout status dc/${{ env.APP_NAME_FRONTEND }}
 
-          oc rollout status dc/${{ env.IMAGE_NAME_API }}
+          oc rollout status dc/${{ env.APP_NAME_API }}
 
-          oc rollout status dc/${{ env.IMAGE_NAME_CAS }}
+          oc rollout status dc/${{ env.APP_NAME_CAS }}
           
