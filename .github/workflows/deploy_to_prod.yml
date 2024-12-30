@@ -14,9 +14,6 @@ env:
   APP_NAME_API: ecas-api
   APP_NAME_CAS: cas-api
   NAMESPACE: '${{ secrets.ECAS_NAMESPACE_NO_ENV }}'
-  IMAGE_NAME_FRONTEND: ecas-frontend
-  IMAGE_NAME_API: ecas-api
-  IMAGE_NAME_CAS: cas-api
  
   MIN_REPLICAS: '1'
   MAX_REPLICAS: '2'
@@ -90,11 +87,11 @@ jobs:
           oc project ${{ env.OPENSHIFT_NAMESPACE_PROD }}
            # Cancel any rollouts in progress
 
-          oc rollout cancel dc/${{ env.IMAGE_NAME_FRONTEND }} 2> /dev/null || true && echo "No rollout in progress"
+          oc rollout cancel dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null || true && echo "No rollout in progress"
 
-          oc rollout cancel dc/${{ env.IMAGE_NAME_API }} 2> /dev/null || true && echo "No ecas api rollout in progress"
+          oc rollout cancel dc/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "No ecas api rollout in progress"
 
-          oc rollout cancel dc/${{ env.IMAGE_NAME_CAS }} 2> /dev/null  || true && echo "No cas api rollout in progress"
+          oc rollout cancel dc/${{ env.APP_NAME_CAS }} 2> /dev/null  || true && echo "No cas api rollout in progress"
           
           oc tag ${{ env.OPENSHIFT_NAMESPACE_TEST }}/${{ env.REPO_NAME }}-frontend:${{ steps.get-latest-tag.outputs.tag }} \
           ${{ env.OPENSHIFT_NAMESPACE_PROD }}/${{ env.REPO_NAME }}-frontend:${{ steps.get-latest-tag.outputs.tag }}
@@ -132,17 +129,17 @@ jobs:
 
           oc rollout latest dc/${{ env.APP_NAME_CAS }} 2> /dev/null || true && echo "Rollout CAS API in progress"
 
-          oc logs  dc/${{ env.IMAGE_NAME_FRONTEND }}
+          oc logs  dc/${{ env.APP_NAME_FRONTEND }}
           
-          oc logs  dc/${{ env.IMAGE_NAME_API }} 
+          oc logs  dc/${{ env.APP_NAME_API }} 
           
-          oc logs  dc/${{ env.IMAGE_NAME_CAS }} 
+          oc logs  dc/${{ env.APP_NAME_CAS }} 
 
           # Get status, returns 0 if rollout is successful
 
-          oc rollout status dc/${{ env.IMAGE_NAME_FRONTEND }}
+          oc rollout status dc/${{ env.APP_NAME_FRONTEND }}
 
-          oc rollout status dc/${{ env.IMAGE_NAME_API }}
+          oc rollout status dc/${{ env.APP_NAME_API }}
 
-          oc rollout status dc/${{ env.IMAGE_NAME_CAS }}
+          oc rollout status dc/${{ env.APP_NAME_CAS }}
           
