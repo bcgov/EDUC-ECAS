@@ -129,14 +129,9 @@
                 </div>
                 <div class="form-row form-col-mobile">
                     <div class="form-group col col-mobile">
-                        <label for="professional_certificate_bc">BC Certificate Number</label>
+                        <label for="professional_certificate_bc">Teacher Certificate Number</label>
                         <input type="text" class="form-control" name="professional_certificate_bc"
                                v-model="user_local.professional_certificate_bc" id="professional_certificate_bc">
-                    </div>
-                    <div class="form-group col col-mobile">
-                        <label for="professional_certificate_yk">YK Certificate Number</label>
-                        <input type="text" class="form-control" name="professional_certificate_yk"
-                               v-model="user_local.professional_certificate_yk" id="professional_certificate_yk">
                     </div>
                 </div>
                 <div class="form-group row row-mobile">
