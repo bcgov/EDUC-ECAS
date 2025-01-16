@@ -151,7 +151,7 @@
                     <button type="button" class="btn btn-link" @click="$keycloak.logoutFn" v-if="$keycloak.authenticated">Log out, I'll save this later</button>
                 </div>
                 <div class="col-12 col-12-mobile text-center collection-notice">
-                    <div>Personal information is collected by the Ministry of Education and Child Care under section 26(c) of the Freedom of Information and Protection of Privacy Act for the purposes of keeping an eligibility list of markers for the current year, managing marking contracts and administering contract payments under the BC Financial Administration Act. If you have any questions about the collection of your personal information, please contact the Manager – Assessment Marking, Student Learning Branch, at P.O. Box 9183 STN PROV GOVT, Victoria BC V8W 9H9 or phone 778-679-6508</div>
+                    <div>Personal information is collected by the Ministry of Education and Child Care under section 26(c) of the Freedom of Information and Protection of Privacy Act for the purposes of keeping an eligibility list of markers for the current year, managing marking contracts and administering contract payments under the BC Financial Administration Act. If you have any questions about the collection of your personal information, please contact the Manager – Assessment Marking, Student Learning Branch, at P.O. Box 9183 STN PROV GOVT, Victoria BC V8W 9H9 or email <a href="mailto:assessments@gov.bc.ca">assessments@gov.bc.ca</a></div>
                 </div>                
             </form>
         </div>
