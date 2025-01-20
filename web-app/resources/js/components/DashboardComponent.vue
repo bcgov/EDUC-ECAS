@@ -391,9 +391,10 @@
 @media (max-width: 1024px){
     .contacts-stats-summary-box {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     font-size: 1.0rem;
+    gap: 1.0rem;
 }
 }
 
