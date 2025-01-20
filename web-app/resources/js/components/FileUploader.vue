@@ -5,6 +5,12 @@
         <h2>Upload your signed contract</h2>
     </div>
     <div class="card-body card-body-custom">
+      <div v-if="errorMessages.length" class="alert alert-danger">
+          <ul >
+            <li v-for="(message, index) in errorMessages" :key="index">{{message }}</li>
+          </ul>
+        </div>
+      
       <div class="file-upload-div">
         <div class="upload">
           <ul v-if="files.length">
@@ -48,7 +54,7 @@
             <h3>Drop files to upload</h3>
           </div>
 
-          <div class="file-upload-btn-group">
+          <div  @change="checkFileSize" class="file-upload-btn-group">
             <file-upload
               v-show="false"
               class="btn btn-primary"
@@ -114,6 +120,7 @@ export default {
     return {
       files: [],
       selectedAssignmentId: null,
+      errorMessages: [],
     }
   },
   computed: {
@@ -126,6 +133,19 @@ export default {
     closeModal() {
         this.$modal.hide('file_upload_form');
     },
+    checkFileSize() {
+      this.errorMessages = [];
+      this.files.forEach(file =>{
+      if (file.size> 1024*1024*3) {
+        this.errorMessages.push('File exceeds 3MB')
+      }
+      if (this.errorMessages.length>0){
+        this.files =[];
+      } else {
+        this.files = files;
+      }
+     });
+     },
     uploadCompleted() {
       if (this.files.length === 0) {
         return false;
