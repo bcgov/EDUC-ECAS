@@ -107,6 +107,7 @@ import { faFileDownload } from '@fortawesome/free-solid-svg-icons';
 import { faFileUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import VueKeyCloak from '@dsb-norge/vue-keycloak-js';
+import "@bcgov/bootstrap-theme/dist/css/bootstrap-theme.min.css";
 
 library.add(faCheck)
 library.add(faTrash)
