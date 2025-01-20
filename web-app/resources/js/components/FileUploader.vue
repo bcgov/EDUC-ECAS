@@ -1,4 +1,4 @@
-c<template>
+<template>
   <div class="card">
     <div class="card-header">
         <button class="btn btn-primary btn-sm float-right" v-on:click="closeModal">X</button>
