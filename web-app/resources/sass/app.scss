@@ -101,8 +101,16 @@ div#logout {
   width: unset;
   flex-basis: unset;
   flex-grow: unset;
-  margin-left: 33%;
+  margin-left: -10%;
   position: absolute;
+}
+.bg-primary-custom {
+  background-color: #003366 !important;
+}
+.btn-primary {
+  color: #fff;
+  background-color: #003366 !important;
+  border-color: #003366 !important;
 }
 
 @media (max-width: 1024px){
@@ -111,13 +119,14 @@ div#logout {
   width: unset;
   flex-basis: unset;
   flex-grow: unset;
-  margin-left: 75%;
+  margin-left: 0%;
   position: absolute;
 
  }
 }
 .header-title h3 {
   line-height: 120px;
+  margin-left: -50%;
 }
 .collection-notice {
   display: block !important;
@@ -129,7 +138,7 @@ div#logout {
 @media (max-width: 1024px){
   .mobile-offset {
   float:left;
-  margin-left: 0%;
+  margin-left: 0% !important;
   
  }
 }

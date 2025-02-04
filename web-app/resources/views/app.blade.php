@@ -17,7 +17,7 @@
 </head>
 <body class="d-flex flex-column h-100">
     <main class="flex-shrink-0">
-        <div class="row bg-primary pt-2">
+        <div class="row bg-primary-custom pt-2">
             <div class="col offset-1 header-logo mobile-offset">
                 <img src="/logo-banner.png" height="120px">
             </div>
