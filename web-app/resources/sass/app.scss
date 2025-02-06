@@ -119,14 +119,14 @@ div#logout {
   width: unset;
   flex-basis: unset;
   flex-grow: unset;
-  margin-left: 0%;
+  margin-right: -7%;
   position: absolute;
 
  }
 }
 .header-title h3 {
   line-height: 120px;
-  margin-left: -50%;
+  margin-left: -65%;
 }
 .collection-notice {
   display: block !important;
@@ -236,6 +236,23 @@ div#logout {
     overflow-y: scroll;   
     
   }
+}
+
+.header-text-align{
+  text-align: center !important;
+}
+@media (max-width: 1024px){
+  .header-text-align {
+    text-align: right !important; 
+    
+  }
+}
+.header-font{
+  font-weight: 700 !important;
+}
+.main-padding {
+  padding-top: 0px;
+  
 }
 
 
