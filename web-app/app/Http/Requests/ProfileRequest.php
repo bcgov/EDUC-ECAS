@@ -47,14 +47,13 @@ class ProfileRequest extends FormRequest
             'professional_certificate_yk'
         ]);
 
-      
-        if (isset($input['professional_certificate_bc'])) {
-            $input['professional_certificate_bc'] = $this->removeSpecialChars($input['professional_certificate_bc']);
-        }
-
-        if (isset($input['professional_certificate_yk'])) {
-            $input['professional_certificate_yk'] = $this->removeSpecialChars($input['professional_certificate_yk']);
-        }
+        $fieldsToSanitize = ['first_name', 'last_name', 'address_1', 'address_2', 'city', 'professional_certificate_bc', 'professional_certificate_yk'];
+        foreach ($fieldsToSanitize as $field) {
+            if (isset($input[$field])) {
+                $input[$field] = $this->removeSpecialChars($input[$field]);
+            }
+        }        
+ 
 
         if (isset($input['social_insurance_number'])) {
             $input['social_insurance_number'] = preg_replace('/[^0-9.]/', '', $input['social_insurance_number']);
