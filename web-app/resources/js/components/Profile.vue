@@ -135,9 +135,6 @@
                     </div>
                 </div>
                 <div class="form-group row row-mobile">
-                    <div class="col" v-show="showCancel">
-                        <button class="btn btn-danger btn-block btn-block-mobile" v-on:click.prevent="cancelProfile">Cancel</button>
-                    </div>
                     <div class="col">
                         <button class="btn btn-primary btn-block btn-block-mobile" v-on:click.prevent="saveProfile" dusk="save">
                             <span>
@@ -145,6 +142,9 @@
                             </span>
                             <div v-show="!working">Save</div>
                         </button>
+                    </div>
+                    <div class="col" v-show="showCancel">
+                        <button class="btn btn-danger btn-block btn-block-mobile" v-on:click.prevent="cancelProfile">Cancel</button>
                     </div>
                 </div>
                 <div class="col-12 text-center" v-show="! showCancel">
