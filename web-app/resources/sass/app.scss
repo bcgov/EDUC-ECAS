@@ -136,6 +136,13 @@ div#logout {
   font-size: 0.7em;
 }
 @media (max-width: 1024px){
+.collection-notice div {
+  text-align: justify;
+  font-size: 0.7em;
+  width: 60%;
+}
+}
+@media (max-width: 1024px){
   .mobile-offset {
   float:left;
   margin-left: 0% !important;
