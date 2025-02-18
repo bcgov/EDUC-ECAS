@@ -18,7 +18,7 @@
                         <form-error :errors="errors" field="first_name"></form-error>
                     </div>
                     <div class="form-group col col-mobile">
-                        <label for="preferred_first_name">Preferred First</label>
+                        <label for="preferred_first_name">Preferred Name</label>
                         <input v-model="user_local.preferred_first_name"
                                type="text" class="form-control"
                                name="preferred_first_name" id="preferred_first_name">
@@ -51,7 +51,7 @@
                         <form-error :errors="errors" field="phone"></form-error>
                     </div>
                     <div class="form-group col">
-                        <label for="social_insurance_number">Social Insurance Num.</label>
+                        <label for="social_insurance_number">SIN</label>
                         <input v-if=" ! user_local.is_SIN_on_file" v-model="user_local.social_insurance_number" type="text" class="form-control form-control-mobile"
                                name="social_insurance_number" id="social_insurance_number">
                         <input v-if="user_local.is_SIN_on_file" disabled type="text" class="form-control form-control-mobile"
