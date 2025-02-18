@@ -73,14 +73,14 @@
                 <template v-if="isStatus(session, 'Open')">
                     <div class="col">
                         <button v-show=" ! working" class="btn btn-primary btn-block" v-on:click="applyToSession(session, true)">
-                            Yes please</button>
+                            Yes</button>
                         <span>
                                 <div class="loader text-center" v-show="working"></div>
                             </span>
                     </div>
                     <div class="col">
                         <button class="btn btn-danger btn-block" v-on:click="closeModal()">
-                           No thank you</button>
+                           No</button>
                     </div>
                 </template>
                 <template v-if="isStatus(session, 'Applied')">
