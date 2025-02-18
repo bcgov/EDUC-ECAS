@@ -42,8 +42,8 @@
                             <div class="filter-input-box filter-input-box-left col-sm-4">
                                 <font-awesome-icon icon="search" alt="Filter by Type" style="margin-top: 7px; margin-right: 5px; font-size: 18px;"/>
                                 <input v-model="typeInputText" v-on:keyup.enter="handleTypeInputText" v-on:blur="handleTypeInputText"
-                                    type="text" class="form-control form-control-sm" name="filter-type-input"
-                                    id="filter-type-input" placeholder="Filter by Type" size="80">
+                                    type="text" class="form-control form-control-sm filter-box-custom" name="filter-type-input"
+                                    id="filter-type-input" placeholder="Type" size="80">
                             </div>
                             <div class="chips-box col-sm-8">
                                 <div v-for="(filteredText, index) in typeFilteredTexts" :key="index" class="chip">
@@ -59,8 +59,8 @@
                             <div class="filter-input-box filter-input-box-right col-sm-6">
                                 <font-awesome-icon icon="search-location" alt="Filter by Location" style="margin-top: 7px; margin-right: 5px; font-size: 22px;"/>
                                 <input v-model="locationInputText" v-on:keyup.enter="handleLocationInputText" v-on:blur="handleLocationInputText"
-                                    type="text" class="form-control form-control-sm" name="location-type-input"
-                                    id="location-type-input" placeholder="Filter by Location" size="80">
+                                    type="text" class="form-control form-control-sm filter-box-custom" name="location-type-input"
+                                    id="location-type-input" placeholder="Location" size="80">
                             </div>
                             <div class="chips-box col-sm-6">
                                 <div v-for="(filteredText, index) in locationFilteredTexts" :key="index" class="chip">
