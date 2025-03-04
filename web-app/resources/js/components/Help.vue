@@ -5,7 +5,7 @@
             <h2>Help</h2>
         </div>
         <div class="card-body">
-            <p>For assistance, please email questions or concerns to <a href="mailto:assessments@gov.bc.ca">assessments@gov.bc.ca<a> </p>
+            <p>If you have questions or concerns, or if you wish to request a direct deposit payment application form, please email <a href="mailto:assessments@gov.bc.ca">assessments@gov.bc.ca</a> for assistance. </p>
         </div>
         <div class="card-footer">
         </div>
