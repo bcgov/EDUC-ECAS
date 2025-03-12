@@ -187,8 +187,6 @@
                         session.status = response.data.data.status;
                         form.closeModal();
                         form.working = false;
-                        console.log('Event: refresh-sessions-data is fired!!!');
-						Event.fire('refresh-sessions-data');
                     })
                     .catch(function (error) {
                         console.log('Failure!', error);
