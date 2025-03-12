@@ -35,7 +35,6 @@
                                 <h2 class ="h2-mobile">
                                     <span v-if="getUser.preferred_first_name">{{ getUser.preferred_first_name }}</span>
                                     <span v-else>{{ getUser.first_name }}</span>
-                                    {{ getUser.last_name }}
                                 </h2>
                             </div>
                             <div class="card-body">
