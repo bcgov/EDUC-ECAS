@@ -34,13 +34,13 @@
             <div class="btn-group-box" v-else>
                 <div class="col">
                     <div class="icon-spinner text-center mt-n2" v-if="isSubmitInProgress"></div>
-                    <button class="btn btn-danger btn-block" v-else v-on:click.prevent="closeModal()">Cancel</button>
+                    <button class="btn btn-primary btn-block" v-else v-on:click.prevent="performSubmit()" dusk="save">
+                        Submit
+                    </button>
                 </div>
                 <div class="col">
                     <div class="icon-spinner text-center mt-n2" v-if="isSubmitInProgress"></div>
-                    <button class="btn btn-primary btn-block" v-else v-on:click.prevent="performSubmit()" dusk="save">
-                        Proceed
-                    </button>
+                    <button class="btn btn-danger btn-block" v-else v-on:click.prevent="closeModal()">Cancel</button>
                 </div>
             </div>
         </div>
