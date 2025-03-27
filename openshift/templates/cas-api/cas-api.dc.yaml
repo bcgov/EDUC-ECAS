@@ -3,10 +3,10 @@
   kind: Template
  
   metadata:
-    name: "cas-api-dc"
+    name: "cas-api"
   objects:
   - apiVersion: v1
-    kind: DeploymentConfig
+    kind: Deployment
     metadata:
       labels:
         app: "${APP_NAME}"
@@ -17,8 +17,8 @@
     spec:
       replicas: ${{MIN_REPLICAS}}
       selector:
-        app: "${APP_NAME}"
-        deploymentconfig: "cas-api"
+        matchLabels:
+          app: "${APP_NAME}"
       strategy:
         resources: {}
         type: Rolling
@@ -26,7 +26,7 @@
         metadata:
           labels:
             app: "${APP_NAME}"
-            deploymentconfig: "cas-api"
+            
         spec:
           containers:
           - image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${REPO_NAME}-cas-api:${TAG}
@@ -117,8 +117,8 @@
         protocol: TCP
         targetPort: 8080
       selector:
-        app: "${APP_NAME}"
-        deploymentconfig: "cas-api"
+        matchLabels:
+          app: "${APP_NAME}"
 
   - apiVersion: autoscaling/v2
     kind: HorizontalPodAutoscaler
@@ -132,7 +132,7 @@
     spec:
       scaleTargetRef:
         apiVersion: apps.openshift.io/v1
-        kind: DeploymentConfig
+        kind: Deployment
         name: "cas-api"
         subresource: scale
       minReplicas: ${{MIN_REPLICAS}}
