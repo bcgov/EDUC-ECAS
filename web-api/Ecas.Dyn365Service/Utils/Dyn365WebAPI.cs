@@ -16,7 +16,7 @@ namespace Ecas.Dyn365Service.Utils
         ///<param name="maxPageSize">Number of records to display per output "page".</param>  
         ///<returns>An HTTP response message</returns>  
         ///
-        public HttpResponseMessage SendRetrieveRequestAsync(string query, Boolean formatted = false, int maxPageSize = 50)
+        public HttpResponseMessage SendRetrieveRequestAsync(string query, Boolean formatted = false, int maxPageSize = 1000)
         {
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, query);
             request.Headers.Add("Prefer", "odata.maxpagesize=" + maxPageSize.ToString());
