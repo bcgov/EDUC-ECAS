@@ -15,8 +15,8 @@ env:
   APP_NAME_CAS: cas-api
   NAMESPACE: '${{ secrets.ECAS_NAMESPACE_NO_ENV }}'
  
-  MIN_REPLICAS: '1'
-  MAX_REPLICAS: '2'
+  MIN_REPLICAS: '3'
+  MAX_REPLICAS: '5'
   MIN_CPU: 300m
   MAX_CPU: 600m
   MIN_MEM: 250Mi
