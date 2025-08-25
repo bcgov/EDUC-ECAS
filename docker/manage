@@ -81,6 +81,7 @@ build-ecas-frontend() {
   #
   BASE_IMAGE="registry.redhat.io/rhscl/php-73-rhel7"
   echo -e "\nBuilding ecas-frontend image from ${BASE_IMAGE}..."
+  docker pull ${BASE_IMAGE}
 
   ${S2I_EXE} build \
     '../web-app' \
@@ -92,8 +93,10 @@ build-ecas-api() {
   #
   # ecas-api
   #
-  BASE_IMAGE="mcr.microsoft.com/dotnet/aspnet:6.0"
+  BASE_IMAGE="registry.redhat.io/rhel8/dotnet-60"
   echo -e "\nBuilding ecas-api image from ${BASE_IMAGE}..."
+  docker pull ${BASE_IMAGE}
+  
 
   ${S2I_EXE} build \
     '../web-api/Ecas.Dyn365Service' \
@@ -109,6 +112,7 @@ build-ecas-cas-api() {
   DOTNET_STARTUP_PROJECT=CASInterfaceService/cas-interface-service.csproj
   BASE_IMAGE="registry.redhat.io/dotnet/dotnet-21-rhel7"
   echo -e "\nBuilding cas-api image from ${BASE_IMAGE}..."
+  docker pull ${BASE_IMAGE}
 
   ${S2I_EXE} build \
     -e "DOTNET_STARTUP_PROJECT=${DOTNET_STARTUP_PROJECT}" \
@@ -120,6 +124,8 @@ build-ecas-cas-api() {
 build-ecas-all() {
   build-ecas-frontend
   build-ecas-api
+  build-ecas-cas-api
+  
 }
 
 configureEnvironment() {
@@ -216,22 +222,20 @@ case "${COMMAND}" in
   start|up)
     unset DEBUG
     DEFAULT_CONTAINERS="ecas-frontend  $DEFAULT_CONTAINERS"
-    _startupParams=$(getStartupParams $@)
     configureEnvironment $@
-    docker-compose up -d ${_startupParams}
-    docker-compose logs -f
+    docker-compose  -f docker-compose-S2I.yml up -d 
+    docker-compose logs -f docker-compose-S2I.yml
   ;;
   start-dev)
     export DEBUG=true
     DEFAULT_CONTAINERS="ecas-frontend"
-    _startupParams=$(getStartupParams $@)
     configureEnvironment $@
-    docker-compose up -d ${_startupParams}
-    docker-compose logs -f
+    docker-compose -f docker-compose-S2I.yml up  -d 
+    docker-compose logs -f docker-compose-S2I.yml
   ;;
   logs)
     configureEnvironment $@
-    docker-compose logs -f
+    docker-compose logs -f docker-compose-S2I.yml
     ;;
   stop)
     DEFAULT_CONTAINERS="ecas-frontend ecas-frontend-dev"
