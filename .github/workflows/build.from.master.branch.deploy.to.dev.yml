@@ -145,9 +145,7 @@ jobs:
 #### Custom s2i builder image for CAS API
       - name: Build custom s2i builder image
         run: |
-          pwd
-          ls -la
-          docker build -t ghcr.io/${{ env.IMAGE_REGISTRY }}/casinterface-custom-s2i:latest .
+          docker build -t ghcr.io/${{ env.IMAGE_REGISTRY }}/casinterface-custom-s2i:latest ./EDUC-HUB
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
