@@ -142,7 +142,22 @@ jobs:
 
       - name: Check out repository
         run: git clone '${{ env.SOURCE_REPOSITORY }}'
-   
+#### Custom s2i builder image for CAS API
+      - name: Build custom s2i builder image
+        run: |
+          docker build -t ghcr.io/${{ env.IMAGE_REGISTRY }}/casinterface-custom-s2i:latest ./EDUC-HUB
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ env.INMAGE_REGISTRY_USER }}
+          password: ${{ env.INMAGE_REGISTRY_PASSWORD }}
+
+      - name: Push custom s2i builder image
+        run: |
+          docker push ghcr.io/${{ env.IMAGE_REGISTRY }}/casinterface-custom-s2i:latest
+#### End of custom s2i builder image for CAS API
       - name: Setup and Build cas api
         id: build-image-cas
         uses: redhat-actions/s2i-build@v2
