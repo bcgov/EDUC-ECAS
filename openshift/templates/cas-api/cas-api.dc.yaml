@@ -32,6 +32,9 @@
           - image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${REPO_NAME}-cas-api:${TAG}
             imagePullPolicy: Always
             name: "cas-api"
+            volumeMounts:
+              - name: custom-certs
+                mountPath: /etc/pki/ca-trust/source/anchors/
             env:
               - name: ASPNETCORE_ENVIRONMENT
                 valueFrom:
@@ -77,6 +80,10 @@
               limits:
                 cpu: "${MAX_CPU}"
                 memory: "${MAX_MEM}"
+          volumes:
+            - name: custom-certs
+              secret:
+                secretName: trusted-custom-ca
          
       test: false
       triggers:
