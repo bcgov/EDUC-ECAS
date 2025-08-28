@@ -156,14 +156,14 @@ jobs:
 
       - name: Push custom s2i builder image
         run: |
-          docker push ghcr.io/${{ env.IMAGE_REGISTRY }}/casinterface-custom-s2i:latest
+          docker push ${{ env.IMAGE_REGISTRY }}/casinterface-custom-s2i:latest
 #### End of custom s2i builder image for CAS API
       - name: Setup and Build cas api
         id: build-image-cas
         uses: redhat-actions/s2i-build@v2
         with:
           path_context: ./EDUC-HUB
-          builder_image: registry.redhat.io/dotnet/dotnet-21-rhel7
+          builder_image: ${{ env.IMAGE_REGISTRY }}/casinterface-custom-s2i:latest
           image: '${{env.APP_NAME_CAS}}'
           tags: ${{ env.TAG }}
           env_vars: |
