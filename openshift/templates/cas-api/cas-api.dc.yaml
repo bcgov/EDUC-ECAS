@@ -34,8 +34,10 @@
             name: "cas-api"
             volumeMounts:
               - name: custom-certs
-                mountPath: /etc/pki/ca-trust/source/anchors/
+                mountPath: /opt/app-root/certs/
             env:
+              - name: SSL_CERT_FILE
+                value: /opt/app-root/certs/trusted_cer.crt
               - name: ASPNETCORE_ENVIRONMENT
                 valueFrom:
                  configMapKeyRef:
