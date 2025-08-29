@@ -47,4 +47,5 @@ oc create  configmap "$REPO_NAME"-flb-sc-config-map \
 
 echo Creating secret for TRUSTED_CA_BUNDLE
 oc create secret generic trusted-custom-ca \
-  --from-literal=trusted-cers.crt="$TRUSTED_CA_BUNDLE" | oc apply -f -
+  --from-literal=trusted-cers.crt="$TRUSTED_CA_BUNDLE" \
+  --dry-run=client -o yaml | oc apply -f -
