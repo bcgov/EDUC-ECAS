@@ -36,7 +36,7 @@ env:
 
   #cas api config maps vars
   ASPNETCORE_ENVIRONMENT_CAS: 'Production'
-  CAS_API_SERVER: https://cfs-prodws.cas.gov.bc.ca:7121
+  CAS_API_SERVER: ${{ secrets.CAS_API_SERVER }}
   CAS_TOKEN_URI: /ords/cas/oauth/token
   CAS_INVOICE_URI: /ords/cas/cfs/apinvoice/
   
@@ -46,23 +46,18 @@ env:
   CA_CERT: ${{ secrets.CA_CERT }}
   CERTIFICATE: ${{ secrets.CERT }}
   PRIVATE_KEY: ${{ secrets.PRIV_KEY }}
+  TRUSTED_CA_BUNDLE: ${{ secrets.TRUSTED_CA_BUNDLE }}
   ENV: "prod"
-  
-  
-
 
 on:
   # https://docs.github.com/en/actions/reference/events-that-trigger-workflows
   workflow_dispatch:
-
 
 jobs:
   deploy-to-openshift-prod:
     name: Deploy to OpenShift Prod
     runs-on: ubuntu-24.04
     environment: prod
-
-
 
     steps:
       - name: Check out repository
@@ -102,7 +97,7 @@ jobs:
           oc tag ${{ env.OPENSHIFT_NAMESPACE_TEST }}/${{ env.REPO_NAME }}-cas-api:${{ steps.get-latest-tag.outputs.tag }} \
           ${{ env.OPENSHIFT_NAMESPACE_PROD }}/${{ env.REPO_NAME }}-cas-api:${{ steps.get-latest-tag.outputs.tag }}
 
-          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/update-configmap.sh | bash /dev/stdin  "${{ env.REPO_NAME }}" "${{env.APP_DEBUG}}" "${{env.DOCUMENTROOT}}" "${{ env.DYNAMICSBASEURL}}" "${{env.ASPNETCORE_ENVIRONMENT}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL}}"  "${{env.ASPNETCORE_ENVIRONMENT_CAS}}"      "${{env.CAS_API_SERVER}}"  "${{env.CAS_TOKEN_URI}}"  "${{env.CAS_INVOICE_URI}}"
+          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/update-configmap.sh | bash /dev/stdin  "${{ env.REPO_NAME }}" "${{env.APP_DEBUG}}" "${{env.DOCUMENTROOT}}" "${{ env.DYNAMICSBASEURL}}" "${{env.ASPNETCORE_ENVIRONMENT}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL}}"  "${{env.ASPNETCORE_ENVIRONMENT_CAS}}"      "${{env.CAS_API_SERVER}}"  "${{env.CAS_TOKEN_URI}}"  "${{env.CAS_INVOICE_URI}}" "${{ env.TRUSTED_CA_BUNDLE }}"
 
 
            # Process and apply deployment template

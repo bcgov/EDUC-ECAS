@@ -17,6 +17,7 @@ ASPNETCORE_ENVIRONMENT_CAS=${11}
 CAS_API_SERVER=${12}
 CAS_TOKEN_URI=${13}
 CAS_INVOICE_URI=${14}
+TRUSTED_CA_BUNDLE=${15}
 
 ###########################################################
 #Setup for config-maps
@@ -43,3 +44,7 @@ oc create  configmap "$REPO_NAME"-flb-sc-config-map \
   --from-literal=fluent-bit.conf="$FLB_CONFIG" \
   --from-literal=parsers.conf="$PARSER_CONFIG" \
   --dry-run=client -o yaml | oc apply -f -
+
+echo Creating secret for TRUSTED_CA_BUNDLE
+oc create secret generic trusted-custom-ca \
+  --from-literal=trusted-cers.crt="$TRUSTED_CA_BUNDLE" | oc apply -f -
