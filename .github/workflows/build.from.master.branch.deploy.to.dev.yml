@@ -71,6 +71,10 @@ jobs:
     runs-on: ubuntu-24.04
     environment: dev
 
+    permissions:
+      actions: write
+      contents: read
+
     steps:
       - name: Check for required secrets
         uses: actions/github-script@v6
@@ -283,7 +287,9 @@ jobs:
           oc rollout status dc/${{ env.APP_NAME_CAS }}
 
 
-      - name: ZAP Scan
-        uses: zaproxy/action-full-scan@v0.7.0
+      - name: ZAP Scan (action, fail on alerts)
+        uses: zaproxy/action-full-scan@v0.12.0
         with:
-          target: 'https://${{ env.HOST_ROUTE }}'
+          target: "https://${{ env.HOST_ROUTE }}"
+          fail_action: true              # fail the job if alerts found
+          allow_issue_writing: false     # don’t open/update a GitHub Issue
