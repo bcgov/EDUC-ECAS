@@ -210,7 +210,7 @@ jobs:
           password: ${{ env.IMAGE_REGISTRY_PASSWORD }}
      
       - name: Deploy
-        run: >
+        run: |
           set -eux
 
           # Login to OpenShift and select project
