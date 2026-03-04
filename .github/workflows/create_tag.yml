@@ -1,8 +1,6 @@
 name: Create Tag
 
 env:
-
-
   OPENSHIFT_SERVER: '${{ secrets.OPENSHIFT_SERVER }}'
   OPENSHIFT_TOKEN: '${{ secrets.OPENSHIFT_TOKEN }}'
   OPENSHIFT_NAMESPACE_DEV: '${{ secrets.ECAS_NAMESPACE_NO_ENV }}-dev'
@@ -22,15 +20,11 @@ on:
         description: 'Version Number'
         required: true
 
-
-
 jobs:
   tag_image:
     name: Tag Image
     runs-on: ubuntu-24.04
     environment: dev
-
-  
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
@@ -45,8 +39,6 @@ jobs:
               ref: 'refs/tags/${{ github.event.inputs.version }}',
               sha: context.sha
             })
-        
-
       - name: Install oc
         uses: redhat-actions/openshift-tools-installer@v1
         with:
@@ -57,9 +49,9 @@ jobs:
       - name: Tag in OpenShift
         run: |
           set -eux
-   
+
           # Login to OpenShift and select project
-          
+
           oc login --token=${{ env.OPENSHIFT_TOKEN }} --server=${{
           env.OPENSHIFT_SERVER }}
 

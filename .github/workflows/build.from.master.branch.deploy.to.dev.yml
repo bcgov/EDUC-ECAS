@@ -5,9 +5,7 @@ env:
   OPENSHIFT_NAMESPACE_DEV: '${{ secrets.ECAS_NAMESPACE_NO_ENV }}-dev'
   REDHAT_REGISTRY_USERNAME: '${{ secrets.REDHAT_REGISTRY_USERNAME }}'
   REDHAT_REGISTRY_PASSWORD: '${{ secrets.REDHAT_REGISTRY_PASSWORD }}'
- 
-  
- 
+
   SOURCE_REPOSITORY: 'https://github.com/bcgov/EDUC-HUB.git'
   DOTNET_STARTUP_PROJECT: 'CASInterfaceService/cas-interface-service.csproj'
   IMAGE_REGISTRY: 'ghcr.io/${{ github.repository_owner }}'
@@ -17,7 +15,7 @@ env:
   APP_NAME_API: ecas-api
   APP_NAME_CAS: cas-api
   REDHAT_REGISTRY: https://registry.redhat.io
- 
+
   DOCKER_ARTIFACTORY_REPO: artifacts.developer.gov.bc.ca/docker-remote
   ARTIFACTORY_REPO: artifacts.developer.gov.bc.ca
   APP_NAME: ecas
@@ -264,22 +262,22 @@ jobs:
           | oc apply -f -
           
 
-           # Start rollout (if necessary) and follow it
+           # Restart deployments to pick up new images and follow rollout status
 
 
-          oc rollout latest dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null || true && echo "Rollout Front End in progress"
+          oc rollout restart deployment/${{ env.APP_NAME_FRONTEND }} && echo "Rollout Front End in progress"
 
-          oc rollout latest dc/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "Rollout ECAS API  in progress"
+          oc rollout restart deployment/${{ env.APP_NAME_API }} && echo "Rollout ECAS API  in progress"
 
-          oc rollout latest dc/${{ env.APP_NAME_CAS }} 2> /dev/null || true && echo "Rollout CAS API in progress"
+          oc rollout restart deployment/${{ env.APP_NAME_CAS }} && echo "Rollout CAS API in progress"
           
           # Get status, returns 0 if rollout is successful
 
-          oc rollout status dc/${{ env.APP_NAME_FRONTEND }}
+          oc rollout status deployment/${{ env.APP_NAME_FRONTEND }}
 
-          oc rollout status dc/${{ env.APP_NAME_API }}
+          oc rollout status deployment/${{ env.APP_NAME_API }}
 
-          oc rollout status dc/${{ env.APP_NAME_CAS }}
+          oc rollout status deployment/${{ env.APP_NAME_CAS }}
 
 
       - name: ZAP Scan

@@ -5,8 +5,8 @@
   metadata:
     name: "cas-api-dc"
   objects:
-  - apiVersion: v1
-    kind: DeploymentConfig
+  - apiVersion: apps/v1
+    kind: Deployment
     metadata:
       labels:
         app: "${APP_NAME}"
@@ -17,16 +17,19 @@
     spec:
       replicas: ${{MIN_REPLICAS}}
       selector:
-        app: "${APP_NAME}"
-        deploymentconfig: "cas-api"
+        matchLabels:
+          app: "${APP_NAME}"
+          deployment: "cas-api"
       strategy:
-        resources: {}
-        type: Rolling
+        type: RollingUpdate
+        rollingUpdate:
+          maxSurge: 1
+          maxUnavailable: 0
       template:
         metadata:
           labels:
             app: "${APP_NAME}"
-            deploymentconfig: "cas-api"
+            deployment: "cas-api"
         spec:
           containers:
           - image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${REPO_NAME}-cas-api:${TAG}
@@ -78,9 +81,6 @@
                 cpu: "${MAX_CPU}"
                 memory: "${MAX_MEM}"
          
-      test: false
-      triggers:
-      - type: ConfigChange
   - apiVersion: v1
     kind: Route
     metadata:
@@ -118,7 +118,7 @@
         targetPort: 8080
       selector:
         app: "${APP_NAME}"
-        deploymentconfig: "cas-api"
+        deployment: "cas-api"
 
   - apiVersion: autoscaling/v2
     kind: HorizontalPodAutoscaler
@@ -131,10 +131,9 @@
         app-group: "${APP_NAME}"
     spec:
       scaleTargetRef:
-        apiVersion: apps.openshift.io/v1
-        kind: DeploymentConfig
+        apiVersion: apps/v1
+        kind: Deployment
         name: "cas-api"
-        subresource: scale
       minReplicas: ${{MIN_REPLICAS}}
       maxReplicas: ${{MAX_REPLICAS}}
       metrics:
