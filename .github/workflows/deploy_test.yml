@@ -1,7 +1,7 @@
 name: Deploy to TEST
 
 env:
-  # 🖊️ EDIT your repository secrets to log into your OpenShift cluster and set up the context.
+  # EDIT your repository secrets to log into your OpenShift cluster and set up the context.
   # See https://github.com/redhat-actions/oc-login#readme for how to retrieve these values.
   # To get a permanent token, refer to https://github.com/redhat-actions/oc-login/wiki/Using-a-Service-Account-for-GitHub-Actions
   OPENSHIFT_SERVER: '${{ secrets.OPENSHIFT_SERVER }}'
@@ -48,9 +48,6 @@ env:
   PRIVATE_KEY: ${{ secrets.PRIV_KEY }}
   ENV: "test"
   
-  
-
-
 on:
   # https://docs.github.com/en/actions/reference/events-that-trigger-workflows
   workflow_dispatch:
@@ -84,13 +81,11 @@ jobs:
           # Login to OpenShift and select project
           oc login --token=${{ env.OPENSHIFT_TOKEN }} --server=${{ env.OPENSHIFT_SERVER }}
           oc project ${{ env.OPENSHIFT_NAMESPACE_TEST }}
-           # Cancel any rollouts in progress
 
-          oc rollout cancel dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null || true && echo "No rollout in progress"
-
-          oc rollout cancel dc/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "No ecas api rollout in progress"
-
-          oc rollout cancel dc/${{ env.APP_NAME_CAS }} 2> /dev/null  || true && echo "No cas api rollout in progress"
+          # Cancel any rollouts in progress
+          oc rollout cancel deployment/${{ env.APP_NAME_FRONTEND }} 2> /dev/null || true && echo "No rollout in progress"
+          oc rollout cancel deployment/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "No ecas api rollout in progress"
+          oc rollout cancel deployment/${{ env.APP_NAME_CAS }} 2> /dev/null || true && echo "No cas api rollout in progress"
           
           oc tag ${{ env.OPENSHIFT_NAMESPACE_DEV }}/${{ env.REPO_NAME }}-frontend:${{ steps.get-latest-tag.outputs.tag }} \
           ${{ env.OPENSHIFT_NAMESPACE_TEST }}/${{ env.REPO_NAME }}-frontend:${{ steps.get-latest-tag.outputs.tag }}
@@ -101,38 +96,73 @@ jobs:
           oc tag ${{ env.OPENSHIFT_NAMESPACE_DEV }}/${{ env.REPO_NAME }}-cas-api:${{ steps.get-latest-tag.outputs.tag }} \
           ${{ env.OPENSHIFT_NAMESPACE_TEST }}/${{ env.REPO_NAME }}-cas-api:${{ steps.get-latest-tag.outputs.tag }}
 
-          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/update-configmap.sh | bash /dev/stdin  "${{ env.REPO_NAME }}" "${{env.APP_DEBUG}}" "${{env.DOCUMENTROOT}}" "${{ env.DYNAMICSBASEURL}}" "${{env.ASPNETCORE_ENVIRONMENT}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL}}" "${{env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL}}"  "${{env.ASPNETCORE_ENVIRONMENT_CAS}}"      "${{env.CAS_API_SERVER}}"  "${{env.CAS_TOKEN_URI}}"  "${{env.CAS_INVOICE_URI}}"
+          curl -s https://raw.githubusercontent.com/bcgov/${{ env.REPO_NAME }}/${{ env.BRANCH }}/openshift/update-configmap.sh \
+            | bash /dev/stdin \
+              "${{ env.REPO_NAME }}" \
+              "${{ env.APP_DEBUG }}" \
+              "${{ env.DOCUMENTROOT }}" \
+              "${{ env.DYNAMICSBASEURL }}" \
+              "${{ env.ASPNETCORE_ENVIRONMENT }}" \
+              "${{ env.DYNAMICSAUTHENTICATIONSETTINGS__ACTIVEENVIRONMENT }}" \
+              "${{ env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDWEBAPIURL }}" \
+              "${{ env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDREDIRECTURL }}" \
+              "${{ env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDRESOURCEURL }}" \
+              "${{ env.DYNAMICSAUTHENTICATIONSETTINGS__CLOUDBASEURL }}" \
+              "${{ env.ASPNETCORE_ENVIRONMENT_CAS }}" \
+              "${{ env.CAS_API_SERVER }}" \
+              "${{ env.CAS_TOKEN_URI }}" \
+              "${{ env.CAS_INVOICE_URI }}"
 
+          # Process and apply deployment template
+          oc process -f ./openshift/templates/ecas-frontend/frontend.dc.yaml \
+            -p APP_NAME=${{ env.APP_NAME }} \
+            -p REPO_NAME=${{ env.REPO_NAME }} \
+            -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_TEST }} \
+            -p TAG=${{ steps.get-latest-tag.outputs.tag }} \
+            -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} \
+            -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} \
+            -p MIN_CPU=${{ env.MIN_CPU }} \
+            -p MAX_CPU=${{ env.MAX_CPU }} \
+            -p MIN_MEM=${{ env.MIN_MEM }} \
+            -p MAX_MEM=${{ env.MAX_MEM }} \
+            -p HOST_ROUTE=${{ env.HOST_ROUTE}} \
+            -p CA_CERT="${{ env.CA_CERT }}" \
+            -p CERTIFICATE="${{ env.CERTIFICATE }}" \
+            -p PRIVATE_KEY="${{ env.PRIVATE_KEY }}" \
+            -p ENV="${{ env.ENV }}" | oc apply -f -
 
-           # Process and apply deployment template
-          
-          oc process -f ./openshift/templates/ecas-frontend/frontend.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }}  -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_TEST }} -p TAG=${{ steps.get-latest-tag.outputs.tag }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE}}  -p CA_CERT="${{ env.CA_CERT }}" -p CERTIFICATE="${{ env.CERTIFICATE }}" -p PRIVATE_KEY="${{ env.PRIVATE_KEY }}" -p ENV="${{env.ENV}}"| oc apply -f -
-          
+          oc process -f ./openshift/templates/ecas-api/api.dc.yaml \
+            -p APP_NAME=${{ env.APP_NAME }} \
+            -p REPO_NAME=${{ env.REPO_NAME }} \
+            -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_TEST }} \
+            -p TAG=${{ steps.get-latest-tag.outputs.tag }} \
+            -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} \
+            -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} \
+            -p MIN_CPU=${{ env.MIN_CPU }} \
+            -p MAX_CPU=${{ env.MAX_CPU }} \
+            -p MIN_MEM=${{ env.MIN_MEM }} \
+            -p MAX_MEM=${{ env.MAX_MEM }} \
+            -p HOST_ROUTE=${{ env.HOST_ROUTE }} | oc apply -f -
 
+          oc process -f ./openshift/templates/cas-api/cas-api.dc.yaml \
+            -p APP_NAME=${{ env.APP_NAME }} \
+            -p REPO_NAME=${{ env.REPO_NAME }} \
+            -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_TEST }} \
+            -p TAG=${{ steps.get-latest-tag.outputs.tag }} \
+            -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} \
+            -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} \
+            -p MIN_CPU=${{ env.MIN_CPU }} \
+            -p MAX_CPU=${{ env.MAX_CPU }} \
+            -p MIN_MEM=${{ env.MIN_MEM }} \
+            -p MAX_MEM=${{ env.MAX_MEM }} \
+            -p HOST_ROUTE=${{ env.HOST_ROUTE }} | oc apply -f -
 
-          oc process -f ./openshift/templates/ecas-api/api.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }}  -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_TEST }} -p TAG=${{ steps.get-latest-tag.outputs.tag}}  -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }} \
-          | oc apply -f -
-          
-
-          oc process -f ./openshift/templates/cas-api/cas-api.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }}  -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE_TEST }} -p TAG=${{ steps.get-latest-tag.outputs.tag}} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} -p HOST_ROUTE=${{ env.HOST_ROUTE }}\
-          | oc apply -f -
-
-                   
-
-          # Start rollout (if necessary) and follow it
-
-
-          oc rollout latest dc/${{ env.APP_NAME_FRONTEND }} 2> /dev/null || true && echo "Rollout Front End in progress"
-
-          oc rollout latest dc/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "Rollout ECAS API  in progress"
-
-          oc rollout latest dc/${{ env.APP_NAME_CAS }} 2> /dev/null || true && echo "Rollout CAS API in progress"
+          # Restart deployments to pick up new images and follow rollout status
+          oc rollout restart deployment/${{ env.APP_NAME_FRONTEND }} && echo "Rollout Front End in progress"
+          oc rollout restart deployment/${{ env.APP_NAME_API }} && echo "Rollout ECAS API  in progress"
+          oc rollout restart deployment/${{ env.APP_NAME_CAS }} && echo "Rollout CAS API in progress"
 
           # Get status, returns 0 if rollout is successful
-
-          oc rollout status dc/${{ env.APP_NAME_FRONTEND }}
-
-          oc rollout status dc/${{ env.APP_NAME_API }}
-
-          oc rollout status dc/${{ env.APP_NAME_CAS }}
-          
+          oc rollout status deployment/${{ env.APP_NAME_FRONTEND }}
+          oc rollout status deployment/${{ env.APP_NAME_API }}
+          oc rollout status deployment/${{ env.APP_NAME_CAS }}
