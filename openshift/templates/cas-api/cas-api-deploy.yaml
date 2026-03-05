@@ -43,6 +43,9 @@ objects:
       spec:
         containers:
         - name: "${NAME}"
+          volumeMounts:
+            - name: custom-certs
+              mountPath: /etc/pki/ca-trust/source/anchors/
           image: ''
           ports:
           - containerPort: 8080
@@ -77,6 +80,10 @@ objects:
             periodSeconds: 10
             successThreshold: 1
             failureThreshold: 3
+        volumes:
+          - name: custom-certs
+            secret:
+              secretName: trusted-custom-ca
 
 - kind: Service
   apiVersion: v1

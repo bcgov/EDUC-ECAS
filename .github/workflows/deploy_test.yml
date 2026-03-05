@@ -36,7 +36,7 @@ env:
 
   #cas api config maps vars
   ASPNETCORE_ENVIRONMENT_CAS: 'Production'
-  CAS_API_SERVER: https://cfs-systws.cas.gov.bc.ca:7026
+  CAS_API_SERVER: ${{ secrets.CAS_API_SERVER }}
   CAS_TOKEN_URI: /ords/cas/oauth/token
   CAS_INVOICE_URI: /ords/cas/cfs/apinvoice/
   
@@ -46,20 +46,18 @@ env:
   CA_CERT: ${{ secrets.CA_CERT }}
   CERTIFICATE: ${{ secrets.CERT }}
   PRIVATE_KEY: ${{ secrets.PRIV_KEY }}
+  TRUSTED_CA_BUNDLE: ${{ secrets.TRUSTED_CA_BUNDLE }}
   ENV: "test"
-  
+
 on:
   # https://docs.github.com/en/actions/reference/events-that-trigger-workflows
   workflow_dispatch:
-
 
 jobs:
   deploy-to-openshift-test:
     name: Deploy to OpenShift TEST
     runs-on: ubuntu-24.04
     environment: test
-
-
 
     steps:
       - name: Check out repository
@@ -111,7 +109,8 @@ jobs:
               "${{ env.ASPNETCORE_ENVIRONMENT_CAS }}" \
               "${{ env.CAS_API_SERVER }}" \
               "${{ env.CAS_TOKEN_URI }}" \
-              "${{ env.CAS_INVOICE_URI }}"
+              "${{ env.CAS_INVOICE_URI }}" \
+              "${{ env.TRUSTED_CA_BUNDLE }}"              
 
           # Process and apply deployment template
           oc process -f ./openshift/templates/ecas-frontend/frontend.dc.yaml \

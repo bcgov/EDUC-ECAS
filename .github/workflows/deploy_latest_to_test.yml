@@ -36,13 +36,14 @@ env:
 
   #cas api config maps vars
   ASPNETCORE_ENVIRONMENT_CAS: 'Production'
-  CAS_API_SERVER: https://cfs-systws.cas.gov.bc.ca:7026
+  CAS_API_SERVER: ${{ secrets.CAS_API_SERVER }}
   CAS_TOKEN_URI: /ords/cas/oauth/token
   CAS_INVOICE_URI: /ords/cas/cfs/apinvoice/
   
   HOST_ROUTE: '${{ secrets.SITE_URL }}'
   BRANCH: "master"
 
+  TRUSTED_CA_BUNDLE: ${{ secrets.TRUSTED_CA_BUNDLE }}
   CA_CERT: ${{ secrets.CA_CERT }}
   CERTIFICATE: ${{ secrets.CERT }}
   PRIVATE_KEY: ${{ secrets.PRIV_KEY }}
@@ -103,10 +104,10 @@ jobs:
               "${{ env.ASPNETCORE_ENVIRONMENT_CAS }}" \
               "${{ env.CAS_API_SERVER }}" \
               "${{ env.CAS_TOKEN_URI }}" \
-              "${{ env.CAS_INVOICE_URI }}"
+              "${{ env.CAS_INVOICE_URI }}" \
+              "${{ env.TRUSTED_CA_BUNDLE }}"              
 
           # Process and apply deployment template
-
           oc process -f ./openshift/templates/ecas-frontend/frontend.dc.yaml \
             -p APP_NAME=${{ env.APP_NAME }} \
             -p REPO_NAME=${{ env.REPO_NAME }} \
