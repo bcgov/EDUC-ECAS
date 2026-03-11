@@ -310,4 +310,3 @@ jobs:
           target: "https://${{ env.HOST_ROUTE }}"
           fail_action: true              # fail the job if alerts found
           allow_issue_writing: false     # don’t open/update a GitHub Issue
-          cmd_options: -l FAIL
