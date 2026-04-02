@@ -48,6 +48,7 @@ env:
   CAS_INVOICE_URI: /ords/cas/cfs/apinvoice/
 
   HOST_ROUTE: '${{ secrets.SITE_URL }}'
+  WWW_HOST_ROUTE: 'www.${{ secrets.SITE_URL }}'
   BRANCH: "master"
 
   CA_CERT: ${{ secrets.CA_CERT }}
@@ -263,6 +264,7 @@ jobs:
             -p MIN_MEM=${{ env.MIN_MEM }} \
             -p MAX_MEM=${{ env.MAX_MEM }} \
             -p HOST_ROUTE=${{ env.HOST_ROUTE}} \
+            -p WWW_HOST_ROUTE=${{ env.WWW_HOST_ROUTE }} \
             -p CA_CERT="${{ env.CA_CERT }}" \
             -p CERTIFICATE="${{ env.CERTIFICATE }}" \
             -p PRIVATE_KEY="${{ env.PRIVATE_KEY }}" \
