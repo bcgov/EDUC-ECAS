@@ -156,6 +156,29 @@
         name: "${APP_NAME}-frontend"
         weight: 100
 
+  - apiVersion: v1
+    kind: Route
+    metadata:
+      name: "${ENV}-www.workwitheducation"
+      labels:
+        name: "${APP_NAME}-frontend"
+        app: ${APP_NAME}
+        app-group: ${APP_NAME}
+    spec:
+      host: ${WWW_HOST_ROUTE}
+      port:
+        targetPort: "${APP_NAME}-frontend"
+      tls:
+        insecureEdgeTerminationPolicy: Redirect
+        termination: edge
+        caCertificate: "${CA_CERT}"
+        certificate: "${CERTIFICATE}"
+        key: "${PRIVATE_KEY}"
+      to:
+        kind: Service
+        name: "${APP_NAME}-frontend"
+        weight: 100
+
       
   - apiVersion: v1
     kind: Service
@@ -262,4 +285,7 @@
     required: true
   - name: ENV
     description: Environement
+    required: true
+  - name: WWW_HOST_ROUTE
+    description: The www hostname for the frontend route
     required: true
