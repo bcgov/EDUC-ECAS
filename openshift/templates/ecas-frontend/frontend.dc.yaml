@@ -87,6 +87,13 @@
                   secretKeyRef:
                     name: ecas-frontend
                     key: API_KEY
+              # Replaces the image default, so the stock php.d dir must stay first or extensions stop loading.
+              - name: PHP_INI_SCAN_DIR
+                value: "${PHP_SYSCONF_PATH}/php.d:/opt/app-root/etc/php-overrides"
+            volumeMounts:
+              - name: php-overrides
+                mountPath: /opt/app-root/etc/php-overrides
+                readOnly: true
             ports:
             - containerPort: 8080
               protocol: TCP
@@ -111,6 +118,29 @@
               limits:
                 cpu: "${MAX_CPU}"
                 memory: "${MAX_MEM}"
+          volumes:
+            - name: php-overrides
+              configMap:
+                name: "${APP_NAME}-frontend-php-overrides"
+  # FIXME: This stopgap cannot stand for long. Prioritizing a PHP upgrade is required!
+  # Stopgap for CVE-2026-109618 / CVE-2026-109619 until the PHP 8 upgrade.
+  # The base image's php.ini allows 200M request bodies; uploads are capped at 3 MB client-side.
+  # memory_limit=-1 removes the PHP OOM path; the container MAX_MEM limit becomes the only memory cap.
+  - apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      labels:
+        app: "${APP_NAME}"
+        name: "${APP_NAME}-frontend"
+        app-group: "${APP_NAME}"
+        template: "educ-${APP_NAME}-template"
+      name: "${APP_NAME}-frontend-php-overrides"
+    data:
+      zz-cve-stopgap.ini: |
+        session.upload_progress.enabled = 0
+        post_max_size = 8M
+        upload_max_filesize = 6M
+        memory_limit = -1
 
   - apiVersion: v1
     kind: Route
@@ -289,3 +319,7 @@
   - name: WWW_HOST_ROUTE
     description: The www hostname for the frontend route
     required: true
+  - name: PHP_SYSCONF_PATH
+    description: PHP config dir of the frontend base image (php-73-rhel7 = /etc/opt/rh/rh-php73)
+    required: true
+    value: "/etc/opt/rh/rh-php73"
