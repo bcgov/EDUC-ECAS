@@ -25,6 +25,7 @@ abstract class BaseMigrations extends TestCase
             ->once()
             ->andReturn([
                 'sub'                   => $user_id,
+                'federated_id'          => $user_id,
                 'preferred_username'    => 'some_bceid'
             ]);
 
