@@ -4,10 +4,13 @@ namespace Tests\Api;
 
 use App\Dynamics\Annotation;
 use App\Dynamics\Assignment;
+use App\Keycloak\KeycloakGuard;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\UploadedFile;
 use Tests\BaseMigrations;
@@ -46,6 +49,22 @@ class ContractFilesTest extends BaseMigrations
     {
         $this->withExceptionHandling();
         $this->mockUnauthenticatedUser();
+        $this->mockEcasApi();
+
+        $this->json($method, '/api/' . $id . '/' . $endpoint)->assertStatus(401);
+
+        $this->assertEmpty($this->ecas_api_requests);
+    }
+
+
+    /**
+     * @test
+     * @dataProvider endpoints
+     */
+    public function a_token_keycloak_rejects_is_rejected($method, $id, $endpoint)
+    {
+        $this->withExceptionHandling();
+        $this->mockKeycloakRejectingToken();
         $this->mockEcasApi();
 
         $this->json($method, '/api/' . $id . '/' . $endpoint)->assertStatus(401);
@@ -234,6 +253,20 @@ class ContractFilesTest extends BaseMigrations
         $this->mockGetProfile(self::PROFILE_ID, $this->validProfileData([
             'federated_id'  => $federated_id
         ]));
+    }
+
+
+    /*
+     * The real guard throws when Keycloak's userinfo endpoint rejects a missing or expired token
+     */
+    protected function mockKeycloakRejectingToken()
+    {
+        $guard = \Mockery::mock(KeycloakGuard::class);
+        $guard->shouldReceive('user')
+            ->once()
+            ->andThrow(new ClientException('401 Unauthorized', new Request('GET', 'userinfo'), new Response(401)));
+
+        $this->app->instance(KeycloakGuard::class, $guard);
     }
 
 

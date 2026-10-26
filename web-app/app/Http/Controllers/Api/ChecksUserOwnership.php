@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Str;
 
 /*
@@ -48,7 +49,15 @@ trait ChecksUserOwnership
 
     private function loggedInUser()
     {
-        $keycloak_user = $this->authentication->user();
+        try
+        {
+            $keycloak_user = $this->authentication->user();
+        }
+        catch (ClientException $exception)
+        {
+            // Keycloak rejects a missing or expired token
+            $keycloak_user = null;
+        }
 
         if ( ! $keycloak_user)
         {
