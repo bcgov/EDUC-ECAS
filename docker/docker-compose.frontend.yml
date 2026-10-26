@@ -1,0 +1,30 @@
+# Local frontend (web-app) built from docker/ecas-frontend/Dockerfile, run against the dev environment.
+# Separate from docker-compose.yml, which runs the S2I-built images. Settings come from docker/.env (see .env.example).
+# From the repository root:
+#   docker compose -f docker/docker-compose.frontend.yml up --build
+name: ecas-local
+
+services:
+
+  # ecas-frontend
+  #  DYNAMICSBASEURL defaults to an ecas-api port-forward on 8090 (see README.md).
+  ecas-frontend:
+    image: ecas-frontend-local
+    build:
+      context: ..
+      dockerfile: docker/ecas-frontend/Dockerfile
+    ports:
+      - 7070:8080
+    environment:
+      - APP_KEY=${APP_KEY:-}
+      - APP_ENV=${APP_ENV:-test}
+      - APP_DEBUG=${APP_DEBUG:-true}
+      - APP_URL=http://localhost:7070
+      - LOG_CHANNEL=stderr
+      - SESSION_SECURE_COOKIE=false
+      - DYNAMICSBASEURL=${DYNAMICSBASEURL:-http://host.docker.internal:8090/api}
+      - DYNAMICS_USERNAME=${DYNAMICS_USERNAME:-}
+      - DYNAMICS_PASSWORD=${DYNAMICS_PASSWORD:-}
+      - KEYCLOAK_AUTHSERVERURL=${KEYCLOAK_AUTHSERVERURL:-}
+      - KEYCLOAK_REALM=${KEYCLOAK_REALM:-}
+      - KEYCLOAK_CLIENTID=${KEYCLOAK_CLIENTID:-}

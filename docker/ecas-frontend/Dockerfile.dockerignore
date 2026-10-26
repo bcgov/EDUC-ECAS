@@ -1,0 +1,20 @@
+# The build context is the repository root; only send what the frontend image uses.
+*
+!web-app
+!docker/ecas-frontend
+
+web-app/.env
+web-app/node_modules
+web-app/vendor
+web-app/public/hot
+web-app/public/js
+web-app/public/css
+web-app/public/storage
+web-app/storage/debugbar
+web-app/storage/logs/*
+web-app/storage/framework/cache/data/*
+web-app/storage/framework/sessions/*
+web-app/storage/framework/views/*
+web-app/bootstrap/cache/*.php
+web-app/.phpunit.result.cache
+**/.DS_Store
