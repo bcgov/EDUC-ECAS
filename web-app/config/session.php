@@ -153,7 +153,7 @@ return [
     |
     */
 
-    'domain' => preg_replace('#^https?://#', '', rtrim(env('APP_URL'),'\:,0..9')),
+    'domain' => preg_replace('#^https?://#', '', rtrim(env('APP_URL', ''),'\:,0..9')),
 
     /*
     |--------------------------------------------------------------------------

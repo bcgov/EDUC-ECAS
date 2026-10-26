@@ -6,11 +6,11 @@
 #
 #   docker compose -f docker/docker-compose.frontend.yml build
 #
-# PHP_VERSION matches production today; bump it here when testing the PHP upgrade.
+# PHP_VERSION should match the PHP release of the S2I builder image.
 
-ARG PHP_VERSION=7.3
+ARG PHP_VERSION=8.3
 ARG NODE_VERSION=14
-ARG COMPOSER_VERSION=2.2
+ARG COMPOSER_VERSION=2.10
 
 # --- Vue/Sass assets: laravel-mix 4 (webpack 4) needs an older Node ---
 FROM node:${NODE_VERSION}-bullseye AS assets
@@ -31,7 +31,7 @@ FROM composer:${COMPOSER_VERSION} AS vendor
 ARG COMPOSER_NO_DEV=1
 WORKDIR /app
 COPY web-app/composer.json web-app/composer.lock ./
-RUN composer install --no-interaction --no-progress --no-scripts --no-autoloader --ignore-platform-reqs
+RUN composer install --no-interaction --no-progress --no-scripts --no-autoloader
 
 # --- Runtime: Apache + mod_php on port 8080, like the S2I image ---
 FROM php:${PHP_VERSION}-apache
