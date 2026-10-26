@@ -12,6 +12,20 @@ Some of the images used by the project use a source-to-image build strategy and 
 
 To run the project execute `./manage start`: the api container will be serving content at http://localhost:8080, while the frontend container will be serving at http://localhost:8081
 
+### Running the frontend locally against dev
+[docker-compose.frontend.yml](docker-compose.frontend.yml) runs just the frontend (`web-app`) from [ecas-frontend/Dockerfile](ecas-frontend/Dockerfile), separately from the S2I setup above: no S2I or Red Hat registry login needed. It mirrors the OpenShift image: Apache + PHP 7.3 on port 8080, assets built with `npm run production`, and the same PHP limits as the CVE stopgap ConfigMap.
+
+1. `cp .env.example .env` in this directory, then fill it in from the `ecas-frontend` and `ecas-api-credentials` secrets in the dev namespace.
+2. Port-forward the dev ecas-api, which `DYNAMICSBASEURL` points at by default: `oc -n <namespace>-dev port-forward svc/ecas-api 8090:8080`
+3. From the repository root: `docker compose -f docker/docker-compose.frontend.yml up --build`
+4. Open http://localhost:7070. Laravel logs go to the container output.
+
+Build arguments:
+- `PHP_VERSION` (default `7.3`, matching production) is the knob for the PHP upgrade, e.g. `docker compose -f docker/docker-compose.frontend.yml build --build-arg PHP_VERSION=8.3`. The current Laravel 6 dependencies are not expected to run on PHP 8 yet.
+- `COMPOSER_NO_DEV=0` installs dev packages so `./vendor/bin/phpunit` can run inside the container. Leave `APP_ENV` at its default unless you need Dusk: `local` and `testing` register the Dusk service provider, which only exists in this build.
+
+Signing in requires the Keycloak client to accept `http://localhost:7070/*` as a redirect URI.
+
 ### Development Mode
 During development it is useful to have code hot-reloading enabled, so that containers won't need to be rebuilt after each change.
 To start both the api and frontend container in development mode, using code hot-reloading, run `./manage start-dev`.
