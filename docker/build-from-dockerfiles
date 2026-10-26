@@ -1,0 +1,8 @@
+#!/bin/bash
+#cleanup volumes before starting docker compose
+docker-compose -f docker-compose-local.yml down --volumes
+cp ../web-app/.env .env
+# build ecas-api and cas-api. For now only frontend is built from dockerfiles
+./manage build api
+./manage build cas-api
+docker-compose -f docker-compose-local.yml up  --build
