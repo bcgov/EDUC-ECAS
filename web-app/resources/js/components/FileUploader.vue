@@ -59,6 +59,7 @@
               v-show="false"
               class="btn btn-primary"
               :post-action="getUploadPostUrl"
+              :headers="uploadHeaders"
               :multiple="true"
               :drop="true"
               :drop-directory="false"
@@ -126,6 +127,10 @@ export default {
   computed: {
     getUploadPostUrl() {
       return 'api/' + this.selectedAssignmentId + '/fileupload';
+    },
+    // the upload component does not go through axios, so send the login token here
+    uploadHeaders() {
+      return { Authorization: 'Bearer ' + this.$keycloak.token };
     }
   },
   methods: {

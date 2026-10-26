@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Dynamics\Annotation;
 use App\Dynamics\Assignment;
 use App\Dynamics\Interfaces\iAssignment;
 use App\Dynamics\Interfaces\iAssignmentStatus;
@@ -20,6 +21,7 @@ use Illuminate\Http\Request;
 
 class FileDownloadController extends Controller
 {
+    use ChecksUserOwnership;
 
     private $profile;
     private $assignment_status;
@@ -29,6 +31,7 @@ class FileDownloadController extends Controller
     private $assignment;
     private $session;
     private $authentication;
+    private $annotation;
 
 
     public function __construct(iAssignment $assignment,
@@ -38,7 +41,8 @@ class FileDownloadController extends Controller
                                 iContractStage $stage,
                                 iContract $contract,
                                 iSession $session,
-                                KeycloakGuard $auth)
+                                KeycloakGuard $auth,
+                                Annotation $annotation)
     {
 
         $this->profile              = $profile;
@@ -49,16 +53,19 @@ class FileDownloadController extends Controller
         $this->role                 = $role;
         $this->session              = $session;
         $this->authentication       = $auth;
+        $this->annotation           = $annotation;
     }
 
     public function index($annotation_id)
     { 
+        $this->checkUserOwnsFile($annotation_id);
+
         $temp_file = tempnam(sys_get_temp_dir(), 'Etmp');
         $resource = fopen($temp_file, 'w');
         $apiurl = \Config::get('env.DYNAMICSBASEURL');
         $apiusr = \Config::get('env.DYNAMICS_USERNAME');
         $apipwd = \Config::get('env.DYNAMICS_PASSWORD');
-        $client = new \GuzzleHttp\Client();
+        $client = app(\GuzzleHttp\Client::class);
         $res = $client->request('GET', $apiurl.'/ContractFiles/GetFile?annotationid='.$annotation_id, ['auth' => [$apiusr, $apipwd]]);
 
         $downloadfile = json_decode($res->getBody()->getContents())->value;

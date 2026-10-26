@@ -20,6 +20,7 @@ use Illuminate\Http\Request;
 
 class FileSubmitController extends Controller
 {
+    use ChecksUserOwnership;
 
     private $profile;
     private $assignment_status;
@@ -63,13 +64,15 @@ class FileSubmitController extends Controller
         return $arr;    
     }
 
-    public function update($annotation_id)
+    public function update($assignment_id)
     {
+        $this->checkUserOwnsAssignment($assignment_id);
+
         $apiurl = \Config::get('env.DYNAMICSBASEURL');
         $apiusr = \Config::get('env.DYNAMICS_USERNAME');
         $apipwd = \Config::get('env.DYNAMICS_PASSWORD');
-        $client = new \GuzzleHttp\Client();
-        $url = $apiurl.'/Operations?statement=educ_assignments('.$annotation_id.')';
+        $client = app(\GuzzleHttp\Client::class);
+        $url = $apiurl.'/Operations?statement=educ_assignments('.$assignment_id.')';
                 $res = $client->patch($url, [
                     'headers' => ['Content-type' => 'application/json'],
                     'auth' => [
