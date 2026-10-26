@@ -54,6 +54,14 @@ class RegionTest extends BaseMigrations
 
 
     /** @test */
+    public function get_a_single_record_via_the_api()
+    {
+        $result = $this->api->get('BC');
+        $this->verifySingle($result);
+        $this->assertEquals('BC', $result['id']);
+    }
+
+    /** @test */
     public function get_all_records_from_api_via_the_cache()
     {
         $results = (new CacheDecorator($this->api))->all();

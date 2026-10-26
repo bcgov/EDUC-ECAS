@@ -83,7 +83,7 @@ class Profile extends DynamicsRepository implements iModelRepository
 
         $collection = $this->retrieveData($query);
 
-        return current($collection)[0];
+        return $collection[0];
 
     } 
 }

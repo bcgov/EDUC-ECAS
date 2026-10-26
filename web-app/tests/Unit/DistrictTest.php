@@ -53,6 +53,14 @@ class DistrictTest extends BaseMigrations
     }
 
     /** @test */
+    public function get_a_single_district_via_the_api()
+    {
+        $result = $this->api->get('2345678');
+        $this->verifySingle($result);
+        $this->assertEquals('2345678', $result['id']);
+    }
+
+    /** @test */
     public function the_api_can_filter_by_district_name()
     {
         $mock = new MockHandler([
