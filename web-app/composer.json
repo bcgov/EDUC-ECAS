@@ -11,18 +11,18 @@
         "php": "^8.3",
         "ext-json": "*",
         "guzzlehttp/guzzle": "^7.2",
-        "laravel/framework": "^10.0",
-        "laravel/tinker": "^2.8",
-        "socialiteproviders/manager": "^4.4"
+        "laravel/framework": "^12.0",
+        "laravel/tinker": "^2.10.1",
+        "socialiteproviders/manager": "^4.8"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.8",
-        "fakerphp/faker": "^1.9.1",
+        "barryvdh/laravel-debugbar": "^3.15",
+        "fakerphp/faker": "^1.23",
         "filp/whoops": "^2.0",
-        "laravel/dusk": "^7.0",
-        "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^7.0",
-        "phpunit/phpunit": "^10.1"
+        "laravel/dusk": "^8.3",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.6",
+        "phpunit/phpunit": "^11.5.50"
     },
     "config": {
         "optimize-autoloader": true,

@@ -17,6 +17,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Tests\BaseMigrations;
+use PHPUnit\Framework\Attributes\Test;
 
 class ProfileCredentialTest extends BaseMigrations
 {
@@ -57,7 +58,7 @@ class ProfileCredentialTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function get_all_credentials_from_api()
     {
         $results = $this->api->all();
@@ -67,7 +68,7 @@ class ProfileCredentialTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function get_filtered_set_of_credentials_via_the_api()
     {
 
@@ -106,7 +107,7 @@ class ProfileCredentialTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function create_a_new_credential_via_the_api()
     {
         $expected_response = 'b85d7fd4-dcc5-e911-b80d-005056833c5b';
@@ -132,7 +133,7 @@ class ProfileCredentialTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function delete_a_credential_via_the_api()
     {
         $mock = new MockHandler([
@@ -151,7 +152,7 @@ class ProfileCredentialTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function get_all_credentials_from_api_via_the_cache()
     {
         $results = (new CacheDecorator($this->api))->all();

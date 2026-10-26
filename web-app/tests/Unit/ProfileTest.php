@@ -12,6 +12,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Tests\BaseMigrations;
 use Faker\Generator as Faker;
+use PHPUnit\Framework\Attributes\Test;
 
 class ProfileTest extends BaseMigrations
 {
@@ -85,7 +86,7 @@ class ProfileTest extends BaseMigrations
 
     }
 
-    /** @test */
+    #[Test]
     public function filter_for_a_single_profile_via_the_api()
     {
 
@@ -96,7 +97,7 @@ class ProfileTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function get_a_single_profile_via_the_api()
     {
 
@@ -108,7 +109,7 @@ class ProfileTest extends BaseMigrations
 
 
 
-    /** @test */
+    #[Test]
     public function return_blank_profile_when_none_exists_via_the_api()
     {
         $mock = new MockHandler([
@@ -139,7 +140,7 @@ class ProfileTest extends BaseMigrations
 
 
 
-    /** @test */
+    #[Test]
     public function get_all_profiles_from_api()
     {
         $results = $this->api->all();
@@ -149,7 +150,7 @@ class ProfileTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function get_all_profiles_from_api_via_the_cache()
     {
         $results = (new CacheDecorator($this->api))->all();

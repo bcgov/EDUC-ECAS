@@ -8,6 +8,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Tests\BaseMigrations;
+use PHPUnit\Framework\Attributes\Test;
 
 class CountryTest extends BaseMigrations
 {
@@ -35,7 +36,7 @@ class CountryTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function get_a_single_country_via_the_api()
     {
         $result = $this->api->get('2345678');

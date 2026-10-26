@@ -9,6 +9,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Tests\BaseMigrations;
+use PHPUnit\Framework\Attributes\Test;
 
 
 class SubjectTest extends BaseMigrations
@@ -43,7 +44,7 @@ class SubjectTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function get_all_subjects_from_api()
     {
         $results = $this->api->all();
@@ -53,7 +54,7 @@ class SubjectTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function get_all_subjects_from_api_via_the_cache()
     {
         $results = (new CacheDecorator($this->api))->all();

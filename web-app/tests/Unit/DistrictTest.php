@@ -9,6 +9,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Tests\BaseMigrations;
+use PHPUnit\Framework\Attributes\Test;
 
 class DistrictTest extends BaseMigrations
 {
@@ -43,7 +44,7 @@ class DistrictTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function get_all_districts_from_api()
     {
         $results = $this->api->all();
@@ -52,7 +53,7 @@ class DistrictTest extends BaseMigrations
 
     }
 
-    /** @test */
+    #[Test]
     public function get_a_single_district_via_the_api()
     {
         $result = $this->api->get('2345678');
@@ -60,7 +61,7 @@ class DistrictTest extends BaseMigrations
         $this->assertEquals('2345678', $result['id']);
     }
 
-    /** @test */
+    #[Test]
     public function the_api_can_filter_by_district_name()
     {
         $mock = new MockHandler([
@@ -87,7 +88,7 @@ class DistrictTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function get_all_districts_from_api_via_the_cache()
     {
         $results = (new CacheDecorator($this->api))->all();

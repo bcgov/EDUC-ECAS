@@ -10,6 +10,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Tests\BaseMigrations;
+use PHPUnit\Framework\Attributes\Test;
 
 class RegionTest extends BaseMigrations
 {
@@ -43,7 +44,7 @@ class RegionTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function get_all_records_from_api()
     {
         $results = $this->api->all();
@@ -53,7 +54,7 @@ class RegionTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function get_a_single_record_via_the_api()
     {
         $result = $this->api->get('BC');
@@ -61,7 +62,7 @@ class RegionTest extends BaseMigrations
         $this->assertEquals('BC', $result['id']);
     }
 
-    /** @test */
+    #[Test]
     public function get_all_records_from_api_via_the_cache()
     {
         $results = (new CacheDecorator($this->api))->all();

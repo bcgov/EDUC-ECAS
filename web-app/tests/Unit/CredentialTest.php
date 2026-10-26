@@ -9,6 +9,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Tests\BaseMigrations;
+use PHPUnit\Framework\Attributes\Test;
 
 class CredentialTest extends BaseMigrations
 {
@@ -41,7 +42,7 @@ class CredentialTest extends BaseMigrations
 
     }
 
-    /** @test */
+    #[Test]
     public function get_credentials()
     {
         $credentials = $this->api->all();
@@ -52,7 +53,7 @@ class CredentialTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function get_cache_credentials()
     {
         $credentials = (new CacheDecorator($this->api))->all();

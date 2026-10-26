@@ -7,13 +7,14 @@ use App\Dynamics\Credential;
 use App\Dynamics\ProfileCredential;
 use Illuminate\Support\Collection;
 use Tests\BaseMigrations;
+use PHPUnit\Framework\Attributes\Test;
 
 
 class ProfileCredentialTest extends BaseMigrations
 {
 
 
-    /** @test */
+    #[Test]
     public function a_user_can_get_all_profile_credentials()
     {
         $mock_profile_id    = 'abc';
@@ -46,7 +47,7 @@ class ProfileCredentialTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function a_user_does_not_receive_credentials_verified_as_no()
     {
         $mock_profile_id    = 'abc';
@@ -79,7 +80,7 @@ class ProfileCredentialTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function an_unauthenticated_user_cannot_get_any_profile_credentials()
     {
         $this->withExceptionHandling();
@@ -96,7 +97,7 @@ class ProfileCredentialTest extends BaseMigrations
         $response->assertStatus(401); // unauthorised
     }
 
-    /** @test */
+    #[Test]
     public function a_user_can_delete_a_profile_credential()
     {
         $mock_profile_id    = 'abc';
@@ -123,7 +124,7 @@ class ProfileCredentialTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function a_user_cannot_delete_another_users_profile_credential()
     {
         $mock_profile_id    = 'abc';
@@ -150,7 +151,7 @@ class ProfileCredentialTest extends BaseMigrations
 
 
 
-    /** @test */
+    #[Test]
     public function a_user_can_create_a_profile_credential()
     {
         $mock_profile_id            = 'abc';
@@ -192,7 +193,7 @@ class ProfileCredentialTest extends BaseMigrations
 
 
 
-    /** @test */
+    #[Test]
     public function a_user_cannot_create_a_profile_credential_with_a_verified_status()
     {
 
@@ -235,7 +236,7 @@ class ProfileCredentialTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function a_user_cannot_update_a_profile_credential()
     {
         $this->withExceptionHandling();
@@ -247,7 +248,7 @@ class ProfileCredentialTest extends BaseMigrations
 
     }
 
-    /** @test */
+    #[Test]
     public function a_user_cannot_get_a_profile_credential()
     {
         $this->withExceptionHandling();

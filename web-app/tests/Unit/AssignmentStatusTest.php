@@ -11,6 +11,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Tests\BaseMigrations;
+use PHPUnit\Framework\Attributes\Test;
 
 
 class AssignmentStatusTest extends BaseMigrations
@@ -44,7 +45,7 @@ class AssignmentStatusTest extends BaseMigrations
 
     }
 
-    /** @test */
+    #[Test]
     public function get_all_assignment_statuses_from_api()
     {
         $results = $this->api->all();
@@ -53,7 +54,7 @@ class AssignmentStatusTest extends BaseMigrations
         $this->verifySingle($results->first());
     }
 
-    /** @test */
+    #[Test]
     public function get_all_assignment_statuses_from_api_cached()
     {
         $results = (new CacheDecorator($this->api))->all();
