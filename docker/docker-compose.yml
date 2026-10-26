@@ -14,6 +14,8 @@ services:
       - APP_DEBUG=true
       - APP_URL=http://localhost
       - DOCUMENTROOT=/public
+      # php-fpm in the ubi9 PHP image hides environment variables from PHP unless this is OFF.
+      - PHP_CLEAR_ENV=OFF
       - DYNAMICSBASEURL=${DYNAMICSBASEURL:-http://ecas-api:8080/api}
 
   # ecas-api

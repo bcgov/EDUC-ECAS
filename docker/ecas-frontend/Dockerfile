@@ -1,6 +1,6 @@
 # ECAS frontend (web-app) image for running the Laravel/Vue app locally.
 #
-# Mirrors the OpenShift S2I build (registry.redhat.io/rhscl/php-73-rhel7 plus
+# Mirrors the OpenShift S2I build (registry.redhat.io/ubi9/php-83 plus
 # web-app/php-post-assemble/npm-install.sh) using public base images, so no Red Hat
 # registry login is needed. Build from the repository root:
 #

@@ -87,6 +87,9 @@
                   secretKeyRef:
                     name: ecas-frontend
                     key: API_KEY
+              # The ubi9 PHP image runs php-fpm, which hides environment variables from PHP unless this is OFF.
+              - name: PHP_CLEAR_ENV
+                value: "OFF"
               # Replaces the image default, so the stock php.d dir must stay first or extensions stop loading.
               - name: PHP_INI_SCAN_DIR
                 value: "${PHP_SYSCONF_PATH}/php.d:/opt/app-root/etc/php-overrides"
@@ -320,6 +323,6 @@
     description: The www hostname for the frontend route
     required: true
   - name: PHP_SYSCONF_PATH
-    description: PHP config dir of the frontend base image (php-73-rhel7 = /etc/opt/rh/rh-php73)
+    description: PHP config dir of the frontend base image (ubi9/php-83 = /etc)
     required: true
-    value: "/etc/opt/rh/rh-php73"
+    value: "/etc"
