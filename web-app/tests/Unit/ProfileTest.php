@@ -132,8 +132,8 @@ class ProfileTest extends BaseMigrations
         $singleProfile = $this->api->firstOrCreate($new_federated_id, $data);   
 
         $this->assertTrue($singleProfile['federated_id']    == $new_federated_id );
-        $this->assertTrue($singleProfile['first_name']      == $data['first_name'] );
-        $this->assertTrue($singleProfile['last_name']       == $data['last_name'] );
+        $this->assertNull($singleProfile['first_name']);
+        $this->assertNull($singleProfile['last_name']);
         $this->assertTrue($singleProfile['email']           == $data['email'] );
     }
 

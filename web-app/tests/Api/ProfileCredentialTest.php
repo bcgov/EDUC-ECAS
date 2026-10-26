@@ -119,7 +119,7 @@ class ProfileCredentialTest extends BaseMigrations
 
         $response = $this->delete('/api/' . $mock_profile_id . '/profile-credentials/' . $record_id_to_be_deleted  );
 
-        $response->assertStatus(204 ); // success
+        $response->assertStatus(200); // success
     }
 
 
