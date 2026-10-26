@@ -26,6 +26,7 @@ RUN npm run production
 
 # --- Composer packages: the autoloader and scripts run later, on the target PHP ---
 FROM composer:${COMPOSER_VERSION} AS vendor
+# ARGs are environment variables in RUN, and Composer reads COMPOSER_NO_DEV from the environment.
 # Defaults to --no-dev like web-app/.sti/environment; build with COMPOSER_NO_DEV=0 for phpunit/dusk.
 ARG COMPOSER_NO_DEV=1
 WORKDIR /app
@@ -34,6 +35,7 @@ RUN composer install --no-interaction --no-progress --no-scripts --no-autoloader
 
 # --- Runtime: Apache + mod_php on port 8080, like the S2I image ---
 FROM php:${PHP_VERSION}-apache
+# Read by composer dump-autoload below, same as the vendor stage.
 ARG COMPOSER_NO_DEV=1
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
