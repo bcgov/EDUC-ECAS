@@ -14,6 +14,10 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\UploadedFile;
 use Tests\BaseMigrations;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\Test;
 
 
 class ContractFilesTest extends BaseMigrations
@@ -27,7 +31,7 @@ class ContractFilesTest extends BaseMigrations
     private $ecas_api_requests = [];
 
 
-    public function endpoints()
+    public static function endpoints()
     {
         return [
             'portal assignments'    => ['GET',    self::PROFILE_ID,    'portalassignment',  'profile'],
@@ -41,11 +45,9 @@ class ContractFilesTest extends BaseMigrations
     }
 
 
-    /**
-     * @test
-     * @dataProvider endpoints
-     */
-    public function an_unauthenticated_user_is_rejected($method, $id, $endpoint)
+    #[Test]
+    #[DataProvider('endpoints')]
+    public function an_unauthenticated_user_is_rejected($method, $id, $endpoint, $id_type)
     {
         $this->withExceptionHandling();
         $this->mockUnauthenticatedUser();
@@ -57,11 +59,9 @@ class ContractFilesTest extends BaseMigrations
     }
 
 
-    /**
-     * @test
-     * @dataProvider endpoints
-     */
-    public function a_token_keycloak_rejects_is_rejected($method, $id, $endpoint)
+    #[Test]
+    #[DataProvider('endpoints')]
+    public function a_token_keycloak_rejects_is_rejected($method, $id, $endpoint, $id_type)
     {
         $this->withExceptionHandling();
         $this->mockKeycloakRejectingToken();
@@ -73,10 +73,8 @@ class ContractFilesTest extends BaseMigrations
     }
 
 
-    /**
-     * @test
-     * @dataProvider endpoints
-     */
+    #[Test]
+    #[DataProvider('endpoints')]
     public function a_user_cannot_use_records_owned_by_someone_else($method, $id, $endpoint, $id_type)
     {
         $this->withExceptionHandling();
@@ -90,11 +88,9 @@ class ContractFilesTest extends BaseMigrations
     }
 
 
-    /**
-     * @test
-     * @dataProvider endpoints
-     */
-    public function an_id_that_is_not_a_guid_is_rejected($method, $id, $endpoint)
+    #[Test]
+    #[DataProvider('endpoints')]
+    public function an_id_that_is_not_a_guid_is_rejected($method, $id, $endpoint, $id_type)
     {
         $this->withExceptionHandling();
         $this->mockUser(self::CALLER_FEDERATED_ID);
@@ -106,7 +102,7 @@ class ContractFilesTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function a_user_can_get_their_portal_assignments()
     {
         $this->mockUser(self::CALLER_FEDERATED_ID);
@@ -125,7 +121,7 @@ class ContractFilesTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function a_user_can_list_files_uploaded_to_their_assignment()
     {
         $this->mockUser(self::CALLER_FEDERATED_ID);
@@ -143,7 +139,7 @@ class ContractFilesTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function a_user_can_get_the_contract_file_for_their_assignment()
     {
         $this->mockUser(self::CALLER_FEDERATED_ID);
@@ -161,7 +157,7 @@ class ContractFilesTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function a_user_can_upload_a_file_to_their_assignment()
     {
         $this->mockUser(self::CALLER_FEDERATED_ID);
@@ -181,7 +177,7 @@ class ContractFilesTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function a_user_can_submit_files_for_their_assignment()
     {
         $this->mockUser(self::CALLER_FEDERATED_ID);
@@ -196,13 +192,10 @@ class ContractFilesTest extends BaseMigrations
     }
 
 
-    /**
-     * The controller calls header() directly, which fails once phpunit has printed anything
-     *
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    // The controller calls header() directly, which fails once phpunit has printed anything
+    #[Test]
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function a_user_can_download_a_file_attached_to_their_assignment()
     {
         $this->mockUser(self::CALLER_FEDERATED_ID);
@@ -222,7 +215,7 @@ class ContractFilesTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function a_user_can_delete_a_file_attached_to_their_assignment()
     {
         $this->mockUser(self::CALLER_FEDERATED_ID);

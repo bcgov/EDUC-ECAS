@@ -5,12 +5,14 @@ namespace Tests\Unit;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 
 class CheckUserIsAuthorizedTest extends TestCase
 {
 
-    public function rejectedFederatedIds()
+    public static function rejectedFederatedIds()
     {
         return [
             'empty on both sides'               => [['federated_id' => ''],     ['federated_id' => '']],
@@ -24,10 +26,8 @@ class CheckUserIsAuthorizedTest extends TestCase
     }
 
 
-    /**
-     * @test
-     * @dataProvider rejectedFederatedIds
-     */
+    #[Test]
+    #[DataProvider('rejectedFederatedIds')]
     public function a_user_without_a_matching_federated_id_is_rejected(array $keycloak_user, array $profile)
     {
         try {
@@ -42,7 +42,7 @@ class CheckUserIsAuthorizedTest extends TestCase
     }
 
 
-    /** @test */
+    #[Test]
     public function a_user_with_a_matching_federated_id_gets_the_profile()
     {
         $profile = ['id' => 'profile_id', 'federated_id' => 'abc'];
