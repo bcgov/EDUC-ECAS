@@ -10,6 +10,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Tests\BaseMigrations;
+use PHPUnit\Framework\Attributes\Test;
 
 class PaymentOptionListTest extends BaseMigrations
 {
@@ -45,7 +46,7 @@ class PaymentOptionListTest extends BaseMigrations
 
 
 
-    /** @test */
+    #[Test]
     public function get_all_records_from_api()
     {
         $results = $this->api->all();
@@ -55,7 +56,7 @@ class PaymentOptionListTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function get_all_records_from_api_via_the_cache()
     {
         $results = (new CacheDecorator($this->api))->all();

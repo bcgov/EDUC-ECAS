@@ -10,6 +10,7 @@ npm install
 # See:  https://laravel.com/docs/5.8/mix#running-mix
 
 echo "Running npm run production"
-npm run production
+# webpack 4 (laravel-mix 4) hashes with md4, which Node 17+ only allows through the legacy OpenSSL provider.
+NODE_OPTIONS=--openssl-legacy-provider npm run production
 
 # For development purposes, use `npm run dev`

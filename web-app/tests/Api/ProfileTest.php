@@ -9,13 +9,14 @@ use App\Dynamics\Profile;
 use App\Dynamics\Region;
 use App\Dynamics\School;
 use Tests\BaseMigrations;
+use PHPUnit\Framework\Attributes\Test;
 
 
 class ProfileTest extends BaseMigrations
 {
 
 
-    /** @test */
+    #[Test]
     public function an_authenticated_user_can_get_their_own_profile()
     {
         $mock_profile_id    = 'abc';
@@ -46,7 +47,7 @@ class ProfileTest extends BaseMigrations
 
 
 
-    /** @test */
+    #[Test]
     public function an_unauthenticated_user_cannot_get_a_profile()
     {
         $this->withExceptionHandling();
@@ -66,7 +67,7 @@ class ProfileTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function an_authenticated_user_cannot_see_another_users_profile()
     {
         $this->withExceptionHandling();
@@ -87,7 +88,7 @@ class ProfileTest extends BaseMigrations
 
 
 
-    /** @test */
+    #[Test]
     public function a_valid_SIN_number_is_never_echoed_back_to_users()
     {
 
@@ -118,7 +119,7 @@ class ProfileTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function an_empty_SIN_number_is_not_shown_as_received()
     {
         $mock_profile_id    = 'abc';
@@ -149,7 +150,7 @@ class ProfileTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function a_SIN_number_is_shown_as_received()
     {
 
@@ -180,7 +181,7 @@ class ProfileTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function the_index_method_on_the_profile_controller_is_blocked()
     {
         $this->withExceptionHandling();
@@ -192,7 +193,7 @@ class ProfileTest extends BaseMigrations
 
 
 
-    /** @test */
+    #[Test]
     public function an_authenticated_user_cannot_update_another_users_profile()
     {
         $this->withExceptionHandling();
@@ -229,7 +230,7 @@ class ProfileTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function the_delete_profile_method_is_disabled()
     {
 
@@ -239,7 +240,7 @@ class ProfileTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function an_authenticated_user_can_create_profile()
     {
         $this->withExceptionHandling();
@@ -249,7 +250,7 @@ class ProfileTest extends BaseMigrations
         $response->assertSessionDoesntHaveErrors();
     }
 
-    /** @test */
+    #[Test]
     public function an_authenticated_user_cannot_create_a_blank_profile()
     {
 
@@ -275,7 +276,7 @@ class ProfileTest extends BaseMigrations
             ->assertSessionHasErrors('postal_code');
     }
 
-    /** @test */
+    #[Test]
     public function an_authenticated_user_cannot_create_a_profile_without_a_valid_email()
     {
 
@@ -286,7 +287,7 @@ class ProfileTest extends BaseMigrations
 
     }
 
-    /** @test */
+    #[Test]
     public function a_profile_can_include_a_postal_code_with_a_space()
     {
         $this->withExceptionHandling();
@@ -298,7 +299,7 @@ class ProfileTest extends BaseMigrations
         $response->assertSessionDoesntHaveErrors();
     }
 
-    /** @test */
+    #[Test]
     public function a_new_profile_must_have_a_postal_code()
     {
         // Valid: Six alternating letters and numbers, spaces don't matter
@@ -310,7 +311,7 @@ class ProfileTest extends BaseMigrations
 
     }
 
-    /** @test */
+    #[Test]
     public function usa_profile_can_have_a_numeric_postal_code()
     {
         // Valid: Six alternating letters and numbers, spaces don't matter
@@ -339,7 +340,7 @@ class ProfileTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function canadian_profile_cannot_have_a_numeric_postal_code()
     {
         // Valid: Six alternating letters and numbers, spaces don't matter
@@ -353,7 +354,7 @@ class ProfileTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function new_profile_sin_cannot_have_fewer_than_9_digits()
     {
 
@@ -365,7 +366,7 @@ class ProfileTest extends BaseMigrations
 
     }
 
-    /** @test */
+    #[Test]
     public function new_profile_sin_can_be_blank()
     {
 
@@ -377,7 +378,7 @@ class ProfileTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function new_profile_sin_cannot_have_alpha_characters()
     {
 
@@ -390,7 +391,7 @@ class ProfileTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function new_profile_sin_must_pass_the_luhn_algorithm()
     {
 
@@ -407,7 +408,7 @@ class ProfileTest extends BaseMigrations
 
 
 
-    /** @test */
+    #[Test]
     public function new_profile_sin_may_have_dashes_between_numbers()
     {
 
@@ -421,7 +422,7 @@ class ProfileTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function new_profile_sin_may_have_blanks_between_triplets()
     {
 
@@ -436,7 +437,7 @@ class ProfileTest extends BaseMigrations
 
 
 
-    /** @test */
+    #[Test]
     public function new_profile_sin_cannot_be_any_9_digit_number()
     {
 

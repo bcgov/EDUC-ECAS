@@ -154,7 +154,7 @@ abstract class DynamicsRepository
 
         $collection = $this->retrieveData($query);
 
-        return current($collection)[0];
+        return $collection[0];
 
     }
 

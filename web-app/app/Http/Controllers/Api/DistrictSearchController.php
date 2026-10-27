@@ -26,7 +26,7 @@ class DistrictSearchController extends Controller
     {
 
 
-        $search_results = $this->district->filterContains(['name'  => $request->get('q')]);
+        $search_results = $this->district->filterContains(['name'  => $request->input('q')]);
 
         return SimpleResource::collection($search_results);
 

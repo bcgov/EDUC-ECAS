@@ -167,7 +167,7 @@ jobs:
         uses: redhat-actions/s2i-build@v2
         with:
           path_context: ./web-app
-          builder_image: registry.redhat.io/rhscl/php-73-rhel7
+          builder_image: registry.redhat.io/ubi9/php-83
           image: '${{env.APP_NAME_FRONTEND }}'
           tags: ${{ env.TAG }}
 

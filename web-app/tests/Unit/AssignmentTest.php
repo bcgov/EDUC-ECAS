@@ -11,6 +11,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Tests\BaseMigrations;
+use PHPUnit\Framework\Attributes\Test;
 
 class AssignmentTest extends BaseMigrations
 {
@@ -55,7 +56,7 @@ class AssignmentTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function get_all_assignments_from_api()
     {
         $results = $this->api->all();
@@ -65,7 +66,7 @@ class AssignmentTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function create_a_new_assignment_via_the_api()
     {
         $expected_response = 'b85d7fd4-dcc5-e911-b80d-005056833c5b';
@@ -90,7 +91,7 @@ class AssignmentTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function update_an_assignment_via_the_api()
     {
         $record_under_test = "225762e7-b0c2-e911-b80d-005056833c5b";
@@ -129,7 +130,7 @@ class AssignmentTest extends BaseMigrations
 
     }
 
-    /** @test */
+    #[Test]
     public function get_filtered_set_of_assignments_via_the_api()
     {
         $mock = new MockHandler([
@@ -161,7 +162,7 @@ class AssignmentTest extends BaseMigrations
 
 
 
-    /** @test */
+    #[Test]
     public function get_all_assignments_from_api_cached()
     {
         $results = (new CacheDecorator($this->api))->all();

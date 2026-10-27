@@ -5,10 +5,11 @@ namespace Tests\Browser;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use PHPUnit\Framework\Attributes\Test;
 
 class DashboardTest extends DuskTestCase
 {
-    /** @test */
+    #[Test]
     public function see_home_page()
     {
         $this->browse(function (Browser $browser) {
@@ -17,7 +18,7 @@ class DashboardTest extends DuskTestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function see_dashboard()
     {
         $this->browse(function (Browser $browser) {
@@ -26,7 +27,7 @@ class DashboardTest extends DuskTestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function new_profile()
     {
         $this->browse(function (Browser $browser) {

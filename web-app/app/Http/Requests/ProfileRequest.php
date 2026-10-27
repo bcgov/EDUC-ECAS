@@ -22,6 +22,22 @@ class ProfileRequest extends FormRequest
         return preg_replace('/[^A-Za-z0-9|\-|\s]/', '', $string); // Removes special chars.
     }
 
+    /**
+     * Same result as filter_var($value, FILTER_SANITIZE_STRING), which PHP 8.1 deprecated:
+     * quotes are HTML-encoded, then tags are stripped.
+     */
+    protected function sanitizeString($value)
+    {
+        if (is_array($value)) {
+            return false;
+        }
+
+        $encoded = str_replace(['"', "'"], ['&#34;', '&#39;'], (string) $value);
+
+        // The filter also treats "<" followed by whitespace as the start of a tag; strip_tags() keeps it as text.
+        return strip_tags(preg_replace('/<(\s)/', '<x$1', $encoded));
+    }
+
 
     /**
      * Sanitize request data before validation.
@@ -82,9 +98,9 @@ class ProfileRequest extends FormRequest
         }
 
         // We'll sanitize all strings
-        $input['email']                     = filter_var($input['email'],               FILTER_SANITIZE_STRING);
-        $input['phone']                     = filter_var($input['phone'],               FILTER_SANITIZE_STRING);
-        $input['postal_code']               = filter_var($input['postal_code'],         FILTER_SANITIZE_STRING);
+        $input['email']                     = $this->sanitizeString($input['email']);
+        $input['phone']                     = $this->sanitizeString($input['phone']);
+        $input['postal_code']               = $this->sanitizeString($input['postal_code']);
 
 
         $this->replace($input);

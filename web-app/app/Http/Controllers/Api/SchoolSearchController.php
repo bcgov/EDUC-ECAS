@@ -26,7 +26,7 @@ class SchoolSearchController extends Controller
     {
 
 
-        $search_results = $this->school->filterContains(['name'  => $request->get('q')]);
+        $search_results = $this->school->filterContains(['name'  => $request->input('q')]);
         return SchoolResource::collection($search_results);
         
 

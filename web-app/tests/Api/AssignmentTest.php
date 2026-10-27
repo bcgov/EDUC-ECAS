@@ -7,13 +7,14 @@ use App\Dynamics\AssignmentStatus;
 use App\Dynamics\ContractStage;
 use App\Dynamics\Role;
 use Tests\BaseMigrations;
+use PHPUnit\Framework\Attributes\Test;
 
 
 class AssignmentTest extends BaseMigrations
 {
 
 
-    /** @test */
+    #[Test]
     public function a_user_can_request_all_assignments()
     {
         $mock_profile_id    = 'abc';
@@ -56,7 +57,7 @@ class AssignmentTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function an_unauthenticated_user_cannot_get_all_assignments()
     {
         $this->withExceptionHandling();
@@ -74,7 +75,7 @@ class AssignmentTest extends BaseMigrations
 
     }
 
-    /** @test */
+    #[Test]
     public function a_user_cannot_delete_an_assignment()
     {
 
@@ -88,7 +89,7 @@ class AssignmentTest extends BaseMigrations
 
 
 
-    /** @test */
+    #[Test]
     public function a_user_can_create_an_assignment()
     {
         $mock_profile_id            = 'abc';

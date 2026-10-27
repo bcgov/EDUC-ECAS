@@ -10,6 +10,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Tests\BaseMigrations;
+use PHPUnit\Framework\Attributes\Test;
 
 class SchoolTest extends BaseMigrations
 {
@@ -47,7 +48,7 @@ class SchoolTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function get_all_schools_from_api()
     {
 
@@ -59,7 +60,15 @@ class SchoolTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
+    public function get_a_single_school_via_the_api()
+    {
+        $result = $this->api->get('2345678');
+        $this->verifySingle($result);
+        $this->assertEquals('2345678', $result['id']);
+    }
+
+    #[Test]
     public function the_api_can_filter_by_school_name()
     {
         $results = $this->api->filterContains([ 'name' => 'Collingwood']);
@@ -71,7 +80,7 @@ class SchoolTest extends BaseMigrations
     }
 
 
-    /** @test */
+    #[Test]
     public function get_all_schools_from_api_via_the_cache()
     {
         $results = (new CacheDecorator($this->api))->all();
