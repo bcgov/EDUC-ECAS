@@ -28,7 +28,7 @@ RUN NODE_OPTIONS=--openssl-legacy-provider npm run production
 # --- Composer packages: the autoloader and scripts run later, on the target PHP ---
 FROM composer:${COMPOSER_VERSION} AS vendor
 # ARGs are environment variables in RUN, and Composer reads COMPOSER_NO_DEV from the environment.
-# Defaults to --no-dev like web-app/.sti/environment; build with COMPOSER_NO_DEV=0 for phpunit/dusk.
+# Defaults to --no-dev like web-app/.s2i/environment; build with COMPOSER_NO_DEV=0 for phpunit/dusk.
 ARG COMPOSER_NO_DEV=1
 WORKDIR /app
 COPY web-app/composer.json web-app/composer.lock ./
