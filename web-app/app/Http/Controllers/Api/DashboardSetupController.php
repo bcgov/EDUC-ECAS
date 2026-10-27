@@ -110,7 +110,7 @@ class DashboardSetupController extends Controller
     public function index()
     {
 
-        $user   = $this->authentication->user();
+        $user   = parent::loggedInUser($this->authentication);
         $profile    = $this->profile->firstOrCreate($user['federated_id'], [
             //'first_name'  => $user['given_name'],
             //'last_name'   => $user['family_name'],

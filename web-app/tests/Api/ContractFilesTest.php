@@ -4,13 +4,6 @@ namespace Tests\Api;
 
 use App\Dynamics\Annotation;
 use App\Dynamics\Assignment;
-use App\Keycloak\KeycloakGuard;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Middleware;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\UploadedFile;
 use Tests\BaseMigrations;
@@ -27,8 +20,6 @@ class ContractFilesTest extends BaseMigrations
     const PROFILE_ID            = '11111111-1111-1111-1111-111111111111';
     const ASSIGNMENT_ID         = '22222222-2222-2222-2222-222222222222';
     const ANNOTATION_ID         = '33333333-3333-3333-3333-333333333333';
-
-    private $ecas_api_requests = [];
 
 
     public static function endpoints()
@@ -249,20 +240,6 @@ class ContractFilesTest extends BaseMigrations
     }
 
 
-    /*
-     * The real guard throws when Keycloak's userinfo endpoint rejects a missing or expired token
-     */
-    protected function mockKeycloakRejectingToken()
-    {
-        $guard = \Mockery::mock(KeycloakGuard::class);
-        $guard->shouldReceive('user')
-            ->once()
-            ->andThrow(new ClientException('401 Unauthorized', new Request('GET', 'userinfo'), new Response(401)));
-
-        $this->app->instance(KeycloakGuard::class, $guard);
-    }
-
-
     protected function mockGetAssignment($assignment_id, $contact_id)
     {
         $repository = \Mockery::mock(Assignment::class);
@@ -290,18 +267,6 @@ class ContractFilesTest extends BaseMigrations
             ]);
 
         $this->app->instance(Annotation::class, $repository);
-    }
-
-
-    /*
-     * Replace the Guzzle client the controllers use to call ecas-api, recording each request
-     */
-    protected function mockEcasApi(array $responses = [])
-    {
-        $handler = HandlerStack::create(new MockHandler($responses));
-        $handler->push(Middleware::history($this->ecas_api_requests));
-
-        $this->app->instance(Client::class, new Client(['handler' => $handler]));
     }
 
 

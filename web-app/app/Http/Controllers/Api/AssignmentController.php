@@ -55,7 +55,7 @@ class AssignmentController extends Controller
 
     public function index($profile_id)
     {
-        $keycloak_user = $this->authentication->user();
+        $keycloak_user = parent::loggedInUser($this->authentication);
         $unverified_profile = $this->profile->get($profile_id);
 
         $profile = parent::checkUserIsAuthorized($keycloak_user, $unverified_profile);
@@ -68,7 +68,7 @@ class AssignmentController extends Controller
     public function store(Request $request, $profile_id)
     {
 
-        $keycloak_user = $this->authentication->user();
+        $keycloak_user = parent::loggedInUser($this->authentication);
         $unverified_profile = $this->profile->get($profile_id);
 
         $profile = parent::checkUserIsAuthorized($keycloak_user, $unverified_profile);
@@ -90,7 +90,7 @@ class AssignmentController extends Controller
     public function update(AssignmentUpdateRequest $request, $profile_id, $assignment_id )
     {
 
-        $keycloak_user = $this->authentication->user();
+        $keycloak_user = parent::loggedInUser($this->authentication);
         $unverified_profile = $this->profile->get($profile_id);
 
         $profile = parent::checkUserIsAuthorized($keycloak_user, $unverified_profile);

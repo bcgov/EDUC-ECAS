@@ -3,6 +3,7 @@
 namespace App\Keycloak;
 
 
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
@@ -109,7 +110,15 @@ class KeycloakGuard implements Guard
     private function authenticate()
     {
 
-        $this->user = Socialite::driver('keycloak')->getUserByToken($this->request->bearerToken());
+        try
+        {
+            $this->user = Socialite::driver('keycloak')->getUserByToken($this->request->bearerToken());
+        }
+        catch (ClientException $exception)
+        {
+            // Keycloak rejects a missing or expired token
+            $this->user = null;
+        }
 
     }
 

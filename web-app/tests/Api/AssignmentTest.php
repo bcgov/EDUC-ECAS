@@ -65,11 +65,6 @@ class AssignmentTest extends BaseMigrations
 
         $this->mockUnauthenticatedUser();
 
-        $this->mockGetProfile($mock_profile_id, $this->validProfileData([
-            'id'                    => $mock_profile_id,
-            'federated_id'          => 'some_user_guid'
-        ]));
-
         $response = $this->get('/api/'. $mock_profile_id .'/assignments' );
         $response->assertStatus(401); // unauthorized
 

@@ -5,7 +5,16 @@ namespace Tests;
 
 use App\Dynamics\Profile;
 use App\Keycloak\KeycloakGuard;
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Laravel\Socialite\Facades\Socialite;
 
 
 
@@ -13,6 +22,8 @@ abstract class BaseMigrations extends TestCase
 {
 
     use DatabaseMigrations;
+
+    protected $ecas_api_requests = [];
 
 
 
@@ -47,6 +58,31 @@ abstract class BaseMigrations extends TestCase
         // load the mock into the IoC container
         $this->app->instance(KeycloakGuard::class, $guard);
 
+    }
+
+
+    /*
+     * Keycloak's userinfo endpoint rejects a missing or expired token, which the real guard handles
+     */
+    protected function mockKeycloakRejectingToken()
+    {
+        Socialite::shouldReceive('driver->getUserByToken')
+            ->andThrow(new ClientException('401 Unauthorized', new Request('GET', 'userinfo'), new Response(401)));
+    }
+
+
+    /*
+     * Replace the Guzzle clients used to call ecas-api, recording each request
+     */
+    protected function mockEcasApi(array $responses = [])
+    {
+        $handler = HandlerStack::create(new MockHandler($responses));
+        $handler->push(Middleware::history($this->ecas_api_requests));
+
+        $client = new Client(['handler' => $handler]);
+
+        $this->app->instance(Client::class, $client);
+        $this->app->instance(ClientInterface::class, $client);
     }
 
 

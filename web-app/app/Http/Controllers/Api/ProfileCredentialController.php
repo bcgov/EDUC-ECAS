@@ -36,7 +36,7 @@ class ProfileCredentialController extends Controller
     public function index($profile_id)
     {
 
-        $keycloak_user = $this->authentication->user();
+        $keycloak_user = parent::loggedInUser($this->authentication);
         $unverified_profile = $this->profile->get($profile_id);
 
         $profile = parent::checkUserIsAuthorized($keycloak_user, $unverified_profile);
@@ -67,7 +67,7 @@ class ProfileCredentialController extends Controller
     public function store(Request $request, $profile_id)
     {
 
-        $keycloak_user = $this->authentication->user();
+        $keycloak_user = parent::loggedInUser($this->authentication);
         $unverified_profile = $this->profile->get($profile_id);
 
         $profile = parent::checkUserIsAuthorized($keycloak_user, $unverified_profile);
@@ -95,7 +95,7 @@ class ProfileCredentialController extends Controller
     public function destroy($profile_id, $credential_id)
     {
 
-        $keycloak_user = $this->authentication->user();
+        $keycloak_user = parent::loggedInUser($this->authentication);
         $unverified_profile = $this->profile->get($profile_id);
 
         $profile = parent::checkUserIsAuthorized($keycloak_user, $unverified_profile);
