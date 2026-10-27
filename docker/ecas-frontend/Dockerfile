@@ -9,11 +9,11 @@
 # PHP_VERSION should match the PHP release of the S2I builder image.
 
 ARG PHP_VERSION=8.3
-ARG NODE_VERSION=14
+ARG NODE_VERSION=22
 ARG COMPOSER_VERSION=2.10
 
-# --- Vue/Sass assets: laravel-mix 4 (webpack 4) needs an older Node ---
-FROM node:${NODE_VERSION}-bullseye AS assets
+# --- Vue/Sass assets: same Node major as the S2I builder ---
+FROM node:${NODE_VERSION}-bookworm AS assets
 WORKDIR /app
 COPY web-app/package.json web-app/package-lock.json ./
 # npm install, not npm ci, as in php-post-assemble/npm-install.sh: package-lock.json is out of sync with package.json.
@@ -22,7 +22,8 @@ RUN npm install --no-audit --no-fund
 COPY web-app/artisan web-app/webpack.mix.js ./
 COPY web-app/resources ./resources
 COPY web-app/public ./public
-RUN npm run production
+# webpack 4 needs the legacy OpenSSL provider on Node 17+, as in php-post-assemble/npm-install.sh.
+RUN NODE_OPTIONS=--openssl-legacy-provider npm run production
 
 # --- Composer packages: the autoloader and scripts run later, on the target PHP ---
 FROM composer:${COMPOSER_VERSION} AS vendor
