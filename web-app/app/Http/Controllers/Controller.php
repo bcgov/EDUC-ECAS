@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Keycloak\KeycloakGuard;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
@@ -11,6 +12,18 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    protected static function loggedInUser(KeycloakGuard $authentication)
+    {
+        $keycloak_user = $authentication->user();
+
+        if( ! $keycloak_user)
+        {
+            abort(401, 'unauthorized');
+        }
+
+        return $keycloak_user;
+    }
 
     protected static function checkUserIsAuthorized( $keycloak_user, Array $profile)
     {

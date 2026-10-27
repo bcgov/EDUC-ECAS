@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Str;
 
 /*
@@ -14,7 +13,7 @@ trait ChecksUserOwnership
 
     protected function checkUserOwnsProfile($profile_id)
     {
-        $keycloak_user = $this->loggedInUser();
+        $keycloak_user = parent::loggedInUser($this->authentication);
         self::abortUnlessGuid($profile_id);
 
         return parent::checkUserIsAuthorized($keycloak_user, $this->profile->get($profile_id));
@@ -22,12 +21,12 @@ trait ChecksUserOwnership
 
     protected function checkUserOwnsAssignment($assignment_id)
     {
-        return $this->checkAssignmentBelongsToUser($this->loggedInUser(), $assignment_id);
+        return $this->checkAssignmentBelongsToUser(parent::loggedInUser($this->authentication), $assignment_id);
     }
 
     protected function checkUserOwnsFile($annotation_id)
     {
-        $keycloak_user = $this->loggedInUser();
+        $keycloak_user = parent::loggedInUser($this->authentication);
         self::abortUnlessGuid($annotation_id);
 
         // a file is owned through the assignment it is attached to
@@ -45,26 +44,6 @@ trait ChecksUserOwnership
         parent::checkUserIsAuthorized($keycloak_user, $this->profile->get($assignment['contact_id']));
 
         return $assignment;
-    }
-
-    private function loggedInUser()
-    {
-        try
-        {
-            $keycloak_user = $this->authentication->user();
-        }
-        catch (ClientException $exception)
-        {
-            // Keycloak rejects a missing or expired token
-            $keycloak_user = null;
-        }
-
-        if ( ! $keycloak_user)
-        {
-            abort(401, 'unauthorized');
-        }
-
-        return $keycloak_user;
     }
 
     // ids are put into ecas-api urls and Dynamics queries, so only accept GUIDs

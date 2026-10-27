@@ -53,7 +53,7 @@ class ProfileController extends Controller
     public function show($profile_id)
     {
 
-        $keycloak_user = $this->authentication->user();
+        $keycloak_user = parent::loggedInUser($this->authentication);
         $unverified_profile = $this->profile->get($profile_id);
         
         $profile = parent::checkUserIsAuthorized($keycloak_user, $unverified_profile);
@@ -69,7 +69,7 @@ error_log(print_r($keycloak_user, TRUE));
  */
     public function store(ProfileRequest $request)
     {
-        $user = $this->authentication->user();
+        $user = parent::loggedInUser($this->authentication);
 
         $data                   = $request->validated();
         $data['federated_id']   = $user['federated_id'];
@@ -90,7 +90,7 @@ error_log(print_r($keycloak_user, TRUE));
     public function update(ProfileRequest $request, $profile_id)
     {
 
-        $keycloak_user = $this->authentication->user();
+        $keycloak_user = parent::loggedInUser($this->authentication);
         $unverified_profile = $this->profile->get($profile_id);
 
         $profile = parent::checkUserIsAuthorized($keycloak_user, $unverified_profile);
