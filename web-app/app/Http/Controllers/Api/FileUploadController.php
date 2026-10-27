@@ -20,6 +20,7 @@ use Illuminate\Http\Request;
 
 class FileUploadController extends Controller
 {
+    use ChecksUserOwnership;
 
     private $profile;
     private $assignment_status;
@@ -53,6 +54,8 @@ class FileUploadController extends Controller
 
     public function store($assignment_id)
     {
+        $this->checkUserOwnsAssignment($assignment_id);
+
         $file     = request('file');
         $fileName = $file->getClientOriginalName();
         $realPath = $file->getRealPath();
@@ -61,7 +64,7 @@ class FileUploadController extends Controller
         $apiurl = \Config::get('env.DYNAMICSBASEURL');
         $apiusr = \Config::get('env.DYNAMICS_USERNAME');
         $apipwd = \Config::get('env.DYNAMICS_PASSWORD');
-        $client = new \GuzzleHttp\Client();
+        $client = app(\GuzzleHttp\Client::class);
         $url = $apiurl.'/ContractFiles/UploadFile';
                 $res = $client->post($url, [
                     'headers' => ['Content-type' => 'application/json'],

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Dynamics\Annotation;
 use App\Dynamics\Assignment;
 use App\Dynamics\Interfaces\iAssignment;
 use App\Dynamics\Interfaces\iAssignmentStatus;
@@ -20,6 +21,7 @@ use Illuminate\Http\Request;
 
 class FileDeleteController extends Controller
 {
+    use ChecksUserOwnership;
 
     private $profile;
     private $assignment_status;
@@ -29,6 +31,7 @@ class FileDeleteController extends Controller
     private $assignment;
     private $session;
     private $authentication;
+    private $annotation;
 
 
     public function __construct(iAssignment $assignment,
@@ -38,7 +41,8 @@ class FileDeleteController extends Controller
                                 iContractStage $stage,
                                 iContract $contract,
                                 iSession $session,
-                                KeycloakGuard $auth)
+                                KeycloakGuard $auth,
+                                Annotation $annotation)
     {
 
         $this->profile              = $profile;
@@ -49,6 +53,7 @@ class FileDeleteController extends Controller
         $this->role                 = $role;
         $this->session              = $session;
         $this->authentication       = $auth;
+        $this->annotation           = $annotation;
     }
 
     public function recursive_change_key($arr, $set) {
@@ -65,10 +70,12 @@ class FileDeleteController extends Controller
 
     public function delete($annotation_id)
     {
+        $this->checkUserOwnsFile($annotation_id);
+
         $apiurl = \Config::get('env.DYNAMICSBASEURL');
         $apiusr = \Config::get('env.DYNAMICS_USERNAME');
         $apipwd = \Config::get('env.DYNAMICS_PASSWORD');
-        $client = new \GuzzleHttp\Client();
+        $client = app(\GuzzleHttp\Client::class);
         $res = $client->request('DELETE', $apiurl.'/ContractFiles/RemoveFile?annotationid='.$annotation_id, ['auth' => [$apiusr, $apipwd]]);       
 
         $deletefile = json_decode($res->getBody()->getContents());

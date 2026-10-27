@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 
 class ListUploadedFilesController extends Controller
 {
+    use ChecksUserOwnership;
 
     private $profile;
     private $assignment_status;
@@ -62,13 +63,15 @@ class ListUploadedFilesController extends Controller
         return $arr;    
     }
 
-    public function index($profile_id)
+    public function index($assignment_id)
     {
+        $this->checkUserOwnsAssignment($assignment_id);
+
         $apiurl = \Config::get('env.DYNAMICSBASEURL');
         $apiusr = \Config::get('env.DYNAMICS_USERNAME');
         $apipwd = \Config::get('env.DYNAMICS_PASSWORD');
-        $client = new \GuzzleHttp\Client();
-        $res = $client->request('GET', $apiurl.'/ContractFiles/ListUploadedFiles?assignmentId='.$profile_id, ['auth' => [$apiusr, $apipwd]]);
+        $client = app(\GuzzleHttp\Client::class);
+        $res = $client->request('GET', $apiurl.'/ContractFiles/ListUploadedFiles?assignmentId='.$assignment_id, ['auth' => [$apiusr, $apipwd]]);
 
         $contractfile = json_decode($res->getBody()->getContents())->value;$pa = json_encode($contractfile);$pa2 = json_decode($pa,true);
 
