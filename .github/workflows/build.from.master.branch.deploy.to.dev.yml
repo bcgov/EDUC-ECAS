@@ -219,11 +219,6 @@ jobs:
           oc login --token=${{ env.OPENSHIFT_TOKEN }} --server=${{ env.OPENSHIFT_SERVER }}
           oc project ${{ env.OPENSHIFT_NAMESPACE_DEV  }}
 
-          # Cancel any rollouts in progress
-          oc rollout cancel deployment/${{ env.APP_NAME_FRONTEND }} 2> /dev/null || true && echo "No rollout in progress"
-          oc rollout cancel deployment/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "No ecas api rollout in progress"
-          oc rollout cancel deployment/${{ env.APP_NAME_CAS }} 2> /dev/null  || true && echo "No cas api rollout in progress"
-
           # Create the image stream if it doesn't exist
           oc create imagestream ${{ env.REPO_NAME }}-frontend> /dev/null || true && echo "Frontend image stream in place"
           oc create imagestream ${{ env.REPO_NAME }}-api> /dev/null || true && echo "Ecas API image stream in place"

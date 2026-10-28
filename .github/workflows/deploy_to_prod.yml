@@ -61,12 +61,6 @@ jobs:
     environment: prod
 
     steps:
-      - name: Only deploy from master
-        if: github.ref != 'refs/heads/master'
-        run: |
-          echo "Run this workflow from master. A run from a tag uses that tag's old workflow and templates."
-          exit 1
-
       - name: Check out repository
         uses: actions/checkout@v3
 
@@ -88,10 +82,6 @@ jobs:
           oc login --token=${{ env.OPENSHIFT_TOKEN }} --server=${{ env.OPENSHIFT_SERVER }}
           oc project ${{ env.OPENSHIFT_NAMESPACE_PROD }}
 
-          # Cancel any rollouts in progress
-          oc rollout cancel deployment/${{ env.APP_NAME_FRONTEND }} 2> /dev/null || true && echo "No rollout in progress"
-          oc rollout cancel deployment/${{ env.APP_NAME_API }} 2> /dev/null || true && echo "No ecas api rollout in progress"
-          oc rollout cancel deployment/${{ env.APP_NAME_CAS }} 2> /dev/null  || true && echo "No cas api rollout in progress"
           
           oc tag ${{ env.OPENSHIFT_NAMESPACE_TEST }}/${{ env.REPO_NAME }}-frontend:${{ steps.get-latest-tag.outputs.tag }} \
           ${{ env.OPENSHIFT_NAMESPACE_PROD }}/${{ env.REPO_NAME }}-frontend:${{ steps.get-latest-tag.outputs.tag }}

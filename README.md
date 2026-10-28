@@ -72,7 +72,7 @@ The frontend, ecas-api and cas-api run in OpenShift as Deployments, deployed by 
 3. Run **Deploy to TEST** from master. It deploys the newest tag.
 4. After sign-off, run **Deploy to PROD** from master.
 
-Run the deploy workflows from master only. A run from a tag uses that tag's workflow and templates, so an old tag deploys old config. On 2026-10-21 a test deploy run from `v2.0.5` recreated the DeploymentConfigs that were replaced by Deployments in March. The Services went back to the Deployments on the next run, but the DeploymentConfig pods kept running unused beside them, and the old ecas-api one kept crashing. The test and prod workflows now stop when run from anything but master, and every deploy deletes leftover DeploymentConfigs.
+Run the deploy workflows from master only. A run from a tag uses that tag's workflow and templates, so an old tag deploys old config. On 2026-10-21 a test deploy run from `v2.0.5` recreated the DeploymentConfigs that were replaced by Deployments in March. The Services went back to the Deployments on the next run, but the DeploymentConfig pods kept running unused beside them. The `test` and `prod` GitHub environments only allow deployments from master, which also blocks old tags, and every deploy deletes leftover DeploymentConfigs.
 
 Don't make the version with a GitHub release instead of Create Tag. A release only creates the git tag, so Deploy to TEST fails with `is not currently pointing to an image`. To recover, tag the dev images by hand and rerun Deploy to TEST:
 
