@@ -134,6 +134,7 @@
                                v-model="user_local.professional_certificate_bc" id="professional_certificate_bc">
                     </div>
                 </div>
+                <div class="text-danger mb-2" v-if="save_error" dusk="save-error">{{ save_error }}</div>
                 <div class="form-group row row-mobile">
                     <div class="col">
                         <button class="btn btn-primary btn-block btn-block-mobile" v-on:click.prevent="saveProfile" dusk="save">
@@ -179,6 +180,7 @@
             return {
                 user_local:     {...this.user},
                 errors:         {},
+                save_error:     '',
                 working:        false,
                 schools:        [],
                 schoolQuery:    '',
@@ -264,6 +266,8 @@
                 }
 
                 this.working = true;
+                this.errors = {};
+                this.save_error = '';
 
                 var form = this;
 
@@ -296,12 +300,7 @@
                             Event.fire('profile-updated', response );
                         })
                         .catch(function (error) {
-                            console.log('Failure!', data);
-                            form.working = false;
-                            if (error.response.status === 422){
-                                console.log("errors: ", error.response.data.errors );
-                                form.errors = error.response.data.errors;
-                            }
+                            form.showSaveError(error);
                         });
                 }
                 else {
@@ -314,13 +313,21 @@
                             Event.fire('profile-updated', response )
                         })
                         .catch(function (error) {
-                            console.log('Failure!');
-                            form.working = false;
-                            if (error.response.status === 422){
-                                form.errors = error.response.data.errors;
-                            }
+                            form.showSaveError(error);
                         });
                 }
+            },
+            showSaveError(error) {
+                this.working = false;
+
+                // Some validated fields have no inline error, and the inline ones can be scrolled out of view
+                if (error.response && error.response.status === 422) {
+                    this.errors = error.response.data.errors;
+                    this.save_error = 'Not saved: ' + Object.values(this.errors).map(messages => messages[0]).join(' ');
+                    return;
+                }
+
+                this.save_error = 'Your profile could not be saved. Please try again, or email assessments@gov.bc.ca if this keeps happening.';
             }
         }
     }
