@@ -13,6 +13,13 @@ namespace Ecas.Dyn365Service.Controllers
     public class ActionController : ControllerBase
     {
 
+        Dyn365WebAPI _dyn365WebAPI;
+
+        public ActionController(Dyn365WebAPI dyn365WebAPI)
+        {
+            _dyn365WebAPI = dyn365WebAPI;
+        }
+
         /// <summary>
         /// Executes POST operations against the Dyn365 API. View https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/webapi/create-entity-web-api
         /// </summary>
@@ -23,7 +30,7 @@ namespace Ecas.Dyn365Service.Controllers
         [HttpPost]
         public ActionResult<string> Post(string name, [FromBody]dynamic value)
         {
-            var response = new Dyn365WebAPI().SendCreateRequestAsync(name, value.ToString());
+            var response = _dyn365WebAPI.SendCreateRequestAsync(name, value.ToString());
 
             //TODO: Improve Exception handling
             if (response.IsSuccessStatusCode)

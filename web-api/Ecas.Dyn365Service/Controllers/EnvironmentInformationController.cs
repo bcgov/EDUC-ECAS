@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using Ecas.Dyn365Service.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
 
 namespace Ecas.Dyn365Service.Controllers
 {
@@ -17,23 +18,23 @@ namespace Ecas.Dyn365Service.Controllers
     [ApiController]
     public class EnvironmentInformation : ControllerBase
     {
+        DynamicsAuthenticationSettings _dynamicsAuthenticationSettings;
+
+        public EnvironmentInformation(IOptions<DynamicsAuthenticationSettings> dynamicsAuthenticationSettingsOptions)
+        {
+            _dynamicsAuthenticationSettings = dynamicsAuthenticationSettingsOptions.Value;
+        }
+
         // GET: api/EnvironmentInformation
         [HttpGet]
         public ActionResult<string> Get()
         {
-            var builder = new ConfigurationBuilder()
-                           .SetBasePath(Directory.GetCurrentDirectory())
-                           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                           .AddEnvironmentVariables();
-
-            var configuration = builder.Build();
-            var _dynamicsAuthenticationSettingsSection = configuration.GetSection("DynamicsAuthenticationSettings");
-            var _dynamicsAuthenticationSettings = _dynamicsAuthenticationSettingsSection.Get<DynamicsAuthenticationSettings>();
-
-            _dynamicsAuthenticationSettings.CloudClientId = "*********";
-            _dynamicsAuthenticationSettings.CloudClientSecret = "*********";
-            _dynamicsAuthenticationSettings.OnPremPassword = "*********";
-            var settings = Newtonsoft.Json.JsonConvert.SerializeObject(_dynamicsAuthenticationSettings);
+            // Mask a copy; the settings instance is shared with Authentication.
+            var maskedSettings = JObject.FromObject(_dynamicsAuthenticationSettings);
+            maskedSettings["CloudClientId"] = "*********";
+            maskedSettings["CloudClientSecret"] = "*********";
+            maskedSettings["OnPremPassword"] = "*********";
+            var settings = Newtonsoft.Json.JsonConvert.SerializeObject(maskedSettings);
 
             return Ok(settings);
         }

@@ -23,6 +23,13 @@ namespace Ecas.Dyn365Service.Controllers
     [ApiController]
     public class OperationsController : ControllerBase
     {
+        Dyn365WebAPI _dyn365WebAPI;
+
+        public OperationsController(Dyn365WebAPI dyn365WebAPI)
+        {
+            _dyn365WebAPI = dyn365WebAPI;
+        }
+
         /// <summary>
         /// Executes GET operations against the Dyn365 API. View https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/webapi/query-data-web-api
         /// </summary>
@@ -40,7 +47,7 @@ namespace Ecas.Dyn365Service.Controllers
                 statement = $"{statement}?{filters}";
             }
 
-            var response = new Dyn365WebAPI().SendRetrieveRequestAsync(statement, true);
+            var response = _dyn365WebAPI.SendRetrieveRequestAsync(statement, true);
 
             if (response.IsSuccessStatusCode)
                 return Ok(response.Content.ReadAsStringAsync().Result);
@@ -59,7 +66,7 @@ namespace Ecas.Dyn365Service.Controllers
         [HttpPost]
         public ActionResult<string> Post(string statement, [FromBody]dynamic value)
         {
-            var response = new Dyn365WebAPI().SendCreateRequestAsync(statement, value.ToString());
+            var response = _dyn365WebAPI.SendCreateRequestAsync(statement, value.ToString());
 
             //TODO: Improve Exception handling
             if (response.IsSuccessStatusCode)
@@ -88,7 +95,7 @@ namespace Ecas.Dyn365Service.Controllers
         [HttpPatch]
         public ActionResult<string> Patch(string statement, [FromBody] dynamic value)
         {
-            HttpResponseMessage response = new Dyn365WebAPI().SendUpdateRequestAsync(statement, value.ToString());
+            HttpResponseMessage response = _dyn365WebAPI.SendUpdateRequestAsync(statement, value.ToString());
 
             //TODO: Improve Exception handling
             if (response.IsSuccessStatusCode)
@@ -107,7 +114,7 @@ namespace Ecas.Dyn365Service.Controllers
         [HttpDelete]
         public ActionResult<string> Delete(string statement)
         {
-            var response = new Dyn365WebAPI().SendDeleteRequestAsync(statement);
+            var response = _dyn365WebAPI.SendDeleteRequestAsync(statement);
 
             //TODO: Improve Exception handling
             if (response.IsSuccessStatusCode)
