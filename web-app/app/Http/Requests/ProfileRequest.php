@@ -100,7 +100,8 @@ class ProfileRequest extends FormRequest
         // We'll sanitize all strings
         $input['email']                     = $this->sanitizeString($input['email']);
         $input['phone']                     = $this->sanitizeString($input['phone']);
-        $input['postal_code']               = $this->sanitizeString($input['postal_code']);
+        // Dynamics rejects the update when the postal code contains a space, e.g. "V8V 8V8"
+        $input['postal_code']               = preg_replace('/\s+/', '', $this->sanitizeString($input['postal_code']));
 
 
         $this->replace($input);

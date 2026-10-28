@@ -231,6 +231,44 @@ class ProfileTest extends BaseMigrations
 
 
     #[Test]
+    public function spaces_are_removed_from_the_postal_code_before_the_profile_is_saved()
+    {
+        $mock_profile_id    = 'abc';
+        $mock_district_id   = 'cfd';
+        $mock_school_id     = 'myt';
+        $mock_region        = 'BC';
+        $mock_federated_id  = '123';
+        $mock_country_id    = 'some_guid';
+
+        $profile = $this->validProfileData([
+            'id'                => $mock_profile_id,
+            'district_id'       => $mock_district_id,
+            'school_id'         => $mock_school_id,
+            'region'            => $mock_region,
+            'federated_id'      => $mock_federated_id,
+            'country_id'        => $mock_country_id
+        ]);
+
+        $this->mockUser($mock_federated_id);
+        $this->mockGetProfile($mock_profile_id, $profile);
+        $this->app->make(Profile::class)->shouldReceive('update')
+            ->with($mock_profile_id, \Mockery::on(fn ($data) => $data['postal_code'] === 'V8V8V8'))
+            ->once()
+            ->andReturn($profile);
+        $this->mockDistrict($mock_district_id);
+        $this->mockSchool($mock_school_id);
+        $this->mockRegion($mock_region);
+        $this->mockCountry($mock_country_id);
+
+        $response = $this->patch('/api/profiles/' . $mock_profile_id, $this->validProfilePostData([
+            'postal_code'   => ' V8V 8V8 '
+        ]));
+
+        $response->assertStatus(200);
+    }
+
+
+    #[Test]
     public function the_delete_profile_method_is_disabled()
     {
 
