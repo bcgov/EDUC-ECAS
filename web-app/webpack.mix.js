@@ -15,3 +15,6 @@ mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css');
 
 mix.js('node_modules/popper.js/dist/popper.js', 'public/js').sourceMaps();
+
+// adds a content hash to the asset urls so browsers fetch the new files after each deploy
+mix.version();

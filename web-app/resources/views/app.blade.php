@@ -7,7 +7,7 @@
     <title>BC Ministry of Education - ECAS</title>
 
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
@@ -48,7 +48,7 @@
         </div>
     </footer>
 
-<script src="/js/app.js"></script>
+<script src="{{ mix('js/app.js') }}"></script>
 
 </body>
 </html>
