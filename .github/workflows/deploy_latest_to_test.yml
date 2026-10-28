@@ -60,6 +60,12 @@ jobs:
     runs-on: ubuntu-24.04
     environment: test
     steps:
+      - name: Only deploy from master
+        if: github.ref != 'refs/heads/master'
+        run: |
+          echo "Run this workflow from master. A run from a tag uses that tag's old workflow and templates."
+          exit 1
+
       - name: Check out repository
         uses: actions/checkout@v3
 
@@ -162,4 +168,7 @@ jobs:
           oc rollout status deployment/${{ env.APP_NAME_FRONTEND }}
           oc rollout status deployment/${{ env.APP_NAME_API }}
           oc rollout status deployment/${{ env.APP_NAME_CAS }}
+
+          # Remove DeploymentConfigs left from before the move to Deployments, e.g. by a run from an old tag
+          oc delete dc/${{ env.APP_NAME_FRONTEND }} dc/${{ env.APP_NAME_API }} dc/${{ env.APP_NAME_CAS }} --ignore-not-found
           
