@@ -17,11 +17,11 @@ namespace Ecas.Dyn365Service.Controllers
     [ApiController]
     public class MetadataController : ControllerBase
     {
-        DynamicsAuthenticationSettings _dynamicsAuthenticationSettings;
+        Dyn365WebAPI _dyn365WebAPI;
 
-        public MetadataController(DynamicsAuthenticationSettings dynamicsAuthenticationSettings)
+        public MetadataController(Dyn365WebAPI dyn365WebAPI)
         {
-            _dynamicsAuthenticationSettings = dynamicsAuthenticationSettings;
+            _dyn365WebAPI = dyn365WebAPI;
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Ecas.Dyn365Service.Controllers
             else
                 statement = $"EntityDefinitions(LogicalName='{entityName}')/Attributes/Microsoft.Dynamics.CRM.StatusAttributeMetadata?$select=LogicalName&$filter=LogicalName eq '{optionSetName}'&$expand=OptionSet";
 
-            var response = new Dyn365WebAPI().SendRetrieveRequestAsync(statement, true);
+            var response = _dyn365WebAPI.SendRetrieveRequestAsync(statement, true);
 
             if (response.IsSuccessStatusCode)
             {

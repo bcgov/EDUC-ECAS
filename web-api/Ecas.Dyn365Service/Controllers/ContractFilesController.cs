@@ -13,6 +13,13 @@ namespace Ecas.Dyn365Service.Controllers
     [ApiController]
     public class ContractFilesController : ControllerBase
     {
+        Dyn365WebAPI _dyn365WebAPI;
+
+        public ContractFilesController(Dyn365WebAPI dyn365WebAPI)
+        {
+            _dyn365WebAPI = dyn365WebAPI;
+        }
+
         [HttpGet]
         [ActionName("GetFile")]
          public ActionResult<string> GetFile(string annotationId)
@@ -31,7 +38,7 @@ namespace Ecas.Dyn365Service.Controllers
                                 </fetch>";
 
             var statement = $"annotations?fetchXml=" + WebUtility.UrlEncode(fetchXML);
-            var response = new Dyn365WebAPI().SendRetrieveRequestAsync(statement, true);
+            var response = _dyn365WebAPI.SendRetrieveRequestAsync(statement, true);
             if (response.IsSuccessStatusCode)
             {
                 return Ok(response.Content.ReadAsStringAsync().Result);
@@ -68,7 +75,7 @@ namespace Ecas.Dyn365Service.Controllers
                                 </fetch>";
 
             var statement = $"annotations?fetchXml=" + WebUtility.UrlEncode(fetchXML);
-            var response = new Dyn365WebAPI().SendRetrieveRequestAsync(statement, true);
+            var response = _dyn365WebAPI.SendRetrieveRequestAsync(statement, true);
 
             if (response.IsSuccessStatusCode)
             {
@@ -104,7 +111,7 @@ namespace Ecas.Dyn365Service.Controllers
                                 </fetch>";
 
             var statement = $"annotations?fetchXml=" + WebUtility.UrlEncode(fetchXML);
-            var response = new Dyn365WebAPI().SendRetrieveRequestAsync(statement, true);
+            var response = _dyn365WebAPI.SendRetrieveRequestAsync(statement, true);
 
             if (response.IsSuccessStatusCode)
             {
@@ -140,7 +147,7 @@ namespace Ecas.Dyn365Service.Controllers
             {
                       return StatusCode((int)HttpStatusCode.InternalServerError, "Sorry, only PDF, JPG and PNG file formats are supported.");
             }
-            var response = new Dyn365WebAPI().SendCreateRequestAsync("annotations", rawJsonData);
+            var response = _dyn365WebAPI.SendCreateRequestAsync("annotations", rawJsonData);
 
             //TODO: Improve Exception handling
                 if (response.IsSuccessStatusCode)
@@ -167,7 +174,7 @@ namespace Ecas.Dyn365Service.Controllers
         public ActionResult<string> RemoveFile(string annotationid)
         {
             annotationid = "annotations(" + annotationid + ")";
-            var response = new Dyn365WebAPI().SendDeleteRequestAsync(annotationid);
+            var response = _dyn365WebAPI.SendDeleteRequestAsync(annotationid);
             if (response.IsSuccessStatusCode)
             {
                 return Ok("The contract has been removed");

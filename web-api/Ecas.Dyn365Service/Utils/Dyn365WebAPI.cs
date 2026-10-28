@@ -9,6 +9,13 @@ namespace Ecas.Dyn365Service.Utils
 {
     public class Dyn365WebAPI
     {
+        private readonly Authentication _authentication;
+
+        public Dyn365WebAPI(Authentication authentication)
+        {
+            _authentication = authentication;
+        }
+
         ///<summary> Sends an HTTP request to the current CRM service. </summary>  
         ///<param name="method">The HTTP method to invoke</param>  
         ///<param name="query">The HTTP query to execute (base URL is provided by client)</param>  
@@ -23,7 +30,7 @@ namespace Ecas.Dyn365Service.Utils
             if (formatted)
                 request.Headers.Add("Prefer",
                     "odata.include-annotations=OData.Community.Display.V1.FormattedValue");
-            return new Authentication().GetHttpClient().SendAsync(request).Result;
+            return _authentication.SendAsync(request).Result;
         }
 
         public HttpResponseMessage SendCreateRequestAsync(string endPoint, string content)
@@ -40,12 +47,12 @@ namespace Ecas.Dyn365Service.Utils
         {
             HttpRequestMessage request = new HttpRequestMessage(operation, endPoint);
             request.Content = new StringContent(content.ToString(), Encoding.UTF8, "application/json");
-            return new Authentication().GetHttpClient().SendAsync(request).Result;
+            return _authentication.SendAsync(request).Result;
         }
 
         public HttpResponseMessage SendDeleteRequestAsync(string endPoint)
         {
-            return new Authentication().GetHttpClient().DeleteAsync(endPoint).Result;
+            return _authentication.SendAsync(new HttpRequestMessage(HttpMethod.Delete, endPoint)).Result;
         }
     }
 }

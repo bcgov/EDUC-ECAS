@@ -14,6 +14,13 @@ namespace Ecas.Dyn365Service.Controllers
     [ApiController]
     public class EcasPortalAssignmentsController : ControllerBase
     {
+        Dyn365WebAPI _dyn365WebAPI;
+
+        public EcasPortalAssignmentsController(Dyn365WebAPI dyn365WebAPI)
+        {
+            _dyn365WebAPI = dyn365WebAPI;
+        }
+
         // GET: api/EcasPortalAssignments
         [HttpGet]
         public ActionResult<string> Get(string contactId)
@@ -44,7 +51,7 @@ namespace Ecas.Dyn365Service.Controllers
 
             var statement = $"educ_assignments?fetchXml=" + WebUtility.UrlEncode(fetchXML);
 
-            var response = new Dyn365WebAPI().SendRetrieveRequestAsync(statement, true);
+            var response = _dyn365WebAPI.SendRetrieveRequestAsync(statement, true);
 
             if (response.IsSuccessStatusCode)
             {

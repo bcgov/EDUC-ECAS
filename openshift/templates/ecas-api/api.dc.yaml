@@ -104,14 +104,14 @@
               timeoutSeconds: 30
               initialDelaySeconds: 3
               httpGet:
-                path: "/api/environmentinformation"
+                path: "/api/health"
                 port: 8080
                 scheme: HTTP
             livenessProbe:
               timeoutSeconds: 30
               initialDelaySeconds: 300
               httpGet:
-                path: "/api/environmentinformation"
+                path: "/api/health"
                 port: 8080
                 scheme: HTTP
             resources:

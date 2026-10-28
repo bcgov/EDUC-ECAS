@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Options;
 using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
@@ -13,41 +13,45 @@ using System.Threading.Tasks;
 
 namespace Ecas.Dyn365Service.Utils
 {
+    /// <summary>
+    /// Registered as a singleton so one HttpClient and one MSAL client (with its token cache) serve every Dynamics call.
+    /// </summary>
     public class Authentication
     {
-        
-        public HttpClient GetHttpClient()
+        private readonly HttpClient _httpClient;
+        private readonly IConfidentialClientApplication _confidentialClientApplication;
+        private readonly string[] _scopes;
+
+        public Authentication(IOptions<DynamicsAuthenticationSettings> dynamicsAuthenticationSettingsOptions)
         {
-            var builder = new ConfigurationBuilder()
-                            .SetBasePath(Directory.GetCurrentDirectory())
-                            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                            .AddEnvironmentVariables();
+            var dynamicsAuthenticationSettings = dynamicsAuthenticationSettingsOptions.Value;
 
-            var configuration = builder.Build();
-            var _dynamicsAuthenticationSettingsSection = configuration.GetSection("DynamicsAuthenticationSettings");
-            var _dynamicsAuthenticationSettings = _dynamicsAuthenticationSettingsSection.Get<DynamicsAuthenticationSettings>();
-
-            if (_dynamicsAuthenticationSettings.ActiveEnvironment.ToLower() == "onprem")
+            if (dynamicsAuthenticationSettings.ActiveEnvironment.ToLower() == "onprem")
             {
-                return getOnPremHttpClient(_dynamicsAuthenticationSettings.OnPremUserName, _dynamicsAuthenticationSettings.OnPremPassword,
-                    _dynamicsAuthenticationSettings.OnPremDomain, _dynamicsAuthenticationSettings.OnPremWebApiUrl);
+                _httpClient = getOnPremHttpClient(dynamicsAuthenticationSettings.OnPremUserName, dynamicsAuthenticationSettings.OnPremPassword,
+                    dynamicsAuthenticationSettings.OnPremDomain, dynamicsAuthenticationSettings.OnPremWebApiUrl);
             }
             else
             {
-                //AuthenticationParameters ap = AuthenticationParameters.CreateFromResourceUrlAsync(
-                //    new Uri(_dynamicsAuthenticationSettings.CloudResourceUrl)).Result;
-
-                //String authorityUrl = ap.Authority;
-                //String resourceUrl = ap.Resource;
-
-                //return getOnlineHttpClient(resourceUrl, authorityUrl, _dynamicsAuthenticationSettings.CloudClientId,
-                //    _dynamicsAuthenticationSettings.CloudClientSecret, _dynamicsAuthenticationSettings.CloudResourceUrl,
-                //    _dynamicsAuthenticationSettings.CloudUserName, _dynamicsAuthenticationSettings.CloudWebApiUrl, _dynamicsAuthenticationSettings.TenantId).Result;
-
-                return getOnlineHttpClient(_dynamicsAuthenticationSettings.CloudBaseUrl, _dynamicsAuthenticationSettings.CloudClientId, _dynamicsAuthenticationSettings.CloudClientSecret,
-                    _dynamicsAuthenticationSettings.CloudWebApiUrl, _dynamicsAuthenticationSettings.TenantId).Result;
-
+                _scopes = new[] { dynamicsAuthenticationSettings.CloudBaseUrl + "/.default" };
+                _confidentialClientApplication = ConfidentialClientApplicationBuilder.Create(clientId: dynamicsAuthenticationSettings.CloudClientId)
+                                                      .WithClientSecret(clientSecret: dynamicsAuthenticationSettings.CloudClientSecret)
+                                                      .WithAuthority(new Uri($"https://login.microsoftonline.com/{dynamicsAuthenticationSettings.TenantId}"))
+                                                      .Build();
+                _httpClient = getOnlineHttpClient(dynamicsAuthenticationSettings.CloudWebApiUrl);
             }
+        }
+
+        public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
+        {
+            if (_confidentialClientApplication != null)
+            {
+                // Served from MSAL's in-memory cache until the token is close to expiry.
+                var result = await _confidentialClientApplication.AcquireTokenForClient(_scopes).ExecuteAsync();
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
+            }
+
+            return await _httpClient.SendAsync(request);
         }
 
         private HttpClient getOnPremHttpClient(string userName, string password, string domainName, string webAPIBaseAddress)
@@ -112,36 +116,14 @@ namespace Ecas.Dyn365Service.Utils
         //    return result.AccessToken;
         //}
 
-        public async Task<HttpClient> getOnlineHttpClient(string baseUrl,  string clientId, string clientSecret,
-            string webApiUrl, string tenantId)
+        private HttpClient getOnlineHttpClient(string webApiUrl)
         {
-            // Get the access token that is required for authentication.
-            var accessToken = await GetAccessToken(baseUrl, clientId, clientSecret, tenantId);
-            
-            HttpClient httpClient = new HttpClient();
+            // The client lives for the whole process, so recycle connections to pick up DNS changes.
+            HttpClient httpClient = new HttpClient(new SocketsHttpHandler { PooledConnectionLifetime = TimeSpan.FromMinutes(5) });
             httpClient.BaseAddress = new Uri(webApiUrl);
             httpClient.Timeout = new TimeSpan(0, 2, 0);  // 2 minutes
-            httpClient.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue("Bearer", accessToken);
 
             return httpClient;
-
-        }
-
-        private static async Task<string> GetAccessToken(string baseUrl, string clientId, string clientSecret, string tenantId)
-        {
-            string[] scopes = { baseUrl + "/.default" };
-            string authority = $"https://login.microsoftonline.com/{tenantId}";
-
-            var clientApp = ConfidentialClientApplicationBuilder.Create(clientId: clientId)
-                                                      .WithClientSecret(clientSecret: clientSecret)
-                                                      .WithAuthority(new Uri(authority))
-                                                      .Build();
-
-            var builder = clientApp.AcquireTokenForClient(scopes);
-            var result = await builder.ExecuteAsync();
-
-            return result.AccessToken;
         }
 
     }
