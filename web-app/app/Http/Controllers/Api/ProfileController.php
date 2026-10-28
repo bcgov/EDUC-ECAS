@@ -57,8 +57,6 @@ class ProfileController extends Controller
         $unverified_profile = $this->profile->get($profile_id);
         
         $profile = parent::checkUserIsAuthorized($keycloak_user, $unverified_profile);
-error_log(print_r($profile, TRUE));
-error_log(print_r($keycloak_user, TRUE));
 
         return new ProfileResource($profile, $this->school, $this->district, $this->region, $this->country);
     }

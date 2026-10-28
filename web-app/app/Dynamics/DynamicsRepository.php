@@ -217,9 +217,6 @@ abstract class DynamicsRepository
      */
     private static function mapToDynamics($data): array
     {
-        Log::debug('original data:');
-        Log::debug($data);
-
         $mapped_data = [];
 
         foreach (static::$fields as $our_name => $dynamics_name) {
@@ -247,9 +244,6 @@ abstract class DynamicsRepository
                 }
             }
         }
-
-        Log::debug('data mapped to Dynamics variables:');
-        Log::debug($mapped_data);
 
         return $mapped_data;
     }
