@@ -81,5 +81,3 @@ oc tag <namespace>-dev/educ-ecas-frontend:latest <namespace>-dev/educ-ecas-front
 oc tag <namespace>-dev/educ-ecas-api:latest <namespace>-dev/educ-ecas-api:<version>
 oc tag <namespace>-dev/educ-ecas-cas-api:latest <namespace>-dev/educ-ecas-cas-api:<version>
 ```
-
-The `*-deploy.yaml` templates and `.param` files in `openshift/templates` belong to the old DeploymentConfig setup and aren't used by the workflows.
