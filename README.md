@@ -62,3 +62,22 @@ The Laravel application is set-up to log various actions and code steps, these l
 **Failure Handling** - The data connection between the web portal is tested and working. However, the calls to the API are largely assumed to be successful. If a call to the API fails it will do so “quietly”, without providing the user with any useful feedback. API and communication stream should be improved to manage failure conditions.
 
 **Vue working in Internet Explorer!!** - The Internet Explorer web browser is the worst thing to happen to developers, 20 years of awful, and counting! To demonstrate, when viewing the web portal in certain versions of Internet Explorer the user will encounter a blank page. This is an I.E. error when displaying code written in the Vue.js framework. A work around is required to make things work on I.E, as per usual. Additional research will need to be undertaken. This is a small but significant issue. Testing with the I.E. browser should be added to automated testing using the Dusk test suite in Laravel.
+
+## Deploying
+
+The frontend, ecas-api and cas-api run in OpenShift as Deployments, deployed by the GitHub Actions workflows:
+
+1. Merging to master builds the images and deploys them to dev.
+2. Run **Create Tag** with the new version, e.g. `v2.1.1`. It creates the git tag and tags the current dev images with the same version.
+3. Run **Deploy to TEST** from master. It deploys the newest tag.
+4. After sign-off, run **Deploy to PROD** from master.
+
+Run the deploy workflows from master only. A run from a tag uses that tag's workflow and templates, so an old tag deploys old config. On 2026-10-21 a test deploy run from `v2.0.5` recreated the DeploymentConfigs that were replaced by Deployments in March. The Services went back to the Deployments on the next run, but the DeploymentConfig pods kept running unused beside them. The `test` and `prod` GitHub environments only allow deployments from master, which also blocks old tags, and every deploy deletes leftover DeploymentConfigs.
+
+Don't make the version with a GitHub release instead of Create Tag. A release only creates the git tag, so Deploy to TEST fails with `is not currently pointing to an image`. To recover, tag the dev images by hand and rerun Deploy to TEST:
+
+```
+oc tag <namespace>-dev/educ-ecas-frontend:latest <namespace>-dev/educ-ecas-frontend:<version>
+oc tag <namespace>-dev/educ-ecas-api:latest <namespace>-dev/educ-ecas-api:<version>
+oc tag <namespace>-dev/educ-ecas-cas-api:latest <namespace>-dev/educ-ecas-cas-api:<version>
+```
