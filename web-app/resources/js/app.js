@@ -146,6 +146,9 @@ window.vue = Vue.use(VueKeyCloak, {
 
     config: '/api/keycloak_config',
     init:   {onLoad: 'login-required'},
+    // keycloak-js 21 leaves the login callback's `#iss=...` in the address bar, and Keycloak rejects that URL
+    // as a post logout redirect for clients that register the exact /Dashboard URL, so redirect there instead
+    logout: {redirectUri: window.location.origin + '/Dashboard'},
 
     onReady: (keycloak) => {
         tokenInterceptor(keycloak);
